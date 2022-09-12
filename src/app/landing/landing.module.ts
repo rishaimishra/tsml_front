@@ -8,9 +8,13 @@ import { ProductsModule } from '../products/products.module';
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '', redirectTo: '', pathMatch: 'full',
     component: HomeComponent
   },
+  // {
+  //   path: ' /:Pid,/:Cid', redirectTo: '', pathMatch: 'full',
+  //   component: HomeComponent
+  // },
 ];
 
 @NgModule({

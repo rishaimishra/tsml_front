@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         this.spinner.hide();
         if (res.status == 1) {
           this.list = res.result;
-          // console.log('this.list=', this.list);
+          console.log('this.list=', this.list);
           this.get_product_by_menu_id(this.product_menu_id);
         }
       },
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     let url = '/index-page/' + id;
     this.productService.getMethod(url).subscribe(
       (res: any) => {
-        //console.log(res);
+        console.log(res);
         this.spinner.hide();
         if (res.status == 1) {
           this.product_list = res.result;
@@ -64,5 +64,10 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  gotoDetailsPage(productId: any, categoryId: any) {
+    console.log(productId, categoryId);
+    this._router.navigate(['/product-details',productId, categoryId]);
   }
 }

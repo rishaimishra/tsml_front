@@ -125,7 +125,7 @@
                                  <ul class="list-unstyled">
                                     <li><a href="overview.html">Overview </a></li>
                                     <li><a routerLink="/ferro-chrome">Ferro Chrome</a></li>
-                                    <li><a href="search-result.html">Chrome Ore</a></li>
+                                    <li><a routerLink="/ferro-chrome">Chrome Ore</a></li>
                                  </ul>
                               </div>
                               <!-- end col-3 -->
@@ -150,7 +150,8 @@
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != false " routerLink="/"> My Account </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != false " routerLink="/view-profile"> My Profile </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != true " routerLink="/login"> Login </a></li>
-                     <li class="nav-item pointer"><a class="nav-link" *ngIf="isUserLogIn != false " (click)="logOut()"> Logout </a></li>
+                     <li class="nav-item"><a class="nav-link pointer" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                         *ngIf="isUserLogIn != false "> Logout </a></li>
                   </ul>
                </div>
                <!-- navbar-collapse.// -->
@@ -183,4 +184,24 @@
    </header>
 </body>
 
+<!-- Logout modal -->
+
+ <!-- Modal -->
+ <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <div class="modal-dialog modal-sm">
+     <div class="modal-content">
+       <div class="modal-header">
+         <!-- <h5 class="modal-title" id="staticBackdropLabel"></h5> -->
+         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+       </div>
+       <div class="modal-body">
+         <p>Are you sure want to logout !</p>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+         <button type="button" class="btn btn-danger btn-sm pointer" (click)="logOut()" data-bs-dismiss="modal">Logout</button>
+       </div>
+     </div>
+   </div>
+ </div>
 </html>

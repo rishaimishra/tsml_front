@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <!-- jQuery -->
-    <script src="assets/js/jquery-2.2.4.min.js"></script>
-    <!--product thumbelina-->
-    <script src="assets/js/thumbelina.js"></script>
-    <script src="assets/js/product-carousel.js"></script>
-    <!--date picker-->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!--Owl Carousel -->
     <!-- <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
@@ -98,7 +86,7 @@
                   <div class="row product-list-inr-bg">
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let pdata of product_list">
                       <div class="product-list">
-                        <a routerLink="/product-details">
+                        <a (click)="gotoDetailsPage(pdata.product_id, pdata.category_id)">
                           <div class="product-list-img">
                             <img src="{{ pdata.primary_image_url }}" alt="product-img" />
                           </div>
@@ -150,7 +138,7 @@
                       </div> -->
                     <!--/-->
                     <div class="col-12 text-center mt-3" *ngIf="product_list.length > 3">
-                      <a href="search-result.html" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                      <a routerLink="/" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                         View
                         All</a>
                     </div>

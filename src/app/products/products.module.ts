@@ -30,6 +30,10 @@ const routes: Routes = [
     component: ProductDetailsComponent,
   },
   {
+    path: 'product-details/:productId,/:categoryId', 
+    component: ProductDetailsComponent,
+  },
+  {
     path: 'edit-FRQ', 
     component: EditFRQComponent,
   },

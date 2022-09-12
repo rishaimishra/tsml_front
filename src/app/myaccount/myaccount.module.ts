@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { SharedModule } from '../shared/shared.module';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
+    SharedModule
   ]
 })
 export class MyaccountModule { }
