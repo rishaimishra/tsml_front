@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="keywords" content="" />
+      <meta name="description" content="" />
+      <title>Global Steel Suppliers & Manufacturers | Mining - Tata Group</title>
+      <!-- jQuery -->
+      <!-- <script src="js/jquery-2.2.4.min.js"></script>
+      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+      <link href="css/font-awesome.css" rel="stylesheet" type="text/css"/>
+      <script src="js/bootstrap.bundle.min.js" type="text/javascript"></script> -->
+      <!--product thumbelina-->
+      <!-- <script src="js/thumbelina.js"></script>
+      <script src="js/product-carousel.js"></script> -->
+      <!--date picker-->
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="js/customs.js" type="text/javascript"></script>
+      <link href="css/style.css" rel="stylesheet" type="text/css"/>
+      <link href="css/responsive.css" rel="stylesheet" type="text/css"/> -->
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+      <style type="text/css">
+         /* ============ only desktop view ============ */
+         @media all and (min-width: 992px) {
+         .navbar .nav-item .dropdown-menu{  display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
+         .navbar .nav-item:hover .nav-link{ color: #fff;  }
+         .navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
+         .navbar .dropdown-menu.fade-up{ top:180%;  }
+         .navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
+         }  
+         /* ============ desktop view .end// ============ */
+         body, html {
+         height: 100%;
+         }
+      </style>
+   </head>
+   <body>
+      <!--/Header-->
+      <section class="login-bg">
+         <div class="vertical-center">
+               <div class="container">
+                  <div class="row justify-content-center my-55">
+                     <div class="col-10 col-md-6 col-lg-4 position-relative">
+                        <div class="nav-round2"></div>
+                        <div class="row login-inner">
+                           <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                           <div class="col-12 mb-3">
+                              <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
+                           </div>
+                           <div class="col-12">
+                              <p class="log-txt">Login to Your Account</p>
+                           </div>
+                           <div class="col-12">
+                              <div>
+                                 <label>User ID</label>
+                                 <input formControlName="email" type="text" class="form-control">
+                              </div>
+                           </div>
+                           <!--/-->
+                           <div class="col-12 mt-3">
+                              <div>
+                                 <label>Password</label>
+                                 <input formControlName="password" type="password" class="form-control">
+                              </div>
+                           </div>
+                           <!--/-->
+                           <div class="col-12 ttext-right">
+                              <a [routerLink]="['/forget-password']" class="smll-font">Forgot Password?</a>
+                           </div>
+                           <!--/-->
+                           <div class="col-12 my-3">
+                              <button href="javascript:;" type="submit" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Submit</button>
+                           </div>
+                           <!--/-->
+                           <div class="col-12 text-center">
+                              <p class="smll-font">Not a member? <a routerLink ="/register" class="smll-font">Sign up</a></p>
+                           </div>
+                        </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+         </div>
+      </section>
+   </body>
+</html>

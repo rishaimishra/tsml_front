@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <!-- header -->
+    <app-header></app-header>
+<body>
+    <div class="page-content">
+        <section class="sub-header-2">
+            <div class="container">
+                <h1>RFQ detail<span class="d-block"></span>Details No: XXXXX</h1>
+                <!-- <h1>RFQ detail<span class="d-block">Details No: XXXXX </h1> -->
+                <a routerLink="/add-product" class="btn btn-primary add-btn-right"><i class="fa fa-plus-circle"></i>
+                    ADD</a>
+                <div class="clearfix"></div>
+            </div>
+        </section>
+        <section class="add-prod-pg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="cart-table">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>High Carbon Ferro Chrome</th>
+                                            <th>Quantity</th>
+                                            <th>Delivery Schedule</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <figure class="product-media">
+                                                        <a href="#">
+                                                            <img src="assets/images/cart1.png" alt="Product image">
+                                                        </a>
+                                                    </figure>
+                                                    <div class="cart-details">
+                                                        <h3 class="product-title">
+                                                            <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                                        </h3>
+                                                        <p>Sizes : 10-150 mm</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product-quantity new-quantity">
+                                                    <div class="product-quantity">
+                                                        <div class="quantity-selectors">
+                                                            <button type="button"
+                                                                class="increment-quantity decrement-quantity1"
+                                                                aria-label="Subtract one" data-direction="-1"
+                                                                disabled="disabled"><span>&#8722;</span></button>
+                                                            <input data-min="1" data-max="0" type="text"
+                                                                name="quantity1" value="250" readonly="true">
+                                                            <button type="button"
+                                                                class="increment-quantity increment-quantity1"
+                                                                aria-label="Add one"
+                                                                data-direction="1"><span>&#43;</span></button>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="view-schedule" data-toggle="modal"
+                                                    data-target="#addModal"><i class="fa fa-calendar"></i> View</a>
+
+                                                <!-- The Modal -->
+                                                <div class="modal" id="addModal">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title text-uppercase">Delivery Schedule
+                                                                </h4>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label>Quantity</label>
+                                                                            <input type="number" class="form-control"
+                                                                                name="" value="100">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/-->
+                                                                    <div class="col-12 col-lg-8">
+                                                                        <div class="form-group">
+                                                                            <label>Proposed Delivery Date</label>
+                                                                            <div class="date-rang wi-100">
+                                                                                <div class="position-relative mr-15">
+                                                                                    <input type="text"
+                                                                                        class="form-control datepicker"
+                                                                                        id="" placeholder="09/01/2022">
+                                                                                    <span class="over_llp"><img
+                                                                                            src="assets/images/cal.png"
+                                                                                            alt=""></span>
+                                                                                </div>
+                                                                                <div class="position-relative ml-15">
+                                                                                    <input type="text"
+                                                                                        class="form-control datepicker"
+                                                                                        id="" placeholder="09/30/2022">
+                                                                                    <span class="over_llp"><img
+                                                                                            src="assets/images/cal.png"
+                                                                                            alt=""></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/-->
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label>Quantity</label>
+                                                                            <input type="number" class="form-control"
+                                                                                name="" value="100">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/-->
+                                                                    <div class="col-12 col-lg-8">
+                                                                        <div class="form-group">
+                                                                            <label>Proposed Delivery Date</label>
+                                                                            <div class="date-rang wi-100">
+                                                                                <div class="position-relative mr-15">
+                                                                                    <input type="text"
+                                                                                        class="form-control datepicker"
+                                                                                        id="" placeholder="09/01/2022">
+                                                                                    <span class="over_llp"><img
+                                                                                            src="assets/images/cal.png"
+                                                                                            alt=""></span>
+                                                                                </div>
+                                                                                <div class="position-relative ml-15">
+                                                                                    <input type="text"
+                                                                                        class="form-control datepicker"
+                                                                                        id="" placeholder="09/30/2022">
+                                                                                    <span class="over_llp"><img
+                                                                                            src="assets/images/cal.png"
+                                                                                            alt=""></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label>Quantity</label>
+                                                                            <input type="number" class="form-control"
+                                                                                name="" value="50">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/-->
+                                                                    <div class="col-12 col-lg-8">
+                                                                        <div class="form-group">
+                                                                            <label>Proposed Delivery Date</label>
+                                                                            <div class="date-rang wi-100">
+                                                                                <div class="position-relative mr-15">
+                                                                                    <input type="text"
+                                                                                        class="form-control datepicker"
+                                                                                        id="" placeholder="09/01/2022">
+                                                                                    <span class="over_llp"><img
+                                                                                            src="assets/images/cal.png"
+                                                                                            alt=""></span>
+                                                                                </div>
+                                                                                <div class="position-relative ml-15">
+                                                                                    <input type="text"
+                                                                                        class="form-control datepicker"
+                                                                                        id="" placeholder="09/30/2022">
+                                                                                    <span class="over_llp"><img
+                                                                                            src="assets/images/cal.png"
+                                                                                            alt=""></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/-->
+                                                                    <div class="col-lg-12 add-btn-sec pt-2 pb-2">
+                                                                        <a href="#" class="btn btn-primary"><i
+                                                                                class="fa fa-check"></i> Approve</a>
+                                                                        <button type="button" class="btn btn-danger"><i
+                                                                                class="fa fa-times"></i> Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-edt-del">
+                                                    <a routerLink="/edit-FRQ" class="edt-btn btn-primary"><i
+                                                            class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="del-btn btn-danger"><i
+                                                            class="fa fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <figure class="product-media">
+                                                        <a href="#">
+                                                            <img src="assets/images/cart1.png" alt="Product image">
+                                                        </a>
+                                                    </figure>
+                                                    <div class="cart-details">
+                                                        <h3 class="product-title">
+                                                            <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                                        </h3>
+                                                        <p>Sizes : 10-150 mm</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product-quantity new-quantity">
+                                                    <div class="product-quantity">
+                                                        <div class="quantity-selectors">
+                                                            <button type="button"
+                                                                class="increment-quantity decrement-quantity2"
+                                                                aria-label="Subtract one" data-direction="-1"
+                                                                disabled="disabled"><span>&#8722;</span></button>
+                                                            <input data-min="1" data-max="0" type="text"
+                                                                name="quantity2" value="250" readonly="true">
+                                                            <button type="button"
+                                                                class="increment-quantity increment-quantity2"
+                                                                aria-label="Add one"
+                                                                data-direction="1"><span>&#43;</span></button>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="view-schedule" data-toggle="modal"
+                                                    data-target="#addModal"><i class="fa fa-calendar"></i> View</a>
+                                            </td>
+                                            <td>
+                                                <div class="btn-edt-del">
+                                                    <a href="RFQ-edit.html" class="edt-btn btn-primary"><i
+                                                            class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="del-btn btn-danger"><i
+                                                            class="fa fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <figure class="product-media">
+                                                        <a href="#">
+                                                            <img src="assets/images/cart1.png" alt="Product image">
+                                                        </a>
+                                                    </figure>
+                                                    <div class="cart-details">
+                                                        <h3 class="product-title">
+                                                            <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                                        </h3>
+                                                        <p>Sizes : 10-150 mm</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product-quantity new-quantity">
+                                                    <div class="product-quantity">
+                                                        <div class="quantity-selectors">
+                                                            <button type="button"
+                                                                class="increment-quantity decrement-quantity3"
+                                                                aria-label="Subtract one" data-direction="-1"
+                                                                disabled="disabled"><span>&#8722;</span></button>
+                                                            <input data-min="1" data-max="0" type="text"
+                                                                name="quantity3" value="250" readonly="true">
+                                                            <button type="button"
+                                                                class="increment-quantity increment-quantity3"
+                                                                aria-label="Add one"
+                                                                data-direction="1"><span>&#43;</span></button>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="view-schedule" data-toggle="modal"
+                                                    data-target="#addModal"><i class="fa fa-calendar"></i> View</a>
+                                            </td>
+                                            <td>
+                                                <div class="btn-edt-del">
+                                                    <a href="RFQ-edit.html" class="edt-btn btn-primary"><i
+                                                            class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="del-btn btn-danger"><i
+                                                            class="fa fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 add-btn-sec">
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary" onclick="location.href = 'kam.html';"><i
+                                    class="fa fa-check"></i> Submit</button>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- footer -->
+    <app-footer></app-footer>
+    <div class="foot_arw">
+        <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
+    </div>
+</body>
+
+</html>

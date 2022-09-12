@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<!-- header -->
+<app-header></app-header>
+
+<body>
+   <div class="page-content">
+      <section class="sub-header-2">
+         <div class="container">
+            <h1>Add Product</h1>
+         </div>
+      </section>
+      <section class="add-prod-pg">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-4 col-md-6 col-sm-6">
+                  <div class="form-group">
+                     <label for="">Product</label>
+                     <select class="form-control">
+                        <option>Select Product</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-6">
+                  <div class="form-group">
+                     <label for="">Category</label>
+                     <select class="form-control">
+                        <option>Select Category</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-6">
+                  <div class="form-group">
+                     <label for="">Subcategory</label>
+                     <select class="form-control">
+                        <option>Select Subcategory</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-6">
+                  <div class="form-group">
+                     <label for="">Sizes offered</label>
+                     <select class="form-control">
+                        <option>Select Sizes</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-6">
+                  <div class="form-group">
+                     <label for="">Total Quantity</label>
+                     <input type="" class="form-control" name="">
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-6 mt-4">
+                  <a href="javascript:;" class="btn btn-primary btn-block" data-toggle="collapse"
+                     data-target="#deliverySchedule"><i class="fa fa-calendar" aria-hidden="true"></i> Delivery
+                     Schedule</a>
+               </div>
+            </div>
+            <div id="deliverySchedule" class="collapse">
+               <div class="schedule-block" id="container">
+                  <div class="row mydiv" id="thediv">
+                     <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="form-group">
+                           <label for="">Quantity</label>
+                           <input type="" class="form-control" name="">
+                        </div>
+                     </div>
+                     <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                           <label for="">Proposed Delivery Date</label>
+                           <div class="fflex">
+                              <div class="position-relative ww-50">
+                                 <input type="text" class="form-control datepicker" placeholder="From">
+                                 <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                              </div>
+                              <div class="position-relative ww-50">
+                                 <input type="text" class="form-control datepicker" placeholder="To">
+                                 <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <button type="button" class="blue-plus-icon btn-copy" onclick="Clone()" )><i
+                           class="fa fa-plus-circle"></i></button>
+                     <button type="button" class="red-plus-icon" onclick='Delete(this)' )><i
+                           class="fa fa-minus-circle"></i></button>
+                  </div>
+                  <div>
+                  </div>
+
+               </div>
+               <div class="row">
+                  <div class="col-lg-12 add-btn-sec">
+                     <a href="RFQ-detail.html" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>
+                     <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </div>
+   <!-- footer -->
+   <app-footer></app-footer>
+   <div class="foot_arw">
+      <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
+   </div>
+   <script>
+      function Clone() {
+         var clone = document.getElementById('thediv').cloneNode(true); // "deep" clone
+         document.getElementById("container").appendChild(clone);
+      }
+
+      function Delete(button) {
+         var parent = button.parentNode;
+         var grand_father = parent.parentNode;
+         grand_father.removeChild(parent);
+      }
+   </script>
+</body>
+
+</html>
