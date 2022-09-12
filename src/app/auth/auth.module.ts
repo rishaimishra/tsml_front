@@ -12,7 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
   {
     path: 'login',

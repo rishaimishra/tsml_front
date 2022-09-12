@@ -1,5 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <!-- jQuery -->
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <!--product thumbelina-->
+    <script src="assets/js/thumbelina.js"></script>
+    <script src="assets/js/product-carousel.js"></script>
+    <!--date picker-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--Owl Carousel -->
+    <!-- <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+    <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/vendors/jquery.min.js"></script>
+    <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script> -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style type="text/css">
+       /* ============ only desktop view ============ */
+       @media all and (min-width: 992px) {
+       .navbar .nav-item .dropdown-menu{  display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
+       .navbar .nav-item:hover .nav-link{ color: #fff;  }
+       .navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
+       .navbar .dropdown-menu.fade-up{ top:180%;  }
+       .navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
+       }  
+       /* ============ desktop view .end// ============ */
+    </style>
+ </head>
 <app-header></app-header>
 
 <body>
@@ -50,7 +82,7 @@
         <div class="row">
           <div class="col-12">
             <ul class="nav nav-tabs" id="myTab" role="tablist" *ngIf="list.length > 0">
-              <p class="pr-title">Our Products..</p>
+              <p class="pr-title">Our Products</p>
               <li class="nav-item" *ngFor="let product_menu of list">
                 <a class="nav-link" data-toggle="tab" href="#fc" role="tab" aria-controls="home"
                   (click)="get_product_by_menu_id(product_menu.id)">{{ product_menu.pro_name }}</a>
@@ -66,7 +98,7 @@
                   <div class="row product-list-inr-bg">
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let pdata of product_list">
                       <div class="product-list">
-                        <a href="product-details.html">
+                        <a routerLink="/product-details">
                           <div class="product-list-img">
                             <img src="{{ pdata.primary_image_url }}" alt="product-img" />
                           </div>

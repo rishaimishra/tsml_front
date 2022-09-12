@@ -31,6 +31,9 @@ login(data: any) {
   return this._http.post(this.BesUrl + '/login', data, { withCredentials: true });
 };
 
+isLoggedIn () {
+  return !!localStorage.getItem('tokenUrl');
+}
 getOtp(requestData: getOptRequest): Observable < getOtpResponse > {
   return this._http.post<getOtpResponse>(`${environment.apiEndpointBase}/${this.GET_OTP_URL}`, requestData);
 };

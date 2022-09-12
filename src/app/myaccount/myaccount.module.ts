@@ -5,20 +5,21 @@ import { MyCartComponent } from './my-cart/my-cart.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 const routes: Routes = [
   {
     path: 'profile', 
-    component: ProfileComponent
+    component: ProfileComponent, canActivate: [AuthGuard]
   },
   {
     path: 'my-cart', 
-    component: MyCartComponent
+    component: MyCartComponent, canActivate: [AuthGuard]
   },
   {
     path: 'view-profile', 
-    component: ViewProfileComponent
+    component: ViewProfileComponent, canActivate: [AuthGuard]
   },
 ];
 

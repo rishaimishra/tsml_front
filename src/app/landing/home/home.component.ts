@@ -20,15 +20,15 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.get_product_by_menu_id(this.product_menu_id);
+    // this.get_product_by_menu_id(this.product_menu_id);
   }
+
 
   ngAfterViewInit() {
     this.spinner.show();
     let url = '/product-manu';
     this.productService.getMethod(url).subscribe(
       (res: any) => {
-        console.log(res);
         this.spinner.hide();
         if (res.status == 1) {
           this.list = res.result;
@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
+    
   }
   get_product_by_menu_id(id: any) {
     this.spinner.show();

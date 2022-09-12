@@ -1,0 +1,6 @@
+{
+    "/api": {
+    "target": "https://beas.in/mje-shop/api",
+    "secure": false
+    }
+    }
