@@ -1,66 +1,78 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-   <!-- haeder -->
-   <app-header></app-header>
-   <body>
-      <div class="page-content">
-         <section class="sub-header">
-            <h1>Tata Indicrome – High Carbon Ferro Chrome. Quality, convenience, trust. Unmatched.</h1>
-            <ul>
-               <li><a href="#"><img src="assets/images/home.png"></a></li>
-               <li><a href="#">/  Products and Customers</a></li>
-               <li>/  Ferro Chrome</li>
-            </ul>
-         </section>
-         <section class="product-sec">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-6">
-                     <div id="thumbnails">
-                        <!---<div class="thumbelina-but vert top"><i class="fa fa-angle-up"></i></div>-->
-                        <ul>
-                           <li>
-                              <a href="images/1.jpg" title="View">
-                              <img class="cloudzoom-gallery cloudzoom-gallery-active"
-                                 src="assets/images/1.jpg"
-                                 alt="thumbnail"
-                                 data-cloudzoom="
+  <!-- haeder -->
+  <app-header></app-header>
+  <body>
+    <div class="page-content" *ngIf="show_data == true">
+      <section class="sub-header">
+        <h1>
+          Tata Indicrome – High Carbon Ferro Chrome. Quality, convenience,
+          trust. Unmatched.
+        </h1>
+        <ul>
+          <li>
+            <a href="#"><img src="assets/images/home.png" /></a>
+          </li>
+          <li><a href="#">/ Products and Customers</a></li>
+          <li>/ Ferro Chrome</li>
+        </ul>
+      </section>
+      <section class="product-sec">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div id="thumbnails">
+                <!---<div class="thumbelina-but vert top"><i class="fa fa-angle-up"></i></div>-->
+                <ul>
+                  <li>
+                    <a href="images/1.jpg" title="View">
+                      <img
+                        class="cloudzoom-gallery cloudzoom-gallery-active"
+                        src="assets/images/1.jpg"
+                        alt="thumbnail"
+                        data-cloudzoom="
                                  useZoom:'.cloudzoom',
                                  image:'images/1.jpg'
-                                 ">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="images/2.jpg" title="View">
-                              <img class="cloudzoom-gallery"
-                                 src="assets/images/2.jpg"
-                                 alt="thumbnail"
-                                 data-cloudzoom="
+                                 "
+                      />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="images/2.jpg" title="View">
+                      <img
+                        class="cloudzoom-gallery"
+                        src="assets/images/2.jpg"
+                        alt="thumbnail"
+                        data-cloudzoom="
                                  useZoom:'.cloudzoom',
                                  image:'images/2.jpg'
-                                 ">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="images/3.jpg" title="View">
-                              <img class="cloudzoom-gallery"
-                                 src="assets/images/3.jpg"
-                                 alt="thumbnail"
-                                 data-cloudzoom="
+                                 "
+                      />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="images/3.jpg" title="View">
+                      <img
+                        class="cloudzoom-gallery"
+                        src="assets/images/3.jpg"
+                        alt="thumbnail"
+                        data-cloudzoom="
                                  useZoom:'.cloudzoom',
                                  image:'images/3.jpg'
-                                 ">
-                              </a>
-                           </li>
-                        </ul>
-                        <!--<div class="thumbelina-but vert bottom"><i class="fa fa-angle-down"></i></div>-->
-                     </div>
-                     <div id="product-image">
-                        <a href="images/1.jpg">
-                        <img class="cloudzoom"
-                           src="assets/images/1.jpg"
-                           alt=""
-                           data-cloudzoom="
+                                 "
+                      />
+                    </a>
+                  </li>
+                </ul>
+                <!--<div class="thumbelina-but vert bottom"><i class="fa fa-angle-down"></i></div>-->
+              </div>
+              <div id="product-image">
+                <a href="{{ product_data.primary_image_url }}">
+                  <img
+                    class="cloudzoom"
+                    src="{{ product_data.primary_image_url }}"
+                    alt=""
+                    data-cloudzoom="
                            zoomPosition:'inside',
                            zoomOffsetX:0,
                            zoomFlyOut:false,
@@ -68,77 +80,124 @@
                            disableZoom:'auto',
                            touchStartDelay:100,
                            propagateGalleryEvent:true
-                           ">
-                        </a>
-                     </div>
-                     <div id="zoom-overlay">
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="pro-descriptipn">
-                        <div class="prod-top">
-                           <h3>Tata Indicrome</h3>
-                           <h4 class="pro-in">High Carbon Ferro Chrome - High Phos</h4>
-                           <div class="sort-desc">
-                              <h2>Short Description</h2>
-                              <p>Ranked among the top-seven global chrome alloy producers, 
-                                 we are the leading manufacturers of High Carbon Ferro 
-                                 Chrome in India. We produce various grades of Ferro Chrome
-                              </p>
-                           </div>
-                           <div class="size-off">
-                              <h2>Sizes offered</h2>
-                              <ul>
-                                 <li class="siz-act"><a href="#">10-50</a></li>
-                                 <li><a href="#">10-70</a></li>
-                                 <li><a href="#">10-100</a></li>
-                                 <li><a href="#">10-150</a></li>
-                                 <li><span>mm</span></li>
-                              </ul>
-                           </div>
-                           <div class="qty-sec">
-                              <div class="row">
-                                 <div class="col-lg-6 col-md-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label for="">Quantity (mt)</label>
-                                       <input type="number" class="form-control" id="" placeholder="150">
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-6 col-md-12 col-sm-6">
-                                    <div class="form-group">
-                                       <label for="">Proposed Delivery Date</label>
-                                       <div class="position-relative">
-                                          <input type="text" class="form-control" id="datepicker" placeholder="Date">
-                                          <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="crt-btn">
-                              <a href="cart.html" class="add-to-cart">
-                              add to cart
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-lg-12">
-                     <div class="detail-product-desc">
-                        <h2>Technical Specification of Product</h2>
-                        <div class="clearfix"></div>
-                        <p>Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max</p>
-                        <p><b>Sizes offered :</b> 10-50, 10-70, 10-100, 10-150 mm</p>
-                     </div>
-                  </div>
-               </div>
+                           "
+                  />
+                </a>
+              </div>
+              <div id="zoom-overlay"></div>
             </div>
-         </section>
-      </div>
-      <!-- footer -->
-      <app-footer></app-footer>
-      <div class="foot_arw">
-         <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
-      </div>
-   </body>
+            <div class="col-md-6">
+              <div class="pro-descriptipn">
+                <div class="prod-top">
+                  <h3>{{ product_data.cat_name }}</h3>
+                  <!-- <h4 class="pro-in">High Carbon Ferro Chrome - High Phos</h4> -->
+                  <div class="sort-desc">
+                    <h2>Short Description</h2>
+                    <p>
+                      {{ product_data.cat_dese }}
+                    </p>
+                  </div>
+                  <div class="size-off">
+                    <h2>Sizes offered</h2>
+                    <ul>
+                      <!-- <li class="siz-act"><a href="#">10-50</a></li> -->
+                      <li
+                        *ngFor="
+                          let size of product_data.sizes;
+                          let index = index
+                        "
+                      >
+                        <a
+                          href="javascript:void(0);"
+                          (click)="selecte_size(size, index)"
+                          >{{ size }}</a
+                        >
+                      </li>
+
+                      <li><span>mm</span></li>
+                    </ul>
+                  </div>
+                  <div class="qty-sec">
+                    <div class="row">
+                      <div class="col-lg-6 col-md-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="">Quantity (mt)</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="qty"
+                            [(ngModel)]="qty"
+                            placeholder="1"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="">Proposed Delivery Date</label>
+                          <div class="position-relative">
+                            <input
+                              type="date"
+                              class="form-control"
+                              id="datepicker"
+                              placeholder="Date"
+                              [(ngModel)]="delivery_date"
+                            />
+                            <span class="over_llp"
+                              ><img src="assets/images/cal.png" alt=""
+                            /></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="crt-btn">
+                    <a
+                      href="javascript:void(0)"
+                      (click)="
+                        add_to_cart(
+                          product_data.cat_id,
+                          product_data.product_id
+                        )
+                      "
+                      class="add-to-cart"
+                    >
+                      add to cart
+                    </a>
+                    <p
+                      *ngIf="show_error == true"
+                      style="color: red; text-align: center"
+                    >
+                      {{ error_message }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="detail-product-desc">
+                <h2>Technical Specification of Product</h2>
+                <div class="clearfix"></div>
+                <p>
+                  Cr - {{ product_data.Cr }}, C - {{ product_data.C }}, Phos -
+                  {{ product_data.Phos }}, S - {{ product_data.S }}, Si -
+                  {{ product_data.Si }}
+                </p>
+                <p><b>Sizes offered :</b> {{ product_data.sizes }} mm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="page-content" *ngIf="show_data == false && product_data == ''">
+      <p style="color: red; text-align: center">No data found.</p>
+    </div>
+    <!-- footer -->
+    <app-footer></app-footer>
+    <div class="foot_arw">
+      <a href="javascript:" id="return-to-top"
+        ><img src="assets/images/footarw.png" alt=""
+      /></a>
+    </div>
+  </body>
 </html>

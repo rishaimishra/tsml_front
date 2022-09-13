@@ -6,23 +6,23 @@ import { ProductsService } from 'src/app/service/products.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
   public list: any = [];
   public product_menu_id: Number = 1;
   public product_list: any = [];
   public show_error: boolean = false;
-  
-  constructor(private _router: Router,
+
+  constructor(
+    private _router: Router,
     private productService: ProductsService,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     // this.get_product_by_menu_id(this.product_menu_id);
   }
-
 
   ngAfterViewInit() {
     this.spinner.show();
@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
-    
   }
   get_product_by_menu_id(id: any) {
     this.spinner.show();
@@ -68,6 +67,6 @@ export class HomeComponent implements OnInit {
 
   gotoDetailsPage(productId: any, categoryId: any) {
     console.log(productId, categoryId);
-    this._router.navigate(['/product-details',productId, categoryId]);
+    this._router.navigate(['/product-details', productId, categoryId]);
   }
 }

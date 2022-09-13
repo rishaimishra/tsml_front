@@ -11,36 +11,35 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { SharedModule } from '../shared/shared.module';
 import { LandingModule } from '../landing/landing.module';
 
-
 const routes: Routes = [
   {
-    path: 'overview', 
-    component: OverviewComponent
+    path: 'overview',
+    component: OverviewComponent,
   },
   {
-    path: 'ferro-chrome', 
+    path: 'ferro-chrome',
     component: FerroChromeComponent,
   },
   {
-    path: 'chrome-ore', 
-    component: ChromeOreComponent
+    path: 'chrome-ore',
+    component: ChromeOreComponent,
   },
   {
-    path: 'product-details', 
+    path: 'product-details',
     component: ProductDetailsComponent,
   },
   {
-    path: 'product-details/:productId,/:categoryId', 
+    path: 'product-details/:productId/:categoryId',
     component: ProductDetailsComponent,
   },
   {
-    path: 'edit-FRQ', 
+    path: 'edit-FRQ',
     component: EditFRQComponent,
   },
   {
-    path: 'add-product', 
+    path: 'add-product',
     component: AddProductComponent,
-  }
+  },
 ];
 
 @NgModule({
@@ -50,14 +49,14 @@ const routes: Routes = [
     ChromeOreComponent,
     ProductDetailsComponent,
     EditFRQComponent,
-    AddProductComponent
+    AddProductComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class ProductsModule { }
+export class ProductsModule {}
