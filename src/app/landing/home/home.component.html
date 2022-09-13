@@ -1,25 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!--Owl Carousel -->
-    <!-- <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+<head>
+  <!--Owl Carousel -->
+  <!-- <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
     <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/vendors/jquery.min.js"></script>
     <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script> -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <style type="text/css">
-       /* ============ only desktop view ============ */
-       @media all and (min-width: 992px) {
-       .navbar .nav-item .dropdown-menu{  display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
-       .navbar .nav-item:hover .nav-link{ color: #fff;  }
-       .navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
-       .navbar .dropdown-menu.fade-up{ top:180%;  }
-       .navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
-       }  
-       /* ============ desktop view .end// ============ */
-    </style>
- </head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <style type="text/css">
+    /* ============ only desktop view ============ */
+    @media all and (min-width: 992px) {
+      .navbar .nav-item .dropdown-menu {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s;
+        margin-top: 0;
+      }
+
+      .navbar .nav-item:hover .nav-link {
+        color: #fff;
+      }
+
+      .navbar .dropdown-menu.fade-down {
+        top: 80%;
+        transform: rotateX(-75deg);
+        transform-origin: 0% 0%;
+      }
+
+      .navbar .dropdown-menu.fade-up {
+        top: 180%;
+      }
+
+      .navbar .nav-item:hover .dropdown-menu {
+        transition: .3s;
+        opacity: 1;
+        visibility: visible;
+        top: 100%;
+        transform: rotateX(0deg);
+      }
+    }
+
+    /* ============ desktop view .end// ============ */
+  </style>
+</head>
 <app-header></app-header>
 
 <body>
@@ -72,13 +100,18 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist" *ngIf="list.length > 0">
               <p class="pr-title">Our Products</p>
               <li class="nav-item" *ngFor="let product_menu of list">
-                <a class="nav-link" data-toggle="tab" href="#fc" role="tab" aria-controls="home"
+                <a class="nav-link active" data-toggle="tab" href="#fc" role="tab" aria-controls="home"
                   (click)="get_product_by_menu_id(product_menu.id)">{{ product_menu.pro_name }}</a>
               </li>
               <!-- <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#co" role="tab" aria-controls="profile">Chrome
-                           Ore</a>
-                     </li> -->
+                <a class="nav-link active" data-toggle="tab" href="#fc" role="tab" aria-controls="profile">Ferro
+                  Chrome</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" data-toggle="tab" href="#co" role="tab"
+                  aria-controls="profile">Chrome
+                  Ore</a>
+              </li> -->
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="fc" role="tabpanel">
@@ -138,9 +171,8 @@
                       </div> -->
                     <!--/-->
                     <div class="col-12 text-center mt-3" *ngIf="product_list.length > 3">
-                      <a routerLink="/" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                        View
-                        All</a>
+                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                        View All</a>
                     </div>
                   </div>
                 </div>
@@ -185,9 +217,8 @@
                     </div>
                     <!--/-->
                     <div class="col-12 text-center mt-3">
-                      <a href="search-result.html" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                        View
-                        All</a>
+                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                        View All</a>
                     </div>
                   </div>
                 </div>
@@ -209,74 +240,99 @@
         <div class="row">
           <div class="col-12">
             <div class="large-12 columns">
-              <div class="owl-carousel owl-theme">
-                <div class="item">
-                  <div class="product-list">
-                    <a routerLink="/product-details">
-                      <div class="product-list-img">
-                        <img src="assets/images/high-carbon.jpg" alt="product-img" />
+              <!-- remove dive -->
+              <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a routerLink="/product-details">
+                          <div class="product-list-img">
+                            <img src="assets/images/high-carbon.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Lumps)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
-                      <h4>Tata Indicrome - HC Ferro Ferro Chrome (Lumps)</h4>
-                      <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                    </a>
+                    </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="product-list">
-                    <a routerLink="/product-details">
-                      <div class="product-list-img">
-                        <img src="assets/images/fecr-chips.jpg" alt="product-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a routerLink="/product-details">
+                          <div class="product-list-img">
+                            <img src="assets/images/fecr-chips.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Chips)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
-                      <h4>Tata Indicrome - HC Ferro Ferro Chrome (Chips)</h4>
-                      <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                    </a>
+                    </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="product-list">
-                    <a routerLink="/product-details">
-                      <div class="product-list-img">
-                        <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a routerLink="/product-details">
+                          <div class="product-list-img">
+                            <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
-                      <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
-                      <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                    </a>
+                    </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="product-list">
-                    <a href="product-details.html">
-                      <div class="product-list-img">
-                        <img src="assets/images/high-carbon.jpg" alt="product-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a href="product-details.html">
+                          <div class="product-list-img">
+                            <img src="assets/images/high-carbon.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Lumps)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
-                      <h4>Tata Indicrome - HC Ferro Ferro Chrome (Lumps)</h4>
-                      <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                    </a>
+                    </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="product-list">
-                    <a href="product-details.html">
-                      <div class="product-list-img">
-                        <img src="assets/images/fecr-chips.jpg" alt="product-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a href="product-details.html">
+                          <div class="product-list-img">
+                            <img src="assets/images/fecr-chips.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Chips)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
-                      <h4>Tata Indicrome - HC Ferro Ferro Chrome (Chips)</h4>
-                      <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                    </a>
+                    </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="product-list">
-                    <a href="product-details.html">
-                      <div class="product-list-img">
-                        <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a href="product-details.html">
+                          <div class="product-list-img">
+                            <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
-                      <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
-                      <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                    </a>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </ng-template>
+              </owl-carousel-o>
             </div>
           </div>
         </div>
@@ -316,99 +372,114 @@
         <div class="row">
           <div class="col-12">
             <div class="large-12 columns">
-              <div class="owl-carousel owl-theme">
-                <div class="item nws">
-                  <div class="news-wrap">
-                    <div class="news-wrap-img">
-                      <img src="assets/images/news/1.jpg" alt="news-img" />
+              <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item nws">
+                      <div class="news-wrap">
+                        <div class="news-wrap-img">
+                          <img src="assets/images/news/1.jpg" alt="news-img" />
+                        </div>
+                        <h4>
+                          Tata Steel Mining recruits 11 village women for Heavy
+                          Earth Moving Machinery Operation.
+                        </h4>
+                        <p>
+                          Sukinda, Odisha: As part of its drive to promote
+                          inclusivity in its workforce, TSML has recruited 11
+                          Heavy Earth Moving Machinery (HEMM) Operators for its
+                          service partners.
+                        </p>
+                        <a href="#">Read More</a>
+                      </div>
                     </div>
-                    <h4>
-                      Tata Steel Mining recruits 11 village women for Heavy
-                      Earth Moving Machinery Operation.
-                    </h4>
-                    <p>
-                      Sukinda, Odisha: As part of its drive to promote
-                      inclusivity in its workforce, TSML has recruited 11
-                      Heavy Earth Moving Machinery (HEMM) Operators for its
-                      service partners.
-                    </p>
-                    <a href="#">Read More</a>
                   </div>
-                </div>
-                <!--/-->
-                <div class="item nws">
-                  <div class="news-wrap">
-                    <div class="news-wrap-img">
-                      <img src="assets/images/news/2.jpg" alt="news-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item nws">
+                      <div class="news-wrap">
+                        <div class="news-wrap-img">
+                          <img src="assets/images/news/2.jpg" alt="news-img" />
+                        </div>
+                        <h4>
+                          Tata Steel Mining bags prestigious Golden Peacock Award
+                          for Sustainability 2021
+                        </h4>
+                        <p>
+                          Tata Steel Mining Limited (TSML) has been honoured with
+                          the prestigious Golden Peacock Award.
+                        </p>
+                        <a href="#">Read More</a>
+                      </div>
                     </div>
-                    <h4>
-                      Tata Steel Mining bags prestigious Golden Peacock Award
-                      for Sustainability 2021
-                    </h4>
-                    <p>
-                      Tata Steel Mining Limited (TSML) has been honoured with
-                      the prestigious Golden Peacock Award.
-                    </p>
-                    <a href="#">Read More</a>
                   </div>
-                </div>
-                <!--/-->
-                <div class="item nws">
-                  <div class="news-wrap">
-                    <div class="news-wrap-img">
-                      <img src="assets/images/news/3.jpg" alt="news-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item nws">
+                      <div class="news-wrap">
+                        <div class="news-wrap-img">
+                          <img src="assets/images/news/3.jpg" alt="news-img" />
+                        </div>
+                        <h4>
+                          Grand festival to promote tribal flavours organised in
+                          Tata Steel Mining’s mine in Sukinda
+                        </h4>
+                        <p>
+                          Tata Steel Foundation hosts Prajatiya Khadyotsav at
+                          Sukinda Chromite Mine of Tata Steel Mining to explore
+                          indigenous flavours
+                        </p>
+                        <a href="#">Read More</a>
+                      </div>
                     </div>
-                    <h4>
-                      Grand festival to promote tribal flavours organised in
-                      Tata Steel Mining’s mine in Sukinda
-                    </h4>
-                    <p>
-                      Tata Steel Foundation hosts Prajatiya Khadyotsav at
-                      Sukinda Chromite Mine of Tata Steel Mining to explore
-                      indigenous flavours
-                    </p>
-                    <a href="#">Read More</a>
                   </div>
-                </div>
-                <!--/-->
-                <div class="item nws">
-                  <div class="news-wrap">
-                    <div class="news-wrap-img">
-                      <img src="assets/images/news/1.jpg" alt="news-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item nws">
+                      <div class="news-wrap">
+                        <div class="news-wrap-img">
+                          <img src="assets/images/news/1.jpg" alt="news-img" />
+                        </div>
+                        <h4>
+                          Tata Steel Mining recruits 11 village women for Heavy
+                          Earth Moving Machinery Operation.
+                        </h4>
+                        <p>
+                          Sukinda, Odisha: As part of its drive to promote
+                          inclusivity in its workforce, TSML has recruited 11
+                          Heavy Earth Moving Machinery (HEMM) Operators for its
+                          service partners.
+                        </p>
+                        <a href="#">Read More</a>
+                      </div>
                     </div>
-                    <h4>
-                      Tata Steel Mining recruits 11 village women for Heavy
-                      Earth Moving Machinery Operation.
-                    </h4>
-                    <p>
-                      Sukinda, Odisha: As part of its drive to promote
-                      inclusivity in its workforce, TSML has recruited 11
-                      Heavy Earth Moving Machinery (HEMM) Operators for its
-                      service partners.
-                    </p>
-                    <a href="#">Read More</a>
                   </div>
-                </div>
-                <!--/-->
-                <div class="item nws">
-                  <div class="news-wrap">
-                    <div class="news-wrap-img">
-                      <img src="assets/images/news/3.jpg" alt="news-img" />
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="slide">
+                    <div class="item nws">
+                      <div class="news-wrap">
+                        <div class="news-wrap-img">
+                          <img src="assets/images/news/3.jpg" alt="news-img" />
+                        </div>
+                        <h4>
+                          Grand festival to promote tribal flavours organised in
+                          Tata Steel Mining’s mine in Sukinda
+                        </h4>
+                        <p>
+                          Tata Steel Foundation hosts Prajatiya Khadyotsav at
+                          Sukinda Chromite Mine of Tata Steel Mining to explore
+                          indigenous flavours
+                        </p>
+                        <a href="#">Read More</a>
+                      </div>
                     </div>
-                    <h4>
-                      Grand festival to promote tribal flavours organised in
-                      Tata Steel Mining’s mine in Sukinda
-                    </h4>
-                    <p>
-                      Tata Steel Foundation hosts Prajatiya Khadyotsav at
-                      Sukinda Chromite Mine of Tata Steel Mining to explore
-                      indigenous flavours
-                    </p>
-                    <a href="#">Read More</a>
                   </div>
-                </div>
-                <!--/-->
-              </div>
+                </ng-template>
+              </owl-carousel-o>
             </div>
           </div>
         </div>

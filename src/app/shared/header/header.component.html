@@ -57,7 +57,7 @@
             <div class="header_top_inr">
                <ul>
                   <li>
-                     <a href="#" class="shopcut"> <span class="cart-txt">My Cart</span>
+                     <a class="shopcut pointer"> <span class="cart-txt">My Cart</span>
                         <img src="assets/images/cuticon.png" alt=""> <span class="noti">0</span>
                      </a>
                      <div class="shopcutBx">
@@ -93,7 +93,7 @@
                         </div>
                         <div class="cutview_btn">
                            <ul>
-                              <li><a href="#url" class="sign_btn">View Cart</a></li>
+                              <li><a routerLink="/my-cart" class="sign_btn">View Cart</a></li>
                            </ul>
                         </div>
                      </div>
@@ -198,8 +198,8 @@
          <p>Are you sure want to logout !</p>
        </div>
        <div class="modal-footer">
-         <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
-         <button type="button" class="btn btn-danger btn-sm pointer" (click)="logOut()" data-bs-dismiss="modal">Logout</button>
+         <button type="button" class="btn btn-success btn-sm" data-bs-dismiss="modal">Cancel</button>
+         <button type="button" class="btn btn-warning btn-sm pointer" (click)="logOut()" data-bs-dismiss="modal">Logout</button>
        </div>
      </div>
    </div>

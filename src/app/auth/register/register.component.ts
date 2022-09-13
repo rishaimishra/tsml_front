@@ -182,20 +182,15 @@ export class RegisterComponent implements OnInit {
 
   submitRegister() {
     const fileData = new FormData();
-    console.log('this.selectedFile=', this.selectedFile);
     this._spinner.show();
     this.submitted = true;
-    if (this.registerForm.invalid) {
-      this.toastr.error('Please check required fields ','Oops');
+    let valueOfRegisterfor = this.registerForm.value.first_name;
+    if(valueOfRegisterfor == '' || valueOfRegisterfor == null) {
+      this.toastr.error('Please check required field');
       this._spinner.hide();
-    } else {
-      // this.registerForm.value.pref_product_size = this.chooseProductSize;
-      // this.registerForm.value.pref_product = this.chooseProduct;
-      // this.registerForm.value.user_type = this.userType;
-      // this.registerForm.value.business_nature = this.businessType;
-      // this.registerForm.value.address_proof_file = this.selectedFile;
-      // this.registerForm.value.cancel_cheque_file = this.cancelCheckBook;
-      //console.log(this.registerForm.value);
+      return;
+    };
+
       fileData.append('first_name', this.registerForm.value.first_name);
       fileData.append('last_name', this.registerForm.value.last_name);
       fileData.append('phone', this.mobileNumber);
@@ -216,7 +211,7 @@ export class RegisterComponent implements OnInit {
       fileData.append('business_nature', this.businessType);
       fileData.append('cancel_cheque_file', this.cancelCheckBook);
 
-      
+
       this._auth.register(fileData).subscribe((res) => {
           if (res) {
             console.log('res', res);
@@ -233,7 +228,7 @@ export class RegisterComponent implements OnInit {
           this.toastr.error('', error);
         }
       );
-    }
+    
   };
 
 }

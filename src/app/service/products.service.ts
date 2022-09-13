@@ -8,9 +8,13 @@ import { Observable } from 'rxjs';
 })
 export class ProductsService {
   BesUrl = environment.apiEndpointBase;
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
   getMethod(url_paremter: any) {
-    return this.http.get(this.BesUrl + url_paremter);
+    return this._http.get(this.BesUrl + url_paremter);
+  };
+
+  viewAllProduct(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/filter-product-menu', reqParameter);
   }
 }

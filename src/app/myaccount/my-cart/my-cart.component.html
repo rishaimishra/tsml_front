@@ -1,173 +1,312 @@
 <!DOCTYPE HTML>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="keywords" content="" />
-      <meta name="description" content="" />
-      <title>Global Steel Suppliers & Manufacturers | Mining - Tata Group</title>
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-      <style type="text/css">
-         /* ============ only desktop view ============ */
-         @media all and (min-width: 992px) {
-         .navbar .nav-item .dropdown-menu{  display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
-         .navbar .nav-item:hover .nav-link{ color: #fff;  }
-         .navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
-         .navbar .dropdown-menu.fade-up{ top:180%;  }
-         .navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
-         }  
-         /* ============ desktop view .end// ============ */
-      </style>
-   </head>
-   <body>
-      <app-header></app-header>
-      <div class="page-content">
-         <section class="sub-header-2">
-            <div class="container">
-               <h1>Shopping Cart</h1>
-               <div class="clearfix"></div>
-            </div>
-         </section>
-         <section class="add-prod-pg">
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-12">
-                     <div class="cart-table">
-                        <div class="table-responsive">
-                           <table class="table">
-                             <thead>
-                               <tr>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="keywords" content="" />
+   <meta name="description" content="" />
+
+   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet">
+
+</head>
+
+<body>
+   <app-header></app-header>
+   <div class="page-content">
+      <section class="sub-header-2">
+         <div class="ml-2">
+            <h1>Shopping Cart</h1>
+            <div class="clearfix"></div>
+         </div>
+      </section>
+      <section class="add-prod-pg">
+         <div class="">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="cart-table">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
                                  <th>Product Details</th>
                                  <th>Quantity</th>
-                                 <th>Proposed Delivery Date</th>
+                                 <th class="text-center">Proposed Delivery Schedule </th>
+                                 <th>Pickup Form</th>
+                                 <th>Location</th>
                                  <th></th>
-                               </tr>
-                             </thead>
-                             <tbody>
-                               <tr>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
                                  <td>
                                     <div class="product">
-                                    <figure class="product-media">
-                                       <a href="#">
-                                       <img src="assets/images/cart1.png" alt="Product image">
-                                       </a>
-                                    </figure>
-                                    <div class="cart-details">
-                                       <h3 class="product-title">
-                                          <a href="#">High Carbon Ferro Chrome - High Phos</a>
-                                       </h3>
-                                       <p>Sizes : 10-150 mm</p>
-                                    </div>
-                                 </div>
-                                 </td>
-                                 <td>
-                                    <div class="product-quantity new-quantity">
-                                    <div class="product-quantity">
-                                       <div class="quantity-selectors">
-                                          <button type="button" class="increment-quantity decrement-quantity1" aria-label="Subtract one" data-direction="-1" disabled="disabled"><span>&#8722;</span></button>
-                                          <input data-min="1" data-max="0" type="text" name="quantity1" value="1" readonly="true">
-                                          <button type="button" class="increment-quantity increment-quantity1" aria-label="Add one" data-direction="1"><span>&#43;</span></button>
-                                          <div class="clearfix"></div>
+                                       <figure class="product-media">
+                                          <a href="#">
+                                             <img src="assets/images/cart1.png" alt="Product image">
+                                          </a>
+                                       </figure>
+                                       <div class="cart-details">
+                                          <h3 class="product-title">
+                                             <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                          </h3>
+                                          <p>Sizes : 10-150 mm</p>
                                        </div>
                                     </div>
-                                 </div>
                                  </td>
-                                 <td>18-08-2022</td>
+                                 <td>
+                                    <div class="product--quantity">
+                                       <input type="" name="" class="form-control form-control-sm" value="1000">
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <a href="#" class="view-schedule" data-toggle="modal" data-target="#addModal"><i
+                                          class="fa fa-calendar"></i> Add</a>
+                                    <!-- The Modal -->
+                                    <div class="modal" id="addModal">
+                                       <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                             <!-- Modal Header -->
+                                             <div class="modal-header">
+                                                <h4 class="modal-title text-uppercase">Add Delivery
+                                                   Schedule</h4>
+                                                <a href="javascript:;" class="btn btn-primary" data-toggle="collapse"
+                                                   data-target="#deliverySchedule"><i class="fa fa-plus-circle"></i> Add
+                                                   Schedule</a>
+                                             </div>
+                                             <!-- Modal body -->
+                                             <div class="modal-body">
+                                                <div class="row" id="">
+                                                   <div class="col-lg-4 col-md-6 col-sm-6">
+                                                      <div class="form-group">
+                                                         <label for="">Quantity</label>
+                                                         <input type="" class="form-control" name="">
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-lg-6 col-md-6 col-sm-6">
+                                                      <div class="form-group">
+                                                         <label for="">Proposed Delivery Date</label>
+                                                         <div class="fflex">
+                                                            <div class="position-relative ww-50">
+                                                               <input type="text" class="form-control datepicker"
+                                                                  placeholder="From">
+                                                               <span class="over_llp"><img src="assets/images/cal.png"
+                                                                     alt=""></span>
+                                                            </div>
+                                                            <div class="position-relative ww-50">
+                                                               <input type="text" class="form-control datepicker"
+                                                                  placeholder="To">
+                                                               <span class="over_llp"><img src="assets/images/cal.png"
+                                                                     alt=""></span>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div id="deliverySchedule" class="collapse">
+                                                   <div class="schedule-block" id="container">
+                                                      <div class="row mydiv" id="thediv">
+                                                         <div class="col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                               <label for="">Quantity</label>
+                                                               <input type="" class="form-control" name="">
+                                                            </div>
+                                                         </div>
+                                                         <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                               <label for="">Proposed Delivery
+                                                                  Date</label>
+                                                               <div class="fflex">
+                                                                  <div class="position-relative ww-50">
+                                                                     <input type="text" class="form-control datepicker"
+                                                                        placeholder="From">
+                                                                     <span class="over_llp"><img
+                                                                           src="assets/images/cal.png" alt=""></span>
+                                                                  </div>
+                                                                  <div class="position-relative ww-50">
+                                                                     <input type="text" class="form-control datepicker"
+                                                                        placeholder="To">
+                                                                     <span class="over_llp"><img
+                                                                           src="assets/images/cal.png" alt=""></span>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+                                                         <!-- <button type="button"
+                                                                                class="blue-plus-icon btn-copy"
+                                                                                onclick="Clone()" )><i
+                                                                                    class="fa fa-plus-circle"></i></button>
+                                                                            <button type="button" class="red-plus-icon"
+                                                                                onclick='Delete(this)' )><i
+                                                                                    class="fa fa-minus-circle"></i></button> -->
+                                                      </div>
+                                                      <div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="add-btn-sec pt-2 pb-2">
+                                                   <a href="#" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+                                                      Submit</a>
+                                                   <button type="button" class="btn btn-danger"><i
+                                                         class="fa fa-times"></i> Cancel</button>
+                                                </div>
+                                             </div>
+                                             <!--/-->
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">PLANT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">DEPOT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">PORT</label>
+                                    </div>
+
+                                 </td>
+                                 <td>
+                                    <select class="form-control form-control-sm location-drop">
+                                       <option>Mumbai Central</option>
+                                    </select>
+                                 </td>
                                  <td>
                                     <div class="btn-edt-del">
-                                    <a href="#" class="del-btn btn-danger"><i class="fa fa-trash"></i></a>
-                                 </div>
+                                       <a href="#" class="del-btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                          title="Delete"><i class="fa fa-trash"></i></a>
+                                    </div>
                                  </td>
-                               </tr>
-                               <tr>
+                              </tr>
+                              <tr>
                                  <td>
                                     <div class="product">
-                                    <figure class="product-media">
-                                       <a href="#">
-                                       <img src="assets/images/cart1.png" alt="Product image">
-                                       </a>
-                                    </figure>
-                                    <div class="cart-details">
-                                       <h3 class="product-title">
-                                          <a href="#">High Carbon Ferro Chrome - High Phos</a>
-                                       </h3>
-                                       <p>Sizes : 10-150 mm</p>
-                                    </div>
-                                 </div>
-                                 </td>
-                                 <td>
-                                    <div class="product-quantity new-quantity">
-                                    <div class="product-quantity">
-                                       <div class="quantity-selectors">
-                                          <button type="button" class="increment-quantity decrement-quantity2" aria-label="Subtract one" data-direction="-1" disabled="disabled"><span>&#8722;</span></button>
-                                          <input data-min="1" data-max="0" type="text" name="quantity2" value="1" readonly="true">
-                                          <button type="button" class="increment-quantity increment-quantity2" aria-label="Add one" data-direction="1"><span>&#43;</span></button>
-                                          <div class="clearfix"></div>
+                                       <figure class="product-media">
+                                          <a href="#">
+                                             <img src="assets/images/cart1.png" alt="Product image">
+                                          </a>
+                                       </figure>
+                                       <div class="cart-details">
+                                          <h3 class="product-title">
+                                             <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                          </h3>
+                                          <p>Sizes : 10-150 mm</p>
                                        </div>
                                     </div>
-                                 </div>
                                  </td>
-                                 <td>18-08-2022</td>
+                                 <td>
+                                    <div class="product--quantity">
+                                       <input type="" name="" class="form-control form-control-sm" value="1000">
+                                    </div>
+                                 </td>
+                                 <td><a href="#" class="view-schedule" data-toggle="modal" data-target="#addModal"><i
+                                          class="fa fa-calendar"></i> Add</a></td>
+
+                                 <td>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">PLANT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">DEPOT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">PORT</label>
+                                    </div>
+
+                                 </td>
+                                 <td>
+                                    <select class="form-control form-control-sm location-drop">
+                                       <option>Mumbai Central</option>
+                                    </select>
+                                 </td>
                                  <td>
                                     <div class="btn-edt-del">
-                                    <a href="#" class="del-btn btn-danger"><i class="fa fa-trash"></i></a>
-                                 </div>
+                                       <a href="#" class="del-btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                          title="Delete"><i class="fa fa-trash"></i></a>
+                                    </div>
                                  </td>
-                               </tr>
-                               <tr>
+                              </tr>
+                              <tr>
                                  <td>
                                     <div class="product">
-                                    <figure class="product-media">
-                                       <a href="#">
-                                       <img src="assets/images/cart1.png" alt="Product image">
-                                       </a>
-                                    </figure>
-                                    <div class="cart-details">
-                                       <h3 class="product-title">
-                                          <a href="#">High Carbon Ferro Chrome - High Phos</a>
-                                       </h3>
-                                       <p>Sizes : 10-150 mm</p>
-                                    </div>
-                                 </div>
-                                 </td>
-                                 <td>
-                                    <div class="product-quantity new-quantity">
-                                    <div class="product-quantity">
-                                       <div class="quantity-selectors">
-                                          <button type="button" class="increment-quantity decrement-quantity3" aria-label="Subtract one" data-direction="-1" disabled="disabled"><span>&#8722;</span></button>
-                                          <input data-min="1" data-max="0" type="text" name="quantity3" value="1" readonly="true">
-                                          <button type="button" class="increment-quantity increment-quantity3" aria-label="Add one" data-direction="1"><span>&#43;</span></button>
-                                          <div class="clearfix"></div>
+                                       <figure class="product-media">
+                                          <a href="#">
+                                             <img src="assets/images/cart1.png" alt="Product image">
+                                          </a>
+                                       </figure>
+                                       <div class="cart-details">
+                                          <h3 class="product-title">
+                                             <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                          </h3>
+                                          <p>Sizes : 10-150 mm</p>
                                        </div>
                                     </div>
-                                 </div>
                                  </td>
-                                 <td>18-08-2022</td>
+                                 <td>
+                                    <div class="product--quantity">
+                                       <input type="" name="" class="form-control form-control-sm" value="1000">
+                                    </div>
+                                 </td>
+                                 <td><a href="#" class="view-schedule" data-toggle="modal" data-target="#addModal"><i
+                                          class="fa fa-calendar"></i> Add</a></td>
+
+                                 <td>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">PLANT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">DEPOT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" id="" value="">
+                                       <label class="form-check-label" for="">PORT</label>
+                                    </div>
+
+                                 </td>
+                                 <td>
+                                    <select class="form-control form-control-sm location-drop">
+                                       <option>Mumbai Central</option>
+                                    </select>
+                                 </td>
                                  <td>
                                     <div class="btn-edt-del">
-                                    <a href="#" class="del-btn btn-danger"><i class="fa fa-trash"></i></a>
-                                 </div>
+                                       <a href="#" class="del-btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                          title="Delete"><i class="fa fa-trash"></i></a>
+                                    </div>
                                  </td>
-                               </tr>
-                             </tbody>
-                           </table>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-lg-12 add-btn-sec">
-                     <div class="text-right">
-                        <a href="RFQ-list.html" class="btn btn-primary">Request for quotation</a>
+                              </tr>
+                           </tbody>
+                        </table>
                      </div>
                   </div>
                </div>
+               <div class="col-lg-12 add-btn-sec">
+                  <div class="text-right mr-2">
+                     <a href="RFQ-list.html" class="btn btn-primary">Request for quotation</a>
+                  </div>
+               </div>
             </div>
-         </section>
-      </div>
-      <app-footer></app-footer>
-      <div class="foot_arw">
-         <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
-      </div>
-   </body>
+         </div>
+      </section>
+   </div>
+   <app-footer></app-footer>
+   <div class="foot_arw">
+      <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
+   </div>
+</body>
+
 </html>

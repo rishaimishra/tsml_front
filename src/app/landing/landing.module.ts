@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProductsModule } from '../products/products.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FormsModule,
     SharedModule,
-    ProductsModule
+    ProductsModule,
+    CarouselModule
 
   ]
 })

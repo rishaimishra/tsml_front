@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 
@@ -20,14 +20,13 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
     this._route.params.subscribe((res) => {
       console.log(res);
-      console.log(res.productId);
-      console.log(res.categoryId);
 
       this.get_product_details(res.productId, res.categoryId);
     });
@@ -38,7 +37,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        //console.log(res);
+        console.log(res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.show_data = true;
@@ -73,5 +72,6 @@ export class ProductDetailsComponent implements OnInit {
       console.log('this.selected_size=', this.selected_size);
       console.log('this.delivery_date=', this.delivery_date);
     }
+    this._router.navigate(['/my-cart']);
   }
 }

@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit {
         this._toster.error('Something went wrong !');
           this._spinner.hide();
       })
-      console.log(this.loginForm.value);
+    } else {
+      this._toster.error('Invalid email or password !');
+      return;
     }
   }
 }

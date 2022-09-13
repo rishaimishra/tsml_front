@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 
@@ -21,7 +22,32 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.get_product_by_menu_id(this.product_menu_id);
+
+  }
+  
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
   }
 
   ngAfterViewInit() {
@@ -66,7 +92,6 @@ export class HomeComponent implements OnInit {
   }
 
   gotoDetailsPage(productId: any, categoryId: any) {
-    console.log(productId, categoryId);
     this._router.navigate(['/product-details', productId, categoryId]);
   }
 }

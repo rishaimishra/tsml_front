@@ -10,6 +10,7 @@ import { EditFRQComponent } from './edit-frq/edit-frq.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { SharedModule } from '../shared/shared.module';
 import { LandingModule } from '../landing/landing.module';
+import { ViewAllProductComponent } from './view-all-product/view-all-product.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
     path: 'add-product',
     component: AddProductComponent,
   },
+  {
+    path: 'all-product',
+    component: ViewAllProductComponent,
+  },
 ];
 
 @NgModule({
@@ -50,6 +55,7 @@ const routes: Routes = [
     ProductDetailsComponent,
     EditFRQComponent,
     AddProductComponent,
+    ViewAllProductComponent,
   ],
   imports: [
     CommonModule,

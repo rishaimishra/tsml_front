@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
     this.isUserLogIn = this._auth.isLoggedIn();
-    console.log(this.isUserLogIn);
   }
 
   // goToregister() {
