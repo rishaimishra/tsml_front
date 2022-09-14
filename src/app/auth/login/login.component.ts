@@ -35,12 +35,12 @@ export class LoginComponent implements OnInit {
           this._spinner.hide();
           this._router.navigate(['/']);
         } else {
-          this._toster.error('Something went wrong !');
+          this._toster.error(res.success.message);
           this._spinner.hide();
         }
       }, error => {
         console.log(error);
-        this._toster.error('Something went wrong !');
+        this._toster.error('Invalid Email or Password');
           this._spinner.hide();
       })
     } else {

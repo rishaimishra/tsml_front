@@ -15,13 +15,20 @@ export class HomeComponent implements OnInit {
   public product_list: any = [];
   public show_error: boolean = false;
   public popular_product_list: any = [];
+  allNews: any;
+
+  
   constructor(
     private _router: Router,
     private productService: ProductsService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _product: ProductsService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.getNews();
+  }
 
   customOptions: OwlOptions = {
     loop: true,
@@ -29,7 +36,7 @@ export class HomeComponent implements OnInit {
     touchDrag: false,
     pullDrag: false,
     dots: false,
-    navSpeed: 700,
+    navSpeed: 1000,
     navText: ['', ''],
     responsive: {
       0: {
@@ -56,7 +63,6 @@ export class HomeComponent implements OnInit {
         this.spinner.hide();
         if (res.status == 1) {
           this.list = res.result;
-          console.log('this.list=', this.list);
           this.get_product_by_menu_id(this.product_menu_id);
         }
       },
@@ -72,7 +78,6 @@ export class HomeComponent implements OnInit {
     let url = '/index-page/' + id;
     this.productService.getMethod(url).subscribe(
       (res: any) => {
-        console.log(res);
         this.spinner.hide();
         if (res.status == 1) {
           this.product_list = res.result;
@@ -99,12 +104,22 @@ export class HomeComponent implements OnInit {
       (res: any) => {
         if (res.status == 1) {
           this.popular_product_list = res.result;
-          console.log('this.popular_product_list=', this.popular_product_list);
         }
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+
+  getNews() {
+    this._product.getAllNews().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.allNews = res.result;
+      }
+    }, (err) => {
+      console.log(err)
+    }
+    )
   }
 }

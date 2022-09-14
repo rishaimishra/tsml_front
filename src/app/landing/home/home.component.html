@@ -1,121 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!--Owl Carousel -->
-    <!-- <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
-    <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/vendors/jquery.min.js"></script>
-    <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script> -->
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <style type="text/css">
-      /* ============ only desktop view ============ */
-      @media all and (min-width: 992px) {
-        .navbar .nav-item .dropdown-menu {
-          display: block;
-          opacity: 0;
-          visibility: hidden;
-          transition: 0.3s;
-          margin-top: 0;
-        }
-
-        .navbar .nav-item:hover .nav-link {
-          color: #fff;
-        }
-
-        .navbar .dropdown-menu.fade-down {
-          top: 80%;
-          transform: rotateX(-75deg);
-          transform-origin: 0% 0%;
-        }
-
-        .navbar .dropdown-menu.fade-up {
-          top: 180%;
-        }
-
-        .navbar .nav-item:hover .dropdown-menu {
-          transition: 0.3s;
-          opacity: 1;
-          visibility: visible;
-          top: 100%;
-          transform: rotateX(0deg);
-        }
+<head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <style type="text/css">
+    /* ============ only desktop view ============ */
+    @media all and (min-width: 992px) {
+      .navbar .nav-item .dropdown-menu {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        margin-top: 0;
       }
 
-      /* ============ desktop view .end// ============ */
-    </style>
-  </head>
-  <app-header></app-header>
+      .navbar .nav-item:hover .nav-link {
+        color: #fff;
+      }
 
-  <body>
-    <div class="page-content bg-grey">
-      <section>
-        <div id="demo" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-            <li data-target="#demo" data-slide-to="1"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
-          </ul>
-          <!-- The slideshow -->
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="assets/images/slide1.jpg" alt="image" />
-              <div class="carousel-caption">
-                <p>
-                  We mine minerals in some of India's most challenging places.
-                </p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="assets/images/slide2.jpg" alt="image" />
-              <div class="carousel-caption">
-                <p>Helping maintain biodiversity in areas of operation.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="assets/images/slide3.jpg" alt="image" />
-              <div class="carousel-caption">
-                <p>Proud to be mining sustainability champions.Everyday.</p>
-              </div>
+      .navbar .dropdown-menu.fade-down {
+        top: 80%;
+        transform: rotateX(-75deg);
+        transform-origin: 0% 0%;
+      }
+
+      .navbar .dropdown-menu.fade-up {
+        top: 180%;
+      }
+
+      .navbar .nav-item:hover .dropdown-menu {
+        transition: 0.3s;
+        opacity: 1;
+        visibility: visible;
+        top: 100%;
+        transform: rotateX(0deg);
+      }
+    }
+
+    /* ============ desktop view .end// ============ */
+  </style>
+</head>
+<app-header></app-header>
+
+<body>
+  <div class="page-content bg-grey">
+    <section>
+      <div id="demo" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+          <li data-target="#demo" data-slide-to="0" class="active"></li>
+          <li data-target="#demo" data-slide-to="1"></li>
+          <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="assets/images/slide1.jpg" alt="image" />
+            <div class="carousel-caption">
+              <p>
+                We mine minerals in some of India's most challenging places.
+              </p>
             </div>
           </div>
-          <!-- Left and right controls -->
-          <a class="carousel-control-prev" href="#demo" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </a>
-          <a class="carousel-control-next" href="#demo" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </a>
+          <div class="carousel-item">
+            <img src="assets/images/slide2.jpg" alt="image" />
+            <div class="carousel-caption">
+              <p>Helping maintain biodiversity in areas of operation.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="assets/images/slide3.jpg" alt="image" />
+            <div class="carousel-caption">
+              <p>Proud to be mining sustainability champions.Everyday.</p>
+            </div>
+          </div>
         </div>
-      </section>
-      <!--/Product List-->
-      <section class="search_result_pg pptt-5">
-        <div class="container py-3">
-          <div class="row">
-            <div class="col-12">
-              <ul
-                class="nav nav-tabs"
-                id="myTab"
-                role="tablist"
-                *ngIf="list.length > 0"
-              >
-                <p class="pr-title">Our Products</p>
-                <li class="nav-item" *ngFor="let product_menu of list">
-                  <a
-                    class="nav-link active"
-                    data-toggle="tab"
-                    href="#fc"
-                    role="tab"
-                    aria-controls="home"
-                    (click)="get_product_by_menu_id(product_menu.id)"
-                    >{{ product_menu.pro_name }}</a
-                  >
-                </li>
-                <!-- <li class="nav-item">
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </section>
+    <!--/Product List-->
+    <section class="search_result_pg pptt-5">
+      <div class="container py-3">
+        <div class="row">
+          <div class="col-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist" *ngIf="list.length > 0">
+              <p class="pr-title">Our Products</p>
+              <li class="nav-item" *ngFor="let product_menu of list">
+                <a class="nav-link" data-toggle="tab" href="#fc" role="tab" aria-controls="home"
+                  (click)="get_product_by_menu_id(product_menu.id)">{{ product_menu.pro_name }}</a>
+              </li>
+              <!-- <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#fc" role="tab" aria-controls="profile">Ferro
                   Chrome</a>
               </li>
@@ -124,459 +105,201 @@
                   aria-controls="profile">Chrome
                   Ore</a>
               </li> -->
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="fc" role="tabpanel">
-                  <div class="product-list-inr">
-                    <div class="row product-list-inr-bg">
-                      <div
-                        class="col-lg-4 col-md-6 col-sm-6"
-                        *ngFor="let pdata of product_list"
-                      >
-                        <div class="product-list">
-                          <a
-                            (click)="
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="fc" role="tabpanel">
+                <div class="product-list-inr">
+                  <div class="row product-list-inr-bg">
+                    <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let pdata of product_list">
+                      <div class="product-list">
+                        <a (click)="
                               gotoDetailsPage(
                                 pdata.product_id,
                                 pdata.category_id
                               )
-                            "
-                          >
-                            <div class="product-list-img">
-                              <img
-                                src="{{ pdata.primary_image_url }}"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>
-                              {{ pdata.category_name }}
-                            </h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div
-                        class="col-lg-4 col-md-6 col-sm-6"
-                        *ngIf="product_list.length == 0 && show_error == true"
-                      >
-                        <p style="color: red">No product found.</p>
-                      </div>
-                      <!-- <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product-list">
-                          <a href="product-details.html">
-                            <div class="product-list-img">
-                              <img
-                                src="assets/images/fecr-chips.jpg"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>
-                              Tata Indicrome - HC Ferro Ferro Chrome (Chips)
-                            </h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div> -->
-                      <!--/-->
-                      <!-- <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product-list">
-                          <a href="product-details.html">
-                            <div class="product-list-img">
-                              <img
-                                src="assets/images/fecr-fines-1.jpg"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div> -->
-                      <!--/-->
-                      <div
-                        class="col-12 text-center mt-3"
-                        *ngIf="product_list.length > 3"
-                      >
-                        <a routerLink="/all-product" class="btn btn-primary"
-                          ><i class="fa fa-eye" aria-hidden="true"></i> View
-                          All</a
-                        >
+                            ">
+                          <div class="product-list-img">
+                            <img src="{{ pdata.primary_image_url }}" alt="product-img" />
+                          </div>
+                          <h4>
+                            {{ pdata.category_name }}
+                          </h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="tab-pane" id="co" role="tabpanel">
-                  <div class="product-list-inr">
-                    <div class="row product-list-inr-bg">
-                      <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product-list">
-                          <a routerLink="/product-details">
-                            <div class="product-list-img">
-                              <img
-                                src="assets/images/high-carbon.jpg"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>Tata Indicrome - Chrome Ore (Lumps)</h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product-list">
-                          <a routerLink="/product-details">
-                            <div class="product-list-img">
-                              <img
-                                src="assets/images/fecr-chips.jpg"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>Tata Indicrome - Chrome Ore (Chips)</h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product-list">
-                          <a routerLink="/product-details">
-                            <div class="product-list-img">
-                              <img
-                                src="assets/images/fecr-fines-1.jpg"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>Tata Indicrome - Chrome Ore (Fines)</h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-12 text-center mt-3">
-                        <a routerLink="/all-product" class="btn btn-primary"
-                          ><i class="fa fa-eye" aria-hidden="true"></i> View
-                          All</a
-                        >
-                      </div>
+                    <!--/-->
+                    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="product_list.length == 0 && show_error == true">
+                      <p style="color: red">No product found.</p>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 text-center mt-3" *ngIf="product_list.length > 3">
+                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                        View
+                        All</a>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--/Product List-->
-      <!--Featured Products-->
-      <section class="white-bg py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 text-center">
-              <p class="pr-title">Popular Products</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="large-12 columns">
-                <!-- remove dive -->
-                <owl-carousel-o [options]="customOptions">
-                  <ng-template
-                    carouselSlide
-                    *ngFor="let pl of popular_product_list"
-                  >
-                    <div class="slide">
-                      <div class="item">
-                        <div class="product-list">
-                          <a
-                            routerLink="/product-details/{{ pl.product_id }}/{{
-                              pl.category_id
-                            }}"
-                          >
-                            <div class="product-list-img">
-                              <img
-                                src="{{ pl.primary_image_url }}"
-                                alt="product-img"
-                              />
-                            </div>
-                            <h4>
-                              {{ pl.product_title }} - {{ pl.ategory_name }}
-                            </h4>
-                            <span class="pop_line"
-                              ><img src="assets/images/pop_line.png" alt="line"
-                            /></span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                  <!-- <ng-template carouselSlide>
-                  <div class="slide">
-                    <div class="item">
+              <div class="tab-pane" id="co" role="tabpanel">
+                <div class="product-list-inr">
+                  <div class="row product-list-inr-bg">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="product-list">
                         <a routerLink="/product-details">
-                          <div class="product-list-img">
-                            <img src="assets/images/fecr-chips.jpg" alt="product-img" />
-                          </div>
-                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Chips)</h4>
-                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                  <div class="slide">
-                    <div class="item">
-                      <div class="product-list">
-                        <a routerLink="/product-details">
-                          <div class="product-list-img">
-                            <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
-                          </div>
-                          <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
-                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                  <div class="slide">
-                    <div class="item">
-                      <div class="product-list">
-                        <a href="product-details.html">
                           <div class="product-list-img">
                             <img src="assets/images/high-carbon.jpg" alt="product-img" />
                           </div>
-                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Lumps)</h4>
+                          <h4>Tata Indicrome - Chrome Ore (Lumps)</h4>
                           <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
                         </a>
                       </div>
                     </div>
-                  </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                  <div class="slide">
-                    <div class="item">
+                    <!--/-->
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="product-list">
-                        <a href="product-details.html">
+                        <a routerLink="/product-details">
                           <div class="product-list-img">
                             <img src="assets/images/fecr-chips.jpg" alt="product-img" />
                           </div>
-                          <h4>Tata Indicrome - HC Ferro Ferro Chrome (Chips)</h4>
+                          <h4>Tata Indicrome - Chrome Ore (Chips)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
+                      </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                      <div class="product-list">
+                        <a routerLink="/product-details">
+                          <div class="product-list-img">
+                            <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
+                          </div>
+                          <h4>Tata Indicrome - Chrome Ore (Fines)</h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
+                      </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 text-center mt-3">
+                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                        View
+                        All</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/Product List-->
+    <!--Featured Products-->
+    <section class="white-bg py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <p class="pr-title">Popular Products</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="large-12 columns">
+              <!-- remove dive -->
+              <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide *ngFor="let pl of popular_product_list">
+                  <div class="slide">
+                    <div class="item">
+                      <div class="product-list">
+                        <a routerLink="/product-details/{{ pl.product_id }}/{{
+                              pl.category_id
+                            }}">
+                          <div class="product-list-img">
+                            <img src="{{ pl.primary_image_url }}" alt="product-img" />
+                          </div>
+                          <h4>
+                            {{ pl.product_title }} - {{ pl.ategory_name }}
+                          </h4>
                           <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
                         </a>
                       </div>
                     </div>
                   </div>
                 </ng-template>
-                <ng-template carouselSlide>
+              </owl-carousel-o>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Featured Products-->
+    <!--Mid Banner-->
+    <section class="mid-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <div class="txt-pos">
+              <p>
+                We operate 3 Chromite mines and 8 Ferro Alloy plants across
+                the country and provide raw materials to stainless steel,
+                alloy steel and refractory manufacturers across the globe.<br />
+                Join us to gain access to our network of distributors and
+                resources
+              </p>
+              <a routerLink="/register" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+                Register
+                Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/Mid Banner-->
+    <!--Latest News-->
+    <section class="grey-bg py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <p class="pr-title pb-3">Latest News</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="large-12 columns">
+              <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide *ngFor ="let news of allNews">
                   <div class="slide">
-                    <div class="item">
-                      <div class="product-list">
-                        <a href="product-details.html">
-                          <div class="product-list-img">
-                            <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
-                          </div>
-                          <h4>Tata Indicrome - HC Ferro Chrome (Fines)</h4>
-                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                        </a>
+                    <div class="item nws">
+                      <div class="news-wrap">
+                        <div class="news-wrap-img">
+                          <img src="{{news?.image}}" alt="news-img" />
+                        </div>
+                        <h4>
+                          {{news?.title}}
+                        </h4>
+                        <p>
+                          {{news?.description}}
+                        </p>
+                        <a href="#">Read More</a>
                       </div>
                     </div>
                   </div>
-                </ng-template> -->
-                </owl-carousel-o>
-              </div>
+                </ng-template>
+                
+              </owl-carousel-o>
             </div>
           </div>
         </div>
-      </section>
-      <!--Featured Products-->
-      <!--Mid Banner-->
-      <section class="mid-banner">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 text-center">
-              <div class="txt-pos">
-                <p>
-                  We operate 3 Chromite mines and 8 Ferro Alloy plants across
-                  the country and provide raw materials to stainless steel,
-                  alloy steel and refractory manufacturers across the globe.<br />
-                  Join us to gain access to our network of distributors and
-                  resources
-                </p>
-                <a routerLink="/register" class="btn btn-primary"
-                  ><i class="fa fa-paper-plane" aria-hidden="true"></i> Register
-                  Now</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--/Mid Banner-->
-      <!--Latest News-->
-      <section class="grey-bg py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 text-center">
-              <p class="pr-title pb-3">Latest News</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="large-12 columns">
-                <owl-carousel-o [options]="customOptions">
-                  <ng-template carouselSlide>
-                    <div class="slide">
-                      <div class="item nws">
-                        <div class="news-wrap">
-                          <div class="news-wrap-img">
-                            <img
-                              src="assets/images/news/1.jpg"
-                              alt="news-img"
-                            />
-                          </div>
-                          <h4>
-                            Tata Steel Mining recruits 11 village women for
-                            Heavy Earth Moving Machinery Operation.
-                          </h4>
-                          <p>
-                            Sukinda, Odisha: As part of its drive to promote
-                            inclusivity in its workforce, TSML has recruited 11
-                            Heavy Earth Moving Machinery (HEMM) Operators for
-                            its service partners.
-                          </p>
-                          <a href="#">Read More</a>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                  <ng-template carouselSlide>
-                    <div class="slide">
-                      <div class="item nws">
-                        <div class="news-wrap">
-                          <div class="news-wrap-img">
-                            <img
-                              src="assets/images/news/2.jpg"
-                              alt="news-img"
-                            />
-                          </div>
-                          <h4>
-                            Tata Steel Mining bags prestigious Golden Peacock
-                            Award for Sustainability 2021
-                          </h4>
-                          <p>
-                            Tata Steel Mining Limited (TSML) has been honoured
-                            with the prestigious Golden Peacock Award.
-                          </p>
-                          <a href="#">Read More</a>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                  <ng-template carouselSlide>
-                    <div class="slide">
-                      <div class="item nws">
-                        <div class="news-wrap">
-                          <div class="news-wrap-img">
-                            <img
-                              src="assets/images/news/3.jpg"
-                              alt="news-img"
-                            />
-                          </div>
-                          <h4>
-                            Grand festival to promote tribal flavours organised
-                            in Tata Steel Mining’s mine in Sukinda
-                          </h4>
-                          <p>
-                            Tata Steel Foundation hosts Prajatiya Khadyotsav at
-                            Sukinda Chromite Mine of Tata Steel Mining to
-                            explore indigenous flavours
-                          </p>
-                          <a href="#">Read More</a>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                  <ng-template carouselSlide>
-                    <div class="slide">
-                      <div class="item nws">
-                        <div class="news-wrap">
-                          <div class="news-wrap-img">
-                            <img
-                              src="assets/images/news/1.jpg"
-                              alt="news-img"
-                            />
-                          </div>
-                          <h4>
-                            Tata Steel Mining recruits 11 village women for
-                            Heavy Earth Moving Machinery Operation.
-                          </h4>
-                          <p>
-                            Sukinda, Odisha: As part of its drive to promote
-                            inclusivity in its workforce, TSML has recruited 11
-                            Heavy Earth Moving Machinery (HEMM) Operators for
-                            its service partners.
-                          </p>
-                          <a href="#">Read More</a>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                  <ng-template carouselSlide>
-                    <div class="slide">
-                      <div class="item nws">
-                        <div class="news-wrap">
-                          <div class="news-wrap-img">
-                            <img
-                              src="assets/images/news/3.jpg"
-                              alt="news-img"
-                            />
-                          </div>
-                          <h4>
-                            Grand festival to promote tribal flavours organised
-                            in Tata Steel Mining’s mine in Sukinda
-                          </h4>
-                          <p>
-                            Tata Steel Foundation hosts Prajatiya Khadyotsav at
-                            Sukinda Chromite Mine of Tata Steel Mining to
-                            explore indigenous flavours
-                          </p>
-                          <a href="#">Read More</a>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                </owl-carousel-o>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--/Latest News-->
-    </div>
-    <app-footer></app-footer>
-    <div class="foot_arw">
-      <a href="javascript:" id="return-to-top"
-        ><img src="assets/images/footarw.png" alt=""
-      /></a>
-    </div>
-  </body>
-  <script type="text/javascript">
+      </div>
+    </section>
+    <!--/Latest News-->
+  </div>
+  <app-footer></app-footer>
+  <div class="foot_arw">
+    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
+  </div>
+</body>
+<!-- <script type="text/javascript">
     $(document).ready(function () {
       $(".owl-carousel").owlCarousel({
         loop: true,
@@ -601,5 +324,6 @@
         },
       });
     });
-  </script>
+  </script> -->
+
 </html>

@@ -1,11 +1,13 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
+import { Country, State, City }  from 'country-state-city';
+
 
 @Component({
   selector: 'app-register',
@@ -13,6 +15,22 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
+  @ViewChild('country')
+  country!: ElementRef;
+  @ViewChild('city')
+  city!: ElementRef;
+  @ViewChild('state')
+  state!: ElementRef;
+
+  countries = Country.getAllCountries();
+  states: any | null;
+  cities: any | null;
+  selectedCountry: any;
+  selectedState: any;
+  selectedCity: any;
+
+  
   chooseProduct: any = [];
   chooseProductSize: any = [];
   registerForm: FormGroup;
@@ -60,16 +78,61 @@ export class RegisterComponent implements OnInit {
       first_name: [''],
       last_name: [''],
       addressone: [''],
+      is_tcs_tds_applicable: [],
+      addresstwo: [''],
+      city: [''],
+      state: [''],
+      pincode: [''],
+      address_type: [''],
       address_proof_file: [''],
-      cancel_cheque_file: ['']
+      cancel_cheque_file: [''],
+      pan_card_file: [''],
+      gst_certificate: [''],
+      turnover_declare: [''],
+      itr_last_yr: [''],
+      form_d: [''],
+      registration_certificate: [''],
+      tcs: ['']
     })
   }
   get f() { return this.registerForm.controls; }
 
   ngOnInit(): void {
+    
+  };
 
-
+  onCountryChange($event: any): void {
+    this.states = State.getStatesOfCountry(JSON.parse(this.country.nativeElement.value).isoCode);
+    this.selectedCountry = JSON.parse(this.country.nativeElement.value);
+    this.cities = this.selectedState = this.selectedCity = null;
   }
+
+  onStateChange(event: any): void {
+    this.cities = City.getCitiesOfState(JSON.parse(this.country.nativeElement.value).isoCode, JSON.parse(this.state.nativeElement.value).isoCode)
+    this.selectedState = JSON.parse(this.state.nativeElement.value);
+    this.selectedCity = null;
+    console.log('event',this.selectedState.name);
+  }
+
+  onCityChange(event: any): void {
+    this.selectedCity = JSON.parse(this.city.nativeElement.value);
+    console.log('city',this.selectedCity.name);
+  }
+
+  // clear(type: string): void {
+  //   switch(type) {
+  //     case 'country':
+  //       this.selectedCountry = this.country.nativeElement.value = this.states = this.cities = this.selectedState = this.selectedCity = null;
+  //       break;
+  //     case 'state':
+  //       this.selectedState = this.state.nativeElement.value = this.cities = this.selectedCity = null;
+  //       break;
+  //     case 'city':
+  //       this.selectedCity = this.city.nativeElement.value = null;
+  //       break;
+  //   }
+  // }
+  
   firsttab() {
     this.addressTab = false;
     this.uploadTab = false
@@ -97,20 +160,17 @@ export class RegisterComponent implements OnInit {
     this.uploadTab = true;
   }
   selectCustomer(event: any) {
-    console.log(event.target.value);
     this.userType = event.target.value;
   }
   onSelectCheckBox(event: any) {
     const productValue = event.target.value;
     this.chooseProduct.push(productValue);
-    console.log(this.chooseProduct);
   };
   choosProductSize(event: any) {
     console.log(event.target.value);
     this.chooseProductSize = event.target.value;
   };
   selectBusiness(event: any) {
-    console.log(event.target.value);
     this.businessType = event.target.value;
   };
   sendOtp(event: any) {
@@ -171,12 +231,12 @@ export class RegisterComponent implements OnInit {
 
   getCancelcheck(event: any) {
     this.cancelCheckBook = event.target.files[0];
-    console.log(this.cancelCheckBook);
+    console.log('checkbook',this.cancelCheckBook);
   };
 
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log('this.selectedFile=', this.selectedFile);
+    console.log('addressProfe', this.selectedFile);
 
   };
 
@@ -204,11 +264,16 @@ export class RegisterComponent implements OnInit {
       fileData.append('company_gst', this.registerForm.value.company_gst);
       fileData.append('company_pan', this.registerForm.value.company_pan);
       fileData.append('password', this.registerForm.value.password);
-      fileData.append('address_proof_file', this.selectedFile);
       fileData.append('pref_product_size', this.chooseProductSize);
       fileData.append('pref_product', this.chooseProduct);
       fileData.append('user_type', this.userType);
       fileData.append('business_nature', this.businessType);
+      fileData.append('addressone', this.registerForm.value.addressone);
+      fileData.append('addresstwo', this.registerForm.value.addresstwo);
+      fileData.append('state', this.selectedState.name);
+      fileData.append('city', this.selectedCity.name);
+      fileData.append('pincode', this.registerForm.value.pincode);
+      fileData.append('address_proof_file', this.selectedFile);
       fileData.append('cancel_cheque_file', this.cancelCheckBook);
 
 

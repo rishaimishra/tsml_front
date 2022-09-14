@@ -16,5 +16,10 @@ export class ProductsService {
 
   viewAllProduct(reqParameter: any) {
     return this._http.post(this.BesUrl + '/filter-product-menu', reqParameter);
+  };
+
+  getAllNews() {
+    return this._http.get(this.BesUrl + '/get_all_news_all');
   }
+  // get_all_news_all
 }

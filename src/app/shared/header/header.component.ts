@@ -29,8 +29,11 @@ export class HeaderComponent implements OnInit {
     this._spinner.show();
     localStorage.removeItem('tokenUrl');
     this.isUserLogIn = false;
-    this._toster.success('Logging Out ... !');
-    this._spinner.hide();
-    // this._router.navigate(['/']);
+    this.isUserLogIn = false;
+    this._toster.success('Logging Out !');
+    setTimeout(() => {
+      this._spinner.hide();
+    }, 1000);
+    this._router.navigate(['/']);
   }
 }
