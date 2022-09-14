@@ -14,17 +14,15 @@ export class HomeComponent implements OnInit {
   public product_menu_id: Number = 1;
   public product_list: any = [];
   public show_error: boolean = false;
-
+  public popular_product_list: any = [];
   constructor(
     private _router: Router,
     private productService: ProductsService,
     private spinner: NgxSpinnerService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
-  
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: false,
@@ -35,20 +33,20 @@ export class HomeComponent implements OnInit {
     navText: ['', ''],
     responsive: {
       0: {
-        items: 1
+        items: 1,
       },
       400: {
-        items: 2
+        items: 2,
       },
       740: {
-        items: 3
+        items: 3,
       },
       940: {
-        items: 4
-      }
+        items: 4,
+      },
     },
-    nav: true
-  }
+    nav: true,
+  };
 
   ngAfterViewInit() {
     this.spinner.show();
@@ -67,6 +65,7 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
+    this.get_popular_product();
   }
   get_product_by_menu_id(id: any) {
     this.spinner.show();
@@ -93,5 +92,19 @@ export class HomeComponent implements OnInit {
 
   gotoDetailsPage(productId: any, categoryId: any) {
     this._router.navigate(['/product-details', productId, categoryId]);
+  }
+  get_popular_product() {
+    let url = '/popular-product';
+    this.productService.getMethod(url).subscribe(
+      (res: any) => {
+        if (res.status == 1) {
+          this.popular_product_list = res.result;
+          console.log('this.popular_product_list=', this.popular_product_list);
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
