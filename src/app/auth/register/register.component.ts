@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
-import { Country, State, City }  from 'country-state-city';
+import { Country, State, City } from 'country-state-city';
 
 
 @Component({
@@ -30,7 +30,6 @@ export class RegisterComponent implements OnInit {
   selectedState: any;
   selectedCity: any;
 
-  
   chooseProduct: any = [];
   chooseProductSize: any = [];
   registerForm: FormGroup;
@@ -45,23 +44,31 @@ export class RegisterComponent implements OnInit {
   verifyingOpt: any;
   verifyOtp: any;
   userType: any;
-  fileToUpload: File | undefined;
   imageUrl: string = '';
   businessType: any;
   addressProfe: any;
   selectedFile: any;
   cancelCheckBook: any;
+  panUpload: any;
+  gstUpload: any;
+  turnoverFile: any;
+  itrFile: any;
+  formDfile: any;
+  consentLetter: any;
+  regisCertificate: any;
+  tcsFile: any;
+
   mobile: any;
   haveOtp: boolean = true;
   invildForm: boolean = true;
 
   constructor(private _router: Router, private _fb: FormBuilder,
-    private _auth: AuthService,private toastr: ToastrService,
+    private _auth: AuthService, private toastr: ToastrService,
     private _spinner: NgxSpinnerService) {
     this.registerForm = _fb.group({
       name: ['Arun'],
       email: ['', Validators.required, Validators.email],
-      phone: ['',[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       password: [''],
       gstin: [''],
       org_pan: [''],
@@ -84,7 +91,7 @@ export class RegisterComponent implements OnInit {
       state: [''],
       pincode: [''],
       address_type: [''],
-      address_proof_file: [''],
+      address_proof_file: ['', Validators.required],
       cancel_cheque_file: [''],
       pan_card_file: [''],
       gst_certificate: [''],
@@ -98,7 +105,7 @@ export class RegisterComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   ngOnInit(): void {
-    
+
   };
 
   onCountryChange($event: any): void {
@@ -111,28 +118,13 @@ export class RegisterComponent implements OnInit {
     this.cities = City.getCitiesOfState(JSON.parse(this.country.nativeElement.value).isoCode, JSON.parse(this.state.nativeElement.value).isoCode)
     this.selectedState = JSON.parse(this.state.nativeElement.value);
     this.selectedCity = null;
-    console.log('event',this.selectedState.name);
   }
 
   onCityChange(event: any): void {
     this.selectedCity = JSON.parse(this.city.nativeElement.value);
-    console.log('city',this.selectedCity.name);
   }
 
-  // clear(type: string): void {
-  //   switch(type) {
-  //     case 'country':
-  //       this.selectedCountry = this.country.nativeElement.value = this.states = this.cities = this.selectedState = this.selectedCity = null;
-  //       break;
-  //     case 'state':
-  //       this.selectedState = this.state.nativeElement.value = this.cities = this.selectedCity = null;
-  //       break;
-  //     case 'city':
-  //       this.selectedCity = this.city.nativeElement.value = null;
-  //       break;
-  //   }
-  // }
-  
+
   firsttab() {
     this.addressTab = false;
     this.uploadTab = false
@@ -201,7 +193,7 @@ export class RegisterComponent implements OnInit {
       }
     }, error => {
       console.log(error);
-      
+
     })
   };
   checkOtp(event: any) {
@@ -231,69 +223,101 @@ export class RegisterComponent implements OnInit {
 
   getCancelcheck(event: any) {
     this.cancelCheckBook = event.target.files[0];
-    console.log('checkbook',this.cancelCheckBook);
   };
 
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log('addressProfe', this.selectedFile);
 
   };
-
+  uploadPan(event: any) {
+    this.panUpload = event.target.files[0];
+  };
+  gstCertificateFileUpload(event: any) {
+    this.gstUpload = event.target.files[0];
+  };
+  turnoverUpload(event: any) {
+    this.turnoverFile = event.target.files[0];
+  };
+  itrFileUpload(event: any) {
+    this.itrFile = event.target.files[0];
+  };
+  formDupload(event: any) {
+    this.formDfile = event.target.files[0];
+  };
+  consentLetterUpload(event: any) {
+    this.consentLetter = event.target.files[0];
+  };
+  regisCertificateUpload(event: any) {
+    this.regisCertificate = event.target.files[0];
+  };
+  tcsFileUpload(event: any) {
+    this.tcsFile = event.target.files[0];
+  }
   submitRegister() {
     const fileData = new FormData();
     this._spinner.show();
     this.submitted = true;
     let valueOfRegisterfor = this.registerForm.value.first_name;
-    if(valueOfRegisterfor == '' || valueOfRegisterfor == null) {
+    if (valueOfRegisterfor == '' || valueOfRegisterfor == null) {
       this.toastr.error('Please check required field');
       this._spinner.hide();
       return;
     };
 
-      fileData.append('first_name', this.registerForm.value.first_name);
-      fileData.append('last_name', this.registerForm.value.last_name);
-      fileData.append('phone', this.mobileNumber);
-      fileData.append('org_pan', this.registerForm.value.org_pan);
-      fileData.append('org_name', this.registerForm.value.org_name);
-      fileData.append('org_address', this.registerForm.value.org_address);
-      fileData.append('user_type', this.userType);
-      fileData.append('pref_product_size', this.chooseProductSize);
-      fileData.append('email', this.registerForm.value.email);
-      fileData.append('name', 'John');
-      fileData.append('company_gst', this.registerForm.value.company_gst);
-      fileData.append('company_pan', this.registerForm.value.company_pan);
-      fileData.append('password', this.registerForm.value.password);
-      fileData.append('pref_product_size', this.chooseProductSize);
-      fileData.append('pref_product', this.chooseProduct);
-      fileData.append('user_type', this.userType);
-      fileData.append('business_nature', this.businessType);
-      fileData.append('addressone', this.registerForm.value.addressone);
-      fileData.append('addresstwo', this.registerForm.value.addresstwo);
-      fileData.append('state', this.selectedState.name);
-      fileData.append('city', this.selectedCity.name);
-      fileData.append('pincode', this.registerForm.value.pincode);
-      fileData.append('address_proof_file', this.selectedFile);
-      fileData.append('cancel_cheque_file', this.cancelCheckBook);
+    fileData.append('first_name', this.registerForm.value.first_name);
+    fileData.append('last_name', this.registerForm.value.last_name);
+    fileData.append('phone', this.mobileNumber);
+    fileData.append('org_pan', this.registerForm.value.org_pan);
+    fileData.append('org_name', this.registerForm.value.org_name);
+    fileData.append('org_address', this.registerForm.value.org_address);
+    fileData.append('user_type', this.userType);
+    fileData.append('pref_product_size', this.chooseProductSize);
+    fileData.append('email', this.registerForm.value.email);
+    fileData.append('name', 'John');
+    fileData.append('company_gst', this.registerForm.value.company_gst);
+    fileData.append('company_pan', this.registerForm.value.company_pan);
+    fileData.append('password', this.registerForm.value.password);
+    fileData.append('pref_product_size', this.chooseProductSize);
+    fileData.append('pref_product', this.chooseProduct);
+    fileData.append('user_type', this.userType);
+    fileData.append('business_nature', this.businessType);
+    fileData.append('addressone', this.registerForm.value.addressone);
+    fileData.append('addresstwo', this.registerForm.value.addresstwo);
+    fileData.append('state', this.selectedState?.name);
+    fileData.append('city', this.selectedCity?.name);
+    fileData.append('pincode', this.registerForm.value.pincode);
+    fileData.append('address_proof_file', this.selectedFile);
+    fileData.append('cancel_cheque_file', this.cancelCheckBook);
+    fileData.append('pan_card_file', this.panUpload);
+    fileData.append('gst_certificate', this.gstUpload);
+    fileData.append('turnover_declare', this.turnoverFile);
+    fileData.append('itr_last_yr', this.itrFile);
+    fileData.append('form_d', this.formDfile);
+    fileData.append('registration_certificate', this.regisCertificate);
+    fileData.append('tcs', this.tcsFile);
 
 
-      this._auth.register(fileData).subscribe((res) => {
-          if (res) {
-            console.log('res', res);
-            this.toastr.success('Registered successfully', '');
-            this.registerForm.reset();
-            this._spinner.hide();
-            this._router.navigate(['/login']);
-          } else {
-            this.toastr.error("Something went wrong");
-            this._spinner.hide();
-          }
-        },
-        (error) => {
-          this.toastr.error('', error);
-        }
-      );
-    
+    this._auth.register(fileData).subscribe((res:any) => {
+      if (res.success) {
+        console.log('res', res);
+        this.toastr.success('Registered successfully', '');
+        this.registerForm.reset();
+        this._spinner.hide();
+        this._router.navigate(['/login']);
+      } if (res.error.validation.email) {
+        this.toastr.error(res.error.validation.email);
+        this._spinner.hide();
+      } else {
+        this.toastr.error("Something went wrong !");
+        this._spinner.hide();
+      }
+    },
+      (error) => {
+        this.toastr.error('', error);
+        this._spinner.hide();
+      }
+    );
+
   };
 
 }

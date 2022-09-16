@@ -2109,3 +2109,4 @@ textarea:focus, input:focus{
 .smll-font{font-size:12px;}
 .log-txt{font-size:20px;}
 .f-logo{width:70%; margin:0 auto; display:block;}
+.header_botom.fixed_header .nav-item:hover .nav-link{color:#3d7eeb!important;}
