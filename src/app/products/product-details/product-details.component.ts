@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',

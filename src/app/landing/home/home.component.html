@@ -194,6 +194,28 @@
       </div>
     </section>
     <!--/Product List-->
+        <!--Mid Banner-->
+        <section class="mid-banner">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 text-center">
+                <div class="txt-pos">
+                  <p>
+                    We operate 3 Chromite mines and 8 Ferro Alloy plants across
+                    the country and provide raw materials to stainless steel,
+                    alloy steel and refractory manufacturers across the globe.<br />
+                    Join us to gain access to our network of distributors and
+                    resources
+                  </p>
+                  <!-- <a routerLink="/register" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    Register
+                    Now</a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--/Mid Banner-->
     <!--Featured Products-->
     <section class="white-bg py-5">
       <div class="container">
@@ -233,97 +255,10 @@
       </div>
     </section>
     <!--Featured Products-->
-    <!--Mid Banner-->
-    <section class="mid-banner">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <div class="txt-pos">
-              <p>
-                We operate 3 Chromite mines and 8 Ferro Alloy plants across
-                the country and provide raw materials to stainless steel,
-                alloy steel and refractory manufacturers across the globe.<br />
-                Join us to gain access to our network of distributors and
-                resources
-              </p>
-              <a routerLink="/register" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>
-                Register
-                Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--/Mid Banner-->
-    <!--Latest News-->
-    <section class="grey-bg py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <p class="pr-title pb-3">Latest News</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="large-12 columns">
-              <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide *ngFor ="let news of allNews">
-                  <div class="slide">
-                    <div class="item nws">
-                      <div class="news-wrap">
-                        <div class="news-wrap-img">
-                          <img src="{{news?.image}}" alt="news-img" />
-                        </div>
-                        <h4>
-                          {{news?.title}}
-                        </h4>
-                        <p>
-                          {{news?.description}}
-                        </p>
-                        <a href="#">Read More</a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-                
-              </owl-carousel-o>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--/Latest News-->
   </div>
   <app-footer></app-footer>
   <div class="foot_arw">
     <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
   </div>
 </body>
-<!-- <script type="text/javascript">
-    $(document).ready(function () {
-      $(".owl-carousel").owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        responsiveClass: true,
-        responsive: {
-          0: {
-            items: 1,
-            nav: true,
-          },
-          600: {
-            items: 3,
-            nav: false,
-          },
-          1000: {
-            items: 4,
-            nav: true,
-            loop: false,
-            margin: 20,
-          },
-        },
-      });
-    });
-  </script> -->
-
 </html>

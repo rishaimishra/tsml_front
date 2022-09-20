@@ -16,6 +16,10 @@
     padding-left: 0;
     padding-right: 0;
 }
+.month-year-search .form-group {
+    margin-left: 10px;
+    width: 18%;
+}
 }
 /*1199*/
 @media (max-width: 1024px) {
@@ -145,6 +149,9 @@ footer {
 }
 .search-section {
     padding: 7px 0;
+}
+.mt-41 {
+    margin-top: 20%;
 }
 }
 /*991*/

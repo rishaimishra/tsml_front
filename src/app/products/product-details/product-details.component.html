@@ -4,137 +4,291 @@
 <app-header></app-header>
 
 <body>
-  <div class="page-content" *ngIf="show_data == true">
+  <div class="page-content">
     <section class="sub-header">
-      <h1>
-        Tata Indicrome – High Carbon Ferro Chrome. Quality, convenience,
-        trust. Unmatched.
-      </h1>
+      <h1>Tata Indicrome – High Carbon Ferro Chrome. Quality, convenience, trust. Unmatched.</h1>
       <ul>
-        <li>
-          <a href="#"><img src="assets/images/home.png" /></a>
-        </li>
-        <li><a href="#">/ Products and Customers</a></li>
-        <li>/ Ferro Chrome</li>
+        <li><a href="#">Home</a></li>
+        <li><span>/</span></li>
+        <li><a href="#">Products and Customers</a></li>
+        <li><span>/</span></li>
+        <li>Ferro Chrome</li>
       </ul>
     </section>
-    <section class="product-sec">
+    <section>
       <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div id="thumbnails">
-              <!---<div class="thumbelina-but vert top"><i class="fa fa-angle-up"></i></div>-->
-              <ul>
-                <li>
-                  <a href="images/1.jpg" title="View">
-                    <img class="cloudzoom-gallery cloudzoom-gallery-active" src="assets/images/1.jpg" alt="thumbnail"
-                      data-cloudzoom="
-                                 useZoom:'.cloudzoom',
-                                 image:'images/1.jpg'
-                                 " />
-                  </a>
-                </li>
-                <li>
-                  <a href="images/2.jpg" title="View">
-                    <img class="cloudzoom-gallery" src="assets/images/2.jpg" alt="thumbnail" data-cloudzoom="
-                                 useZoom:'.cloudzoom',
-                                 image:'images/2.jpg'
-                                 " />
-                  </a>
-                </li>
-                <li>
-                  <a href="images/3.jpg" title="View">
-                    <img class="cloudzoom-gallery" src="assets/images/3.jpg" alt="thumbnail" data-cloudzoom="
-                                 useZoom:'.cloudzoom',
-                                 image:'images/3.jpg'
-                                 " />
-                  </a>
-                </li>
-              </ul>
-              <!--<div class="thumbelina-but vert bottom"><i class="fa fa-angle-down"></i></div>-->
-            </div>
-            <div id="product-image">
-              <a href="{{ product_data.primary_image_url }}">
-                <img class="cloudzoom" src="{{ product_data.primary_image_url }}" alt="" data-cloudzoom="
-                           zoomPosition:'inside',
-                           zoomOffsetX:0,
-                           zoomFlyOut:false,
-                           variableMagnification:false,
-                           disableZoom:'auto',
-                           touchStartDelay:100,
-                           propagateGalleryEvent:true
-                           " />
-              </a>
-            </div>
-            <div id="zoom-overlay"></div>
+        <div class="prod-list-detl">
+          <div class="sec-pro-cat">
+            <span>Add item</span>
+            <select class="form-control form-control-sm">
+              <option>--select--</option>
+              <option>Lumps</option>
+              <option>Chips</option>
+              <option>Fines</option>
+            </select>
           </div>
-          <div class="col-md-6">
-            <div class="pro-descriptipn">
-              <div class="prod-top">
-                <h3>{{ product_data.cat_name }}</h3>
-                <!-- <h4 class="pro-in">High Carbon Ferro Chrome - High Phos</h4> -->
-                <div class="sort-desc">
-                  <h2>Short Description</h2>
-                  <p>
-                    {{ product_data.cat_dese }}
-                  </p>
-                </div>
-                <div class="size-off">
-                  <h2>Sizes offered</h2>
-                  <ul>
-                    <!-- <li class="siz-act"><a href="#">10-50</a></li> -->
-                    <li *ngFor="
-                          let size of product_data.sizes;
-                          let index = index
-                        ">
-                      <a href="javascript:void(0);" (click)="selecte_size(size, index)">{{ size }}</a>
-                    </li>
 
-                    <li><span>mm</span></li>
-                  </ul>
-                </div>
-                <div class="qty-sec">
-                  <div class="row">
-                    <div class="col-lg-6 col-md-12 col-sm-6">
-                      <div class="form-group">
-                        <label for="">Quantity (mt)</label>
-                        <input type="number" class="form-control" id="qty" [(ngModel)]="qty" placeholder="1" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-6">
-                      <div class="form-group">
-                        <label for="">Proposed Delivery Date</label>
-                        <div class="position-relative">
-                          <input type="date" class="form-control" id="datepicker" placeholder="Date"
-                            [(ngModel)]="delivery_date" />
-                          <!-- <span class="over_llp"><img src="assets/images/cal.png" alt="" /></span> -->
-                        </div>
-                      </div>
-                    </div>
+          <div class="demo">
+            <div class="accordion--" id="accordionExample">
+              <div class="card">
+                <div class="card-header card-header--" id="headingOne">
+                  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"><i
+                      class="fa fa-plus"></i></button>
+                  <div class="acc-pro-pic">
+                    <img src="{{product_data?.primary_image_url}}">
+                  </div>
+                  <div class="acc-pro-dec">
+                    <h3>{{product_data?.cat_name}}</h3>
+                    <p>Ranked among the top-seven global chrome alloy producers, we are the leading manufacturers of
+                      High Carbon Ferro Chrome in India. We produce various grades of Ferro Chrome</p>
+                  </div>
+
+                  <div class="acc-pro-qty">
+                    <input type="text" class="form-control" id="" placeholder="150" disabled="">
                   </div>
                 </div>
-                <div class="crt-btn">
-                  <a href="javascript:void(0)" (click)="
-                        add_to_cart(product_data.cat_id,product_data.product_id)" class="add-to-cart">add to cart
-                  </a>
-                  <p *ngIf="show_error == true" style="color: red; text-align: center">
-                    {{ error_message }}
-                  </p>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Sizes Offered</label>
+                          <select class="form-control form-control-sm">
+                            <option>10-50</option>
+                            <option>10-70</option>
+                            <option>10-100</option>
+                            <option>10-150</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Quantity</label>
+                          <input type="text" class="form-control form-control-sm" id="" placeholder="" value="150">
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                          <div class="pri-box">
+                            <span>₹</span>
+                            <input type="text" class="form-control form-control-sm" id="" placeholder=""
+                              value="107347.5">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Delivery Method</label>
+                          <select class="form-control form-control-sm">
+                            <option>FOR</option>
+                            <option>Ex-Works</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Pickup From</label>
+                          <select class="form-control form-control-sm">
+                            <option>Plant</option>
+                            <option>Depot</option>
+                            <option>Port</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Location</label>
+                          <select class="form-control form-control-sm">
+                            <option>Kolkata</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <div class="bil-add-new-add">
+                            <label for="">Bill To</label>
+                            <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
+                                Address</a></label>
+                          </div>
+                          <select class="form-control form-control-sm">
+                            <option>Kolkata</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <div class="bil-add-new-add">
+                            <label for="">Ship To</label>
+                            <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
+                                Address</a></label>
+                          </div>
+                          <select class="form-control form-control-sm">
+                            <option>Kolkata</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Proposed Delivery Date</label>
+                          <div class="date-rang">
+                            <div class="position-relative">
+                              <input type="text" class="form-control form-control-sm datepicker" placeholder="From"
+                                value="09/13/2022">
+                              <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                            </div>
+                            <div class="position-relative">
+                              <input type="text" class="form-control form-control-sm datepicker" placeholder="To"
+                                value="09/30/2022">
+                              <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-11">
+                        <div class="form-group">
+                          <label for="">Remarks</label>
+                          <textarea class="form-control form-control-sm" rows="4"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-lg-1">
+                        <a href="javascript:;" class="blue-plus-icon btn-copy mt-25" data-toggle="collapse"
+                          data-target="#deliverySchedule"><i class="fa fa-plus-circle"></i></a>
+                      </div>
+                    </div>
+
+                    <div id="deliverySchedule" class="collapse">
+                      <div class="schedule-block" id="container">
+                        <div class="row mydiv" id="thediv">
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Sizes Offered</label>
+                              <select class="form-control form-control-sm">
+                                <option>10-50</option>
+                                <option>10-70</option>
+                                <option>10-100</option>
+                                <option>10-150</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Quantity</label>
+                              <input type="text" class="form-control form-control-sm" id="" placeholder="" value="150">
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                              <div class="pri-box">
+                                <span>₹</span>
+                                <input type="text" class="form-control form-control-sm" id="" placeholder=""
+                                  value="107347.5">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Delivery Method</label>
+                              <select class="form-control form-control-sm">
+                                <option>FOR</option>
+                                <option>Ex-Works</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Pickup From</label>
+                              <select class="form-control form-control-sm">
+                                <option>Plant</option>
+                                <option>Depot</option>
+                                <option>Port</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Location</label>
+                              <select class="form-control form-control-sm">
+                                <option>Kolkata</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <div class="bil-add-new-add">
+                                <label for="">Bill To</label>
+                                <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
+                                    Address</a></label>
+                              </div>
+                              <select class="form-control form-control-sm">
+                                <option>Kolkata</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <div class="bil-add-new-add">
+                                <label for="">Ship To</label>
+                                <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
+                                    Address</a></label>
+                              </div>
+                              <select class="form-control form-control-sm">
+                                <option>Kolkata</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Proposed Delivery Date</label>
+                              <div class="date-rang">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control form-control-sm datepicker" placeholder="From"
+                                    value="09/13/2022">
+                                  <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                                </div>
+                                <div class="position-relative">
+                                  <input type="text" class="form-control form-control-sm datepicker" placeholder="To"
+                                    value="09/30/2022">
+                                  <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-11">
+                            <div class="form-group">
+                              <label for="">Remarks</label>
+                              <textarea class="form-control form-control-sm" rows="4"></textarea>
+                            </div>
+                          </div>
+                          <!-- <button type="button" class="blue-plus-icon btn-copy mt-15" onclick="Clone()" )><i
+                              class="fa fa-plus-circle"></i></button>
+                          <button type="button" class="red-plus-icon mt-15" onclick='Delete(this)' )><i
+                              class="fa fa-minus-circle"></i></button> -->
+                              <button type="button" class="blue-plus-icon btn-copy mt-15"><i
+                                class="fa fa-plus-circle"></i></button>
+                            <button type="button" class="red-plus-icon mt-15"><i
+                                class="fa fa-minus-circle"></i></button>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
-          <div class="col-lg-12">
-            <div class="detail-product-desc">
-              <h2>Technical Specification of Product</h2>
-              <div class="clearfix"></div>
-              <p>
-                Cr - {{ product_data.Cr }}, C - {{ product_data.C }}, Phos -
-                {{ product_data.Phos }}, S - {{ product_data.S }}, Si -
-                {{ product_data.Si }}
-              </p>
-              <p><b>Sizes offered :</b> {{ product_data.sizes }} mm</p>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 add-btn-sec pt-0">
+            <a href="RFQ-list.html" class="btn btn-primary">Request for quotation</a>
           </div>
         </div>
       </div>
@@ -146,8 +300,77 @@
   <!-- footer -->
   <app-footer></app-footer>
   <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
+    <a href="javascript:" id="return-to-top"><img src="assets/assets/images/footarw.png" alt="" /></a>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // Add minus icon for collapse element which is open by default
+      $(".collapse.show").each(function () {
+        $(this)
+          .prev(".card-header")
+          .find(".fa")
+          .addClass("fa-minus")
+          .removeClass("fa-plus");
+      });
+
+      // Toggle plus minus icon on show hide of collapse element
+      $(".collapse")
+        .on("show.bs.collapse", function () {
+          $(this)
+            .prev(".card-header")
+            .find(".fa")
+            .removeClass("fa-plus")
+            .addClass("fa-minus");
+        })
+        .on("hide.bs.collapse", function () {
+          $(this)
+            .prev(".card-header")
+            .find(".fa")
+            .removeClass("fa-minus")
+            .addClass("fa-plus");
+        });
+    });
+
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      $(".user_lk").click(function () {
+
+        $(".show01").slideToggle();
+
+      });
+
+      $(".user_llk").click(function () {
+
+        $(".show02").slideToggle();
+
+      });
+
+      $(".user_lllk").click(function () {
+
+        $(".show03").slideToggle();
+
+      });
+
+    });
+  </script>
+  <script>
+    function Clone() {
+
+
+      var clone = document.getElementById('thediv').cloneNode(true); // "deep" clone
+      document.getElementById("container").appendChild(clone);
+    }
+
+    function Delete(button) {
+      var parent = button.parentNode;
+      var grand_father = parent.parentNode;
+      grand_father.removeChild(parent);
+    }
+  </script>
 </body>
 
 </html>
