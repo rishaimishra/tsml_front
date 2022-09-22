@@ -755,228 +755,178 @@
                                              </thead>
                                              <tbody>
                                                 <tr>
-                                                   <td>Address Proof</td>
+                                                   <td>Address Proof <span style="color:#f00;">*</span></td>
                                                    <td>
                                                       --
                                                    </td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input (change)="getAddrssProfe($event)" type="file"
-                                                               name="file-1[]" id="file-1" class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-1">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
-                                                                  <div *ngIf="f['address_proof_file']?.invalid && (f['address_proof_file']?.touched || submitted)">
-                                                                     <small class="text-danger">
-                                                                        Address proof is required !
-                                                                     </small>
-                                                                  </div>
+                                                            <input type="file" (change)="getAddrssProfe($event)" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-1">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
+                                                            <div *ngIf="f['address_proof_file']?.invalid && (f['address_proof_file']?.touched || submitted)">
+                                                               <small class="text-danger">
+                                                                  Address proof is required !
+                                                               </small>
+                                                            </div>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>Cancelled cheque </td>
+                                                   <td>Cancelled Cheque <span style="color:#f00;">*</span> </td>
                                                    <td>
                                                       --
                                                    </td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input (change)="getCancelcheck($event)" type="file"
-                                                               name="file-1[]" id="file-2" class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-2">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="getCancelcheck($event)" name="file-1[]" id="file-2" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-2">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>PAN card</td>
+                                                   <td>PAN Card <span style="color:#f00;">*</span></td>
                                                    <td><input type="date" class="form-control"></td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="uploadPan($event)" name="file-1[]" id="file-3"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-3">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="uploadPan($event)" name="file-1[]" id="file-3" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-3">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>GST Certificate</td>
+                                                   <td>GST Certificate <span style="color:#f00;">*</span> </td>
                                                    <td><input type="date" class="form-control"></td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="gstCertificateFileUpload($event)" name="file-1[]" id="file-4"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-4">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="gstCertificateFileUpload($event)" name="file-1[]" id="file-4" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-4">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>Declaration on turnover-section 194Q and 206 cc</td>
+                                                   <td>Declaration on turnover-section 194Q and 206 cc <span style="color:#f00;">*</span></td>
                                                    <td>
                                                       --
                                                    </td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="turnoverUpload($event)" name="file-1[]" id="file-5"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-5">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="turnoverUpload($event)" name="file-1[]" id="file-5" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-5">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>ITR of last 2 FYs</td>
+                                                   <td>ITR of last 2 FYs <span style="color:#f00;">*</span></td>
                                                    <td>
                                                       --
                                                    </td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="itrFileUpload($event)" name="file-1[]" id="file-6"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-6">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="itrFileUpload($event)" name="file-1[]" id="file-6" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-6">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>Form D</td>
+                                                   <td>Form D <span style="color:#f00;">*</span></td>
                                                    <td><input type="date" class="form-control"></td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="formDupload($event)" name="file-1[]" id="file-7"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-7">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="formDupload($event)" name="file-1[]" id="file-7" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-7">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>Consent Letter</td>
+                                                   <td>Consent Letter <span style="color:#f00;">*</span></td>
                                                    <td>--</td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="consentLetterUpload($event)" name="file-1[]" id="file-8"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-8">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="consentLetterUpload($event)" name="file-1[]" id="file-8" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-8">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>Registration Certificates </td>
+                                                   <td>Registration Certificates <span style="color:#f00;">*</span></td>
                                                    <td>
                                                       --
                                                    </td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="regisCertificateUpload($event)" name="file-1[]" id="file-9"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-9">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="regisCertificateUpload($event)" name="file-1[]" id="file-9" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-9">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td>TCS (If turnover is >Rs 10 crs)</td>
+                                                   <td>TCS (If turnover is >Rs 10 crs) <span style="color:#f00;">*</span></td>
                                                    <td><input type="date" class="form-control"></td>
                                                    <td class="position-relative">
                                                       <div class="uplodimg">
                                                          <div class="uplodimgfil">
-                                                            <input type="file" (change)="tcsFileUpload($event)" name="file-1[]" id="file-10"
-                                                               class="inputfile inputfile-1"
-                                                               data-multiple-caption="{count} files selected"
-                                                               multiple="">
-                                                            <label for="file-10">Upload<img
-                                                                  src="assets/images/upload.png" alt=""></label>
+                                                            <input type="file" (change)="tcsFileUpload($event)" name="file-1[]" id="file-10" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                            <label for="file-10">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
                                                          </div>
+                                                         <a href="#" class="reg-cross">
+                                                         <i class="fa fa-times"></i>
+                                                         </a>
                                                       </div>
-                                                   </td>
-                                                   <td class="text-center">
-                                                      <a href="#">
-                                                         <img src="assets/assets/images/cross.png" alt="cross">
-                                                      </a>
+                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
                                                    </td>
                                                 </tr>
                                              </tbody>

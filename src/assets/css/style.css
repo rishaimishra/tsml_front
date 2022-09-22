@@ -1461,6 +1461,9 @@ button.decrement-quantity, button.increment-quantity, button.decrement-quantity1
 }
 .upload-documents .arrow-down-hovr {
     display: none;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 37px;
 }
 .upload-documents span {
     margin-right: 10px;
@@ -2519,7 +2522,7 @@ button:focus { outline: none; }
     border-top-right-radius: 0rem!important;
     color: #3d7eec;
      background: #fff; 
-     border-left: 3px solid #cccc; 
+    border-left: 3px solid #cccc; 
     font-weight: bold;
     margin-bottom: 0;
     padding: 15px;
@@ -2952,7 +2955,7 @@ a {
 .dashborad_sections .card .card-header .form-control {
     height: 36px;
     font-size: 13px;
-    border-radius: 30px;
+    border-radius: 5px;
 }
 .dashborad_sections .card .card-header, .dashborad_sections .card .card-body, .dashborad_sections .card .card-footer {
     background-color: transparent;
@@ -3232,13 +3235,6 @@ color: #FFFFFF;
 }
 /*19.9.2022*/
 .form-radio-wrap{text-align:right;margin-bottom:10px;}
-
-
-
-
-
-
-
 .dashborad_sections .font-15 {
     white-space: nowrap;
 }
@@ -3271,7 +3267,7 @@ color: #FFFFFF;
     padding-right: 0;
 }
 .uplodimgfil label span {
-    background: #3d7eeb;
+    background: #e7eaf1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3303,3 +3299,6 @@ color: #FFFFFF;
 .upload-documents.upload-documents-complains span {
     border-radius: 3px 0 0 3px;
 }
+/*21.9.2022*/
+#block-footercopyright img{border-radius:5px;}
+.h-36{height:36px;}
