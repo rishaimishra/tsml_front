@@ -1,21 +1,23 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { Country, State, City } from 'country-state-city';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-
   @ViewChild('country')
   country!: ElementRef;
   @ViewChild('city')
@@ -62,13 +64,20 @@ export class RegisterComponent implements OnInit {
   haveOtp: boolean = true;
   invildForm: boolean = true;
 
-  constructor(private _router: Router, private _fb: FormBuilder,
-    private _auth: AuthService, private toastr: ToastrService,
-    private _spinner: NgxSpinnerService) {
+  constructor(
+    private _router: Router,
+    private _fb: FormBuilder,
+    private _auth: AuthService,
+    private toastr: ToastrService,
+    private _spinner: NgxSpinnerService
+  ) {
     this.registerForm = _fb.group({
       name: ['Arun'],
       email: ['', Validators.required, Validators.email],
-      phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phone: [
+        '',
+        [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')],
+      ],
       password: [''],
       gstin: [''],
       org_pan: [''],
@@ -99,23 +108,28 @@ export class RegisterComponent implements OnInit {
       itr_last_yr: [''],
       form_d: [''],
       registration_certificate: [''],
-      tcs: ['']
-    })
+      tcs: [''],
+    });
   }
-  get f() { return this.registerForm.controls; }
+  get f() {
+    return this.registerForm.controls;
+  }
 
-  ngOnInit(): void {
-
-  };
+  ngOnInit(): void {}
 
   onCountryChange($event: any): void {
-    this.states = State.getStatesOfCountry(JSON.parse(this.country.nativeElement.value).isoCode);
+    this.states = State.getStatesOfCountry(
+      JSON.parse(this.country.nativeElement.value).isoCode
+    );
     this.selectedCountry = JSON.parse(this.country.nativeElement.value);
     this.cities = this.selectedState = this.selectedCity = null;
   }
 
   onStateChange(event: any): void {
-    this.cities = City.getCitiesOfState(JSON.parse(this.country.nativeElement.value).isoCode, JSON.parse(this.state.nativeElement.value).isoCode)
+    this.cities = City.getCitiesOfState(
+      JSON.parse(this.country.nativeElement.value).isoCode,
+      JSON.parse(this.state.nativeElement.value).isoCode
+    );
     this.selectedState = JSON.parse(this.state.nativeElement.value);
     this.selectedCity = null;
   }
@@ -124,26 +138,25 @@ export class RegisterComponent implements OnInit {
     this.selectedCity = JSON.parse(this.city.nativeElement.value);
   }
 
-
   firsttab() {
     this.addressTab = false;
-    this.uploadTab = false
+    this.uploadTab = false;
     this.mobileTab = true;
     this.ekycTab = false;
   }
   mobileTabContinue() {
     this.addressTab = false;
-    this.uploadTab = false
+    this.uploadTab = false;
     this.mobileTab = false;
     this.ekycTab = true;
-  };
+  }
 
   ekycTabContinue() {
     this.mobileTab = false;
-    this.uploadTab = false
+    this.uploadTab = false;
     this.ekycTab = false;
     this.addressTab = true;
-  };
+  }
 
   addressTabContinue() {
     this.mobileTab = false;
@@ -157,45 +170,47 @@ export class RegisterComponent implements OnInit {
   onSelectCheckBox(event: any) {
     const productValue = event.target.value;
     this.chooseProduct.push(productValue);
-  };
+  }
   choosProductSize(event: any) {
     console.log(event.target.value);
     this.chooseProductSize = event.target.value;
-  };
+  }
   selectBusiness(event: any) {
     this.businessType = event.target.value;
-  };
+  }
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;
   }
   getOpt() {
     this._spinner.show();
     let mobileNu = {
-      mobile_no: this.mobileNumber
+      mobile_no: this.mobileNumber,
     };
     if (mobileNu.mobile_no == '') {
       this.toastr.error('Mobile number is required');
       this._spinner.hide();
       return;
-    };
-    this._auth.getOtp(mobileNu).subscribe(res => {
-      if (res.status > 0) {
-        this._spinner.hide();
-        this.toastr.success(res.message);
-        this.mobile = res.result;
-        setTimeout(() => {
-          this.mobile.otp = '';
-        }, 30000);
-        this.haveOtp = false;
-      } else {
-        this.toastr.error(res.message);
-        this._spinner.hide();
+    }
+    this._auth.getOtp(mobileNu).subscribe(
+      (res) => {
+        if (res.status > 0) {
+          this._spinner.hide();
+          this.toastr.success(res.message);
+          this.mobile = res.result;
+          setTimeout(() => {
+            this.mobile.otp = '';
+          }, 30000);
+          this.haveOtp = false;
+        } else {
+          this.toastr.error(res.message);
+          this._spinner.hide();
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-    }, error => {
-      console.log(error);
-
-    })
-  };
+    );
+  }
   checkOtp(event: any) {
     this.verifyOtp = event.target.value;
   }
@@ -203,53 +218,55 @@ export class RegisterComponent implements OnInit {
     this._spinner.show();
     let otpVerify = {
       mobile_no: this.mobile.mob_number,
-      otp: this.verifyOtp
+      otp: this.verifyOtp,
     };
 
     if (otpVerify.mobile_no || otpVerify.otp > 0) {
-      this._auth.verifyOtp(otpVerify).subscribe(res => {
-        if (res.status > 0) {
-          this._spinner.hide();
-          this.toastr.success(res.message);
-        } else {
-          this.toastr.error(res.message);
-          this._spinner.hide();
+      this._auth.verifyOtp(otpVerify).subscribe(
+        (res) => {
+          if (res.status > 0) {
+            this._spinner.hide();
+            this.toastr.success(res.message);
+          } else {
+            this.toastr.error(res.message);
+            this._spinner.hide();
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-      }, error => {
-        console.log(error);
-      })
+      );
     }
-  };
+  }
 
   getCancelcheck(event: any) {
     this.cancelCheckBook = event.target.files[0];
-  };
+  }
 
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
-
-  };
+  }
   uploadPan(event: any) {
     this.panUpload = event.target.files[0];
-  };
+  }
   gstCertificateFileUpload(event: any) {
     this.gstUpload = event.target.files[0];
-  };
+  }
   turnoverUpload(event: any) {
     this.turnoverFile = event.target.files[0];
-  };
+  }
   itrFileUpload(event: any) {
     this.itrFile = event.target.files[0];
-  };
+  }
   formDupload(event: any) {
     this.formDfile = event.target.files[0];
-  };
+  }
   consentLetterUpload(event: any) {
     this.consentLetter = event.target.files[0];
-  };
+  }
   regisCertificateUpload(event: any) {
     this.regisCertificate = event.target.files[0];
-  };
+  }
   tcsFileUpload(event: any) {
     this.tcsFile = event.target.files[0];
   }
@@ -262,7 +279,7 @@ export class RegisterComponent implements OnInit {
       this.toastr.error('Please check required field');
       this._spinner.hide();
       return;
-    };
+    }
 
     fileData.append('first_name', this.registerForm.value.first_name);
     fileData.append('last_name', this.registerForm.value.last_name);
@@ -296,28 +313,27 @@ export class RegisterComponent implements OnInit {
     fileData.append('registration_certificate', this.regisCertificate);
     fileData.append('tcs', this.tcsFile);
 
-
-    this._auth.register(fileData).subscribe((res:any) => {
-      if (res.success) {
-        console.log('res', res);
-        this.toastr.success('Registered successfully', '');
-        this.registerForm.reset();
-        this._spinner.hide();
-        this._router.navigate(['/login']);
-      } if (res.error.validation.email) {
-        this.toastr.error(res.error.validation.email);
-        this._spinner.hide();
-      } else {
-        this.toastr.error("Something went wrong !");
-        this._spinner.hide();
-      }
-    },
+    this._auth.register(fileData).subscribe(
+      (res: any) => {
+        if (res.success) {
+          console.log('res', res);
+          this.toastr.success('Registered successfully', '');
+          this.registerForm.reset();
+          this._spinner.hide();
+          this._router.navigate(['/login']);
+        }
+        if (res.error.validation.email) {
+          this.toastr.error(res.error.validation.email);
+          this._spinner.hide();
+        } else {
+          this.toastr.error('Something went wrong !');
+          this._spinner.hide();
+        }
+      },
       (error) => {
         this.toastr.error('', error);
         this._spinner.hide();
       }
     );
-
-  };
-
+  }
 }

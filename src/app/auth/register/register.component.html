@@ -1,994 +1,1619 @@
 <html lang="en">
-<head>
-   <style type="text/css">
+  <head>
+    <style type="text/css">
       /* ============ only desktop view ============ */
       @media all and (min-width: 992px) {
-         .navbar .nav-item .dropdown-menu {
-            display: block;
-            opacity: 0;
-            visibility: hidden;
-            transition: .3s;
-            margin-top: 0;
-         }
+        .navbar .nav-item .dropdown-menu {
+          display: block;
+          opacity: 0;
+          visibility: hidden;
+          transition: 0.3s;
+          margin-top: 0;
+        }
 
-         .navbar .nav-item:hover .nav-link {
-            color: #fff;
-         }
+        .navbar .nav-item:hover .nav-link {
+          color: #fff;
+        }
 
-         .navbar .dropdown-menu.fade-down {
-            top: 80%;
-            transform: rotateX(-75deg);
-            transform-origin: 0% 0%;
-         }
+        .navbar .dropdown-menu.fade-down {
+          top: 80%;
+          transform: rotateX(-75deg);
+          transform-origin: 0% 0%;
+        }
 
-         .navbar .dropdown-menu.fade-up {
-            top: 180%;
-         }
+        .navbar .dropdown-menu.fade-up {
+          top: 180%;
+        }
 
-         .navbar .nav-item:hover .dropdown-menu {
-            transition: .3s;
-            opacity: 1;
-            visibility: visible;
-            top: 100%;
-            transform: rotateX(0deg);
-         }
+        .navbar .nav-item:hover .dropdown-menu {
+          transition: 0.3s;
+          opacity: 1;
+          visibility: visible;
+          top: 100%;
+          transform: rotateX(0deg);
+        }
       }
 
       /* ============ desktop view .end// ============ */
-   </style>
-</head>
+    </style>
+  </head>
 
-<body>
-   <app-header></app-header>
-   <!--Top Banner-->
-   <section>
+  <body>
+    <app-header></app-header>
+    <!--Top Banner-->
+    <section>
       <div class="container-fluid">
-         <div class="row">
-            <div class="col-12 p-0 position-relative top-banner-inner">
-               <img src="assets/assets/images/banner.png" alt="banner" class="top-banner">
-               <p class="banner-title">Register Now</p>
-            </div>
-         </div>
+        <div class="row">
+          <div class="col-12 p-0 position-relative top-banner-inner">
+            <img
+              src="assets/assets/images/banner.png"
+              alt="banner"
+              class="top-banner"
+            />
+            <p class="banner-title">Register Now</p>
+          </div>
+        </div>
       </div>
-   </section>
-   <!--/Top Banner-->
-   <!--Content-->
-   <section class="bg-grey position-relative">
+    </section>
+    <!--/Top Banner-->
+    <!--Content-->
+    <section class="bg-grey position-relative">
       <div class="container">
-         <div class="row ptt-5">
-            <div class="col-12 myy-5">
-               <div class="reg-tab">
-                  <ul class="nav nav-tabs" id="regTab" role="tablist">
-                     <li class="nav-item position-relative">
-                        <a class="nav-link active" data-toggle="tab" (click)="firsttab()" role="tab"
-                           aria-controls="mobile"><span class="mobile-icon mr-2"></span> <span class="nav-ttxt">Mobile &
-                              GST
-                              Verification</span><span class="nav-round"></span></a>
-                     </li>
-                     <li class="nav-item position-relative">
-                        <a class="nav-link" data-toggle="tab" (click)="mobileTabContinue()" role="tab"
-                           aria-controls="profile"><span class="kyc-icon mr-2"></span> <span class="nav-ttxt">e-KYC
-                              Customer</span><span class="nav-round"></span></a>
-                     </li>
-                     <li class="nav-item position-relative">
-                        <a class="nav-link " data-toggle="tab" (click)="ekycTabContinue()" role="tab"
-                           aria-controls="address"><span class="address-icon mr-2"></span> <span
-                              class="nav-ttxt">Address</span><span class="nav-round"></span></a>
-                     </li>
-                     <li class="nav-item position-relative">
-                        <a class="nav-link" data-toggle="tab" (click)="addressTabContinue()" role="tab"
-                           aria-controls="uploads"><span class="upload-icon mr-2"></span> <span
-                              class="nav-ttxt">Uploads</span><span class="nav-round"></span></a>
-                     </li>
-                  </ul>
-                  <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
-                     <div class="tab-content">
-                        <div *ngIf="mobileTab" class="active" id="" role="tabpanel">
-                           <div class="container">
-                              <div class="row tab-bg-white">
-                                 <div class="col-12 col-lg-6 col-sm-6">
-                                    <div class="form-group ">
-                                       <label>Mobile Number</label>
-                                       <div class="d-flex2 display-f">
-                                          <input (keyup)="sendOtp($event)" formControlName="phone" type="number"
-                                             class="form-control w-79">
-                                          <button (click)="getOpt()" type="button" class="btn blue-btn">Get OTP</button>
-                                       </div>
-                                       <div *ngIf="f['phone']?.errors?.pattern"> <small class="text-danger">Please,
-                                             Enter 10 digit mobile number.</small> </div>
-                                       <div *ngIf="f['phone']?.invalid && (f['phone']?.touched || submitted)">
-                                          <small class="text-danger">
-                                             Mobile Number is required
-                                          </small>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+        <div class="row ptt-5">
+          <div class="col-12 myy-5">
+            <div class="reg-tab">
+              <ul class="nav nav-tabs" id="regTab" role="tablist">
+                <li class="nav-item position-relative">
+                  <a
+                    [ngClass]="
+                      mobileTab == true ? 'nav-link active' : 'nav-link'
+                    "
+                    data-toggle="tab"
+                    (click)="firsttab()"
+                    role="tab"
+                    aria-controls="mobile"
+                    ><span class="mobile-icon mr-2"></span>
+                    <span class="nav-ttxt">Mobile & GST Verification</span
+                    ><span class="nav-round"></span
+                  ></a>
+                </li>
+                <li class="nav-item position-relative">
+                  <a
+                    [ngClass]="ekycTab == true ? 'nav-link active' : 'nav-link'"
+                    data-toggle="tab"
+                    (click)="mobileTabContinue()"
+                    role="tab"
+                    aria-controls="profile"
+                    ><span class="kyc-icon mr-2"></span>
+                    <span class="nav-ttxt">e-KYC Customer</span
+                    ><span class="nav-round"></span
+                  ></a>
+                </li>
+                <li class="nav-item position-relative">
+                  <a
+                    [ngClass]="
+                      addressTab == true ? 'nav-link active' : 'nav-link'
+                    "
+                    data-toggle="tab"
+                    (click)="ekycTabContinue()"
+                    role="tab"
+                    aria-controls="address"
+                    ><span class="address-icon mr-2"></span>
+                    <span class="nav-ttxt">Address</span
+                    ><span class="nav-round"></span
+                  ></a>
+                </li>
+                <li class="nav-item position-relative">
+                  <a
+                    [ngClass]="
+                      this.uploadTab == true ? 'nav-link active' : 'nav-link'
+                    "
+                    data-toggle="tab"
+                    (click)="addressTabContinue()"
+                    role="tab"
+                    aria-controls="uploads"
+                    ><span class="upload-icon mr-2"></span>
+                    <span class="nav-ttxt">Uploads</span
+                    ><span class="nav-round"></span
+                  ></a>
+                </li>
+              </ul>
+              <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+                <div class="tab-content">
+                  <div *ngIf="mobileTab" class="active" id="" role="tabpanel">
+                    <div class="container">
+                      <div class="row tab-bg-white">
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Mobile Number</label>
+                            <div class="d-flex2 display-f">
+                              <input
+                                (keyup)="sendOtp($event)"
+                                formControlName="phone"
+                                type="number"
+                                class="form-control w-79"
+                              />
+                              <button
+                                (click)="getOpt()"
+                                type="button"
+                                class="btn blue-btn"
+                              >
+                                Get OTP
+                              </button>
+                            </div>
+                            <div *ngIf="f['phone']?.errors?.pattern">
+                              <small class="text-danger"
+                                >Please, Enter 10 digit mobile number.</small
+                              >
+                            </div>
+                            <div
+                              *ngIf="
+                                f['phone']?.invalid &&
+                                (f['phone']?.touched || submitted)
+                              "
+                            >
+                              <small class="text-danger">
+                                Mobile Number is required
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Enter OTP</label>
+                            <span class="text-primary ml-5">{{
+                              mobile?.otp
+                            }}</span>
+                            <div class="d-flex2 display-f">
+                              <input
+                                type="number"
+                                (change)="checkOtp($event)"
+                                class="form-control w-79"
+                              />
+                              <button
+                                type="button"
+                                (click)="checkVerifyOtp()"
+                                [disabled]="haveOtp"
+                                class="btn blue-btn"
+                              >
+                                Verify
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Email ID</label>
+                            <input
+                              formControlName="email"
+                              type="email"
+                              class="form-control"
+                            />
+                            <div
+                              *ngIf="
+                                f['email'].invalid &&
+                                (f['email'].dirty ||
+                                  f['email'].touched ||
+                                  submitted)
+                              "
+                            >
+                              <small class="text-danger">
+                                Email is required
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Password</label>
+                            <input
+                              formControlName="password"
+                              type="password"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--  -->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>GSTIN</label>
+                            <div class="d-flex2 display-f">
+                              <input
+                                formControlName="gstin"
+                                type="text"
+                                class="form-control w-79"
+                              />
+                              <button type="button" class="btn blue-btn">
+                                Get Details
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Organization PAN</label>
+                            <input
+                              formControlName="org_pan"
+                              type="text"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Organization Name</label>
+                            <input
+                              formControlName="org_name"
+                              type="text"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Organization Address</label>
+                            <input
+                              formControlName="org_address"
+                              type="text"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label>Choose Product</label>
+                            <ul id="tree1" (change)="onSelectCheckBox($event)">
+                              <li class="branch-main">
+                                <a href="javascript:;"
+                                  >Ferro Chrome
+                                  <span
+                                    class="price-info price-info0 d-inline-block"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                  >
+                                    <i class="fa fa-info-circle"></i>
+                                  </span>
+                                </a>
+                                <ul>
+                                  <li>
+                                    <a href="javascript:;">
+                                      HC Ferro Chrome (Lumps)
+                                      <span
+                                        class="price-info price-info0 d-inline-block"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                      >
+                                        <i class="fa fa-info-circle"></i> </span
+                                    ></a>
+                                    <ul>
+                                      <li>
+                                        <a href="javascript:;">
+                                          <label class="container-check"
+                                            >High
+                                            <span
+                                              class="price-info price-info0 d-inline-block"
+                                              data-toggle="tooltip"
+                                              data-placement="top"
+                                              title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                            >
+                                              <i class="fa fa-info-circle"></i>
+                                            </span>
+                                            <input
+                                              type="checkbox"
+                                              value="High"
+                                            />
+                                            <span
+                                              class="checkmark"
+                                            ></span> </label
+                                        ></a>
+                                      </li>
+                                      <li>
+                                        <a href="javascript:;">
+                                          <label class="container-check"
+                                            >Medium
+                                            <span
+                                              class="price-info price-info0 d-inline-block"
+                                              data-toggle="tooltip"
+                                              data-placement="top"
+                                              title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                            >
+                                              <i class="fa fa-info-circle"></i>
+                                            </span>
+                                            <input
+                                              type="checkbox"
+                                              value="Medium"
+                                            />
+                                            <span class="checkmark"></span>
+                                          </label>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="javascript:;">
+                                          <label class="container-check"
+                                            >Low
+                                            <span
+                                              class="price-info price-info0 d-inline-block"
+                                              data-toggle="tooltip"
+                                              data-placement="top"
+                                              title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                            >
+                                              <i class="fa fa-info-circle"></i>
+                                            </span>
+                                            <input
+                                              type="checkbox"
+                                              value="Low"
+                                            />
+                                            <span class="checkmark"></span>
+                                          </label>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="javascript:;">
+                                          <label class="container-check"
+                                            >Low Silicone
+                                            <span
+                                              class="price-info price-info0 d-inline-block"
+                                              data-toggle="tooltip"
+                                              data-placement="top"
+                                              title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                            >
+                                              <i class="fa fa-info-circle"></i>
+                                            </span>
+                                            <input
+                                              type="checkbox"
+                                              value="Low Silicone"
+                                            />
+                                            <span class="checkmark"></span>
+                                          </label>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                  <li>
+                                    <a href="javascript:;">
+                                      <label class="container-check"
+                                        >HC Ferro Chrome (Chips)
+                                        <span
+                                          class="price-info price-info0 d-inline-block"
+                                          data-toggle="tooltip"
+                                          data-placement="top"
+                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                        >
+                                          <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <input
+                                          type="checkbox"
+                                          value="HC Ferro Chrome (Chips)"
+                                        />
+                                        <span class="checkmark"></span>
+                                      </label>
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="javascript:;">
+                                      <label class="container-check"
+                                        >HC Ferro Chrome (Fines)
+                                        <span
+                                          class="price-info price-info0 d-inline-block"
+                                          data-toggle="tooltip"
+                                          data-placement="top"
+                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                        >
+                                          <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <input
+                                          type="checkbox"
+                                          value="HC Ferro Chrome (Fines)"
+                                        />
+                                        <span class="checkmark"></span>
+                                      </label>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li class="branch-main">
+                                Chrome Ore
+                                <span
+                                  class="price-info price-info0 d-inline-block"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                >
+                                  <i class="fa fa-info-circle d-block"></i>
+                                </span>
+                                <ul>
+                                  <li>
+                                    <a href="javascript:;">
+                                      <label class="container-check"
+                                        >High Grade Friable Chrome Ore
+                                        <span
+                                          class="price-info price-info0 d-inline-block"
+                                          data-toggle="tooltip"
+                                          data-placement="top"
+                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                        >
+                                          <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <input
+                                          type="checkbox"
+                                          value="High Grade Friable Chrome Ore"
+                                        />
+                                        <span class="checkmark"></span>
+                                      </label>
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="javascript:;">
+                                      <label class="container-check"
+                                        >Medium Grade Friable Chrome Ore
+                                        <span
+                                          class="price-info price-info0 d-inline-block"
+                                          data-toggle="tooltip"
+                                          data-placement="top"
+                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max"
+                                        >
+                                          <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <input
+                                          type="checkbox"
+                                          value="Medium Grade Friable Chrome Ore"
+                                        />
+                                        <span class="checkmark"></span>
+                                      </label>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12" (change)="choosProductSize($event)">
+                          <label class="d-block mt-3"
+                            >Choose Product’s Size (mm)</label
+                          >
+                          <label class="container-radio"
+                            >10-150
+                            <input type="radio" value="10-150" name="radio" />
+                            <span class="checkmark"></span>
+                          </label>
+                          <label class="container-radio"
+                            >10-50
+                            <input type="radio" value="10-50" name="radio" />
+                            <span class="checkmark"></span>
+                          </label>
+                          <label class="container-radio"
+                            >10-70
+                            <input type="radio" value="10-70" name="radio" />
+                            <span class="checkmark"></span>
+                          </label>
+                          <label class="container-radio"
+                            >10-100
+                            <input type="radio" value="10-100" name="radio" />
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <!--/-->
+                        <div class="col-12">
+                          <div
+                            class="form-group question-form-control font--16"
+                          >
+                            <div class="form-check form-check-inline">
+                              <label
+                                class="form-check-label"
+                                for="inlineCheckbox1"
+                                >Are you interested in Distribution?</label
+                              >
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                id=""
+                                name="cd"
+                                value="option1"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="inlineCheckbox1"
+                                >Yes</label
+                              >
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                id=""
+                                name="cd"
+                                value="option2"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="inlineCheckbox2"
+                                >No</label
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <!-- / -->
+                        <div class="col-12 mt-2">
+                          <button
+                            (click)="mobileTabContinue()"
+                            class="btn btn-primary ttab"
+                            data-toggle="tab"
+                            role="tab"
+                            aria-controls="profile"
+                            routerLinkActive="active"
+                          >
+                            <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+                            Continue
+                          </button>
+                        </div>
+                        <!--/-->
+                      </div>
+                    </div>
+                  </div>
+                  <!--/Mobile-->
+                  <div *ngIf="ekycTab" class="" id="" role="tabpanel">
+                    <div class="container">
+                      <div class="row tab-bg-white">
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>GST Number</label>
+                            <input
+                              formControlName="company_gst"
+                              type="number"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Linked Address</label>
+                            <input
+                              formControlName="company_linked_address"
+                              type="text"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>PAN Number</label>
+                            <input
+                              formControlName="company_pan"
+                              type="text"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Company Name</label>
+                            <input
+                              formControlName="company_name"
+                              type="text"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6">
+                          <div class="form-group">
+                            <label>Nature of Business</label>
+                            <select
+                              (change)="selectBusiness($event)"
+                              class="form-control"
+                            >
+                              <option>Select</option>
+                              <option value="Manufacturer">Manufacturer</option>
+                              <option value="Trader">Trader</option>
+                              <option value="Manufacturer & Trader">
+                                Manufacturer & Trader
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 col-lg-6 col-sm-6 mt-4">
+                          <div class="form-group">
+                            <label class="container-check"
+                              >Is TCS/TDS applicable?
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 mt-2">
+                          <!-- <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
+                          <button
+                            (click)="ekycTabContinue()"
+                            data-toggle="tab"
+                            role="tab"
+                            aria-controls="address"
+                            class="btn btn-primary ttab"
+                            routerLinkActive="active"
+                          >
+                            <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+                            Continue
+                          </button>
+                        </div>
+                        <!--/-->
+                      </div>
+                    </div>
+                  </div>
+                  <!--/EKYC-->
+                  <div *ngIf="addressTab" class="" id="" role="tabpanel">
+                    <div class="container">
+                      <div class="row tab-bg-white">
+                        <div class="col-12">
+                          <div id="accordion" class="accordion">
+                            <div class="card mb-0">
+                              <div
+                                class="card-header"
+                                data-toggle="collapse"
+                                href="#collapseOne"
+                              >
+                                <a class="card-title">
+                                  Enter Shipping Address
+                                </a>
+                              </div>
+                              <div
+                                id="collapseOne"
+                                class="card-body collapse show"
+                                data-parent="#accordion"
+                              >
+                                <div class="row">
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Enter OTP</label> <span class="text-primary ml-5">{{mobile?.otp}}</span>
-                                       <div class="d-flex2 display-f">
-                                          <input type="number" (change)="checkOtp($event)" class="form-control w-79">
-                                          <button type="button" (click)="checkVerifyOtp()" [disabled]="haveOtp"
-                                             class="btn blue-btn">Verify</button>
-                                       </div>
+                                      <label>First Name</label>
+                                      <input
+                                        formControlName="first_name"
+                                        type="text"
+                                        class="form-control"
+                                      />
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Email ID</label>
-                                       <input formControlName="email" type="email" class="form-control">
-                                       <div
-                                          *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched || submitted)">
-                                          <small class="text-danger">
-                                             Email is required
-                                          </small>
-                                       </div>
-                                    </div>
-                                 </div>
+                                  </div>
                                   <!--/-->
                                   <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Password</label>
-                                       <input formControlName="password" type="password" class="form-control">
+                                      <label>Last Name</label>
+                                      <input
+                                        formControlName="last_name"
+                                        type="text"
+                                        class="form-control"
+                                      />
                                     </div>
-                                 </div>
-                                 <!--  -->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>GSTIN</label>
-                                       <div class="d-flex2 display-f">
-                                          <input formControlName="gstin" type="text" class="form-control w-79">
-                                          <button type="button" class="btn blue-btn">Get Details</button>
-                                       </div>
+                                      <label>Address Line1</label>
+                                      <input
+                                        formControlName="addressone"
+                                        type="text"
+                                        class="form-control"
+                                      />
                                     </div>
-                                 </div>
-                                
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Organization PAN</label>
-                                       <input formControlName="org_pan" type="text" class="form-control">
+                                      <label>Address Line2</label>
+                                      <input
+                                        type="text"
+                                        formControlName="addressone"
+                                        class="form-control"
+                                      />
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Organization Name</label>
-                                       <input formControlName="org_name" type="text" class="form-control">
+                                      <label>Country</label>
+                                      <select
+                                        #country
+                                        name="country"
+                                        id="country"
+                                        (change)="onCountryChange($event)"
+                                        class="form-control"
+                                      >
+                                        <option [value]="null">
+                                          Select country
+                                        </option>
+                                        <option
+                                          *ngFor="let country of countries"
+                                          [value]="country | json"
+                                        >
+                                          {{ country.name }}
+                                        </option>
+                                      </select>
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!-- / -->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Organization Address</label>
-                                       <input formControlName="org_address" type="text" class="form-control">
+                                      <label>State</label>
+                                      <select
+                                        #state
+                                        name="state"
+                                        id="state"
+                                        (change)="onStateChange($event)"
+                                        class="form-control"
+                                      >
+                                        <option [value]="null">
+                                          Select state
+                                        </option>
+                                        <option
+                                          *ngFor="let state of states"
+                                          [value]="state | json"
+                                        >
+                                          {{ state.name }}
+                                        </option>
+                                      </select>
+                                      <!-- <input type="text" formControlName="state" class="form-control" > -->
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12">
+                                  </div>
+                                  <!-- / -->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Choose Product</label>
-                                       <ul id="tree1" (change)="onSelectCheckBox($event)">
-                                          <li class="branch-main">
-                                             <a href="javascript:;">Ferro Chrome
-                                                <span class="price-info price-info0 d-inline-block"
-                                                   data-toggle="tooltip" data-placement="top"
-                                                   title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                   <i class="fa fa-info-circle"></i>
-                                                </span>
-                                             </a>
-                                             <ul>
-                                                <li>
-                                                   <a href="javascript:;"> HC Ferro Chrome (Lumps) <span
-                                                         class="price-info price-info0 d-inline-block"
-                                                         data-toggle="tooltip" data-placement="top"
-                                                         title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                         <i class="fa fa-info-circle"></i>
-                                                      </span></a>
-                                                   <ul>
-                                                      <li><a href="javascript:;">
-                                                            <label class="container-check">High <span
-                                                                  class="price-info price-info0 d-inline-block"
-                                                                  data-toggle="tooltip" data-placement="top"
-                                                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                                  <i class="fa fa-info-circle"></i>
-                                                               </span>
-                                                               <input type="checkbox" value="High">
-                                                               <span class="checkmark"></span>
-                                                            </label></a>
-                                                      </li>
-                                                      <li><a href="javascript:;">
-                                                            <label class="container-check">Medium <span
-                                                                  class="price-info price-info0 d-inline-block"
-                                                                  data-toggle="tooltip" data-placement="top"
-                                                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                                  <i class="fa fa-info-circle"></i>
-                                                               </span>
-                                                               <input type="checkbox" value="Medium">
-                                                               <span class="checkmark"></span>
-                                                            </label>
-                                                         </a>
-                                                      </li>
-                                                      <li><a href="javascript:;">
-                                                            <label class="container-check">Low <span
-                                                                  class="price-info price-info0 d-inline-block"
-                                                                  data-toggle="tooltip" data-placement="top"
-                                                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                                  <i class="fa fa-info-circle"></i>
-                                                               </span>
-                                                               <input type="checkbox" value="Low">
-                                                               <span class="checkmark"></span>
-                                                            </label>
-                                                         </a>
-                                                      </li>
-                                                      <li><a href="javascript:;">
-                                                            <label class="container-check">Low Silicone <span
-                                                                  class="price-info price-info0 d-inline-block"
-                                                                  data-toggle="tooltip" data-placement="top"
-                                                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                                  <i class="fa fa-info-circle"></i>
-                                                               </span>
-                                                               <input type="checkbox" value="Low Silicone">
-                                                               <span class="checkmark"></span>
-                                                            </label>
-                                                         </a>
-                                                      </li>
-                                                   </ul>
-                                                </li>
-                                                <li><a href="javascript:;">
-                                                      <label class="container-check">HC Ferro Chrome (Chips) <span
-                                                            class="price-info price-info0 d-inline-block"
-                                                            data-toggle="tooltip" data-placement="top"
-                                                            title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                            <i class="fa fa-info-circle"></i>
-                                                         </span>
-                                                         <input type="checkbox" value="HC Ferro Chrome (Chips)">
-                                                         <span class="checkmark"></span>
-                                                      </label>
-                                                   </a>
-                                                </li>
-                                                <li><a href="javascript:;">
-                                                      <label class="container-check">HC Ferro Chrome (Fines) <span
-                                                            class="price-info price-info0 d-inline-block"
-                                                            data-toggle="tooltip" data-placement="top"
-                                                            title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                            <i class="fa fa-info-circle"></i>
-                                                         </span>
-                                                         <input type="checkbox" value="HC Ferro Chrome (Fines)">
-                                                         <span class="checkmark"></span>
-                                                      </label>
-                                                   </a>
-                                                </li>
-                                             </ul>
-                                          </li>
-                                          <li class="branch-main">
-                                             Chrome Ore <span class="price-info price-info0 d-inline-block"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                <i class="fa fa-info-circle d-block"></i>
-                                             </span>
-                                             <ul>
-                                                <li>
-                                                   <a href="javascript:;">
-                                                      <label class="container-check">High Grade Friable Chrome Ore <span
-                                                            class="price-info price-info0 d-inline-block"
-                                                            data-toggle="tooltip" data-placement="top"
-                                                            title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                            <i class="fa fa-info-circle"></i>
-                                                         </span>
-                                                         <input type="checkbox" value="High Grade Friable Chrome Ore">
-                                                         <span class="checkmark"></span>
-                                                      </label>
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a href="javascript:;">
-                                                      <label class="container-check">Medium Grade Friable Chrome Ore
-                                                         <span class="price-info price-info0 d-inline-block"
-                                                            data-toggle="tooltip" data-placement="top"
-                                                            title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                            <i class="fa fa-info-circle"></i>
-                                                         </span>
-                                                         <input type="checkbox" value="Medium Grade Friable Chrome Ore">
-                                                         <span class="checkmark"></span>
-                                                      </label>
-                                                   </a>
-                                                </li>
-                                             </ul>
-                                          </li>
-                                       </ul>
+                                      <label>City</label>
+                                      <select
+                                        name=""
+                                        id=""
+                                        class="form-control"
+                                        #city
+                                        name="city"
+                                        id="city"
+                                        (change)="onCityChange($event)"
+                                      >
+                                        <option [value]="null">
+                                          Select city
+                                        </option>
+                                        <option
+                                          *ngFor="let city of cities"
+                                          [value]="city | json"
+                                        >
+                                          {{ city.name }}
+                                        </option>
+                                      </select>
+                                      <!-- <input type="text" formControlName="city" class="form-control" > -->
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12" (change)="choosProductSize($event)">
-                                    <label class="d-block mt-3">Choose Product’s Size (mm)</label>
-                                    <label class="container-radio">10-150
-                                       <input type="radio" value="10-150" name="radio">
-                                       <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container-radio">10-50
-                                       <input type="radio" value="10-50" name="radio">
-                                       <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container-radio">10-70
-                                       <input type="radio" value="10-70" name="radio">
-                                       <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container-radio">10-100
-                                       <input type="radio" value="10-100" name="radio">
-                                       <span class="checkmark"></span>
-                                    </label>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12">
-                                    <div class="form-group question-form-control font--16">
-                                       <div class="form-check form-check-inline">
-                                          <label class="form-check-label" for="inlineCheckbox1">Are you interested in Distribution?</label>
-                                       </div>
-                                       <div class="form-check form-check-inline">
-                                          <input class="form-check-input" type="radio" id="" name="cd" value="option1">
-                                          <label class="form-check-label" for="inlineCheckbox1">Yes</label>
-                                       </div>
-                                       <div class="form-check form-check-inline">
-                                          <input class="form-check-input" type="radio" id="" name="cd" value="option2">
-                                          <label class="form-check-label" for="inlineCheckbox2">No</label>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- / -->
-                                 <div class="col-12 mt-2">
-                                    <button (click)="mobileTabContinue()" class="btn btn-primary ttab" data-toggle="tab"
-                                       role="tab" aria-controls="profile" routerLinkActive="active">
-                                       <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-                                       Continue
-                                    </button>
-                                 </div>
-                                 <!--/-->
-                              </div>
-                           </div>
-                        </div>
-                        <!--/Mobile-->
-                        <div *ngIf="ekycTab" class="" id="" role="tabpanel">
-                           <div class="container">
-                              <div class="row tab-bg-white">
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>GST Number</label>
-                                       <input formControlName="company_gst" type="number" class="form-control">
+                                      <label>Pincode</label>
+                                      <input
+                                        type="text"
+                                        formControlName="pincode"
+                                        class="form-control"
+                                      />
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!--/-->
+                                  <!-- <div class="col-12 col-lg-6 col-sm-6"></div> -->
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                       <label>Linked Address</label>
-                                       <input formControlName="company_linked_address" type="text" class="form-control">
+                                      <label class="container-check"
+                                        >Use this as billing address
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                      </label>
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
+                                  </div>
+                                  <!--/-->
+                                  <div
+                                    class="col-12 col-lg-6 col-sm-6 text-right2"
+                                  >
                                     <div class="form-group">
-                                       <label>PAN Number</label>
-                                       <input formControlName="company_pan" type="text" class="form-control">
+                                      <a
+                                        href="#newAddressBlock"
+                                        data-toggle="collapse"
+                                        ><i class="fa fa-plus-circle"></i> Add
+                                        New Address</a
+                                      >
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Company Name</label>
-                                       <input formControlName="company_name" type="text" class="form-control">
-                                    </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                       <label>Nature of Business</label>
-                                       <select (change)="selectBusiness($event)" class="form-control">
-                                          <option>Select</option>
-                                          <option value="Manufacturer">Manufacturer</option>
-                                          <option value="Trader">Trader</option>
-                                          <option value="Manufacturer & Trader">Manufacturer & Trader</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-6 col-sm-6 mt-4">
-                                    <div class="form-group">
-                                       <label class="container-check">Is TCS/TDS applicable?
-                                          <input type="checkbox">
-                                          <span class="checkmark"></span>
-                                       </label>
-                                    </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 mt-2">
-                                    <!-- <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
-                                    <button (click)="ekycTabContinue()" data-toggle="tab" role="tab"
-                                       aria-controls="address" class="btn btn-primary ttab" routerLinkActive="active">
-                                       <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-                                       Continue
-                                    </button>
-                                 </div>
-                                 <!--/-->
-                              </div>
-                           </div>
-                        </div>
-                        <!--/EKYC-->
-                        <div *ngIf="addressTab" class="" id="" role="tabpanel">
-                           <div class="container">
-                              <div class="row tab-bg-white">
-                                 <div class="col-12">
-                                    <div id="accordion" class="accordion">
-                                       <div class="card mb-0">
-                                          <div class="card-header" data-toggle="collapse" href="#collapseOne">
-                                             <a class="card-title">
-                                                Enter Shipping Address
-                                             </a>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12">
+                                    <div id="newAddressBlock" class="collapse">
+                                      <div class="row">
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>GSTIN</label>
+                                            <div class="d-flex2 display-f">
+                                              <input
+                                                type="number"
+                                                class="form-control w-79"
+                                              />
+                                              <button
+                                                type="button"
+                                                class="btn blue-btn"
+                                              >
+                                                Get Details
+                                              </button>
+                                            </div>
                                           </div>
-                                          <div id="collapseOne" class="card-body collapse show"
-                                             data-parent="#accordion">
-                                             <div class="row">
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>First Name</label>
-                                                      <input formControlName="first_name" type="text"
-                                                         class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Last Name</label>
-                                                      <input formControlName="last_name" type="text"
-                                                         class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Address Line1</label>
-                                                      <input formControlName="addressone" type="text"
-                                                         class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Address Line2</label>
-                                                      <input type="text" formControlName="addressone"
-                                                         class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Country</label>
-                                                      <select #country name="country" id="country"
-                                                         (change)="onCountryChange($event)" class="form-control">
-                                                         <option [value]="null">Select country</option>
-                                                         <option *ngFor="let country of countries"
-                                                            [value]="country | json">{{ country.name }}</option>
-                                                      </select>
-                                                   </div>
-                                                </div>
-                                                <!-- / -->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>State</label>
-                                                      <select #state name="state" id="state" (change)="onStateChange($event)" class="form-control">
-                                                         <option [value]="null">Select state</option>
-                                                         <option *ngFor="let state of states" [value]="state | json">{{ state.name }}</option>
-                                                      </select>
-                                                      <!-- <input type="text" formControlName="state" class="form-control" > -->
-                                                   </div>
-                                                </div>
-                                                <!-- / -->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>City</label>
-                                                      <select name="" id="" class="form-control" #city name="city" id="city" (change)="onCityChange($event)">
-                                                         <option  [value]="null">Select city</option>
-                                                         <option *ngFor="let city of cities" [value]="city | json">{{ city.name }}</option>
-                                                      </select>
-                                                      <!-- <input type="text" formControlName="city" class="form-control" > -->
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Pincode</label>
-                                                      <input type="text" formControlName="pincode" class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <!-- <div class="col-12 col-lg-6 col-sm-6"></div> -->
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label class="container-check">Use this as billing address
-                                                         <input type="checkbox">
-                                                         <span class="checkmark"></span>
-                                                      </label>
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6 text-right2">
-                                                   <div class="form-group">
-                                                      <a href="#newAddressBlock" data-toggle="collapse"><i
-                                                            class="fa fa-plus-circle"></i> Add New Address</a>
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12">
-                                                   <div id="newAddressBlock" class="collapse">
-                                                      <div class="row">
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>GSTIN</label>
-                                                               <div class="d-flex2 display-f">
-                                                                  <input type="number" class="form-control w-79">
-                                                                  <button type="button" class="btn blue-btn">Get
-                                                                     Details</button>
-                                                               </div>
-                                                            </div>
-                                                         </div>
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>First Name</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Last Name</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Address Line1</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Address Line2</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>City</label>
-                                                               <input type="text" readonly class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>State</label>
-                                                               <input type="text" readonly class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Pincode</label>
-                                                               <input type="text" readonly class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>First Name</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
                                           </div>
-                                          <div class="card-header collapsed" data-toggle="collapse"
-                                             data-parent="#accordion" href="#collapseTwo">
-                                             <a class="card-title">
-                                                Enter Billing Address
-                                             </a>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
                                           </div>
-                                          <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
-                                             <div class="row">
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>First Name</label>
-                                                      <input type="text" class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Last Name</label>
-                                                      <input type="text" class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Address Line1</label>
-                                                      <input type="text" class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Address Line2</label>
-                                                      <input type="text" class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>City</label>
-                                                      <input type="text" readonly class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>State</label>
-                                                      <input type="text" readonly class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6">
-                                                   <div class="form-group">
-                                                      <label>Pincode</label>
-                                                      <input type="text" readonly class="form-control">
-                                                   </div>
-                                                </div>
-                                                <!--/-->
-                                                <div class="col-12 col-lg-6 col-sm-6"></div>
-                                                <div class="col-12 col-lg-6 col-sm-6"></div>
-                                                <div class="col-12 col-lg-6 col-sm-6 text-right2">
-                                                   <div class="form-group">
-                                                      <a href="#newAddressBlock2" data-toggle="collapse"
-                                                         class="collapsed" aria-expanded="false"><i
-                                                            class="fa fa-plus-circle"></i> Add New
-                                                         Address</a>
-                                                   </div>
-                                                </div>
-                                                <div class="col-12">
-                                                   <div id="newAddressBlock2" class="collapse">
-                                                      <div class="row">
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>GSTIN</label>
-                                                               <div class="d-flex2 display-f">
-                                                                  <input type="number" class="form-control w-79">
-                                                                  <button type="button" class="btn blue-btn">Get
-                                                                     Details</button>
-                                                               </div>
-                                                            </div>
-                                                         </div>
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>First Name</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Last Name</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Address Line1</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Address Line2</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>City</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>State</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                         <div class="col-12 col-lg-6 col-sm-6">
-                                                            <div class="form-group">
-                                                               <label>Pincode</label>
-                                                               <input type="text" class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!--/-->
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Address Line1</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
                                           </div>
-                                       </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Address Line2</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>City</label>
+                                            <input
+                                              type="text"
+                                              readonly
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>State</label>
+                                            <input
+                                              type="text"
+                                              readonly
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Pincode</label>
+                                            <input
+                                              type="text"
+                                              readonly
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                      </div>
                                     </div>
-                                 </div>
-                                 <!--/-->
-                                 <div class="col-12 mt-4">
-                                    <!--  <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
-                                    <button (click)="addressTabContinue()" data-toggle="tab" role="tab"
-                                       aria-controls="uploads" class="btn btn-primary ttab" routerLinkActive="active">
-                                       <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-                                       Continue
-                                    </button>
-                                 </div>
-                                 <!--/-->
+                                  </div>
+                                </div>
                               </div>
-                           </div>
-                        </div>
-                        <!--/Address-->
-                        <div *ngIf="uploadTab" class="" id="" role="tabpanel">
-                           <div class="container">
-                              <div class="row tab-bg-white">
-                                 <div class="col-12 mt-3">
-                                    <div class="cart-table">
-                                       <div class="table-responsive">
-                                          <table class="table">
-                                             <thead>
-                                                <tr>
-                                                   <th>Document Name</th>
-                                                   <th>Valid Till</th>
-                                                   <th></th>
-                                                   <th></th>
-                                                </tr>
-                                             </thead>
-                                             <tbody>
-                                                <tr>
-                                                   <td>Address Proof <span style="color:#f00;">*</span></td>
-                                                   <td>
-                                                      --
-                                                   </td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="getAddrssProfe($event)" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-1">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                            <div *ngIf="f['address_proof_file']?.invalid && (f['address_proof_file']?.touched || submitted)">
-                                                               <small class="text-danger">
-                                                                  Address proof is required !
-                                                               </small>
-                                                            </div>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>Cancelled Cheque <span style="color:#f00;">*</span> </td>
-                                                   <td>
-                                                      --
-                                                   </td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="getCancelcheck($event)" name="file-1[]" id="file-2" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-2">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>PAN Card <span style="color:#f00;">*</span></td>
-                                                   <td><input type="date" class="form-control"></td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="uploadPan($event)" name="file-1[]" id="file-3" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-3">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>GST Certificate <span style="color:#f00;">*</span> </td>
-                                                   <td><input type="date" class="form-control"></td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="gstCertificateFileUpload($event)" name="file-1[]" id="file-4" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-4">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>Declaration on turnover-section 194Q and 206 cc <span style="color:#f00;">*</span></td>
-                                                   <td>
-                                                      --
-                                                   </td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="turnoverUpload($event)" name="file-1[]" id="file-5" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-5">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>ITR of last 2 FYs <span style="color:#f00;">*</span></td>
-                                                   <td>
-                                                      --
-                                                   </td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="itrFileUpload($event)" name="file-1[]" id="file-6" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-6">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>Form D <span style="color:#f00;">*</span></td>
-                                                   <td><input type="date" class="form-control"></td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="formDupload($event)" name="file-1[]" id="file-7" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-7">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>Consent Letter <span style="color:#f00;">*</span></td>
-                                                   <td>--</td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="consentLetterUpload($event)" name="file-1[]" id="file-8" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-8">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>Registration Certificates <span style="color:#f00;">*</span></td>
-                                                   <td>
-                                                      --
-                                                   </td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="regisCertificateUpload($event)" name="file-1[]" id="file-9" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-9">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td>TCS (If turnover is >Rs 10 crs) <span style="color:#f00;">*</span></td>
-                                                   <td><input type="date" class="form-control"></td>
-                                                   <td class="position-relative">
-                                                      <div class="uplodimg">
-                                                         <div class="uplodimgfil">
-                                                            <input type="file" (change)="tcsFileUpload($event)" name="file-1[]" id="file-10" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                            <label for="file-10">Upload <span><img src="assets/images/upload.png" alt=""></span></label>
-                                                         </div>
-                                                         <a href="#" class="reg-cross">
-                                                         <i class="fa fa-times"></i>
-                                                         </a>
-                                                      </div>
-                                                      <small>Maximum file size:5MB (PDF, PNG, JPG)</small>
-                                                   </td>
-                                                </tr>
-                                             </tbody>
-                                          </table>
-                                       </div>
-                                    </div>
-                                    <!--/-->
-                                 </div>
-                                 <div class="col-12">
-                                    <div class="form-group">
-                                       <label class="container-check">Interested to become distributor/dealer for TSML
-                                          <input type="checkbox">
-                                          <span class="checkmark"></span>
-                                       </label>
-                                    </div>
-                                    <div class="form-group">
-                                       <label class="container-check">I agree to the <a href="privacy.html"><u>terms and
-                                                conditions</u></a>
-                                          <input type="checkbox">
-                                          <span class="checkmark"></span>
-                                       </label>
-                                    </div>
-                                 </div>
-                                 <div class="col-12">
-                                    <div class="submit-btn-sec">
-                                       <button type="submit" class="btn btn-primary mr-2"><i
-                                             class="fa fa-paper-plane"></i> Submit</button>
-                                       <button type="button" class="btn btn-danger"><i class="fa fa-times"></i>
-                                          Cancel</button>
-                                    </div>
-                                 </div>
+                              <div
+                                class="card-header collapsed"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapseTwo"
+                              >
+                                <a class="card-title">
+                                  Enter Billing Address
+                                </a>
                               </div>
-                           </div>
+                              <div
+                                id="collapseTwo"
+                                class="card-body collapse"
+                                data-parent="#accordion"
+                              >
+                                <div class="row">
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>First Name</label>
+                                      <input type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Last Name</label>
+                                      <input type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Address Line1</label>
+                                      <input type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Address Line2</label>
+                                      <input type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>City</label>
+                                      <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>State</label>
+                                      <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Pincode</label>
+                                      <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6"></div>
+                                  <div class="col-12 col-lg-6 col-sm-6"></div>
+                                  <div
+                                    class="col-12 col-lg-6 col-sm-6 text-right2"
+                                  >
+                                    <div class="form-group">
+                                      <a
+                                        href="#newAddressBlock2"
+                                        data-toggle="collapse"
+                                        class="collapsed"
+                                        aria-expanded="false"
+                                        ><i class="fa fa-plus-circle"></i> Add
+                                        New Address</a
+                                      >
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div id="newAddressBlock2" class="collapse">
+                                      <div class="row">
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>GSTIN</label>
+                                            <div class="d-flex2 display-f">
+                                              <input
+                                                type="number"
+                                                class="form-control w-79"
+                                              />
+                                              <button
+                                                type="button"
+                                                class="btn blue-btn"
+                                              >
+                                                Get Details
+                                              </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>First Name</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Address Line1</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Address Line2</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>City</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>State</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                        <div class="col-12 col-lg-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Pincode</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!--/-->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <!--/Upload-->
-                     </div>
-                  </form>
-               </div>
+                        <!--/-->
+                        <div class="col-12 mt-4">
+                          <!--  <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
+                          <button
+                            (click)="addressTabContinue()"
+                            data-toggle="tab"
+                            role="tab"
+                            aria-controls="uploads"
+                            class="btn btn-primary ttab"
+                            routerLinkActive="active"
+                          >
+                            <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+                            Continue
+                          </button>
+                        </div>
+                        <!--/-->
+                      </div>
+                    </div>
+                  </div>
+                  <!--/Address-->
+                  <div *ngIf="uploadTab" class="" id="" role="tabpanel">
+                    <div class="container">
+                      <div class="row tab-bg-white">
+                        <div class="col-12 mt-3">
+                          <div class="cart-table">
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Document Name</th>
+                                    <th>Valid Till</th>
+                                    <th></th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      Address Proof
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>--</td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="getAddrssProfe($event)"
+                                            name="file-1[]"
+                                            id="file-1"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-1"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                          <div
+                                            *ngIf="
+                                              f['address_proof_file']
+                                                ?.invalid &&
+                                              (f['address_proof_file']
+                                                ?.touched ||
+                                                submitted)
+                                            "
+                                          >
+                                            <small class="text-danger">
+                                              Address proof is required !
+                                            </small>
+                                          </div>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Cancelled Cheque
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>--</td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="getCancelcheck($event)"
+                                            name="file-1[]"
+                                            id="file-2"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-2"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      PAN Card
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>
+                                      <input type="date" class="form-control" />
+                                    </td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="uploadPan($event)"
+                                            name="file-1[]"
+                                            id="file-3"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-3"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      GST Certificate
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>
+                                      <input type="date" class="form-control" />
+                                    </td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="
+                                              gstCertificateFileUpload($event)
+                                            "
+                                            name="file-1[]"
+                                            id="file-4"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-4"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Declaration on turnover-section 194Q and
+                                      206 cc <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>--</td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="turnoverUpload($event)"
+                                            name="file-1[]"
+                                            id="file-5"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-5"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      ITR of last 2 FYs
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>--</td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="itrFileUpload($event)"
+                                            name="file-1[]"
+                                            id="file-6"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-6"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Form D <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>
+                                      <input type="date" class="form-control" />
+                                    </td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="formDupload($event)"
+                                            name="file-1[]"
+                                            id="file-7"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-7"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Consent Letter
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>--</td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="
+                                              consentLetterUpload($event)
+                                            "
+                                            name="file-1[]"
+                                            id="file-8"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-8"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      Registration Certificates
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>--</td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="
+                                              regisCertificateUpload($event)
+                                            "
+                                            name="file-1[]"
+                                            id="file-9"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-9"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      TCS (If turnover is >Rs 10 crs)
+                                      <span style="color: #f00">*</span>
+                                    </td>
+                                    <td>
+                                      <input type="date" class="form-control" />
+                                    </td>
+                                    <td class="position-relative">
+                                      <div class="uplodimg">
+                                        <div class="uplodimgfil">
+                                          <input
+                                            type="file"
+                                            (change)="tcsFileUpload($event)"
+                                            name="file-1[]"
+                                            id="file-10"
+                                            class="inputfile inputfile-1"
+                                            data-multiple-caption="{count} files selected"
+                                            multiple=""
+                                          />
+                                          <label for="file-10"
+                                            >Upload
+                                            <span
+                                              ><img
+                                                src="assets/images/upload.png"
+                                                alt="" /></span
+                                          ></label>
+                                        </div>
+                                        <a href="#" class="reg-cross">
+                                          <i class="fa fa-times"></i>
+                                        </a>
+                                      </div>
+                                      <small
+                                        >Maximum file size:5MB (PDF, PNG,
+                                        JPG)</small
+                                      >
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <!--/-->
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label class="container-check"
+                              >Interested to become distributor/dealer for TSML
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                          <div class="form-group">
+                            <label class="container-check"
+                              >I agree to the
+                              <a href="privacy.html"
+                                ><u>terms and conditions</u></a
+                              >
+                              <input type="checkbox" />
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="submit-btn-sec">
+                            <button type="submit" class="btn btn-primary mr-2">
+                              <i class="fa fa-paper-plane"></i> Submit
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                              <i class="fa fa-times"></i> Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/Upload-->
+                </div>
+              </form>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </section>
-   <!--/Content-->
-   <div class="container-fluid display-off">
+    </section>
+    <!--/Content-->
+    <div class="container-fluid display-off">
       <div class="row">
-         <div class="col-12 text-right position-relative h-200">
-            <div class="mine-img"><img src="assets/assets/images/mine.png" class="img-responsive" alt="mine-image">
-            </div>
-         </div>
+        <div class="col-12 text-right position-relative h-200">
+          <div class="mine-img">
+            <img
+              src="assets/assets/images/mine.png"
+              class="img-responsive"
+              alt="mine-image"
+            />
+          </div>
+        </div>
       </div>
-   </div>
-   <!--Footer-->
-   <app-footer></app-footer>
-   <div class="foot_arw">
-      <a href="javascript:" id="return-to-top"><img src="assets/assets/images/footarw.png" alt=""></a>
-   </div>
-   <!--/Footer-->
-   <script>
+    </div>
+    <!--Footer-->
+    <app-footer></app-footer>
+    <div class="foot_arw">
+      <a href="javascript:" id="return-to-top"
+        ><img src="assets/assets/images/footarw.png" alt=""
+      /></a>
+    </div>
+    <!--/Footer-->
+    <script>
       $(function () {
-         $('[data-toggle="tooltip"]').tooltip()
-      })
-   </script>
-</body>
-
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
+  </body>
 </html>
