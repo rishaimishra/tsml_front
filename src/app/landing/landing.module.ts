@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProductsModule } from '../products/products.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgImageSliderModule } from 'ng-image-slider';
+
 
 const routes: Routes = [
   {
@@ -29,6 +31,7 @@ const routes: Routes = [
     FormsModule,
     SharedModule,
     ProductsModule,
+    NgImageSliderModule,
     CarouselModule
 
   ]

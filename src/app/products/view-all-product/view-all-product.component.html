@@ -24,7 +24,7 @@
                        <div class="sea_resu_left_body">
                           <div class="fil_top">
                              <strong>Filter by</strong>
-                             <a href="#url" class="cler_bt">Clear All</a>
+                             <a (click)="clreaFilter()" class="cler_bt">Clear All</a>
                           </div>
                           <div class="sea_left_tog">
                              <div class="panel-group fliter-list" id="accordion" role="tablist" aria-multiselectable="true">
@@ -36,14 +36,16 @@
                                       <div class="diiferent-sec">
                                          <form>
                                             <div class="fit_frm">
-                                               <select>
-                                                  <option>Search by Product</option>
+                                               <select (change)="productList($event)">
+                                                  <option value="">Search by Product</option>
+                                                  <option value="{{PrItem?.id}}" *ngFor="let PrItem of products">{{PrItem?.pro_name}}</option>
                                                </select>
                                             </div>
                                          </form>
                                       </div>
                                    </div>
                                 </div>
+                                <!-- Category -->
                                 <div class="panel panel-default">
                                    <div class="panel-heading" role="tab" id="headingTwo">
                                       <h3 class="panel-title"><a class="collapsed" data-toggle="collapse"  href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Category </a></h3>
@@ -52,14 +54,16 @@
                                       <div class="diiferent-sec">
                                          <form>
                                             <div class="fit_frm">
-                                               <select>
+                                               <select (change)="getCategory($event)">
                                                   <option>Search by Category</option>
+                                                  <option value="{{catList?.id}}" *ngFor="let catList of categoryList">{{catList?.cat_name}}</option>
                                                </select>
                                             </div>
                                          </form>
                                       </div>
                                    </div>
                                 </div>
+                                <!-- Sub-category -->
                                 <div class="panel panel-default">
                                    <div class="panel-heading" role="tab" id="headingfore">
                                       <h3 class="panel-title"><a class="collapsed" data-toggle="collapse"  href="#collapsefore" aria-expanded="false" aria-controls="collapsefore">Subcategory </a></h3>
@@ -68,39 +72,41 @@
                                       <div class="diiferent-sec">
                                          <form>
                                             <div class="fit_frm">
-                                               <select>
+                                               <select (change)="selectSubCategory($event)">
                                                   <option>Search by Subcategory</option>
+                                                  <option value="{{subItems?.id}}" *ngFor="let subItems of subCategory">{{subItems?.sub_cat_name}}</option>
                                                </select>
                                             </div>
                                          </form>
                                       </div>
                                    </div>
                                 </div>
+                                <!-- Size offered -->
                                 <div class="panel panel-default">
                                    <div class="panel-heading" role="tab" id="headingFive">
                                       <h3 class="panel-title"><a class="collapsed" data-toggle="collapse"  href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Sizes offered </a></h3>
                                    </div>
                                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                       <div class="diiferent-sec">
-                                         <ul class="category-ul">
+                                         <ul class="category-ul" (change)="selectSize($event)">
                                             <li>
-                                               <input id="chk1" type="checkbox" value="all" name="chk1" checked="">
+                                               <input id="chk1" type="checkbox" value="150" name="chk1" checked="">
                                                <label for="chk1">All Sizes</label> 
                                             </li>
                                             <li>
-                                               <input id="chk2" type="checkbox" value="all" name="chk1">
+                                               <input id="chk2" type="checkbox" value="50" name="chk1">
                                                <label for="chk2">10-50</label>  
                                             </li>
                                             <li>
-                                               <input id="chk3" type="checkbox" value="all" name="chk1">
+                                               <input id="chk3" type="checkbox" value="70" name="chk1">
                                                <label for="chk3">10-70</label>  
                                             </li>
                                             <li>
-                                               <input id="chk4" type="checkbox" value="all" name="chk1">
+                                               <input id="chk4" type="checkbox" value="100" name="chk1">
                                                <label for="chk4">10-100</label> 
                                             </li>
                                             <li>
-                                               <input id="chk5" type="checkbox" value="all" name="chk1">
+                                               <input id="chk5" type="checkbox" value="150" name="chk1">
                                                <label for="chk5">10-150</label> 
                                             </li>
                                          </ul>
@@ -130,7 +136,7 @@
                     </div>
                     <div class="search_result_right">
                        <div class="sort_sec">
-                          <h4>We found <b>12 products</b> available for you</h4>
+                          <h4>We found <b>{{allProductItem?.length}} products</b> available for you</h4>
                           <div class="sort_bx">
                              <ul class="str_sel_ul">
                                 <li>Sort By</li>
@@ -148,35 +154,14 @@
                        <div class="se_re_rig_body">
                           <div class="popular_list_inr">
                              <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let products of allProductItem; let i = index">
                                    <div class="popular_list_bx">
                                       <div class="popular_list_img">
-                                         <a href="product-details.html"><img src="assets/images/high-carbon.jpg" alt=""></a>
+                                         <!-- <a><img src="assets/images/high-carbon.jpg" alt=""></a> -->
+                                         <a><img src="https://beas.in/mje-shop/storage/app/public/images/product/{{products?.primary_image}}" alt=""></a>
                                       </div>
                                       <div class="popular_text">
-                                         <h4><a href="product-details.html">Tata Indicrome - HC Ferro Chrome (Lumps)</a></h4>
-                                         <span class="pop_line"><img src="assets/images/pop_line.png" alt="" /></span>
-                                      </div>
-                                   </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                   <div class="popular_list_bx">
-                                      <div class="popular_list_img">
-                                         <a href="product-details.html"><img src="assets/images/fecr-chips.jpg" alt=""></a>
-                                      </div>
-                                      <div class="popular_text">
-                                         <h4><a href="product-details.html">Tata Indicrome - HC Ferro Ferro Chrome (Chips)</a></h4>
-                                         <span class="pop_line"><img src="assets/images/pop_line.png" alt="" /></span>
-                                      </div>
-                                   </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                   <div class="popular_list_bx">
-                                      <div class="popular_list_img">
-                                         <a href="product-details.html"><img src="assets/images/fecr-fines-1.jpg" alt=""></a>
-                                      </div>
-                                      <div class="popular_text">
-                                         <h4><a href="product-details.html">Tata Indicrome - HC Ferro Chrome (Fines)</a></h4>
+                                         <h4><a>{{products?.cat_name}}</a></h4>
                                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="" /></span>
                                       </div>
                                    </div>

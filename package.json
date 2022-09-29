@@ -24,6 +24,7 @@
     "country-state-city": "^3.1.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.1",
+    "ng-image-slider": "^6.0.0",
     "ngx-owl-carousel-o": "^14.0.1",
     "ngx-spinner": "^14.0.0",
     "ngx-toastr": "^15.0.0",

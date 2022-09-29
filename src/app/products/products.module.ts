@@ -11,6 +11,8 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { SharedModule } from '../shared/shared.module';
 import { LandingModule } from '../landing/landing.module';
 import { ViewAllProductComponent } from './view-all-product/view-all-product.component';
+import { ThankYouComponent } from './thank-you/thank-you.component';
+import { RfqListComponent } from './rfq-list/rfq-list.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,14 @@ const routes: Routes = [
     path: 'all-product',
     component: ViewAllProductComponent,
   },
+  {
+    path: 'thank-you',
+    component: ThankYouComponent,
+  },
+  {
+    path: 'rfq-list',
+    component: RfqListComponent,
+  },
 ];
 
 @NgModule({
@@ -56,6 +66,8 @@ const routes: Routes = [
     EditFRQComponent,
     AddProductComponent,
     ViewAllProductComponent,
+    ThankYouComponent,
+    RfqListComponent,
   ],
   imports: [
     CommonModule,

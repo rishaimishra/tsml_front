@@ -20,26 +20,27 @@
         <div class="prod-list-detl">
           <div class="sec-pro-cat">
             <span>Add item</span>
-            <select class="form-control form-control-sm">
-              <option>--select--</option>
-              <option>Lumps</option>
-              <option>Chips</option>
-              <option>Fines</option>
+            <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
+              <option value="">--select--</option>
+              <option value="1">Lumps</option>
+              <option value="2">Chips</option>
+              <option value="3">Fines</option>
             </select>
           </div>
-
-          <div class="demo">
+          <!-- List start -->
+          <div class="demo" *ngFor="let productData of selectedItem">
             <div class="accordion--" id="accordionExample">
               <div class="card">
                 <div class="card-header card-header--" id="headingOne">
                   <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"><i
                       class="fa fa-plus"></i></button>
                   <div class="acc-pro-pic">
-                    <img src="{{product_data?.primary_image_url}}">
+                    <img src="{{productData?.primary_image_url}}">
                   </div>
                   <div class="acc-pro-dec">
-                    <h3>{{product_data?.cat_name}}</h3>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem magni qui officia, tempora, commodi quia, alias inventore et aperiam ipsa corrupti omnis sed quasi quod. Dolor, temporibus! Ratione, fugiat eligendi?</p>
+                    <h3>{{productData?.cat_name}}</h3>
+                    <p>Ranked among the top-seven global chrome alloy producers, we are the leading manufacturers of High Carbon Ferro Chrome in India. We produce various grades of Ferro Chrome
+                      Chemical Composition: Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max</p>
                   </div>
 
                   <div class="acc-pro-qty">
@@ -53,18 +54,19 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Sizes Offered</label>
-                          <select class="form-control form-control-sm">
-                            <option>10-50</option>
-                            <option>10-70</option>
-                            <option>10-100</option>
-                            <option>10-150</option>
+                          <select (change)="sizeOfferd($event)" class="form-control form-control-sm">
+                            <option value="">Select ..</option>
+                            <option value="10-50">10-50</option>
+                            <option value="10-70">10-70</option>
+                            <option value="10-100">10-100</option>
+                            <option value="10-150">10-150</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity</label>
-                          <input type="text" class="form-control form-control-sm" id="" placeholder="" value="150">
+                          <input type="text" [(ngModel)]="quantity2" class="form-control form-control-sm" id="" placeholder="" value="">
                         </div>
                       </div>
                       <div class="col-lg-3">
@@ -72,8 +74,8 @@
                           <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
                           <div class="pri-box">
                             <span>₹</span>
-                            <input type="text" class="form-control form-control-sm" id="" placeholder=""
-                              value="107347.5">
+                            <input type="text" [(ngModel)]="expectedPrice1" class="form-control form-control-sm" id="" placeholder=""
+                              value="">
                           </div>
                         </div>
                       </div>
@@ -81,19 +83,21 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Delivery Method</label>
-                          <select class="form-control form-control-sm">
-                            <option>FOR</option>
-                            <option>Ex-Works</option>
+                          <select (change)="deliveryMethod($event)" class="form-control form-control-sm">
+                            <option value="">Select ..</option>
+                            <option value="FOR">FOR</option>
+                            <option value="Ex-Works">Ex-Works</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Pickup From</label>
-                          <select class="form-control form-control-sm">
-                            <option>Plant</option>
-                            <option>Depot</option>
-                            <option>Port</option>
+                          <select (change)="pickupFrom($event)" class="form-control form-control-sm">
+                            <option value="">Select..</option>
+                            <option value="Plant">Plant</option>
+                            <option value="Depot">Depot</option>
+                            <option value="Port">Port</option>
                           </select>
                         </div>
                       </div>
@@ -101,7 +105,8 @@
                         <div class="form-group">
                           <label for="">Location</label>
                           <select class="form-control form-control-sm">
-                            <option>Kolkata</option>
+                            <option>Select location</option>
+                            <option value="" *ngFor="let state of states">{{state?.name}}</option>
                           </select>
                         </div>
                       </div>
@@ -114,7 +119,8 @@
                                 Address</a></label>
                           </div>
                           <select class="form-control form-control-sm">
-                            <option>Kolkata</option>
+                            <option>Bill to</option>
+                            <option value="" *ngFor="let state of states">{{state?.name}}</option>
                           </select>
                         </div>
                       </div>
@@ -126,7 +132,8 @@
                                 Address</a></label>
                           </div>
                           <select class="form-control form-control-sm">
-                            <option>Kolkata</option>
+                            <option>Ship to</option>
+                            <option value="" *ngFor="let state of states">{{state?.name}}</option>
                           </select>
                         </div>
                       </div>
@@ -135,14 +142,14 @@
                           <label for="">Proposed Delivery Date</label>
                           <div class="date-rang">
                             <div class="position-relative">
-                              <input type="text" class="form-control form-control-sm datepicker" placeholder="From"
-                                value="09/13/2022">
-                              <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                              <input type="date" [(ngModel)]="deliveryDate1" class="form-control form-control-sm " placeholder="From"
+                                value="">
+                              <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                             <div class="position-relative">
-                              <input type="text" class="form-control form-control-sm datepicker" placeholder="To"
-                                value="09/30/2022">
-                              <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                              <input type="date" [(ngModel)]="deliveryDate2" class="form-control form-control-sm " placeholder="To"
+                                value="">
+                              <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                           </div>
                         </div>
@@ -150,7 +157,7 @@
                       <div class="col-lg-11">
                         <div class="form-group">
                           <label for="">Remarks</label>
-                          <textarea class="form-control form-control-sm" rows="4"></textarea>
+                          <textarea [(ngModel)]="remarks" class="form-control form-control-sm" rows="4"></textarea>
                         </div>
                       </div>
                       <div class="col-lg-1">
@@ -165,18 +172,18 @@
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Sizes Offered</label>
-                              <select class="form-control form-control-sm">
-                                <option>10-50</option>
-                                <option>10-70</option>
-                                <option>10-100</option>
-                                <option>10-150</option>
+                              <select (change)="sizeOffered2($event)" class="form-control form-control-sm">
+                                <option value="10-50">10-50</option>
+                                <option value="10-70">10-70</option>
+                                <option value="10-100">10-100</option>
+                                <option value="10-150">10-150</option>
                               </select>
                             </div>
                           </div>
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Quantity</label>
-                              <input type="text" class="form-control form-control-sm" id="" placeholder="" value="150">
+                              <input type="text" [(ngModel)]="quantity1" class="form-control form-control-sm" id="" placeholder="" value="">
                             </div>
                           </div>
                           <div class="col-lg-3">
@@ -184,8 +191,8 @@
                               <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
                               <div class="pri-box">
                                 <span>₹</span>
-                                <input type="text" class="form-control form-control-sm" id="" placeholder=""
-                                  value="107347.5">
+                                <input type="text" [(ngModel)]="expectedPrice2" class="form-control form-control-sm" id="" placeholder=""
+                                  value="">
                               </div>
                             </div>
                           </div>
@@ -193,27 +200,30 @@
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Delivery Method</label>
-                              <select class="form-control form-control-sm">
-                                <option>FOR</option>
-                                <option>Ex-Works</option>
+                              <select (change)="deliveryMethod2($event)" class="form-control form-control-sm">
+                                <option value="">Select method</option>
+                                <option value="FOR">FOR</option>
+                                <option value="Ex-Works">Ex-Works</option>
                               </select>
                             </div>
                           </div>
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Pickup From</label>
-                              <select class="form-control form-control-sm">
-                                <option>Plant</option>
-                                <option>Depot</option>
-                                <option>Port</option>
+                              <select (change)="pickupfrome2($event)" class="form-control form-control-sm">
+                                <option value="">Select ..</option>
+                                <option value="Plant">Plant</option>
+                                <option value="Depot">Depot</option>
+                                <option value="Port">Port</option>
                               </select>
                             </div>
                           </div>
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Location</label>
-                              <select class="form-control form-control-sm">
-                                <option>Kolkata</option>
+                              <select (change)="selectlocation2($event)" class="form-control form-control-sm">
+                                <option>Select location</option>
+                                <option value="{{state?.name}}" *ngFor="let state of states">{{state?.name}}</option>
                               </select>
                             </div>
                           </div>
@@ -225,8 +235,9 @@
                                 <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
                                     Address</a></label>
                               </div>
-                              <select class="form-control form-control-sm">
-                                <option>Kolkata</option>
+                              <select (change)="billTo2($event)" class="form-control form-control-sm">
+                                <option value="">Select</option>
+                                <option value="{{state?.name}}" *ngFor="let state of states">{{state?.name}}</option>
                               </select>
                             </div>
                           </div>
@@ -237,8 +248,9 @@
                                 <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
                                     Address</a></label>
                               </div>
-                              <select class="form-control form-control-sm">
-                                <option>Kolkata</option>
+                              <select (change)="shipTo2($event)" class="form-control form-control-sm">
+                                <option>Select</option>
+                                <option value="{{state?.name}}" *ngFor="let state of states">{{state?.name}}</option>
                               </select>
                             </div>
                           </div>
@@ -247,13 +259,13 @@
                               <label for="">Proposed Delivery Date</label>
                               <div class="date-rang">
                                 <div class="position-relative">
-                                  <input type="text" class="form-control form-control-sm datepicker" placeholder="From"
-                                    value="09/13/2022">
+                                  <input type="date" [(ngModel)]="deliveryDate3" class="form-control form-control-sm" placeholder="From"
+                                    value="">
                                   <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                                 </div>
                                 <div class="position-relative">
-                                  <input type="text" class="form-control form-control-sm datepicker" placeholder="To"
-                                    value="09/30/2022">
+                                  <input type="date" [(ngModel)]="deliveryDate4" class="form-control form-control-sm" placeholder="To"
+                                    value="">
                                   <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                                 </div>
                               </div>
@@ -262,13 +274,9 @@
                           <div class="col-lg-11">
                             <div class="form-group">
                               <label for="">Remarks</label>
-                              <textarea class="form-control form-control-sm" rows="4"></textarea>
+                              <textarea [(ngModel)]="remarks2" class="form-control form-control-sm" rows="4"></textarea>
                             </div>
                           </div>
-                          <!-- <button type="button" class="blue-plus-icon btn-copy mt-15" onclick="Clone()" )><i
-                              class="fa fa-plus-circle"></i></button>
-                          <button type="button" class="red-plus-icon mt-15" onclick='Delete(this)' )><i
-                              class="fa fa-minus-circle"></i></button> -->
                               <button type="button" class="blue-plus-icon btn-copy mt-15"><i
                                 class="fa fa-plus-circle"></i></button>
                             <button type="button" class="red-plus-icon mt-15"><i
@@ -287,7 +295,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12 add-btn-sec pt-0">
-            <a href="RFQ-list.html" class="btn btn-primary">Request for quotation</a>
+            <a (click)="ReqForQuatation()" class="btn btn-primary">Request for quotation</a>
           </div>
         </div>
       </div>

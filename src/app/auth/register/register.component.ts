@@ -59,6 +59,7 @@ export class RegisterComponent implements OnInit {
   consentLetter: any;
   regisCertificate: any;
   tcsFile: any;
+  isTermCondition: boolean = false;
 
   mobile: any;
   haveOtp: boolean = true;
@@ -117,6 +118,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  checkTerms(event: any) {
+    this.isTermCondition = event.target.checked;
+  }
   onCountryChange($event: any): void {
     this.states = State.getStatesOfCountry(
       JSON.parse(this.country.nativeElement.value).isoCode

@@ -85,7 +85,7 @@
         </a>
       </div>
     </section>
-    <!--/Product List-->
+
     <section class="search_result_pg pptt-5">
       <div class="container py-3">
         <div class="row">
@@ -93,7 +93,7 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist" *ngIf="list.length > 0">
               <p class="pr-title">Our Products</p>
               <li class="nav-item" *ngFor="let product_menu of list">
-                <a class="nav-link" data-toggle="tab" href="#fc" role="tab" aria-controls="home"
+                <a class="nav-link pointerTab" data-toggle="tab" role="tab" aria-controls="home" [ngClass]="{active: isActive(product_menu.id)}"
                   (click)="get_product_by_menu_id(product_menu.id)">{{ product_menu.pro_name }}</a>
               </li>
               <!-- <li class="nav-item">
@@ -111,18 +111,25 @@
                 <div class="product-list-inr">
                   <div class="row product-list-inr-bg">
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let pdata of product_list">
-                      <div class="product-list">
-                        <a (click)="
-                              gotoDetailsPage(
-                                pdata.product_id,
-                                pdata.category_id
-                              )
-                            ">
+                      <div class="product-list pointerTab" *ngIf="isUserLogin">
+                        <a (click)="gotoDetailsPage(pdata.product_id,pdata.category_id)">
                           <div class="product-list-img">
                             <img src="{{ pdata.primary_image_url }}" alt="product-img" />
                           </div>
                           <h4>
-                            {{ pdata.category_name }}
+                            {{ pdata.product_title }} - {{ pdata.category_name }}
+                          </h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
+                      </div>
+                      <!-- isUserLogin -->
+                      <div class="product-list pointerTab" *ngIf="!isUserLogin" routerLink="/login">
+                        <a>
+                          <div class="product-list-img">
+                            <img src="{{ pdata.primary_image_url }}" alt="product-img" />
+                          </div>
+                          <h4>
+                            {{ pdata.product_title }} - {{ pdata.category_name }}
                           </h4>
                           <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
                         </a>
@@ -133,8 +140,13 @@
                       <p style="color: red">No product found.</p>
                     </div>
                     <!--/-->
-                    <div class="col-12 text-center mt-3" *ngIf="product_list.length > 3">
-                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                    <div class="col-12 text-center mt-3" *ngIf="product_list.length > 2">
+                      <a *ngIf="isUserLogin" routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                        View
+                        All</a>
+                    </div>
+                    <div class="col-12 text-center mt-3" *ngIf="product_list.length > 2">
+                      <a *ngIf="!isUserLogin" routerLink="/login" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                         View
                         All</a>
                     </div>
@@ -215,7 +227,7 @@
             </div>
           </div>
         </section>
-        <!--/Mid Banner-->
+
     <!--Featured Products-->
     <section class="white-bg py-5">
       <div class="container">
@@ -229,18 +241,31 @@
             <div class="large-12 columns">
               <!-- remove dive -->
               <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide *ngFor="let pl of popular_product_list">
-                  <div class="slide">
+                <ng-container *ngFor="let pl of popular_product_list">
+                <ng-template  class="slide" carouselSlide [id]="pl.id">
+                  <div >
                     <div class="item">
-                      <div class="product-list">
+                      <div class="product-list" *ngIf="isUserLogin">
                         <a routerLink="/product-details/{{ pl.product_id }}/{{
                               pl.category_id
                             }}">
                           <div class="product-list-img">
+                            <img src="{{ pl.primary_image_url }}" [alt]="pl.id" [title]="pl.id" alt="product-img" />
+                          </div>
+                          <h4>
+                            {{ pl.product_title }} - {{ pl.category_name }}
+                          </h4>
+                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
+                        </a>
+                      </div>
+                      <!-- isUserLogin -->
+                      <div *ngIf="!isUserLogin" class="product-list">
+                        <a routerLink="/login">
+                          <div class="product-list-img">
                             <img src="{{ pl.primary_image_url }}" alt="product-img" />
                           </div>
                           <h4>
-                            {{ pl.product_title }} - {{ pl.ategory_name }}
+                            {{ pl.product_title }} - {{ pl.category_name }}
                           </h4>
                           <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
                         </a>
@@ -248,6 +273,7 @@
                     </div>
                   </div>
                 </ng-template>
+              </ng-container>
               </owl-carousel-o>
             </div>
           </div>

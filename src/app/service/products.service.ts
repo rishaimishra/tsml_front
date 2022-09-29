@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductsService {
-  BesUrl = environment.apiEndpointBase;
+  private BesUrl = environment.apiEndpointBase;
   constructor(private _http: HttpClient) {}
 
   getMethod(url_paremter: any) {
@@ -21,5 +21,13 @@ export class ProductsService {
   getAllNews() {
     return this._http.get(this.BesUrl + '/get_all_news_all');
   }
-  // get_all_news_all
+
+  getAllProducts() {
+    return this._http.get(this.BesUrl + '/filter-product-menu');
+  };
+
+  filterProducts(requestData: any) {
+    return this._http.post(this.BesUrl + '/filter-product-menu', requestData);
+  };
+
 }

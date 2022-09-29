@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
 
 @Component({
@@ -10,31 +11,37 @@ import { ProductsService } from 'src/app/service/products.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isUserLogin: any;
   public list: any = [];
   public product_menu_id: Number = 1;
   public product_list: any = [];
   public show_error: boolean = false;
   public popular_product_list: any = [];
   allNews: any;
+  menuId: any;
 
-  
+
   constructor(
     private _router: Router,
     private productService: ProductsService,
     private spinner: NgxSpinnerService,
-    private _product: ProductsService
-  ) {}
+    private _product: ProductsService,
+    private _auth: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.getNews();
+    this.isUserLogin = this._auth.isLoggedIn();
+    
   }
 
   customOptions: OwlOptions = {
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    autoplay: true,
+    center: true,
     dots: false,
+    autoHeight: true,
+    autoWidth: true,
     navSpeed: 1000,
     navText: ['', ''],
     responsive: {
@@ -73,6 +80,7 @@ export class HomeComponent implements OnInit {
     this.get_popular_product();
   }
   get_product_by_menu_id(id: any) {
+    this.menuId = id;
     this.spinner.show();
     let url = '/index-page/' + id;
     this.productService.getMethod(url).subscribe(
@@ -80,12 +88,11 @@ export class HomeComponent implements OnInit {
         this.spinner.hide();
         if (res.status == 1) {
           this.product_list = res.result;
+
         } else {
           this.product_list = [];
           this.show_error = true;
         }
-
-        console.log('this.product_list=', this.product_list);
       },
       (err) => {
         this.spinner.hide();
@@ -93,7 +100,10 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
+  isActive(item: any) {
+    return this.menuId === item;
+  };
+  
   gotoDetailsPage(productId: any, categoryId: any) {
     this._router.navigate(['/product-details', productId, categoryId]);
   }
@@ -103,6 +113,7 @@ export class HomeComponent implements OnInit {
       (res: any) => {
         if (res.status == 1) {
           this.popular_product_list = res.result;
+          console.log(this.popular_product_list);
         }
       },
       (err) => {
