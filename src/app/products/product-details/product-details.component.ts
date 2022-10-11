@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
-
+import * as uuid from 'uuid';
+//import uuid from "uuid";
 
 @Component({
   selector: 'app-product-details',
@@ -18,6 +20,7 @@ export class ProductDetailsComponent implements OnInit {
   public show_error: boolean = false;
   public error_message: String = '';
   addItems: boolean = false;
+  isUserLogin: any;
   title: any = '';
   productId: any;
   selectedItem: any = [];
@@ -34,171 +37,189 @@ export class ProductDetailsComponent implements OnInit {
   quantity2: any;
   proSize1: any;
 
+  public quotation: any[] = [];
+  public quotation_value: any[] = [
+    {
+      size: '',
+      quantity: '',
+      advance_payment: '',
+      delivery_method: '',
+      pickup_from: '',
+      location: '',
+      bill_to: '',
+      ship_to: '',
+      delivery_date1: '',
+      delivery_date2: '',
+      remarks: '',
+    },
+  ];
 
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
     private spinner: NgxSpinnerService,
     private _router: Router,
-    private _product: ProductsService
+    private _product: ProductsService,
+    private _auth: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isUserLogin = this._auth.isLoggedIn();
     this.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
-      console.log('id',res);
+      console.log('id', res);
       this.get_product_details(res.productId, res.categoryId);
     });
   }
 
-  getState () {
+  getState() {
     this.states = [
       {
-      "key": "AN",
-      "name": "Andaman and Nicobar Islands"
+        key: 'AN',
+        name: 'Andaman and Nicobar Islands',
       },
       {
-      "key": "AP",
-      "name": "Andhra Pradesh"
+        key: 'AP',
+        name: 'Andhra Pradesh',
       },
       {
-      "key": "AR",
-      "name": "Arunachal Pradesh"
+        key: 'AR',
+        name: 'Arunachal Pradesh',
       },
       {
-      "key": "AS",
-      "name": "Assam"
+        key: 'AS',
+        name: 'Assam',
       },
       {
-      "key": "BR",
-      "name": "Bihar"
+        key: 'BR',
+        name: 'Bihar',
       },
       {
-      "key": "CG",
-      "name": "Chandigarh"
+        key: 'CG',
+        name: 'Chandigarh',
       },
       {
-      "key": "CH",
-      "name": "Chhattisgarh"
+        key: 'CH',
+        name: 'Chhattisgarh',
       },
       {
-      "key": "DH",
-      "name": "Dadra and Nagar Haveli"
+        key: 'DH',
+        name: 'Dadra and Nagar Haveli',
       },
       {
-      "key": "DD",
-      "name": "Daman and Diu"
+        key: 'DD',
+        name: 'Daman and Diu',
       },
       {
-      "key": "DL",
-      "name": "Delhi"
+        key: 'DL',
+        name: 'Delhi',
       },
       {
-      "key": "GA",
-      "name": "Goa"
+        key: 'GA',
+        name: 'Goa',
       },
       {
-      "key": "GJ",
-      "name": "Gujarat"
+        key: 'GJ',
+        name: 'Gujarat',
       },
       {
-      "key": "HR",
-      "name": "Haryana"
+        key: 'HR',
+        name: 'Haryana',
       },
       {
-      "key": "HP",
-      "name": "Himachal Pradesh"
+        key: 'HP',
+        name: 'Himachal Pradesh',
       },
       {
-      "key": "JK",
-      "name": "Jammu and Kashmir"
+        key: 'JK',
+        name: 'Jammu and Kashmir',
       },
       {
-      "key": "JH",
-      "name": "Jharkhand"
+        key: 'JH',
+        name: 'Jharkhand',
       },
       {
-      "key": "KA",
-      "name": "Karnataka"
+        key: 'KA',
+        name: 'Karnataka',
       },
       {
-      "key": "KL",
-      "name": "Kerala"
+        key: 'KL',
+        name: 'Kerala',
       },
       {
-      "key": "LD",
-      "name": "Lakshadweep"
+        key: 'LD',
+        name: 'Lakshadweep',
       },
       {
-      "key": "MP",
-      "name": "Madhya Pradesh"
+        key: 'MP',
+        name: 'Madhya Pradesh',
       },
       {
-      "key": "MH",
-      "name": "Maharashtra"
+        key: 'MH',
+        name: 'Maharashtra',
       },
       {
-      "key": "MN",
-      "name": "Manipur"
+        key: 'MN',
+        name: 'Manipur',
       },
       {
-      "key": "ML",
-      "name": "Meghalaya"
+        key: 'ML',
+        name: 'Meghalaya',
       },
       {
-      "key": "MZ",
-      "name": "Mizoram"
+        key: 'MZ',
+        name: 'Mizoram',
       },
       {
-      "key": "NL",
-      "name": "Nagaland"
+        key: 'NL',
+        name: 'Nagaland',
       },
       {
-      "key": "OR",
-      "name": "Odisha"
+        key: 'OR',
+        name: 'Odisha',
       },
       {
-      "key": "PY",
-      "name": "Puducherry"
+        key: 'PY',
+        name: 'Puducherry',
       },
       {
-      "key": "PB",
-      "name": "Punjab"
+        key: 'PB',
+        name: 'Punjab',
       },
       {
-      "key": "RJ",
-      "name": "Rajasthan"
+        key: 'RJ',
+        name: 'Rajasthan',
       },
       {
-      "key": "SK",
-      "name": "Sikkim"
+        key: 'SK',
+        name: 'Sikkim',
       },
       {
-      "key": "TN",
-      "name": "Tamil Nadu"
+        key: 'TN',
+        name: 'Tamil Nadu',
       },
       {
-      "key": "TS",
-      "name": "Telangana"
+        key: 'TS',
+        name: 'Telangana',
       },
       {
-      "key": "TR",
-      "name": "Tripura"
+        key: 'TR',
+        name: 'Tripura',
       },
       {
-      "key": "UK",
-      "name": "Uttar Pradesh"
+        key: 'UK',
+        name: 'Uttar Pradesh',
       },
       {
-      "key": "UP",
-      "name": "Uttarakhand"
+        key: 'UP',
+        name: 'Uttarakhand',
       },
       {
-      "key": "WB",
-      "name": "West Bengal"
-      }
-      ]
+        key: 'WB',
+        name: 'West Bengal',
+      },
+    ];
   }
   get_product_details(product_id: any, category_id: any) {
     this.spinner.show();
@@ -206,12 +227,52 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log(res);
+        console.log('res',res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
-          console.log('data',this.selectedItem);
           this.show_data = true;
+          const uniqueID = uuid.v4();
+          console.log('uniqueId', uniqueID);
+          this.quotation.push({
+            id: uniqueID,
+            size: '',
+            quantity: '',
+            advance_payment: '',
+            delivery_method: '',
+            pickup_from: '',
+            location: '',
+            bill_to: '',
+            ship_to: '',
+            delivery_date1: '',
+            delivery_date2: '',
+            remarks: '',
+          });
+          /*this.quotation = [
+            {
+              id: uniqueID,
+              size: '',
+              quantity: '',
+              advance_payment: '',
+              delivery_method: '',
+              pickup_from: '',
+              location: '',
+              bill_to: '',
+              ship_to: '',
+              delivery_date1: '',
+              delivery_date2: '',
+              remarks: '',
+            },
+          ];*/
+          console.log('quotation=', this.quotation);
+          // this.selectedItem.push({
+          //   product_data: this.product_data,
+          //   quotation_data: this.quotation,
+          // });
+          // this.selectedItem.push(result[i]);
+          let i = this.selectedItem.length - 1;
+          this.selectedItem[i]['form_data'] = this.quotation;
+          console.log('this.selectedItem=', this.selectedItem);
         } else {
           this.product_data = '';
         }
@@ -226,7 +287,7 @@ export class ProductDetailsComponent implements OnInit {
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   }
-  sizeOffered2(event:any) {
+  sizeOffered2(event: any) {
     console.log(event.target.value);
   }
   add_to_cart(cat_id: any, product_id: any) {
@@ -250,7 +311,7 @@ export class ProductDetailsComponent implements OnInit {
   selectItems(event: any) {
     console.log(event.target.value);
     let categoryId = event.target.value;
-    console.log('iiidd',this.productId);
+    console.log('iiidd', this.productId);
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
     this.productService.getMethod(url).subscribe(
@@ -260,8 +321,47 @@ export class ProductDetailsComponent implements OnInit {
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
-          console.log('data',this.selectedItem);
+          console.log('data', this.selectedItem);
           this.show_data = true;
+          const uniqueID = uuid.v4();
+          this.quotation.push({
+            id: uniqueID,
+            size: '',
+            quantity: '',
+            advance_payment: '',
+            delivery_method: '',
+            pickup_from: '',
+            location: '',
+            bill_to: '',
+            ship_to: '',
+            delivery_date1: '',
+            delivery_date2: '',
+            remarks: '',
+          });
+          /*this.quotation = [
+            {
+              id: uniqueID,
+              size: '',
+              quantity: '',
+              advance_payment: '',
+              delivery_method: '',
+              pickup_from: '',
+              location: '',
+              bill_to: '',
+              ship_to: '',
+              delivery_date1: '',
+              delivery_date2: '',
+              remarks: '',
+            },
+          ];*/
+          // console.log('quotation=', this.quotation);
+          // this.selectedItem.push({
+          //   product_data: this.product_data,
+          //   quotation_data: this.quotation,
+          // });
+          // console.log('this.selectedItem=', this.selectedItem);
+          let i = this.selectedItem.length - 1;
+          this.selectedItem[i]['form_data'] = this.quotation;
         } else {
           this.product_data = '';
         }
@@ -272,93 +372,91 @@ export class ProductDetailsComponent implements OnInit {
         // console.log(err);
       }
     );
-
   }
 
   sizeOfferd(event: any) {
     console.log(event.target.value);
     this.proSize1 = event.target.value;
-  };
-  deliveryMethod(event:any) {
+  }
+  deliveryMethod(event: any) {
     console.log(event.target.value);
-  };
+  }
   pickupFrom(event: any) {
     console.log(event.target.value);
-  };
-  deliveryMethod2(event:any) {
+  }
+  deliveryMethod2(event: any) {
     console.log(event.target.value);
-  };
+  }
   pickupfrome2(event: any) {
     console.log(event.target.value);
-  };
-  selectlocation2(event:any) {
+  }
+  selectlocation2(event: any) {
     console.log(event.target.value);
   }
   billTo2(event: any) {
     console.log(event.target.value);
   }
-  shipTo2(event: any) {
-
+  shipTo2(event: any) {}
+  ReqForQuatation2() {
+    // this._router.navigate(['/thank-you']);
+    let requestData = {
+      rfq_number: 'RFQ1237',
+      product_id: '3',
+      quantity: '1700',
+      quote_schedules: [
+        {
+          schedule_no: 'D200',
+          quantity: '',
+          pro_size: '',
+          to_date: '',
+          from_date: '2022-09-06',
+          expected_price: '',
+          kam_price: '',
+          delivery: '',
+          valid_till: '',
+          plant: 'DELI',
+          location: 'mumbai',
+          bill_to: 'mumbai',
+          ship_to: 'mumbai',
+          remarks: '',
+        },
+        {
+          schedule_no: 'D300',
+          quantity: '1000',
+          pro_size: '10-150',
+          to_date: '2022-09-06',
+          from_date: '2022-09-06',
+          expected_price: '25145',
+          kam_price: '12505',
+          delivery: 'FOR',
+          valid_till: '',
+          plant: 'PLANT',
+          location: 'mumbai',
+          bill_to: 'mumbai',
+          ship_to: 'mumbai',
+          remarks: 'remarkls',
+        },
+        {
+          schedule_no: 'D400',
+          quantity: '500',
+          pro_size: '10-100',
+          to_date: '2022-09-06',
+          from_date: '2022-09-06',
+          expected_price: '25145',
+          kam_price: '12505',
+          delivery: 'FOR',
+          valid_till: '',
+          plant: 'PLANT',
+          location: 'mumbai',
+          bill_to: 'mumbai',
+          ship_to: 'mumbai',
+          remarks: 'remarkls',
+        },
+      ],
+    };
+    console.log(requestData);
   }
   ReqForQuatation() {
-    this._router.navigate(['/thank-you']);
-    let requestData = {
-      rfq_number:'RFQ1237',
-      product_id:'3',
-      quantity:'1700',
-      quote_schedules:[
-           {
-               schedule_no:'D200',
-               quantity: this.quantity1,
-               pro_size: this.proSize1,
-               to_date: this.deliveryDate2,
-               from_date:'2022-09-06',
-               expected_price: this.expectedPrice1,
-               kam_price: '',
-               delivery: this.deliveryDate1,
-               valid_till: '',
-               plant:'DELI',
-               location:'mumbai',
-               bill_to:'mumbai',
-               ship_to:'mumbai',
-               remarks: this.remarks
-   
-           },
-           {
-               schedule_no:'D300',
-               quantity:'1000',
-               pro_size:'10-150',
-               to_date:'2022-09-06',
-               from_date:'2022-09-06',
-               expected_price:'25145',
-               kam_price:'12505',
-               delivery:'FOR',
-               valid_till:'',
-               plant:'PLANT',
-               location:'mumbai',
-               bill_to:'mumbai',
-               ship_to:'mumbai',
-               remarks:'remarkls'
-           },
-           {
-               schedule_no:'D400',
-               quantity:'500',
-               pro_size:'10-100',
-               to_date:'2022-09-06',
-               from_date:'2022-09-06',
-               expected_price:'25145',
-               kam_price:'12505',
-               delivery:'FOR',
-               valid_till:'',
-               plant:'PLANT',
-               location:'mumbai',
-               bill_to:'mumbai',
-               ship_to:'mumbai',
-               remarks:'remarkls'
-           }
-      ]
-   
-   }
-   console.log(requestData);
+    console.log(this.quotation);
   }
 }

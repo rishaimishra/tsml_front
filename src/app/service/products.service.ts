@@ -13,7 +13,9 @@ export class ProductsService {
   getMethod(url_paremter: any) {
     return this._http.get(this.BesUrl + url_paremter);
   };
-
+  getGstin(url_paremter: any) {
+    return this._http.get('https://sheet.gstincheck.co.in/check/' + url_paremter);
+  };
   viewAllProduct(reqParameter: any) {
     return this._http.post(this.BesUrl + '/filter-product-menu', reqParameter);
   };

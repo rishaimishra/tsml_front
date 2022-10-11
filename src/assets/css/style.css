@@ -3480,3 +3480,51 @@ header.header_sec {
     height: 10px;
     content: "";
 }
+.custom-file-label {
+    border: 1px solid #3d7eeb;
+    height: 36px;
+}
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Browse";
+    background: url(../images/upload.png) center center #3d7eeb !important;
+    background-repeat: no-repeat!important;
+    font-size: 0;
+    width: 42px;
+    height: 34px;
+}
+.custom-file-input {
+    height: 36px;
+}
+.reg-tbl td {
+    vertical-align: top!important;
+}
+.custom-file-input:focus~.custom-file-label {
+    border-color: #3d7eeb;
+    box-shadow: unset;
+}
+.edt-pro .custom-file-input {
+    height: 42px;
+}
+.edt-pro .custom-file-label {
+    height: 42px;
+    border-radius: 4px;
+    border: 1px solid #40404080;
+    font-size: 15px;
+    line-height: 27px;
+    color: #000;
+    font-weight: 400;
+}
+.edt-pro .custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Browse";
+    background: url(../images/arrow-down.png) center center !important;
+    background-repeat: no-repeat!important;
+    font-size: 0;
+    width: 42px;
+    height: 40px;
+    transform: rotate(-180deg);
+    border-radius: 0!important;
+    border: 0!important;
+}
+.custom-file, .custom-file input, .custom-file label {
+    cursor: pointer;
+}

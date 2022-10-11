@@ -111,7 +111,7 @@
                 <div class="product-list-inr">
                   <div class="row product-list-inr-bg">
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let pdata of product_list">
-                      <div class="product-list pointerTab" *ngIf="isUserLogin">
+                      <div class="product-list pointerTab">
                         <a (click)="gotoDetailsPage(pdata.product_id,pdata.category_id)">
                           <div class="product-list-img">
                             <img src="{{ pdata.primary_image_url }}" alt="product-img" />
@@ -122,18 +122,7 @@
                           <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
                         </a>
                       </div>
-                      <!-- isUserLogin -->
-                      <div class="product-list pointerTab" *ngIf="!isUserLogin" routerLink="/login">
-                        <a>
-                          <div class="product-list-img">
-                            <img src="{{ pdata.primary_image_url }}" alt="product-img" />
-                          </div>
-                          <h4>
-                            {{ pdata.product_title }} - {{ pdata.category_name }}
-                          </h4>
-                          <span class="pop_line"><img src="assets/images/pop_line.png" alt="line" /></span>
-                        </a>
-                      </div>
+                      
                     </div>
                     <!--/-->
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="product_list.length == 0 && show_error == true">
@@ -141,15 +130,15 @@
                     </div>
                     <!--/-->
                     <div class="col-12 text-center mt-3" *ngIf="product_list.length > 2">
-                      <a *ngIf="isUserLogin" routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                         View
                         All</a>
                     </div>
-                    <div class="col-12 text-center mt-3" *ngIf="product_list.length > 2">
+                    <!-- <div class="col-12 text-center mt-3" *ngIf="product_list.length > 2">
                       <a *ngIf="!isUserLogin" routerLink="/login" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                         View
                         All</a>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

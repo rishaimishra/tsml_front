@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.invalid) {
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
         if (res.success == true) {
-          this._toster.success('Login Successfull', 'Welcome');
+          this._toster.success('Login Successfully', 'Welcome');
           localStorage.setItem('tokenUrl',res.token);
           
           this._spinner.hide();

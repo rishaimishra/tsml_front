@@ -24,9 +24,9 @@ export class ViewAllProductComponent implements OnInit {
     this.showAllProducts();
   }
 
-  // gotoDetailsPage(productId: any, categoryId: any) {
-  //   this._router.navigate(['/product-details', productId, categoryId]);
-  // }
+  gotoDetailsPage(productId: any, categoryId: any) {
+    this._router.navigate(['/product-details', productId, categoryId]);
+  }
   clreaFilter() {
     this.showAllProducts();
   }

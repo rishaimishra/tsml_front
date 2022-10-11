@@ -84,7 +84,7 @@
                       this.uploadTab == true ? 'nav-link active' : 'nav-link'
                     " data-toggle="tab" (click)="addressTabContinue()" role="tab" aria-controls="uploads"><span
                     class="upload-icon mr-2"></span>
-                  <span class="nav-ttxt">Uploads</span><span class="nav-round"></span></a>
+                  <span class="nav-ttxt">Documents Upload</span><span class="nav-round"></span></a>
               </li>
             </ul>
             <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
@@ -152,6 +152,11 @@
                         <div class="form-group">
                           <label>Password</label>
                           <input formControlName="password" type="password" class="form-control" />
+                          <div *ngIf="f['password']?.invalid &&(f['password']?.touched || submitted)">
+                            <small class="text-danger">
+                              Password is required
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <!--  -->
@@ -160,9 +165,15 @@
                           <label>GSTIN</label>
                           <div class="d-flex2 display-f">
                             <input formControlName="gstin" type="text" class="form-control w-79" />
-                            <button type="button" class="btn blue-btn">
+
+                            <button type="button" class="btn blue-btn" (click)="getGstIn()">
                               Get Details
                             </button>
+                          </div>
+                          <div *ngIf="f['gstin']?.invalid &&(f['gstin']?.touched || submitted)">
+                            <small class="text-danger">
+                              GSTIN is required
+                            </small>
                           </div>
                         </div>
                       </div>
@@ -171,21 +182,28 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Organization PAN</label>
-                          <input formControlName="org_pan" readonly type="text" class="form-control" />
+                          <input formControlName="org_pan" type="text" class="form-control" />
+                          <div *ngIf="f['org_pan']?.invalid &&(f['org_pan']?.touched || submitted)">
+                            <small class="text-danger">
+                              PAN is required
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Organization Name</label>
-                          <input formControlName="org_name" readonly type="text" class="form-control" />
+                          <input formControlName="org_name" [(ngModel)]="orgName" readonly type="text"
+                            class="form-control" />
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Organization Address</label>
-                          <input formControlName="org_address" readonly type="text" class="form-control" />
+                          <input formControlName="org_address" [(ngModel)]="orgAddr" readonly type="text"
+                            class="form-control" />
                         </div>
                       </div>
                       <!--/-->
@@ -351,17 +369,17 @@
                       </div>
                       <!--/-->
                       <div class="col-12">
-                        <div class="form-group question-form-control font--16">
+                        <div (change)="checkDistribution($event)" class="form-group question-form-control font--16">
                           <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox1">Are you interested in
                               Distribution?</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="" name="cd" value="option1" />
+                            <input class="form-check-input" type="radio" id="" name="cd" value="Yes" />
                             <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="" name="cd" value="option2" />
+                            <input class="form-check-input" type="radio" id="" name="cd" value="No" />
                             <label class="form-check-label" for="inlineCheckbox2">No</label>
                           </div>
                         </div>
@@ -385,14 +403,21 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>GST Number</label>
-                          <input formControlName="company_gst" type="number" class="form-control" />
+                          <input formControlName="company_gst" readonly [(ngModel)]="gstNumber" type="text"
+                            class="form-control" />
+                          <!-- <div *ngIf="f['company_gst']?.invalid &&(f['company_gst']?.touched || submitted)">
+                            <small class="text-danger">
+                              GST is required
+                            </small>
+                          </div> -->
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Linked Address</label>
-                          <input formControlName="company_linked_address" readonly type="text" class="form-control" />
+                          <input formControlName="company_linked_address" [(ngModel)]="linkedAddr" readonly type="text"
+                            class="form-control" />
                         </div>
                       </div>
                       <!--/-->
@@ -400,33 +425,46 @@
                         <div class="form-group">
                           <label>PAN Number</label>
                           <input formControlName="company_pan" type="text" class="form-control" />
+                          <div *ngIf="f['company_pan']?.invalid &&(f['company_pan']?.touched || submitted)">
+                            <small class="text-danger">
+                              Pan is required
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Company Name</label>
-                          <input formControlName="company_name" readonly type="text" class="form-control" />
+                          <input formControlName="company_name" [(ngModel)]="companyName" readonly type="text"
+                            class="form-control" />
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Nature of Business</label>
-                          <select (change)="selectBusiness($event)" class="form-control">
-                            <option>Select</option>
+                          <select (change)="selectBusiness($event)" formControlName="business_nature"
+                            class="form-control">
+                            <option value="">Select</option>
                             <option value="Manufacturer">Manufacturer</option>
                             <option value="Trader">Trader</option>
                             <option value="Manufacturer & Trader">
                               Manufacturer & Trader
                             </option>
                           </select>
+                          <div
+                            *ngIf="f['business_nature']?.invalid &&(f['business_nature']?.touched || f['business_nature'].dirty || submitted)">
+                            <small class="text-danger">
+                              Nature of business is required
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6 mt-4">
                         <div class="form-group">
-                          <label class="container-check">Is TCS/TDS applicable?
+                          <label (change)="isTdsApplicable($event)" class="container-check">Is TCS/TDS applicable?
                             <input type="checkbox" />
                             <span class="checkmark"></span>
                           </label>
@@ -463,6 +501,11 @@
                                   <div class="form-group">
                                     <label>First Name</label>
                                     <input formControlName="first_name" type="text" class="form-control" />
+                                    <div *ngIf="f['first_name']?.invalid &&(f['first_name']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        First name is required
+                                      </small>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--/-->
@@ -470,24 +513,36 @@
                                   <div class="form-group">
                                     <label>Last Name</label>
                                     <input formControlName="last_name" type="text" class="form-control" />
+                                    <div *ngIf="f['last_name']?.invalid &&(f['last_name']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        Last name is required
+                                      </small>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line1</label>
-                                    <input formControlName="addressone" type="text" class="form-control" />
+                                    <input formControlName="addressone" readonly [(ngModel)]="addressLine1" type="text"
+                                      class="form-control" />
+                                    <!-- <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        Addrss Line is required
+                                      </small>
+                                    </div> -->
                                   </div>
                                 </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line2</label>
-                                    <input type="text" formControlName="addressone" class="form-control" />
+                                    <input type="text" readonly [(ngModel)]="addressLine2" formControlName="addresstwo"
+                                      class="form-control" />
                                   </div>
                                 </div>
                                 <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
+                                <!-- <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Country</label>
                                     <select #country name="country" id="country" (change)="onCountryChange($event)"
@@ -500,48 +555,66 @@
                                       </option>
                                     </select>
                                   </div>
-                                </div>
+                                </div> -->
                                 <!-- / -->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>State</label>
-                                    <select #state name="state" id="state" (change)="onStateChange($event)"
+                                    <!-- <select #state name="state" id="state" formControlName="state" (change)="onStateChange($event)"
                                       class="form-control">
-                                      <option [value]="null">
+                                      <option value ="">
                                         Select state
                                       </option>
                                       <option *ngFor="let state of states" [value]="state | json">
                                         {{ state.name }}
                                       </option>
                                     </select>
-                                    <!-- <input type="text" formControlName="state" class="form-control" > -->
+                                    <div *ngIf="f['state']?.invalid &&(f['state']?.touched || f['state'].dirty || submitted)">
+                                      <small class="text-danger">
+                                        State is required
+                                      </small>
+                                    </div> -->
+                                    <input type="text" formControlName="state" [(ngModel)]="stateSelect"
+                                      class="form-control" readonly>
                                   </div>
                                 </div>
                                 <!-- / -->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>City</label>
-                                    <select name="" id="" class="form-control" #city name="city" id="city"
+                                    <!-- <select name="" id="" class="form-control" formControlName="city" #city name="city" id="city"
                                       (change)="onCityChange($event)">
-                                      <option [value]="null">
+                                      <option value ="">
                                         Select city
                                       </option>
                                       <option *ngFor="let city of cities" [value]="city | json">
                                         {{ city.name }}
                                       </option>
                                     </select>
-                                    <!-- <input type="text" formControlName="city" class="form-control" > -->
+                                    <div *ngIf="f['city']?.invalid &&(f['city']?.touched || f['city'].dirty || submitted)">
+                                      <small class="text-danger">
+                                        City is required
+                                      </small>
+                                    </div> -->
+                                    <input type="text" formControlName="city" [(ngModel)]="citySelect"
+                                      class="form-control" readonly>
                                   </div>
                                 </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Pincode</label>
-                                    <input type="text" formControlName="pincode" class="form-control" />
+                                    <input type="text" readonly formControlName="pincode" [(ngModel)]="pincodeSelect"
+                                      class="form-control" />
+                                    <!-- <div *ngIf="f['pincode']?.invalid &&(f['pincode']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        Pincode Line is required
+                                      </small>
+                                    </div> -->
                                   </div>
                                 </div>
                                 <!--/-->
-                                <!-- <div class="col-12 col-lg-6 col-sm-6"></div> -->
+                                <div class="col-12 col-lg-6 col-sm-6"></div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
@@ -559,7 +632,7 @@
                                       New Address</a>
                                   </div>
                                 </div>
-                                <!--/-->
+                                <!-- add another shiping address-->
                                 <div class="col-12">
                                   <div id="newAddressBlock" class="collapse">
                                     <div class="row">
@@ -567,8 +640,9 @@
                                         <div class="form-group">
                                           <label>GSTIN</label>
                                           <div class="d-flex2 display-f">
-                                            <input type="number" class="form-control w-79" />
-                                            <button type="button" class="btn blue-btn">
+                                            <input type="text" formControlName="gstin2" [(ngModel)]="getGstNumber"
+                                              class="form-control w-79" />
+                                            <button type="button" class="btn blue-btn" (click)="gstinDetails()">
                                               Get Details
                                             </button>
                                           </div>
@@ -577,49 +651,54 @@
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>First Name</label>
-                                          <input type="text" class="form-control" />
+                                          <input type="text" formControlName="" class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Last Name</label>
-                                          <input type="text" class="form-control" />
+                                          <input type="text" formControlName="" class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Address Line1</label>
-                                          <input type="text" class="form-control" />
+                                          <input type="text" formControlName="" [(ngModel)]="addrrLine1" readonly
+                                            class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Address Line2</label>
-                                          <input type="text" class="form-control" />
+                                          <input type="text" formControlName="" [(ngModel)]="addrrLine2" readonly
+                                            class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>City</label>
-                                          <input type="text" readonly class="form-control" />
+                                          <input type="text" formControlName="" [(ngModel)]="billCitySelect" readonly
+                                            class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>State</label>
-                                          <input type="text" readonly class="form-control" />
+                                          <input type="text" formControlName="" [(ngModel)]="billStateSelect" readonly
+                                            class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Pincode</label>
-                                          <input type="text" readonly class="form-control" />
+                                          <input type="text" formControlName="" [(ngModel)]="billPincodeSelect" readonly
+                                            class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
@@ -628,6 +707,7 @@
                                 </div>
                               </div>
                             </div>
+                            <!-- Start Billing address -->
                             <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
                               href="#collapseTwo">
                               <a class="card-title">
@@ -639,28 +719,43 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" formControlName="first_name" class="form-control" />
+                                    <div *ngIf="f['first_name']?.invalid &&(f['first_name']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        First Name is required
+                                      </small>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" formControlName="last_name" class="form-control" />
+                                    <div *ngIf="f['last_name']?.invalid &&(f['last_name']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        Last Name is required
+                                      </small>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line1</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" formControlName="addressone" class="form-control" />
+                                    <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
+                                      <small class="text-danger">
+                                        Address Line is required
+                                      </small>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line2</label>
-                                    <input type="text" class="form-control" />
+                                    <input type="text" formControlName="addresstwo" class="form-control" />
                                   </div>
                                 </div>
                                 <!--/-->
@@ -803,23 +898,23 @@
                                   <td>--</td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="getAddrssProfe($event)" name="file-1[]" id="file-1"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-1">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                        <div *ngIf="f['address_proof_file']?.invalid &&(f['address_proof_file']?.touched ||submitted)">
+                                      <div class="custom-file">
+                                        <input type="file" (change)="getAddrssProfe($event)"
+                                          formControlName="address_proof_file" accept=".png, .jpg, .jpeg, .pdf"
+                                           id="file-1" class="custom-file-input" name="filename"/>
+                                        <label class="custom-file-label" for="file-1">{{selectedFile?.name ? selectedFile?.name:'Upload'}}</label>
+                                        <div *ngIf="f['address_proof_file']?.invalid &&(f['address_proof_file']?.touched ||
+                                        f['address_proof_file'].dirty ||submitted)">
                                           <small class="text-danger">
                                             Address proof is required !
                                           </small>
                                         </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload" (click)="resetUpload()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="addressProof">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -831,23 +926,23 @@
                                   <td>--</td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="getCancelcheck($event)" name="file-1[]" id="file-2"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-2">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                          <div *ngIf="f['cancel_cheque_file']?.invalid &&(f['cancel_cheque_file']?.touched ||submitted)">
+                                      <div class="custom-file">
+                                        <input type="file" (change)="getCancelcheck($event)"
+                                          formControlName="cancel_cheque_file" accept=".png, .jpg, .jpeg, .pdf"
+                                           id="file-2" class="custom-file-input" name="filename"/>
+                                        <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ? cancelCheckBook?.name:'Upload'}}</label>
+                                        <div *ngIf="f['cancel_cheque_file']?.invalid &&(f['cancel_cheque_file']?.touched ||
+                                          f['cancel_cheque_file'].dirty ||submitted)">
                                           <small class="text-danger">
                                             Checkbook is required !
                                           </small>
                                         </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload2" (click)="resetCheckbook()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="checkbook">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -857,27 +952,26 @@
                                     <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" class="form-control" />
+                                    <input type="date" formControlName="pan_dt" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="uploadPan($event)" name="file-1[]" id="file-3"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-3">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                          <div *ngIf="f['pan_card_file']?.invalid &&(f['pan_card_file']?.touched ||submitted)">
-                                            <small class="text-danger">
-                                              Pan is required !
-                                            </small>
-                                          </div>
+                                      <div class="custom-file">
+                                        <input type="file" (change)="uploadPan($event)" formControlName="pan_card_file"
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-3" class="custom-file-input" name="filename" />
+                                        <label class="custom-file-label" for="file-3">{{panUpload?.name ? panUpload?.name:'Upload'}}</label>
+                                        <div *ngIf="f['pan_card_file']?.invalid &&(f['pan_card_file']?.touched ||
+                                          f['pan_card_file'].dirty ||submitted)">
+                                          <small class="text-danger">
+                                            Pan is required !
+                                          </small>
+                                        </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload3" (click)="resetPan()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="panCard">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -887,28 +981,26 @@
                                     <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" class="form-control" />
+                                    <input type="date" formControlName="gst_dt" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="
-                                              gstCertificateFileUpload($event)
-                                            " name="file-1[]" id="file-4" class="inputfile inputfile-1"
-                                          data-multiple-caption="{count} files selected" multiple="" />
-                                        <label for="file-4">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                          <div *ngIf="f['gst_certificate']?.invalid &&(f['gst_certificate']?.touched ||submitted)">
-                                            <small class="text-danger">
-                                              GST Certificate is required !
-                                            </small>
-                                          </div>
+                                      <div class="custom-file">
+                                        <input type="file" (change)="gstCertificateFileUpload($event)" formControlName="gst_certificate" accept=".png, .jpg, .jpeg, .pdf"
+                                           id="file-4" class="custom-file-input" name="filename"/>
+                                        <label class="custom-file-label" for="file-4">{{gstUpload?.name ? gstUpload?.name:'Upload'}}</label>
+                                        <div *ngIf="f['gst_certificate']?.invalid &&(f['gst_certificate']?.touched ||
+                                          f['gst_certificate'].dirty ||submitted)">
+                                          <small class="text-danger">
+                                            GST Certificate is required !
+                                          </small>
+                                        </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload4" (click)="resetGst()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="gstCertificate">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -920,23 +1012,23 @@
                                   <td>--</td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="turnoverUpload($event)" name="file-1[]" id="file-5"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-5">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                          <div *ngIf="f['turnover_declare']?.invalid &&(f['turnover_declare']?.touched ||submitted)">
-                                            <small class="text-danger">
-                                              File is required !
-                                            </small>
-                                          </div>
+                                      <div class="custom-file">
+                                        <input type="file" (change)="turnoverUpload($event)"
+                                          formControlName="turnover_declare" accept=".png, .jpg, .jpeg, .pdf"
+                                          id="file-5" class="custom-file-input" name="filename"/>
+                                        <label class="custom-file-label" for="file-5">{{turnoverFile?.name ? turnoverFile?.name:'Upload'}}</label>
+                                        <div *ngIf="f['turnover_declare']?.invalid &&(f['turnover_declare']?.touched ||
+                                          f['turnover_declare'].dirty ||submitted)">
+                                          <small class="text-danger">
+                                            File is required !
+                                          </small>
+                                        </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload5" (click)="resetTurnover()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="turnOverFile">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -948,47 +1040,45 @@
                                   <td>--</td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="itrFileUpload($event)" name="file-1[]" id="file-6"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-6">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                          <div *ngIf="f['itr_last_yr']?.invalid &&(f['itr_last_yr']?.touched ||submitted)">
-                                            <small class="text-danger">
-                                              ITR is required !
-                                            </small>
-                                          </div>
+                                      <div class="custom-file">
+                                        <input type="file" (change)="itrFileUpload($event)"
+                                          formControlName="itr_last_yr" accept=".png, .jpg, .jpeg, .pdf"
+                                          id="file-6" class="custom-file-input" name="filename" />
+                                        <label class="custom-file-label" for="file-6">{{itrFile?.name ? itrFile?.name:'Upload'}}</label>
+                                        <div *ngIf="f['itr_last_yr']?.invalid &&(f['itr_last_yr']?.touched ||
+                                          f['itr_last_yr'].dirty ||submitted)">
+                                          <small class="text-danger">
+                                            ITR is required !
+                                          </small>
+                                        </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload6" (click)="resetItr()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="itrFileCheck">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
-                                <tr>
+                                <tr *ngIf="showFormD">
                                   <td>
                                     Form D <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" class="form-control" />
+                                    <input type="date" formControlName="formD_dt" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="formDupload($event)" name="file-1[]" id="file-7"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-7">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
+                                      <div class="custom-file">
+                                        <input type="file" (change)="formDupload($event)" accept=".png, .jpg, .jpeg, .pdf" id="file-7"
+                                        class="custom-file-input" name="filename" />
+                                        <label class="custom-file-label" for="file-7">{{formDfile?.name ? formDfile?.name:'Upload'}}</label>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload7" (click)="resetFormD()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="formD">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -1000,19 +1090,16 @@
                                   <td>--</td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="
-                                              consentLetterUpload($event)
-                                            " name="file-1[]" id="file-8" class="inputfile inputfile-1"
-                                          data-multiple-caption="{count} files selected" multiple="" />
-                                        <label for="file-8">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
+                                      <div class="custom-file">
+                                        <input type="file" (change)="consentLetterUpload($event)" accept=".png, .jpg, .jpeg, .pdf" id="file-8"
+                                        class="custom-file-input" name="filename" />
+                                        <label class="custom-file-label" for="file-8">{{consentLetter?.name ? consentLetter?.name:'Upload'}}</label>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload8" (click)="resetConsent()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="consentFileSize">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -1024,19 +1111,17 @@
                                   <td>--</td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="
-                                              regisCertificateUpload($event)
-                                            " name="file-1[]" id="file-9" class="inputfile inputfile-1"
-                                          data-multiple-caption="{count} files selected" multiple="" />
-                                        <label for="file-9">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                      </div>
-                                      <a href="#" class="reg-cross">
+                                        <div class="custom-file">
+                                           <input type="file" (change)="regisCertificateUpload($event)" class="custom-file-input" id="customFile"
+                                           accept=".png, .jpg, .jpeg, .pdf" name="filename">
+                                           <label class="custom-file-label" for="customFile">{{regisCertificate?.name ? regisCertificate?.name:'Upload'}}</label>
+                                         </div>
+                                         
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload9" (click)="resetCertificate()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="registerFileSize">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -1046,23 +1131,27 @@
                                     <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" class="form-control" />
+                                    <input type="date" formControlName="tcs_dt" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
-                                      <div class="uplodimgfil">
-                                        <input type="file" (change)="tcsFileUpload($event)" name="file-1[]" id="file-10"
-                                          class="inputfile inputfile-1" data-multiple-caption="{count} files selected"
-                                          multiple="" />
-                                        <label for="file-10">Upload
-                                          <span><img src="assets/images/upload.png" alt="" /></span></label>
-                                          
+                                     <div class="custom-file">
+                                        <input type="file" (change)="tcsFileUpload($event)" formControlName="tcs"
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-10"
+                                          class=" custom-file-input" name="filename" />
+                                        <label class="custom-file-label" for="file-10">{{tcsFile?.name ? tcsFile?.name:'Upload'}}</label>
+                                        <div *ngIf="f['tcs']?.invalid &&(f['tcs']?.touched ||
+                                          f['tcs'].dirty ||submitted)">
+                                          <small class="text-danger">
+                                            TCS is required !
+                                          </small>
+                                        </div>
                                       </div>
-                                      <a href="#" class="reg-cross">
+                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload10" (click)="resetTcs()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small>Maximum file size:5MB (PDF, PNG,
+                                    <small *ngIf="tcsFileSize">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -1082,7 +1171,7 @@
                           </div> -->
                         <div class="form-group">
                           <label class="container-check">I agree to the
-                            <a href="privacy.html"><u>terms and conditions</u></a>
+                            <a routerLink="/privacy"><u>terms and conditions</u></a>
                             <input type="checkbox" (change)="checkTerms($event)" />
                             <span class="checkmark"></span>
                           </label>
@@ -1122,9 +1211,10 @@
   <!--Footer-->
   <app-footer></app-footer>
   <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/assets/images/footarw.png" alt="" /></a>
+    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
   </div>
   <!--/Footer-->
+
   <script>
     $(function () {
       $('[data-toggle="tooltip"]').tooltip();

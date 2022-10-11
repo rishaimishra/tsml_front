@@ -155,8 +155,8 @@
                           <div class="popular_list_inr">
                              <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let products of allProductItem; let i = index">
-                                   <div class="popular_list_bx">
-                                      <div class="popular_list_img">
+                                   <div class="popular_list_bx" (click)="gotoDetailsPage(products?.product_id, products?.id)">
+                                      <div class="popular_list_img pointer_tab">
                                          <!-- <a><img src="assets/images/high-carbon.jpg" alt=""></a> -->
                                          <a><img src="https://beas.in/mje-shop/storage/app/public/images/product/{{products?.primary_image}}" alt=""></a>
                                       </div>
