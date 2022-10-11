@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/service/auth.service';
@@ -36,6 +37,8 @@ export class ProductDetailsComponent implements OnInit {
   quantity1: any = [];
   quantity2: any;
   proSize1: any;
+  addMultiForm: FormGroup;
+  gaugeTitles: FormArray | undefined;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [
@@ -60,8 +63,17 @@ export class ProductDetailsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _router: Router,
     private _product: ProductsService,
-    private _auth: AuthService
-  ) {}
+    private _auth: AuthService,
+    private _fb: FormBuilder
+  ) 
+  {
+    this.addMultiForm = this._fb.group({
+      gaugeTitles: this._fb.array([this.createItem()])
+    })
+  }
+  // get f() { return this.addMultiForm.controls; }
+  // get t() { return this.f.gaugeTitles as FormArray; }
+  // getControl(item: AbstractControl): FormControl { return item as FormControl; }
 
   ngOnInit(): void {
     this.isUserLogin = this._auth.isLoggedIn();
@@ -71,8 +83,28 @@ export class ProductDetailsComponent implements OnInit {
       console.log('id', res);
       this.get_product_details(res.productId, res.categoryId);
     });
-  }
+    // console.log(this.addMultiForm.get('gaugeTitles').controls)
+    this.gaugeTitles = this.addMultiForm.get('gaugeTitles') as FormArray;
 
+  }
+  get addDynamicRow() {
+    return this.addMultiForm.get('gaugeTitles') as FormArray;
+  }
+  createItem(){
+    return this._fb.group({
+      schedule_no: [uuid.v4()],
+      title:[''],
+      name:[''],    
+      addr:[''],
+      amount: [''],
+      city: ['']
+    });
+  }
+  addItem():void{
+    this.gaugeTitles = this.addMultiForm.get('gaugeTitles') as FormArray;
+    this.gaugeTitles.push(this.createItem());
+    console.log(this.gaugeTitles.controls)
+  }
   getState() {
     this.states = [
       {
@@ -397,8 +429,8 @@ export class ProductDetailsComponent implements OnInit {
     console.log(event.target.value);
   }
   shipTo2(event: any) {}
-  ReqForQuatation2() {
-    // this._router.navigate(['/thank-you']);
+ /* ReqForQuatation2() {
+    this._router.navigate(['/thank-you']);
     let requestData = {
       rfq_number: 'RFQ1237',
       product_id: '3',
@@ -455,8 +487,9 @@ export class ProductDetailsComponent implements OnInit {
       ],
     };
     console.log(requestData);
-  }
+  }*/
   ReqForQuatation() {
     console.log(this.quotation);
+    console.log(this.addMultiForm.value);
   }
 }
