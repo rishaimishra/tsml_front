@@ -13,6 +13,8 @@ import { LandingModule } from '../landing/landing.module';
 import { ViewAllProductComponent } from './view-all-product/view-all-product.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { RfqListComponent } from './rfq-list/rfq-list.component';
+import { AuthGuard } from '../auth/auth.guard';
+import { RfqDetailsComponent } from './rfq-details/rfq-details.component';
 
 const routes: Routes = [
   {
@@ -37,11 +39,11 @@ const routes: Routes = [
   },
   {
     path: 'edit-FRQ',
-    component: EditFRQComponent,
+    component: EditFRQComponent,canActivate: [AuthGuard],
   },
   {
     path: 'add-product',
-    component: AddProductComponent,
+    component: AddProductComponent,canActivate: [AuthGuard],
   },
   {
     path: 'all-product',
@@ -49,11 +51,15 @@ const routes: Routes = [
   },
   {
     path: 'thank-you',
-    component: ThankYouComponent,
+    component: ThankYouComponent,canActivate: [AuthGuard],
   },
   {
     path: 'rfq-list',
-    component: RfqListComponent,
+    component: RfqListComponent,canActivate: [AuthGuard],
+  },
+  {
+    path: 'RFQ-details/:RFQ',
+    component: RfqDetailsComponent,canActivate: [AuthGuard],
   },
 ];
 
@@ -68,6 +74,7 @@ const routes: Routes = [
     ViewAllProductComponent,
     ThankYouComponent,
     RfqListComponent,
+    RfqDetailsComponent,
   ],
   imports: [
     CommonModule,

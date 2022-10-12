@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 
@@ -10,7 +11,8 @@ import { ProductsService } from 'src/app/service/products.service';
 export class RfqListComponent implements OnInit {
   rfqList: any = [];
   constructor(private _products: ProductsService,
-    private _spinner: NgxSpinnerService) { }
+    private _spinner: NgxSpinnerService,
+    private _router: Router) { }
 
   ngOnInit(): void {
     this._products.getAllRequestOfRfq().subscribe((res: any) => {
@@ -20,5 +22,7 @@ export class RfqListComponent implements OnInit {
       }
     }) 
   }
-
+  goToproductDetails(rfqNo: any) {
+    this._router.navigate(['/RFQ-details',rfqNo]);
+  }
 }

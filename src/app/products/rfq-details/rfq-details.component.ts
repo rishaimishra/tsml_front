@@ -4,14 +4,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import * as uuid from 'uuid';
-//import uuid from "uuid";
 
 @Component({
-  selector: 'app-product-details',
-  templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.scss'],
+  selector: 'app-rfq-details',
+  templateUrl: './rfq-details.component.html',
+  styleUrls: ['./rfq-details.component.scss']
 })
-export class ProductDetailsComponent implements OnInit {
+export class RfqDetailsComponent implements OnInit {
+
   public product_data: any = '';
   public show_data: boolean = false;
   public qty: Number = 1;
@@ -52,9 +52,10 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getState();
     this._route.params.subscribe((res) => {
-      this.productId = res.productId;
+      this.productId = res.RFQ;
+      this.detailByRfq();
       console.log('id', res);
-      this.get_product_details(res.productId, res.categoryId);
+      // this.get_product_details(res.productId, res.categoryId);
     });
     
   }
@@ -214,7 +215,7 @@ export class ProductDetailsComponent implements OnInit {
       },
     ];
   }
-  get_product_details(product_id: any, category_id: any) {
+  /* get_product_details(product_id: any, category_id: any) {
     this.spinner.show();
     let url = '/product-details/' + product_id + '/' + category_id;
     this.productService.getMethod(url).subscribe(
@@ -243,28 +244,8 @@ export class ProductDetailsComponent implements OnInit {
             kam_price: 12505,
             valid_till: '',
           });
-          /*this.quotation = [
-            {
-              id: uniqueID,
-              size: '',
-              quantity: '',
-              advance_payment: '',
-              delivery_method: '',
-              pickup_from: '',
-              location: '',
-              bill_to: '',
-              ship_to: '',
-              delivery_date1: '',
-              delivery_date2: '',
-              remarks: '',
-            },
-          ];*/
+
           console.log('quotation=', this.quotation);
-          // this.selectedItem.push({
-          //   product_data: this.product_data,
-          //   quotation_data: this.quotation,
-          // });
-          // this.selectedItem.push(result[i]);
           let i = this.selectedItem.length - 1;
           this.selectedItem[i]['form_data'] = this.quotation;
 
@@ -273,13 +254,51 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.product_data = '';
         }
-        //console.log('this.product_data=', this.product_data);
       },
       (err) => {
         this.spinner.hide();
-        // console.log(err);
       }
     );
+  } */
+  detailByRfq() {
+    this.spinner.show();
+    let url = '/user/get_quote_by_id' +'/'+ this.productId;
+    this.productService.getMethod(url).subscribe((res:any) => {
+      console.log('resss',res);
+      this.spinner.hide();
+        if (res.status == 1) {
+          this.product_data = res.result.product;
+          this.selectedItem.push(this.product_data);
+          console.log('data', this.selectedItem);
+          this.show_data = true;
+          const uniqueID = uuid.v4();
+          this.quotation.push({
+            schedule_no: uniqueID,
+            pro_size: '',
+            quantity: '',
+            expected_price: '',
+            delivery: '',
+            plant: '',
+            location: '',
+            bill_to: '',
+            ship_to: '',
+            from_date: '',
+            to_date: '',
+            remarks: '',
+            kam_price: 12505,
+            valid_till: '',
+          });
+
+          console.log('quotation=', this.quotation);
+          let i = this.selectedItem.length - 1;
+          this.selectedItem[i]['form_data'] = this.quotation;
+
+          console.log('this.selectedItem=', this.selectedItem);
+          this.final_form_data();
+        } else {
+          this.product_data = '';
+        }
+    })
   }
   selecte_size(size: any, index: any) {
     this.selected_size = size;
@@ -306,9 +325,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   selectItems(event: any) {
-    console.log(event.target.value);
     let categoryId = event.target.value;
-    console.log('iiidd', this.productId);
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
     this.productService.getMethod(url).subscribe(
@@ -341,28 +358,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log('this.quotation=', this.quotation);
           let quation_lenght = this.quotation.length - 1;
           console.log('quation_lenght=', quation_lenght);
-          /*this.quotation = [
-            {
-              id: uniqueID,
-              size: '',
-              quantity: '',
-              advance_payment: '',
-              delivery_method: '',
-              pickup_from: '',
-              location: '',
-              bill_to: '',
-              ship_to: '',
-              delivery_date1: '',
-              delivery_date2: '',
-              remarks: '',
-            },
-          ];*/
-          // console.log('quotation=', this.quotation);
-          // this.selectedItem.push({
-          //   product_data: this.product_data,
-          //   quotation_data: this.quotation,
-          // });
-          // console.log('this.selectedItem=', this.selectedItem);
+
           let i = this.selectedItem.length - 1;
           console.log(
             'this.quotation[quation_lenght]=',
@@ -374,7 +370,6 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.product_data = '';
         }
-        //console.log('this.product_data=', this.product_data);
       },
       (err) => {
         this.spinner.hide();
@@ -473,4 +468,5 @@ export class ProductDetailsComponent implements OnInit {
     }
     console.log('this.quotation_value=', this.quotation_value);
   }
+
 }
