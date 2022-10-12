@@ -34,60 +34,31 @@
                                 </tr>
                              </thead>
                              <tbody>
-                                <tr>
+                                <tr *ngFor="let rfqItem of rfqList">
                                    <td>
-                                      XXXXX
+                                      {{rfqItem?.rfq_no}}
                                    </td>
                                    <td>
-                                      18-08-2022
+                                    {{rfqItem?.created_at}}
                                    </td>
-                                   <td>XXXXX</td>
-                                   <td>XXXX</td>
-                                   <td>
+                                   <td>{{rfqItem?.name}}</td>
+                                   <td>{{rfqItem?.quantity}}</td>
+                                   <td *ngIf="rfqItem?.kam_status == 0">
                                       Pending
                                    </td>
+                                   <td *ngIf="rfqItem?.kam_status == 1">
+                                    Price Negotiation
+                                 </td>
+                                 <td *ngIf="rfqItem?.kam_status == 2">
+                                    Rejected
+                                 </td>
                                    <td>
-                                      <div class="btn-edt-del">
-                                         <a href="RFQ-detail.html" class="edt-btn btn-primary2" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>   
+                                      <div class="btn-edt-del pointer">
+                                         <a class="edt-btn btn-primary2" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>   
                                       </div>
                                    </td>
                                 </tr>
-                                <tr>
-                                   <td>
-                                      XXXXX
-                                   </td>
-                                   <td>
-                                      18-08-2022
-                                   </td>
-                                   <td>XXXXX</td>
-                                   <td>XXXX</td>
-                                   <td>
-                                      Price Negotiation 
-                                   </td>
-                                   <td>
-                                      <div class="btn-edt-del">
-                                         <a href="RFQ-detail.html" class="edt-btn btn-primary2" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>   
-                                      </div>
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td>
-                                      XXXXX
-                                   </td>
-                                   <td>
-                                      18-08-2022
-                                   </td>
-                                   <td>XXXXX</td>
-                                   <td>XXXX</td>
-                                   <td>
-                                      Rejected
-                                   </td>
-                                   <td>
-                                      <div class="btn-edt-del">
-                                         <a href="RFQ-detail.html" class="edt-btn btn-primary2" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>   
-                                      </div>
-                                   </td>
-                                </tr>
+                               
                              </tbody>
                           </table>
                        </div>

@@ -28,7 +28,14 @@ export class AuthService {
   };
 
   isLoggedIn() {
-    return !!localStorage.getItem('tokenUrl');
+    return localStorage.getItem('tokenUrl') != null;
+  };
+  // isLoggedIn() {
+  //   return !!localStorage.getItem('tokenUrl') != null;
+  // };
+
+  getToken() {
+    return localStorage.getItem('tokenUrl') || '';
   }
   getOtp(requestData: getOptRequest): Observable<getOtpResponse> {
     return this._http.post<getOtpResponse>(`${environment.apiEndpointBase}/${this.GET_OTP_URL}`, requestData);

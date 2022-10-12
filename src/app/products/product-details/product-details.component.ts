@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthService } from 'src/app/service/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import * as uuid from 'uuid';
 //import uuid from "uuid";
@@ -21,7 +20,6 @@ export class ProductDetailsComponent implements OnInit {
   public show_error: boolean = false;
   public error_message: String = '';
   addItems: boolean = false;
-  isUserLogin: any;
   title: any = '';
   productId: any;
   selectedItem: any = [];
@@ -37,73 +35,35 @@ export class ProductDetailsComponent implements OnInit {
   quantity1: any = [];
   quantity2: any;
   proSize1: any;
-  addMultiForm: FormGroup;
-  gaugeTitles: FormArray | undefined;
 
   public quotation: any[] = [];
-  public quotation_value: any[] = [
-    {
-      size: '',
-      quantity: '',
-      advance_payment: '',
-      delivery_method: '',
-      pickup_from: '',
-      location: '',
-      bill_to: '',
-      ship_to: '',
-      delivery_date1: '',
-      delivery_date2: '',
-      remarks: '',
-    },
-  ];
-
+  public quotation_value: any[] = [];
+  totalQty: any;
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
     private spinner: NgxSpinnerService,
     private _router: Router,
     private _product: ProductsService,
-    private _auth: AuthService,
-    private _fb: FormBuilder
-  ) 
-  {
-    this.addMultiForm = this._fb.group({
-      gaugeTitles: this._fb.array([this.createItem()])
-    })
-  }
-  // get f() { return this.addMultiForm.controls; }
-  // get t() { return this.f.gaugeTitles as FormArray; }
-  // getControl(item: AbstractControl): FormControl { return item as FormControl; }
+    private _toaster: ToastrService
+  ) { }
 
   ngOnInit(): void {
-    this.isUserLogin = this._auth.isLoggedIn();
     this.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
       console.log('id', res);
       this.get_product_details(res.productId, res.categoryId);
     });
-    // console.log(this.addMultiForm.get('gaugeTitles').controls)
-    this.gaugeTitles = this.addMultiForm.get('gaugeTitles') as FormArray;
-
+    
   }
-  get addDynamicRow() {
-    return this.addMultiForm.get('gaugeTitles') as FormArray;
-  }
-  createItem(){
-    return this._fb.group({
-      schedule_no: [uuid.v4()],
-      title:[''],
-      name:[''],    
-      addr:[''],
-      amount: [''],
-      city: ['']
-    });
-  }
-  addItem():void{
-    this.gaugeTitles = this.addMultiForm.get('gaugeTitles') as FormArray;
-    this.gaugeTitles.push(this.createItem());
-    console.log(this.gaugeTitles.controls)
+  getTotalQuantity(event: any) {
+    
+    let qty = 0;
+    for (let i = 0; i < this.quotation_value.length; i++) {
+      qty = qty + parseInt(this.quotation_value[i]['quantity']);
+    }
+    this.totalQty = qty;
   }
   getState() {
     this.states = [
@@ -259,26 +219,28 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log('res',res);
+        console.log(res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
+          console.log('data', this.selectedItem);
           this.show_data = true;
           const uniqueID = uuid.v4();
-          console.log('uniqueId', uniqueID);
           this.quotation.push({
-            id: uniqueID,
-            size: '',
+            schedule_no: uniqueID,
+            pro_size: '',
             quantity: '',
-            advance_payment: '',
-            delivery_method: '',
-            pickup_from: '',
+            expected_price: '',
+            delivery: '',
+            plant: '',
             location: '',
             bill_to: '',
             ship_to: '',
-            delivery_date1: '',
-            delivery_date2: '',
+            from_date: '',
+            to_date: '',
             remarks: '',
+            kam_price: 12505,
+            valid_till: '',
           });
           /*this.quotation = [
             {
@@ -304,7 +266,9 @@ export class ProductDetailsComponent implements OnInit {
           // this.selectedItem.push(result[i]);
           let i = this.selectedItem.length - 1;
           this.selectedItem[i]['form_data'] = this.quotation;
+
           console.log('this.selectedItem=', this.selectedItem);
+          this.final_form_data();
         } else {
           this.product_data = '';
         }
@@ -356,20 +320,26 @@ export class ProductDetailsComponent implements OnInit {
           console.log('data', this.selectedItem);
           this.show_data = true;
           const uniqueID = uuid.v4();
+          this.quotation = [];
           this.quotation.push({
-            id: uniqueID,
-            size: '',
+            schedule_no: uniqueID,
+            pro_size: '',
             quantity: '',
-            advance_payment: '',
-            delivery_method: '',
-            pickup_from: '',
+            expected_price: '',
+            delivery: '',
+            plant: '',
             location: '',
             bill_to: '',
             ship_to: '',
-            delivery_date1: '',
-            delivery_date2: '',
+            from_date: '',
+            to_date: '',
             remarks: '',
+            kam_price: 12505,
+            valid_till: '',
           });
+          console.log('this.quotation=', this.quotation);
+          let quation_lenght = this.quotation.length - 1;
+          console.log('quation_lenght=', quation_lenght);
           /*this.quotation = [
             {
               id: uniqueID,
@@ -393,7 +363,13 @@ export class ProductDetailsComponent implements OnInit {
           // });
           // console.log('this.selectedItem=', this.selectedItem);
           let i = this.selectedItem.length - 1;
+          console.log(
+            'this.quotation[quation_lenght]=',
+            this.quotation[quation_lenght]
+          );
           this.selectedItem[i]['form_data'] = this.quotation;
+          console.log('this.selectedItem=', this.selectedItem);
+          this.final_form_data();
         } else {
           this.product_data = '';
         }
@@ -407,8 +383,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   sizeOfferd(event: any) {
-    console.log(event.target.value);
     this.proSize1 = event.target.value;
+    console.log(this.proSize1);
   }
   deliveryMethod(event: any) {
     console.log(event.target.value);
@@ -428,68 +404,72 @@ export class ProductDetailsComponent implements OnInit {
   billTo2(event: any) {
     console.log(event.target.value);
   }
-  shipTo2(event: any) {}
- /* ReqForQuatation2() {
-    this._router.navigate(['/thank-you']);
-    let requestData = {
-      rfq_number: 'RFQ1237',
-      product_id: '3',
-      quantity: '1700',
-      quote_schedules: [
-        {
-          schedule_no: 'D200',
-          quantity: '',
-          pro_size: '',
-          to_date: '',
-          from_date: '2022-09-06',
-          expected_price: '',
-          kam_price: '',
-          delivery: '',
-          valid_till: '',
-          plant: 'DELI',
-          location: 'mumbai',
-          bill_to: 'mumbai',
-          ship_to: 'mumbai',
-          remarks: '',
-        },
-        {
-          schedule_no: 'D300',
-          quantity: '1000',
-          pro_size: '10-150',
-          to_date: '2022-09-06',
-          from_date: '2022-09-06',
-          expected_price: '25145',
-          kam_price: '12505',
-          delivery: 'FOR',
-          valid_till: '',
-          plant: 'PLANT',
-          location: 'mumbai',
-          bill_to: 'mumbai',
-          ship_to: 'mumbai',
-          remarks: 'remarkls',
-        },
-        {
-          schedule_no: 'D400',
-          quantity: '500',
-          pro_size: '10-100',
-          to_date: '2022-09-06',
-          from_date: '2022-09-06',
-          expected_price: '25145',
-          kam_price: '12505',
-          delivery: 'FOR',
-          valid_till: '',
-          plant: 'PLANT',
-          location: 'mumbai',
-          bill_to: 'mumbai',
-          ship_to: 'mumbai',
-          remarks: 'remarkls',
-        },
-      ],
-    };
-    console.log(requestData);
-  }*/
+  shipTo2(event: any) { }
+
   ReqForQuatation() {
-    console.log(this.quotation);
-    console.log(this.addMultiForm.value);
+    this.spinner.show();
+    console.log(this.quotation_value);
+    let qty = 0;
+    for (let i = 0; i < this.quotation_value.length; i++) {
+      qty = qty + parseInt(this.quotation_value[i]['quantity']);
+    }
+    console.log('qty=', qty);
+    let reqData = {
+      rfq_number: uuid.v4(),
+      product_id: this.productId,
+      quantity: qty,
+      quote_schedules: this.quotation_value,
+    };
+    console.log('reqData=', reqData);
+    this._product.storeRfq(reqData).subscribe((res: any) => {
+      console.log(res);
+      if (res.status != 0) {
+        this.spinner.hide();
+        this._toaster.success('Request success');
+        this._router.navigate(['/thank-you']);
+      } else {
+        this._toaster.error(res.result);
+        this.spinner.hide();
+      }
+    });
+  }
+
+  addItem(i: any) {
+    console.log('i=', i);
+    const uniqueID = uuid.v4();
+    this.quotation = this.selectedItem[i]['form_data'];
+    this.quotation.push({
+      schedule_no: uniqueID,
+      pro_size: '',
+      quantity: '',
+      expected_price: '',
+      delivery: '',
+      plant: '',
+      location: '',
+      bill_to: '',
+      ship_to: '',
+      from_date: '',
+      to_date: '',
+      remarks: '',
+      kam_price: 12505,
+      valid_till: '',
+    });
+    this.selectedItem[i]['form_data'] = this.quotation;
+    console.log('this.selectedItem=', this.selectedItem);
+    this.final_form_data();
+  }
+  final_form_data() {
+    this.quotation_value = [];
+    console.log('this.selectedItem final fn=', this.selectedItem);
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data = this.selectedItem[i]['form_data'];
+      console.log('form_data=', form_data);
+      console.log('hi');
+      for (let k = 0; k < form_data.length; k++) {
+        this.quotation_value.push(form_data[k]);
+      }
+      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
+    }
+    console.log('this.quotation_value=', this.quotation_value);
   }
 }

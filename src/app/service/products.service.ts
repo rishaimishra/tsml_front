@@ -19,6 +19,9 @@ export class ProductsService {
   viewAllProduct(reqParameter: any) {
     return this._http.post(this.BesUrl + '/filter-product-menu', reqParameter);
   };
+  storeRfq(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/store_quotes', reqParameter);
+  };
 
   getAllNews() {
     return this._http.get(this.BesUrl + '/get_all_news_all');
@@ -27,7 +30,9 @@ export class ProductsService {
   getAllProducts() {
     return this._http.get(this.BesUrl + '/filter-product-menu');
   };
-
+  getAllRequestOfRfq() {
+    return this._http.get(this.BesUrl + '/user/quotes_list');
+  };
   filterProducts(requestData: any) {
     return this._http.post(this.BesUrl + '/filter-product-menu', requestData);
   };

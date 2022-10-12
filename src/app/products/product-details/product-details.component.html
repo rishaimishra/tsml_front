@@ -25,9 +25,9 @@
             <span>Add item</span>
             <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
               <option value="">--select--</option>
-              <option value="1" *ngIf="product_data?.cat_id != '1'">Lumps</option>
-              <option value="2" *ngIf="product_data?.cat_id != '2'">Chips</option>
-              <option value="3" *ngIf="product_data?.cat_id != '3'">Fines</option>
+              <option value="1">Lumps</option>
+              <option value="2">Chips</option>
+              <option value="3">Fines</option>
             </select>
           </div>
           <!-- List start -->
@@ -54,33 +54,36 @@
                   </div>
 
                   <div class="acc-pro-qty">
-                    <input type="text" class="form-control" id="" placeholder="150" disabled="" />
+                    <input type="text" class="form-control" id="" placeholder="{{totalQty? totalQty: '0'}}" disabled="" />
                   </div>
                 </div>
-                <form [formGroup]="addMultiForm">
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                  <div class="card-body" formArrayName="gaugeTitles"
-                  *ngFor="let item of gaugeTitles?.controls; let i = index;">
-                    <div class="row" [formGroupName]="i">
+                  <div class="card-body">
+                    <div class="row" *ngFor="
+                          let formData of productData['form_data'];
+                          let y = index
+                        ">
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Sizes Offered</label>
-                          <select (change)="sizeOfferd($event)" [(ngModel)]="productData['form_data'][i].size"
-                            name="size_{{ productData['form_data'][i].id }}" class="form-control form-control-sm">
+                          <select (change)="sizeOfferd($event)" #offerInput="ngModel" [(ngModel)]="formData.pro_size"
+                            name="pro_size_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="10-50">10-50</option>
                             <option value="10-70">10-70</option>
                             <option value="10-100">10-100</option>
                             <option value="10-150">10-150</option>
                           </select>
+                          <small *ngIf="offerInput.touched && qtyInput.invalid" class="inputValidation">Offer size is required</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity</label>
-                          <input type="text" [(ngModel)]="productData['form_data'][i].quantity" name="quantity_{{
-                                productData['form_data'][i].id
-                              }}" class="form-control form-control-sm" id="" placeholder="" value="" />
+                          <input #qtyInput="ngModel" type="text" (change)="getTotalQuantity($event)" [(ngModel)]="formData.quantity"
+                            name="quantity_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
+                            placeholder="" value="formData.quantity" required/>
+                            <small *ngIf="qtyInput.touched && qtyInput.invalid" class="inputValidation">Quantity is required</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
@@ -88,11 +91,9 @@
                           <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
                           <div class="pri-box">
                             <span>₹</span>
-                            <input type="text" [(ngModel)]="
-                                  productData['form_data'][i].advance_payment
-                                " name="advance_payment_{{
-                                  productData['form_data'][i].id
-                                }}" class="form-control form-control-sm" id="" placeholder="" value="" />
+                            <input type="text" [(ngModel)]="formData.expected_price"
+                              name="expected_price{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
+                              placeholder="" value="" />
                           </div>
                         </div>
                       </div>
@@ -100,11 +101,8 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Delivery Method</label>
-                          <select (change)="deliveryMethod($event)" [(ngModel)]="
-                                productData['form_data'][i].delivery_method
-                              " name="delivery_method_{{
-                                productData['form_data'][i].id
-                              }}" class="form-control form-control-sm">
+                          <select (change)="deliveryMethod($event)" [(ngModel)]="formData.delivery"
+                            name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm">
                             <option value="">Select ..</option>
                             <option value="FOR">FOR</option>
                             <option value="Ex-Works">Ex-Works</option>
@@ -114,11 +112,8 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Pickup From</label>
-                          <select (change)="pickupFrom($event)" [(ngModel)]="
-                                productData['form_data'][i].pickup_from
-                              " name="pickup_from_{{
-                                productData['form_data'][i].id
-                              }}" class="form-control form-control-sm">
+                          <select (change)="pickupFrom($event)" [(ngModel)]="formData.plant"
+                            name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm">
                             <option value="">Select..</option>
                             <option value="Plant">Plant</option>
                             <option value="Depot">Depot</option>
@@ -129,12 +124,10 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Location</label>
-                          <select class="form-control form-control-sm"
-                            [(ngModel)]="productData['form_data'][i].location" name="location_{{
-                                productData['form_data'][i].id
-                              }}">
+                          <select class="form-control form-control-sm" [(ngModel)]="formData.location"
+                            name="location_{{ formData.schedule_no }}">
                             <option value="">Select location</option>
-                            <option value="{{ state?.name }}" *ngFor="let state of states">
+                            <option *ngFor="let state of states" value="{{ state?.name }}">
                               {{ state?.name }}
                             </option>
                           </select>
@@ -145,15 +138,17 @@
                         <div class="form-group">
                           <div class="bil-add-new-add">
                             <label for="">Bill To</label>
-                            <label for=""><a class="text-primary"><i class="fa fa-plus-circle"></i> Add New
-                                Address</a></label>
+                            <!-- <label for=""
+                                ><a href="registration.html"
+                                  ><i class="fa fa-plus-circle"></i> Add New
+                                  Address</a
+                                ></label
+                              > -->
                           </div>
-                          <select class="form-control form-control-sm" [(ngModel)]="productData['form_data'][i].bill_to"
-                            name="bill_to_{{
-                                productData['form_data'][i].id
-                              }}">
+                          <select class="form-control form-control-sm" [(ngModel)]="formData.bill_to"
+                            name="bill_to_{{ formData.schedule_no }}">
                             <option value="">Bill to</option>
-                            <option value="{{ state?.name }}" *ngFor="let state of states">
+                            <option *ngFor="let state of states" value="{{ state?.name }}">
                               {{ state?.name }}
                             </option>
                           </select>
@@ -163,15 +158,17 @@
                         <div class="form-group">
                           <div class="bil-add-new-add">
                             <label for="">Ship To</label>
-                            <label for=""><a class="text-primary"><i class="fa fa-plus-circle"></i> Add New
-                                Address</a></label>
+                            <!-- <label for=""
+                                ><a href="registration.html"
+                                  ><i class="fa fa-plus-circle"></i> Add New
+                                  Address</a
+                                ></label
+                              > -->
                           </div>
-                          <select class="form-control form-control-sm" [(ngModel)]="productData['form_data'][i].ship_to"
-                            name="ship_to_{{
-                                productData['form_data'][i].id
-                              }}">
+                          <select class="form-control form-control-sm" [(ngModel)]="formData.ship_to"
+                            name="ship_to_{{ formData.schedule_no }}">
                             <option value="">Ship to</option>
-                            <option value="{{ state?.name }}" *ngFor="let state of states">
+                            <option *ngFor="let state of states" value="{{ state?.name }}">
                               {{ state?.name }}
                             </option>
                           </select>
@@ -182,51 +179,169 @@
                           <label for="">Proposed Delivery Date</label>
                           <div class="date-rang">
                             <div class="position-relative">
-                              <input type="date" [(ngModel)]="
-                                    productData['form_data'][i].delivery_date1
-                                  " name="delivery_date1_{{
-                                    productData['form_data'][i].id
-                                  }}" class="form-control form-control-sm" placeholder="From" value="" />
+                              <input type="date" [(ngModel)]="formData.from_date"
+                                name="from_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
+                                placeholder="From" value="" />
                               <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                             <div class="position-relative">
-                              <input type="date" [(ngModel)]="
-                                    productData['form_data'][i].delivery_date2
-                                  " name="delivery_date2_{{
-                                    productData['form_data'][i].id
-                                  }}" class="form-control form-control-sm" placeholder="To" value="" />
+                              <input type="date" [(ngModel)]="formData.to_date"
+                                name="to_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
+                                placeholder="To" value="" />
                               <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg-10">
+                      <div class="col-lg-11">
                         <div class="form-group">
                           <label for="">Remarks</label>
-                          <textarea [(ngModel)]="productData['form_data'][i].remarks" name="remarks_{{
-                                productData['form_data'][i].id
-                              }}" class="form-control form-control-sm" rows="4"></textarea>
+                          <textarea [(ngModel)]="formData.remarks" name="remarks_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" rows="4"></textarea>
                         </div>
                       </div>
-                      <!-- add new  -->
-                      <div class="col-lg-2">
-                        <a href="javascript:;" class="btn btn-primary mt-27" data-toggle="collapse"
-                        (click)="addItem()"><i class="fa fa-plus-circle"></i> Add New</a>
-                     </div>
                     </div>
-                    
+                    <div class="col-lg-2">
+                      <a href="javascript:;" class="btn btn-primary mt-27" data-toggle="collapse"
+                        (click)="addItem(i)"><i class="fa fa-plus-circle"></i> Add New</a>
+                    </div>
+
+                    <div id="deliverySchedule" class="collapse">
+                      <div class="schedule-block" id="container">
+                        <div class="row mydiv" id="thediv">
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Sizes Offered</label>
+                              <select (change)="sizeOffered2($event)" class="form-control form-control-sm">
+                                <option value="10-50">10-50</option>
+                                <option value="10-70">10-70</option>
+                                <option value="10-100">10-100</option>
+                                <option value="10-150">10-150</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Quantity</label>
+                              <input type="text" [(ngModel)]="quantity1" class="form-control form-control-sm" id=""
+                                placeholder="" value="" />
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                              <div class="pri-box">
+                                <span>₹</span>
+                                <input type="text" [(ngModel)]="expectedPrice2" class="form-control form-control-sm"
+                                  id="" placeholder="" value="" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Delivery Method</label>
+                              <select (change)="deliveryMethod2($event)" class="form-control form-control-sm">
+                                <option value="">Select method</option>
+                                <option value="FOR">FOR</option>
+                                <option value="Ex-Works">Ex-Works</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Pickup From</label>
+                              <select (change)="pickupfrome2($event)" class="form-control form-control-sm">
+                                <option value="">Select ..</option>
+                                <option value="Plant">Plant</option>
+                                <option value="Depot">Depot</option>
+                                <option value="Port">Port</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Location</label>
+                              <select (change)="selectlocation2($event)" class="form-control form-control-sm">
+                                <option>Select location</option>
+                                <option value="{{ state?.name }}" *ngFor="let state of states">
+                                  {{ state?.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <div class="bil-add-new-add">
+                                <label for="">Bill To</label>
+                                <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
+                                    Address</a></label>
+                              </div>
+                              <select (change)="billTo2($event)" class="form-control form-control-sm">
+                                <option value="">Select</option>
+                                <option value="{{ state?.name }}" *ngFor="let state of states">
+                                  {{ state?.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <div class="bil-add-new-add">
+                                <label for="">Ship To</label>
+                                <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
+                                    Address</a></label>
+                              </div>
+                              <select (change)="shipTo2($event)" class="form-control form-control-sm">
+                                <option>Select</option>
+                                <option value="{{ state?.name }}" *ngFor="let state of states">
+                                  {{ state?.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label for="">Proposed Delivery Date</label>
+                              <div class="date-rang">
+                                <div class="position-relative">
+                                  <input type="date" [(ngModel)]="deliveryDate3" class="form-control form-control-sm"
+                                    placeholder="From" value="" />
+                                  <span class="over_llp"><img src="assets/images/cal.png" alt="" /></span>
+                                </div>
+                                <div class="position-relative">
+                                  <input type="date" [(ngModel)]="deliveryDate4" class="form-control form-control-sm"
+                                    placeholder="To" value="" />
+                                  <span class="over_llp"><img src="assets/images/cal.png" alt="" /></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-11">
+                            <div class="form-group">
+                              <label for="">Remarks</label>
+                              <textarea [(ngModel)]="remarks2" class="form-control form-control-sm" rows="4"></textarea>
+                            </div>
+                          </div>
+                          <button type="button" class="blue-plus-icon btn-copy mt-15">
+                            <i class="fa fa-plus-circle"></i>
+                          </button>
+                          <button type="button" class="red-plus-icon mt-15">
+                            <i class="fa fa-minus-circle"></i>
+                          </button>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </form>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12 add-btn-sec pt-0" *ngIf="!isUserLogin" routerLink="/login">
-            <a class="btn btn-primary">Request for quotation</a>
-          </div>
-          <div class="col-lg-12 add-btn-sec pt-0" *ngIf="isUserLogin">
+          <div class="col-lg-12 add-btn-sec pt-0">
             <a (click)="ReqForQuatation()" class="btn btn-primary">Request for quotation</a>
           </div>
         </div>
@@ -239,7 +354,7 @@
   <!-- footer -->
   <app-footer></app-footer>
   <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
+    <a href="javascript:" id="return-to-top"><img src="assets/assets/images/footarw.png" alt="" /></a>
   </div>
 
   <script type="text/javascript">
@@ -287,7 +402,18 @@
       });
     });
   </script>
+  <script>
+    function Clone() {
+      var clone = document.getElementById("thediv").cloneNode(true); // "deep" clone
+      document.getElementById("container").appendChild(clone);
+    }
 
+    function Delete(button) {
+      var parent = button.parentNode;
+      var grand_father = parent.parentNode;
+      grand_father.removeChild(parent);
+    }
+  </script>
 </body>
 
 </html>
