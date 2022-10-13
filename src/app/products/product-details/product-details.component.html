@@ -54,7 +54,7 @@
                   </div>
 
                   <div class="acc-pro-qty">
-                    <input type="text" class="form-control" id="" placeholder="{{totalQty? totalQty: '0'}}" disabled="" />
+                    <input type="text" class="form-control" id="qty_{{productData.cat_id}}" placeholder="0" disabled="" />
                   </div>
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -80,7 +80,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity</label>
-                          <input #qtyInput="ngModel" type="text" (change)="getTotalQuantity($event)" [(ngModel)]="formData.quantity"
+                          <input #qtyInput="ngModel" type="number" (change)="getTotalQuantity(productData?.cat_id)" [(ngModel)]="formData.quantity"
                             name="quantity_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
                             placeholder="" value="formData.quantity" required/>
                             <small *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)" class="inputValidation">Quantity is required</small>
@@ -91,7 +91,7 @@
                           <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
                           <div class="pri-box">
                             <span>₹</span>
-                            <input type="text" #priceInput="ngModel" [(ngModel)]="formData.expected_price"
+                            <input type="number" #priceInput="ngModel" [(ngModel)]="formData.expected_price"
                               name="expected_price{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
                               placeholder="" value="" required/>
                               <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)" class="inputValidation">Price is required</small>

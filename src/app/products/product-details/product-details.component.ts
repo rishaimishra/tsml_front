@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import * as uuid from 'uuid';
+declare var $: any;
 //import uuid from "uuid";
 
 @Component({
@@ -36,6 +37,7 @@ export class ProductDetailsComponent implements OnInit {
   quantity2: any;
   proSize1: any;
   submit: boolean = false;
+  categoryid: any;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -53,18 +55,25 @@ export class ProductDetailsComponent implements OnInit {
     this.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
+      this.categoryid = res.categoryId;
       console.log('id', res);
       this.get_product_details(res.productId, res.categoryId);
     });
-    
   }
 
-  getTotalQuantity(event: any) {
-    let qty = 0;
-    for (let i = 0; i < this.quotation_value.length; i++) {
-      qty = qty + parseInt(this.quotation_value[i]['quantity']);
+  getTotalQuantity(cat_id: any) {
+    console.log(cat_id)
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data_array = this.selectedItem[i]['form_data'];
+      console.log('form_data_array=', form_data_array);
+      let qty = 0;
+      for (let i = 0; i < form_data_array.length; i++) {
+        qty = qty + parseInt(form_data_array[i]['quantity']);
+      }
+      console.log('quantity', qty);
+      this.totalQty = qty;
     }
-    this.totalQty = qty;
+    $("#qty_"+cat_id).val(this.totalQty);
   }
   getState() {
     this.states = [
@@ -226,9 +235,10 @@ export class ProductDetailsComponent implements OnInit {
           this.selectedItem.push(this.product_data);
           console.log('data', this.selectedItem);
           this.show_data = true;
-          const uniqueID = uuid.v4();
+          // const uniqueID = uuid.v4();
+      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation.push({
-            schedule_no: uniqueID,
+            schedule_no: scheduleNo,
             pro_size: '',
             quantity: '',
             expected_price: '',
@@ -243,22 +253,7 @@ export class ProductDetailsComponent implements OnInit {
             kam_price: 12505,
             valid_till: '',
           });
-          /*this.quotation = [
-            {
-              id: uniqueID,
-              size: '',
-              quantity: '',
-              advance_payment: '',
-              delivery_method: '',
-              pickup_from: '',
-              location: '',
-              bill_to: '',
-              ship_to: '',
-              delivery_date1: '',
-              delivery_date2: '',
-              remarks: '',
-            },
-          ];*/
+
           console.log('quotation=', this.quotation);
           // this.selectedItem.push({
           //   product_data: this.product_data,
@@ -308,6 +303,7 @@ export class ProductDetailsComponent implements OnInit {
   selectItems(event: any) {
     console.log(event.target.value);
     let categoryId = event.target.value;
+    this.categoryid = event.target.value;
     console.log('iiidd', this.productId);
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
@@ -320,10 +316,11 @@ export class ProductDetailsComponent implements OnInit {
           this.selectedItem.push(this.product_data);
           console.log('data', this.selectedItem);
           this.show_data = true;
-          const uniqueID = uuid.v4();
+          // const uniqueID = uuid.v4();
+      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation = [];
           this.quotation.push({
-            schedule_no: uniqueID,
+            schedule_no: scheduleNo,
             pro_size: '',
             quantity: '',
             expected_price: '',
@@ -341,28 +338,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log('this.quotation=', this.quotation);
           let quation_lenght = this.quotation.length - 1;
           console.log('quation_lenght=', quation_lenght);
-          /*this.quotation = [
-            {
-              id: uniqueID,
-              size: '',
-              quantity: '',
-              advance_payment: '',
-              delivery_method: '',
-              pickup_from: '',
-              location: '',
-              bill_to: '',
-              ship_to: '',
-              delivery_date1: '',
-              delivery_date2: '',
-              remarks: '',
-            },
-          ];*/
-          // console.log('quotation=', this.quotation);
-          // this.selectedItem.push({
-          //   product_data: this.product_data,
-          //   quotation_data: this.quotation,
-          // });
-          // console.log('this.selectedItem=', this.selectedItem);
+
           let i = this.selectedItem.length - 1;
           console.log(
             'this.quotation[quation_lenght]=',
@@ -407,25 +383,66 @@ export class ProductDetailsComponent implements OnInit {
   }
   shipTo2(event: any) { }
 
+  // ReqForQuatation1() {
+  //   this.submit = true;
+  //   this.spinner.show();
+  //   console.log(this.quotation_value);
+  //   let qty = 0;
+  //   for (let i = 0; i < this.quotation_value.length; i++) {
+  //     qty = qty + parseInt(this.quotation_value[i]['quantity']);
+  //   }
+  //   console.log('qty=', qty);
+  //   let reqData = {
+  //     rfq_number: uuid.v4(),
+  //     product_id: this.productId,
+  //     cat_id: this.categoryid,
+  //     quantity: qty,
+  //     quote_schedules: this.quotation_value,
+  //   };
+  //   console.log(reqData);
+
+  //   this._product.storeRfq(reqData).subscribe((res: any) => {
+  //     console.log(res);
+  //     if (res.status != 0 && res.result != 'Quote not created') {
+  //       this.spinner.hide();
+  //       this._toaster.success('Request success');
+  //       this._router.navigate(['/thank-you']);
+  //     } if (res.result == 'Quote not created') {
+  //       this._toaster.error(res.result);
+  //       this.spinner.hide();
+  //     }
+      
+  //   });
+  // }
   ReqForQuatation() {
     this.submit = true;
-    this.spinner.show();
-    console.log(this.quotation_value);
-    let qty = 0;
-    for (let i = 0; i < this.quotation_value.length; i++) {
-      qty = qty + parseInt(this.quotation_value[i]['quantity']);
+    const val = Math.floor(1000 + Math.random() * 9000);
+    let rfqNumber = val;
+    let rfqFormArry: any = [];
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data_array = this.selectedItem[i]['form_data'];
+      let qty = 0;
+      for (let i = 0; i < form_data_array.length; i++) {
+        qty = qty + parseInt(form_data_array[i]['quantity']);
+      }
+      let reqData = {
+        rfq_number: 'RFQ' +rfqNumber,
+        product_id: this.productId,
+        cat_id: this.selectedItem[i]['cat_id'],
+        quantity: qty,
+        quote_schedules: form_data_array,
+      };
+      rfqFormArry.push(reqData);
+      let qtyNull = reqData['quote_schedules'][i].quantity;
+      let remarksNull = reqData['quote_schedules'][i].remarks;
+      if (qtyNull == '' || remarksNull == '') {
+        this._toaster.error('please check required field');
+        return;
+      }
     }
-    console.log('qty=', qty);
-    let reqData = {
-      rfq_number: uuid.v4(),
-      product_id: this.productId,
-      quantity: qty,
-      quote_schedules: this.quotation_value,
-    };
-
-    this._product.storeRfq(reqData).subscribe((res: any) => {
+    this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
-      if (res.status != 0 && res.result != 'Quote not created') {
+      if (res.status == 1 && res.result != 'Quote not created') {
         this.spinner.hide();
         this._toaster.success('Request success');
         this._router.navigate(['/thank-you']);
@@ -433,15 +450,20 @@ export class ProductDetailsComponent implements OnInit {
         this._toaster.error(res.result);
         this.spinner.hide();
       }
-      
+      if (res.status == 'Token has Expired') {
+        this._toaster.error(res.status, 'Please login again');
+        this._router.navigate(['/login']);
+        this.spinner.hide();
+      }
     });
   }
 
   addItem(i: any) {
-    const uniqueID = uuid.v4();
+    // const uniqueID = uuid.v4();
+    const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['form_data'];
     this.quotation.push({
-      schedule_no: uniqueID,
+      schedule_no: scheduleNo,
       pro_size: '',
       quantity: '',
       expected_price: '',
