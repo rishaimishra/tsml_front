@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import * as uuid from 'uuid';
+declare var $: any;
 
 @Component({
   selector: 'app-rfq-details',
@@ -36,6 +37,7 @@ export class RfqDetailsComponent implements OnInit {
   quantity2: any;
   proSize1: any;
   submit: boolean = false;
+  categoryid: any;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -53,6 +55,7 @@ export class RfqDetailsComponent implements OnInit {
     this.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.RFQ;
+      this.categoryid = res.categoryId;
       this.detailByRfq();
       console.log('id', res);
       // this.get_product_details(res.productId, res.categoryId);
@@ -60,12 +63,19 @@ export class RfqDetailsComponent implements OnInit {
     
   }
 
-  getTotalQuantity(event: any) {
-    let qty = 0;
-    for (let i = 0; i < this.quotation_value.length; i++) {
-      qty = qty + parseInt(this.quotation_value[i]['quantity']);
+  getTotalQuantity(cat_id: any) {
+    console.log(cat_id)
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data_array = this.selectedItem[i]['form_data'];
+      console.log('form_data_array=', form_data_array);
+      let qty = 0;
+      for (let i = 0; i < form_data_array.length; i++) {
+        qty = qty + parseInt(form_data_array[i]['quantity']);
+      }
+      console.log('quantity', qty);
+      this.totalQty = qty;
     }
-    this.totalQty = qty;
+    $("#qty_"+cat_id).val(this.totalQty);
   }
   getState() {
     this.states = [
@@ -215,51 +225,7 @@ export class RfqDetailsComponent implements OnInit {
       },
     ];
   }
-  /* get_product_details(product_id: any, category_id: any) {
-    this.spinner.show();
-    let url = '/product-details/' + product_id + '/' + category_id;
-    this.productService.getMethod(url).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        console.log(res);
-        if (res.status == 1) {
-          this.product_data = res.result;
-          this.selectedItem.push(this.product_data);
-          console.log('data', this.selectedItem);
-          this.show_data = true;
-          const uniqueID = uuid.v4();
-          this.quotation.push({
-            schedule_no: uniqueID,
-            pro_size: '',
-            quantity: '',
-            expected_price: '',
-            delivery: '',
-            plant: '',
-            location: '',
-            bill_to: '',
-            ship_to: '',
-            from_date: '',
-            to_date: '',
-            remarks: '',
-            kam_price: 12505,
-            valid_till: '',
-          });
 
-          console.log('quotation=', this.quotation);
-          let i = this.selectedItem.length - 1;
-          this.selectedItem[i]['form_data'] = this.quotation;
-
-          console.log('this.selectedItem=', this.selectedItem);
-          this.final_form_data();
-        } else {
-          this.product_data = '';
-        }
-      },
-      (err) => {
-        this.spinner.hide();
-      }
-    );
-  } */
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' +'/'+ this.productId;
@@ -267,13 +233,18 @@ export class RfqDetailsComponent implements OnInit {
       console.log('resss',res);
       this.spinner.hide();
         if (res.status == 1) {
-          this.product_data = res.result.product;
+          this.product_data = res.result;
           this.selectedItem.push(this.product_data);
-          console.log('data', this.selectedItem);
+          console.log('data', res.message);
+          if (res.message == 'Quote do no exists'){
+            this._toaster.info(res.message);
+            this._router.navigate(['/rfq-list']);
+          }
           this.show_data = true;
-          const uniqueID = uuid.v4();
+          // const uniqueID = uuid.v4();
+      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation.push({
-            schedule_no: uniqueID,
+            schedule_no: scheduleNo,
             pro_size: '',
             quantity: '',
             expected_price: '',
@@ -298,6 +269,22 @@ export class RfqDetailsComponent implements OnInit {
         } else {
           this.product_data = '';
         }
+    })
+  }
+  deleteRfqById(id: any) {
+    this.spinner.show();
+    let apiKey = '/user/delete_quote_by_id';
+    let apiUrl = apiKey+ '/'+ id;
+    this.productService.getMethod(apiUrl).subscribe((res: any) => {
+      console.log(res)
+      if (res.status == 1 && res.result == 'Quote deleted') {
+        this._toaster.success(res.result);
+        this.spinner.hide();
+        this.detailByRfq();
+      } else {
+        this._toaster.error(res.result);
+        this.spinner.hide();
+      }
     })
   }
   selecte_size(size: any, index: any) {
@@ -326,6 +313,7 @@ export class RfqDetailsComponent implements OnInit {
 
   selectItems(event: any) {
     let categoryId = event.target.value;
+    this.categoryid = event.target.value;
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
     this.productService.getMethod(url).subscribe(
@@ -337,10 +325,11 @@ export class RfqDetailsComponent implements OnInit {
           this.selectedItem.push(this.product_data);
           console.log('data', this.selectedItem);
           this.show_data = true;
-          const uniqueID = uuid.v4();
+          // const uniqueID = uuid.v4();
+      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation = [];
           this.quotation.push({
-            schedule_no: uniqueID,
+            schedule_no: scheduleNo,
             pro_size: '',
             quantity: '',
             expected_price: '',
@@ -370,6 +359,7 @@ export class RfqDetailsComponent implements OnInit {
         } else {
           this.product_data = '';
         }
+        //console.log('this.product_data=', this.product_data);
       },
       (err) => {
         this.spinner.hide();
@@ -377,7 +367,6 @@ export class RfqDetailsComponent implements OnInit {
       }
     );
   }
-
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
     console.log(this.proSize1);
@@ -404,23 +393,33 @@ export class RfqDetailsComponent implements OnInit {
 
   ReqForQuatation() {
     this.submit = true;
-    this.spinner.show();
-    console.log(this.quotation_value);
-    let qty = 0;
-    for (let i = 0; i < this.quotation_value.length; i++) {
-      qty = qty + parseInt(this.quotation_value[i]['quantity']);
+    const val = Math.floor(1000 + Math.random() * 9000);
+    let rfqNumber = val;
+    let rfqFormArry: any = [];
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data_array = this.selectedItem[i]['form_data'];
+      let qty = 0;
+      for (let i = 0; i < form_data_array.length; i++) {
+        qty = qty + parseInt(form_data_array[i]['quantity']);
+      }
+      let reqData = {
+        rfq_number: 'RFQ' +rfqNumber,
+        product_id: this.productId,
+        cat_id: this.selectedItem[i]['cat_id'],
+        quantity: qty,
+        quote_schedules: form_data_array,
+      };
+      rfqFormArry.push(reqData);
+      let qtyNull = reqData['quote_schedules'][i].quantity;
+      let remarksNull = reqData['quote_schedules'][i].remarks;
+      if (qtyNull == '' || remarksNull == '') {
+        this._toaster.error('please check required field');
+        return;
+      }
     }
-    console.log('qty=', qty);
-    let reqData = {
-      rfq_number: uuid.v4(),
-      product_id: this.productId,
-      quantity: qty,
-      quote_schedules: this.quotation_value,
-    };
-
-    this._product.storeRfq(reqData).subscribe((res: any) => {
+    this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
-      if (res.status != 0 && res.result != 'Quote not created') {
+      if (res.status == 1 && res.result != 'Quote not created') {
         this.spinner.hide();
         this._toaster.success('Request success');
         this._router.navigate(['/thank-you']);
@@ -428,15 +427,20 @@ export class RfqDetailsComponent implements OnInit {
         this._toaster.error(res.result);
         this.spinner.hide();
       }
-      
+      if (res.status == 'Token has Expired') {
+        this._toaster.error(res.status, 'Please login again');
+        this._router.navigate(['/login']);
+        this.spinner.hide();
+      }
     });
   }
 
   addItem(i: any) {
-    const uniqueID = uuid.v4();
+    // const uniqueID = uuid.v4();
+    const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['form_data'];
     this.quotation.push({
-      schedule_no: uniqueID,
+      schedule_no: scheduleNo,
       pro_size: '',
       quantity: '',
       expected_price: '',

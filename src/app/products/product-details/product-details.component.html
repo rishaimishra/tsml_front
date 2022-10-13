@@ -25,9 +25,11 @@
             <span>Add item</span>
             <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
               <option value="">--select--</option>
-              <option value="1">Lumps</option>
-              <option value="2">Chips</option>
-              <option value="3">Fines</option>
+              <option value="1" *ngIf="productId != 2">Lumps</option>
+              <option value="2" *ngIf="productId != 2">Chips</option>
+              <option value="3" *ngIf="productId != 2">Fines</option>
+              <option value="4" *ngIf="productId != 1">High</option>
+              <option value="5" *ngIf="productId != 1">Medium</option>
             </select>
           </div>
           <!-- List start -->

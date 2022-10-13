@@ -16,9 +16,9 @@ export class ProductsService {
   getGstin(url_paremter: any) {
     return this._http.get('https://sheet.gstincheck.co.in/check/' + url_paremter);
   };
-  // getRfqDetails(req: any) {
-  //   return this._http.get(this.BesUrl + '/user/get_quote_by_id', req);
-  // };
+  deleteRfq(req: any) {
+    return this._http.get(this.BesUrl + '/delete_quote_by_id', req);
+  };
   viewAllProduct(reqParameter: any) {
     return this._http.post(this.BesUrl + '/filter-product-menu', reqParameter);
   };

@@ -26,7 +26,7 @@
           </div>
           <!-- List start -->
 
-          <div class="demo" *ngFor="let productData of selectedItem; let i = index">
+          <div class="demo" *ngFor="let productData of product_data; let i = index">
             <div class="accordion--" id="accordionExample">
               <div class="card">
                 <div class="card-header card-header--" id="headingOne">
@@ -48,10 +48,10 @@
                   </div>
 
                   <div class="acc-pro-qty">
-                    <input type="text" class="form-control" id="" placeholder="{{totalQty? totalQty: '0'}}" disabled="" />
+                    <input type="text" class="form-control" id="qty_{{productData.cat_id}}" placeholder="0" disabled="" />
                   </div>
-                  <div class="acc-pro-del">
-                    <a href="#" class="del-btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
+                  <div class="acc-pro-del pointerTab">
+                    <button  class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
                  </div>
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
