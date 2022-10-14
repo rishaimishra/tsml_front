@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
         if (res.success == true) {
           this._toster.success('Login Successfully', 'Welcome');
           localStorage.setItem('tokenUrl',res.token);
+          localStorage.setItem('USER_NAME',res.data.user_name);
           
           this._spinner.hide();
           this._router.navigate(['/']);

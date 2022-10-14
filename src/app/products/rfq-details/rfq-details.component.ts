@@ -57,8 +57,6 @@ export class RfqDetailsComponent implements OnInit {
       this.productId = res.RFQ;
       this.categoryid = res.categoryId;
       this.detailByRfq();
-      console.log('id', res);
-      // this.get_product_details(res.productId, res.categoryId);
     });
     
   }
@@ -226,6 +224,7 @@ export class RfqDetailsComponent implements OnInit {
     ];
   }
 
+  qtyData = [];
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' +'/'+ this.productId;
@@ -235,7 +234,6 @@ export class RfqDetailsComponent implements OnInit {
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
-          console.log('data', res.message);
           if (res.message == 'Quote do no exists'){
             this._toaster.info(res.message);
             this._router.navigate(['/rfq-list']);
@@ -260,15 +258,13 @@ export class RfqDetailsComponent implements OnInit {
             valid_till: '',
           });
 
-          console.log('quotation=', this.quotation);
           let i = this.selectedItem.length - 1;
           this.selectedItem[i]['form_data'] = this.quotation;
-
-          console.log('this.selectedItem=', this.selectedItem);
-          this.final_form_data();
+          // this.final_form_data();
         } else {
           this.product_data = '';
         }
+
     })
   }
   deleteRfqById(id: any) {
@@ -315,11 +311,11 @@ export class RfqDetailsComponent implements OnInit {
     let categoryId = event.target.value;
     this.categoryid = event.target.value;
     this.spinner.show();
-    let url = '/product-details/' + this.productId + '/' + categoryId;
+    let url = '/product-details/' + this.product_data[0].product_id + '/' + categoryId;
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log(res);
+        console.log('addItem',res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
@@ -344,26 +340,16 @@ export class RfqDetailsComponent implements OnInit {
             kam_price: 12505,
             valid_till: '',
           });
-          console.log('this.quotation=', this.quotation);
-          let quation_lenght = this.quotation.length - 1;
-          console.log('quation_lenght=', quation_lenght);
 
+          let quation_lenght = this.quotation.length - 1;
           let i = this.selectedItem.length - 1;
-          console.log(
-            'this.quotation[quation_lenght]=',
-            this.quotation[quation_lenght]
-          );
+
           this.selectedItem[i]['form_data'] = this.quotation;
           console.log('this.selectedItem=', this.selectedItem);
           this.final_form_data();
         } else {
           this.product_data = '';
         }
-        //console.log('this.product_data=', this.product_data);
-      },
-      (err) => {
-        this.spinner.hide();
-        // console.log(err);
       }
     );
   }
@@ -391,7 +377,7 @@ export class RfqDetailsComponent implements OnInit {
   }
   shipTo2(event: any) { }
 
-  ReqForQuatation() {
+  submitRfq() {
     this.submit = true;
     const val = Math.floor(1000 + Math.random() * 9000);
     let rfqNumber = val;
@@ -409,6 +395,7 @@ export class RfqDetailsComponent implements OnInit {
         quantity: qty,
         quote_schedules: form_data_array,
       };
+      console.log(reqData);
       rfqFormArry.push(reqData);
       let qtyNull = reqData['quote_schedules'][i].quantity;
       let remarksNull = reqData['quote_schedules'][i].remarks;
@@ -417,7 +404,7 @@ export class RfqDetailsComponent implements OnInit {
         return;
       }
     }
-    this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
+    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
       if (res.status == 1 && res.result != 'Quote not created') {
         this.spinner.hide();
@@ -436,6 +423,7 @@ export class RfqDetailsComponent implements OnInit {
   }
 
   addItem(i: any) {
+    console.log("i",i)
     // const uniqueID = uuid.v4();
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['form_data'];

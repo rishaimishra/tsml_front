@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -70,10 +71,11 @@ export class ProductDetailsComponent implements OnInit {
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
       }
-      console.log('quantity', qty);
+      console.log('quantity1', qty);
       this.totalQty = qty;
     }
     $("#qty_"+cat_id).val(this.totalQty);
+
   }
   getState() {
     this.states = [
@@ -255,11 +257,6 @@ export class ProductDetailsComponent implements OnInit {
           });
 
           console.log('quotation=', this.quotation);
-          // this.selectedItem.push({
-          //   product_data: this.product_data,
-          //   quotation_data: this.quotation,
-          // });
-          // this.selectedItem.push(result[i]);
           let i = this.selectedItem.length - 1;
           this.selectedItem[i]['form_data'] = this.quotation;
 
@@ -268,11 +265,10 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.product_data = '';
         }
-        //console.log('this.product_data=', this.product_data);
       },
       (err) => {
         this.spinner.hide();
-        // console.log(err);
+        console.log(err);
       }
     );
   }
@@ -301,10 +297,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   selectItems(event: any) {
-    console.log(event.target.value);
     let categoryId = event.target.value;
     this.categoryid = event.target.value;
-    console.log('iiidd', this.productId);
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
     this.productService.getMethod(url).subscribe(
@@ -482,6 +476,7 @@ export class ProductDetailsComponent implements OnInit {
     // console.log('this.selectedItem=', this.selectedItem);
     this.final_form_data();
   }
+
   final_form_data() {
     this.quotation_value = [];
     // console.log('this.selectedItem final fn=', this.selectedItem);
@@ -491,7 +486,7 @@ export class ProductDetailsComponent implements OnInit {
       for (let k = 0; k < form_data.length; k++) {
         this.quotation_value.push(form_data[k]);
       }
-      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
+      this.quotation_value[i] = this.selectedItem[i]['form_data'];
     }
     console.log('this.quotation_value=', this.quotation_value);
   }

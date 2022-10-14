@@ -37,7 +37,7 @@
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
                   <div class="acc-pro-dec">
-                    <h3>{{ productData?.pro_name }}</h3>
+                    <h3>{{ productData?.cat_name }}</h3>
                     <p>
                       Ranked among the top-seven global chrome alloy
                       producers, we are the leading manufacturers of High
@@ -48,7 +48,7 @@
                   </div>
 
                   <div class="acc-pro-qty">
-                    <input type="text" class="form-control" id="qty_{{productData.cat_id}}" placeholder="0" disabled="" />
+                    <input type="text" class="form-control" id="qty_{{i}}" placeholder="0" disabled="" />
                   </div>
                   <div class="acc-pro-del pointerTab">
                     <button  class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
@@ -57,7 +57,7 @@
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                   <div class="card-body">
                     <div class="row" *ngFor="
-                          let formData of productData['form_data'];
+                          let formData of productData['schedule'];
                           let y = index
                         ">
                       <div class="col-lg-3">
@@ -77,7 +77,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity</label>
-                          <input #qtyInput="ngModel" type="text" (change)="getTotalQuantity($event)" [(ngModel)]="formData.quantity"
+                          <input #qtyInput="ngModel" type="text" (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
                             name="quantity_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
                             placeholder="" value="formData.quantity" required/>
                             <small *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)" class="inputValidation">Quantity is required</small>
@@ -186,7 +186,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg-11">
+                      <div class="col-lg-12">
                         <div class="form-group">
                           <label for="">Remarks</label>
                           <textarea [(ngModel)]="formData.remarks" #remarks="ngModel" name="remarks_{{ formData.schedule_no }}"
@@ -195,8 +195,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-2">
-                      <a href="javascript:;" class="btn btn-primary mt-27" data-toggle="collapse"
+                    <div class="col-lg-12">
+                      <a href="javascript:;" class="btn btn-primary float-right my-4" data-toggle="collapse"
                         (click)="addItem(i)"><i class="fa fa-plus-circle"></i> Add New</a>
                     </div>
 
@@ -340,7 +340,7 @@
           </div>
         </div> -->
         <div class="text-right pb-5">
-        <button type="button" class="btn btn-primary" (click)="ReqForQuatation()"><i class="fa fa-paper-plane"></i> Submit</button> &nbsp;
+        <button type="button" class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button> &nbsp;
          <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
          </div>
       </div>
