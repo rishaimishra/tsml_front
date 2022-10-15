@@ -42,10 +42,7 @@ export class RfqDetailsComponent implements OnInit {
   public quotation: any[] = [];
   public quotation_value: any[] = [];
   totalQty: any;
-<<<<<<< HEAD
   editProductId :any;
-=======
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
@@ -235,17 +232,12 @@ export class RfqDetailsComponent implements OnInit {
       console.log('resss',res);
       this.spinner.hide();
         if (res.status == 1) {
-<<<<<<< HEAD
           this.editProductId = res.result[0]['product_id'];
           console.log('this.editProductId=',this.editProductId);
           this.product_data = res.result;
           //console.log()
           this.selectedItem.push(this.product_data);
           this.selectedItem = this.product_data;
-=======
-          this.product_data = res.result;
-          this.selectedItem.push(this.product_data);
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
           if (res.message == 'Quote do no exists'){
             this._toaster.info(res.message);
             this._router.navigate(['/rfq-list']);
@@ -270,13 +262,8 @@ export class RfqDetailsComponent implements OnInit {
             valid_till: '',
           });
 
-<<<<<<< HEAD
           //let i = this.selectedItem.length - 1;
          // this.selectedItem[i]['form_data'] = this.quotation;
-=======
-          let i = this.selectedItem.length - 1;
-          this.selectedItem[i]['form_data'] = this.quotation;
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
           // this.final_form_data();
         } else {
           this.product_data = '';
@@ -328,16 +315,11 @@ export class RfqDetailsComponent implements OnInit {
     let categoryId = event.target.value;
     this.categoryid = event.target.value;
     this.spinner.show();
-<<<<<<< HEAD
     let url = '/product-details/' + this.editProductId + '/' + categoryId;
-=======
-    let url = '/product-details/' + this.product_data[0].product_id + '/' + categoryId;
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
         console.log('addItem',res);
-<<<<<<< HEAD
         //return;
         if (res.status == 1) {
           this.product_data = res.result;
@@ -345,12 +327,6 @@ export class RfqDetailsComponent implements OnInit {
           //this.selectedItem=this.product_data;
           console.log('data', this.selectedItem);
          // return;
-=======
-        if (res.status == 1) {
-          this.product_data = res.result;
-          this.selectedItem.push(this.product_data);
-          console.log('data', this.selectedItem);
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
           this.show_data = true;
           // const uniqueID = uuid.v4();
       const scheduleNo = Math.floor(1000 + Math.random() * 9000);
@@ -372,21 +348,12 @@ export class RfqDetailsComponent implements OnInit {
             valid_till: '',
           });
 
-<<<<<<< HEAD
          // let quation_lenght = this.quotation.length - 1;
           let i = this.selectedItem.length - 1;
 
           this.selectedItem[i]['schedule'] = this.quotation;
           console.log('this.selectedItem=', this.selectedItem);
           //this.final_form_data();
-=======
-          let quation_lenght = this.quotation.length - 1;
-          let i = this.selectedItem.length - 1;
-
-          this.selectedItem[i]['form_data'] = this.quotation;
-          console.log('this.selectedItem=', this.selectedItem);
-          this.final_form_data();
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
         } else {
           this.product_data = '';
         }
@@ -419,36 +386,22 @@ export class RfqDetailsComponent implements OnInit {
 
   submitRfq() {
     this.submit = true;
-<<<<<<< HEAD
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
-=======
-    const val = Math.floor(1000 + Math.random() * 9000);
-    let rfqNumber = val;
-    let rfqFormArry: any = [];
-    for (let i = 0; i < this.selectedItem.length; i++) {
-      let form_data_array = this.selectedItem[i]['form_data'];
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
       }
       let reqData = {
-<<<<<<< HEAD
         rfq_number: this.productId,
         product_id: this.editProductId,
-=======
-        rfq_number: 'RFQ' +rfqNumber,
-        product_id: this.productId,
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
         quote_schedules: form_data_array,
       };
       console.log(reqData);
       rfqFormArry.push(reqData);
-<<<<<<< HEAD
       // let qtyNull = reqData['quote_schedules'][i].quantity;
       // let remarksNull = reqData['quote_schedules'][i].remarks;
       // if (qtyNull == '' || remarksNull == '') {
@@ -460,17 +413,6 @@ export class RfqDetailsComponent implements OnInit {
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
       return;
-=======
-      let qtyNull = reqData['quote_schedules'][i].quantity;
-      let remarksNull = reqData['quote_schedules'][i].remarks;
-      if (qtyNull == '' || remarksNull == '') {
-        this._toaster.error('please check required field');
-        return;
-      }
-    }
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
-      console.log(res);
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
       if (res.status == 1 && res.result != 'Quote not created') {
         this.spinner.hide();
         this._toaster.success('Request success');
@@ -491,13 +433,9 @@ export class RfqDetailsComponent implements OnInit {
     console.log("i",i)
     // const uniqueID = uuid.v4();
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
-<<<<<<< HEAD
     console.log('this.selectedItem=',this.selectedItem);
     this.quotation = this.selectedItem[i]['schedule'];
     console.log('this.quotation=',this.quotation);
-=======
-    this.quotation = this.selectedItem[i]['form_data'];
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
     this.quotation.push({
       schedule_no: scheduleNo,
       pro_size: '',
@@ -514,24 +452,15 @@ export class RfqDetailsComponent implements OnInit {
       kam_price: 12505,
       valid_till: '',
     });
-<<<<<<< HEAD
     this.selectedItem[i]['schedule'] = this.quotation;
     console.log('this.selectedItem=', this.selectedItem);
-=======
-    this.selectedItem[i]['form_data'] = this.quotation;
-    // console.log('this.selectedItem=', this.selectedItem);
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
     this.final_form_data();
   }
   final_form_data() {
     this.quotation_value = [];
     // console.log('this.selectedItem final fn=', this.selectedItem);
     for (let i = 0; i < this.selectedItem.length; i++) {
-<<<<<<< HEAD
       let form_data = this.selectedItem[i]['schedule'];
-=======
-      let form_data = this.selectedItem[i]['form_data'];
->>>>>>> efe18550bb7effad453e31ec98e5b3a872103557
  
       for (let k = 0; k < form_data.length; k++) {
         this.quotation_value.push(form_data[k]);
