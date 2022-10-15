@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
+declare var $: any; 
+
 
 @Component({
   selector: 'app-header',
@@ -12,6 +14,7 @@ import { AuthService } from 'src/app/service/auth.service';
 export class HeaderComponent implements OnInit {
   isTokenUrl: any;
   isUserLogIn: boolean = false;
+  userName: any;
   
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService) { }
@@ -19,6 +22,12 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
     this.isUserLogIn = this._auth.isLoggedIn();
+    this.userName = localStorage.getItem('USER_NAME');
+    $( document ).ready(function() {
+      $(".shopcut").click(function(){
+        $(".shopcutBx").slideToggle("slow");
+    });
+  });
   }
 
   // goToregister() {

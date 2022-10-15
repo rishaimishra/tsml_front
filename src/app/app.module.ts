@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
@@ -13,8 +13,9 @@ import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthIntercepto } from './service/auth.interceptor';
 
 
 
@@ -38,7 +39,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ToastrModule.forRoot(),
   ],
   exports: [RouterModule],
-  providers: [Location, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthIntercepto, multi: true},
+    Location, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,4 @@
 $( document ).ready(function() {
-   
-	$(".shopcut").click(function(){
-        $(".shopcutBx").slideToggle("slow");
-    });
-
 
     $( function() {
 	    $( ".datepicker" ).datepicker();
