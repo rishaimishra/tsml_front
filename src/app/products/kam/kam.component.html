@@ -1,0 +1,581 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<body>
+    <!-- header -->
+    <app-header></app-header>
+    <div class="page-content">
+        <section class="sub-header-2">
+            <div class="container">
+                <h1>Price Negotiation</h1>
+                <!--<a href="#" class="btn btn-primary add-btn-right"><i class="fa fa-plus-circle"></i> Add Item</a>-->
+                <div class="clearfix"></div>
+            </div>
+        </section>
+        <section>
+            <div class="container">
+                <div class="prod-list-detl pt-0">
+                    <div class="demo">
+                        <div class="accordion-- cam-" id="accordionExample">
+                            <div class="card" *ngFor="let formData of kamDetails;let i = index">
+                                <div class="card-header card-header--" id="headingOne">
+                                    <button type="button" class="btn btn-link" id="hello" data-toggle="collapse"
+                                        data-target="#collapseOne"><i class="fa fa-plus"></i></button>
+                                    <div class="acc-pro-dec">
+                                        <div class="odr-info-01">
+                                            <span>RFQ Number</span>
+                                            <p>{{formData?.rfq_no}}</p>
+                                        </div>
+                                        <div class="odr-info-02">
+                                            <span>RFQ Date</span>
+                                            <p>{{formData?.created_at}}</p>
+                                        </div>
+                                        <div class="odr-info-03">
+                                            <em>
+                                                <span>Quantity</span>
+                                                <p>{{formData?.quantity}}</p>
+                                            </em>
+                                        </div>
+                                        <div class="odr-info-04">
+                                            <em>
+                                                <span>Price (₹)</span>
+                                                <p>{{formData?.expected_price}}<img src="assets/images/mone.png" alt="">
+                                                </p>
+                                            </em>
+                                        </div>
+                                        <div class="odr-info-05">
+                                            <span>Location</span>
+                                            <p>{{formData?.location}}</p>
+                                        </div>
+                                        <div class="odr-info-06">
+                                            <span>Remarks</span>
+                                            <p>{{formData?.remarks | truncate:120}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="acc-pro-del">
+                                        <button class="del-btn btn-danger pointer" (click)="deleteKam(formData?.id)"
+                                            data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                class="fa fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <!-- new -->
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Sizes Offered</label>
+                                                    <select (change)="sizeOfferd($event)" #offerInput="ngModel"
+                                                        [(ngModel)]="formData.sizes"
+                                                        name="pro_size_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select ..</option>
+                                                        <option value="10-50">10-50</option>
+                                                        <option value="10-70">10-70</option>
+                                                        <option value="10-100">10-100</option>
+                                                        <option value="10-150">10-150</option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="offerInput.invalid && (offerInput.dirty || offerInput.touched || submit)"
+                                                        class="inputValidation">Offer size is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Quantity</label>
+                                                    <input #qtyInput="ngModel" type="number"
+                                                        [(ngModel)]="formData.quantity"
+                                                        name="quantity_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" id="" placeholder=""
+                                                        value="formData.quantity" required />
+                                                    <small
+                                                        *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)"
+                                                        class="inputValidation">Quantity is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Expected Ex-Works Price<small>(On Advance
+                                                            Payment)</small></label>
+                                                    <div class="pri-box">
+                                                        <span>₹</span>
+                                                        <input type="number" #priceInput="ngModel"
+                                                            [(ngModel)]="formData.expected_price"
+                                                            name="expected_price{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" id="" placeholder=""
+                                                            value="" required />
+                                                        <small
+                                                            *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
+                                                            class="inputValidation">Price is required</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Delivery Method</label>
+                                                    <select (change)="deliveryMethod($event)" #dlvrMethodInput="ngModel"
+                                                        [(ngModel)]="formData.delivery"
+                                                        name="delivery_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select ..</option>
+                                                        <option value="FOR">FOR</option>
+                                                        <option value="Ex-Works">Ex-Works</option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
+                                                        class="inputValidation">Select delivery method</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Pickup From</label>
+                                                    <select (change)="pickupFrom($event)" #pickUpfrom="ngModel"
+                                                        [(ngModel)]="formData.plant"
+                                                        name="plant_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select..</option>
+                                                        <option value="Plant">Plant</option>
+                                                        <option value="Depot">Depot</option>
+                                                        <option value="Port">Port</option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
+                                                        class="inputValidation">Pickup from is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Location</label>
+                                                    <select class="form-control form-control-sm" #location="ngModel"
+                                                        [(ngModel)]="formData.location"
+                                                        name="location_{{ formData.schedule_no }}" required>
+                                                        <option value="">Select location</option>
+                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                            {{ state?.name }}
+                                                        </option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="location.invalid && (location.dirty || location.touched || submit)"
+                                                        class="inputValidation">Location is required</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <div class="bil-add-new-add">
+                                                        <label for="">Bill To</label>
+                                                    </div>
+                                                    <select class="form-control form-control-sm" #billTo="ngModel"
+                                                        [(ngModel)]="formData.bill_to"
+                                                        name="bill_to_{{ formData.schedule_no }}" required>
+                                                        <option value="">Bill to</option>
+                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                            {{ state?.name }}
+                                                        </option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
+                                                        class="inputValidation">Select bill to</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <div class="bil-add-new-add">
+                                                        <label for="">Ship To</label>
+                                                    </div>
+                                                    <select class="form-control form-control-sm" #shipTo="ngModel"
+                                                        [(ngModel)]="formData.ship_to"
+                                                        name="ship_to_{{ formData.schedule_no }}" required>
+                                                        <option value="">Ship to</option>
+                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                            {{ state?.name }}
+                                                        </option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
+                                                        class="inputValidation">Select ship to</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Proposed Delivery Date</label>
+                                                    <div class="date-rang">
+                                                        <div class="position-relative">
+                                                            <input type="date" [(ngModel)]="formData.from_date"
+                                                                #dlvrDate="ngModel"
+                                                                name="from_date_{{ formData.schedule_no }}"
+                                                                class="form-control form-control-sm" placeholder="From"
+                                                                value="" required />
+                                                            <small
+                                                                *ngIf="dlvrDate.invalid && (dlvrDate.dirty || dlvrDate.touched || submit)"
+                                                                class="inputValidation">Delivery date from</small>
+                                                            <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                                                        </div>
+                                                        <div class="position-relative">
+                                                            <input type="date" [(ngModel)]="formData.to_date"
+                                                                #dlvrDateTo="ngModel"
+                                                                name="to_date_{{ formData.schedule_no }}"
+                                                                class="form-control form-control-sm" placeholder="To"
+                                                                value="" required />
+                                                            <small
+                                                                *ngIf="dlvrDateTo.invalid && (dlvrDateTo.dirty || dlvrDateTo.touched || submit)"
+                                                                class="inputValidation">Delivery date to</small>
+                                                            <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">CAM's Price <span class="price-info price-info0"
+                                                            data-toggle="modal" (click)="priceModal(formData?.id)" data-target="#addPrice"><i
+                                                                class="fa fa-info-circle"></i></span></label>
+                                                    <div class="pri-box">
+                                                        <span>₹</span>
+                                                        <input type="text" class="form-control form-control-sm" id=""
+                                                            placeholder="" value="107347.5">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Valid Till </label>
+                                                    <div class="position-relative">
+                                                        <input type="date"
+                                                            class="form-control form-control-sm datepicker"
+                                                            placeholder="To" value="">
+                                                        <!-- <span class="over_llp"><img src="assets/images/cal.png"
+                                                                alt=""></span> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Remarks</label>
+                                                    <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
+                                                        name="remarks_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" rows="4"
+                                                        required></textarea>
+                                                    <small
+                                                        *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
+                                                        class="inputValidation">Remarks is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="app-reg-btn">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input" id="inlineCheckbox0"
+                                                            (change)="getRequote($event)" value="{{formData?.schedule_no}}"
+                                                            name="fav_language_{{formData?.id}}">
+                                                        <label for="inlineCheckbox0">Requote </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input" id="inlineCheckbox1"
+                                                            (click)="getStatus(formData?.id,1)"
+                                                            name="fav_language_{{formData?.id}}" value="Accept">
+                                                        <label for="inlineCheckbox0">Accept </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input" id="inlineCheckbox2"
+                                                            (click)="getStatus(formData?.id,2)"
+                                                            name="fav_language_{{formData?.id}}" value="Reject">
+                                                        <label for="inlineCheckbox2">Reject </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right pb-5">
+                    <button type="button" (click)="submitReqote()" class="btn btn-primary"><i
+                            class="fa fa-paper-plane"></i> Submit</button> &nbsp;
+                    <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+                <div class="history-table">
+                    <section class="sub-header-2">
+                        <div class="container">
+                            <h1>Negotiation History</h1>
+                        </div>
+                    </section>
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Product Details</th>
+                                        <th>RFQ Number</th>
+                                        <th>Name</th>
+                                        <th>Remarks</th>
+                                        <th>RFQ Date</th>
+                                        <th>Ex-Works Price (₹)</th>
+                                        <th>CAM's Price (₹)</th>
+                                        <th colspan="2" class="text-center">Valid Till </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="product">
+                                                <div class="cart-details">
+                                                    <h3 class="product-title">
+                                                        <a href="#">High Carbon Ferro Chrome - High Phos</a>
+                                                    </h3>
+                                                    <p>Sizes : 10-150 mm</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            7031704698
+                                        </td>
+                                        <td>
+                                            Surojit Bera
+                                        </td>
+                                        <td>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        </td>
+                                        <td>
+                                            <div class="white-space-nowrap">18-08-2022</div>
+                                        </td>
+                                        <td>
+                                            <div class="hst-exp-price">
+                                                <b>107347.5</b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="kam-price">
+                                                <b>113847.5</b>
+                                            </div>
+                                        </td>
+                                        <td>09/30/2022</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- footer -->
+    <app-footer></app-footer>
+    <div class="foot_arw">
+        <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
+    </div>
+
+    <!-- price popup -->
+    <div class="modal" id="addPrice">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-uppercase">Price Calculation</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" colspan="2">Pricing Components</th>
+                                <th scope="col">Calculated Price (₹)</th>
+                                <th scope="col">Updated Price (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody (change)="calculatePrice($event)">
+                            <tr>
+                                <td colspan="2">BPT Price</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        104000.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="btpPrice"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder="" value="104000.00" disabled></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Price Premium(L/F)</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        -4000.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="pricePremium"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Misc Expense</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        0.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="miscExpense"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Delivery Cost</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        2500.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="deliveryCost"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td>Credit Cost For</td>
+                                <td>
+                                    <select
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150">
+                                        <option>30 Days</option>
+                                        <option>45 Days</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="pp-bx">
+                                        0.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="creditCost"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Interest Rate</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        0.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="interestRate"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">CAM Discount</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        0.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="camDiscount"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Final Price</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        102500.00
+                                    </div>
+                                </td>
+                                <td><input type="number" [(ngModel)]="finalPrice" 
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder="" value="" disabled=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Difference Between BTP & Final Price (%)</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        0.00
+                                    </div>
+                                </td>
+                                <td><input type="number"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-note"><i>Note: Price Quoted Excluding GST & TCS Charges</i></p>
+                    <div class="add-btn-sec pt-2 pb-2">
+                        <button class="btn btn-primary"><i class="fa fa-check"></i> Ok</button> &nbsp;
+                        <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </div>
+                <!--/-->
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Add minus icon for collapse element which is open by default
+            $(".collapse.show").each(function () {
+                $(this)
+                    .prev(".card-header")
+                    .find(".fa")
+                    .addClass("fa-minus")
+                    .removeClass("fa-plus");
+            });
+
+            // Toggle plus minus icon on show hide of collapse element
+            $(".collapse")
+                .on("show.bs.collapse", function () {
+                    $(this)
+                        .prev(".card-header")
+                        .find(".fa")
+                        .removeClass("fa-plus")
+                        .addClass("fa-minus");
+                })
+                .on("hide.bs.collapse", function () {
+                    $(this)
+                        .prev(".card-header")
+                        .find(".fa")
+                        .removeClass("fa-minus")
+                        .addClass("fa-plus");
+                });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".user_lk").click(function () {
+
+                $(".show01").slideToggle();
+
+            });
+
+            $(".user_llk").click(function () {
+
+                $(".show02").slideToggle();
+
+            });
+
+            $(".user_lllk").click(function () {
+
+                $(".show03").slideToggle();
+
+            });
+
+        });
+    </script>
+    <script>
+        function Clone() {
+
+
+            var clone = document.getElementById('thediv').cloneNode(true); // "deep" clone
+            document.getElementById("container").appendChild(clone);
+        }
+
+        function Delete(button) {
+            var parent = button.parentNode;
+            var grand_father = parent.parentNode;
+            grand_father.removeChild(parent);
+        }
+    </script>
+</body>
+
+</html>

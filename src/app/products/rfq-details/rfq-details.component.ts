@@ -224,7 +224,6 @@ export class RfqDetailsComponent implements OnInit {
     ];
   }
 
-  qtyData = [];
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' +'/'+ this.productId;
@@ -235,13 +234,8 @@ export class RfqDetailsComponent implements OnInit {
           this.editProductId = res.result[0]['product_id'];
           console.log('this.editProductId=',this.editProductId);
           this.product_data = res.result;
-          //console.log()
           this.selectedItem.push(this.product_data);
           this.selectedItem = this.product_data;
-          if (res.message == 'Quote do no exists'){
-            this._toaster.info(res.message);
-            this._router.navigate(['/rfq-list']);
-          }
           this.show_data = true;
           // const uniqueID = uuid.v4();
       const scheduleNo = Math.floor(1000 + Math.random() * 9000);
@@ -265,7 +259,12 @@ export class RfqDetailsComponent implements OnInit {
           //let i = this.selectedItem.length - 1;
          // this.selectedItem[i]['form_data'] = this.quotation;
           // this.final_form_data();
-        } else {
+        } 
+        if (res.status == 'Token has Expired'){
+          this._toaster.error(res.status);
+          this._router.navigate(['/login']);
+        }
+        else {
           this.product_data = '';
         }
 
@@ -286,6 +285,10 @@ export class RfqDetailsComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  goToKamPage(id: any) {
+    this._router.navigate(['/kam',id]);
   }
   selecte_size(size: any, index: any) {
     this.selected_size = size;
@@ -386,6 +389,7 @@ export class RfqDetailsComponent implements OnInit {
 
   submitRfq() {
     this.submit = true;
+    this.spinner.show();
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -402,28 +406,26 @@ export class RfqDetailsComponent implements OnInit {
       };
       console.log(reqData);
       rfqFormArry.push(reqData);
-      // let qtyNull = reqData['quote_schedules'][i].quantity;
-      // let remarksNull = reqData['quote_schedules'][i].remarks;
-      // if (qtyNull == '' || remarksNull == '') {
-      //   this._toaster.error('please check required field');
-      //   return;
-      // }
     }
     console.log('rfqFormArry=',rfqFormArry);
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
-      return;
-      if (res.status == 1 && res.result != 'Quote not created') {
+      if (res.message == 'success') {
         this.spinner.hide();
-        this._toaster.success('Request success');
-        this._router.navigate(['/thank-you']);
-      } if (res.result == 'Quote not created') {
-        this._toaster.error(res.result);
+        this._toaster.success(res.result);
+        this._router.navigate(['/kam', this.productId]);
+      } 
+      if (res.message != 'success') {
+        this._toaster.error(res.message);
         this.spinner.hide();
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
         this._router.navigate(['/login']);
+        this.spinner.hide();
+      }
+      else {
+        
         this.spinner.hide();
       }
     });

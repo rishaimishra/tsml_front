@@ -74,7 +74,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log('quantity1', qty);
       this.totalQty = qty;
     }
-    $("#qty_"+cat_id).val(this.totalQty);
+    $("#qty_" + cat_id).val(this.totalQty);
 
   }
   getState() {
@@ -238,7 +238,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log('data', this.selectedItem);
           this.show_data = true;
           // const uniqueID = uuid.v4();
-      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+          const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation.push({
             schedule_no: scheduleNo,
             pro_size: '',
@@ -311,7 +311,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log('data', this.selectedItem);
           this.show_data = true;
           // const uniqueID = uuid.v4();
-      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+          const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation = [];
           this.quotation.push({
             schedule_no: scheduleNo,
@@ -405,10 +405,11 @@ export class ProductDetailsComponent implements OnInit {
   //       this._toaster.error(res.result);
   //       this.spinner.hide();
   //     }
-      
+
   //   });
   // }
   ReqForQuatation() {
+    this.spinner.show();
     this.submit = true;
     const val = Math.floor(1000 + Math.random() * 9000);
     let rfqNumber = val;
@@ -420,7 +421,7 @@ export class ProductDetailsComponent implements OnInit {
         qty = qty + parseInt(form_data_array[i]['quantity']);
       }
       let reqData = {
-        rfq_number: 'RFQ' +rfqNumber,
+        rfq_number: 'RFQ' + rfqNumber,
         product_id: this.productId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
@@ -431,7 +432,9 @@ export class ProductDetailsComponent implements OnInit {
       let remarksNull = reqData['quote_schedules'][i].remarks;
       if (qtyNull == '' || remarksNull == '') {
         this._toaster.error('please check required field');
+        this.spinner.hide();
         return;
+
       }
     }
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
@@ -440,6 +443,8 @@ export class ProductDetailsComponent implements OnInit {
         this.spinner.hide();
         this._toaster.success('Request success');
         this._router.navigate(['/thank-you']);
+        this.spinner.hide();
+
       } if (res.result == 'Quote not created') {
         this._toaster.error(res.result);
         this.spinner.hide();
@@ -449,6 +454,10 @@ export class ProductDetailsComponent implements OnInit {
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+
     });
   }
 
@@ -482,7 +491,7 @@ export class ProductDetailsComponent implements OnInit {
     // console.log('this.selectedItem final fn=', this.selectedItem);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data = this.selectedItem[i]['form_data'];
- 
+
       for (let k = 0; k < form_data.length; k++) {
         this.quotation_value.push(form_data[k]);
       }

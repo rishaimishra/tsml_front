@@ -15,6 +15,8 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
 import { RfqListComponent } from './rfq-list/rfq-list.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { RfqDetailsComponent } from './rfq-details/rfq-details.component';
+import { KamComponent } from './kam/kam.component';
+import { TruncatePipe } from './transform.pipe';
 
 const routes: Routes = [
   {
@@ -61,6 +63,10 @@ const routes: Routes = [
     path: 'RFQ-details/:RFQ',
     component: RfqDetailsComponent,canActivate: [AuthGuard],
   },
+  {
+    path: 'kam/:id',
+    component: KamComponent,canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
@@ -75,6 +81,8 @@ const routes: Routes = [
     ThankYouComponent,
     RfqListComponent,
     RfqDetailsComponent,
+    KamComponent,
+    TruncatePipe
   ],
   imports: [
     CommonModule,

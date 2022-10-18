@@ -23,6 +23,12 @@ export class HeaderComponent implements OnInit {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
     this.isUserLogIn = this._auth.isLoggedIn();
     this.userName = localStorage.getItem('USER_NAME');
+
+    $( document ).ready(function() {
+      $(".shopcut").click(function(){
+        $(".shopcutBx").slideToggle("slow");
+    });
+  });
   }
 
   // goToregister() {
