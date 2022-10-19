@@ -30,7 +30,7 @@
             <div class="accordion--" id="accordionExample">
               <div class="card">
                 <div class="card-header card-header--" id="headingOne">
-                  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne">
+                  <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
                   </button>
                   <div class="acc-pro-pic" (click)="goToKamPage(productData?.rfq_no)">
@@ -54,7 +54,7 @@
                     <button  class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
                  </div>
                 </div>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                   <div class="card-body">
                     <div class="row" *ngFor="
                           let formData of productData['schedule'];
@@ -346,9 +346,12 @@
       </div>
     </section>
   </div>
-  <div class="page-content" *ngIf="show_data == false && product_data == ''">
-    <p style="color: red; text-align: center">No data found.</p>
+  <div class="page-content text-center mb-3" *ngIf="show_data == false && product_data == ''">
+    <b style="color: rgb(124, 121, 121);">No data found.</b>
   </div>
+  <!-- <div class="page-content" *ngIf="show_data == false && product_data == ''">
+    <p style="color: red; text-align: center">No data found.</p>
+  </div> -->
   <!-- footer -->
   <app-footer></app-footer>
   <div class="foot_arw">

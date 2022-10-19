@@ -1,74 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
 </head>
+
 <body>
-    <app-header></app-header>
-    <div class="page-content">
-        <section class="sub-header-2">
-           <div class="container">
-              <h1>RFQ List</h1>
-              <!-- <a href="add-product.html" class="btn btn-primary add-btn-right"><i class="fa fa-plus-circle"></i> ADD</a> -->
-              <div class="clearfix"></div>
-           </div>
-        </section>
-        <section class="add-prod-pg">
-           <div class="container">
-              <div class="row">
-                 <div class="col-lg-12">
-                    <div class="cart-table">
-                       <div class="table-responsive">
-                          <table class="table">
-                             <thead>
-                                <tr>
-                                   <th>RFQ No.</th>
-                                   <th>RFQ Date</th>
-                                   <th>Customer</th>
-                                   <th>Total Quantity</th>
-                                   <th>Status</th>
-                                   <th></th>
-                                </tr>
-                             </thead>
-                             <tbody>
-                                <tr *ngFor="let rfqItem of rfqList">
-                                   <td>
-                                      {{rfqItem?.rfq_no}}
-                                   </td>
-                                   <td>
+   <app-header></app-header>
+   <div class="page-content">
+      <section class="sub-header-2">
+         <div class="container">
+            <h1>RFQ List</h1>
+            <!-- <a href="add-product.html" class="btn btn-primary add-btn-right"><i class="fa fa-plus-circle"></i> ADD</a> -->
+            <div class="clearfix"></div>
+         </div>
+      </section>
+      <section class="add-prod-pg">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="cart-table">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th>RFQ No.</th>
+                                 <th>RFQ Date</th>
+                                 <th>Customer</th>
+                                 <th>Total Quantity</th>
+                                 <th>Status</th>
+                                 <th></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor="let rfqItem of rfqList; let i = index">
+                                 <td>
+                                    {{rfqItem?.rfq_no}}
+                                 </td>
+                                 <td>
                                     {{rfqItem?.created_at}}
-                                   </td>
-                                   <td>{{rfqItem?.name}}</td>
-                                   <td>{{rfqItem?.quantity}}</td>
-                                   <td *ngIf="rfqItem?.kam_status == 0">
-                                      Pending
-                                   </td>
-                                   <td *ngIf="rfqItem?.kam_status == 1">
+                                 </td>
+                                 <td>{{rfqItem?.name}}</td>
+                                 <td>{{rfqItem?.quantity}}</td>
+                                 <td *ngIf="rfqItem?.kam_status == 0">
+                                    Pending
+                                 </td>
+                                 <td *ngIf="rfqItem?.kam_status == 1">
                                     Price Negotiation
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 2">
                                     Rejected
                                  </td>
-                                   <td>
-                                      <div class="btn-edt-del pointerTab">
-                                         <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no)" data-toggle="tooltip" data-placement="top" title="View">
-                                          <i class="fa fa-eye" aria-hidden="true"></i></a>   
-                                      </div>
-                                   </td>
-                                </tr>
-                               
-                             </tbody>
-                          </table>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </section>
-     </div>
-     <app-footer></app-footer>
+                                 <td>
+                                    <div class="btn-edt-del pointerTab">
+                                       <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no)"
+                                          data-toggle="tooltip" data-placement="top" title="View">
+                                          <i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <div *ngIf="rfqList?.length < 1" class="col-12 text-center mb-3"
+                           style="color: gray;">
+                           <b class="">Product not found !</b>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </div>
+   <app-footer></app-footer>
 </body>
+
 </html>

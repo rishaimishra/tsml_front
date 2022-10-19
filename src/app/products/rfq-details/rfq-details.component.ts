@@ -62,19 +62,17 @@ export class RfqDetailsComponent implements OnInit {
   }
 
   getTotalQuantity(cat_id: any) {
-    console.log(cat_id)
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
-      console.log('form_data_array=', form_data_array);
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
       }
-      console.log('quantity', qty);
       this.totalQty = qty;
     }
-    $("#qty_"+cat_id).val(this.totalQty);
+    $("#qty_"+ cat_id).val(this.totalQty);
   }
+  
   getState() {
     this.states = [
       {

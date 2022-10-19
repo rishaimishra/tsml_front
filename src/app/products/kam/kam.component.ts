@@ -28,6 +28,11 @@ export class KamComponent implements OnInit {
   finalPrice: number | undefined;
   btpAndFinal: number | undefined;
 
+  requoteArr: any = [];
+  statusArr: any = [];
+
+  sum:any;
+
   constructor(private _route: ActivatedRoute,
     private _product: ProductsService,
     private _spinner: NgxSpinnerService,
@@ -41,7 +46,23 @@ export class KamComponent implements OnInit {
       }
     })
     this.getRfqDetailById();
-    
+    console.log(this.pricePremium);
+  }
+  setClass(i:any){
+    let value = $("#myDIV"+i).attr('class');
+    if(value == 'fa fa-plus')
+    {
+      $(".btn-link").children("i.fa").removeClass("fa-minus").addClass("fa-plus");
+      $("#myDIV"+i).removeClass("fa-plus")
+      $("#myDIV"+i).addClass("fa-minus");
+    }
+    else{
+
+      // $("#btnset").children("i.fa").removeClass("fa-minus").addClass("fa-plus");
+      $("#myDIV"+i).addClass("fa-plus")
+      $("#myDIV"+i).removeClass("fa-minus");
+    }
+
   }
 
   getState() {
@@ -226,27 +247,11 @@ export class KamComponent implements OnInit {
       this._spinner.hide();
     })
   }
-  sizeOfferd(event: any) {
 
-  };
-  getTotalQuantity(event: any) {
-
-  };
-  deliveryMethod(event: any) {
-
-  };
-  pickupFrom(event: any) {
-
-  }
-
-  requoteArr: any = [];
-  statusArr: any = [];
   getRequote(event: any) {
     let indx = this.statusArr.findIndex((item: any) => item.id == event.target.value);
     if (indx !== -1) {
-
       this.statusArr.splice(indx, 1);
-
     }
 
     let checked = event.target.checked;
@@ -282,23 +287,6 @@ export class KamComponent implements OnInit {
     console.log('reqParam', this.statusArr);
   };
 
-
-  selectedId: any;
-  priceModal(id: any) {
-    this.selectedId = id;
-  }
-  totalPrice: any = []
-  calculatePrice(event: any) {
-    let values = Number(event.target.value);
-    // $("#qty_" + this.selectedId).val(values);
-    this.totalPrice.push(values);
-    console.log('array', this.totalPrice);
-
-    var sum = this.totalPrice.reduce((acc: any, cur: any) => acc + cur, 0);
-    console.log('sum', sum);
-    this.finalPrice = sum;
-  }
-
   submitReqote() {
     this._spinner.show();
     if (this.requoteArr.length > 0) {
@@ -309,8 +297,8 @@ export class KamComponent implements OnInit {
           this._spinner.hide();
         } else {
           this._toaster.error(res.message);
+          this._spinner.hide();
         }
-        console.log(res);
       })
     }
     if (this.statusArr.length > 0) {
@@ -322,6 +310,7 @@ export class KamComponent implements OnInit {
         }
         else {
           this._toaster.error(res.message);
+          this._spinner.hide();
         }
 
       })

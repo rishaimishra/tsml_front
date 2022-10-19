@@ -19,8 +19,10 @@
                         <div class="accordion-- cam-" id="accordionExample">
                             <div class="card" *ngFor="let formData of kamDetails;let i = index">
                                 <div class="card-header card-header--" id="headingOne">
-                                    <button type="button" class="btn btn-link" id="hello" data-toggle="collapse"
-                                        data-target="#collapseOne"><i class="fa fa-plus"></i></button>
+                                    <!-- <button type="button" class="btn btn-link" id="hello" data-toggle="collapse"
+                                    [attr.data-target]="'#collapseOne'+i"><i class="fa fa-plus"></i></button> -->
+                                    <button type="button" class="btn btn-link" (click)="setClass(i)" data-toggle="collapse"
+                                        [attr.data-target]="'#collapseOne'+i"><i class="fa fa-plus" id="myDIV{{i}}"></i></button>
                                     <div class="acc-pro-dec">
                                         <div class="odr-info-01">
                                             <span>RFQ Number</span>
@@ -58,7 +60,7 @@
                                                 class="fa fa-trash"></i></button>
                                     </div>
                                 </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
                                     data-parent="#accordionExample">
                                     <div class="card-body">
                                         <!-- new -->
@@ -66,7 +68,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Sizes Offered</label>
-                                                    <select (change)="sizeOfferd($event)" #offerInput="ngModel"
+                                                    <select #offerInput="ngModel"
                                                         [(ngModel)]="formData.sizes"
                                                         name="pro_size_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -115,7 +117,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Delivery Method</label>
-                                                    <select (change)="deliveryMethod($event)" #dlvrMethodInput="ngModel"
+                                                    <select #dlvrMethodInput="ngModel"
                                                         [(ngModel)]="formData.delivery"
                                                         name="delivery_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -131,7 +133,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Pickup From</label>
-                                                    <select (change)="pickupFrom($event)" #pickUpfrom="ngModel"
+                                                    <select #pickUpfrom="ngModel"
                                                         [(ngModel)]="formData.plant"
                                                         name="plant_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -230,7 +232,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">CAM's Price <span class="price-info price-info0"
-                                                            data-toggle="modal" (click)="priceModal(formData?.id)" data-target="#addPrice"><i
+                                                            data-toggle="modal" data-target="#addPrice"><i
                                                                 class="fa fa-info-circle"></i></span></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
@@ -379,7 +381,6 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-
                     <table class="table">
                         <thead>
                             <tr>
@@ -388,7 +389,7 @@
                                 <th scope="col">Updated Price (₹)</th>
                             </tr>
                         </thead>
-                        <tbody (change)="calculatePrice($event)">
+                        <tbody>
                             <tr>
                                 <td colspan="2">BPT Price</td>
                                 <td>
@@ -396,7 +397,7 @@
                                         104000.00
                                     </div>
                                 </td>
-                                <td><input type="number" [(ngModel)]="btpPrice"
+                                <td><input type="number" 
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="" placeholder="" value="104000.00" disabled></td>
                             </tr>
@@ -480,7 +481,7 @@
                                         102500.00
                                     </div>
                                 </td>
-                                <td><input type="number" [(ngModel)]="finalPrice" 
+                                <td><input type="number" 
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="" placeholder="" value="" disabled=""></td>
                             </tr>

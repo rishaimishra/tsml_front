@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getNews();
     this.isUserLogin = this._auth.isLoggedIn();
-    
+
   }
 
   customOptions: OwlOptions = {
