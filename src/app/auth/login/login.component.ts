@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,14 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.invalid) {
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
         if (res.success == true) {
-          this._toster.success('Login Successfully', 'Welcome');
+          // this._toster.success('Login Successfully', 'Welcome');
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Welcome',
+            showConfirmButton: false,
+            timer: 1500
+          })
           localStorage.setItem('tokenUrl',res.token);
           localStorage.setItem('USER_NAME',res.data.user_name);
           

@@ -14,6 +14,7 @@ export class ViewAllProductComponent implements OnInit {
   products: any;
   subCategory: any;
   productSize: any = [];
+  category:any;
 
 
   constructor(private _product: ProductsService,
@@ -35,7 +36,6 @@ export class ViewAllProductComponent implements OnInit {
     this._product.getAllProducts().subscribe((res: any) => {
       if (res.success == true) {
         this.allProductItem = res.data;
-        console.log(this.allProductItem);
         this.categoryList = res.getCategory;
         this.products = res.getProductList;
         this._loader.hide();
@@ -53,7 +53,6 @@ export class ViewAllProductComponent implements OnInit {
     }
     this._product.filterProducts(categoryFilter).subscribe((res: any) => {
       if (res.success == true) {
-        console.log(res.subCategories);
         this.subCategory = res.subCategories;
         this.allProductItem = res.data;
         this._loader.hide();
@@ -71,7 +70,6 @@ export class ViewAllProductComponent implements OnInit {
     }
     this._product.filterProducts(sizeFilter).subscribe((res: any) => {
       if (res.success == true) {
-        console.log(res.subCategories);
         this.subCategory = res.subCategories;
         this.allProductItem = res.data;
         this._loader.hide();
@@ -88,8 +86,7 @@ export class ViewAllProductComponent implements OnInit {
     }
     this._product.filterProducts(sizeFilter).subscribe((res: any) => {
       if (res.success == true) {
-        console.log(res.subCategories);
-        // this.subCategory = res.subCategories;
+        this.category = res.getCategory;
         this.allProductItem = res.data;
         this._loader.hide();
       }

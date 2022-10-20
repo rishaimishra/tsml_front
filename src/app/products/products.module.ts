@@ -18,6 +18,7 @@ import { RfqDetailsComponent } from './rfq-details/rfq-details.component';
 import { KamComponent } from './kam/kam.component';
 import { TruncatePipe } from './transform.pipe';
 
+
 const routes: Routes = [
   {
     path: 'overview',

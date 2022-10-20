@@ -403,7 +403,7 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>GST Number</label>
-                          <input formControlName="company_gst" readonly [(ngModel)]="gstNumber" type="text"
+                          <input formControlName="company_gst" [(ngModel)]="gstNumber" type="text"
                             class="form-control" />
                           <!-- <div *ngIf="f['company_gst']?.invalid &&(f['company_gst']?.touched || submitted)">
                             <small class="text-danger">
@@ -618,10 +618,14 @@
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
-                                    <label class="container-check">Use this as billing address
+                                    <!-- <label class="container-check">Use this as billing address
                                       <input type="checkbox" />
                                       <span class="checkmark"></span>
-                                    </label>
+                                    </label> -->
+                                    <div class="form-check ml-2">
+                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                      <label class="form-check-label" for="exampleCheck1">Use this as billing address</label>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--/-->
@@ -900,7 +904,7 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="getAddrssProfe($event)"
-                                          formControlName="address_proof_file" accept=".png, .jpg, .jpeg, .pdf"
+                                          formControlName="address_proof_file"  accept=".png, .jpg, .jpeg, .pdf"
                                            id="file-1" class="custom-file-input" name="filename"/>
                                         <label class="custom-file-label" for="file-1">{{selectedFile?.name ? selectedFile?.name:'Upload'}}</label>
                                         <div *ngIf="f['address_proof_file']?.invalid &&(f['address_proof_file']?.touched ||

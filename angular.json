@@ -37,18 +37,19 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/animate.css/animate.min.css",
               "node_modules/ngx-spinner/animations/square-jelly-box.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css"
             ],
             "scripts": [
-              "src/assets/js/customs.js",
               "node_modules/jquery/dist/jquery.js",
-              "src/assets/js/bootstrap.bundle.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/js/customs.js",
               "src/assets/js/jquery-2.2.4.min.js",
+              "src/assets/js/bootstrap.bundle.min.js",
               "src/assets/js/product-carousel.js",
               "src/assets/js/thumbelina.js",
-              "node_modules/jquery/dist/jquery.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {

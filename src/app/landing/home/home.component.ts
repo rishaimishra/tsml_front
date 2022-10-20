@@ -4,6 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getNews();
     this.isUserLogin = this._auth.isLoggedIn();
-
   }
 
   customOptions: OwlOptions = {

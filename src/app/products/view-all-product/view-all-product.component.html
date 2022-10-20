@@ -38,7 +38,7 @@
                                             <div class="fit_frm">
                                                <select (change)="productList($event)">
                                                   <option value="">Search by Product</option>
-                                                  <option value="{{PrItem?.id}}" *ngFor="let PrItem of products">{{PrItem?.pro_name}}</option>
+                                                  <option *ngFor="let PrItem of products" value="{{PrItem?.id}}">{{PrItem?.pro_name}}</option>
                                                </select>
                                             </div>
                                          </form>
@@ -56,7 +56,7 @@
                                             <div class="fit_frm">
                                                <select (change)="getCategory($event)">
                                                   <option>Search by Category</option>
-                                                  <option value="{{catList?.id}}" *ngFor="let catList of categoryList">{{catList?.cat_name}}</option>
+                                                  <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
                                                </select>
                                             </div>
                                          </form>

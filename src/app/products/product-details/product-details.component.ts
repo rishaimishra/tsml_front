@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import * as uuid from 'uuid';
 declare var $: any;
+import { DatepickerModule } from 'ng2-datepicker';
+
 //import uuid from "uuid";
 
 @Component({
@@ -39,7 +41,7 @@ export class ProductDetailsComponent implements OnInit {
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
-
+  
   public quotation: any[] = [];
   public quotation_value: any[] = [];
   totalQty: any;
@@ -499,4 +501,5 @@ export class ProductDetailsComponent implements OnInit {
     }
     console.log('this.quotation_value=', this.quotation_value);
   }
+  
 }

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
+import Swal from 'sweetalert2';
 declare var $: any; 
 
 
@@ -48,15 +49,26 @@ export class HeaderComponent implements OnInit {
   // }
 
   logOut() {
-    this._spinner.show();
-    localStorage.removeItem('tokenUrl');
-    this.isUserLogIn = false;
-    this.isUserLogIn = false;
-    this._toster.success('Logging Out !');
-    setTimeout(() => {
-      this._spinner.hide();
-    }, 1000);
-    this._router.navigate(['/']);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to logout",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('tokenUrl');
+        this.isUserLogIn = false;
+        this.isUserLogIn = false;
+        this._router.navigate(['/']);
+        Swal.fire(
+          'Logged out!',
+          'Success',
+        )
+      }
+    })
   }
 
   showCart() {
