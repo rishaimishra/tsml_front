@@ -62,6 +62,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log('id', res);
       this.get_product_details(res.productId, res.categoryId);
     });
+    this.setFromData();
   }
 
   getTotalQuantity(cat_id: any) {
@@ -501,5 +502,26 @@ export class ProductDetailsComponent implements OnInit {
     }
     console.log('this.quotation_value=', this.quotation_value);
   }
-  
+
+  date: any;
+  setFromData()
+  {
+    var today:any = new Date();
+   
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    // var today:any = dd + '/' + mm + '/' + yyyy;
+    var today:any = yyyy + '-' + mm + '-' + dd;
+            this.date = today;
+    
+  };
+
 }
