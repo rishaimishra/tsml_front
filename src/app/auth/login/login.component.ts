@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           })
           localStorage.setItem('tokenUrl',res.token);
           localStorage.setItem('USER_NAME',res.data.user_name);
-          
+          localStorage.setItem('USER_ID',res.data.user_id);
           this._spinner.hide();
           this._router.navigate(['/']);
         } else {

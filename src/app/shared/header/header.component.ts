@@ -63,10 +63,6 @@ export class HeaderComponent implements OnInit {
         this.isUserLogIn = false;
         this.isUserLogIn = false;
         this._router.navigate(['/']);
-        Swal.fire(
-          'Logged out!',
-          'Success',
-        )
       }
     })
   }

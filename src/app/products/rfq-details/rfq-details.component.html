@@ -33,7 +33,7 @@
                   <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
                   </button>
-                  <div class="acc-pro-pic" (click)="goToKamPage(productData?.rfq_no)">
+                  <div class="acc-pro-pic" (click)="goToCustomerPage(productData?.rfq_no)">
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
                   <div class="acc-pro-dec">
@@ -170,14 +170,14 @@
                           <label for="">Proposed Delivery Date</label>
                           <div class="date-rang">
                             <div class="position-relative">
-                              <input type="date" [(ngModel)]="formData.from_date" #dlvrDate="ngModel"
+                              <input type="date" [(ngModel)]="formData.from_date" (change)="setNxtData($event, formData.schedule_no)" min="{{date}}" #dlvrDate="ngModel"
                                 name="from_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
                                 placeholder="From" value="" required/>
                           <small *ngIf="dlvrDate.invalid && (dlvrDate.dirty || dlvrDate.touched || submit)" class="inputValidation">Delivery date from</small>
                               <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                             <div class="position-relative">
-                              <input type="date" [(ngModel)]="formData.to_date" #dlvrDateTo="ngModel"
+                              <input type="date" [(ngModel)]="formData.to_date" id="to_date_{{formData.schedule_no}}" #dlvrDateTo="ngModel"
                                 name="to_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
                                 placeholder="To" value="" required/>
                           <small *ngIf="dlvrDateTo.invalid && (dlvrDateTo.dirty || dlvrDateTo.touched || submit)" class="inputValidation">Delivery date to</small>

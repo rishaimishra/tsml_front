@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
+import Swal from 'sweetalert2';
 import * as uuid from 'uuid';
 declare var $: any;
 
@@ -269,24 +270,39 @@ export class RfqDetailsComponent implements OnInit {
     })
   }
   deleteRfqById(id: any) {
-    this.spinner.show();
-    let apiKey = '/user/delete_quote_by_id';
-    let apiUrl = apiKey+ '/'+ id;
-    this.productService.getMethod(apiUrl).subscribe((res: any) => {
-      console.log(res)
-      if (res.status == 1 && res.result == 'Quote deleted') {
-        this._toaster.success(res.result);
-        this.spinner.hide();
-        this.detailByRfq();
-      } else {
-        this._toaster.error(res.result);
-        this.spinner.hide();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let apiKey = '/user/delete_quote_by_id';
+        let apiUrl = apiKey+ '/'+ id;
+        this.productService.getMethod(apiUrl).subscribe((res: any) => {
+          console.log(res)
+          if (res.status == 1 && res.result == 'Quote deleted') {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            this.spinner.hide();
+            this.detailByRfq();
+          } else {
+            this._toaster.error(res.result);
+            this.spinner.hide();
+          }
+        })
       }
     })
   }
 
-  goToKamPage(id: any) {
-    this._router.navigate(['/kam',id]);
+  goToCustomerPage(id: any) {
+    this._router.navigate(['/customer',id]);
   }
   selecte_size(size: any, index: any) {
     this.selected_size = size;
@@ -411,7 +427,7 @@ export class RfqDetailsComponent implements OnInit {
       if (res.message == 'success') {
         this.spinner.hide();
         this._toaster.success(res.result);
-        this._router.navigate(['/kam', this.productId]);
+        this._router.navigate(['/customer', this.productId]);
       } 
       if (res.message != 'success') {
         this._toaster.error(res.message);
@@ -470,4 +486,50 @@ export class RfqDetailsComponent implements OnInit {
     console.log('this.quotation_value=', this.quotation_value);
   }
 
+  date: any;
+  setFromData()
+  {
+    var today:any = new Date();
+   
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    // var today:any = dd + '/' + mm + '/' + yyyy;
+    var today:any = yyyy + '-' + mm + '-' + dd;
+            this.date = today;
+    
+  };
+
+  nxtDt: any;
+  setNxtData(event:any, i:any)
+  {
+    let day = new Date(event.target.value);
+
+    let nextDay:any = new Date(day);
+    nextDay.setDate(day.getDate() + 1);
+
+    var dd = nextDay.getDate();
+    var mm = nextDay.getMonth() + 1;
+
+    var yyyy = nextDay.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    // var today:any = dd + '/' + mm + '/' + yyyy;
+    var nextDt:any = yyyy + '-' + mm + '-' + dd;
+            this.nxtDt = nextDt;
+            $("#to_date_"+i).attr("min",this.nxtDt);
+    console.log('date',this.nxtDt); 
+   
+  }
 }

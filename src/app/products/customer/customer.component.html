@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- haeder -->
+<app-header></app-header>
+
+<body>
+    <div class="page-content">
+        <section class="sub-header-2">
+            <div class="container">
+                <h1>Price Negotiation</h1>
+                <div class="clearfix"></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="prod-list-detl">
+                    <!-- List start -->
+                    <div class="demo" *ngFor="let productData of selectedItem; let i = index">
+                        <div class="accordion--" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header card-header--" id="headingOne">
+                                    <button type="button" class="btn btn-link" data-toggle="collapse"
+                                        [attr.data-target]="'#collapseOne'+i">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    <div class="acc-pro-pic" (click)="goToCustomerPage(productData?.rfq_no)">
+                                        <img src="{{ productData?.primary_image_url }}" />
+                                    </div>
+                                    <div class="acc-pro-dec">
+                                        <h3>{{ productData?.cat_name }}</h3>
+                                        <p>
+                                            Ranked among the top-seven global chrome alloy
+                                            producers, we are the leading manufacturers of High
+                                            Carbon Ferro Chrome in India. We produce various grades
+                                            of Ferro Chrome Chemical Composition: Cr - 60% Min, C -
+                                            6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max
+                                        </p>
+                                    </div>
+
+                                    <div class="acc-pro-qty">
+                                        <input type="text" class="form-control" id="qty_{{i}}" placeholder="0"
+                                            disabled="" value="{{productData.quantity}}" />
+                                    </div>
+                                    <div class="acc-pro-del pointerTab">
+                                        <button class="del-btn btn-danger"
+                                            (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
+                                            data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="row" *ngFor="let formData of productData['schedule'];let y = index">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Sizes Offered</label>
+                                                    <select (change)="sizeOfferd($event)" #offerInput="ngModel"
+                                                        [(ngModel)]="formData.pro_size"
+                                                        name="pro_size_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select ..</option>
+                                                        <option value="10-50">10-50</option>
+                                                        <option value="10-70">10-70</option>
+                                                        <option value="10-100">10-100</option>
+                                                        <option value="10-150">10-150</option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="offerInput.invalid && (offerInput.dirty || offerInput.touched || submit)"
+                                                        class="inputValidation">Offer size is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Quantity</label>
+                                                    <input #qtyInput="ngModel" type="number"
+                                                        (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
+                                                        name="quantity_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" id="" placeholder=""
+                                                        value="formData.quantity" required />
+                                                    <small
+                                                        *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)"
+                                                        class="inputValidation">Quantity is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Expected Ex-Works Price<small>(On Advance
+                                                            Payment)</small></label>
+                                                    <div class="pri-box">
+                                                        <span>₹</span>
+                                                        <input type="number" #priceInput="ngModel"
+                                                            [(ngModel)]="formData.expected_price"
+                                                            name="expected_price{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" id="" placeholder=""
+                                                            value="" required />
+                                                        <small
+                                                            *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
+                                                            class="inputValidation">Price is required</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Delivery Method</label>
+                                                    <select (change)="deliveryMethod($event)" #dlvrMethodInput="ngModel"
+                                                        [(ngModel)]="formData.delivery"
+                                                        name="delivery_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select ..</option>
+                                                        <option value="FOR">FOR</option>
+                                                        <option value="Ex-Works">Ex-Works</option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
+                                                        class="inputValidation">Select delivery method</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Pickup From</label>
+                                                    <select (change)="pickupFrom($event)" #pickUpfrom="ngModel"
+                                                        [(ngModel)]="formData.plant"
+                                                        name="plant_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select..</option>
+                                                        <option value="Plant">Plant</option>
+                                                        <option value="Depot">Depot</option>
+                                                        <option value="Port">Port</option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
+                                                        class="inputValidation">Pickup from is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Location</label>
+                                                    <select class="form-control form-control-sm" #location="ngModel"
+                                                        [(ngModel)]="formData.location"
+                                                        name="location_{{ formData.schedule_no }}" required>
+                                                        <option value="">Select location</option>
+                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                            {{ state?.name }}
+                                                        </option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="location.invalid && (location.dirty || location.touched || submit)"
+                                                        class="inputValidation">Location is required</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <div class="bil-add-new-add">
+                                                        <label for="">Bill To</label>
+                                                    </div>
+                                                    <select class="form-control form-control-sm" #billTo="ngModel"
+                                                        [(ngModel)]="formData.bill_to"
+                                                        name="bill_to_{{ formData.schedule_no }}" required>
+                                                        <option value="">Bill to</option>
+                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                            {{ state?.name }}
+                                                        </option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
+                                                        class="inputValidation">Select bill to</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <div class="bil-add-new-add">
+                                                        <label for="">Ship To</label>
+                                                    </div>
+                                                    <select class="form-control form-control-sm" #shipTo="ngModel"
+                                                        [(ngModel)]="formData.ship_to"
+                                                        name="ship_to_{{ formData.schedule_no }}" required>
+                                                        <option value="">Ship to</option>
+                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                            {{ state?.name }}
+                                                        </option>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
+                                                        class="inputValidation">Select ship to</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Proposed Delivery Date</label>
+                                                    <div class="date-rang">
+                                                        <div class="position-relative">
+                                                            <input type="date" [(ngModel)]="formData.from_date"
+                                                                #dlvrDate="ngModel" (change)="setNxtData($event, formData.schedule_no)" min="{{date}}"
+                                                                name="from_date_{{ formData.schedule_no }}"
+                                                                class="form-control form-control-sm" placeholder="From"
+                                                                value="" required />
+                                                            <small
+                                                                *ngIf="dlvrDate.invalid && (dlvrDate.dirty || dlvrDate.touched || submit)"
+                                                                class="inputValidation">Delivery date from</small>
+                                                            <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                                                        </div>
+                                                        <div class="position-relative">
+                                                            <input type="date" [(ngModel)]="formData.to_date"
+                                                                #dlvrDateTo="ngModel" id="to_date_{{formData.schedule_no}}" 
+                                                                name="to_date_{{ formData.schedule_no }}"
+                                                                class="form-control form-control-sm" placeholder="To"
+                                                                value="" required />
+                                                            <small
+                                                                *ngIf="dlvrDateTo.invalid && (dlvrDateTo.dirty || dlvrDateTo.touched || submit)"
+                                                                class="inputValidation">Delivery date to</small>
+                                                            <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="" (click)="getPrice(formData.location,formData.plant)">CAM's Price <span class="price-info price-info0"
+                                                            data-toggle="modal" data-target="#addPrice"><i
+                                                                class="fa fa-info-circle"></i></span></label>
+                                                    <div class="pri-box">
+                                                        <span>₹</span>
+                                                        <input type="text" class="form-control form-control-sm" id=""
+                                                            placeholder="0" value="{{Totalsum}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Valid Till </label>
+                                                    <div class="position-relative">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm datepicker"
+                                                            placeholder="To" value="">
+                                                        <span class="over_llp"><img src="assets/images/cal.png"
+                                                                alt=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Remarks</label>
+                                                    <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
+                                                        name="remarks_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" rows="4"
+                                                        required></textarea>
+                                                    <small
+                                                        *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
+                                                        class="inputValidation">Remarks is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <div class="app-reg-btn">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input"
+                                                            id="inlineCheckbox0" (change)="getRequote($event)"
+                                                            value="{{formData?.schedule_no}}"
+                                                            name="fav_language_{{formData?.id}}">
+                                                        <label for="inlineCheckbox0">Requote </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input"
+                                                            id="inlineCheckbox1" (click)="getStatus(formData?.id,1)"
+                                                            name="fav_language_{{formData?.id}}" value="Accept">
+                                                        <label for="inlineCheckbox0">Accept </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" class="form-check-input"
+                                                            id="inlineCheckbox2" (click)="getStatus(formData?.id,2)"
+                                                            name="fav_language_{{formData?.id}}" value="Reject">
+                                                        <label for="inlineCheckbox2">Reject </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="deliverySchedule" class="collapse">
+                                            <div class="schedule-block" id="container">
+                                                <div class="row mydiv" id="thediv">
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Sizes Offered</label>
+                                                            <select (change)="sizeOffered2($event)"
+                                                                class="form-control form-control-sm">
+                                                                <option value="10-50">10-50</option>
+                                                                <option value="10-70">10-70</option>
+                                                                <option value="10-100">10-100</option>
+                                                                <option value="10-150">10-150</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Quantity</label>
+                                                            <input type="number" [(ngModel)]="quantity1"
+                                                                class="form-control form-control-sm" id=""
+                                                                placeholder="" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Expected Ex-Works Price<small>(On Advance
+                                                                    Payment)</small></label>
+                                                            <div class="pri-box">
+                                                                <span>₹</span>
+                                                                <input type="number" [(ngModel)]="expectedPrice2"
+                                                                    class="form-control form-control-sm" id=""
+                                                                    placeholder="" value="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Delivery Method</label>
+                                                            <select (change)="deliveryMethod2($event)"
+                                                                class="form-control form-control-sm">
+                                                                <option value="">Select method</option>
+                                                                <option value="FOR">FOR</option>
+                                                                <option value="Ex-Works">Ex-Works</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Pickup From</label>
+                                                            <select (change)="pickupfrome2($event)"
+                                                                class="form-control form-control-sm">
+                                                                <option value="">Select ..</option>
+                                                                <option value="Plant">Plant</option>
+                                                                <option value="Depot">Depot</option>
+                                                                <option value="Port">Port</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Location</label>
+                                                            <select (change)="selectlocation2($event)"
+                                                                class="form-control form-control-sm">
+                                                                <option>Select location</option>
+                                                                <option value="{{ state?.name }}"
+                                                                    *ngFor="let state of states">
+                                                                    {{ state?.name }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <div class="bil-add-new-add">
+                                                                <label for="">Bill To</label>
+                                                                <label for=""><a href="registration.html"><i
+                                                                            class="fa fa-plus-circle"></i> Add New
+                                                                        Address</a></label>
+                                                            </div>
+                                                            <select (change)="billTo2($event)"
+                                                                class="form-control form-control-sm">
+                                                                <option value="">Select</option>
+                                                                <option value="{{ state?.name }}"
+                                                                    *ngFor="let state of states">
+                                                                    {{ state?.name }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <div class="bil-add-new-add">
+                                                                <label for="">Ship To</label>
+                                                                <label for=""><a href="registration.html"><i
+                                                                            class="fa fa-plus-circle"></i> Add New
+                                                                        Address</a></label>
+                                                            </div>
+                                                            <select (change)="shipTo2($event)"
+                                                                class="form-control form-control-sm">
+                                                                <option>Select</option>
+                                                                <option value="{{ state?.name }}"
+                                                                    *ngFor="let state of states">
+                                                                    {{ state?.name }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="">Proposed Delivery Date</label>
+                                                            <div class="date-rang">
+                                                                <div class="position-relative">
+                                                                    <input type="date" [(ngModel)]="deliveryDate3"
+                                                                        class="form-control form-control-sm"
+                                                                        placeholder="From" value="" />
+                                                                    <span class="over_llp"><img
+                                                                            src="assets/images/cal.png" alt="" /></span>
+                                                                </div>
+                                                                <div class="position-relative">
+                                                                    <input type="date" [(ngModel)]="deliveryDate4"
+                                                                        class="form-control form-control-sm"
+                                                                        placeholder="To" value="" />
+                                                                    <span class="over_llp"><img
+                                                                            src="assets/images/cal.png" alt="" /></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-11">
+                                                        <div class="form-group">
+                                                            <label for="">Remarks</label>
+                                                            <textarea [(ngModel)]="remarks2"
+                                                                class="form-control form-control-sm"
+                                                                rows="4"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right pb-5">
+                    <button type="button" class="btn btn-primary" (click)="submitRfq()"><i
+                            class="fa fa-paper-plane"></i> Submit</button> &nbsp;
+                    <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="page-content text-center mb-3" *ngIf="show_data == false && product_data == ''">
+        <b style="color: rgb(124, 121, 121);">No data found.</b>
+    </div>
+    <app-footer></app-footer>
+    <div class="foot_arw">
+        <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
+    </div>
+    <!-- Price calculation -->
+    <div class="modal" id="addPrice">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-uppercase">Price Calculation</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" colspan="2">Pricing Components</th>
+                                <th scope="col">Calculated Price (₹)</th>
+                                <th scope="col">Updated Price (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2">BPT Price</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{proPrices?.bpt_price}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder="" value="104000.00" disabled></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Price Premium(L/F)</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{proPrices?.price_premium}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Misc Expense</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{proPrices?.misc_expense}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Delivery Cost</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{proPrices?.delivery_cost}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td>Credit Cost For</td>
+                                <td>
+                                    <select (change)="selectDay($event)"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150">
+                                        <option value="30">30 Days</option>
+                                        <option value="45">45 Days</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="pp-bx">
+                                        <span *ngIf="days == 30">{{proPrices?.credit_cost_for30_days}}</span>
+                                        <span *ngIf="days == 45">{{proPrices?.credit_cost_for45_days}}</span>
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Interest Rate</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{proPrices?.interest_rate }}%
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">CAM Discount</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{proPrices?.cam_discount}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Final Price</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{Totalsum}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder="" value="102500.00" disabled=""></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Difference Between BTP & Final Price (%)</td>
+                                <td>
+                                    <div class="pp-bx">
+                                        {{bptAndfinal}}
+                                    </div>
+                                </td>
+                                <td><input type="text"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="" placeholder=""></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-note"><i>Note: Price Quoted Excluding GST & TCS Charges</i></p>
+
+
+                    <div class="add-btn-sec pt-2 pb-2">
+                        <a href="#" class="btn btn-primary"><i class="fa fa-check"></i> Ok</a>&nbsp;
+                        <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </div>
+                <!--/-->
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Add minus icon for collapse element which is open by default
+            $(".collapse.show").each(function () {
+                $(this)
+                    .prev(".card-header")
+                    .find(".fa")
+                    .addClass("fa-minus")
+                    .removeClass("fa-plus");
+            });
+
+            // Toggle plus minus icon on show hide of collapse element
+            $(".collapse")
+                .on("show.bs.collapse", function () {
+                    $(this)
+                        .prev(".card-header")
+                        .find(".fa")
+                        .removeClass("fa-plus")
+                        .addClass("fa-minus");
+                })
+                .on("hide.bs.collapse", function () {
+                    $(this)
+                        .prev(".card-header")
+                        .find(".fa")
+                        .removeClass("fa-minus")
+                        .addClass("fa-plus");
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".user_lk").click(function () {
+                $(".show01").slideToggle();
+            });
+
+            $(".user_llk").click(function () {
+                $(".show02").slideToggle();
+            });
+
+            $(".user_lllk").click(function () {
+                $(".show03").slideToggle();
+            });
+        });
+    </script>
+    <script>
+        function Clone() {
+            var clone = document.getElementById("thediv").cloneNode(true); // "deep" clone
+            document.getElementById("container").appendChild(clone);
+        }
+
+        function Delete(button) {
+            var parent = button.parentNode;
+            var grand_father = parent.parentNode;
+            grand_father.removeChild(parent);
+        }
+    </script>
+</body>
+
+</html>

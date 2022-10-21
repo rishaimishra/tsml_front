@@ -62,4 +62,8 @@ export class ProductsService {
   rfqStatusData(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/update_quotes_sche', reqParameter);
   };
+
+  priceCalculation(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get-store-pro-price', reqParameter);
+  };
 }

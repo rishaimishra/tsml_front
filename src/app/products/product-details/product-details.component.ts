@@ -524,4 +524,29 @@ export class ProductDetailsComponent implements OnInit {
     
   };
 
+  nxtDt: any;
+  setNxtData(event:any, i:any)
+  {
+    let day = new Date(event.target.value);
+
+    let nextDay:any = new Date(day);
+    nextDay.setDate(day.getDate() + 1);
+
+    var dd = nextDay.getDate();
+    var mm = nextDay.getMonth() + 1;
+
+    var yyyy = nextDay.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    // var today:any = dd + '/' + mm + '/' + yyyy;
+    var nextDt:any = yyyy + '-' + mm + '-' + dd;
+            this.nxtDt = nextDt;
+            $("#to_date_"+i).attr("min",this.nxtDt);
+    console.log('date',this.nxtDt); 
+   
+  }
 }
