@@ -171,13 +171,13 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    $( document ).ready(function() {
-      $(".custom-file-input").on("change", function() {
-        var fileName = $().val().split("\\").pop();
-        $().siblings(".custom-file-label").addClass("selected").html(fileName);
-      });
-      $('#tree1').treed();
-  });
+  //   $( document ).ready(function() {
+  //     $(".custom-file-input").on("change", function() {
+  //       var fileName = $().val().split("\\").pop();
+  //       $().siblings(".custom-file-label").addClass("selected").html(fileName);
+  //     });
+  //     $('#tree1').treed();
+  // });
 
   }
 

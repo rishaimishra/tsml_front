@@ -467,7 +467,7 @@
                                         {{proPrices?.bpt_price}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number"  
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="" placeholder="" value="104000.00" disabled></td>
                             </tr>
@@ -478,7 +478,7 @@
                                         {{proPrices?.price_premium}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number" [(ngModel)]="premiumCustomer" (keyup)="btpPopulat()"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="" placeholder=""></td>
                             </tr>
@@ -489,7 +489,7 @@
                                         {{proPrices?.misc_expense}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number" [(ngModel)]="btpCustomer"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="" placeholder=""></td>
                             </tr>

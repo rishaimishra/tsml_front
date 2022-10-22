@@ -45,6 +45,8 @@ export class CustomerComponent implements OnInit {
   days:any = 30;
   Totalsum:any;
   bptAndfinal:any;
+  btpCustomer: any;
+  premiumCustomer: any;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -72,6 +74,12 @@ export class CustomerComponent implements OnInit {
     this.detailByRfq();
 }
 
+btpPopulat() {
+  if (this.btpCustomer != null && this.premiumCustomer != null) {
+    console.log('btpCustomer',this.btpCustomer, 'premiumCustomer-', this.premiumCustomer);
+    
+  }
+}
 getTotalQuantity(cat_id: any) {
   console.log('cat_id',cat_id);
   for (let i = 0; i < this.selectedItem.length; i++) {
