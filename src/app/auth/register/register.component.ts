@@ -110,6 +110,19 @@ export class RegisterComponent implements OnInit {
   billCitySelect: any = '';
   billStateSelect: any = '';
 
+  ferroChrome = [
+    {id:1, select: false, name: 'High'},
+    {id:2, select: false, name: 'Low'},
+    {id:3, select: false, name: 'Medium'},
+    {id:4, select: false, name: 'Low Silicone'},
+    {id:5, select: false, name: 'HC Ferro Chrome (Chips)'},
+    {id:6, select: false, name: 'HC Ferro Chrome (Fine)'},
+  ];
+  chromeOre = [
+    {id:1, select: false, name: 'High Grade Friable Chrome Ore'},
+    {id:2, select: false, name: 'Medium Grade Friable Chrome Ore'},
+  ];
+
   constructor(
     private _router: Router,
     private _fb: FormBuilder,
@@ -176,9 +189,9 @@ export class RegisterComponent implements OnInit {
   //       var fileName = $().val().split("\\").pop();
   //       $().siblings(".custom-file-label").addClass("selected").html(fileName);
   //     });
-  //     $('#tree1').treed();
   // });
-
+  
+      $('#tree1').treed();
   }
 
   checkTerms(event: any) {
@@ -239,9 +252,28 @@ export class RegisterComponent implements OnInit {
   selectCustomer(event: any) {
     this.userType = event.target.value;
   }
-  onSelectCheckBox(event: any) {
+
+  onSelectFerroChrome(event: any) {
     const productValue = event.target.value;
-    this.chooseProduct.push(productValue);
+    const name = event.target.value;
+    const isChecked = event.target.checked;
+
+    this.ferroChrome.map((selectedName:any) => {
+      if (selectedName.name == name) {
+        selectedName.select = isChecked;
+        if (selectedName.select == true) {
+          this.chooseProduct.push(selectedName.name);
+        } else {
+          this.chooseProduct.splice(selectedName.name,1);
+        }
+        console.log(this.chooseProduct);
+        return selectedName;
+      }
+      return selectedName;
+    });
+  };
+  onSelectChromeOre(event:any) {
+    const productValue = event.target.value;
     if (productValue == 'High Grade Friable Chrome Ore') {
       this.showFormD = true;
     }
@@ -250,17 +282,35 @@ export class RegisterComponent implements OnInit {
     } else {
       this.showFormD = false;
     }
+    const name = event.target.value;
+    const isChecked = event.target.checked;
+
+    this.chromeOre.map((selectedName:any) => {
+      if (selectedName.name == name) {
+        selectedName.select = isChecked;
+        if (selectedName.select == true) {
+          this.chooseProduct.push(selectedName.name);
+        } else {
+          this.chooseProduct.splice(selectedName.name,1);
+        }
+        console.log(this.chooseProduct);
+        return selectedName;
+      }
+      return selectedName;
+    });
   }
+
   choosProductSize(event: any) {
-    console.log(event.target.value);
     this.chooseProductSize = event.target.value;
-  }
+  };
+
   selectBusiness(event: any) {
     this.businessType = event.target.value;
   }
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;
-  }
+  };
+
   getOpt() {
     this._spinner.show();
     let mobileNu = {
