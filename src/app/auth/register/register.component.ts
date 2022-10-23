@@ -123,6 +123,13 @@ export class RegisterComponent implements OnInit {
     {id:2, select: false, name: 'Medium Grade Friable Chrome Ore'},
   ];
 
+  selectProduct = [
+    {id:1, select: false, name: '10-150'},
+    {id:2, select: false, name: '10-50'},
+    {id:3, select: false, name: '10-70'},
+    {id:4, select: false, name: '10-100'},
+  ];
+
   constructor(
     private _router: Router,
     private _fb: FormBuilder,
@@ -204,10 +211,19 @@ export class RegisterComponent implements OnInit {
     this.selectedCountry = JSON.parse(this.country.nativeElement.value);
     this.cities = this.selectedState = this.selectedCity = null;
   }
-  checkDistribution(event: any) {
-    console.log(event.target.value);
+  checkedYes: boolean = false;
+  checkedNo: boolean = false;
+  checkDistributionYes(event: any) {
+      this.distributionValue = event.target.value;
+    this.checkedYes = event.target.checked;
+    this.checkedNo = false;
+  };
+
+  checkDistributionNo(event:any) {
     this.distributionValue = event.target.value;
-  }
+    this.checkedNo = event.target.checked;
+    this.checkedYes = false;
+  };
   onStateChange(event: any): void {
     this.cities = City.getCitiesOfState(
       JSON.parse(this.country.nativeElement.value).isoCode,
@@ -302,6 +318,17 @@ export class RegisterComponent implements OnInit {
 
   choosProductSize(event: any) {
     this.chooseProductSize = event.target.value;
+    const name = event.target.value;
+    const isChecked = event.target.checked;
+
+    this.selectProduct.map((selectedName:any) => {
+      if (selectedName.name == name) {
+        selectedName.select = isChecked;
+        console.log(selectedName);
+        return selectedName;
+      }
+      return selectedName;
+    });
   };
 
   selectBusiness(event: any) {
@@ -618,7 +645,6 @@ export class RegisterComponent implements OnInit {
     }
   }
   isTdsApplicable(event: any) {
-    console.log(event.target.checked);
     this.isTDS_applicable = event.target.checked;
   }
   submitRegister() {
