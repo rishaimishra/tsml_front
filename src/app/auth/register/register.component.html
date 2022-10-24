@@ -758,12 +758,11 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="getAddrssProfe($event)"
-                                          formControlName="address_proof_file" accept=".png, .jpg, .jpeg, .pdf"
-                                          id="file-1" class="custom-file-input" name="filename" />
+                                           accept=".png, .jpg, .jpeg, .pdf"
+                                          id="file-1" class="custom-file-input"/>
                                         <label class="custom-file-label" for="file-1">{{selectedFile?.name ?
                                           selectedFile?.name:'Upload'}}</label>
-                                        <div *ngIf="f['address_proof_file']?.invalid &&(f['address_proof_file']?.touched ||
-                                        f['address_proof_file'].dirty ||submitted)">
+                                        <div *ngIf="!addProof && submitted">
                                           <small class="text-danger">
                                             Address proof is required !
                                           </small>
@@ -773,7 +772,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="addressProof">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="addressProof">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -787,12 +786,11 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="getCancelcheck($event)"
-                                          formControlName="cancel_cheque_file" accept=".png, .jpg, .jpeg, .pdf"
+                                           accept=".png, .jpg, .jpeg, .pdf"
                                           id="file-2" class="custom-file-input" name="filename" />
                                         <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ?
                                           cancelCheckBook?.name:'Upload'}}</label>
-                                        <div *ngIf="f['cancel_cheque_file']?.invalid &&(f['cancel_cheque_file']?.touched ||
-                                          f['cancel_cheque_file'].dirty ||submitted)">
+                                        <div *ngIf="!checkBook && submitted">
                                           <small class="text-danger">
                                             Checkbook is required !
                                           </small>
@@ -803,7 +801,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="checkbook">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="checkbook">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -818,13 +816,12 @@
                                   <td class="position-relative">
                                     <div class="uplodimg">
                                       <div class="custom-file">
-                                        <input type="file" (change)="uploadPan($event)" formControlName="pan_card_file"
+                                        <input type="file" (change)="uploadPan($event)" 
                                           accept=".png, .jpg, .jpeg, .pdf" id="file-3" class="custom-file-input"
                                           name="filename" />
                                         <label class="custom-file-label" for="file-3">{{panUpload?.name ?
                                           panUpload?.name:'Upload'}}</label>
-                                        <div *ngIf="f['pan_card_file']?.invalid &&(f['pan_card_file']?.touched ||
-                                          f['pan_card_file'].dirty ||submitted)">
+                                        <div *ngIf="!panCardUpload && submitted">
                                           <small class="text-danger">
                                             Pan is required !
                                           </small>
@@ -834,7 +831,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="panCard">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="panCard">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -850,12 +847,11 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="gstCertificateFileUpload($event)"
-                                          formControlName="gst_certificate" accept=".png, .jpg, .jpeg, .pdf" id="file-4"
+                                           accept=".png, .jpg, .jpeg, .pdf" id="file-4"
                                           class="custom-file-input" name="filename" />
                                         <label class="custom-file-label" for="file-4">{{gstUpload?.name ?
                                           gstUpload?.name:'Upload'}}</label>
-                                        <div *ngIf="f['gst_certificate']?.invalid &&(f['gst_certificate']?.touched ||
-                                          f['gst_certificate'].dirty ||submitted)">
+                                        <div *ngIf="!gstFile && submitted">
                                           <small class="text-danger">
                                             GST Certificate is required !
                                           </small>
@@ -865,7 +861,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="gstCertificate">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="gstCertificate">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -879,12 +875,11 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="turnoverUpload($event)"
-                                          formControlName="turnover_declare" accept=".png, .jpg, .jpeg, .pdf"
+                                           accept=".png, .jpg, .jpeg, .pdf"
                                           id="file-5" class="custom-file-input" name="filename" />
                                         <label class="custom-file-label" for="file-5">{{turnoverFile?.name ?
                                           turnoverFile?.name:'Upload'}}</label>
-                                        <div *ngIf="f['turnover_declare']?.invalid &&(f['turnover_declare']?.touched ||
-                                          f['turnover_declare'].dirty ||submitted)">
+                                        <div *ngIf="!turnOver && submitted">
                                           <small class="text-danger">
                                             File is required !
                                           </small>
@@ -895,7 +890,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="turnOverFile">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="turnOverFile">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -909,12 +904,11 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="itrFileUpload($event)"
-                                          formControlName="itr_last_yr" accept=".png, .jpg, .jpeg, .pdf" id="file-6"
+                                           accept=".png, .jpg, .jpeg, .pdf" id="file-6"
                                           class="custom-file-input" name="filename" />
                                         <label class="custom-file-label" for="file-6">{{itrFile?.name ?
                                           itrFile?.name:'Upload'}}</label>
-                                        <div *ngIf="f['itr_last_yr']?.invalid &&(f['itr_last_yr']?.touched ||
-                                          f['itr_last_yr'].dirty ||submitted)">
+                                        <div *ngIf="!itrFileUpl && submitted">
                                           <small class="text-danger">
                                             ITR is required !
                                           </small>
@@ -924,7 +918,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="itrFileCheck">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="itrFileCheck">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -933,7 +927,7 @@
                                     Form D <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" formControlName="formD_dt" class="form-control" />
+                                    <input type="date" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
@@ -948,7 +942,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="formD">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="formD">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -966,13 +960,18 @@
                                           name="filename" />
                                         <label class="custom-file-label" for="file-8">{{consentLetter?.name ?
                                           consentLetter?.name:'Upload'}}</label>
+                                          <div *ngIf="!consentFile && submitted">
+                                            <small class="text-danger">
+                                              Consent Letter is required !
+                                            </small>
+                                          </div>
                                       </div>
                                       <a class="reg-cross pointerClass" *ngIf="showResetUpload8"
                                         (click)="resetConsent()">
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="consentFileSize">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="consentFileSize">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -990,6 +989,11 @@
                                           name="filename">
                                         <label class="custom-file-label" for="customFile">{{regisCertificate?.name ?
                                           regisCertificate?.name:'Upload'}}</label>
+                                          <div *ngIf="!cerftificateUpl && submitted">
+                                            <small class="text-danger">
+                                              Consent Letter is required !
+                                            </small>
+                                          </div>
                                       </div>
 
                                       <a class="reg-cross pointerClass" *ngIf="showResetUpload9"
@@ -997,7 +1001,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="registerFileSize">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="registerFileSize">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -1007,18 +1011,17 @@
                                     <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" formControlName="tcs_dt" class="form-control" />
+                                    <input type="date" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
                                       <div class="custom-file">
-                                        <input type="file" (change)="tcsFileUpload($event)" formControlName="tcs"
+                                        <input type="file" (change)="tcsFileUpload($event)"
                                           accept=".png, .jpg, .jpeg, .pdf" id="file-10" class=" custom-file-input"
                                           name="filename" />
                                         <label class="custom-file-label" for="file-10">{{tcsFile?.name ?
                                           tcsFile?.name:'Upload'}}</label>
-                                        <div *ngIf="f['tcs']?.invalid &&(f['tcs']?.touched ||
-                                          f['tcs'].dirty ||submitted)">
+                                        <div *ngIf="!tcsUplod && submitted">
                                           <small class="text-danger">
                                             TCS is required !
                                           </small>
@@ -1028,7 +1031,7 @@
                                         <i class="fa fa-times"></i>
                                       </a>
                                     </div>
-                                    <small *ngIf="tcsFileSize">Maximum file size:5MB (PDF, PNG,
+                                    <small class="text-danger" *ngIf="tcsFileSize">Maximum file size:5MB (PDF, PNG,
                                       JPG)</small>
                                   </td>
                                 </tr>
@@ -1039,17 +1042,10 @@
                         <!--/-->
                       </div>
                       <div class="col-12">
-                        <!-- <div class="form-group">
-                            <label class="container-check"
-                              >Interested to become distributor/dealer for TSML
-                              <input type="checkbox" />
-                              <span class="checkmark"></span>
-                            </label>
-                          </div> -->
                         <div class="form-group">
                           <label class="container-check">I agree to the
                             <a routerLink="/privacy"><u>terms and conditions</u></a>
-                            <input type="checkbox" (change)="checkTerms($event)" />
+                            <input type="checkbox" (change)="checkTerms($event)" [checked]="isTermCondition"/>
                             <span class="checkmark"></span>
                           </label>
                         </div>

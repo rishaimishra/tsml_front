@@ -14,7 +14,7 @@ import { Country, State, City } from 'country-state-city';
 import { ProductsService } from 'src/app/service/products.service';
 
 declare var jQuery: any;
-declare var $: any; 
+declare var $: any;
 
 @Component({
   selector: 'app-register',
@@ -88,6 +88,16 @@ export class RegisterComponent implements OnInit {
   addressLine1: any = '';
   addressLine2: any = '';
 
+  addProof!: string | ArrayBuffer | null;
+  checkBook!: string | ArrayBuffer | null;
+  panCardUpload!: string | ArrayBuffer | null;
+  gstFile!: string | ArrayBuffer | null;
+  turnOver!: string | ArrayBuffer | null;
+  itrFileUpl!: string | ArrayBuffer | null;
+  consentFile!: string | ArrayBuffer | null;
+  cerftificateUpl!: string | ArrayBuffer | null;
+  tcsUplod!: string | ArrayBuffer | null;
+
   mobile: any;
   haveOtp: boolean = true;
   invildForm: boolean = true;
@@ -109,26 +119,29 @@ export class RegisterComponent implements OnInit {
   billPincodeSelect: any = '';
   billCitySelect: any = '';
   billStateSelect: any = '';
+  checkedYes: boolean = false;
+  checkedNo: boolean = false;
 
   ferroChrome = [
-    {id:1, select: false, name: 'High'},
-    {id:2, select: false, name: 'Low'},
-    {id:3, select: false, name: 'Medium'},
-    {id:4, select: false, name: 'Low Silicone'},
-    {id:5, select: false, name: 'HC Ferro Chrome (Chips)'},
-    {id:6, select: false, name: 'HC Ferro Chrome (Fine)'},
+    { id: 1, select: false, name: 'High' },
+    { id: 2, select: false, name: 'Low' },
+    { id: 3, select: false, name: 'Medium' },
+    { id: 4, select: false, name: 'Low Silicone' },
+    { id: 5, select: false, name: 'HC Ferro Chrome (Chips)' },
+    { id: 6, select: false, name: 'HC Ferro Chrome (Fine)' },
   ];
   chromeOre = [
-    {id:1, select: false, name: 'High Grade Friable Chrome Ore'},
-    {id:2, select: false, name: 'Medium Grade Friable Chrome Ore'},
+    { id: 1, select: false, name: 'High Grade Friable Chrome Ore' },
+    { id: 2, select: false, name: 'Medium Grade Friable Chrome Ore' },
   ];
 
   selectProduct = [
-    {id:1, select: false, name: '10-150'},
-    {id:2, select: false, name: '10-50'},
-    {id:3, select: false, name: '10-70'},
-    {id:4, select: false, name: '10-100'},
+    { id: 1, select: false, name: '10-150' },
+    { id: 2, select: false, name: '10-50' },
+    { id: 3, select: false, name: '10-70' },
+    { id: 4, select: false, name: '10-100' },
   ];
+  address_proof_file: string | number;
 
   constructor(
     private _router: Router,
@@ -191,14 +204,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-  //   $( document ).ready(function() {
-  //     $(".custom-file-input").on("change", function() {
-  //       var fileName = $().val().split("\\").pop();
-  //       $().siblings(".custom-file-label").addClass("selected").html(fileName);
-  //     });
-  // });
-  
-      $('#tree1').treed();
+    //   $( document ).ready(function() {
+    //     $(".custom-file-input").on("change", function() {
+    //       var fileName = $().val().split("\\").pop();
+    //       $().siblings(".custom-file-label").addClass("selected").html(fileName);
+    //     });
+    // });
+
+    $('#tree1').treed();
   }
 
   checkTerms(event: any) {
@@ -211,15 +224,14 @@ export class RegisterComponent implements OnInit {
     this.selectedCountry = JSON.parse(this.country.nativeElement.value);
     this.cities = this.selectedState = this.selectedCity = null;
   }
-  checkedYes: boolean = false;
-  checkedNo: boolean = false;
+
   checkDistributionYes(event: any) {
-      this.distributionValue = event.target.value;
+    this.distributionValue = event.target.value;
     this.checkedYes = event.target.checked;
     this.checkedNo = false;
   };
 
-  checkDistributionNo(event:any) {
+  checkDistributionNo(event: any) {
     this.distributionValue = event.target.value;
     this.checkedNo = event.target.checked;
     this.checkedYes = false;
@@ -230,7 +242,7 @@ export class RegisterComponent implements OnInit {
       JSON.parse(this.state.nativeElement.value).isoCode
     );
     this.selectedState = JSON.parse(this.state.nativeElement.value);
-      this.registerForm.value.state = this.selectedState.name;
+    this.registerForm.value.state = this.selectedState.name;
     this.selectedCity = null;
   }
 
@@ -274,13 +286,13 @@ export class RegisterComponent implements OnInit {
     const name = event.target.value;
     const isChecked = event.target.checked;
 
-    this.ferroChrome.map((selectedName:any) => {
+    this.ferroChrome.map((selectedName: any) => {
       if (selectedName.name == name) {
         selectedName.select = isChecked;
         if (selectedName.select == true) {
           this.chooseProduct.push(selectedName.name);
         } else {
-          this.chooseProduct.splice(selectedName.name,1);
+          this.chooseProduct.splice(selectedName.name, 1);
         }
         console.log(this.chooseProduct);
         return selectedName;
@@ -288,7 +300,7 @@ export class RegisterComponent implements OnInit {
       return selectedName;
     });
   };
-  onSelectChromeOre(event:any) {
+  onSelectChromeOre(event: any) {
     const productValue = event.target.value;
     if (productValue == 'High Grade Friable Chrome Ore') {
       this.showFormD = true;
@@ -301,13 +313,13 @@ export class RegisterComponent implements OnInit {
     const name = event.target.value;
     const isChecked = event.target.checked;
 
-    this.chromeOre.map((selectedName:any) => {
+    this.chromeOre.map((selectedName: any) => {
       if (selectedName.name == name) {
         selectedName.select = isChecked;
         if (selectedName.select == true) {
           this.chooseProduct.push(selectedName.name);
         } else {
-          this.chooseProduct.splice(selectedName.name,1);
+          this.chooseProduct.splice(selectedName.name, 1);
         }
         console.log(this.chooseProduct);
         return selectedName;
@@ -321,7 +333,7 @@ export class RegisterComponent implements OnInit {
     const name = event.target.value;
     const isChecked = event.target.checked;
 
-    this.selectProduct.map((selectedName:any) => {
+    this.selectProduct.map((selectedName: any) => {
       if (selectedName.name == name) {
         selectedName.select = isChecked;
         console.log(selectedName);
@@ -400,9 +412,14 @@ export class RegisterComponent implements OnInit {
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload = true;
     }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.addProof = reader.result;
+    };
     if (file.size >= 5209785) {
       this.addressProof = true;
       event.target.value = null;
@@ -410,17 +427,26 @@ export class RegisterComponent implements OnInit {
     } else {
       this.addressProof = false;
     }
+
   }
   resetUpload() {
+    // this.resetFile(this.file1);
+    this.addProof = null;
     this.selectedFile = '';
     this.showResetUpload = false;
-  }
+  };
+
   getCancelcheck(event: any) {
     this.cancelCheckBook = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload2 = true;
     }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.checkBook = reader.result;
+    };
     if (file.size >= 5209785) {
       this.checkbook = true;
       event.target.value = null;
@@ -430,15 +456,21 @@ export class RegisterComponent implements OnInit {
     }
   }
   resetCheckbook() {
+    this.checkBook = null;
     this.cancelCheckBook = '';
     this.showResetUpload2 = false;
   }
   uploadPan(event: any) {
     this.panUpload = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload3 = true;
     }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.panCardUpload = reader.result;
+    };
     if (file.size >= 5209785) {
       this.panCard = true;
       event.target.value = null;
@@ -448,15 +480,21 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetPan() {
+    this.panCardUpload = null;
     this.panUpload = '';
     this.showResetUpload3 = false;
   }
   gstCertificateFileUpload(event: any) {
     this.gstUpload = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload4 = true;
-    }
+    };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.gstFile = reader.result;
+    };
     if (file.size >= 5209785) {
       this.gstCertificate = true;
       event.target.value = null;
@@ -466,15 +504,21 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetGst() {
+    this.gstFile = null;
     this.gstUpload = '';
     this.showResetUpload4 = false;
   }
   turnoverUpload(event: any) {
     this.turnoverFile = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload5 = true;
-    }
+    };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.turnOver = reader.result;
+    };
     if (file.size >= 5209785) {
       this.turnOverFile = true;
       event.target.value = null;
@@ -484,15 +528,21 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetTurnover() {
+    this.turnOver = null;
     this.turnoverFile = '';
     this.showResetUpload5 = false;
   }
   itrFileUpload(event: any) {
     this.itrFile = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload6 = true;
-    }
+    };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.itrFileUpl = reader.result;
+    };
     if (file.size >= 5209785) {
       this.itrFileCheck = true;
       event.target.value = null;
@@ -502,13 +552,14 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetItr() {
+    this.itrFileUpl = null;
     this.itrFile = '';
     this.showResetUpload6 = false;
   }
   formDupload(event: any) {
     this.formDfile = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload7 = true;
     }
     if (file.size >= 5209785) {
@@ -526,9 +577,14 @@ export class RegisterComponent implements OnInit {
   consentLetterUpload(event: any) {
     this.consentLetter = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload8 = true;
-    }
+    };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.consentFile = reader.result;
+    };
     if (file.size >= 5209785) {
       this.consentFileSize = true;
       event.target.value = null;
@@ -538,15 +594,21 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetConsent() {
+    this.consentFile = null;
     this.consentLetter = '';
     this.showResetUpload8 = false;
   }
   regisCertificateUpload(event: any) {
     this.regisCertificate = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload9 = true;
-    }
+    };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.cerftificateUpl = reader.result;
+    };
     if (file.size >= 5209785) {
       this.registerFileSize = true;
       event.target.value = null;
@@ -556,6 +618,7 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetCertificate() {
+    this.cerftificateUpl = null;
     this.regisCertificate = '';
     this.showResetUpload9 = false;
 
@@ -563,9 +626,14 @@ export class RegisterComponent implements OnInit {
   tcsFileUpload(event: any) {
     this.tcsFile = event.target.files[0];
     let file = event.target.files[0];
-    if(file != '' || file != undefined) {
+    if (file != '' || file != undefined) {
       this.showResetUpload10 = true;
-    }
+    };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.tcsUplod = reader.result;
+    };
     if (file.size >= 5209785) {
       this.tcsFileSize = true;
       event.target.value = null;
@@ -575,6 +643,7 @@ export class RegisterComponent implements OnInit {
     }
   };
   resetTcs() {
+    this.tcsUplod = null;
     this.tcsFile = '';
     this.showResetUpload10 = false;
 
@@ -587,7 +656,7 @@ export class RegisterComponent implements OnInit {
     let url = apiKey + '/' + gstin;
     if (gstin) {
       this.productService.getGstin(url).subscribe((res: any) => {
-        if(res.flag == true) {
+        if (res.flag == true) {
           this._spinner.hide();
           this.toastr.success(res.message);
           this.orgAddr = res.data.pradr.adr;
@@ -620,7 +689,7 @@ export class RegisterComponent implements OnInit {
     let url = apiKey + '/' + gstin;
     if (gstin) {
       this.productService.getGstin(url).subscribe((res: any) => {
-        if(res.flag == true) {
+        if (res.flag == true) {
           this._spinner.hide();
           this.toastr.success(res.message);
           // this.orgAddr = res.data.pradr.adr;
@@ -651,9 +720,49 @@ export class RegisterComponent implements OnInit {
     const fileData = new FormData();
     this._spinner.show();
     this.submitted = true;
-    let valueOfRegisterfor = this.registerForm.value.first_name;
-    if (valueOfRegisterfor == '' || valueOfRegisterfor == null) {
-      this.toastr.error('Please check required field');
+
+    if (!this.addProof) {
+      this.toastr.error('', 'Address proof required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.checkBook) {
+      this.toastr.error('', 'Checkbook is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.panCardUpload) {
+      this.toastr.error('', 'Pan is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.gstFile) {
+      this.toastr.error('', 'GST certificate is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.turnOver) {
+      this.toastr.error('', 'Turnover-section is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.itrFileUpl) {
+      this.toastr.error('', 'ITR file is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.consentFile) {
+      this.toastr.error('', 'Consent Letter is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.cerftificateUpl) {
+      this.toastr.error('', 'Registration Certificates is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.tcsUplod) {
+      this.toastr.error('', 'TCS is required');
       this._spinner.hide();
       return;
     }
