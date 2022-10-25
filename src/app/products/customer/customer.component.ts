@@ -55,6 +55,7 @@ export class CustomerComponent implements OnInit {
   schldId: any;
   firstIndex:any;
   lastIndex:any;
+  negotiationHistory:any;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -81,6 +82,7 @@ export class CustomerComponent implements OnInit {
       }
     })
     this.detailByRfq();
+    this.getNegotiationHistory();
     this.priceForm = this._fb.group({
       price_premium: '',
       misc_expense: '',
@@ -271,24 +273,6 @@ export class CustomerComponent implements OnInit {
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.show_data = true;
-        // const uniqueID = uuid.v4();
-        // const scheduleNo = Math.floor(1000 + Math.random() * 9000);
-        //     this.quotation.push({
-        //       schedule_no: scheduleNo,
-        //       pro_size: '',
-        //       quantity: '',
-        //       expected_price: '',
-        //       delivery: '',
-        //       plant: '',
-        //       location: '',
-        //       bill_to: '',
-        //       ship_to: '',
-        //       from_date: '',
-        //       to_date: '',
-        //       remarks: '',
-        //       kam_price: 12505,
-        //       valid_till: '',
-        //     });
 
       }
       if (res.status == 'Token has Expired') {
@@ -435,9 +419,7 @@ export class CustomerComponent implements OnInit {
       //   return;
       // }
     }
-    console.log('rfqFormArry=', rfqFormArry);
-    this.spinner.hide();
-    return;
+
     if (this.requoteArr.length > 0) {
       this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
         if (res.message == 'status updated') {
@@ -528,7 +510,6 @@ export class CustomerComponent implements OnInit {
 
   };
   selectDay(event: any) {
-    console.log(event.target.value);
     this.days = event.target.value;
 
   }
@@ -549,25 +530,6 @@ export class CustomerComponent implements OnInit {
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
-      // for (let i of res.result) {
-      //   this.proPrices.push({
-      //     bpt_price: i.bpt_price,
-      //     price_premium: i.price_premium,
-      //     premiumCustomer: 0,
-      //     misc_expense: i.misc_expense,
-      //     btpCustomer: 0,
-      //     delivery_cost: i.delivery_cost,
-      //     deliveryCosr: 0,
-      //     credit_cost_for30_days: i.credit_cost_for30_days,
-      //     credit_cost_for45_days: i.credit_cost_for45_days,
-      //     creditCostCustomer: 0,
-      //     interest_rate: i.interest_rate,
-      //     intrestRate: 0,
-      //     cam_discount: i.cam_discount,
-      //     camDiscount: 0
-      //   })
-      // }
-      // this.proPrices = res.result;
 
       let daysCoast = Number(this.productPrice.credit_cost_for30_days) * Number(this.productPrice.interest_rate) / Number(100);
 
@@ -602,6 +564,12 @@ export class CustomerComponent implements OnInit {
     this.Totalsum1 = sum - Number(_discount);
     this.bptAndfinal1 = Number(this.Totalsum) - Number(bptPrice);
 
+  };
+  getNegotiationHistory() {
+    let apiUrl = '/user/quotes_history/' + this.productId;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      this.negotiationHistory = res.result;
+    })
   };
 
   priceSave(id: any, firstIndx:any, lastIndx:any) {

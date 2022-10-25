@@ -435,6 +435,70 @@
                             class="fa fa-paper-plane"></i> Submit</button> &nbsp;
                     <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
                 </div>
+
+                <!-- Negotiation History list -->
+                <div class="history-table">
+                    <section class="sub-header-2">
+                       <div class="container">
+                          <h1>Negotiation History</h1>
+                       </div>
+                    </section>
+                    <div class="container">
+                    <div class="table-responsive">
+                       <table class="table mb-0">
+                          <thead>
+                             <tr>
+                                <th>Product Details</th>
+                                <th>RFQ Number</th>
+                                <th>Name</th>
+                                <th>Remarks</th>
+                                <th>RFQ Date</th>
+                                <th>Ex-Works Price (₹)</th>
+                                <th>CAM's Price (₹)</th>
+                                <th colspan="2" class="text-center">Valid Till    </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <tr *ngFor="let history of negotiationHistory">
+                                <td>
+                                   <div class="product">
+                                      <div class="cart-details">
+                                         <h3 class="product-title">
+                                            <a>{{history?.pro_name}}</a>
+                                         </h3>
+                                         <p>Sizes : {{history?.size}}</p>
+                                      </div>
+                                   </div>
+                                </td>
+                                <td>
+                                    {{history?.rfq_no}}
+                                </td>
+                                <td>
+                                    {{history?.name}}
+                                </td>
+                                <td>
+                                    {{history?.remarks}}
+                                </td>
+                                <td>
+                                   <div class="white-space-nowrap">{{history?.rfq_date}}</div>
+                                </td>
+                                <td>
+                                   <div class="hst-exp-price">
+                                      <b>{{history?.expected_price}}</b>
+                                   </div>
+                                </td>
+                                <td>
+                                   <div class="kam-price">
+                                      <b>{{history?.kam_price}}</b>
+                                   </div>
+                                </td>
+                                <td>{{history?.rfq_date}}</td>
+                             </tr>
+                          </tbody>
+                       </table>
+                    </div>
+                    </div>
+                 </div>
             </div>
         </section>
     </div>
@@ -472,7 +536,7 @@
                                         {{productPrice?.bpt_price}}
                                     </div>
                                 </td>
-                                <td><input type="number" 
+                                <td><input type="number" readonly
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="_bptPrice{{schldId}}" placeholder="" value="{{productPrice?.bpt_price}}"></td>
                             </tr>
