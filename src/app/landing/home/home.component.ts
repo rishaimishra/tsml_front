@@ -113,7 +113,6 @@ export class HomeComponent implements OnInit {
       (res: any) => {
         if (res.status == 1) {
           this.popular_product_list = res.result;
-          console.log(this.popular_product_list);
         }
       },
       (err) => {

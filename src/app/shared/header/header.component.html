@@ -100,15 +100,15 @@
                         </div>
                         <!-- dropdown-large.// -->
                      </li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != true && loginFalse != true" routerLink="/register">
+                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/register">
                            Register </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != false " routerLink="/"> My Account
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true)" routerLink="/"> My Account
                         </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != false " routerLink="/view-profile">
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true)" routerLink="/view-profile">
                            My Profile </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn != true || loginFalse != false" routerLink="/login"> Login
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != true || loginFalse != false)" routerLink="/login"> Login
                         </a></li>
-                     <li class="nav-item"><a class="nav-link pointer" (click)="logOut()" *ngIf="isUserLogIn != false && loginFalse != true"> Logout </a></li>
+                     <li class="nav-item"><a class="nav-link pointer" (click)="logOut()" *ngIf="(isUserLogIn != false && loginFalse != true)"> Logout </a></li>
                   </ul>
                </div>
                <!-- navbar-collapse.// -->

@@ -34,13 +34,11 @@ export class HeaderComponent implements OnInit {
     });
   });
   this._product.getAllRequestOfRfq().subscribe((res: any) => {
-    console.log(res);
     if(res.status == 'Token has Expired') {
       this.loginFalse = true;
     }
-    else {
-      console.log(res.status);
-    }
+  }, err => {
+    console.log(err);
   })
   }
 
