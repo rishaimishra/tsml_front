@@ -193,7 +193,9 @@
                                                     <div class="date-rang">
                                                         <div class="position-relative">
                                                             <input type="date" [(ngModel)]="formData.from_date"
-                                                                #dlvrDate="ngModel" (change)="setNxtData($event, formData.schedule_no)" min="{{date}}"
+                                                                #dlvrDate="ngModel"
+                                                                (change)="setNxtData($event, formData.schedule_no)"
+                                                                min="{{date}}"
                                                                 name="from_date_{{ formData.schedule_no }}"
                                                                 class="form-control form-control-sm" placeholder="From"
                                                                 value="" required />
@@ -204,7 +206,8 @@
                                                         </div>
                                                         <div class="position-relative">
                                                             <input type="date" [(ngModel)]="formData.to_date"
-                                                                #dlvrDateTo="ngModel" id="to_date_{{formData.schedule_no}}" 
+                                                                #dlvrDateTo="ngModel"
+                                                                id="to_date_{{formData.schedule_no}}"
                                                                 name="to_date_{{ formData.schedule_no }}"
                                                                 class="form-control form-control-sm" placeholder="To"
                                                                 value="" required />
@@ -218,13 +221,15 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <label for="" (click)="getPrice(formData.location,formData.plant)">CAM's Price <span class="price-info price-info0"
-                                                            data-toggle="modal" data-target="#addPrice"><i
+                                                    <label for=""
+                                                        (click)="getPrice(formData.location,formData.plant, formData?.schedule_no, i, y)">CAM's Price
+                                                        <span class="price-info price-info0" data-toggle="modal"
+                                                            data-target="#addPrice"><i
                                                                 class="fa fa-info-circle"></i></span></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="text" class="form-control form-control-sm" id=""
-                                                            placeholder="0" value="{{Totalsum}}">
+                                                        <input type="text" [(ngModel)]="formData.kam_price" class="form-control form-control-sm kamClass" id="camsPrice{{formData.schedule_no}}"
+                                                            placeholder="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,7 +237,7 @@
                                                 <div class="form-group">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
-                                                        <input type="text"
+                                                        <input type="text" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker"
                                                             placeholder="To" value="">
                                                         <span class="over_llp"><img src="assets/images/cal.png"
@@ -450,7 +455,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-
+                    <form [formGroup]="priceForm">
                     <table class="table">
                         <thead>
                             <tr>
@@ -459,50 +464,50 @@
                                 <th scope="col">Updated Price (₹)</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody (change)="calculatePrice(schldId)">
                             <tr>
                                 <td colspan="2">BPT Price</td>
                                 <td>
                                     <div class="pp-bx">
-                                        {{proPrices?.bpt_price}}
+                                        {{productPrice?.bpt_price}}
                                     </div>
                                 </td>
-                                <td><input type="number"  
+                                <td><input type="number" 
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder="" value="104000.00" disabled></td>
+                                        id="_bptPrice{{schldId}}" placeholder="" value="{{productPrice?.bpt_price}}"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Price Premium(L/F)</td>
                                 <td>
                                     <div class="pp-bx">
-                                        {{proPrices?.price_premium}}
+                                        {{productPrice?.price_premium}}
                                     </div>
                                 </td>
-                                <td><input type="number" [(ngModel)]="premiumCustomer" (keyup)="btpPopulat()"
+                                <td><input type="number" formControlName="price_premium"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                        id="price_premium{{schldId}}" value="" placeholder=""></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Misc Expense</td>
                                 <td>
                                     <div class="pp-bx">
-                                        {{proPrices?.misc_expense}}
+                                        {{productPrice?.misc_expense}}
                                     </div>
                                 </td>
-                                <td><input type="number" [(ngModel)]="btpCustomer"
+                                <td><input type="number" formControlName="misc_expense"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                        id="misc_expense{{schldId}}" placeholder=""></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Delivery Cost</td>
                                 <td>
                                     <div class="pp-bx">
-                                        {{proPrices?.delivery_cost}}
+                                        {{productPrice?.delivery_cost}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number" formControlName="delivery_cost"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                        id="delivery{{schldId}}" placeholder=""></td>
                             </tr>
                             <tr>
                                 <td>Credit Cost For</td>
@@ -515,35 +520,35 @@
                                 </td>
                                 <td>
                                     <div class="pp-bx">
-                                        <span *ngIf="days == 30">{{proPrices?.credit_cost_for30_days}}</span>
-                                        <span *ngIf="days == 45">{{proPrices?.credit_cost_for45_days}}</span>
+                                        <span *ngIf="days == 30">{{productPrice?.credit_cost_for30_days}}</span>
+                                        <span *ngIf="days == 45">{{productPrice?.credit_cost_for45_days}}</span>
                                     </div>
                                 </td>
-                                <td><input type="text"
-                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                <td><input type="number" formControlName="creditCoast"
+                                        class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="_credit{{schldId}}" placeholder=""></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Interest Rate</td>
                                 <td>
                                     <div class="pp-bx">
-                                        {{proPrices?.interest_rate }}%
+                                        {{productPrice?.interest_rate }}%
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number"  formControlName="interest_rate"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                        id="_interest{{schldId}}" placeholder=""></td>
                             </tr>
                             <tr>
                                 <td colspan="2">CAM Discount</td>
                                 <td>
                                     <div class="pp-bx">
-                                        {{proPrices?.cam_discount}}
+                                        {{productPrice?.cam_discount}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number" formControlName="cam_discount"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                        id="_discount{{schldId}}" placeholder=""></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Final Price</td>
@@ -552,9 +557,9 @@
                                         {{Totalsum}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="number" readonly formControlName="totalSum"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder="" value="102500.00" disabled=""></td>
+                                        id="_total{{schldId}}" placeholder="" value="{{Totalsum1}}"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Difference Between BTP & Final Price (%)</td>
@@ -563,81 +568,25 @@
                                         {{bptAndfinal}}
                                     </div>
                                 </td>
-                                <td><input type="text"
+                                <td><input type="text" formControlName="finalAmt"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="" placeholder=""></td>
+                                        id="_bptAndfinal{{schldId}}" value="{{bptAndfinal1}}" placeholder=""></td>
                             </tr>
                         </tbody>
                     </table>
+                </form>
                     <p class="text-note"><i>Note: Price Quoted Excluding GST & TCS Charges</i></p>
 
-
                     <div class="add-btn-sec pt-2 pb-2">
-                        <a href="#" class="btn btn-primary"><i class="fa fa-check"></i> Ok</a>&nbsp;
-                        <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                        <a class="btn btn-primary" (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i> Ok</a>&nbsp;
+                        <button type="button" class="btn btn-danger" (click)="cancelprice()"><i class="fa fa-times"></i> Cancel</button>
                     </div>
                 </div>
                 <!--/-->
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // Add minus icon for collapse element which is open by default
-            $(".collapse.show").each(function () {
-                $(this)
-                    .prev(".card-header")
-                    .find(".fa")
-                    .addClass("fa-minus")
-                    .removeClass("fa-plus");
-            });
-
-            // Toggle plus minus icon on show hide of collapse element
-            $(".collapse")
-                .on("show.bs.collapse", function () {
-                    $(this)
-                        .prev(".card-header")
-                        .find(".fa")
-                        .removeClass("fa-plus")
-                        .addClass("fa-minus");
-                })
-                .on("hide.bs.collapse", function () {
-                    $(this)
-                        .prev(".card-header")
-                        .find(".fa")
-                        .removeClass("fa-minus")
-                        .addClass("fa-plus");
-                });
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".user_lk").click(function () {
-                $(".show01").slideToggle();
-            });
-
-            $(".user_llk").click(function () {
-                $(".show02").slideToggle();
-            });
-
-            $(".user_lllk").click(function () {
-                $(".show03").slideToggle();
-            });
-        });
-    </script>
-    <script>
-        function Clone() {
-            var clone = document.getElementById("thediv").cloneNode(true); // "deep" clone
-            document.getElementById("container").appendChild(clone);
-        }
-
-        function Delete(button) {
-            var parent = button.parentNode;
-            var grand_father = parent.parentNode;
-            grand_father.removeChild(parent);
-        }
-    </script>
+    
 </body>
 
 </html>

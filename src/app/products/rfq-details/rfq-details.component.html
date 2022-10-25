@@ -33,10 +33,10 @@
                   <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
                   </button>
-                  <div class="acc-pro-pic" (click)="goToCustomerPage(productData?.rfq_no)">
+                  <div class="acc-pro-pic pointerTab" (click)="goToCustomerPage(productData?.rfq_no)">
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
-                  <div class="acc-pro-dec">
+                  <div class="acc-pro-dec pointerTab" (click)="goToCustomerPage(productData?.rfq_no)">
                     <h3>{{ productData?.cat_name }}</h3>
                     <p>
                       Ranked among the top-seven global chrome alloy
@@ -358,63 +358,6 @@
     <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
   </div>
 
-  <script type="text/javascript">
-    $(document).ready(function () {
-      // Add minus icon for collapse element which is open by default
-      $(".collapse.show").each(function () {
-        $(this)
-          .prev(".card-header")
-          .find(".fa")
-          .addClass("fa-minus")
-          .removeClass("fa-plus");
-      });
-
-      // Toggle plus minus icon on show hide of collapse element
-      $(".collapse")
-        .on("show.bs.collapse", function () {
-          $(this)
-            .prev(".card-header")
-            .find(".fa")
-            .removeClass("fa-plus")
-            .addClass("fa-minus");
-        })
-        .on("hide.bs.collapse", function () {
-          $(this)
-            .prev(".card-header")
-            .find(".fa")
-            .removeClass("fa-minus")
-            .addClass("fa-plus");
-        });
-    });
-  </script>
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $(".user_lk").click(function () {
-        $(".show01").slideToggle();
-      });
-
-      $(".user_llk").click(function () {
-        $(".show02").slideToggle();
-      });
-
-      $(".user_lllk").click(function () {
-        $(".show03").slideToggle();
-      });
-    });
-  </script>
-  <script>
-    function Clone() {
-      var clone = document.getElementById("thediv").cloneNode(true); // "deep" clone
-      document.getElementById("container").appendChild(clone);
-    }
-
-    function Delete(button) {
-      var parent = button.parentNode;
-      var grand_father = parent.parentNode;
-      grand_father.removeChild(parent);
-    }
-  </script>
 </body>
 
 </html>

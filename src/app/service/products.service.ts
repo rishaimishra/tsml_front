@@ -66,4 +66,5 @@ export class ProductsService {
   priceCalculation(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/get-store-pro-price', reqParameter);
   };
+
 }
