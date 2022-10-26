@@ -418,7 +418,7 @@ export class CustomerComponent implements OnInit {
       + Number(_credit) + Number(daysCoast);
 
     this.Totalsum1 = sum - Number(_discount);
-    this.bptAndfinal1 = Number(this.Totalsum) - Number(bptPrice);
+    this.bptAndfinal1 = Number(this.Totalsum1) - Number(bptPrice);
 
   };
   getNegotiationHistory() {
