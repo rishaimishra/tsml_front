@@ -67,4 +67,7 @@ export class ProductsService {
     return this._http.post(this.BesUrl + '/user/get-store-pro-price', reqParameter);
   };
 
+  getPiceValue() {
+    return this._http.get(this.BesUrl + '/user/get-threshold-price');
+  };
 }

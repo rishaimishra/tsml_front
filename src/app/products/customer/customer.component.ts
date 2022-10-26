@@ -54,9 +54,11 @@ export class CustomerComponent implements OnInit {
   bptAndfinal1: any;
   productPrice: any;
   schldId: any;
-  firstIndex:any;
-  lastIndex:any;
-  negotiationHistory:any;
+  firstIndex: any;
+  lastIndex: any;
+  negotiationHistory: any;
+  priceVal: any;
+  priceLimit:any = [];
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -98,6 +100,7 @@ export class CustomerComponent implements OnInit {
 
     })
 
+    this.pricaValue();
   }
 
   getTotalQuantity(cat_id: any) {
@@ -244,9 +247,14 @@ export class CustomerComponent implements OnInit {
     else {
       this.statusArr.push(reqParam);
     }
-    console.log('reqParam', this.statusArr);
+    // console.log('reqParam', this.statusArr);
   };
-
+  pricaValue() {
+    this._product.getPiceValue().subscribe((res: any) => {
+      console.log('value', res);
+      this.priceVal = res.result;
+    })
+  }
   submitRfq() {
     this.submit = true;
     this.spinner.show();
@@ -280,9 +288,36 @@ export class CustomerComponent implements OnInit {
       console.log(res);
       if (res.message == 'success') {
         this.spinner.hide();
-        this._toaster.success(res.result);
-        // this._router.navigate(['../customer']);
-        // window.location.reload();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Updated successully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        // status update and reqoute
+        if (this.requoteArr.length > 0) {
+          this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
+            if (res.message == 'status updated') {
+              this.spinner.hide();
+              // this._toaster.success(res.result);
+            } else {
+              this._toaster.error(res.message);
+            }
+          })
+        }
+        if (this.statusArr.length > 0) {
+          this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
+            if (res.message == 'status updated') {
+              // this._toaster.success(res.message);
+              this.spinner.hide();
+            }
+            else {
+              this._toaster.error(res.message);
+            }
+
+          })
+        }
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -293,34 +328,13 @@ export class CustomerComponent implements OnInit {
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
+      this.detailByRfq();
 
     }, err => {
       console.log(err);
       this.spinner.hide();
     });
 
-    if (this.requoteArr.length > 0) {
-      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-        if (res.message == 'status updated') {
-          this.spinner.hide();
-          this._toaster.success(res.result);
-        } else {
-          this._toaster.error(res.message);
-        }
-      })
-    }
-    if (this.statusArr.length > 0) {
-      this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
-        if (res.message == 'status updated') {
-          this._toaster.success(res.message);
-          this.spinner.hide();
-        }
-        else {
-          this._toaster.error(res.message);
-        }
-
-      })
-    }
   }
 
   date: any;
@@ -375,7 +389,7 @@ export class CustomerComponent implements OnInit {
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-    console.log(i,'y',y);
+    console.log(i, 'y', y);
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
@@ -403,6 +417,14 @@ export class CustomerComponent implements OnInit {
 
 
   calculatePrice(id: any) {
+    console.log(this.priceVal.cam_discount);
+    let cam_discount = this.priceVal.cam_discount;
+    let delivery_cost = this.priceVal.delivery_cost;
+    let miscExpense = this.priceVal.misc_expense;
+    let pricePremium = this.priceVal.price_premium;
+    let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
+    let credit_cost_for45_days = this.priceVal.credit_cost_for45_days;
+
     let bptPrice = $("#_bptPrice" + id).val();
     let price_premium = $("#price_premium" + id).val();
     let misc_expense = $("#misc_expense" + id).val();
@@ -411,6 +433,29 @@ export class CustomerComponent implements OnInit {
     let _interest = $("#_interest" + id).val();
     let _discount = $("#_discount" + id).val();
     let _total = $("#_total" + id).val();
+
+    let priceValidator = [];
+    if (_discount < cam_discount && _discount != '') {
+      this._toaster.error('', 'Cam discount should not be less than ' + cam_discount);
+      priceValidator.push(1);
+    };
+    if (price_premium < pricePremium && price_premium != '') {
+      this._toaster.error('', 'Price Premium should not be less than ' + pricePremium);
+      priceValidator.push(2);
+    };
+    if (delivery < delivery_cost && delivery != '') {
+      this._toaster.error('', 'Delivery cost should not be less than ' + delivery_cost);
+      priceValidator.push(3);
+    };
+    if (_credit < credit_cost_for30_days && _credit != '') {
+      this._toaster.error('', 'Credit cost should not be less than ' + credit_cost_for30_days);
+      priceValidator.push(4);
+    };
+    if (misc_expense < miscExpense && misc_expense != '') {
+      this._toaster.error('', 'Misc Expense should not be less than ' + miscExpense);
+      priceValidator.push(5);
+    };
+    this.priceLimit =  priceValidator;
 
     let intPercent = Number(100) + Number(_interest);
     let daysCoast = _credit * intPercent / 100;
@@ -425,12 +470,13 @@ export class CustomerComponent implements OnInit {
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.productId;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.negotiationHistory = res.result;
     })
   };
 
-  priceSave(id: any, firstIndx:any, lastIndx:any) {
+  priceSave(id: any, firstIndx: any, lastIndx: any) {
+
     $("#camsPrice" + id).val(this.Totalsum1);
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
