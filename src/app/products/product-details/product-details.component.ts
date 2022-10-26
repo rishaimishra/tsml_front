@@ -431,14 +431,14 @@ export class ProductDetailsComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-      let qtyNull = reqData['quote_schedules'][i].quantity;
-      let remarksNull = reqData['quote_schedules'][i].remarks;
-      if (qtyNull == '' || remarksNull == '') {
-        this._toaster.error('please check required field');
-        this.spinner.hide();
-        return;
+      // let qtyNull = reqData['quote_schedules'][i].quantity;
+      // let remarksNull = reqData['quote_schedules'][i].remarks;
+      // if (qtyNull == '' || remarksNull == '') {
+      //   this._toaster.error('please check required field');
+      //   this.spinner.hide();
+      //   return;
 
-      }
+      // }
     }
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
