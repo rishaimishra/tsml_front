@@ -42,10 +42,8 @@
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/jquery/dist/jquery.min.js",
-              "src/assets/js/customs.js",
               "src/assets/js/jquery-2.2.4.min.js",
+              "src/assets/js/customs.js",
               "src/assets/js/bootstrap.bundle.min.js",
               "src/assets/js/product-carousel.js",
               "src/assets/js/thumbelina.js",

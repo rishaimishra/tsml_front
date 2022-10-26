@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     loop: true,
     autoplay: true,
     center: true,
-    dots: false,
+    dots: true,
     autoHeight: true,
     autoWidth: true,
     navSpeed: 1000,

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
+import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 import * as uuid from 'uuid';
 declare var $: any;
@@ -50,11 +51,12 @@ export class RfqDetailsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _router: Router,
     private _product: ProductsService,
-    private _toaster: ToastrService
+    private _toaster: ToastrService,
+    private _state: StateCityService
   ) { }
 
   ngOnInit(): void {
-    this.getState();
+    this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.RFQ;
       this.categoryid = res.categoryId;
@@ -74,155 +76,6 @@ export class RfqDetailsComponent implements OnInit {
     $("#qty_"+ cat_id).val(this.totalQty);
   }
   
-  getState() {
-    this.states = [
-      {
-        key: 'AN',
-        name: 'Andaman and Nicobar Islands',
-      },
-      {
-        key: 'AP',
-        name: 'Andhra Pradesh',
-      },
-      {
-        key: 'AR',
-        name: 'Arunachal Pradesh',
-      },
-      {
-        key: 'AS',
-        name: 'Assam',
-      },
-      {
-        key: 'BR',
-        name: 'Bihar',
-      },
-      {
-        key: 'CG',
-        name: 'Chandigarh',
-      },
-      {
-        key: 'CH',
-        name: 'Chhattisgarh',
-      },
-      {
-        key: 'DH',
-        name: 'Dadra and Nagar Haveli',
-      },
-      {
-        key: 'DD',
-        name: 'Daman and Diu',
-      },
-      {
-        key: 'DL',
-        name: 'Delhi',
-      },
-      {
-        key: 'GA',
-        name: 'Goa',
-      },
-      {
-        key: 'GJ',
-        name: 'Gujarat',
-      },
-      {
-        key: 'HR',
-        name: 'Haryana',
-      },
-      {
-        key: 'HP',
-        name: 'Himachal Pradesh',
-      },
-      {
-        key: 'JK',
-        name: 'Jammu and Kashmir',
-      },
-      {
-        key: 'JH',
-        name: 'Jharkhand',
-      },
-      {
-        key: 'KA',
-        name: 'Karnataka',
-      },
-      {
-        key: 'KL',
-        name: 'Kerala',
-      },
-      {
-        key: 'LD',
-        name: 'Lakshadweep',
-      },
-      {
-        key: 'MP',
-        name: 'Madhya Pradesh',
-      },
-      {
-        key: 'MH',
-        name: 'Maharashtra',
-      },
-      {
-        key: 'MN',
-        name: 'Manipur',
-      },
-      {
-        key: 'ML',
-        name: 'Meghalaya',
-      },
-      {
-        key: 'MZ',
-        name: 'Mizoram',
-      },
-      {
-        key: 'NL',
-        name: 'Nagaland',
-      },
-      {
-        key: 'OR',
-        name: 'Odisha',
-      },
-      {
-        key: 'PY',
-        name: 'Puducherry',
-      },
-      {
-        key: 'PB',
-        name: 'Punjab',
-      },
-      {
-        key: 'RJ',
-        name: 'Rajasthan',
-      },
-      {
-        key: 'SK',
-        name: 'Sikkim',
-      },
-      {
-        key: 'TN',
-        name: 'Tamil Nadu',
-      },
-      {
-        key: 'TS',
-        name: 'Telangana',
-      },
-      {
-        key: 'TR',
-        name: 'Tripura',
-      },
-      {
-        key: 'UK',
-        name: 'Uttar Pradesh',
-      },
-      {
-        key: 'UP',
-        name: 'Uttarakhand',
-      },
-      {
-        key: 'WB',
-        name: 'West Bengal',
-      },
-    ];
-  }
-
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' +'/'+ this.productId;

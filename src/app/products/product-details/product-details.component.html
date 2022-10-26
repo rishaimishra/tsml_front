@@ -104,7 +104,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Delivery Method</label>
-                          <select (change)="deliveryMethod($event)" #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
+                          <select #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="FOR">FOR</option>
@@ -116,7 +116,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Pickup From</label>
-                          <select (change)="pickupFrom($event)" #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
+                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select..</option>
                             <option value="Plant">Plant</option>
@@ -241,7 +241,7 @@
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Delivery Method</label>
-                              <select (change)="deliveryMethod2($event)" class="form-control form-control-sm">
+                              <select class="form-control form-control-sm">
                                 <option value="">Select method</option>
                                 <option value="FOR">FOR</option>
                                 <option value="Ex-Works">Ex-Works</option>
@@ -251,7 +251,7 @@
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Pickup From</label>
-                              <select (change)="pickupfrome2($event)" class="form-control form-control-sm">
+                              <select class="form-control form-control-sm">
                                 <option value="">Select ..</option>
                                 <option value="Plant">Plant</option>
                                 <option value="Depot">Depot</option>
@@ -262,7 +262,7 @@
                           <div class="col-lg-3">
                             <div class="form-group">
                               <label for="">Location</label>
-                              <select (change)="selectlocation2($event)" class="form-control form-control-sm">
+                              <select class="form-control form-control-sm">
                                 <option>Select location</option>
                                 <option value="{{ state?.name }}" *ngFor="let state of states">
                                   {{ state?.name }}
@@ -278,7 +278,7 @@
                                 <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
                                     Address</a></label>
                               </div>
-                              <select (change)="billTo2($event)" class="form-control form-control-sm">
+                              <select class="form-control form-control-sm">
                                 <option value="">Select</option>
                                 <option value="{{ state?.name }}" *ngFor="let state of states">
                                   {{ state?.name }}
@@ -293,7 +293,7 @@
                                 <label for=""><a href="registration.html"><i class="fa fa-plus-circle"></i> Add New
                                     Address</a></label>
                               </div>
-                              <select (change)="shipTo2($event)" class="form-control form-control-sm">
+                              <select class="form-control form-control-sm">
                                 <option>Select</option>
                                 <option value="{{ state?.name }}" *ngFor="let state of states">
                                   {{ state?.name }}

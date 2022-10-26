@@ -6,6 +6,7 @@ import { ProductsService } from 'src/app/service/products.service';
 import { DecimalPipe, formatNumber } from '@angular/common';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
 
 
@@ -70,17 +71,19 @@ export class CustomerComponent implements OnInit {
     private _router: Router,
     private _product: ProductsService,
     private _toaster: ToastrService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _state: StateCityService
   ) { }
 
   ngOnInit(): void {
+    $(window).scrollTop(0);
     this.user_Id = localStorage.getItem('USER_ID');
-    this.getState();
     this._route.params.subscribe(res => {
       if (res.id) {
         this.productId = res.id;
       }
-    })
+    });
+    this.states = this._state.getState();
     this.detailByRfq();
     this.getNegotiationHistory();
     this.priceForm = this._fb.group({
@@ -94,6 +97,7 @@ export class CustomerComponent implements OnInit {
       finalAmt: '',
 
     })
+
   }
 
   getTotalQuantity(cat_id: any) {
@@ -109,154 +113,6 @@ export class CustomerComponent implements OnInit {
     $("#qty_" + cat_id).val(this.totalQty);
   }
 
-  getState() {
-    this.states = [
-      {
-        key: 'AN',
-        name: 'Andaman and Nicobar Islands',
-      },
-      {
-        key: 'AP',
-        name: 'Andhra Pradesh',
-      },
-      {
-        key: 'AR',
-        name: 'Arunachal Pradesh',
-      },
-      {
-        key: 'AS',
-        name: 'Assam',
-      },
-      {
-        key: 'BR',
-        name: 'Bihar',
-      },
-      {
-        key: 'CG',
-        name: 'Chandigarh',
-      },
-      {
-        key: 'CH',
-        name: 'Chhattisgarh',
-      },
-      {
-        key: 'DH',
-        name: 'Dadra and Nagar Haveli',
-      },
-      {
-        key: 'DD',
-        name: 'Daman and Diu',
-      },
-      {
-        key: 'DL',
-        name: 'Delhi',
-      },
-      {
-        key: 'GA',
-        name: 'Goa',
-      },
-      {
-        key: 'GJ',
-        name: 'Gujarat',
-      },
-      {
-        key: 'HR',
-        name: 'Haryana',
-      },
-      {
-        key: 'HP',
-        name: 'Himachal Pradesh',
-      },
-      {
-        key: 'JK',
-        name: 'Jammu and Kashmir',
-      },
-      {
-        key: 'JH',
-        name: 'Jharkhand',
-      },
-      {
-        key: 'KA',
-        name: 'Karnataka',
-      },
-      {
-        key: 'KL',
-        name: 'Kerala',
-      },
-      {
-        key: 'LD',
-        name: 'Lakshadweep',
-      },
-      {
-        key: 'MP',
-        name: 'Madhya Pradesh',
-      },
-      {
-        key: 'MH',
-        name: 'Maharashtra',
-      },
-      {
-        key: 'MN',
-        name: 'Manipur',
-      },
-      {
-        key: 'ML',
-        name: 'Meghalaya',
-      },
-      {
-        key: 'MZ',
-        name: 'Mizoram',
-      },
-      {
-        key: 'NL',
-        name: 'Nagaland',
-      },
-      {
-        key: 'OR',
-        name: 'Odisha',
-      },
-      {
-        key: 'PY',
-        name: 'Puducherry',
-      },
-      {
-        key: 'PB',
-        name: 'Punjab',
-      },
-      {
-        key: 'RJ',
-        name: 'Rajasthan',
-      },
-      {
-        key: 'SK',
-        name: 'Sikkim',
-      },
-      {
-        key: 'TN',
-        name: 'Tamil Nadu',
-      },
-      {
-        key: 'TS',
-        name: 'Telangana',
-      },
-      {
-        key: 'TR',
-        name: 'Tripura',
-      },
-      {
-        key: 'UK',
-        name: 'Uttar Pradesh',
-      },
-      {
-        key: 'UP',
-        name: 'Uttarakhand',
-      },
-      {
-        key: 'WB',
-        name: 'West Bengal',
-      },
-    ];
-  }
 
   detailByRfq() {
     this.spinner.show();
