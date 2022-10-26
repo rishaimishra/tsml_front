@@ -42,10 +42,6 @@ export class HeaderComponent implements OnInit {
   })
   }
 
-  // goToregister() {
-  //   this._router.navigate(['/register']);
-  // }
-
   logOut() {
     Swal.fire({
       title: 'Are you sure?',
@@ -65,7 +61,4 @@ export class HeaderComponent implements OnInit {
     })
   }
 
-  showCart() {
-    
-  }
 }

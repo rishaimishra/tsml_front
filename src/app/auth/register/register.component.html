@@ -1,44 +1,3 @@
-<html lang="en">
-
-<head>
-  <style type="text/css">
-    /* ============ only desktop view ============ */
-    @media all and (min-width: 992px) {
-      .navbar .nav-item .dropdown-menu {
-        display: block;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.3s;
-        margin-top: 0;
-      }
-
-      .navbar .nav-item:hover .nav-link {
-        color: #fff;
-      }
-
-      .navbar .dropdown-menu.fade-down {
-        top: 80%;
-        transform: rotateX(-75deg);
-        transform-origin: 0% 0%;
-      }
-
-      .navbar .dropdown-menu.fade-up {
-        top: 180%;
-      }
-
-      .navbar .nav-item:hover .dropdown-menu {
-        transition: 0.3s;
-        opacity: 1;
-        visibility: visible;
-        top: 100%;
-        transform: rotateX(0deg);
-      }
-    }
-
-    /* ============ desktop view .end// ============ */
-  </style>
-</head>
-
 <body>
   <app-header></app-header>
   <!--Top Banner-->
@@ -208,73 +167,80 @@
                       </div>
                       <!--/-->
                       <div class="col-12">
-                        <div class="form-group">
-                          <label>Choose Product</label>
-                          <ul id="tree1">
-                            <li class="branch-main">
-                              <a href="javascript:;">Ferro Chrome
-                                <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                  <i class="fa fa-info-circle"></i>
-                                </span>
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="javascript:;">
-                                    HC Ferro Chrome (Lumps)
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label>Choose Product</label>
+                              <ul id="tree1">
+                                <li class="branch-main">
+                                  <a href="javascript:;">Ferro Chrome
                                     <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
                                       data-placement="top"
                                       title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                      <i class="fa fa-info-circle"></i> </span></a>
+                                      <i class="fa fa-info-circle"></i>
+                                    </span>
+                                  </a>
                                   <ul>
-                                    <li *ngFor="let item of ferroChrome">
+                                    <li>
                                       <a href="javascript:;">
-                                        <label class="container-check">{{item?.name}}
+                                        HC Ferro Chrome (Lumps)
+                                        <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                          data-placement="top"
+                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                          <i class="fa fa-info-circle"></i> </span></a>
+                                      <ul>
+                                        <li *ngFor="let item of ferroChrome">
+                                          <a href="javascript:;">
+                                            <label class="container-check">{{item?.name}}
+                                              <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                                <i class="fa fa-info-circle"></i>
+                                              </span>
+                                              <input type="checkbox" value="{{item?.name}}" [checked]="item.select"
+                                                (change)="onSelectFerroChrome($event)" />
+                                              <span class="checkmark"></span> </label></a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li class="branch-main">
+                                  Chrome Ore
+                                  <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                    <i class="fa fa-info-circle d-block"></i>
+                                  </span>
+                                  <ul>
+                                    <li *ngFor="let oreItem of chromeOre">
+                                      <a href="javascript:;">
+                                        <label class="container-check">{{oreItem?.name}}
                                           <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
                                             data-placement="top"
                                             title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
                                             <i class="fa fa-info-circle"></i>
                                           </span>
-                                          <input type="checkbox" value="{{item?.name}}" [checked]="item.select"
-                                            (change)="onSelectFerroChrome($event)" />
-                                          <span class="checkmark"></span> </label></a>
+                                          <input type="checkbox" [checked]="oreItem.select" value="{{oreItem?.name}}" (change)="onSelectChromeOre($event)"/>
+                                          <span class="checkmark"></span>
+                                        </label>
+                                      </a>
                                     </li>
                                   </ul>
                                 </li>
                               </ul>
-                            </li>
-                            <li class="branch-main">
-                              Chrome Ore
-                              <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                data-placement="top"
-                                title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                <i class="fa fa-info-circle d-block"></i>
-                              </span>
-                              <ul>
-                                <li *ngFor="let oreItem of chromeOre">
-                                  <a href="javascript:;">
-                                    <label class="container-check">{{oreItem?.name}}
-                                      <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                        <i class="fa fa-info-circle"></i>
-                                      </span>
-                                      <input type="checkbox" [checked]="oreItem.select" value="{{oreItem?.name}}" (change)="onSelectChromeOre($event)"/>
-                                      <span class="checkmark"></span>
-                                    </label>
-                                  </a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
+    
+                            </div> 
+                          </div>
+                          
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12">
                         <label class="d-block mt-3">Choose Product’s Size (mm)</label>
                         <label *ngFor="let product of selectProduct" class="container-radio">{{product?.name}}
-                          <input type="radio" (change)="choosProductSize($event)" [checked]="product.select" value="{{product?.name}}" name="radio" />
+                          <input type="radio" (change)="choosProductSize($event)" [checked]="product.select"
+                            value="{{product?.name}}" name="radio" />
                           <span class="checkmark"></span>
                         </label>
                       </div>
@@ -286,11 +252,13 @@
                               Distribution?</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" (change)="checkDistributionYes($event)" [checked]="checkedYes" type="radio" value="Yes" />
+                            <input class="form-check-input" (change)="checkDistributionYes($event)"
+                              [checked]="checkedYes" type="radio" value="Yes" />
                             <label class="form-check-label" for="inlineCheckbox1">Yes</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" (change)="checkDistributionNo($event)" [checked]="checkedNo" type="radio" value="No" />
+                            <input class="form-check-input" (change)="checkDistributionNo($event)" [checked]="checkedNo"
+                              type="radio" value="No" />
                             <label class="form-check-label" for="inlineCheckbox2">No</label>
                           </div>
                         </div>
@@ -376,7 +344,7 @@
                       <div class="col-12 col-lg-6 col-sm-6 mt-4">
                         <div class="form-group">
                           <label (change)="isTdsApplicable($event)" class="container-check">Is TCS/TDS applicable?
-                            <input type="checkbox" [checked]="isTDS_applicable"/>
+                            <input type="checkbox" [checked]="isTDS_applicable" />
                             <span class="checkmark"></span>
                           </label>
                         </div>
@@ -758,8 +726,7 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="getAddrssProfe($event)"
-                                           accept=".png, .jpg, .jpeg, .pdf"
-                                          id="file-1" class="custom-file-input"/>
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-1" class="custom-file-input" />
                                         <label class="custom-file-label" for="file-1">{{selectedFile?.name ?
                                           selectedFile?.name:'Upload'}}</label>
                                         <div *ngIf="!addProof && submitted">
@@ -786,8 +753,8 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="getCancelcheck($event)"
-                                           accept=".png, .jpg, .jpeg, .pdf"
-                                          id="file-2" class="custom-file-input" name="filename" />
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-2" class="custom-file-input"
+                                          name="filename" />
                                         <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ?
                                           cancelCheckBook?.name:'Upload'}}</label>
                                         <div *ngIf="!checkBook && submitted">
@@ -816,9 +783,8 @@
                                   <td class="position-relative">
                                     <div class="uplodimg">
                                       <div class="custom-file">
-                                        <input type="file" (change)="uploadPan($event)" 
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-3" class="custom-file-input"
-                                          name="filename" />
+                                        <input type="file" (change)="uploadPan($event)" accept=".png, .jpg, .jpeg, .pdf"
+                                          id="file-3" class="custom-file-input" name="filename" />
                                         <label class="custom-file-label" for="file-3">{{panUpload?.name ?
                                           panUpload?.name:'Upload'}}</label>
                                         <div *ngIf="!panCardUpload && submitted">
@@ -847,8 +813,8 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="gstCertificateFileUpload($event)"
-                                           accept=".png, .jpg, .jpeg, .pdf" id="file-4"
-                                          class="custom-file-input" name="filename" />
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-4" class="custom-file-input"
+                                          name="filename" />
                                         <label class="custom-file-label" for="file-4">{{gstUpload?.name ?
                                           gstUpload?.name:'Upload'}}</label>
                                         <div *ngIf="!gstFile && submitted">
@@ -875,8 +841,8 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="turnoverUpload($event)"
-                                           accept=".png, .jpg, .jpeg, .pdf"
-                                          id="file-5" class="custom-file-input" name="filename" />
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-5" class="custom-file-input"
+                                          name="filename" />
                                         <label class="custom-file-label" for="file-5">{{turnoverFile?.name ?
                                           turnoverFile?.name:'Upload'}}</label>
                                         <div *ngIf="!turnOver && submitted">
@@ -904,8 +870,8 @@
                                     <div class="uplodimg">
                                       <div class="custom-file">
                                         <input type="file" (change)="itrFileUpload($event)"
-                                           accept=".png, .jpg, .jpeg, .pdf" id="file-6"
-                                          class="custom-file-input" name="filename" />
+                                          accept=".png, .jpg, .jpeg, .pdf" id="file-6" class="custom-file-input"
+                                          name="filename" />
                                         <label class="custom-file-label" for="file-6">{{itrFile?.name ?
                                           itrFile?.name:'Upload'}}</label>
                                         <div *ngIf="!itrFileUpl && submitted">
@@ -960,11 +926,11 @@
                                           name="filename" />
                                         <label class="custom-file-label" for="file-8">{{consentLetter?.name ?
                                           consentLetter?.name:'Upload'}}</label>
-                                          <div *ngIf="!consentFile && submitted">
-                                            <small class="text-danger">
-                                              Consent Letter is required !
-                                            </small>
-                                          </div>
+                                        <div *ngIf="!consentFile && submitted">
+                                          <small class="text-danger">
+                                            Consent Letter is required !
+                                          </small>
+                                        </div>
                                       </div>
                                       <a class="reg-cross pointerClass" *ngIf="showResetUpload8"
                                         (click)="resetConsent()">
@@ -989,11 +955,11 @@
                                           name="filename">
                                         <label class="custom-file-label" for="customFile">{{regisCertificate?.name ?
                                           regisCertificate?.name:'Upload'}}</label>
-                                          <div *ngIf="!cerftificateUpl && submitted">
-                                            <small class="text-danger">
-                                              Consent Letter is required !
-                                            </small>
-                                          </div>
+                                        <div *ngIf="!cerftificateUpl && submitted">
+                                          <small class="text-danger">
+                                            Consent Letter is required !
+                                          </small>
+                                        </div>
                                       </div>
 
                                       <a class="reg-cross pointerClass" *ngIf="showResetUpload9"
@@ -1045,7 +1011,7 @@
                         <div class="form-group">
                           <label class="container-check">I agree to the
                             <a routerLink="/privacy"><u>terms and conditions</u></a>
-                            <input type="checkbox" (change)="checkTerms($event)" [checked]="isTermCondition"/>
+                            <input type="checkbox" (change)="checkTerms($event)" [checked]="isTermCondition" />
                             <span class="checkmark"></span>
                           </label>
                         </div>
@@ -1088,11 +1054,4 @@
   </div>
   <!--/Footer-->
 
-  <script>
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  </script>
 </body>
-
-</html>

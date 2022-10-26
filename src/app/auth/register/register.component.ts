@@ -211,7 +211,7 @@ export class RegisterComponent implements OnInit {
     //     });
     // });
 
-    $('#tree1').treed();
+    // $('#tree1').treed();
   }
 
   checkTerms(event: any) {
