@@ -17,7 +17,7 @@
                 <div class="prod-list-detl">
                     <!-- List start -->
                     <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-                        <div class="accordion--" id="accordionExample">
+                        <div class="accordion--" id="accordionExample" *ngIf="productData.schedule.length > 0">
                             <div class="card">
                                 <div class="card-header card-header--" id="headingOne">
                                     <button type="button" class="btn btn-link" data-toggle="collapse"

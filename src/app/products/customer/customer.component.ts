@@ -276,6 +276,29 @@ export class CustomerComponent implements OnInit {
       // }
     }
 
+    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+      console.log(res);
+      if (res.message == 'success') {
+        this.spinner.hide();
+        this._toaster.success(res.result);
+        // this._router.navigate(['../customer']);
+        // window.location.reload();
+      }
+      if (res.message == 'error' || res.status == 0) {
+        this._toaster.error(res.message);
+        this.spinner.hide();
+      }
+      if (res.status == 'Token has Expired') {
+        this._toaster.error(res.status, 'Please login again');
+        this._router.navigate(['/login']);
+        this.spinner.hide();
+      }
+
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    });
+
     if (this.requoteArr.length > 0) {
       this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
         if (res.message == 'status updated') {
@@ -298,27 +321,6 @@ export class CustomerComponent implements OnInit {
 
       })
     }
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
-      console.log(res);
-      if (res.message == 'success') {
-        this.spinner.hide();
-        this._toaster.success(res.result);
-        // this._router.navigate(['/kam', this.productId]);
-      }
-      if (res.message == 'error' || res.status == 0) {
-        this._toaster.error(res.message);
-        this.spinner.hide();
-      }
-      if (res.status == 'Token has Expired') {
-        this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
-        this.spinner.hide();
-      }
-
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-    });
   }
 
   date: any;
