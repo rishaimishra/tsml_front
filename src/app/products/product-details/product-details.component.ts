@@ -61,7 +61,6 @@ export class ProductDetailsComponent implements OnInit {
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
       this.categoryid = res.categoryId;
-      console.log('id', res);
       this.get_product_details(res.productId, res.categoryId);
     });
     this.setFromData();
@@ -227,7 +226,10 @@ export class ProductDetailsComponent implements OnInit {
       //   return;
 
       // }
+      let rfqNumberShow = reqData.rfq_number;
+      this._state.sendRfqNumer(rfqNumberShow);
     }
+
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       if (res.status == 1 && res.result != 'Quote not created') {
         this.spinner.hide();

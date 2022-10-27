@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import { DecimalPipe, formatNumber } from '@angular/common';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
 
@@ -58,12 +58,20 @@ export class CustomerComponent implements OnInit {
   lastIndex: any;
   negotiationHistory: any;
   priceVal: any;
-  priceLimit:any = [];
+  priceLimit: any = [];
+  showButtons: any;
+  kamsRemarks: any = '';
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
   totalQty: any;
   editProductId: any;
+  submitted: boolean = false;
+  premiumPrice: boolean = false;
+  miscPrice: boolean = false;
+  deliveryCost: boolean = false;
+  kamDiscount: boolean = false;
+  daysCost:any;
 
 
   constructor(
@@ -79,6 +87,10 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     $(window).scrollTop(0);
+    // $(function () {
+    //   $('#datetimepicker1').datetimepicker();
+    // });
+    // $('#datetimepicker').data("DateTimePicker").FUNCTION();
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
@@ -89,20 +101,22 @@ export class CustomerComponent implements OnInit {
     this.detailByRfq();
     this.getNegotiationHistory();
     this.priceForm = this._fb.group({
-      price_premium: '',
-      misc_expense: '',
-      delivery_cost: '',
-      creditCoast: '',
-      interest_rate: '',
-      cam_discount: '',
-      totalSum: '',
-      finalAmt: '',
+      price_premium: ['', Validators.required],
+      misc_expense: ['', Validators.required],
+      delivery_cost: ['', Validators.required],
+      creditCoast: ['', Validators.required],
+      interest_rate: [5],
+      cam_discount: ['', Validators.required],
+      totalSum: [''],
+      finalAmt: [''],
 
     })
 
     this.pricaValue();
   }
-
+  get f(): { [key: string]: AbstractControl } {
+    return this.priceForm.controls;
+  }
   getTotalQuantity(cat_id: any) {
     console.log('cat_id', cat_id);
     for (let i = 0; i < this.selectedItem.length; i++) {
@@ -132,7 +146,10 @@ export class CustomerComponent implements OnInit {
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.show_data = true;
-
+        for (let i = 0; i < this.selectedItem.length; i++) {
+          let form_data_array = this.selectedItem[i]['schedule'];
+          this.showButtons = form_data_array.length;
+        }
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
@@ -253,7 +270,7 @@ export class CustomerComponent implements OnInit {
     this._product.getPiceValue().subscribe((res: any) => {
       console.log('value', res);
       this.priceVal = res.result;
-    })
+    });
   }
   submitRfq() {
     this.submit = true;
@@ -383,7 +400,15 @@ export class CustomerComponent implements OnInit {
   };
   selectDay(event: any) {
     this.days = event.target.value;
-
+    // if(this.days == 30) {
+    //   this.productPrice?.credit_cost_for30_days;
+    //   this.daysCost = this.productPrice?.credit_cost_for30_days;
+    // };
+    // if(this.days == 45) {
+    //   this.productPrice?.credit_cost_for45_days;
+    //   this.daysCost = this.productPrice?.credit_cost_for45_days;
+    // }
+    // console.log('days',this.productPrice);
   }
 
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
@@ -411,13 +436,10 @@ export class CustomerComponent implements OnInit {
       this.Totalsum = sum - Number(this.productPrice.cam_discount);
       this.bptAndfinal = Number(this.Totalsum) - Number(this.productPrice.bpt_price);
     })
-    console.log('Totalsum', this.Totalsum);
-    console.log('bptAndfinal', this.bptAndfinal);
   };
 
 
   calculatePrice(id: any) {
-    console.log(this.priceVal.cam_discount);
     let cam_discount = this.priceVal.cam_discount;
     let delivery_cost = this.priceVal.delivery_cost;
     let miscExpense = this.priceVal.misc_expense;
@@ -425,37 +447,47 @@ export class CustomerComponent implements OnInit {
     let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
     let credit_cost_for45_days = this.priceVal.credit_cost_for45_days;
 
-    let bptPrice = $("#_bptPrice" + id).val();
-    let price_premium = $("#price_premium" + id).val();
-    let misc_expense = $("#misc_expense" + id).val();
-    let delivery = $("#delivery" + id).val();
-    let _credit = $("#_credit" + id).val();
-    let _interest = $("#_interest" + id).val();
-    let _discount = $("#_discount" + id).val();
-    let _total = $("#_total" + id).val();
+    let bptPrice = Number($("#_bptPrice" + id).val());
+    let price_premium = Number($("#price_premium" + id).val());
+    let misc_expense = Number($("#misc_expense" + id).val());
+    let delivery = ($("#delivery" + id).val());
+    let _credit = Number($("#_credit" + id).val());
+    let _interest = Number($("#_interest" + id).val());
+    let _discount = Number($("#_discount" + id).val());
+    console.log('_discount',_discount);
+    let _total = Number($("#_total" + id).val());
 
     let priceValidator = [];
-    if (_discount < cam_discount && _discount != '') {
-      this._toaster.error('', 'Cam discount should not be less than ' + cam_discount);
+
+    if (price_premium < pricePremium && price_premium != 0) {
       priceValidator.push(1);
+      this.premiumPrice = true;
+    } else {
+      this.premiumPrice = false;
     };
-    if (price_premium < pricePremium && price_premium != '') {
-      this._toaster.error('', 'Price Premium should not be less than ' + pricePremium);
+    if (misc_expense < miscExpense && misc_expense != 0) {
+      this.miscPrice = true;
       priceValidator.push(2);
+    } else {
+      this.miscPrice = false;
     };
-    if (delivery < delivery_cost && delivery != '') {
-      this._toaster.error('', 'Delivery cost should not be less than ' + delivery_cost);
+    if (delivery < delivery_cost && delivery != 0) {
+      this.deliveryCost = true;
       priceValidator.push(3);
+    } else {
+      this.deliveryCost = false;
     };
-    if (_credit < credit_cost_for30_days && _credit != '') {
-      this._toaster.error('', 'Credit cost should not be less than ' + credit_cost_for30_days);
+    if (_credit < credit_cost_for30_days && _credit != 0) {
+      // this._toaster.error('', 'Credit cost should not be less than ' + credit_cost_for30_days);
       priceValidator.push(4);
     };
-    if (misc_expense < miscExpense && misc_expense != '') {
-      this._toaster.error('', 'Misc Expense should not be less than ' + miscExpense);
+    if (_discount < cam_discount && _discount != 0) {
+      this.kamDiscount = true;
       priceValidator.push(5);
+    } else {
+      this.kamDiscount = false;
     };
-    this.priceLimit =  priceValidator;
+    this.priceLimit = priceValidator;
 
     let intPercent = Number(100) + Number(_interest);
     let daysCoast = _credit * intPercent / 100;
@@ -476,7 +508,10 @@ export class CustomerComponent implements OnInit {
   };
 
   priceSave(id: any, firstIndx: any, lastIndx: any) {
-
+    if (!this.priceForm.valid) {
+      this.submitted = true;
+      return;
+    };
     $("#camsPrice" + id).val(this.Totalsum1);
     $("#addPrice").hide();
     $('body').removeClass('modal-open');

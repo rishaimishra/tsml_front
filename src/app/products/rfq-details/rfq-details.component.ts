@@ -40,6 +40,7 @@ export class RfqDetailsComponent implements OnInit {
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
+  showButtons:any;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -74,21 +75,23 @@ export class RfqDetailsComponent implements OnInit {
       this.totalQty = qty;
     }
     $("#qty_"+ cat_id).val(this.totalQty);
-  }
+  };
   
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' +'/'+ this.productId;
     this.productService.getMethod(url).subscribe((res:any) => {
-      console.log('resss',res);
       this.spinner.hide();
         if (res.status == 1) {
           this.editProductId = res.result[0]['product_id'];
-          console.log('this.editProductId=',this.editProductId);
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
           this.selectedItem = this.product_data;
           this.show_data = true;
+          for (let i = 0; i < this.selectedItem.length; i++) {
+            let form_data_array = this.selectedItem[i]['schedule'];
+            this.showButtons = form_data_array.length;
+          }
           // const uniqueID = uuid.v4();
       const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation.push({
@@ -121,7 +124,7 @@ export class RfqDetailsComponent implements OnInit {
         }
 
     })
-  }
+  };
   deleteRfqById(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -136,7 +139,6 @@ export class RfqDetailsComponent implements OnInit {
         let apiKey = '/user/delete_quote_by_id';
         let apiUrl = apiKey+ '/'+ id;
         this.productService.getMethod(apiUrl).subscribe((res: any) => {
-          console.log(res)
           if (res.status == 1 && res.result == 'Quote deleted') {
             Swal.fire(
               'Deleted!',
@@ -144,7 +146,12 @@ export class RfqDetailsComponent implements OnInit {
               'success'
             )
             this.spinner.hide();
-            this.detailByRfq();
+            // this.detailByRfq();
+            // if (this.showButtons < 0) {
+              this._router.navigate(['/rfq-list']);
+            // } else {
+            //   window.location.reload();
+            // }
           } else {
             this._toaster.error(res.result);
             this.spinner.hide();
@@ -152,17 +159,17 @@ export class RfqDetailsComponent implements OnInit {
         })
       }
     })
-  }
+  };
 
   goToCustomerPage(id: any) {
     this._router.navigate(['/customer',id]);
-  }
+  };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
-  }
+  };
   sizeOffered2(event: any) {
     console.log(event.target.value);
-  }
+  };
   add_to_cart(cat_id: any, product_id: any) {
     console.log('cat_id=', cat_id);
     console.log('product_id=', product_id);
@@ -179,7 +186,7 @@ export class RfqDetailsComponent implements OnInit {
       console.log('this.delivery_date=', this.delivery_date);
     }
     this._router.navigate(['/my-cart']);
-  }
+  };
 
   selectItems(event: any) {
     let categoryId = event.target.value;
@@ -229,30 +236,30 @@ export class RfqDetailsComponent implements OnInit {
         }
       }
     );
-  }
+  };
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
     console.log(this.proSize1);
-  }
+  };
   deliveryMethod(event: any) {
     console.log(event.target.value);
-  }
+  };
   pickupFrom(event: any) {
     console.log(event.target.value);
   }
   deliveryMethod2(event: any) {
     console.log(event.target.value);
-  }
+  };
   pickupfrome2(event: any) {
     console.log(event.target.value);
-  }
+  };
   selectlocation2(event: any) {
     console.log(event.target.value);
-  }
+  };
   billTo2(event: any) {
     console.log(event.target.value);
-  }
-  shipTo2(event: any) { }
+  };
+  shipTo2(event: any) { };
 
   submitRfq() {
     this.submit = true;
@@ -271,7 +278,7 @@ export class RfqDetailsComponent implements OnInit {
         quantity: qty,
         quote_schedules: form_data_array,
       };
-      console.log(reqData);
+
       rfqFormArry.push(reqData);
     }
     console.log('rfqFormArry=',rfqFormArry);
@@ -296,7 +303,7 @@ export class RfqDetailsComponent implements OnInit {
         this.spinner.hide();
       }
     });
-  }
+  };
 
   addItem(i: any) {
     console.log("i",i)
@@ -324,7 +331,7 @@ export class RfqDetailsComponent implements OnInit {
     this.selectedItem[i]['schedule'] = this.quotation;
     console.log('this.selectedItem=', this.selectedItem);
     this.final_form_data();
-  }
+  };
   final_form_data() {
     this.quotation_value = [];
     // console.log('this.selectedItem final fn=', this.selectedItem);
@@ -337,7 +344,7 @@ export class RfqDetailsComponent implements OnInit {
       //this.quotation_value[i] = this.selectedItem[i]['form_data'];
     }
     console.log('this.quotation_value=', this.quotation_value);
-  }
+  };
 
   date: any;
   setFromData()
