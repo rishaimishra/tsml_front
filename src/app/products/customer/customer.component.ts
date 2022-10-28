@@ -71,7 +71,10 @@ export class CustomerComponent implements OnInit {
   miscPrice: boolean = false;
   deliveryCost: boolean = false;
   kamDiscount: boolean = false;
-  daysCost:any;
+  credCost: boolean = false;
+  daysCost: any;
+  totalDayCost:any;
+  daysCostCount:any;
 
 
   constructor(
@@ -104,8 +107,8 @@ export class CustomerComponent implements OnInit {
       price_premium: ['', Validators.required],
       misc_expense: ['', Validators.required],
       delivery_cost: ['', Validators.required],
-      creditCoast: ['', Validators.required],
-      interest_rate: [5],
+      creditCoast: [''],
+      interest_rate: [''],
       cam_discount: ['', Validators.required],
       totalSum: [''],
       finalAmt: [''],
@@ -118,7 +121,6 @@ export class CustomerComponent implements OnInit {
     return this.priceForm.controls;
   }
   getTotalQuantity(cat_id: any) {
-    console.log('cat_id', cat_id);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
       let qty = 0;
@@ -300,6 +302,7 @@ export class CustomerComponent implements OnInit {
       //   return;
       // }
     }
+    console.log(rfqFormArry);
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
@@ -400,21 +403,33 @@ export class CustomerComponent implements OnInit {
   };
   selectDay(event: any) {
     this.days = event.target.value;
-    // if(this.days == 30) {
-    //   this.productPrice?.credit_cost_for30_days;
-    //   this.daysCost = this.productPrice?.credit_cost_for30_days;
-    // };
-    // if(this.days == 45) {
-    //   this.productPrice?.credit_cost_for45_days;
-    //   this.daysCost = this.productPrice?.credit_cost_for45_days;
-    // }
-    // console.log('days',this.productPrice);
-  }
+
+    let bptPrice = $('#bptId').html();
+    let pricePrId = $('#pricePrId').html();
+    let miscId = $('#miscId').html();
+    let delCost = $('#delCost').html();
+    let intrId = $('#intrId').html();
+    let kamid = $('#kamid').html();
+
+    let actualVal = Number(intrId) / 100;
+    let daysCoast = this.days * actualVal / 365;
+
+    this.totalDayCost = daysCoast.toFixed(2);
+    console.log( this.days);
+
+    let sum = Number(bptPrice) + Number(pricePrId) + Number(miscId) + Number(delCost)
+      + Number(daysCoast);
+    let toatal = daysCoast * sum;
+    let fixed = toatal - Number(kamid);
+    this.Totalsum = fixed.toFixed(2)
+    let finalAmt = Number(this.Totalsum) - Number(bptPrice);
+    this.bptAndfinal = finalAmt.toFixed(2);
+  };
 
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-    console.log(i, 'y', y);
+
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
@@ -428,13 +443,23 @@ export class CustomerComponent implements OnInit {
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
 
-      let daysCoast = Number(this.productPrice.credit_cost_for30_days) * Number(this.productPrice.interest_rate) / Number(100);
+      let actualVal = Number(this.productPrice.interest_rate) / 100;
+      let daysCoast = this.days * actualVal / 365;
+      this.totalDayCost = daysCoast.toFixed(2);
 
+      let sum1 = (Number(this.productPrice.bpt_price) + Number(this.productPrice.price_premium) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost)
+      )* daysCoast;
+ 
       let sum = Number(this.productPrice.bpt_price) + Number(this.productPrice.price_premium) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost)
-        + Number(this.productPrice.credit_cost_for30_days) + Number(daysCoast);
+        + sum1;
+      let toatal = sum;
+      
+     this.daysCostCount = sum1.toFixed(2);
+      let fixed = toatal - Number(this.productPrice.cam_discount);
+      this.Totalsum = fixed.toFixed(2);
 
-      this.Totalsum = sum - Number(this.productPrice.cam_discount);
-      this.bptAndfinal = Number(this.Totalsum) - Number(this.productPrice.bpt_price);
+      let finalAmt = (Number(this.Totalsum) - Number(this.productPrice.bpt_price))* 100 / Number(this.productPrice.bpt_price);
+      this.bptAndfinal = finalAmt.toFixed(2);
     })
   };
 
@@ -450,15 +475,13 @@ export class CustomerComponent implements OnInit {
     let bptPrice = Number($("#_bptPrice" + id).val());
     let price_premium = Number($("#price_premium" + id).val());
     let misc_expense = Number($("#misc_expense" + id).val());
-    let delivery = ($("#delivery" + id).val());
+    let delivery = Number($("#delivery" + id).val());
     let _credit = Number($("#_credit" + id).val());
     let _interest = Number($("#_interest" + id).val());
     let _discount = Number($("#_discount" + id).val());
-    console.log('_discount',_discount);
     let _total = Number($("#_total" + id).val());
 
     let priceValidator = [];
-
     if (price_premium < pricePremium && price_premium != 0) {
       priceValidator.push(1);
       this.premiumPrice = true;
@@ -477,9 +500,11 @@ export class CustomerComponent implements OnInit {
     } else {
       this.deliveryCost = false;
     };
-    if (_credit < credit_cost_for30_days && _credit != 0) {
-      // this._toaster.error('', 'Credit cost should not be less than ' + credit_cost_for30_days);
+    if (_credit < this.days && _credit != 0) {
+      this.credCost = true;
       priceValidator.push(4);
+    } else {
+      this.credCost = false;
     };
     if (_discount < cam_discount && _discount != 0) {
       this.kamDiscount = true;
@@ -489,16 +514,36 @@ export class CustomerComponent implements OnInit {
     };
     this.priceLimit = priceValidator;
 
-    let intPercent = Number(100) + Number(_interest);
-    let daysCoast = _credit * intPercent / 100;
-    console.log('daysCoast', daysCoast);
+    // let actualVal = Number(_interest) / 100;
+    // let daysCoast = this.days * actualVal / 365;
+    // this.totalDayCost = daysCoast.toFixed(2);
+    // let sum = Number(bptPrice) - Number(price_premium) + Number(misc_expense) + Number(delivery)
+    // + Number(daysCoast);
+    // let toatal = daysCoast * sum;
+    // let fixed = toatal - Number(_discount);
+    // this.Totalsum1 = fixed.toFixed(2)
+    // let finalAmt = Number(this.Totalsum1) - Number(bptPrice);
+    // this.bptAndfinal1 = finalAmt.toFixed(2);
+    // console.log('sum',this.Totalsum1);
+    // 
+    let actualVal = Number(_interest) / 100;
+    let daysCoast = this.days * actualVal / 365;
+    this.totalDayCost = daysCoast.toFixed(2);
 
-    let sum = Number(bptPrice) + Number(price_premium) + Number(misc_expense) + Number(delivery)
-      + Number(_credit) + Number(daysCoast);
+    let sum1 = ((Number(bptPrice) + Number(misc_expense) + Number(delivery)) - Number(price_premium)) * daysCoast;
+    console.log('sum1',sum1);
 
-    this.Totalsum1 = sum - Number(_discount);
-    this.bptAndfinal1 = Number(this.Totalsum1) - Number(bptPrice);
+    let sum =((Number(bptPrice) + Number(misc_expense) + Number(delivery)) - Number(price_premium))
+      + sum1;
+    let toatal = sum;
+    
+   this.daysCostCount = sum1.toFixed(2);
+    let fixed = toatal - Number(_discount);
+    this.Totalsum1 = fixed.toFixed(2);
 
+    // let finalAmt = (Number(this.Totalsum1) - Number(this.productPrice.bpt_price))* 100 / Number(this.productPrice.bpt_price);
+    // this.bptAndfinal1 = finalAmt.toFixed(2);
+    
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.productId;

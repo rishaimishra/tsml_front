@@ -261,8 +261,8 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="">Kam's Remarks</label>
-                                                    <textarea [(ngModel)]="kamsRemarks" #remarks="ngModel"
-                                                        name="remarks_{{ formData.schedule_no }}"
+                                                    <textarea [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
+                                                        name="kamRemarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>
                                                     <small
@@ -270,6 +270,7 @@
                                                         class="inputValidation">Remarks is required</small>
                                                 </div>
                                             </div>
+                                           
                                             <div class="col-lg-12 mb-3">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
@@ -545,7 +546,7 @@
                             <tr>
                                 <td colspan="2">BPT Price</td>
                                 <td>
-                                    <div class="pp-bx">
+                                    <div class="pp-bx" id="bptId">
                                         {{productPrice?.bpt_price}}
                                     </div>
                                 </td>
@@ -556,7 +557,7 @@
                             <tr>
                                 <td colspan="2">Price Premium(L/F)</td>
                                 <td>
-                                    <div class="pp-bx">
+                                    <div class="pp-bx" id="pricePrId">
                                         {{productPrice?.price_premium}}
                                     </div>
                                 </td>
@@ -569,7 +570,7 @@
                             <tr>
                                 <td colspan="2">Misc Expense</td>
                                 <td>
-                                    <div class="pp-bx">
+                                    <div class="pp-bx" id="miscId">
                                         {{productPrice?.misc_expense}}
                                     </div>
                                 </td>
@@ -582,7 +583,7 @@
                             <tr>
                                 <td colspan="2">Delivery Cost</td>
                                 <td>
-                                    <div class="pp-bx">
+                                    <div class="pp-bx" id="delCost">
                                         {{productPrice?.delivery_cost}}
                                     </div>
                                 </td>
@@ -593,43 +594,45 @@
                                     </td>
                             </tr>
                             <tr>
+                                <td colspan="2">Interest Rate ( % )</td>
+                                <td>
+                                    <div class="pp-bx" id="intrId">
+                                        {{productPrice?.interest_rate }}
+                                    </div>
+                                </td>
+                                <td><input type="number"  formControlName="interest_rate"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="_interest{{schldId}}" value="{{productPrice?.interest_rate }}" readonly>
+                                        
+                                    </td>
+                            </tr>
+                            <tr>
                                 <td>Credit Cost For</td>
                                 <td>
                                     <select (change)="selectDay($event)"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150">
-                                        <option value="30">30 Days</option>
+                                        <option value="30" selected>30 Days</option>
                                         <option value="45">45 Days</option>
                                     </select>
                                 </td>
                                 <td>
                                     <div class="pp-bx">
-                                        <span *ngIf="days == 30">{{productPrice?.credit_cost_for30_days}}</span>
-                                        <span *ngIf="days == 45">{{productPrice?.credit_cost_for45_days}}</span>
+                                        <!-- <span *ngIf="days == 30">{{productPrice?.credit_cost_for30_days}}</span>
+                                        <span *ngIf="days == 45">{{productPrice?.credit_cost_for45_days}}</span> -->
+                                        <span>{{daysCostCount}}</span>
                                     </div>
                                 </td>
-                                <td><input type="number" formControlName="creditCoast" [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
+                                <td><input type="number" readonly formControlName="delivery_cost" [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                         class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="_credit{{schldId}}" placeholder="">
-                                        
-                                    </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Interest Rate</td>
-                                <td>
-                                    <div class="pp-bx">
-                                        {{productPrice?.interest_rate }} %
-                                    </div>
-                                </td>
-                                <td><input type="number"  formControlName="interest_rate"
-                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="_interest{{schldId}}" placeholder="5 %" readonly>
+                                        id="_credit{{schldId}}" value="{{daysCostCount}}" placeholder="">
+                                        <small class="addClass" *ngIf="credCost">Credit Cost not be less than Kam's Cost</small>
                                         
                                     </td>
                             </tr>
                             <tr>
                                 <td colspan="2">KAM Discount</td>
                                 <td>
-                                    <div class="pp-bx">
+                                    <div class="pp-bx" id="kamid">
                                         {{productPrice?.cam_discount}}
                                     </div>
                                 </td>
@@ -659,7 +662,7 @@
                                 </td>
                                 <td><input type="text" formControlName="finalAmt"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="_bptAndfinal{{schldId}}" value="{{bptAndfinal1}}" placeholder=""></td>
+                                        id="_bptAndfinal{{schldId}}" placeholder=""></td>
                             </tr>
                         </tbody>
                     </table>

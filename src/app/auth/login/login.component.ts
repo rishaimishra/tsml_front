@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.invalid) {
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
         if (res.success == true) {
-          // this._toster.success('Login Successfully', 'Welcome');
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -41,8 +40,15 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('tokenUrl',res.token);
           localStorage.setItem('USER_NAME',res.data.user_name);
           localStorage.setItem('USER_ID',res.data.user_id);
+          localStorage.setItem('USER_TYPE',res.data.user_type);
           this._spinner.hide();
-          this._router.navigate(['/']);
+          if(res.data['user_type'] == 'Kam') {
+            this._router.navigate(['/kam-dashboard']);
+            this._spinner.hide();
+          } else {
+            this._router.navigate(['/customer-dashboard']);
+            this._spinner.hide();
+          }
         } else {
           this._toster.error(res.success.message);
           this._spinner.hide();

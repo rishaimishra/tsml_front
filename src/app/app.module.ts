@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthIntercepto } from './service/auth.interceptor';
 import { DatepickerModule } from 'ng2-datepicker';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 
@@ -35,6 +36,7 @@ import { DatepickerModule } from 'ng2-datepicker';
     OthersModule,
     SharedModule,
     BrowserModule,
+    DashboardModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),

@@ -14,7 +14,7 @@ declare var $: any;
   styleUrls: ['./rfq-details.component.scss']
 })
 export class RfqDetailsComponent implements OnInit {
-
+  userType: boolean;
   public product_data: any = '';
   public show_data: boolean = false;
   public qty: Number = 1;
@@ -57,6 +57,13 @@ export class RfqDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this.userType = false;
+    } else {
+      this.userType = true;
+    }
+     this.userType
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.RFQ;
@@ -109,6 +116,7 @@ export class RfqDetailsComponent implements OnInit {
             remarks: '',
             kam_price: 12505,
             valid_till: '',
+            kamsRemarks: ''
           });
 
           //let i = this.selectedItem.length - 1;
@@ -327,6 +335,7 @@ export class RfqDetailsComponent implements OnInit {
       remarks: '',
       kam_price: 12505,
       valid_till: '',
+      kamsRemarks: ''
     });
     this.selectedItem[i]['schedule'] = this.quotation;
     console.log('this.selectedItem=', this.selectedItem);
@@ -391,5 +400,9 @@ export class RfqDetailsComponent implements OnInit {
             $("#to_date_"+i).attr("min",this.nxtDt);
     console.log('date',this.nxtDt); 
    
+  }
+
+  cancelprice() {
+    console.log('hi');
   }
 }

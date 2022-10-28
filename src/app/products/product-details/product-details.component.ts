@@ -111,6 +111,7 @@ export class ProductDetailsComponent implements OnInit {
             remarks: '',
             kam_price: 12505,
             valid_till: '',
+            kamsRemarks: ''
           });
 
           console.log('quotation=', this.quotation);
@@ -168,6 +169,7 @@ export class ProductDetailsComponent implements OnInit {
             remarks: '',
             kam_price: 12505,
             valid_till: '',
+            kamsRemarks: ''
           });
           console.log('this.quotation=', this.quotation);
           let quation_lenght = this.quotation.length - 1;
@@ -241,8 +243,8 @@ export class ProductDetailsComponent implements OnInit {
         this._toaster.error(res.result);
         this.spinner.hide();
       }
-      if (res.status == 'Token has Expired') {
-        this._toaster.error(res.status, 'Please login again');
+      if (res.status == 'Authorization Token not found') {
+        this._toaster.error('Please register to submit RFQ');
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
@@ -272,6 +274,7 @@ export class ProductDetailsComponent implements OnInit {
       remarks: '',
       kam_price: 12505,
       valid_till: '',
+      kamsRemarks: ''
     });
     this.selectedItem[i]['form_data'] = this.quotation;
     // console.log('this.selectedItem=', this.selectedItem);
