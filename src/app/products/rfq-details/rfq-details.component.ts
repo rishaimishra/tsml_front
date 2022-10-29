@@ -41,6 +41,7 @@ export class RfqDetailsComponent implements OnInit {
   submit: boolean = false;
   categoryid: any;
   showButtons:any;
+  messages:any;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -63,7 +64,7 @@ export class RfqDetailsComponent implements OnInit {
     } else {
       this.userType = true;
     }
-     this.userType
+    //  this.userType
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.RFQ;
@@ -401,8 +402,19 @@ export class RfqDetailsComponent implements OnInit {
     console.log('date',this.nxtDt); 
    
   }
-
+  messageBox(shcdlNo:any) {
+    this.spinner.show();
+    let apiUrl = '/user/view_remarks/' + shcdlNo;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      if (res.message == 'success') {
+        this.spinner.hide();
+        this.messages = res.result;
+      }
+    })
+  }
   cancelprice() {
-    console.log('hi');
+    $("#viewMoreMessage").hide();
+    $('body').removeClass('modal-open');
+    $(".modal-backdrop").removeClass("modal-backdrop show");
   }
 }

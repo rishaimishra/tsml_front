@@ -30,9 +30,6 @@ export class AuthService {
   isLoggedIn() {
     return localStorage.getItem('tokenUrl') != null;
   };
-  // isLoggedIn() {
-  //   return !!localStorage.getItem('tokenUrl') != null;
-  // };
 
   getToken() {
     return localStorage.getItem('tokenUrl') || '';
@@ -43,6 +40,11 @@ export class AuthService {
 
   verifyOtp(requestData: verifyOptRequest): Observable<verifyOtpResponse> {
     return this._http.post<verifyOtpResponse>(`${environment.apiEndpointBase}/${this.VERIFY_OTP_URL}`, requestData);
-  }
+  };
 
+  // http://localhost/TSML/api/password-email
+
+  resetPassByEmail(data: any) {
+    return this._http.post('http://localhost/TSML/api/password-email', data);
+  };
 }

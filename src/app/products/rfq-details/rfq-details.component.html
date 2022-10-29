@@ -230,7 +230,7 @@
                         </div>
                       </div>
                       <div class="col-2">
-                        <span class="text-primary pointerTab" data-toggle="modal" data-target="#viewMoreMessage">View
+                        <span class="text-primary pointerTab" (click)="messageBox(formData.schedule_no)" data-toggle="modal" data-target="#viewMoreMessage">View
                           More..</span>
                       </div>
                     </div>
@@ -385,37 +385,21 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title text-uppercase">Remarks</h4>
-                <hr/>
+                <div class="">
+                  <button type="button" class="btn bt-sm btn-danger" (click)="cancelprice()"><i
+                      class="fa fa-times"></i></button>
+                </div>
+
               </div>
               <!-- Modal body -->
               <div class="modal-body row">
-                <div class="col-6">
-                  <h6>customer remarks</h6>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                </div>
-                <div class="col-6">
-                  <h6>Kam's remarks</h6>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
-                <p>hello</p>
+                <div class="col-6" *ngFor="let remark of messages">
+                <small>{{remark.remarks}} </small>
+                <small>{{remark.created_at}}<br></small>
+                <small>{{remark.kamsRemarks}}</small>
+
                 </div>
                 
-                <div class="add-btn-sec pt-2 pb-2">
-                  <button type="button" class="btn btn-danger text-right" (click)="cancelprice()"><i
-                      class="fa fa-times"></i> Cancel</button>
-                </div>
               </div>
               <!--/-->
             </div>

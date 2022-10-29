@@ -70,4 +70,5 @@ export class ProductsService {
   getPiceValue() {
     return this._http.get(this.BesUrl + '/user/get-threshold-price');
   };
+
 }

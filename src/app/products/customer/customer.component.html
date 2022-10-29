@@ -43,7 +43,7 @@
                                             disabled="" value="{{productData.quantity}}" />
                                     </div>
                                     <div class="acc-pro-del pointerTab">
-                                        <button class="del-btn btn-danger"
+                                        <button class="del-btn btn-danger" [disabled]="userType"
                                             (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
                                             data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
                                     </div>
@@ -55,7 +55,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Sizes Offered</label>
-                                                    <select (change)="sizeOfferd($event)" #offerInput="ngModel"
+                                                    <select (change)="sizeOfferd($event)" [disabled]="userType" #offerInput="ngModel"
                                                         [(ngModel)]="formData.pro_size"
                                                         name="pro_size_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -73,7 +73,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Quantity</label>
-                                                    <input #qtyInput="ngModel" type="number"
+                                                    <input #qtyInput="ngModel" [disabled]="userType" type="number"
                                                         (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
                                                         name="quantity_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" id="" placeholder=""
@@ -89,7 +89,7 @@
                                                             Payment)</small></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="number" #priceInput="ngModel"
+                                                        <input type="number" [disabled]="userType" #priceInput="ngModel"
                                                             [(ngModel)]="formData.expected_price"
                                                             name="expected_price{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" id="" placeholder=""
@@ -104,7 +104,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Delivery Method</label>
-                                                    <select (change)="deliveryMethod($event)" #dlvrMethodInput="ngModel"
+                                                    <select (change)="deliveryMethod($event)" [disabled]="userType" #dlvrMethodInput="ngModel"
                                                         [(ngModel)]="formData.delivery"
                                                         name="delivery_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -120,7 +120,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Pickup From</label>
-                                                    <select (change)="pickupFrom($event)" #pickUpfrom="ngModel"
+                                                    <select (change)="pickupFrom($event)" [disabled]="userType" #pickUpfrom="ngModel"
                                                         [(ngModel)]="formData.plant"
                                                         name="plant_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -137,7 +137,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Location</label>
-                                                    <select class="form-control form-control-sm" #location="ngModel"
+                                                    <select class="form-control form-control-sm" [disabled]="userType" #location="ngModel"
                                                         [(ngModel)]="formData.location"
                                                         name="location_{{ formData.schedule_no }}" required>
                                                         <option value="">Select location</option>
@@ -156,7 +156,7 @@
                                                     <div class="bil-add-new-add">
                                                         <label for="">Bill To</label>
                                                     </div>
-                                                    <select class="form-control form-control-sm" #billTo="ngModel"
+                                                    <select class="form-control form-control-sm" [disabled]="userType" #billTo="ngModel"
                                                         [(ngModel)]="formData.bill_to"
                                                         name="bill_to_{{ formData.schedule_no }}" required>
                                                         <option value="">Bill to</option>
@@ -174,7 +174,7 @@
                                                     <div class="bil-add-new-add">
                                                         <label for="">Ship To</label>
                                                     </div>
-                                                    <select class="form-control form-control-sm" #shipTo="ngModel"
+                                                    <select class="form-control form-control-sm" [disabled]="userType" #shipTo="ngModel"
                                                         [(ngModel)]="formData.ship_to"
                                                         name="ship_to_{{ formData.schedule_no }}" required>
                                                         <option value="">Ship to</option>
@@ -192,7 +192,7 @@
                                                     <label for="">Proposed Delivery Date</label>
                                                     <div class="date-rang">
                                                         <div class="position-relative">
-                                                            <input type="date" [(ngModel)]="formData.from_date"
+                                                            <input type="date" [disabled]="userType" [(ngModel)]="formData.from_date"
                                                                 #dlvrDate="ngModel"
                                                                 (change)="setNxtData($event, formData.schedule_no)"
                                                                 min="{{date}}"
@@ -205,7 +205,7 @@
                                                             <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                                                         </div>
                                                         <div class="position-relative">
-                                                            <input type="date" [(ngModel)]="formData.to_date"
+                                                            <input type="date" [disabled]="userType" [(ngModel)]="formData.to_date"
                                                                 #dlvrDateTo="ngModel"
                                                                 id="to_date_{{formData.schedule_no}}"
                                                                 name="to_date_{{ formData.schedule_no }}"
@@ -228,7 +228,7 @@
                                                                 class="fa fa-info-circle"></i></span></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="text" [(ngModel)]="formData.kam_price" class="form-control form-control-sm kamClass" id="camsPrice{{formData.schedule_no}}"
+                                                        <input type="text" [disabled]="userType" [(ngModel)]="formData.kam_price" class="form-control form-control-sm kamClass" id="camsPrice{{formData.schedule_no}}"
                                                             placeholder="0">
                                                     </div>
                                                 </div>
@@ -240,7 +240,7 @@
                                                         <!-- <input type="date" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker"
                                                             placeholder="To" value=""> -->
-                                                            <input type="datetime-local" [(ngModel)]="formData.valid_till" class="form-control form-control-sm datepicker">
+                                                            <input type="datetime-local" [disabled]="userType" [(ngModel)]="formData.valid_till" class="form-control form-control-sm datepicker">
                                                     </div>
                                                 </div>
                                             </div>
@@ -261,7 +261,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="">Kam's Remarks</label>
-                                                    <textarea [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
+                                                    <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                                                         name="kamRemarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>
@@ -270,24 +270,27 @@
                                                         class="inputValidation">Remarks is required</small>
                                                 </div>
                                             </div>
-                                           
+                                            <div class="col-2">
+                                                <span class="text-primary pointerTab" (click)="messageBox(formData.schedule_no)" data-toggle="modal" data-target="#viewMoreMessage">View
+                                                  More..</span>
+                                              </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio" class="form-check-input"
+                                                        <input type="radio" [disabled]="userType" class="form-check-input"
                                                             id="inlineCheckbox0" (change)="getRequote($event)"
                                                             value="{{formData?.schedule_no}}"
                                                             name="fav_language_{{formData?.id}}">
                                                         <label for="inlineCheckbox0">Requote </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio" class="form-check-input"
+                                                        <input type="radio" [disabled]="userType" class="form-check-input"
                                                             id="inlineCheckbox1" (click)="getStatus(formData?.schedule_no,1)"
                                                             name="fav_language_{{formData?.id}}" value="Accept">
                                                         <label for="inlineCheckbox0">Accept </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio" class="form-check-input"
+                                                        <input type="radio" [disabled]="userType" class="form-check-input"
                                                             id="inlineCheckbox2" (click)="getStatus(formData?.schedule_no,2)"
                                                             name="fav_language_{{formData?.id}}" value="Reject">
                                                         <label for="inlineCheckbox2">Reject </label>
@@ -513,6 +516,31 @@
                     </div>
                     </div>
                  </div>
+                 <div class="modal" id="viewMoreMessage">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title text-uppercase">Remarks</h4>
+                          <div class="">
+                            <button type="button" class="btn bt-sm btn-danger" (click)="cancelprice2()"><i
+                                class="fa fa-times"></i></button>
+                          </div>
+          
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body row">
+                          <div class="col-6" *ngFor="let remark of messages">
+                          <small>{{remark.remarks}} </small>
+                          <small>{{remark.created_at}}<br></small>
+                          <small>{{remark.kamsRemarks}}</small>
+          
+                          </div>
+                          
+                        </div>
+                        <!--/-->
+                      </div>
+                    </div>
+                  </div>
             </div>
         </section>
     </div>
@@ -624,7 +652,7 @@
                                 </td>
                                 <td><input type="number" readonly formControlName="delivery_cost" [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                         class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="_credit{{schldId}}" value="{{daysCostCount}}" placeholder="">
+                                        id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
                                         <small class="addClass" *ngIf="credCost">Credit Cost not be less than Kam's Cost</small>
                                         
                                     </td>

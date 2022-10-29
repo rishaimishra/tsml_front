@@ -23,6 +23,7 @@ export class CustomerComponent implements OnInit {
   public delivery_date: any = '';
   public show_error: boolean = false;
   public error_message: String = '';
+  userType: boolean;
   user_Id: any;
   addItems: boolean = false;
   title: any = '';
@@ -75,6 +76,8 @@ export class CustomerComponent implements OnInit {
   daysCost: any;
   totalDayCost:any;
   daysCostCount:any;
+  daysCostCountCustomer: any;
+  messages:any;
 
 
   constructor(
@@ -90,6 +93,13 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     $(window).scrollTop(0);
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this.userType = false;
+    } else {
+      this.userType = true;
+    }
+    //  this.userType
     // $(function () {
     //   $('#datetimepicker1').datetimepicker();
     // });
@@ -295,14 +305,7 @@ export class CustomerComponent implements OnInit {
       };
       rfqFormArry.push(reqData);
 
-      // if (rfqFormArry[i]['quote_schedules'].quantity == null) {
-      //   this._toaster.error('Quantity can not be empty !');
-      //   this.submit = true;
-      //   this.spinner.hide();
-      //   return;
-      // }
-    }
-    console.log(rfqFormArry);
+    };
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
@@ -403,27 +406,11 @@ export class CustomerComponent implements OnInit {
   };
   selectDay(event: any) {
     this.days = event.target.value;
-
-    let bptPrice = $('#bptId').html();
-    let pricePrId = $('#pricePrId').html();
-    let miscId = $('#miscId').html();
-    let delCost = $('#delCost').html();
-    let intrId = $('#intrId').html();
-    let kamid = $('#kamid').html();
-
-    let actualVal = Number(intrId) / 100;
-    let daysCoast = this.days * actualVal / 365;
-
-    this.totalDayCost = daysCoast.toFixed(2);
-    console.log( this.days);
-
-    let sum = Number(bptPrice) + Number(pricePrId) + Number(miscId) + Number(delCost)
-      + Number(daysCoast);
-    let toatal = daysCoast * sum;
-    let fixed = toatal - Number(kamid);
-    this.Totalsum = fixed.toFixed(2)
-    let finalAmt = Number(this.Totalsum) - Number(bptPrice);
-    this.bptAndfinal = finalAmt.toFixed(2);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+      const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
+      const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
+      this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
+      this.Totalsum = this.daysCostCount - Number(this.productPrice.cam_discount);
   };
 
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
@@ -442,24 +429,11 @@ export class CustomerComponent implements OnInit {
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
-
-      let actualVal = Number(this.productPrice.interest_rate) / 100;
-      let daysCoast = this.days * actualVal / 365;
-      this.totalDayCost = daysCoast.toFixed(2);
-
-      let sum1 = (Number(this.productPrice.bpt_price) + Number(this.productPrice.price_premium) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost)
-      )* daysCoast;
- 
-      let sum = Number(this.productPrice.bpt_price) + Number(this.productPrice.price_premium) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost)
-        + sum1;
-      let toatal = sum;
-      
-     this.daysCostCount = sum1.toFixed(2);
-      let fixed = toatal - Number(this.productPrice.cam_discount);
-      this.Totalsum = fixed.toFixed(2);
-
-      let finalAmt = (Number(this.Totalsum) - Number(this.productPrice.bpt_price))* 100 / Number(this.productPrice.bpt_price);
-      this.bptAndfinal = finalAmt.toFixed(2);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+      const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
+      const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
+      this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
+      this.Totalsum = (this.daysCostCount - Number(this.productPrice.cam_discount)).toFixed(2);
     })
   };
 
@@ -513,36 +487,12 @@ export class CustomerComponent implements OnInit {
       this.kamDiscount = false;
     };
     this.priceLimit = priceValidator;
+    const total = (bptPrice + misc_expense + delivery) - price_premium;
+    const hanrateIntrest = Number(_interest) / 100;
+    const daysCount = (this.days * hanrateIntrest) / 365;
+    this.daysCostCountCustomer = (total * daysCount).toFixed(2);
+    this.Totalsum1 = (this.daysCostCountCustomer - _discount).toFixed(2);
 
-    // let actualVal = Number(_interest) / 100;
-    // let daysCoast = this.days * actualVal / 365;
-    // this.totalDayCost = daysCoast.toFixed(2);
-    // let sum = Number(bptPrice) - Number(price_premium) + Number(misc_expense) + Number(delivery)
-    // + Number(daysCoast);
-    // let toatal = daysCoast * sum;
-    // let fixed = toatal - Number(_discount);
-    // this.Totalsum1 = fixed.toFixed(2)
-    // let finalAmt = Number(this.Totalsum1) - Number(bptPrice);
-    // this.bptAndfinal1 = finalAmt.toFixed(2);
-    // console.log('sum',this.Totalsum1);
-    // 
-    let actualVal = Number(_interest) / 100;
-    let daysCoast = this.days * actualVal / 365;
-    this.totalDayCost = daysCoast.toFixed(2);
-
-    let sum1 = ((Number(bptPrice) + Number(misc_expense) + Number(delivery)) - Number(price_premium)) * daysCoast;
-    console.log('sum1',sum1);
-
-    let sum =((Number(bptPrice) + Number(misc_expense) + Number(delivery)) - Number(price_premium))
-      + sum1;
-    let toatal = sum;
-    
-   this.daysCostCount = sum1.toFixed(2);
-    let fixed = toatal - Number(_discount);
-    this.Totalsum1 = fixed.toFixed(2);
-
-    // let finalAmt = (Number(this.Totalsum1) - Number(this.productPrice.bpt_price))* 100 / Number(this.productPrice.bpt_price);
-    // this.bptAndfinal1 = finalAmt.toFixed(2);
     
   };
   getNegotiationHistory() {
@@ -564,11 +514,26 @@ export class CustomerComponent implements OnInit {
     $(".kamClass").keypress();
     this.selectedItem[firstIndx].schedule[lastIndx].kam_price = this.Totalsum1;
   };
-
+  messageBox(shcdlNo:any) {
+    this.spinner.show();
+    let apiUrl = '/user/view_remarks/' + shcdlNo;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      if (res.message == 'success') {
+        this.spinner.hide();
+        this.messages = res.result;
+      }
+    })
+  }
   cancelprice() {
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
 
+  };
+
+  cancelprice2() {
+    $("#addPrice").hide();
+    $('body').removeClass('modal-open');
+    $(".modal-backdrop").removeClass("modal-backdrop show");
   }
 }
