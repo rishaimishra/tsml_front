@@ -8,3 +8,24 @@
     color: #dc3545!important;
     font-size: x-small;
 }
+.remark-bdy {
+    border: 1px solid #1e5abe;
+    margin: 10px 0px 0px 0px;
+    padding: 5px;
+    border-radius: 0px 20px 0px;
+    box-shadow: 5px 6px #75a6f9;
+
+    h5 {
+        margin: 0;
+    }
+    p{
+        margin-bottom: 2px;
+    }
+    p .date {
+        float: right;
+    margin-top: 4px;
+    margin-bottom: 0;
+    font-style: oblique;
+    font-weight: 500;
+    }
+}

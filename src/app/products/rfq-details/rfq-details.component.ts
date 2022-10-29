@@ -41,7 +41,7 @@ export class RfqDetailsComponent implements OnInit {
   submit: boolean = false;
   categoryid: any;
   showButtons:any;
-  messages:any;
+  messages:any = [];
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -55,7 +55,8 @@ export class RfqDetailsComponent implements OnInit {
     private _product: ProductsService,
     private _toaster: ToastrService,
     private _state: StateCityService
-  ) { }
+  ) {
+   }
 
   ngOnInit(): void {
     let userRol = localStorage.getItem('USER_TYPE');
@@ -413,6 +414,7 @@ export class RfqDetailsComponent implements OnInit {
     })
   }
   cancelprice() {
+    this.messages = [];
     $("#viewMoreMessage").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
