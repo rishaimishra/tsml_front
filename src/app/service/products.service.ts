@@ -70,5 +70,8 @@ export class ProductsService {
   getPiceValue() {
     return this._http.get(this.BesUrl + '/user/get-threshold-price');
   };
+  getPoItems() {
+    return this._http.get(this.BesUrl + '/user/get_quote_po_by_id');
+  };
 
 }

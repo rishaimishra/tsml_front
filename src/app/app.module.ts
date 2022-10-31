@@ -18,6 +18,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthIntercepto } from './service/auth.interceptor';
 import { DatepickerModule } from 'ng2-datepicker';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PoModule } from './po/po.module';
 
 
 
@@ -40,7 +41,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     BrowserAnimationsModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
-    DatepickerModule
+    DatepickerModule,
+    PoModule
   ],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

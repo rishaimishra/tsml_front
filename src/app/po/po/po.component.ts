@@ -1,21 +1,22 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
-import { DecimalPipe, formatNumber } from '@angular/common';
-import Swal from 'sweetalert2';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
+import Swal from 'sweetalert2';
+import * as uuid from 'uuid';
 declare var $: any;
 
-
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  selector: 'app-po',
+  templateUrl: './po.component.html',
+  styleUrls: ['./po.component.scss']
 })
-export class CustomerComponent implements OnInit {
+export class PoComponent implements OnInit {
+
+  userType: boolean;
   public product_data: any = '';
   public show_data: boolean = false;
   public qty: Number = 1;
@@ -23,9 +24,8 @@ export class CustomerComponent implements OnInit {
   public delivery_date: any = '';
   public show_error: boolean = false;
   public error_message: String = '';
-  userType: boolean;
-  user_Id: any;
   addItems: boolean = false;
+  user_Id: any;
   title: any = '';
   productId: any;
   selectedItem: any = [];
@@ -43,29 +43,26 @@ export class CustomerComponent implements OnInit {
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
-  proPrices: any = [];
-  requoteArr: any = [];
-  statusArr: any = [];
+  showButtons: any;
+  messages: any = [];
+  productPrice: any;
+  catId: any;
+  category: any;
+  newDate: any;
+  priceVal: any;
+  priceLimit: any = [];
   days: any = 30;
   Totalsum: any;
   bptAndfinal: any;
   priceForm: FormGroup;
   finalResult: any = 0;
   Totalsum1: any;
-  bptAndfinal1: any;
-  productPrice: any;
-  schldId: any;
   firstIndex: any;
   lastIndex: any;
-  negotiationHistory: any;
-  priceVal: any;
-  priceLimit: any = [];
-  showButtons: any;
-  kamsRemarks: any = '';
 
-  public quotation: any[] = [];
-  public quotation_value: any[] = [];
-  totalQty: any;
+  bptAndfinal1: any;
+  schldId: any;
+
   editProductId: any;
   submitted: boolean = false;
   premiumPrice: boolean = false;
@@ -77,8 +74,12 @@ export class CustomerComponent implements OnInit {
   totalDayCost:any;
   daysCostCount:any;
   daysCostCountCustomer: any;
-  messages:any;
   poRedirectArr:any = [];
+  showUpload: boolean = false;
+
+  public quotation: any[] = [];
+  public quotation_value: any[] = [];
+  totalQty: any;
 
 
   constructor(
@@ -88,32 +89,28 @@ export class CustomerComponent implements OnInit {
     private _router: Router,
     private _product: ProductsService,
     private _toaster: ToastrService,
-    private _fb: FormBuilder,
-    private _state: StateCityService
-  ) { }
+    private _state: StateCityService,
+    private _fb: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
-    $(window).scrollTop(0);
     let userRol = localStorage.getItem('USER_TYPE');
-    if(userRol == 'Kam') {
+    if (userRol == 'Kam') {
       this.userType = false;
     } else {
       this.userType = true;
     }
     //  this.userType
-    // $(function () {
-    //   $('#datetimepicker1').datetimepicker();
-    // });
-    // $('#datetimepicker').data("DateTimePicker").FUNCTION();
     this.user_Id = localStorage.getItem('USER_ID');
-    this._route.params.subscribe(res => {
-      if (res.id) {
-        this.productId = res.id;
-      }
-    });
     this.states = this._state.getState();
-    this.detailByRfq();
-    this.getNegotiationHistory();
+    this._route.params.subscribe((res) => {
+      console.log(res);
+      this.productId = res.id;
+      this.categoryid = res.categoryId;
+      this.detailByRfq();
+    });
+
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
       misc_expense: ['', Validators.required],
@@ -127,10 +124,11 @@ export class CustomerComponent implements OnInit {
     })
 
     this.pricaValue();
-  }
+  };
+
   get f(): { [key: string]: AbstractControl } {
     return this.priceForm.controls;
-  }
+  };
   getTotalQuantity(cat_id: any) {
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -141,42 +139,78 @@ export class CustomerComponent implements OnInit {
       this.totalQty = qty;
     }
     $("#qty_" + cat_id).val(this.totalQty);
-  }
-
+  };
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_quote_by_id' + '/' + this.productId;
-    // let url = '/user/get_quote_sche_by_id/' + this.productId;
+    let url = '/user/get_quote_po_by_id' + '/' + this.productId;
     this.productService.getMethod(url).subscribe((res: any) => {
-      console.log('resss', res);
       this.spinner.hide();
-      if (res.message == 'success') {
+      if (res.status == 1) {
         this.editProductId = res.result[0]['product_id'];
         this.product_data = res.result;
-
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
+        this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
         }
+        // const uniqueID = uuid.v4();
+        const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+        this.quotation.push({
+          schedule_no: scheduleNo,
+          pro_size: '',
+          quantity: '',
+          expected_price: '',
+          delivery: '',
+          plant: '',
+          location: '',
+          bill_to: '',
+          ship_to: '',
+          from_date: '',
+          to_date: '',
+          remarks: '',
+          kam_price: 12505,
+          valid_till: '',
+          kamsRemarks: ''
+        });
+
+        this.getCategory();
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
         this._router.navigate(['/login']);
-      }
-      if (res.result.length < 1) {
-        this._router.navigate(['/rfq-list']);
       }
       else {
         this.product_data = '';
       }
 
     })
-  }
+  };
 
+  getCategory() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    this.newDate = dd + '-' + mm + '-' + yyyy;
+
+    this.spinner.show();
+    let sizeFilter = {
+      product_id: this.catId,
+    }
+    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+      if (res.success == true) {
+        this.category = res.getCategory;
+        this.spinner.hide();
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  };
   deleteRfqById(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -191,14 +225,16 @@ export class CustomerComponent implements OnInit {
         let apiKey = '/user/delete_quote_by_id';
         let apiUrl = apiKey + '/' + id;
         this.productService.getMethod(apiUrl).subscribe((res: any) => {
-          console.log(res)
           if (res.status == 1 && res.result == 'Quote deleted') {
             Swal.fire(
               'Deleted!',
               'Your file has been deleted.',
               'success'
             )
+            this.spinner.hide();
             this.detailByRfq();
+            // this._router.navigate(['/rfq-list']);
+            
           } else {
             this._toaster.error(res.result);
             this.spinner.hide();
@@ -206,136 +242,88 @@ export class CustomerComponent implements OnInit {
         })
       }
     })
-  }
+  };
 
   goToCustomerPage(id: any) {
     this._router.navigate(['/customer', id]);
-  }
+  };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
-  }
+  };
   sizeOffered2(event: any) {
     console.log(event.target.value);
-  }
-
-  sizeOfferd(event: any) {
-    this.proSize1 = event.target.value;
-    console.log(this.proSize1);
-  }
-  deliveryMethod(event: any) {
-    console.log(event.target.value);
-  }
-  pickupFrom(event: any) {
-    console.log(event.target.value);
-  }
-  deliveryMethod2(event: any) {
-    console.log(event.target.value);
-  }
-  pickupfrome2(event: any) {
-    console.log(event.target.value);
-  }
-  selectlocation2(event: any) {
-    console.log(event.target.value);
-  }
-  billTo2(event: any) {
-    console.log(event.target.value);
-  }
-
-  getRequote(event: any) {
-    let reqParam = {
-      "id": event.target.value,
-      "status": 'Req'
-    };
-    let redirectSt = event.target.value.toString();
-    // const index: number = this.poRedirectArr.indexOf(event.target.value);
-    let indxId = this.poRedirectArr.findIndex((item: any) => item.id == event.target.value);
-    if (indxId !== -1) {
-      this.poRedirectArr.splice(indxId, 1);
-    }
-    // if(this.poRedirectArr.hasOwnProperty(redirectSt) == true) {
-    //   this.poRedirectArr.splice(redirectSt, 1);
-    // }
-    this.poRedirectArr.push(reqParam);
-
-    console.log('redirectSt',redirectSt, this.poRedirectArr);
-    let indx = this.statusArr.findIndex((item: any) => item.id == event.target.value);
-    if (indx !== -1) {
-      this.statusArr.splice(indx, 1);
-    }
-
-    let checked = event.target.checked;
-    if (checked == true) {
-      this.requoteArr.push(event.target.value);
-    }
-
   };
 
-  getStatus(id: any, st: number) {
+  selectItems(event: any) {
+    let categoryId = event.target.value;
+    this.categoryid = event.target.value;
+    this.spinner.show();
+    let url = '/product-details/' + this.editProductId + '/' + categoryId;
+    this.productService.getMethod(url).subscribe(
+      (res: any) => {
+        this.spinner.hide();
+        console.log('addItem', res);
+        //return;
+        if (res.status == 1) {
+          this.product_data = res.result;
+          this.selectedItem.push(this.product_data);
+          //this.selectedItem=this.product_data;
+          console.log('data', this.selectedItem);
+          // return;
+          this.show_data = true;
+          // const uniqueID = uuid.v4();
+          const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+          this.quotation = [];
+          this.quotation.push({
+            schedule_no: scheduleNo,
+            pro_size: '',
+            quantity: '',
+            expected_price: '',
+            delivery: '',
+            plant: '',
+            location: '',
+            bill_to: '',
+            ship_to: '',
+            from_date: '',
+            to_date: '',
+            remarks: '',
+            kam_price: 12505,
+            valid_till: '',
+            kamsRemarks: ''
+          });
 
-    let indxId = this.poRedirectArr.findIndex((item: any) => item.id == id);
-    if (indxId !== -1) {
-      this.poRedirectArr.splice(indxId, 1);
-    }
+          // let quation_lenght = this.quotation.length - 1;
+          let i = this.selectedItem.length - 1;
 
-    const numbersArr = this.requoteArr.map(Number);
-    const index: number = numbersArr.indexOf(id);
-    if (index !== -1) {
-      this.requoteArr.splice(index, 1);
-    }
-
-    if (st === 1) {
-      let reqStParam = {
-        "id": id,
-        "status": 'Acpt'
-      };
-      this.poRedirectArr.push(reqStParam);
-    } else {
-      let reqStParam = {
-        "id": id,
-        "status": 'Rej'
-      };
-      this.poRedirectArr.push(reqStParam);
-    };
-
-    let reqParam = {
-      "id": id,
-      "status": st
-    };
-    
-    let indx = this.statusArr.findIndex((item: any) => item.id == id);
-    if (indx !== -1) {
-
-      this.statusArr.splice(indx, 1);
-      this.statusArr.push(reqParam);
-    }
-    else {
-      this.statusArr.push(reqParam);
-    }
-    // console.log('reqParam', this.statusArr);
+          this.selectedItem[i]['schedule'] = this.quotation;
+          console.log('this.selectedItem=', this.selectedItem);
+          //this.final_form_data();
+        } else {
+          this.product_data = '';
+        }
+      }
+    );
+  };
+  sizeOfferd(event: any) {
+    this.proSize1 = event.target.value;
   };
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
       console.log('value', res);
       this.priceVal = res.result;
     });
-  }
+  };
+
   submitRfq() {
     this.submit = true;
-    let rediectStatus = [];
-    let countArr = [];
-    // this.spinner.show();
+    this.spinner.show();
     let rfqFormArry: any = [];
-    // console.log(this.poRedirectArr);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
-      // countArr.push(form_data_array);
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
-        // console.log(form_data_array[i]['schedule_no']);
-        countArr.push(form_data_array[i]['schedule_no']);
       }
-      
       let reqData = {
         rfq_number: this.productId,
         product_id: this.editProductId,
@@ -343,52 +331,18 @@ export class CustomerComponent implements OnInit {
         quantity: qty,
         quote_schedules: form_data_array,
       };
-      rfqFormArry.push(reqData);
-      
-      
-    };
-    this.poRedirectArr.forEach(element => {
-      rediectStatus.push(element.status);
 
-    });
-    // console.log(rediectStatus.length, countArr.length, rediectStatus.includes('Req'));
+      rfqFormArry.push(reqData);
+    }
+    console.log('rfqFormArry=', rfqFormArry);
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
-      console.log(res);
       if (res.message == 'success') {
         this.spinner.hide();
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Updated successully',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        // status update and reqoute
-        if (this.requoteArr.length > 0) {
-          this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-            if (res.message == 'status updated') {
-              this.spinner.hide();
-              // this._toaster.success(res.result);
-            } else {
-              this._toaster.error(res.message);
-            }
-          })
-        }
-        if (this.statusArr.length > 0) {
-          this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
-            if (res.message == 'status updated') {
-              // this._toaster.success(res.message);
-              this.spinner.hide();
-            }
-            else {
-              this._toaster.error(res.message);
-            }
-
-          })
-        }
+        this._toaster.success(res.result);
+        this._router.navigate(['/po-list', this.productId]);
       }
-      if (res.message == 'error' || res.status == 0) {
+      if (res.message != 'success') {
         this._toaster.error(res.message);
         this.spinner.hide();
       }
@@ -397,19 +351,51 @@ export class CustomerComponent implements OnInit {
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
-      this.detailByRfq();
+      else {
 
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
+        this.spinner.hide();
+      }
     });
+  };
 
-    if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      // const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
-      // let po_id = val;
-      this._router.navigate(['/po',this.productId]);
+  addItem(i: any) {
+    // const uniqueID = uuid.v4();
+    const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+    this.quotation = this.selectedItem[i]['schedule'];
+    this.quotation.push({
+      schedule_no: scheduleNo,
+      pro_size: '',
+      quantity: '',
+      expected_price: '',
+      delivery: '',
+      plant: '',
+      location: '',
+      bill_to: '',
+      ship_to: '',
+      from_date: '',
+      to_date: '',
+      remarks: '',
+      kam_price: 12505,
+      valid_till: '',
+      kamsRemarks: ''
+    });
+    this.selectedItem[i]['schedule'] = this.quotation;
+    console.log('this.selectedItem=', this.selectedItem);
+    this.final_form_data();
+  };
+  final_form_data() {
+    this.quotation_value = [];
+    // console.log('this.selectedItem final fn=', this.selectedItem);
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data = this.selectedItem[i]['schedule'];
+
+      for (let k = 0; k < form_data.length; k++) {
+        this.quotation_value.push(form_data[k]);
+      }
+      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
     }
-  }
+    console.log('this.quotation_value=', this.quotation_value);
+  };
 
   date: any;
   setFromData() {
@@ -463,7 +449,6 @@ export class CustomerComponent implements OnInit {
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
       this.Totalsum = this.daysCostCount - Number(this.productPrice.cam_discount);
   };
-
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
@@ -480,19 +465,14 @@ export class CustomerComponent implements OnInit {
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
-      Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
-
+      console.log('this.productPrice',this.productPrice);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-      console.log(this.daysCostCount);
-  
-      this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+      this.Totalsum = (this.daysCostCount - Number(this.productPrice.cam_discount)).toFixed(2);
     })
   };
-
-
   calculatePrice(id: any) {
     let cam_discount = this.priceVal.cam_discount;
     let delivery_cost = this.priceVal.delivery_cost;
@@ -509,8 +489,6 @@ export class CustomerComponent implements OnInit {
     let _interest = Number($("#_interest" + id).val());
     let _discount = Number($("#_discount" + id).val());
     let _total = Number($("#_total" + id).val());
-
-    console.log();
 
     let priceValidator = [];
     if (price_premium < pricePremium && price_premium != 0) {
@@ -545,21 +523,12 @@ export class CustomerComponent implements OnInit {
     };
     this.priceLimit = priceValidator;
     const total = (bptPrice + misc_expense + delivery) - price_premium;
-
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
+    this.Totalsum1 = (this.daysCostCountCustomer - _discount).toFixed(2);
 
-    // this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
-    this.Totalsum1 = (Number(total) + this.daysCostCountCustomer - _discount).toFixed(2);
-    console.log('Hello',this.Totalsum1);
     
-  };
-  getNegotiationHistory() {
-    let apiUrl = '/user/quotes_history/' + this.productId;
-    this._product.getMethod(apiUrl).subscribe((res: any) => {
-      this.negotiationHistory = res.result;
-    })
   };
 
   priceSave(id: any, firstIndx: any, lastIndx: any) {
@@ -585,15 +554,12 @@ export class CustomerComponent implements OnInit {
     })
   }
   cancelprice() {
+    this.messages = [];
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
-
-  };
-
-  cancelprice2() {
-    $("#addPrice").hide();
-    $('body').removeClass('modal-open');
-    $(".modal-backdrop").removeClass("modal-backdrop show");
+  }
+  selectUpload() {
+    this.showUpload = true;
   }
 }

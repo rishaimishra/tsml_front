@@ -284,7 +284,7 @@
                                             <div class="col-lg-12 mb-3">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio" [disabled]="userType"
+                                                        <input type="radio"
                                                             class="form-check-input" id="inlineCheckbox0"
                                                             (change)="getRequote($event)"
                                                             value="{{formData?.schedule_no}}"
@@ -292,14 +292,14 @@
                                                         <label for="inlineCheckbox0">Requote </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio" [disabled]="userType"
+                                                        <input type="radio"
                                                             class="form-check-input" id="inlineCheckbox1"
                                                             (click)="getStatus(formData?.schedule_no,1)"
                                                             name="fav_language_{{formData?.id}}" value="Accept">
                                                         <label for="inlineCheckbox0">Accept </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio" [disabled]="userType"
+                                                        <input type="radio"
                                                             class="form-check-input" id="inlineCheckbox2"
                                                             (click)="getStatus(formData?.schedule_no,2)"
                                                             name="fav_language_{{formData?.id}}" value="Reject">
@@ -408,7 +408,7 @@
                                                                             class="fa fa-plus-circle"></i> Add New
                                                                         Address</a></label>
                                                             </div>
-                                                            <select (change)="shipTo2($event)"
+                                                            <select
                                                                 class="form-control form-control-sm">
                                                                 <option>Select</option>
                                                                 <option value="{{ state?.name }}"

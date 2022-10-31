@@ -45,6 +45,6 @@ export class AuthService {
   // http://localhost/TSML/api/password-email
 
   resetPassByEmail(data: any) {
-    return this._http.post('http://localhost/TSML/api/password-email', data);
+    return this._http.post(this.BesUrl + '/password-update', data);
   };
 }
