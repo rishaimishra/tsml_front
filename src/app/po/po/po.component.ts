@@ -441,14 +441,16 @@ export class PoComponent implements OnInit {
     console.log('date', this.nxtDt);
 
   };
+
   selectDay(event: any) {
     this.days = event.target.value;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-      this.Totalsum = this.daysCostCount - Number(this.productPrice.cam_discount);
+      this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
   };
+
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
@@ -463,19 +465,23 @@ export class PoComponent implements OnInit {
       "pickup_from": pickup,
       "location": location
     }
+
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
-      console.log('this.productPrice',this.productPrice);
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
+      Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-      this.Totalsum = (this.daysCostCount - Number(this.productPrice.cam_discount)).toFixed(2);
+      console.log(this.daysCostCount);
+  
+      this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
     })
   };
   calculatePrice(id: any) {
     let cam_discount = this.priceVal.cam_discount;
-    let delivery_cost = this.priceVal.delivery_cost;
+    let deliveryCost = this.priceVal.delivery_cost;
     let miscExpense = this.priceVal.misc_expense;
     let pricePremium = this.priceVal.price_premium;
     let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
@@ -503,7 +509,7 @@ export class PoComponent implements OnInit {
     } else {
       this.miscPrice = false;
     };
-    if (delivery < delivery_cost && delivery != 0) {
+    if (delivery < deliveryCost && delivery != 0) {
       this.deliveryCost = true;
       priceValidator.push(3);
     } else {
@@ -521,13 +527,13 @@ export class PoComponent implements OnInit {
     } else {
       this.kamDiscount = false;
     };
-    this.priceLimit = priceValidator;
+
     const total = (bptPrice + misc_expense + delivery) - price_premium;
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
-    this.Totalsum1 = (this.daysCostCountCustomer - _discount).toFixed(2);
 
+    this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
     
   };
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
+import { CustomValidators } from './customValidator';
 
 @Component({
   selector: 'app-forget-password',
@@ -15,38 +17,57 @@ export class ForgetPasswordComponent implements OnInit {
   hideShowPass: boolean = false;
   forgetPassForm: FormGroup;
   email: any = '';
+  submitted: boolean = false;
 
   constructor(private _auth: AuthService,
     private _fb: FormBuilder, private _toaster: ToastrService, private _spinner: NgxSpinnerService,
     private _router: Router) 
-    { 
-      this.forgetPassForm = this._fb.group({
-        "email": [''],
-        "password": [''],
-        "password_confirm": ['']
-      })
-    }
+    {
+    this.forgetPassForm = this._fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password_confirm: ['', [Validators.required, Validators.minLength(6)]]
+    })
 
+    CustomValidators.mustMatch('password', 'password_confirm') // insert here
+  }
+  get f() {
+    return this.forgetPassForm.controls;
+  }
   ngOnInit(): void {
   }
 
   resetPassword() {
     this._spinner.show();
+    this.submitted = true;
+    if (this.forgetPassForm.invalid) {
+      this._spinner.hide();
+      return;
+    }
     if (this.forgetPassForm.valid) {
       this._auth.resetPassByEmail(this.forgetPassForm.value).subscribe((res:any) => {
-        console.log(res);
-        if(res.message == 'Password changed successfully !!') {
-          this._toaster.success(res.message);
+        if (!this.forgetPassForm.invalid && res.message == 'Password changed successfully !!' && !res.error) {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            text: 'Password changed successfully !!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this._spinner.hide();
           this._router.navigate(['/login']);
         } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Confirm password must match',
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+          // this._toaster.error(res.error.validation.password_confirm);
           this._spinner.hide();
         }
-      }, err => {
-        console.log(err);
-        this._spinner.hide();
       })
-    }
-    }
-  }
+      // this._spinner.hide();
+}}
 
+}

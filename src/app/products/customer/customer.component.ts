@@ -90,10 +90,10 @@ export class CustomerComponent implements OnInit {
     private _toaster: ToastrService,
     private _fb: FormBuilder,
     private _state: StateCityService
-  ) { }
+  ) {$(window).scrollTop(0); }
 
   ngOnInit(): void {
-    $(window).scrollTop(0);
+    
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
@@ -461,7 +461,9 @@ export class CustomerComponent implements OnInit {
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-      this.Totalsum = this.daysCostCount - Number(this.productPrice.cam_discount);
+
+      // this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
+      this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
   };
 
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
@@ -495,7 +497,7 @@ export class CustomerComponent implements OnInit {
 
   calculatePrice(id: any) {
     let cam_discount = this.priceVal.cam_discount;
-    let delivery_cost = this.priceVal.delivery_cost;
+    let deliveryCost = this.priceVal.delivery_cost;
     let miscExpense = this.priceVal.misc_expense;
     let pricePremium = this.priceVal.price_premium;
     let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
@@ -510,7 +512,7 @@ export class CustomerComponent implements OnInit {
     let _discount = Number($("#_discount" + id).val());
     let _total = Number($("#_total" + id).val());
 
-    console.log();
+    console.log('_discount',_discount);
 
     let priceValidator = [];
     if (price_premium < pricePremium && price_premium != 0) {
@@ -525,7 +527,7 @@ export class CustomerComponent implements OnInit {
     } else {
       this.miscPrice = false;
     };
-    if (delivery < delivery_cost && delivery != 0) {
+    if (delivery < deliveryCost && delivery != 0) {
       this.deliveryCost = true;
       priceValidator.push(3);
     } else {
@@ -545,14 +547,11 @@ export class CustomerComponent implements OnInit {
     };
     this.priceLimit = priceValidator;
     const total = (bptPrice + misc_expense + delivery) - price_premium;
-
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
 
-    // this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
-    this.Totalsum1 = (Number(total) + this.daysCostCountCustomer - _discount).toFixed(2);
-    console.log('Hello',this.Totalsum1);
+    this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
     
   };
   getNegotiationHistory() {
