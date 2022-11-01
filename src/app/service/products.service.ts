@@ -45,6 +45,10 @@ export class ProductsService {
     return this._http.get(this.BesUrl + '/user/quotes_list');
   };
 
+  getAllRfqForKam() {
+    return this._http.get(this.BesUrl + '/user/kam_quotes_list');
+  };
+
   filterProducts(requestData: any) {
     return this._http.post(this.BesUrl + '/filter-product-menu', requestData);
   };
@@ -74,4 +78,15 @@ export class ProductsService {
     return this._http.get(this.BesUrl + '/user/get_quote_po_by_id');
   };
 
+  uploadLetterHeadFile(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/submit_po', reqParameter);
+  };
+  
+  getPoList() {
+    return this._http.get(this.BesUrl + '/user/get_po_all');
+  };
+
+  getkamPoList() {
+    return this._http.get(this.BesUrl + '/user/get_po_all_kam');
+  };
 }

@@ -275,39 +275,6 @@
               </div>
             </div>
           </div>
-          <!-- upload section -->
-          <div class="form-check pl-0 display-f" (click)="uploadButton()">
-            <input type="checkbox" name="text" id="differentaddress"> <span class="list_checkmark"
-              for="differentaddress"></span>
-            <label class="form-check-label font-15" for="differentaddress">
-              Do you want to upload po in your letterhead?
-            </label>
-          </div>
-          <div class="different_address" *ngIf="showUpload">
-            <hr class="custom-hr">
-            <div class="">
-              <div class="row">
-                <div class="col-md-6 col-lg-4">
-                  <div class="form_box_area">
-                    <input type="file" (change)="selectFile($event)" accept=".jpg,.jpeg,.pdf" class="form-control-file"
-                      id="">
-                    <!-- <div *ngIf="!letterHead && submitt">
-                      <small class="text-danger">
-                        File is required !
-                      </small>
-                    </div> -->
-                  </div>
-                  <small class="redText" *ngIf="letterHeadFile">Maximum file size:5MB (PDF, PNG, JPG)</small>
-                </div>
-                <!-- <div class="col-md-6 col-lg-4">
-                  <div class="">
-                    <button (click)="uploadLetterHead()" class="btn btn-primary btn-ser mt-0"
-                      type="button">Upload</button>
-                  </div>
-                </div> -->
-              </div>
-            </div>
-          </div>
         </div>
         <div class="text-right pb-5" *ngIf="showButtons > 0">
           <button type="button" class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i>

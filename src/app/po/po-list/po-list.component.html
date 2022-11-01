@@ -1,1 +1,75 @@
-<p>Po-list works</p>
+<body>
+    <app-header></app-header>
+    <div class="page-content">
+       <section class="sub-header-2">
+          <div class="container">
+             <h1>Edit PO</h1>
+             <div class="clearfix"></div>
+          </div>
+       </section>
+       <section class="add-prod-pg">
+          <div class="container">
+             <div class="row">
+                <div class="col-lg-12 pb-5">
+                   <div class="cart-table">
+                      <div class="table-responsive">
+                         <table class="table">
+                            <thead>
+                               <tr>
+                                  <th>PO Number</th>
+                                  <th>PO Date</th>
+                                  <th>Customer Name</th>
+                                  <th>Total Order Quantity (MT)</th>
+                                  <th>Status</th>
+                                  <th></th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr *ngFor="let po of poItems">
+                                  <td>
+                                    {{po.po_no}}
+                                  </td>
+                                  <td>
+                                    {{po.po_date}}
+                                  </td>
+                                  <td>
+                                    {{po.user}}
+                                  </td>
+                                  <td>
+                                    {{po.quantity}}
+                                  </td>
+                                  <td *ngIf="po.status == 2">
+                                    Pending
+                                  </td>
+                                  <td *ngIf="po.status == 1">
+                                    Deliver
+                                  </td>
+                                  <td *ngIf="po.status == 3">
+                                    Under Process
+                                  </td>
+                                  <td>
+                                     <div class="btn-edt-del">
+                                        <a  class="edt-btn btn-primary classPointer" [routerLink]="['/po-edit',po.rfq_no]" data-toggle="tooltip" data-placement="top" title="Amendment PO"><i class="fa fa-pencil"></i></a>
+                                        <a  class="edt-btn btn-primary2 classPointer" [routerLink]="['/po-view',po.rfq_no]" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                     </div>
+                                  </td>
+                               </tr>
+                            </tbody>
+                         </table>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </section>
+    </div>
+    <app-footer></app-footer>
+    <div class="foot_arw">
+       <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
+    </div>
+    <script>
+       $(function () {
+       $('[data-toggle="tooltip"]').tooltip()
+       })
+    </script>
+ </body>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ProductsService } from 'src/app/service/products.service';
 declare var $: any;
 
 @Component({
@@ -7,14 +9,50 @@ declare var $: any;
   styleUrls: ['./po-list.component.scss']
 })
 export class PoListComponent implements OnInit {
+  userType: boolean;
+  poItems:any;
 
-  constructor() {
+
+  constructor(private _products: ProductsService, private spinner:NgxSpinnerService) {
   }
 
   ngOnInit(): void {
-   
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this.userType = false;
+      this.getKamPoListing();
+    } else {
+      this.userType = true;
+      this.getPoListing();
+    }
   };
 
  
+  getPoListing () {
+    this.spinner.show();
+    this._products.getPoList().subscribe((res:any) => {
+      if(res.message == 'success') {
+        this.spinner.hide();
+      console.log(res);
+      this.poItems = res.result;
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  }
 
+  getKamPoListing () {
+    this.spinner.show();
+    this._products.getkamPoList().subscribe((res:any) => {
+      if(res.message == 'success') {
+        this.spinner.hide();
+      console.log(res);
+      this.poItems = res.result;
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  }
 }

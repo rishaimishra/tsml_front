@@ -5,11 +5,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PoComponent } from './po/po.component';
+import { PoEditComponent } from './po-edit/po-edit.component';
+import { AuthGuard } from '../auth/auth.guard';
+import { PoViewComponent } from './po-view/po-view.component';
+import { EditFRQComponent } from '../products/edit-frq/edit-frq.component';
 
 
 const routes: Routes = [
-  {path: 'po/:id', component: PoComponent},
-  {path: 'po-list', component: PoListComponent}
+  {path: 'po/:id', component: PoComponent, canActivate: [AuthGuard]},
+  {path: 'po-list', component: PoListComponent, canActivate: [AuthGuard]},
+  {path: 'po-edit/:id', component: PoEditComponent, canActivate: [AuthGuard]},
+  {path: 'po-view/:id', component: PoViewComponent, canActivate: [AuthGuard]}
 
 ];
 
@@ -17,7 +23,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     PoListComponent,
-    PoComponent
+    PoComponent,
+    PoEditComponent,
+    PoViewComponent
   ],
   imports: [
     CommonModule,

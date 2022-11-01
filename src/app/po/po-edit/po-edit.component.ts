@@ -9,12 +9,13 @@ import Swal from 'sweetalert2';
 import * as uuid from 'uuid';
 declare var $: any;
 
+
 @Component({
-  selector: 'app-po',
-  templateUrl: './po.component.html',
-  styleUrls: ['./po.component.scss']
+  selector: 'app-po-edit',
+  templateUrl: './po-edit.component.html',
+  styleUrls: ['./po-edit.component.scss']
 })
-export class PoComponent implements OnInit {
+export class PoEditComponent implements OnInit {
 
   userType: boolean;
   public product_data: any = '';
@@ -75,7 +76,6 @@ export class PoComponent implements OnInit {
   daysCostCount: any;
   daysCostCountCustomer: any;
   poRedirectArr: any = [];
-  showUpload: boolean = false;
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -320,47 +320,7 @@ export class PoComponent implements OnInit {
       this.priceVal = res.result;
     });
   };
-  selectFile(event: any) {
-    console.log(event.target.files[0]);
-    this.letterHedFile = event.target.files[0];
-    let file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.letterHead = reader.result;
-    };
-    if (file.size >= 5209785) {
-      this.letterHeadFile = true;
-      event.target.value = null;
-      return;
-    } else {
-      this.letterHeadFile = false;
-    }
-  }
-  uploadLetterHead() {
-    // this.submitt = true;
-    this.spinner.show();
-    const fileData = new FormData();
 
-    fileData.append('rfq_no', this.productId);
-    fileData.append('po_no', this.po_id);
-    fileData.append('letterhead', this.letterHedFile);
-    fileData.append('po_date', this.newDate);
-
-    this._product.uploadLetterHeadFile(fileData).subscribe((res: any) => {
-      console.log(res);
-      if (res.success) {
-        this.spinner.hide();
-        Swal.fire(
-          'PO Created!',
-          '',
-          'success'
-        )
-      } else {
-        this.spinner.hide();
-      }
-    })
-  }
   submitRfq() {
     this.submit = true;
     // this.spinner.show();
@@ -396,14 +356,9 @@ export class PoComponent implements OnInit {
       if (res.message == 'success') {
         this.detailByRfq();
         this.spinner.hide();
-        Swal.fire(
-          'Updated',
-          '',
-          'success'
-        )
+        this._toaster.success(res.result);
         this.poStatusRequest(poStatusArr);
-        this.uploadLetterHead();
-        this._router.navigate(['/po-list']);
+        this._router.navigate(['/po-list', this.productId]);
       }
       if (res.message != 'success') {
         this._toaster.error(res.message);
@@ -415,6 +370,7 @@ export class PoComponent implements OnInit {
         this.spinner.hide();
       }
       else {
+
         this.spinner.hide();
       }
       
@@ -628,10 +584,6 @@ export class PoComponent implements OnInit {
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
   }
-  uploadButton() {
-    this.showUpload = true;
-  };
-
 
   poStatusRequest (statusArr:any) {
     this._product.rfqStatusData(statusArr).subscribe((res: any) => {
@@ -640,7 +592,7 @@ export class PoComponent implements OnInit {
         this.spinner.hide();
       }
       else {
-        this._toaster.success(res.message);
+        this._toaster.error(res.message);
       }
 
     })

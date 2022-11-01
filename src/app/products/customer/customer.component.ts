@@ -360,7 +360,7 @@ export class CustomerComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Updated successully',
+          text: 'Updated successully',
           showConfirmButton: false,
           timer: 1500
         })

@@ -239,11 +239,12 @@ export class ProductDetailsComponent implements OnInit {
         this._router.navigate(['/thank-you']);
         this.spinner.hide();
 
-      } if (res.result == 'Quote not created') {
+      } 
+      if (res.result == 'Quote not created') {
         this._toaster.error(res.result);
         this.spinner.hide();
       }
-      if (res.status == 'Authorization Token not found') {
+      if (res.status == 'Token has Expired') {
         this._toaster.error('Please register to submit RFQ');
         this._router.navigate(['/login']);
         this.spinner.hide();
