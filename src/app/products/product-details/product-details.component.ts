@@ -244,7 +244,7 @@ export class ProductDetailsComponent implements OnInit {
         this._toaster.error(res.result);
         this.spinner.hide();
       }
-      if (res.status == 'Token has Expired') {
+      if (res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
         this._toaster.error('Please register to submit RFQ');
         this._router.navigate(['/login']);
         this.spinner.hide();
