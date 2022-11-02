@@ -3528,4 +3528,38 @@ header.header_sec {
 .custom-file, .custom-file input, .custom-file label {
     cursor: pointer;
 }
-
+/*02 Nov*/
+.custom-file-label::after {
+    background: url(../images/upload.png) #3d7eeb;
+    font-size: 0;
+    background-repeat: no-repeat;
+    height: 44px;
+    width: 50px;
+    background-position: center;
+}
+.custom-file, .custom-file-input, .custom-file-label {
+    height: 46px;
+}
+.custom-file-label {
+    height: 46px;
+    padding-top: 12px;
+}
+.custom-file-label {
+    border: 1px solid #40404080;
+}
+.prof-form-bdy {
+    background: #fff;
+}
+.reply_btn_box {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.reply_btn .btn-primary {
+    margin-top: 0;
+    padding: .25rem .5rem;
+}
+.clos-btn {
+    padding-right: 10px;
+}
+/*02 Nov end*/

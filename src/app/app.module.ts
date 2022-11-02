@@ -19,6 +19,7 @@ import { AuthIntercepto } from './service/auth.interceptor';
 import { DatepickerModule } from 'ng2-datepicker';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PoModule } from './po/po.module';
+import { ComplainsModule } from './complains/complains.module';
 
 
 
@@ -42,7 +43,8 @@ import { PoModule } from './po/po.module';
     NgxSpinnerModule,
     ToastrModule.forRoot(),
     DatepickerModule,
-    PoModule
+    PoModule,
+    ComplainsModule
   ],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
