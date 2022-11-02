@@ -111,7 +111,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Delivery Method</label>
-                          <select #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
+                          <select #dlvrMethodInput="ngModel" [disabled]="userType" [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="FOR">FOR</option>
@@ -125,7 +125,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Pickup From</label>
-                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
+                          <select #pickUpfrom="ngModel" [disabled]="userType" [(ngModel)]="formData.plant"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select..</option>
                             <option value="Plant">Plant</option>

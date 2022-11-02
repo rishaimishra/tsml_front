@@ -56,18 +56,26 @@ export class ForgetPasswordComponent implements OnInit {
           })
           this._spinner.hide();
           this._router.navigate(['/login']);
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Confirm password must match',
-            // footer: '<a href="">Why do I have this issue?</a>'
-          })
-          // this._toaster.error(res.error.validation.password_confirm);
+        } 
+          if(res.error.message == 'Email address not found !!') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: res.error.message
+              // footer: '<a href="">Why do I have this issue?</a>'
+            })
+          } 
+          else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: res.error.validation.password_confirm,
+              // footer: '<a href="">Why do I have this issue?</a>'
+            })
+          }
           this._spinner.hide();
-        }
+        
       })
-      // this._spinner.hide();
 }}
 
 }

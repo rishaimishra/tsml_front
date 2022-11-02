@@ -42,6 +42,14 @@ export class HeaderComponent implements OnInit {
   })
   }
 
+  clickOnLogo() {
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this._router.navigate(['/kam-dashboard']);
+    } else {
+      this._router.navigate(['/customer-dashboard']);
+    }
+  }
   logOut() {
     Swal.fire({
       title: 'Are you sure?',

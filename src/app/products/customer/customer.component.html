@@ -89,7 +89,7 @@
                                                             Payment)</small></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="number" [disabled]="userType" #priceInput="ngModel"
+                                                        <input type="number" [disabled]="!userType" #priceInput="ngModel"
                                                             [(ngModel)]="formData.expected_price"
                                                             name="expected_price{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" id="" placeholder=""
@@ -243,9 +243,12 @@
                                                         <!-- <input type="date" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker"
                                                             placeholder="To" value=""> -->
-                                                        <input type="datetime-local" [disabled]="userType"
+                                                        <input type="datetime-local" [disabled]="userType" #validTill="ngModel"
                                                             [(ngModel)]="formData.valid_till"
-                                                            class="form-control form-control-sm datepicker">
+                                                            class="form-control form-control-sm datepicker" required>
+                                                            <small
+                                                        *ngIf="validTill.invalid && (validTill.dirty || validTill.touched || submit)"
+                                                        class="inputValidation">Valid Till is required</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -660,7 +663,7 @@
                                             {{productPrice?.interest_rate }}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="interest_rate"
+                                    <td><input type="number" 
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_interest{{schldId}}" value="{{productPrice?.interest_rate }}" readonly>
 
@@ -682,7 +685,7 @@
                                             <span>{{daysCostCount}}</span>
                                         </div>
                                     </td>
-                                    <td><input type="number" readonly formControlName="delivery_cost"
+                                    <td><input type="number" readonly 
                                             [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                             class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
@@ -725,9 +728,9 @@
                                             {{bptAndfinal}}
                                         </div>
                                     </td>
-                                    <td><input type="text" formControlName="finalAmt"
+                                    <td><input type="text" formControlName="finalAmt" readonly
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_bptAndfinal{{schldId}}" placeholder=""></td>
+                                            id="_bptAndfinal{{schldId}}" placeholder="" value="{{percentPrice}}"></td>
                                 </tr>
                             </tbody>
                         </table>

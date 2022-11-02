@@ -79,6 +79,7 @@ export class CustomerComponent implements OnInit {
   daysCostCountCustomer: any;
   messages:any;
   poRedirectArr:any = [];
+  percentPrice:any;
 
 
   constructor(
@@ -100,11 +101,7 @@ export class CustomerComponent implements OnInit {
     } else {
       this.userType = true;
     }
-    //  this.userType
-    // $(function () {
-    //   $('#datetimepicker1').datetimepicker();
-    // });
-    // $('#datetimepicker').data("DateTimePicker").FUNCTION();
+
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
@@ -323,7 +320,7 @@ export class CustomerComponent implements OnInit {
     this.submit = true;
     let rediectStatus = [];
     let countArr = [];
-    // this.spinner.show();
+    this.spinner.show();
     let rfqFormArry: any = [];
     // console.log(this.poRedirectArr);
     for (let i = 0; i < this.selectedItem.length; i++) {
@@ -332,8 +329,13 @@ export class CustomerComponent implements OnInit {
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
-        // console.log(form_data_array[i]['schedule_no']);
         countArr.push(form_data_array[i]['schedule_no']);
+        console.log('Arry',form_data_array[i]['valid_till']);
+        if (form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') {
+          this.spinner.hide();
+          this._toaster.error('','Valid Till is required');
+          return;
+        }
       }
       
       let reqData = {
@@ -344,14 +346,12 @@ export class CustomerComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-      
-      
+
     };
     this.poRedirectArr.forEach(element => {
       rediectStatus.push(element.status);
 
     });
-    // console.log(rediectStatus.length, countArr.length, rediectStatus.includes('Req'));
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
@@ -462,18 +462,20 @@ export class CustomerComponent implements OnInit {
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
 
-      // this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
       this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
+
+      // let prcentPrice = (backendTotal - this.productPrice.bpt_price);
+      // this.percentPrice = (this.productPrice.bpt_price / prcentPrice).toFixed(2);
   };
 
   getPrice(location: any, pickup: any, schedule_no: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-
+    
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
-
+    
     this.priceForm.reset();
     let price = {
       "user_id": this.user_Id,
@@ -511,8 +513,6 @@ export class CustomerComponent implements OnInit {
     let _interest = Number($("#_interest" + id).val());
     let _discount = Number($("#_discount" + id).val());
     let _total = Number($("#_total" + id).val());
-
-    console.log('_discount',_discount);
 
     let priceValidator = [];
     if (price_premium < pricePremium && price_premium != 0) {
@@ -552,7 +552,9 @@ export class CustomerComponent implements OnInit {
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
 
     this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
-    
+    let prcentPrice = (this.Totalsum1 - bptPrice);
+    this.percentPrice = (bptPrice / prcentPrice).toFixed(2);
+
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.productId;

@@ -217,16 +217,24 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>#89754</td>
-                          <td>11-08-2018</td>
-                          <td>150</td>
-                          <td>107347.5</td>
-                          <td>Cancel</td>
+                        <tr *ngFor="let po of poItems">
+                          <td>{{po.po_no}}</td>
+                          <td>{{po.po_date}}</td>
+                          <td>{{po.quantity}}</td>
+                          <td>....</td>
+                          <td *ngIf="po.status == 2">
+                            Pending
+                          </td>
+                          <td *ngIf="po.status == 1">
+                            Deliver
+                          </td>
+                          <td *ngIf="po.status == 3">
+                            Under Process
+                          </td>
                           <td>
                              <div class="cell1 tab_head_sheet_1 ">
                                  <div class="add_ttrr actions-main text-center">
-                                    <a class="css-tooltip-top color-blue meet-rvw uu0" href="#"> <span>View Details</span>
+                                    <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po-view',po.rfq_no]"> <span>View Details</span>
                                     <img src="assets/images/view-act-b.png" class="blue-show" alt="">
                                     </a> 
                                    
@@ -241,7 +249,7 @@
                               </div>
                           </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <td>#89754</td>
                           <td>11-08-2018</td>
                           <td>150</td>
@@ -384,7 +392,7 @@
                                  </div>
                               </div>
                           </td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>

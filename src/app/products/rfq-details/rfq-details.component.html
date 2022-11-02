@@ -98,7 +98,7 @@
                           <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
                           <div class="pri-box">
                             <span>₹</span>
-                            <input type="number" [disabled]="userType" #priceInput="ngModel"
+                            <input type="number" #priceInput="ngModel"
                               [(ngModel)]="formData.expected_price" name="expected_price{{ formData.schedule_no }}"
                               class="form-control form-control-sm" id="" placeholder="" value="" required />
                             <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
