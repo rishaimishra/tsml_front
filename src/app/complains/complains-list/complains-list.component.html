@@ -17,7 +17,7 @@
                          <table class="table">
                             <thead>
                                <tr>
-                                  <th>Customer Name</th>
+                                  <th *ngIf="!userType">Customer Name</th>
                                   <th>Categories</th>
                                   <th>Sub Categories 1</th>
                                   <th>Sub Categories 2</th>
@@ -28,125 +28,30 @@
                             </thead>
                             <tbody>
                                <tr>
-                                  <td>
-                                     Chayanika Sarkar
+                                  <td *ngIf="!userType">
+                                     {{camplainsItems?.customer_name}}
                                   </td>
                                   <td>
-                                     Registration
+                                    {{camplainsItems?.com_cate_name}}
                                   </td>
                                   <td>
-                                     Delay in Registration etc.
+                                    {{camplainsItems?.com_sub_cate_name}}
                                   </td>
                                   <td>
-                                     Damaged item
+                                    {{camplainsItems?.com_sub_cate2_name}}
                                   </td>
                                   <td>
-                                     --
+                                     {{camplainsItems?.com_sub_cate3_name}}
                                   </td>
                                   <td>
-                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                     -----
                                   <td>
                                      <div class="btn-edt-del">
-                                        <a href="complains-form-reply.html" class="edt-btn btn-primary" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                        <a class="edt-btn btn-primary pointer" (click)="goToreplyPage(camplainsItems?.customer_name)" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
                                      </div>
                                   </td>
                                </tr>
-                               <tr>
-                                  <td>
-                                     Sayan Basak
-                                  </td>
-                                  <td>
-                                     Registration
-                                  </td>
-                                  <td>
-                                     Delay in Registration etc.
-                                  </td>
-                                  <td>
-                                     Damaged item
-                                  </td>
-                                  <td>
-                                     --
-                                  </td>
-                                  <td>
-                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                  <td>
-                                     <div class="btn-edt-del">
-                                        <a href="complains-form-reply.html" class="edt-btn btn-primary" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
-                                     </div>
-                                  </td>
-                               </tr>
-                               <tr>
-                                  <td>
-                                     Sayanti Das
-                                  </td>
-                                  <td>
-                                     Registration
-                                  </td>
-                                  <td>
-                                     Delay in Registration etc.
-                                  </td>
-                                  <td>
-                                     Damaged item
-                                  </td>
-                                  <td>
-                                     --
-                                  </td>
-                                  <td>
-                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                  <td>
-                                     <div class="btn-edt-del">
-                                        <a href="complains-form-reply.html" class="edt-btn btn-primary" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
-                                     </div>
-                                  </td>
-                               </tr>
-                               <tr>
-                                  <td>
-                                     Pralay Maity
-                                  </td>
-                                  <td>
-                                     Registration
-                                  </td>
-                                  <td>
-                                     Delay in Registration etc.
-                                  </td>
-                                  <td>
-                                     Damaged item
-                                  </td>
-                                  <td>
-                                     --
-                                  </td>
-                                  <td>
-                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                  <td>
-                                     <div class="btn-edt-del">
-                                        <a href="complains-form-reply.html" class="edt-btn btn-primary" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
-                                     </div>
-                                  </td>
-                               </tr>
-                               <tr>
-                                  <td>
-                                     Sudeb Mandal
-                                  </td>
-                                  <td>
-                                     Registration
-                                  </td>
-                                  <td>
-                                     Delay in Registration etc.
-                                  </td>
-                                  <td>
-                                     Damaged item
-                                  </td>
-                                  <td>
-                                     --
-                                  </td>
-                                  <td>
-                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                  <td>
-                                     <div class="btn-edt-del">
-                                        <a href="complains-form-reply.html" class="edt-btn btn-primary" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
-                                     </div>
-                                  </td>
-                               </tr>
+                             
                             </tbody>
                          </table>
                       </div>

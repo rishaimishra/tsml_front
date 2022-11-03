@@ -7,12 +7,14 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from '../auth/auth.guard';
 import { ComplainsListComponent } from './complains-list/complains-list.component';
 import { ComplainsReplyComponent } from './complains-reply/complains-reply.component';
+import { KamReplyComponent } from './kam-reply/kam-reply.component';
 
 
 const routes: Routes = [
   {path: 'complains', component: ComplainsComponent, canActivate: [AuthGuard]},
   {path: 'complains-list', component: ComplainsListComponent, canActivate: [AuthGuard]},
-  {path: 'complains-reply', component: ComplainsReplyComponent, canActivate: [AuthGuard]},
+  {path: 'complains-reply/:name', component: ComplainsReplyComponent, canActivate: [AuthGuard]},
+  {path: 'kam-reply/:name', component: KamReplyComponent, canActivate: [AuthGuard]},
 
 ];
 
@@ -21,7 +23,8 @@ const routes: Routes = [
   declarations: [
     ComplainsComponent,
     ComplainsListComponent,
-    ComplainsReplyComponent
+    ComplainsReplyComponent,
+    KamReplyComponent
   ],
   imports: [
     CommonModule,

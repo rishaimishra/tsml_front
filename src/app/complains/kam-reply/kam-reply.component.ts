@@ -5,11 +5,12 @@ import { ComplainsService } from 'src/app/service/complains.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-complains-reply',
-  templateUrl: './complains-reply.component.html',
-  styleUrls: ['./complains-reply.component.scss']
+  selector: 'app-kam-reply',
+  templateUrl: './kam-reply.component.html',
+  styleUrls: ['./kam-reply.component.scss']
 })
-export class ComplainsReplyComponent implements OnInit {
+export class KamReplyComponent implements OnInit {
+
   userName:any;
   compInfo:any;
   showKamTextArea: boolean = false;
@@ -38,6 +39,7 @@ export class ComplainsReplyComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
+        this._spiner.hide();
       }
     }, err => {
       console.log(err);
@@ -50,10 +52,9 @@ export class ComplainsReplyComponent implements OnInit {
   };
 
   submitReply(compId:any) {
-    this._spiner.show();
     let replyReq = {
       "complain_id": compId,
-      "customer_remarks": this.remarkReply,
+      "kam_remarks": this.remarkReply,
     };
     console.log(replyReq);
     this._complains.replyComplains(replyReq).subscribe((res:any) => {
@@ -78,4 +79,5 @@ export class ComplainsReplyComponent implements OnInit {
     })
 
   }
+
 }

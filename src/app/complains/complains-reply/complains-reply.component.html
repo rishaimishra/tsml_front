@@ -15,13 +15,7 @@
                      <div class="form-group">
                         <label for="">Categories</label>
                         <select class="form-control" disabled>
-                           <option>Registration</option>
-                           <option>Finance/Tax</option>
-                           <option>Refunds</option>
-                           <option>Invoicing Issues</option>
-                           <option>Quality</option>
-                           <option>Logistics</option>
-                           <option>Other Queries</option>
+                           <option>{{compInfo?.com_cate_name}}</option>
                         </select>
                      </div>
                   </div>
@@ -29,23 +23,7 @@
                      <div class="form-group">
                         <label for="">Sub Categories 1</label>
                         <select class="form-control" disabled>
-                           <option>Delay in Registration etc.</option>
-                           <option>Taxes in my invoice/ GST related</option>
-                           <option>Credit Note</option>
-                           <option>Credit availability</option>
-                           <option>Check refund status and timeline</option>
-                           <option>Non receipt of refund amount</option>
-                           <option>Incorrect Invoicing</option>
-                           <option>Non-reciept of invoices</option>
-                           <option>Weight Shortage received</option>
-                           <option>Material quality issue</option>
-                           <option>Improper Vehicle (eg. damaged vehicle, tarpaulin missing)</option>
-                           <option>Packaging Issues</option>
-                           <option>Additional Product Information</option>
-                           <option>Marketing/ business related</option>
-                           <option>General feedback</option>
-                           <option>Post sales support</option>
-                           <option>Other help topics</option>
+                           <option>{{compInfo?.com_sub_cate_name}}</option>
                         </select>
                      </div>
                   </div>
@@ -53,8 +31,7 @@
                      <div class="form-group">
                         <label for="">Sub Categories 2</label>
                         <select class="form-control" disabled>
-                           <option>Damaged item</option>
-                           <option>Incorrect item</option>
+                           <option>{{compInfo?.com_sub_cate2_name}}</option>
                         </select>
                      </div>
                   </div>
@@ -62,7 +39,7 @@
                      <div class="form-group">
                         <label for="">Sub Categories 3</label>
                         <select class="form-control" disabled>
-                           <option>--select--</option>
+                           <option>{{compInfo?.com_sub_cate3_name}}</option>
                         </select>
                      </div>
                   </div>
@@ -72,17 +49,17 @@
                         <textarea class="form-control" rows="5" disabled></textarea>
                      </div>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                     <div id="remarksArea" style="display:none;" class="form-group">
-                        <label for="">Remarks</label>
-                        <textarea class="form-control" rows="5"></textarea>
+                  <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="showKamTextArea">
+                     <div class="form-group">
+                        <label for="">Customer Remarks</label>
+                        <textarea [(ngModel)]="remarkReply" class="form-control" rows="5"></textarea>
                      </div>
                   </div>
                   <div class="col-lg-4 col-md-6 col-sm-6">
-                     <div class="down_btn_box">
-                        <div class="reply_btn"><a href="complains-list.html" class="btn btn-primary"><i
+                     <!-- <div class="down_btn_box">
+                        <div class="reply_btn"><a class="btn btn-primary"><i
                                  class="fa fa-download"></i> Download</a></div>
-                     </div>
+                     </div> -->
                   </div>
                   <div class="col-lg-8 col-md-6 col-sm-6">
                      <div class="reply_btn_box">
@@ -94,7 +71,7 @@
                               </label>
                            </div>
                         </div>
-                        <div class="reply_btn"><button class="btn btn-primary btn-sm" id="replyButton"><i
+                        <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
                                  class="fa fa-reply"></i> Reply</button></div>
                      </div>
                   </div>
@@ -102,7 +79,7 @@
                <hr>
                <div class="row">
                   <div class="col-lg-12">
-                     <button class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
+                     <button (click)="submitReply(compInfo?.complain_id)"class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
                      <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
                   </div>
                </div>

@@ -10,72 +10,54 @@
         <section class="prof-form">
             <div class="container">
                 <div class="prof-form-bdy">
+                    <form [formGroup]="complainsForm" (ngSubmit)="saveComplains()">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Categories</label>
-                                <select class="form-control">
-                                    <option>Registration</option>
-                                    <option>Finance/Tax</option>
-                                    <option>Refunds</option>
-                                    <option>Invoicing Issues</option>
-                                    <option>Quality</option>
-                                    <option>Logistics</option>
-                                    <option>Other Queries</option>
+                                <select (change)="selectCategories($event)" formControlName="com_cate_id" class="form-control">
+                                    <option value="">--Categories--</option>
+                                    <option value="{{catgri.id}}" *ngFor="let catgri of categorie">{{catgri.com_cate_name}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Sub Categories 1</label>
-                                <select class="form-control">
-                                    <option>Delay in Registration etc.</option>
-                                    <option>Taxes in my invoice/ GST related</option>
-                                    <option>Credit Note</option>
-                                    <option>Credit availability</option>
-                                    <option>Check refund status and timeline</option>
-                                    <option>Non receipt of refund amount</option>
-                                    <option>Incorrect Invoicing</option>
-                                    <option>Non-reciept of invoices</option>
-                                    <option>Weight Shortage received</option>
-                                    <option>Material quality issue</option>
-                                    <option>Improper Vehicle (eg. damaged vehicle, tarpaulin missing)</option>
-                                    <option>Packaging Issues</option>
-                                    <option>Additional Product Information</option>
-                                    <option>Marketing/ business related</option>
-                                    <option>General feedback</option>
-                                    <option>Post sales support</option>
-                                    <option>Other help topics</option>
+                                <select (change)="selectSubCat1($event)" formControlName="com_sub_cate_id" class="form-control">
+                                    <option value="">--Sub categories 1--</option>
+                                    <option value="{{subCat1.id}}" *ngFor="let subCat1 of subCatgri1">{{subCat1.com_sub_cate_name}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Sub Categories 2</label>
-                                <select class="form-control">
-                                    <option>Damaged item</option>
-                                    <option>Incorrect item</option>
+                                <select (change)="selectSubCat2($event)" formControlName="com_sub_cate_2id" class="form-control">
+                                    <option value="">--Sub categories 2--</option>
+                                    <option value="{{subCat2.id}}" *ngFor="let subCat2 of subCatgri2">{{subCat2.com_sub_cate2_name}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Sub Categories 3</label>
-                                <select class="form-control">
-                                    <option>--select--</option>
+                                <select (change)="selectSubCat3($event)" formControlName="com_sub_cate_3id" class="form-control">
+                                    <option value="">--select--</option>
+                                    <option value="{{sabCat3.id}}" *ngFor="let sabCat3 of subCatgri3">{{sabCat3.com_sub_cate3_name}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <label for="">Remarks</label>
-                                <textarea class="form-control" rows="5"></textarea>
+                                <textarea formControlName="customer_remarks" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <label for="">Upload</label>
                             <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="customFile" name="filename">
+                                <input type="file" (change)="onSelectFile($event)" class="custom-file-input" id="customFile" name="filename">
                                 <label class="custom-file-label" for="customFile"> Upload Attachment</label>
                             </div>
                         </div>
@@ -83,11 +65,12 @@
                     <hr>
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="complains-list.html" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
-                                Submit</a>&nbsp;
-                            <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+                                Submit</button>&nbsp;
+                                <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
