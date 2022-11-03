@@ -251,9 +251,7 @@ export class PoComponent implements OnInit {
     })
   };
 
-  goToCustomerPage(id: any) {
-    this._router.navigate(['/customer', id]);
-  };
+
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   };
@@ -390,17 +388,19 @@ export class PoComponent implements OnInit {
       rfqFormArry.push(reqData);
       // console.log('rfqFormArry=', form_data_array);
     }
-    console.log('poStatusArr',poStatusArr);
+
   
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.detailByRfq();
         this.spinner.hide();
-        Swal.fire(
-          'Updated',
-          '',
-          'success'
-        )
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          text: 'Updated successully',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.poStatusRequest(poStatusArr);
         this.uploadLetterHead();
         this._router.navigate(['/po-list']);

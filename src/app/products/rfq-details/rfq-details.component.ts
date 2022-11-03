@@ -59,6 +59,7 @@ export class RfqDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    $(window).scrollTop(0);
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
@@ -180,23 +181,6 @@ export class RfqDetailsComponent implements OnInit {
   sizeOffered2(event: any) {
     console.log(event.target.value);
   };
-  add_to_cart(cat_id: any, product_id: any) {
-    console.log('cat_id=', cat_id);
-    console.log('product_id=', product_id);
-    if (this.selected_size == '') {
-      this.show_error = true;
-      this.error_message = 'Select the size';
-    } else if (this.delivery_date == '') {
-      this.show_error = true;
-      this.error_message = 'Enter delivery date';
-    } else {
-      this.show_error = false;
-      this.error_message = '';
-      console.log('this.selected_size=', this.selected_size);
-      console.log('this.delivery_date=', this.delivery_date);
-    }
-    this._router.navigate(['/my-cart']);
-  };
 
   selectItems(event: any) {
     let categoryId = event.target.value;
@@ -249,27 +233,7 @@ export class RfqDetailsComponent implements OnInit {
   };
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
-    console.log(this.proSize1);
   };
-  deliveryMethod(event: any) {
-    console.log(event.target.value);
-  };
-  pickupFrom(event: any) {
-    console.log(event.target.value);
-  }
-  deliveryMethod2(event: any) {
-    console.log(event.target.value);
-  };
-  pickupfrome2(event: any) {
-    console.log(event.target.value);
-  };
-  selectlocation2(event: any) {
-    console.log(event.target.value);
-  };
-  billTo2(event: any) {
-    console.log(event.target.value);
-  };
-  shipTo2(event: any) { };
 
   submitRfq() {
     this.submit = true;

@@ -331,7 +331,7 @@ export class CustomerComponent implements OnInit {
         qty = qty + parseInt(form_data_array[i]['quantity']);
         countArr.push(form_data_array[i]['schedule_no']);
         console.log('Arry',form_data_array[i]['valid_till']);
-        if (form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') {
+        if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false) {
           this.spinner.hide();
           this._toaster.error('','Valid Till is required');
           return;
@@ -397,7 +397,6 @@ export class CustomerComponent implements OnInit {
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
-      this.detailByRfq();
 
     }, err => {
       console.log(err);
@@ -408,6 +407,8 @@ export class CustomerComponent implements OnInit {
       // const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
       // let po_id = val;
       this._router.navigate(['/po',this.productId]);
+    } else {
+      this._router.navigate(['/rfq-list']);
     }
   }
 
