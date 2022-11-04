@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -14,27 +14,31 @@ import Swal from 'sweetalert2';
 export class ComplainsComponent implements OnInit {
   user_name:any;
   complainsForm: FormGroup;
+  submitted: boolean = false;
   categorie: any;
   subCatgri1: any;
   subCatgri2: any;
   subCatgri3: any;
+  selectedFile: File;
 
 
   constructor(private _complainse: ComplainsService,
     private _spinner: NgxSpinnerService, private _fb: FormBuilder,
     private _router: Router, private toaster: ToastrService) {
     this.complainsForm = this._fb.group({
-      com_cate_id: [''],
-      com_sub_cate_id: [''],
-      com_sub_cate_2id: [''],
-      com_sub_cate_3id: [''],
-      customer_remarks: [''],
+      com_cate_id: ['', Validators.required],
+      com_sub_cate_id: ['', Validators.required],
+      com_sub_cate_2id: ['', Validators.required],
+      com_sub_cate_3id: ['', Validators.required],
+      customer_remarks: ['', Validators.required],
       customer_name: [''],
       complain_file: ['']
 
     })
   }
-
+  get f(): { [key: string]: AbstractControl } {
+    return this.complainsForm.controls;
+  };
   ngOnInit(): void {
     this.user_name = localStorage.getItem('USER_NAME');
     this.categories();
@@ -66,7 +70,6 @@ export class ComplainsComponent implements OnInit {
         this.complainsForm.value.com_sub_cate_id = catgriId;
         this._spinner.hide();
         this.subCatgri1 = res.result;
-        console.log('Cat-', this.subCatgri1);
       }
     })
   };
@@ -80,7 +83,6 @@ export class ComplainsComponent implements OnInit {
         this.complainsForm.value.com_sub_cate_2id = subCatId;
         this._spinner.hide();
         this.subCatgri2 = res.result;
-        console.log('sabCat-2', this.subCatgri2);
       }
     })
   };
@@ -94,7 +96,6 @@ export class ComplainsComponent implements OnInit {
         this.complainsForm.value.com_sub_cate_3id = sabCatId2;
         this._spinner.hide();
         this.subCatgri3 = res.result;
-        console.log('sabCat-3', this.subCatgri3);
       } else {
         this._spinner.hide();
       }
@@ -107,17 +108,32 @@ export class ComplainsComponent implements OnInit {
   }
 
   onSelectFile(event:any) {
-    // const fileData = new FormData();
-    let selectedFile = event.target.files[0];
-    // fileData.append('complain_file', selectedFile);
-    // this.complainsForm.value.complain_file = fileData;
+    this.selectedFile = event.target.files[0];
+    
 
   }
   saveComplains() {
+    // this.submitted = true;
+    if (this.complainsForm.invalid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Fields are required',
+      })
+      return;
+    };
     this._spinner.show();
-    this.complainsForm.value.customer_name = this.user_name;
-    this._complainse.storeComplain(this.complainsForm.value).subscribe((res:any) => {
-      console.log(res);
+    const fileData = new FormData();
+    let frm = this.complainsForm.value;
+    fileData.append('com_cate_id', frm.com_cate_id);
+    fileData.append('com_sub_cate_id', frm.com_sub_cate_id);
+    fileData.append('com_sub_cate_2id', frm.com_sub_cate_2id);
+    fileData.append('com_sub_cate_3id', frm.com_sub_cate_3id);
+    fileData.append('customer_remarks', frm.customer_remarks);
+    fileData.append('customer_name', this.user_name);
+    fileData.append('complain_file', this.selectedFile);
+
+    this._complainse.storeComplain(fileData).subscribe((res:any) => {
       if(res.status == 1 && res.result == 'success') {
         this._spinner.hide();
         Swal.fire({
@@ -129,7 +145,7 @@ export class ComplainsComponent implements OnInit {
         });
         this._router.navigate(['/complains-list']);
       } 
-      if (res.status == 0) {
+      if (res.message == 'error' || res.status != 1) {
         this._spinner.hide();
         this.toaster.error(res.message);
       }

@@ -20,6 +20,7 @@ import { DatepickerModule } from 'ng2-datepicker';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PoModule } from './po/po.module';
 import { ComplainsModule } from './complains/complains.module';
+import { OrderModule } from './order/order.module';
 
 
 
@@ -44,7 +45,8 @@ import { ComplainsModule } from './complains/complains.module';
     ToastrModule.forRoot(),
     DatepickerModule,
     PoModule,
-    ComplainsModule
+    ComplainsModule,
+    OrderModule
   ],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,0 +1,191 @@
+<app-header></app-header>
+<div class="page-content">
+    <section class="prof-head">
+        <div class="container">
+            <h2>Order Planning</h2>
+        </div>
+    </section>
+    <section class="prof-form">
+        <div class="container">
+            <div class="prof-form-bdy">
+                <div class="search-sec">
+                    <form [formGroup]="productionForm" (ngSubmit)="productionSave()">
+                        <div class="row">
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <div class="position-relative">
+                                        <input type="date" formControlName="start_date"
+                                            class="form-control form-control-sm datepicker">
+                                        <div
+                                            *ngIf="productionForm.controls['start_date'].invalid && (productionForm.controls['start_date'].dirty || productionForm.controls['start_date'].touched || submitted)">
+                                            <small class="errorStyle">
+                                                Please enter start date.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <div class="position-relative">
+                                        <input type="date" formControlName="end_date"
+                                            class="form-control form-control-sm datepicker">
+                                        <div
+                                            *ngIf="productionForm.controls['end_date'].invalid && (productionForm.controls['end_date'].dirty || productionForm.controls['end_date'].touched || submitted)">
+                                            <small class="errorStyle">
+                                                Please enter end date.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Plant</label>
+                                    <select formControlName="plant" class="form-control form-control-sm">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let state of stateName" value="{{state.name}}">{{state.name}}
+                                        </option>
+                                    </select>
+                                    <div
+                                        *ngIf="productionForm.controls['plant'].invalid && (productionForm.controls['plant'].dirty || productionForm.controls['plant'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Plant is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select formControlName="cat_id" (change)="selectCate($event)"
+                                        class="form-control form-control-sm">
+                                        <option value="">--Select--</option>
+                                        <option value="Ferro Chrome">Ferro Chrome</option>
+                                        <option value="Chrome Ore">Chrome Ore</option>
+                                    </select>
+                                    <div
+                                        *ngIf="productionForm.controls['cat_id'].invalid && (productionForm.controls['cat_id'].dirty || productionForm.controls['cat_id'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Categorie is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Subcategory</label>
+                                    <select formControlName="sub_cat_id" (change)="selectsubCat($event)"
+                                        class="form-control form-control-sm">
+                                        <option value="">--Select--</option>
+                                        <option value="HC Ferro Chrome (Chips)">HC Ferro Chrome (Chips)</option>
+                                        <option value="High Grade Friable Chrome Ore">High Grade Friable Chrome Ore
+                                        </option>
+                                    </select>
+                                    <div
+                                        *ngIf="productionForm.controls['sub_cat_id'].invalid && (productionForm.controls['sub_cat_id'].dirty || productionForm.controls['sub_cat_id'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Sub categorie is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Size</label>
+                                    <select formControlName="size" (change)="selectSize($event)"
+                                        class="form-control form-control-sm">
+                                        <option value=""> Select</option>
+                                        <option value="10-50">10-50</option>
+                                        <option value="10-70">10-70</option>
+                                        <option value="10-100">10-100</option>
+                                        <option value="10-150">10-150</option>
+                                    </select>
+                                    <div
+                                        *ngIf="productionForm.controls['size'].invalid && (productionForm.controls['size'].dirty || productionForm.controls['size'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Size is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Opening Stock</label>
+                                    <input type="text" formControlName="open_stk" class="form-control form-control-sm">
+                                    <div
+                                        *ngIf="productionForm.controls['open_stk'].invalid && (productionForm.controls['open_stk'].dirty || productionForm.controls['open_stk'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Please enter stock.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Monthly Prodution Plan</label>
+                                    <input type="text" formControlName="mnthly_prod"
+                                        class="form-control form-control-sm">
+                                        <div
+                                        *ngIf="productionForm.controls['mnthly_prod'].invalid && (productionForm.controls['mnthly_prod'].dirty || productionForm.controls['mnthly_prod'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Monthly prodution is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Export Order Qty.</label>
+                                    <input type="text" formControlName="export" class="form-control form-control-sm">
+                                    <div
+                                        *ngIf="productionForm.controls['export'].invalid && (productionForm.controls['export'].dirty || productionForm.controls['export'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Export order qty is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Offline Domestic Qty.</label>
+                                    <input type="text" formControlName="offline" class="form-control form-control-sm">
+                                    <div
+                                        *ngIf="productionForm.controls['offline'].invalid && (productionForm.controls['offline'].dirty || productionForm.controls['offline'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Offline domestic qty is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Order In SAP</label>
+                                    <input type="text" formControlName="sap_order" class="form-control form-control-sm">
+                                    <div
+                                        *ngIf="productionForm.controls['sap_order'].invalid && (productionForm.controls['sap_order'].dirty || productionForm.controls['sap_order'].touched || submitted)">
+                                        <small class="errorStyle">
+                                            Order In SAP is required.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-12">
+                                <hr>
+                            </div>
+                            <div class="col-lg-12 text-right">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-paper-plane"></i>
+                                    Submit</button>&nbsp;
+                                <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<app-footer></app-footer>

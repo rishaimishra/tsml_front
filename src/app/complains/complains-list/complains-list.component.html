@@ -27,27 +27,27 @@
                                </tr>
                             </thead>
                             <tbody>
-                               <tr>
+                               <tr *ngFor="let comp of camplainsItems">
                                   <td *ngIf="!userType">
-                                     {{camplainsItems?.customer_name}}
+                                     {{comp?.customer_name}}
                                   </td>
                                   <td>
-                                    {{camplainsItems?.com_cate_name}}
+                                    {{comp?.com_cate_name}}
                                   </td>
                                   <td>
-                                    {{camplainsItems?.com_sub_cate_name}}
+                                    {{comp?.com_sub_cate_name}}
                                   </td>
                                   <td>
-                                    {{camplainsItems?.com_sub_cate2_name}}
+                                    {{comp?.com_sub_cate2_name}}
                                   </td>
                                   <td>
-                                     {{camplainsItems?.com_sub_cate3_name}}
+                                     {{comp?.com_sub_cate3_name}}
                                   </td>
                                   <td>
-                                     -----
+                                     {{comp?.remarks}}
                                   <td>
                                      <div class="btn-edt-del">
-                                        <a class="edt-btn btn-primary pointer" (click)="goToreplyPage(camplainsItems?.customer_name)" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                        <a class="edt-btn btn-primary pointer" (click)="goToreplyPage(comp?.complain_id)" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
                                      </div>
                                   </td>
                                </tr>

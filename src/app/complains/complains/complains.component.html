@@ -15,7 +15,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Categories</label>
-                                <select (change)="selectCategories($event)" formControlName="com_cate_id" class="form-control">
+                                <select (change)="selectCategories($event)" formControlName="com_cate_id" 
+                                [ngClass]="{ 'is-invalid': (f.com_cate_id.errors && f.com_cate_id.touched) || submitted}" class="form-control">
                                     <option value="">--Categories--</option>
                                     <option value="{{catgri.id}}" *ngFor="let catgri of categorie">{{catgri.com_cate_name}}</option>
                                 </select>
@@ -24,7 +25,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Sub Categories 1</label>
-                                <select (change)="selectSubCat1($event)" formControlName="com_sub_cate_id" class="form-control">
+                                <select (change)="selectSubCat1($event)" formControlName="com_sub_cate_id" 
+                                [ngClass]="{ 'is-invalid': f.com_sub_cate_id.errors && f.com_sub_cate_id.touched || submitted}" class="form-control">
                                     <option value="">--Sub categories 1--</option>
                                     <option value="{{subCat1.id}}" *ngFor="let subCat1 of subCatgri1">{{subCat1.com_sub_cate_name}}</option>
                                 </select>
@@ -33,7 +35,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Sub Categories 2</label>
-                                <select (change)="selectSubCat2($event)" formControlName="com_sub_cate_2id" class="form-control">
+                                <select (change)="selectSubCat2($event)" formControlName="com_sub_cate_2id" 
+                                [ngClass]="{ 'is-invalid': f.com_sub_cate_2id.errors && f.com_sub_cate_2id.touched || submitted}" class="form-control">
                                     <option value="">--Sub categories 2--</option>
                                     <option value="{{subCat2.id}}" *ngFor="let subCat2 of subCatgri2">{{subCat2.com_sub_cate2_name}}</option>
                                 </select>
@@ -42,7 +45,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="">Sub Categories 3</label>
-                                <select (change)="selectSubCat3($event)" formControlName="com_sub_cate_3id" class="form-control">
+                                <select (change)="selectSubCat3($event)" formControlName="com_sub_cate_3id"
+                                [ngClass]="{ 'is-invalid': f.com_sub_cate_3id.errors && f.com_sub_cate_3id.touched || submitted}" class="form-control">
                                     <option value="">--select--</option>
                                     <option value="{{sabCat3.id}}" *ngFor="let sabCat3 of subCatgri3">{{sabCat3.com_sub_cate3_name}}</option>
                                 </select>
@@ -51,7 +55,8 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <label for="">Remarks</label>
-                                <textarea formControlName="customer_remarks" class="form-control" rows="5"></textarea>
+                                <textarea formControlName="customer_remarks" [ngClass]="{ 'is-invalid': f.customer_remarks.errors && f.customer_remarks.touched || submitted}"
+                                 class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">

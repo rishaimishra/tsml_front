@@ -43,35 +43,61 @@
                         </select>
                      </div>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                     <div class="form-group">
-                        <label for="">Remarks</label>
-                        <textarea class="form-control" rows="5" disabled></textarea>
+                  <div class="col-12">
+                     <hr style="border: 1px solid;">
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12" *ngFor="let remarks of remarkAll">
+                     <!-- <div class="form-group" *ngIf="remarks?.customer_remarks != null">
+                        <label for="">Customer Remarks</label>
+                        <textarea class="form-control" rows="5" disabled>{{remarks.customer_remarks}}</textarea>
                      </div>
+                     <div class="form-group" *ngIf="remarks?.kam_remarks != null">
+                        <label for="">Kam's Remarks</label>
+                        <textarea class="form-control" rows="5" disabled>{{remarks.kam_remarks}}</textarea>
+                     </div> -->
+                     <ol class="chat">
+                        <li class="other" *ngIf="remarks?.customer_remarks != null">
+                           <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
+                           <div class="msg">
+                              <p>Customer Remarks!</p>
+                              <p>{{remarks.customer_remarks}}</p>
+                              <time>20:17</time>
+                           </div>
+                        </li>
+                        <li class="self" *ngIf="remarks?.kam_remarks != null">
+                           <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
+                           <div class="msg">
+                              <p>Kam's Remarks!</p>
+                              <p>{{remarks.kam_remarks}}</p>
+                              <time>20:18</time>
+                           </div>
+                        </li>
+                     </ol>
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="showKamTextArea">
                      <div class="form-group">
                         <label for="">Customer Remarks</label>
-                        <textarea [(ngModel)]="remarkReply" class="form-control" rows="5"></textarea>
+                        <textarea [(ngModel)]="remarkReply" #remarkRep="ngModel" class="form-control" rows="5"
+                           required></textarea>
+                        <small *ngIf="remarkRep.invalid && (remarkRep.dirty || remarkRep.touched || submitt)"
+                           class="inputValidation">Remarks is required</small>
                      </div>
                   </div>
                   <div class="col-lg-4 col-md-6 col-sm-6">
-                     <!-- <div class="down_btn_box">
-                        <div class="reply_btn"><a class="btn btn-primary"><i
-                                 class="fa fa-download"></i> Download</a></div>
-                     </div> -->
+
                   </div>
                   <div class="col-lg-8 col-md-6 col-sm-6">
                      <div class="reply_btn_box">
                         <div class="clos-btn">
                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                              <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
+                                 type="checkbox" value="" id="defaultCheck1">
                               <label class="form-check-label" for="defaultCheck1">
                                  Close
                               </label>
                            </div>
                         </div>
-                        <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
+                        <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm"><i
                                  class="fa fa-reply"></i> Reply</button></div>
                      </div>
                   </div>
@@ -79,7 +105,8 @@
                <hr>
                <div class="row">
                   <div class="col-lg-12">
-                     <button (click)="submitReply(compInfo?.complain_id)"class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
+                     <button (click)="submitReply(compInfo?.complain_id)" class="btn btn-primary"><i
+                           class="fa fa-paper-plane"></i> Submit</button>&nbsp;
                      <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
                   </div>
                </div>
@@ -88,6 +115,9 @@
       </section>
    </div>
    <!-- Footer -->
+
+   <!-- <input class="textarea" type="text" placeholder="Type here!" /> -->
+ 
    <app-footer></app-footer>
    <div class="foot_arw">
       <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>

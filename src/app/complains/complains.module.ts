@@ -13,8 +13,8 @@ import { KamReplyComponent } from './kam-reply/kam-reply.component';
 const routes: Routes = [
   {path: 'complains', component: ComplainsComponent, canActivate: [AuthGuard]},
   {path: 'complains-list', component: ComplainsListComponent, canActivate: [AuthGuard]},
-  {path: 'complains-reply/:name', component: ComplainsReplyComponent, canActivate: [AuthGuard]},
-  {path: 'kam-reply/:name', component: KamReplyComponent, canActivate: [AuthGuard]},
+  {path: 'complains-reply/:id', component: ComplainsReplyComponent, canActivate: [AuthGuard]},
+  {path: 'kam-reply/:id', component: KamReplyComponent, canActivate: [AuthGuard]},
 
 ];
 

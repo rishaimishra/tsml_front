@@ -36,6 +36,7 @@ export class ComplainsListComponent implements OnInit {
       if (res.status != 0 && res.message == 'success.') {
         this._spinner.hide();
         this.camplainsItems = res.result;
+        console.log(this.camplainsItems);
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
@@ -47,14 +48,14 @@ export class ComplainsListComponent implements OnInit {
     })
   };
 
-  goToreplyPage(name:any) {
+  goToreplyPage(complain_id:any) {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
-      this._router.navigate(['/kam-reply',name]);
+      this._router.navigate(['/kam-reply',complain_id]);
     } else {
       this.userType = true;
-      this._router.navigate(['/complains-reply',name]);
+      this._router.navigate(['/complains-reply',complain_id]);
     }
   }
 }
