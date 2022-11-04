@@ -61,7 +61,7 @@
                            <div class="msg">
                               <p>Customer Remarks!</p>
                               <p>{{remarks.customer_remarks}}</p>
-                              <time>20:17</time>
+                              <time>{{remarks.created_at}}</time>
                            </div>
                         </li>
                         <li class="self" *ngIf="remarks?.kam_remarks != null">
@@ -69,7 +69,7 @@
                            <div class="msg">
                               <p>Kam's Remarks!</p>
                               <p>{{remarks.kam_remarks}}</p>
-                              <time>20:18</time>
+                              <time>{{remarks.created_at}}</time>
                            </div>
                         </li>
                      </ol>
