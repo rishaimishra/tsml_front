@@ -1,1 +1,73 @@
-<p>daily-production works!</p>
+<!-- Header -->
+<app-header></app-header>
+<div class="page-content">
+    <section class="prof-head">
+        <div class="container">
+            <h2>Daily Production Upload</h2>
+        </div>
+    </section>
+    <section class="prof-form">
+        <div class="container">
+            <div class="prof-form-bdy">
+                <div class="search-sec">
+                    <div class="row">
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <div class="position-relative">
+                                    <input type="date" [(ngModel)]="startDate" #startDt="ngModel" class="form-control datepicker" required>
+                                    <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                                    <small *ngIf="(startDate.invalid || startDate.dirty) || submitt"
+                            class="inputValidation">Start Date is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>End Date</label>
+                                <div class="position-relative">
+                                    <input type="date" [(ngModel)]="endDate" #endDt="ngModel" class="form-control datepicker" required>
+                                    <!-- <span class="over_llp"><img src="images/cal.png" alt=""></span> -->
+                                    <small *ngIf="endDate.invalid || endDate.dirty || endDate.touched || submitt"
+                            class="inputValidation">End Date is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Order In SAP</label>
+                                <div class="position-relative">
+                                    <input type="text" [(ngModel)]="fg_sap" #fg_sap1="ngModel" class="form-control datepicker" required>
+                                    <!-- <span class="over_llp"><img src="images/cal.png" alt=""></span> -->
+                                    <small *ngIf="fg_sap.invalid || fg_sap.dirty || fg_sap.touched || submitt"
+                            class="inputValidation">Order In SAP is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <label for="">Production Upload</label>
+                            <div class="custom-file mb-3">
+                                <input type="file" accept=".xlsx,.xlsm," (change)="fileUplaod($event)" class="custom-file-input" id="customFile" name="filename" required>
+                                <label class="custom-file-label" for="customFile">{{uploadedFile.name ? uploadedFile.name : 'Production Upload'}}</label>
+                               
+                            </div>
+                        </div>
+                       
+                        <div class="col-12 col-lg-12">
+                            <hr>
+                        </div>
+                        <div class="col-lg-12">
+                            <!-- href="daily-production-upload-table.html" -->
+                            <button class="btn btn-primary" type="button" (click)="submitForm()"><i
+                                    class="fa fa-paper-plane"></i> Submit</button>&nbsp;
+                            <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<!-- footer -->
+<app-footer></app-footer>

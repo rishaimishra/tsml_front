@@ -7,12 +7,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DispatchPlanComponent } from './dispatch-plan/dispatch-plan.component';
 
 
 const routes: Routes = [
   {path: 'order-planing', component: OrderPlaningComponent, canActivate: [AuthGuard]},
   {path: 'order-planing-form', component: OrderPlaningFormComponent, canActivate: [AuthGuard]},
   {path: 'daily-production', component: DailyProductionComponent, canActivate: [AuthGuard]},
+  {path: 'dispatch-plan', component: DispatchPlanComponent, canActivate: [AuthGuard]},
 
 ];
 
@@ -20,7 +22,8 @@ const routes: Routes = [
   declarations: [
     OrderPlaningFormComponent,
     OrderPlaningComponent,
-    DailyProductionComponent
+    DailyProductionComponent,
+    DispatchPlanComponent
   ],
   imports: [
     CommonModule,

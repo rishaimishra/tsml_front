@@ -54,7 +54,6 @@ export class CustomerDashboardComponent implements OnInit {
     this._product.getPoList().subscribe((res:any) => {
       if(res.message == 'success') {
         this.spinner.hide();
-      console.log(res);
       this.poItems = res.result;
       }
     }, err => {

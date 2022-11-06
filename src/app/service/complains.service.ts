@@ -29,8 +29,20 @@ export class ComplainsService {
   replyComplains(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/remarks-replay', reqParameter);
   };
-  //user/monthly_prod_plan_submit
+
   saveProduction(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/monthly_prod_plan_submit', reqParameter);
+  };
+
+  storeDailyProd(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/prod-qty-upload', reqParameter);
+  };
+
+  storeDispatchPlan(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/submit_dispatch_plan', reqParameter);
+  };
+
+  OrderPlaning(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get_order_planning', reqParameter);
   };
 }
