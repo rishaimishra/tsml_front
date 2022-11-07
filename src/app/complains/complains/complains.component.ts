@@ -20,6 +20,8 @@ export class ComplainsComponent implements OnInit {
   subCatgri2: any;
   subCatgri3: any;
   selectedFile: File;
+  poNumber:any;
+  poDate:any;
 
 
   constructor(private _complainse: ComplainsService,
@@ -32,6 +34,8 @@ export class ComplainsComponent implements OnInit {
       com_sub_cate_3id: ['', Validators.required],
       customer_remarks: ['', Validators.required],
       customer_name: [''],
+      po_date: [''],
+      po_number: [''],
       complain_file: ['']
 
     })
@@ -41,6 +45,13 @@ export class ComplainsComponent implements OnInit {
   };
   ngOnInit(): void {
     this.user_name = localStorage.getItem('USER_NAME');
+
+    this._complainse.receiveData().subscribe((res:any) => {
+      this.poNumber = res[0];
+      this.poDate = res[1]
+      
+      console.log('poData',this.poNumber, this.poDate);
+    })
     this.categories();
   }
   categories() {
@@ -131,6 +142,8 @@ export class ComplainsComponent implements OnInit {
     fileData.append('com_sub_cate_3id', frm.com_sub_cate_3id);
     fileData.append('customer_remarks', frm.customer_remarks);
     fileData.append('customer_name', this.user_name);
+    fileData.append('po_date', this.poDate);
+    fileData.append('po_number', this.poNumber);
     fileData.append('complain_file', this.selectedFile);
 
     this._complainse.storeComplain(fileData).subscribe((res:any) => {

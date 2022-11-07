@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { ComplainsService } from 'src/app/service/complains.service';
 import { ProductsService } from 'src/app/service/products.service';
 import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
@@ -85,6 +86,7 @@ export class PoViewComponent implements OnInit {
   letterHead: any;
   letterHeadFile: boolean = false;
   letterHedFile: any;
+  poInfo:any;
 
 
   constructor(
@@ -95,7 +97,8 @@ export class PoViewComponent implements OnInit {
     private _product: ProductsService,
     private _toaster: ToastrService,
     private _state: StateCityService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _complains: ComplainsService
   ) {
   }
 
@@ -145,7 +148,7 @@ export class PoViewComponent implements OnInit {
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_quote_po_by_id' + '/' + this.productId;
+    let url = '/user/get_po_by_id' + '/' + this.productId;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
@@ -155,6 +158,7 @@ export class PoViewComponent implements OnInit {
         this.selectedItem = this.product_data;
         this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
+        this.poInfo = this.selectedItem[0];
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
@@ -593,4 +597,16 @@ export class PoViewComponent implements OnInit {
     })
   }
 
+  raiseComplain(poId:any, date:any) {
+    console.log('Hi Customer', poId, date);
+    let data:any = [];
+    data = [poId, date];
+    this._complains.sendData(data);
+    this._router.navigate(['/complains']);
+  };
+
+  viewComplain() {
+    console.log('Hi Kam');
+    this._router.navigate(['/kam-reply']);
+  }
 }

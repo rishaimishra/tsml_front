@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,6 +10,8 @@ export class ComplainsService {
 
   private BesUrl = environment.apiEndpointBase;
   constructor(private _http: HttpClient) { }
+
+  private subject = new BehaviorSubject<string>('');
 
   getMethod(url_paremter: any) {
     return this._http.get(this.BesUrl + url_paremter);
@@ -44,5 +47,13 @@ export class ComplainsService {
 
   OrderPlaning(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/get_order_planning', reqParameter);
+  };
+
+  sendData(data:string) {
+    this.subject.next(data)
+  };
+
+  receiveData(): Observable<string> {
+    return this.subject.asObservable();
   };
 }

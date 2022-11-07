@@ -18,6 +18,8 @@
                             <thead>
                                <tr>
                                   <th *ngIf="!userType">Customer Name</th>
+                                  <th>Po Number</th>
+                                  <th>Po Date</th>
                                   <th>Categories</th>
                                   <th>Sub Categories 1</th>
                                   <th>Sub Categories 2</th>
@@ -28,6 +30,12 @@
                             </thead>
                             <tbody>
                                <tr *ngFor="let comp of camplainsItems">
+                                 <td>
+                                    {{comp?.po_number}}
+                                  </td>
+                                 <td>
+                                    {{comp?.po_date}}
+                                  </td>
                                   <td *ngIf="!userType">
                                      {{comp?.customer_name}}
                                   </td>

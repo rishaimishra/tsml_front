@@ -85,6 +85,7 @@ export class PoEditComponent implements OnInit {
   letterHead: any;
   letterHeadFile: boolean = false;
   letterHedFile: any;
+  poInfo:any;
 
 
   constructor(
@@ -159,6 +160,7 @@ export class PoEditComponent implements OnInit {
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.catId = this.selectedItem[0].product_id;
+        this.poInfo = this.selectedItem[0];
         this.show_data = true;
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];

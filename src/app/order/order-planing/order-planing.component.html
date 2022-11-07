@@ -9,14 +9,16 @@
     </section>
     <section class="add-prod-pg">
         <div class="container-fluid">
+            <!-- Sarching  -->
             <div class="prof-form-bdy pb-0">
+                <form [formGroup]="orderPlaningForm" (ngSubmit)="searchOrderPlan()">
                 <div class="row">
                     <div class="col-12 col-lg-2">
                         <div class="form-group">
                             <label>Start Date</label>
                             <div class="position-relative">
-                                <input type="text" class="form-control form-control-sm datepicker">
-                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                                <input type="date" formControlName="start_date" class="form-control form-control-sm datepicker">
+                                <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                         </div>
                     </div>
@@ -25,18 +27,18 @@
                         <div class="form-group">
                             <label>End Date</label>
                             <div class="position-relative">
-                                <input type="text" class="form-control form-control-sm datepicker">
-                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                                <input type="date"  formControlName="end_date" class="form-control form-control-sm datepicker">
+                                <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-2">
                         <div class="form-group">
                             <label>Plant</label>
-                            <select class="form-control form-control-sm">
-                                <option> Select</option>
-                                <option>XXXXX</option>
-                                <option>XXXXX</option>
+                            <select (change)="selectPlant($event)" class="form-control form-control-sm" formControlName="plant">
+                                <option value="">--Select--</option>
+                                <option value="Plant 1">Plant 1</option>
+                                <option value="Plant 2">Plant 2</option>
                             </select>
                         </div>
                     </div>
@@ -44,33 +46,34 @@
                     <div class="col-12 col-lg-2">
                         <div class="form-group">
                             <label>Material Group</label>
-                            <input type="text" class="form-control form-control-sm">
+                            <input type="text" formControlName="mat_grp" class="form-control form-control-sm">
                         </div>
                     </div>
                     <!--/-->
                     <div class="col-12 col-lg-2">
                         <div class="form-group">
                             <label>Material Number</label>
-                            <input type="text" class="form-control form-control-sm">
+                            <input type="text" formControlName="mat_no" class="form-control form-control-sm">
                         </div>
                     </div>
                     <!--/-->
                     <div class="col-12 col-lg-2">
                         <div class="form-group">
                             <label>Grade Code</label>
-                            <input type="text" class="form-control form-control-sm">
+                            <input type="text" formControlName="grade" class="form-control form-control-sm">
                         </div>
                     </div>
                     <!--/-->
 
                     <!--/-->
                     <div class="col-12 col-lg-2">
-                        <button type="button" class="btn btn-primary mb-4"><i class="fa fa-search"
+                        <button type="submit" class="btn btn-primary mb-4"><i class="fa fa-search"
                                 aria-hidden="true"></i> Search</button>
                     </div>
                 </div>
+            </form>
             </div>
-
+            <!-- Listing -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cart-table pb-5 mt-4">
@@ -95,131 +98,40 @@
                                         <th>Order Punched<em>In System (SO)</em></th>
                                         <th>FG Stock<em>(for the date) </em></th>
                                         <th>FG Stock<em>(SAP- as on date)</em></th>
-                                        <th>FG Stock after<em>dispatch plan</em></th>
+                                        <th>FG Stock <em>after dispatch plan</em></th>
                                         <th>Total <br> Planned qty</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="wid-25">Kolkata Chrome Corporation Pvt. Ltd.</td>
-                                        <td class="wid-25">Ferro Chrome</td>
-                                        <td class="wid-25">HC Ferro Chrome (Chips)</td>
-                                        <td>Product 1</td>
-                                        <td>XXXXXX</td>
-                                        <td>Subcat A</td>
-                                        <td>#############</td>
-                                        <td>1000</td>
-                                        <td>8000</td>
-                                        <td>2000</td>
-                                        <td>800</td>
-                                        <td>6200</td>
-                                        <td>500</td>
-                                        <td>5700</td>
-                                        <td>1000</td>
-                                        <td>700</td>
-                                        <td>100</td>
-                                        <td>200</td>
-                                        <td>600</td>
+                                    <tr *ngFor="let orders of orderList">
+                                        <td class="wid-25">{{orders.plant}}</td>
+                                        <td class="wid-25">{{orders.category}}</td>
+                                        <td class="wid-25">{{orders.subcategory}}</td>
+                                        <td>{{orders.mat_grp}}</td>
+                                        <td>{{orders.mat_no}}</td>
+                                        <td>{{orders.grade}}</td>
+                                        <td>{{orders.desc}}</td>
+                                        <td>{{orders.op_stk}}</td>
+                                        <td>{{orders.mnthl_prdo_stk}}</td>
+                                        <td>{{orders.export}}</td>
+                                        <td>{{orders.offline}}</td>
+                                        <td>{{orders.tot_qty}}</td>
+                                        <td>{{orders.on_dom}}</td>
+                                        <td>{{orders.bal_qty}}</td>
+                                        <td>{{orders.order_pur}}</td>
+                                        <td>{{orders.fg}}</td>
+                                        <td>{{orders.fg_sap}}</td>
+                                        <td>{{orders.fg_after_dis}}</td>
+                                        <td>{{orders.dis_sum}}</td>
                                         <td><button class="btn btn-sm btn-primary" data-toggle="modal"
                                                 data-target="#myModal">Dispatch Plan</button></td>
                                     </tr>
-                                    <tr>
-                                        <td class="wid-25">Plant 2</td>
-                                        <td class="wid-25">Chrome Ore</td>
-                                        <td class="wid-25">High Grade Friable Chrome Ore</td>
-                                        <td>Product 1</td>
-                                        <td>XXXXXX</td>
-                                        <td>Subcat A</td>
-                                        <td>#############</td>
-                                        <td>1000</td>
-                                        <td>8000</td>
-                                        <td>2000</td>
-                                        <td>800</td>
-                                        <td>6200</td>
-                                        <td>500</td>
-                                        <td>5700</td>
-                                        <td>1000</td>
-                                        <td>700</td>
-                                        <td>100</td>
-                                        <td>200</td>
-                                        <td>600</td>
-                                        <td><button class="btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#myModal">Dispatch Plan</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="wid-25">Plant 3</td>
-                                        <td class="wid-25">Chrome Ore</td>
-                                        <td class="wid-25">High Grade Friable Chrome Ore</td>
-                                        <td>Product 1</td>
-                                        <td>XXXXXX</td>
-                                        <td>Subcat A</td>
-                                        <td>#############</td>
-                                        <td>1000</td>
-                                        <td>8000</td>
-                                        <td>2000</td>
-                                        <td>800</td>
-                                        <td>6200</td>
-                                        <td>500</td>
-                                        <td>5700</td>
-                                        <td>1000</td>
-                                        <td>700</td>
-                                        <td>100</td>
-                                        <td>200</td>
-                                        <td>600</td>
-                                        <td><button class="btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#myModal">Dispatch Plan</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="wid-25">Mumbai Chrome Corporation Pvt. Ltd.</td>
-                                        <td class="wid-25">Ferro Chrome</td>
-                                        <td class="wid-25">HC Ferro Chrome (Chips)</td>
-                                        <td>Product 1</td>
-                                        <td>XXXXXX</td>
-                                        <td>Subcat A</td>
-                                        <td>#############</td>
-                                        <td>1000</td>
-                                        <td>8000</td>
-                                        <td>2000</td>
-                                        <td>800</td>
-                                        <td>6200</td>
-                                        <td>500</td>
-                                        <td>5700</td>
-                                        <td>1000</td>
-                                        <td>700</td>
-                                        <td>100</td>
-                                        <td>200</td>
-                                        <td>600</td>
-                                        <td><button class="btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#myModal">Dispatch Plan</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="wid-25">Depot 2</td>
-                                        <td class="wid-25">Ferro Chrome</td>
-                                        <td class="wid-25">HC Ferro Chrome (Chips)</td>
-                                        <td>Product 1</td>
-                                        <td>XXXXXX</td>
-                                        <td>Subcat A</td>
-                                        <td>#############</td>
-                                        <td>1000</td>
-                                        <td>8000</td>
-                                        <td>2000</td>
-                                        <td>800</td>
-                                        <td>6200</td>
-                                        <td>500</td>
-                                        <td>5700</td>
-                                        <td>1000</td>
-                                        <td>700</td>
-                                        <td>100</td>
-                                        <td>200</td>
-                                        <td>600</td>
-                                        <td><button class="btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#myModal">Dispatch Plan</button></td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
 
-                            <!-- Modal -->
+                            <!-- Dispatch plan Modal -->
                             <div id="myModal" class="modal" role="dialog">
                                 <div class="modal-dialog modal-90">
 
@@ -230,112 +142,25 @@
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-op">
-                                                    <thead>
-                                                        <th>1</th>
-                                                        <th>2</th>
-                                                        <th>3</th>
-                                                        <th>4</th>
-                                                        <th>5</th>
-                                                        <th>6</th>
-                                                        <th>7</th>
-                                                        <th>8</th>
-                                                        <th>9</th>
-                                                        <th>10</th>
-                                                        <th>11</th>
-                                                        <th>12</th>
-                                                        <th>13</th>
-                                                        <th>14</th>
-                                                        <th>15</th>
-                                                        <th>16</th>
-                                                        <th>17</th>
-                                                        <th>18</th>
-                                                        <th>19</th>
-                                                        <th>20</th>
-                                                        <th>21</th>
-                                                        <th>22</th>
-                                                        <th>23</th>
-                                                        <th>24</th>
-                                                        <th>25</th>
-                                                        <th>26</th>
-                                                        <th>27</th>
-                                                        <th>28</th>
-                                                        <th>29</th>
-                                                        <th>30</th>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="100"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="200"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="300"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="400"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="600"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="700"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="800"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="900"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                            <td><input class="form-control form-control-sm" type="text"
-                                                                    placeholder="" value="500"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            
+                                            <div class="row table-op2">
+                                                <div class="top-table-op-2" *ngFor="let dispatch of dispatchPlan">
+                                                    {{dispatch.day}}
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="row mt-2 table-op3">
+                                                <div class=" top-table-op-2" *ngFor="let dispatch of dispatchPlan">
+                                                   <input type="text" class="form-control" value="{{dispatch.ds_qty}}" readonly name="" id="">
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <a href="#" class="btn btn-primary"><i class="fa fa-check"></i>
-                                                        Ok</a>
+                                                        Ok</a>&nbsp;
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i
                                                             class="fa fa-times"></i> Cancel</button>
                                                 </div>

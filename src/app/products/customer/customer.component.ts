@@ -469,10 +469,10 @@ export class CustomerComponent implements OnInit {
       // this.percentPrice = (this.productPrice.bpt_price / prcentPrice).toFixed(2);
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-    
+    console.log(prodId,catid, size);
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
@@ -481,7 +481,11 @@ export class CustomerComponent implements OnInit {
     let price = {
       "user_id": this.user_Id,
       "pickup_from": pickup,
-      "location": location
+      "location": location,
+      "destation_location": shipTo,
+      "pro_id": prodId,
+      "cat_id": catid,
+      "size": size
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;

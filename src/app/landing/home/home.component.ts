@@ -104,8 +104,8 @@ export class HomeComponent implements OnInit {
     return this.menuId === item;
   };
   
-  gotoDetailsPage(productId: any, categoryId: any) {
-    this._router.navigate(['/product-details', productId, categoryId]);
+  gotoDetailsPage() {
+    this._router.navigate(['/all-product']);
   }
   get_popular_product() {
     let url = '/popular-product';

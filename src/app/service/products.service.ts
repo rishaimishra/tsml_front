@@ -57,7 +57,6 @@ export class ProductsService {
     return this._http.post(this.BesUrl + '/user/delete_quote_sche', reqParameter);
   };
 
-  // user/submit_requote_id
 
   reqouteData(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/submit_requote_id', reqParameter);

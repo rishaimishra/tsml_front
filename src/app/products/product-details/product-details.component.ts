@@ -92,7 +92,6 @@ export class ProductDetailsComponent implements OnInit {
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
-          console.log('data', this.selectedItem);
           this.show_data = true;
           // const uniqueID = uuid.v4();
           const scheduleNo = Math.floor(1000 + Math.random() * 9000);
