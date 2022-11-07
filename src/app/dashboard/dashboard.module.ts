@@ -5,11 +5,13 @@ import { KamDashboardComponent } from './kam-dashboard/kam-dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SalesDashboardComponent } from './sales-dashboard/sales-dashboard.component';
 
 
 const routes: Routes = [
   {path: 'customer-dashboard', component: CustomerDashboardComponent},
-  {path: 'kam-dashboard', component: KamDashboardComponent}
+  {path: 'kam-dashboard', component: KamDashboardComponent},
+  {path: 'sales-dashboard', component: SalesDashboardComponent}
 
 ]
 
@@ -17,7 +19,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     CustomerDashboardComponent,
-    KamDashboardComponent
+    KamDashboardComponent,
+    SalesDashboardComponent
   ],
   imports: [
     CommonModule,

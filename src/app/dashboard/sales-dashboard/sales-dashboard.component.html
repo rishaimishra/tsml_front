@@ -1,0 +1,272 @@
+<header class="header_sec">
+    <div class="header_top">
+       <div class="container">
+          <!-- <div class="header_top_inr">
+             <ul>
+                <li>
+                   <a href="#" class="shopcut"> <span class="cart-txt">My Cart</span>
+                   <img src="assets/images/cuticon.png" alt=""> <span class="noti">3</span> 
+                   </a>
+                   <div class="shopcutBx">
+                      <div class="shopcutBx_media">
+                         <div class="media">
+                            <em> <a href="#"> <img src="assets/images/product2.png" alt="product"> </a></em>
+                            <div class="media-body">
+                               <p><a href="#">HC Ferro Chrome</a></p>
+                               <b>Size: 10-50</b>
+                            </div>
+                         </div>
+                         <a href="#url" class="closecut"><i class="fa fa-times" aria-hidden="true"></i></a>
+                      </div>
+                      <div class="shopcutBx_media">
+                         <div class="media">
+                            <em> <a href="#"> <img src="assets/images/product1.png" alt="product"> </a></em>
+                            <div class="media-body">
+                               <p><a href="#">HC Ferro Chrome</a></p>
+                               <b>Size: 10-50</b>
+                            </div>
+                         </div>
+                         <a href="#url" class="closecut"><i class="fa fa-times" aria-hidden="true"></i></a>
+                      </div>
+                      <div class="shopcutBx_media">
+                         <div class="media">
+                            <em> <a href="#"> <img src="assets/images/product3.png" alt="product"> </a></em>
+                            <div class="media-body">
+                               <p><a href="#">HC Ferro Chrome</a></p>
+                               <b>Size: 10-50</b>
+                            </div>
+                         </div>
+                         <a href="#url" class="closecut"><i class="fa fa-times" aria-hidden="true"></i></a>
+                      </div>
+                      <div class="cutview_btn">
+                         <ul>
+                            <li><a href="#url" class="sign_btn">View Cart</a></li>
+                         </ul>
+                      </div>
+                   </div>
+                </li>
+                <li class="hedTopBtn"> <a href="#url" class="sign_btn">Contact</a> <a href="#url" class="sign_btn log_btn">English</a> </li>
+             </ul>
+          </div> -->
+       </div>
+    </div>
+    <div class="header_botom">
+       <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-dark">
+             <a class="navbar-brand" href="#"><span class="wit-pic wit-primary-logo"><img src="assets/images/logo-white.png" alt="logo" /></span><span class="blu-pic blu-primary-logo"><img src="assets/images/logo-blue.png" alt="logo" /></span></a>
+             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+             </button>
+              <div class="collapse navbar-collapse" id="main_nav">
+                <ul class="navbar-nav ml-auto">
+                   <li class="nav-item"><a class="nav-link" href="search-result.html">  Home </a></li>
+                   <li class="nav-item dropdown">
+                      <a class="nav-link  dropdown-toggle" href="javascript:;" data-toggle="dropdown">Products</a>
+                      <div class="dropdown-menu dropdown-large">
+                         <div class="row g-3">
+                            <div class="col-sm-6">
+                               <ul class="list-unstyled">
+                                  <li><a href="overview.html">Overview </a></li>
+                                  <li><a href="search-result.html">Ferro Chrome</a></li>
+                                  <li><a href="search-result.html">Chrome Ore</a></li>
+                               </ul>
+                            </div>
+                            <!-- end col-3 -->
+                            <div class="col-sm-6">
+                               <ul class="list-unstyled">
+                                  <li>
+                                     <img src="assets/images/about-us-dropdown.jpg">
+                                  </li>
+                               </ul>
+                               <h6 class="title">Tata Steel Mining Ltd. (Formerly TS Alloys Ltd) is a 100 per cent subsidiary of Tata Steel Ltd. We have nurtured strong relationship with customers across the globe and strive to become a key player in mining and Ferro Alloys business.</h6>
+                            </div>
+                            <!-- end col-3 -->
+                         </div>
+                         <!-- end row -->
+                      </div>
+                      <!-- dropdown-large.// -->
+                   </li>
+                   
+                    <li class="nav-item"><a class="nav-link" *ngIf="!userType" routerLink="/order-planing">Order Schedule</a></li>
+                  <li class="nav-item" *ngIf="userType">
+                    <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
+                        Order Schedule</a>
+                        <div class="dropdown-menu dropdown-large" style="color: black;">
+                            <a routerLink="/order-planing">Order Planing</a><br>
+                            <a routerLink="/order-planing-form" class="mt-2">Order Planing Form</a>
+                          </div>
+                  </li>
+                   <li class="nav-item">
+                      <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
+                      Schedule</a>
+                      
+                      <!-- dropdown-large.// -->
+                      <div class="dropdown-menu dropdown-large">
+                         <div class="row g-3">
+                            <div class="col-sm-6">
+                               <ul class="list-unstyled">
+                                  <li><a href="scheduling.html">View Schedule</a></li>
+                               </ul>
+                            </div>
+                            <!-- end col-3 -->
+                            <div class="col-sm-6">
+                               <ul class="list-unstyled">
+                                  <li>
+                                     <img src="assets/images/about-us-dropdown.jpg">
+                                  </li>
+                               </ul>
+                               <h6 class="title">Tata Steel Mining Ltd. (Formerly TS Alloys Ltd) is a 100 per cent subsidiary of Tata Steel Ltd. We have nurtured strong relationship with customers across the globe and strive to become a key player in mining and Ferro Alloys business.</h6>
+                            </div>
+                            <!-- end col-3 -->
+                         </div>
+                         <!-- end row -->
+                      </div>
+                   </li>
+                   <li class="nav-item"><a class="nav-link" href="stock-status.html">Stock Status</a></li>
+                   <li class="nav-item"><a class="nav-link" href="login.html"> Logout </a></li>
+                </ul>
+             </div>
+             <!-- navbar-collapse.// -->
+             <div class="hedbt">
+                <a href="search-service-request.html" class="sebtn"><span class="wit-pic"><img src="assets/images/magnifiying-white.png"></span><span class="blu-pic"><img src="assets/images/magnifiying-black.png"></span></a>
+                <span class="wit-pic wit-secondary-logo"><img src="assets/images/secondary-white.png"></span><span class="blu-pic blu-secondary-logo"><img src="assets/images/secondary-blue.png"></span>
+             </div>
+          </nav>
+       </div>
+    </div>
+ </header>
+ <div class="page-content">
+    <div class="container">
+       <div class="row">
+          <div class="col-12">
+             <h3 class="text-dark mt-4 mb-0">Welcome to Sales Dashboard</h3>
+          </div>
+       </div>
+       <div class="row mt-3">
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">500</span>
+                            <b>No of Customers</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-warning1  hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">256</span>
+                            <b>Orders in Hand</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">20,000 MT</span>
+                            <b> Production Till Date</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">18,000 MT</span>
+                            <b>Dispatch Till Date</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+             </div>
+       <!--Top Four Blocks-->
+       <!--Graphs-->
+       <div class="row">
+          <div class="col-12 mt-2">
+             <div class="month-year-search">
+                <!-- <div class="form-group">
+                   <label>Select Month</label>
+                   <select class="form-control">
+                      <option>Select</option>
+                   </select>
+                </div> -->
+                <div class="form-group">
+                  <a href="#" class="btn btn-primary btn-block mt-41"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
+                </div>
+                <div class="form-group">
+                   <label>Select Year</label>
+                   <select class="form-control">
+                      <option>Select Year</option>
+                   </select>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="row mt-2 mb-5">
+          <div class="col-12 col-lg-6 grid-margin stretch-card">
+             <div class="card">
+                <div class="card-body px-0 pb-0 border-bottom">
+                   <div class="px-4">
+                      <h4 class="card-title ml-1">Region Wise Product Sale</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                </div>
+             </div>
+          </div>
+          <!--/-->
+          <div class="col-12 col-lg-6 grid-margin stretch-card">
+             <div class="card">
+                <div class="card-body px-0 pb-0 border-bottom">
+                   <div class="px-4">
+                      <h4 class="card-title ml-1">Category Wise Product Sale</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+                </div>
+             </div>
+          </div>
+          <!--/-->
+          <div class="col-12 col-lg-6 grid-margin stretch-card">
+             <div class="card">
+                <div class="card-body px-0 pb-0 border-bottom">
+                   <div class="px-4">
+                      <h4 class="card-title ml-1">CAM Wise Product Sale</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+                </div>
+             </div>
+          </div>
+          <!--/-->
+          <div class="col-12 col-lg-6 grid-margin stretch-card">
+             <div class="card">
+                <div class="card-body px-0 pb-0 border-bottom">
+                   <div class="px-4">
+                      <h4 class="card-title ml-1">Month Wise Product Sale</h4>
+                   </div>
+                </div>
+                <div class="card-body"> 
+                <canvas id="myChart4" style="width:100%;max-width:600px"></canvas>
+             </div>
+          </div>
+          <!--/-->
+       </div>
+       <!--/Graphs-->
+    </div>
+ </div>
+ <div class="foot_arw">
+    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
+ </div>
