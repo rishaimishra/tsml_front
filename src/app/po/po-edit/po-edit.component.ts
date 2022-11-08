@@ -151,7 +151,7 @@ export class PoEditComponent implements OnInit {
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_quote_po_by_id' + '/' + this.productId;
+    let url = '/user/get_po_by_id' + '/' + this.productId;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {

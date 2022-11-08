@@ -90,10 +90,11 @@
                     <li class="nav-item"><a class="nav-link" *ngIf="!userType" routerLink="/order-planing">Order Schedule</a></li>
                   <li class="nav-item" *ngIf="userType">
                     <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
-                        Order Schedule</a>
-                        <div class="dropdown-menu dropdown-large" style="color: black;">
+                        Order Planning</a>
+                        <div class="dropdown-menu small-dd" style="color: black;">
                             <a routerLink="/order-planing">Order Planing</a><br>
-                            <a routerLink="/order-planing-form" class="mt-2">Order Planing Form</a>
+                            <a routerLink="/order-planing-form" class="mt-2">Order Planing Form</a><br>
+                            <a routerLink="/dispatch-plan" class="mt-2">Dispatch Plan</a>
                           </div>
                   </li>
                    <li class="nav-item">

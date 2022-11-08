@@ -6,7 +6,7 @@
    <div class="page-content">
       <section class="prof-head">
          <div class="container">
-            <h2>CAM Dashboard</h2>
+            <h2>KAM Dashboard</h2>
          </div>
       </section>
       <section class="dashborad_sections">
@@ -146,7 +146,7 @@
                                  *ngIf="rfqItem?.status == 'Pending'">{{rfqItem?.status}}</div>
 
                               <span class="font-weight-bold">RFQ Number: #{{rfqItem?.rfq_no}}</span>&nbsp;
-                              <a [routerLink]="['/RFQ-details',rfqItem?.rfq_no]">{{rfqItem?.cat_name}}</a>
+                              <a [routerLink]="['/customer',rfqItem?.rfq_no]">{{rfqItem?.cat_name}}</a>
                               <p class="my-1">{{rfqItem?.pro_desc}}</p>
                               <small class="text-muted">Name: <span
                                     class="font-weight-bold font-13">{{rfqItem?.name}}</span>
@@ -228,7 +228,7 @@
                                     <td>
                                        <div class="cell1 tab_head_sheet_1 ">
                                           <div class="add_ttrr actions-main text-center">
-                                             <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po-view',po.rfq_no]"> <span>View
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po-view',po.po_no]"> <span>View
                                                    Details</span>
                                                 <img src="assets/images/view-act-b.png" class="blue-show" alt="">
                                              </a>

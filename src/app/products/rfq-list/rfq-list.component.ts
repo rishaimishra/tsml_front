@@ -59,6 +59,6 @@ export class RfqListComponent implements OnInit {
     }) 
   }
   goToproductDetails(rfqNo: any) {
-    this._router.navigate(['/RFQ-details',rfqNo]);
+    this._router.navigate(['/customer',rfqNo]);
   }
 }

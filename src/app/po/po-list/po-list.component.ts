@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 declare var $: any;
@@ -13,7 +14,8 @@ export class PoListComponent implements OnInit {
   poItems:any;
 
 
-  constructor(private _products: ProductsService, private spinner:NgxSpinnerService) {
+  constructor(private _products: ProductsService, private spinner:NgxSpinnerService,
+    private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -36,6 +38,10 @@ export class PoListComponent implements OnInit {
       console.log(res);
       this.poItems = res.result;
       }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/login']);
+        this.spinner.hide();
+      }
     }, err => {
       console.log(err);
       this.spinner.hide();
@@ -49,6 +55,10 @@ export class PoListComponent implements OnInit {
         this.spinner.hide();
       console.log(res);
       this.poItems = res.result;
+      }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/login']);
+        this.spinner.hide();
       }
     }, err => {
       console.log(err);

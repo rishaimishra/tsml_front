@@ -8,8 +8,8 @@
     <section class="sub-header-2" *ngIf="showButtons > 0">
       <div class="container">
         <div class="top-txt">
-          <h1>PO Number: <b>{{po_id}}</b></h1>
-          <h2>PO date: <b>{{newDate }}</b></h2>
+          <h1>Accepted RFQ: <b>{{productId}}</b></h1>
+          <h2>RFQ Date: <b>{{newDate }}</b></h2>
           <div class="clearfix"></div>
         </div>
       </div>
@@ -262,8 +262,8 @@
                       </div>
                       <div class="col-2">
                         <span class="text-primary pointerTab" data-toggle="modal" data-target="#viewMoreMessage"
-                          (click)="messageBox(formData.schedule_no)">View
-                          More..</span>
+                          (click)="messageBox(formData.schedule_no)">See
+                          Remarks</span>
                       </div>
                     </div>
                     <div class="col-lg-12">
