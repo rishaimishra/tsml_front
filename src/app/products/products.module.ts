@@ -67,12 +67,12 @@ const routes: Routes = [
   },
   {
     path: 'kam/:id',
-    component: KamComponent,canActivate: [AuthGuard],
-  },
-  {
-    path: 'customer/:id',
     component: CustomerComponent,canActivate: [AuthGuard],
   },
+  // {
+  //   path: 'customer/:id',
+  //   component: CustomerComponent,canActivate: [AuthGuard],
+  // },
 ];
 
 @NgModule({

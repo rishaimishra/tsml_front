@@ -480,21 +480,25 @@
         </div>
         <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
           <div *ngFor="let remark of messages">
-            <div class="remark-bdy">
-              <div>
-                <h6>Remarks</h6>
-                <p>{{remark.remarks}} </p>
-              </div>
-              <div>
-                <h6>Kam Remarks</h6>
-                <p>{{remark.kamsRemarks}} </p>
-              </div>
-              <p class="date">{{remark.created_at | date}}</p>
-
-              <!-- <small>{{remark.created_at | date}}<br></small>
-                    <small>{{remark.kamsRemarks}}</small> -->
-            </div>
-          </div>
+            <ol class="chat">
+               <li class="other" *ngIf="remark?.remarks != null">
+                  <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
+                  <div class="msg">
+                     <p>Customer Remarks!</p>
+                     <p>{{remark.remarks}}</p>
+                     <time>{{remark.created_at | date}}</time>
+                  </div>
+               </li>
+               <li class="self" *ngIf="remark?.kamsRemarks != null">
+                  <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
+                  <div class="msg">
+                     <p>Kam's Remarks!</p>
+                     <p>{{remark.kamsRemarks}}</p>
+                     <time>{{remark.created_at | date}}</time>
+                  </div>
+               </li>
+            </ol>
+        </div>
 
         </div>
         <!--/-->

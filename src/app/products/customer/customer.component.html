@@ -16,15 +16,50 @@
             <div class="container">
                 <div class="prod-list-detl">
                     <!-- List start -->
+
                     <div class="demo" *ngFor="let productData of selectedItem; let i = index">
                         <div class="accordion--" id="accordionExample" *ngIf="productData.schedule.length > 0">
                             <div class="card">
-                                <div class="card-header card-header--" id="headingOne">
+
+                                <div class="card-header card-header-- ccard-header--" id="headingOne">
                                     <button type="button" class="btn btn-link" data-toggle="collapse"
                                         [attr.data-target]="'#collapseOne'+i">
                                         <i class="fa fa-plus"></i>
                                     </button>
-                                    <div class="acc-pro-pic" (click)="goToCustomerPage(productData?.rfq_no)">
+                                    <div class="rowBox">
+                                        <div class="oodr-info-03">
+                                            <span>Customer Name</span>
+                                            <p>John Doe</p>
+
+                                        </div>
+                                        <div class="oodr-info-01">
+                                            <em>
+                                                <span>RFQ Number</span>
+                                                <p>{{productId}}</p>
+                                            </em>
+                                        </div>
+                                        <div class="oodr-info-01">
+                                            <em>
+                                                <span>RFQ Date</span>
+                                                <p>222</p>
+                                            </em>
+                                        </div>
+                                        <div class="oodr-info-01">
+
+                                            <em>
+                                                <span>Quantity</span>
+                                                <p>{{productData.quantity}}</p>
+                                            </em>
+
+                                        </div>
+                                        <div class="oodr-info-02">
+                                            <div class="">
+                                                <button [disabled]="userType" class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
+                                                    data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="acc-pro-pic" (click)="goToCustomerPage(productData?.rfq_no)">
                                         <img src="{{ productData?.primary_image_url }}" />
                                     </div>
                                     <div class="acc-pro-dec">
@@ -37,8 +72,8 @@
                                             6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max
                                         </p>
                                     </div>
-
-                                    <div class="acc-pro-qty">
+                             -->
+                                    <!-- <div class="acc-pro-qty">
                                         <input type="text" class="form-control" id="qty_{{i}}" placeholder="0"
                                             disabled="" value="{{productData.quantity}}" />
                                     </div>
@@ -46,7 +81,7 @@
                                         <button class="del-btn btn-danger" [disabled]="userType"
                                             (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
                                             data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
                                     data-parent="#accordionExample">
@@ -89,8 +124,8 @@
                                                             Payment)</small></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="number" [disabled]="!userType" #priceInput="ngModel"
-                                                            [(ngModel)]="formData.expected_price"
+                                                        <input type="number" [disabled]="!userType"
+                                                            #priceInput="ngModel" [(ngModel)]="formData.expected_price"
                                                             name="expected_price{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" id="" placeholder=""
                                                             value="" required />
@@ -243,12 +278,12 @@
                                                         <!-- <input type="date" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker"
                                                             placeholder="To" value=""> -->
-                                                        <input type="datetime-local" [disabled]="userType" #validTill="ngModel"
-                                                            [(ngModel)]="formData.valid_till"
+                                                        <input type="datetime-local" [disabled]="userType"
+                                                            #validTill="ngModel" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
-                                                            <small
-                                                        *ngIf="validTill.invalid && (validTill.dirty || validTill.touched || submit)"
-                                                        class="inputValidation">Valid Till is required</small>
+                                                        <small
+                                                            *ngIf="validTill.invalid && (validTill.dirty || validTill.touched || submit)"
+                                                            class="inputValidation">Valid Till is required</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -280,30 +315,30 @@
                                                 </div>
                                             </div>
                                             <div class="col-2">
-                                                <span class="text-primary pointerTab"
-                                                     data-toggle="modal" data-target="#viewMoreMessage" (click)="messageBox(formData.schedule_no)">See
+                                                <span class="text-primary pointerTab" data-toggle="modal"
+                                                    data-target="#viewMoreMessage"
+                                                    (click)="messageBox(formData.schedule_no)">See
                                                     Remarks</span>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio"
-                                                            class="form-check-input" id="inlineCheckbox0"
-                                                            (change)="getRequote($event)"
+                                                        <input type="radio" class="form-check-input"
+                                                            id="inlineCheckbox0" (change)="getRequote($event)"
                                                             value="{{formData?.schedule_no}}"
                                                             name="fav_language_{{formData?.id}}">
                                                         <label for="inlineCheckbox0">Requote </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio"
-                                                            class="form-check-input" id="inlineCheckbox1"
+                                                        <input type="radio" class="form-check-input"
+                                                            id="inlineCheckbox1"
                                                             (click)="getStatus(formData?.schedule_no,1)"
                                                             name="fav_language_{{formData?.id}}" value="Accept">
                                                         <label for="inlineCheckbox0">Accept </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input type="radio"
-                                                            class="form-check-input" id="inlineCheckbox2"
+                                                        <input type="radio" class="form-check-input"
+                                                            id="inlineCheckbox2"
                                                             (click)="getStatus(formData?.schedule_no,2)"
                                                             name="fav_language_{{formData?.id}}" value="Reject">
                                                         <label for="inlineCheckbox2">Reject </label>
@@ -411,8 +446,7 @@
                                                                             class="fa fa-plus-circle"></i> Add New
                                                                         Address</a></label>
                                                             </div>
-                                                            <select
-                                                                class="form-control form-control-sm">
+                                                            <select class="form-control form-control-sm">
                                                                 <option>Select</option>
                                                                 <option value="{{ state?.name }}"
                                                                     *ngFor="let state of states">
@@ -459,6 +493,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
                     <button type="button" class="btn btn-primary" (click)="submitRfq()"><i
@@ -544,10 +579,10 @@
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body row" *ngIf="messages == 'Quote not updated'">
-                                {{messages}}
+                                <p class="ml-2">{{messages}}</p>
                             </div>
                             <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
-                                <div *ngFor="let remark of messages">
+                                <!-- <div *ngFor="let remark of messages">
                                     <div class="remark-bdy">
                                         <div>
                                             <h6>Remarks</h6>
@@ -558,12 +593,30 @@
                                             <p>{{remark.kamsRemarks}} </p>
                                         </div>
                                         <p class="date">{{remark.created_at | date}}</p>
-
-                                        <!-- <small>{{remark.created_at | date}}<br></small>
-                    <small>{{remark.kamsRemarks}}</small> -->
                                     </div>
+                                </div> -->
+                                <div *ngFor="let remark of messages">
+                                    <ol class="chat">
+                                        <li class="other" *ngIf="remark?.remarks != null">
+                                            <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
+                                                    draggable="false" /></div>
+                                            <div class="msg">
+                                                <p>Customer Remarks!</p>
+                                                <p>{{remark.remarks}}</p>
+                                                <time>{{remark.created_at | date}}</time>
+                                            </div>
+                                        </li>
+                                        <li class="self" *ngIf="remark?.kamsRemarks != null">
+                                            <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png"
+                                                    draggable="false" /></div>
+                                            <div class="msg">
+                                                <p>Kam's Remarks!</p>
+                                                <p>{{remark.kamsRemarks}}</p>
+                                                <time>{{remark.created_at | date}}</time>
+                                            </div>
+                                        </li>
+                                    </ol>
                                 </div>
-
                             </div>
                             <!--/-->
                         </div>
@@ -663,7 +716,7 @@
                                             {{productPrice?.interest_rate }}
                                         </div>
                                     </td>
-                                    <td><input type="number" 
+                                    <td><input type="number"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_interest{{schldId}}" value="{{productPrice?.interest_rate }}" readonly>
 
@@ -685,7 +738,7 @@
                                             <span>{{daysCostCount}}</span>
                                         </div>
                                     </td>
-                                    <td><input type="number" readonly 
+                                    <td><input type="number" readonly
                                             [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                             class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
@@ -738,8 +791,9 @@
                     <p class="text-note"><i>Note: Price Quoted Excluding GST & TCS Charges</i></p>
 
                     <div class="add-btn-sec pt-2 pb-2">
-                        <button class="btn btn-primary" [disabled]="userType" (click)="priceSave(schldId, firstIndex, lastIndex)"><i
-                                class="fa fa-check"></i> Ok</button>&nbsp;
+                        <button class="btn btn-primary" [disabled]="userType"
+                            (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i>
+                            Ok</button>&nbsp;
                         <button type="button" class="btn btn-danger" (click)="cancelprice()"><i class="fa fa-times"></i>
                             Cancel</button>
                     </div>

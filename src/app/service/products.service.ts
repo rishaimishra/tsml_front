@@ -88,4 +88,8 @@ export class ProductsService {
   getkamPoList() {
     return this._http.get(this.BesUrl + '/user/get_po_all_kam');
   };
+
+  rfqStatusChange(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/quotes_status_update', reqParameter);
+  };
 }

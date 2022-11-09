@@ -110,7 +110,6 @@ export class PoComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      console.log(res);
       this.productId = res.id;
       this.categoryid = res.categoryId;
       this.detailByRfq();
@@ -419,6 +418,14 @@ export class PoComponent implements OnInit {
       }
       
     });
+
+    let rfqStatus = {
+      "rfq_no": this.productId,
+      "status": 4
+    }
+    this._product.rfqStatusChange(rfqStatus).subscribe((res:any) => {
+      console.log(res);
+    })
   };
 
   addItem(i: any) {

@@ -108,7 +108,7 @@
                   <div class="align-items-center justify-content-between">
                     <div class="row ">
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                        <div class="card-content">
+                        <div class="card-content pointerTab" routerLink="/complains-list">
                           <h5 class="font-15">Complains</h5>
                           <h2 class="mb-3 font-18">128</h2>
                           <p class="mb-0"><span class="col-green">18%</span>
@@ -141,15 +141,15 @@
                 <div class="card-body">
                    <div class="support-ticket media pb-1 mb-3" *ngFor="let rfqItem of kamItems">
                       <div class="media-body">
-                         <div class="badge badge-pill badge-danger mb-1 float-right"
-                         *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div>
+                         <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
+                         *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
                          <div class="badge badge-pill badge-success mb-1 float-right"
-                         *ngIf="rfqItem?.status == 'Accepted'">{{rfqItem?.status}}</div>
+                         *ngIf="rfqItem?.status == 'Accepted'" >{{rfqItem?.status}}</div>
                          <div class="badge badge-pill badge-warning mb-1 float-right"
                          *ngIf="rfqItem?.status == 'Pending'">{{rfqItem?.status}}</div>
 
                          <span class="font-weight-bold">RFQ Number: #{{rfqItem?.rfq_no}}</span>&nbsp;
-                         <a [routerLink]="['/rfq-list']">{{rfqItem?.cat_name}}</a>
+                         <a (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no)" class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>
                          <p class="my-1">{{rfqItem?.pro_desc}}</p>
                          <small class="text-muted">Name: <span class="font-weight-bold font-13">{{rfqItem?.name}}</span>
                          &nbsp;&nbsp; - {{rfqItem?.dash_dt}}</small>

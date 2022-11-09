@@ -126,15 +126,10 @@
                                         <td>{{orders.dis_sum}}</td>
                                         <td><button class="btn btn-sm btn-primary" data-toggle="modal"
                                                 data-target="#myModal">Dispatch Plan</button></td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
 
-                            <!-- Dispatch plan Modal -->
+                                         <!-- Dispatch plan Modal -->
                             <div id="myModal" class="modal" role="dialog">
                                 <div class="modal-dialog modal-90">
-
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -144,16 +139,16 @@
                                         <div class="modal-body">
                                             
                                             <div class="row table-op2">
-                                                <div class="top-table-op-2" *ngFor="let dispatch of dispatchPlan">
+                                                <div class="top-table-op-2" *ngFor="let dispatch of orders.dispatch">
                                                     {{dispatch.day}}
                                                 </div>
                                                 
                                             </div>
                                             <div class="row mt-2 table-op3">
-                                                <div class=" top-table-op-2" *ngFor="let dispatch of dispatchPlan">
+                                                <div class=" top-table-op-2" *ngFor="let dispatch of orders.dispatch">
                                                    <input type="text" class="form-control" value="{{dispatch.ds_qty}}" readonly name="" id="">
                                                 </div>
-                                                
+                                            
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -170,7 +165,10 @@
 
                                 </div>
                             </div>
-
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

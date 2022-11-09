@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     this._spinner.show();
     if (!this.loginForm.invalid) {
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
+        this._spinner.hide();
         if (res.success == true) {
           Swal.fire({
             position: 'center',
@@ -42,16 +43,18 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('USER_ID',res.data.user_id);
           localStorage.setItem('USER_TYPE',res.data.user_type);
           this._spinner.hide();
+          
           if(res.data['user_type'] == 'Kam') {
             this._router.navigate(['/kam-dashboard']);
-            this._spinner.hide();
-          } else {
+          }
+          else if (res.data['user_type'] == 'Sales') {
+            this._router.navigate(['/sales-dashboard']);
+          }
+          else if (res.data['user_type'] == 'C') {
             this._router.navigate(['/customer-dashboard']);
-            this._spinner.hide();
           }
         } else {
           this._toster.error(res.success.message);
-          this._spinner.hide();
         }
       }, error => {
         console.log(error);

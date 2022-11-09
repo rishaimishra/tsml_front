@@ -103,9 +103,14 @@ export class PoViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let userRol = localStorage.getItem('USER_TYPE');
-
     this.user_Id = localStorage.getItem('USER_ID');
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this.userType = false;
+    } else {
+      this.userType = true;
+    }
+
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       console.log(res);
@@ -598,15 +603,15 @@ export class PoViewComponent implements OnInit {
   }
 
   raiseComplain(poId:any, date:any) {
-    console.log('Hi Customer', poId, date);
     let data:any = [];
     data = [poId, date];
     this._complains.sendData(data);
     this._router.navigate(['/complains']);
   };
 
-  viewComplain() {
-    console.log('Hi Kam');
-    this._router.navigate(['/kam-reply']);
+  viewComplain(poNo:any) {
+    console.log(poNo);
+    this.spinner.hide();
+    this._router.navigate(['/kam-reply',poNo]);
   }
 }

@@ -35,14 +35,15 @@ export class ComplainsReplyComponent implements OnInit {
 
   complainsReply() {
     this._spiner.show();
-    // http://localhost/TSML/api/user/complain-details/1
-    let apiUrl = '/user/complain-details/'+ this.compId;
+    // https://beas.in/mje-shop/api/user/complain-details-kam/AIT7770
+    let apiUrl = '/user/complain-details-kam/'+ this.compId;
 
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
       if (res.message == 'success' && res.status == 1) {
         this._spiner.hide();
         this.compInfo = res.result;
         this.remarkAll = res.remarksData;
+        console.log(this.compInfo)
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
@@ -92,23 +93,28 @@ export class ComplainsReplyComponent implements OnInit {
 
   };
 
-  closeStatus (event:any) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You want to close this discussion",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-      }).then((result) => {
-        if (result.isConfirmed && event.target.checked == true) {
-          this.closeChat = true;
-
-        } 
-        if (event.target.checked == false) {
-          this.closeChat = false
-        }
-      })
+  closeStatus (compId:any) {
+    console.log(compId);
+    let apiUrl = '/user/closed-remarks/' +  compId;
+    this._complains.getMethod(apiUrl).subscribe((res:any) => {
+      console.log(res);
+    })
+      // Swal.fire({
+      //   title: 'Are you sure?',
+      //   text: "You want to close this discussion",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   confirmButtonColor: '#3085d6',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Yes'
+      // }).then((result) => {
+      //   if (result.isConfirmed && event.target.checked == true) {
+      //     this.closeChat = true;
+          
+      //   } 
+      //   if (event.target.checked == false) {
+      //     this.closeChat = false
+      //   }
+      // })
   }
 }

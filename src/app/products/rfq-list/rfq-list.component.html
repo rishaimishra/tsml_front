@@ -45,18 +45,18 @@
                                  </td>
                                  <td>{{rfqItem?.name}}</td>
                                  <td>{{rfqItem?.quantity}}</td>
-                                 <td *ngIf="rfqItem?.kam_status == 0">
+                                 <td *ngIf="rfqItem?.status == 'Pending'">
                                     Pending
                                  </td>
-                                 <td *ngIf="rfqItem?.kam_status == 1">
-                                    Price Negotiation
+                                 <td *ngIf="rfqItem?.status == 'Accepted'">
+                                    Accepted
                                  </td>
-                                 <td *ngIf="rfqItem?.kam_status == 2">
+                                 <td *ngIf="rfqItem?.status == 'Rejected'">
                                     Rejected
                                  </td>
                                  <td>
                                     <div class="btn-edt-del pointerTab">
-                                       <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no)"
+                                       <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status)"
                                           data-toggle="tooltip" data-placement="top" title="Go for price negotiation">
                                           <i class="fa fa-eye" aria-hidden="true"></i></a>
                                     </div>

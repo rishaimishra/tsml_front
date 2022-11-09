@@ -32,14 +32,17 @@ export class KamReplyComponent implements OnInit {
     const usrName:any = localStorage.getItem('USER_NAME');
     this._route.params.subscribe((param:any) => {
       this.compId = param.id;
+      console.log(this.compId);
       this.complainsReply();
     })
   }
 
   complainsReply() {
     this._spiner.show();
-    let apiUrl = '/user/complain-details/'+this.compId;
+    // https://beas.in/mje-shop/api/user/complain-details-kam/AIT7770
+    let apiUrl = '/user/complain-details-kam/'+this.compId;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
+      this._spiner.hide();
       if (res.message == 'success' && res.status == 1) {
         this._spiner.hide();
         this.compInfo = res.result;
@@ -94,24 +97,28 @@ export class KamReplyComponent implements OnInit {
 
   }
 
-  closeStatus (event:any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You want to close this discussion",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
-    }).then((result) => {
-      if (result.isConfirmed && event.target.checked == true) {
-        this.closeChat = true;
-
-      } 
-      if (event.target.checked == false) {
-        this.closeChat = false
-      }
+  closeStatus (compId:any) {
+    let apiUrl = '/user/closed-remarks/' +  compId;
+    this._complains.getMethod(apiUrl).subscribe((res:any) => {
+      console.log(res);
     })
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You want to close this discussion",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes'
+    // }).then((result) => {
+    //   if (result.isConfirmed && event.target.checked == true) {
+    //     this.closeChat = true;
+
+    //   } 
+    //   if (event.target.checked == false) {
+    //     this.closeChat = false
+    //   }
+    // })
 }
 
 }

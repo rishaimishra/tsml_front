@@ -12,6 +12,7 @@ import { ProductsService } from 'src/app/service/products.service';
 export class CustomerDashboardComponent implements OnInit {
   kamItems:any;
   poItems:any;
+  p: number = 1;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
     private _router: Router, private _product: ProductsService) { }
@@ -28,6 +29,14 @@ export class CustomerDashboardComponent implements OnInit {
     }
   }
 
+  reedirectPage(status:any, rfqNumber:any) {
+    console.log(status, rfqNumber);
+    if (status == 'Accepted') {
+      this._router.navigate(['/po',rfqNumber]);
+    } else {
+      this._router.navigate(['/rfq-list']);
+    }
+  }
   getKamItems() {
     this.spinner.show();
     this._product.getAllRequestOfRfq().subscribe((res:any) => {

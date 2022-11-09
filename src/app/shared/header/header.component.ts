@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
   isUserLogIn: boolean = false;
   userName: any;
   loginFalse: boolean = false;
+  userType: boolean;
+  userRol:any;
   
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
@@ -27,6 +29,14 @@ export class HeaderComponent implements OnInit {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
     this.isUserLogIn = this._auth.isLoggedIn();
     this.userName = localStorage.getItem('USER_NAME');
+    this.userRol = localStorage.getItem('USER_TYPE');
+    if(this.userRol == 'Kam') {
+      this.userType = false;
+      // this._router.navigate(['/kam-dashboard']);
+    } else {
+      this.userType = true;
+      // this._router.navigate(['/customer-dashboard']);
+    }
 
     $( document ).ready(function() {
       $(".shopcut").click(function(){
@@ -45,8 +55,10 @@ export class HeaderComponent implements OnInit {
   clickOnLogo() {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
+      this.userType = false;
       this._router.navigate(['/kam-dashboard']);
     } else {
+      this.userType = true;
       this._router.navigate(['/customer-dashboard']);
     }
   }

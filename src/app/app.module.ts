@@ -21,6 +21,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PoModule } from './po/po.module';
 import { ComplainsModule } from './complains/complains.module';
 import { OrderModule } from './order/order.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -46,7 +47,8 @@ import { OrderModule } from './order/order.module';
     DatepickerModule,
     PoModule,
     ComplainsModule,
-    OrderModule
+    OrderModule,
+    NgxPaginationModule
   ],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

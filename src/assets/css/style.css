@@ -2919,7 +2919,7 @@ a {
     overflow: hidden;
 }
 .dashborad_sections .font-15 {
-    font-size: 15px !important;
+    font-size: 13px !important;
 }
 .dashborad_sections .font-18 {
     font-size: 18px !important;
@@ -3731,3 +3731,46 @@ padding: 15px;}
 .small-dd a:hover {
     color: #3D7EEB;
 }
+.ccard-header-- {
+    display: flex;
+    align-items: center;
+    justify-content: left!important;
+}
+.oodr-info-01 {
+    width: 16%;
+    margin-right: 15px;
+    margin-left: 15px;
+    text-align: center;
+    position:relative;
+}
+.oodr-info-02{
+    margin-left: 15px;
+    position: absolute;
+    right: 20px;
+}
+.rowBox{display: flex;
+    width: 100%;}
+.oodr-info-01 em {
+        font-style: normal;
+        border: 1px solid #c1d1d5;
+        padding: 4px 10px 4px 8px;
+        border-radius: 8px;
+        display: block;
+    }
+    .oodr-info-01 em span{font-weight:bold;}
+    .oodr-info-01 p{font-size: 14px;
+        margin: 0;
+        line-height: 23px;
+        color: #404040;}
+    .oodr-info-02 .fa{margin-right:0!important;}
+    .card-header {
+        padding: 0.95rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(0,0,0,.03);
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+    .oodr-info-03{width:34%;
+        margin-right: 15px;
+        margin-left: 25px;
+    }
+    .oodr-info-03 span{font-weight:bold;}
