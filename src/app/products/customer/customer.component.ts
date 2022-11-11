@@ -95,6 +95,12 @@ export class CustomerComponent implements OnInit {
   ) {$(window).scrollTop(0); }
 
   ngOnInit(): void {
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this.userType = false;
+    } else {
+      this.userType = true;
+    }
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
