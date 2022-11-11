@@ -29,8 +29,11 @@
                                     <div class="rowBox">
                                         <div class="oodr-info-03">
                                             <span>Customer Name</span>
-                                            <p>John Doe</p>
-
+                                            <p>{{productData.uname}}</p>
+                                        </div>
+                                        <div class="oodr-info-03">
+                                            <span>Categorie</span>
+                                            <p>{{productData.cat_name}}</p>
                                         </div>
                                         <div class="oodr-info-01">
                                             <em>
@@ -38,23 +41,29 @@
                                                 <p>{{productId}}</p>
                                             </em>
                                         </div>
+                                        <!-- <div class="oodr-info-01">
+                                            <em>
+                                                <span>Product Name</span>
+                                                <p></p>
+                                            </em>
+                                        </div> -->
                                         <div class="oodr-info-01">
                                             <em>
                                                 <span>RFQ Date</span>
-                                                <p>222</p>
+                                                <p>{{productData.created_at | date: 'dd/MM/YYYY' }}</p>
                                             </em>
                                         </div>
                                         <div class="oodr-info-01">
 
                                             <em>
-                                                <span>Quantity</span>
+                                                <span>Quantity (MT)</span>
                                                 <p>{{productData.quantity}}</p>
                                             </em>
 
                                         </div>
                                         <div class="oodr-info-02">
                                             <div class="">
-                                                <button [disabled]="userType" class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
+                                                <button *ngIf="userType == false" class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
                                                     data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
                                             </div>
                                         </div>
@@ -86,7 +95,7 @@
                                 <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
                                     data-parent="#accordionExample">
                                     <div class="card-body">
-                                        <div class="row" *ngFor="let formData of productData['schedule'];let y = index">
+                                        <div class="row mt-3" *ngFor="let formData of productData['schedule'];let y = index">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Sizes Offered</label>
@@ -107,7 +116,7 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <label for="">Quantity</label>
+                                                    <label for="">Quantity (MT)</label>
                                                     <input #qtyInput="ngModel" [disabled]="userType" type="number"
                                                         (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
                                                         name="quantity_{{ formData.schedule_no }}"
@@ -320,7 +329,7 @@
                                                     (click)="messageBox(formData.schedule_no)">See
                                                     Remarks</span>
                                             </div>
-                                            <div class="col-lg-12 mb-3">
+                                            <div class="col-lg-12 mb-3" *ngIf="formData.kam_price != null || formData.kam_remarks != null">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
                                                         <input type="radio" class="form-check-input"
@@ -364,7 +373,7 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <div class="form-group">
-                                                            <label for="">Quantity</label>
+                                                            <label for="">Quantity (MT)</label>
                                                             <input type="number" [(ngModel)]="quantity1"
                                                                 class="form-control form-control-sm" id=""
                                                                 placeholder="" value="" />
@@ -498,7 +507,7 @@
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
                     <button type="button" class="btn btn-primary" (click)="submitRfq()"><i
                             class="fa fa-paper-plane"></i> Submit</button> &nbsp;
-                    <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                    <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
                 </div>
 
                 <!-- Negotiation History list -->
@@ -515,11 +524,11 @@
                                     <tr>
                                         <th>Product Details</th>
                                         <th>RFQ Number</th>
-                                        <th>Name</th>
+                                        <th *ngIf="!userType">Name</th>
                                         <th>Remarks</th>
                                         <th>RFQ Date</th>
                                         <th>Ex-Works Price (₹)</th>
-                                        <th>CAM's Price (₹)</th>
+                                        <th>Tsml's Price (₹)</th>
                                         <th colspan="2" class="text-center">Valid Till </th>
                                     </tr>
                                 </thead>
@@ -538,7 +547,7 @@
                                         <td>
                                             {{history?.rfq_no}}
                                         </td>
-                                        <td>
+                                        <td *ngIf="!userType">
                                             {{history?.name}}
                                         </td>
                                         <td>
@@ -758,7 +767,7 @@
                                             [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_discount{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should not be less than
+                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should not be greater than
                                             {{productPrice?.cam_discount}}</small>
                                     </td>
                                 </tr>

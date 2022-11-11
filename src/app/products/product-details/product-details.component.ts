@@ -42,6 +42,7 @@ export class ProductDetailsComponent implements OnInit {
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
+  userRole:any;
   
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -57,6 +58,12 @@ export class ProductDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let userRol = localStorage.getItem('USER_TYPE');
+    if(userRol == 'Kam') {
+      this.userRole = 'K';
+    } else {
+      this.userRole = 'C';
+    }
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
@@ -108,7 +115,7 @@ export class ProductDetailsComponent implements OnInit {
             from_date: '',
             to_date: '',
             remarks: '',
-            kam_price: 12505,
+            kam_price: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -166,7 +173,7 @@ export class ProductDetailsComponent implements OnInit {
             from_date: '',
             to_date: '',
             remarks: '',
-            kam_price: 12505,
+            kam_price: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -216,6 +223,7 @@ export class ProductDetailsComponent implements OnInit {
         product_id: this.productId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
+        quote_type: this.userRole,
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
@@ -272,7 +280,7 @@ export class ProductDetailsComponent implements OnInit {
       from_date: '',
       to_date: '',
       remarks: '',
-      kam_price: 12505,
+      kam_price: '',
       valid_till: '',
       kamsRemarks: ''
     });

@@ -66,13 +66,13 @@ const routes: Routes = [
     component: RfqDetailsComponent,canActivate: [AuthGuard],
   },
   {
-    path: 'kam/:id',
+    path: 'negotiation/:id',
     component: CustomerComponent,canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'customer/:id',
-  //   component: CustomerComponent,canActivate: [AuthGuard],
-  // },
+  {
+    path: 'kam/:id',
+    component: KamComponent,canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

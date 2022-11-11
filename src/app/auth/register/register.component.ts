@@ -121,6 +121,7 @@ export class RegisterComponent implements OnInit {
   billStateSelect: any = '';
   checkedYes: boolean = false;
   checkedNo: boolean = false;
+  businessChecked: boolean = false;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High' },
@@ -345,6 +346,11 @@ export class RegisterComponent implements OnInit {
 
   selectBusiness(event: any) {
     this.businessType = event.target.value;
+    if (this.businessType == 'Trader' || this.businessType == 'Manufacturer & Trader') {
+      this.businessChecked = true;
+    } else {
+      this.businessChecked = false;
+    }
   }
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;

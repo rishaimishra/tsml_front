@@ -77,7 +77,7 @@
                            <div class="row g-3">
                               <div class="col-sm-6">
                                  <ul class="list-unstyled">
-                                    <li><a href="overview.html">Overview </a></li>
+                                    <!-- <li><a href="overview.html">Overview </a></li> -->
                                     <li><a routerLink="/all-product">Ferro Chrome</a></li>
                                     <li><a routerLink="/all-product">Chrome Ore</a></li>
                                  </ul>
@@ -114,8 +114,10 @@
                            </li>
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/order-planing"> View Order Planning
                         </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true)" routerLink="/view-profile">
-                           My Profile </a></li>
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userType)" routerLink="/customer-dashboard">
+                           Dashboard </a></li>
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/kam-dashboard">
+                              Dashboard </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != true || loginFalse != false)" routerLink="/login"> Login
                         </a></li>
                      <li class="nav-item"><a class="nav-link pointer" (click)="logOut()" *ngIf="(isUserLogIn != false && loginFalse != true)"> Logout </a></li>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
-import { DecimalPipe, formatNumber } from '@angular/common';
+import { DecimalPipe, formatNumber, Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
@@ -90,18 +90,11 @@ export class CustomerComponent implements OnInit {
     private _product: ProductsService,
     private _toaster: ToastrService,
     private _fb: FormBuilder,
-    private _state: StateCityService
+    private _state: StateCityService,
+    private location: Location,
   ) {$(window).scrollTop(0); }
 
   ngOnInit(): void {
-    
-    let userRol = localStorage.getItem('USER_TYPE');
-    if(userRol == 'Kam') {
-      this.userType = false;
-    } else {
-      this.userType = true;
-    }
-
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
@@ -318,6 +311,7 @@ export class CustomerComponent implements OnInit {
   }
   submitRfq() {
     this.submit = true;
+    let userRol = localStorage.getItem('USER_TYPE');
     let rediectStatus = [];
     let countArr = [];
     this.spinner.show();
@@ -343,15 +337,15 @@ export class CustomerComponent implements OnInit {
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
+        quote_type: userRol,
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-
     };
-    this.poRedirectArr.forEach(element => {
-      rediectStatus.push(element.status);
+    // this.poRedirectArr.forEach(element => {
+    //   rediectStatus.push(element.status);
 
-    });
+    // });
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       console.log(res);
@@ -544,7 +538,7 @@ export class CustomerComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    if (_discount < cam_discount && _discount != 0) {
+    if (_discount > cam_discount && _discount > 0 && _discount != 0) {
       this.kamDiscount = true;
       priceValidator.push(5);
     } else {
@@ -601,5 +595,9 @@ export class CustomerComponent implements OnInit {
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
+  }
+
+  clickBack() {
+    this.location.back();
   }
 }

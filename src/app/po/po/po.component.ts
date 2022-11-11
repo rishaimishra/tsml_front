@@ -178,7 +178,7 @@ export class PoComponent implements OnInit {
           from_date: '',
           to_date: '',
           remarks: '',
-          kam_price: 12505,
+          kam_price: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -291,7 +291,7 @@ export class PoComponent implements OnInit {
             from_date: '',
             to_date: '',
             remarks: '',
-            kam_price: 12505,
+            kam_price: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -381,6 +381,7 @@ export class PoComponent implements OnInit {
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
+        quote_type:'',
         quote_schedules: form_data_array,
       };
 
@@ -445,7 +446,7 @@ export class PoComponent implements OnInit {
       from_date: '',
       to_date: '',
       remarks: '',
-      kam_price: 12505,
+      kam_price: '',
       valid_till: '',
       kamsRemarks: ''
     });

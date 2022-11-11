@@ -3769,7 +3769,8 @@ padding: 15px;}
         background-color: rgba(0,0,0,.03);
         border-bottom: 1px solid rgba(0,0,0,.125);
     }
-    .oodr-info-03{width:34%;
+    .oodr-info-03{
+        width:16%;
         margin-right: 15px;
         margin-left: 25px;
     }

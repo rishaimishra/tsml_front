@@ -62,7 +62,7 @@ export class RfqListComponent implements OnInit {
     if (status == 'Accepted') {
       this._router.navigate(['/po',rfqNo])
     } else {
-      this._router.navigate(['/kam',rfqNo]);
+      this._router.navigate(['/negotiation',rfqNo]);
     }
   }
 }

@@ -121,7 +121,7 @@
                       <!--  -->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
-                          <label>GSTIN</label>
+                          <label>GSTN</label>
                           <div class="d-flex2 display-f">
                             <input formControlName="gstin" type="text" class="form-control w-79" />
 
@@ -131,7 +131,7 @@
                           </div>
                           <div *ngIf="f['gstin']?.invalid &&(f['gstin']?.touched || submitted)">
                             <small class="text-danger">
-                              GSTIN is required
+                              GSTN is required
                             </small>
                           </div>
                         </div>
@@ -344,7 +344,7 @@
                       <div class="col-12 col-lg-6 col-sm-6 mt-4">
                         <div class="form-group">
                           <label (change)="isTdsApplicable($event)" class="container-check">Is TCS/TDS applicable?
-                            <input type="checkbox" [checked]="isTDS_applicable" />
+                            <input type="checkbox" [checked]="businessChecked" />
                             <span class="checkmark"></span>
                           </label>
                         </div>
@@ -369,6 +369,157 @@
                       <div class="col-12">
                         <div id="accordion" class="accordion">
                           <div class="card mb-0">
+                             <!-- Start Billing address -->
+                             <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseTwo">
+                             <a class="card-title">
+                               Enter Billing Address
+                             </a>
+                           </div>
+                           <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+                             <div class="row">
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>First Name</label>
+                                   <input type="text" formControlName="first_name" class="form-control" />
+                                   <div *ngIf="f['first_name']?.invalid &&(f['first_name']?.touched || submitted)">
+                                     <small class="text-danger">
+                                       First Name is required
+                                     </small>
+                                   </div>
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>Last Name</label>
+                                   <input type="text" formControlName="last_name" class="form-control" />
+                                   <div *ngIf="f['last_name']?.invalid &&(f['last_name']?.touched || submitted)">
+                                     <small class="text-danger">
+                                       Last Name is required
+                                     </small>
+                                   </div>
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>Address Line1</label>
+                                   <input type="text" formControlName="addressone" class="form-control" />
+                                   <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
+                                     <small class="text-danger">
+                                       Address Line is required
+                                     </small>
+                                   </div>
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>Address Line2</label>
+                                   <input type="text" formControlName="addresstwo" class="form-control" />
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>City</label>
+                                   <input type="text" readonly class="form-control" />
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>State</label>
+                                   <input type="text" readonly class="form-control" />
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6">
+                                 <div class="form-group">
+                                   <label>Pincode</label>
+                                   <input type="text" readonly class="form-control" />
+                                 </div>
+                               </div>
+                               <!--/-->
+                               <div class="col-12 col-lg-6 col-sm-6"></div>
+                               <div class="col-12 col-lg-6 col-sm-6"></div>
+                               <div class="col-12 col-lg-6 col-sm-6 text-right2">
+                                 <div class="form-group">
+                                   <a href="#newAddressBlock2" data-toggle="collapse" class="collapsed"
+                                     aria-expanded="false"><i class="fa fa-plus-circle"></i> Add
+                                     New Address</a>
+                                 </div>
+                               </div>
+                               <div class="col-12">
+                                 <div id="newAddressBlock2" class="collapse">
+                                   <div class="row">
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>GSTN</label>
+                                         <div class="d-flex2 display-f">
+                                           <input type="number" class="form-control w-79" />
+                                           <button type="button" class="btn blue-btn">
+                                             Get Details
+                                           </button>
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>First Name</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>Last Name</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>Address Line1</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>Address Line2</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>City</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>State</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                     <div class="col-12 col-lg-6 col-sm-6">
+                                       <div class="form-group">
+                                         <label>Pincode</label>
+                                         <input type="text" class="form-control" />
+                                       </div>
+                                     </div>
+                                     <!--/-->
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                            <!-- Shipping address -->
                             <div class="card-header" data-toggle="collapse" href="#collapseOne">
                               <a class="card-title">
                                 Enter Shipping Address
@@ -464,7 +615,7 @@
                                     <div class="row">
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
-                                          <label>GSTIN</label>
+                                          <label>GSTN</label>
                                           <div class="d-flex2 display-f">
                                             <input type="text" formControlName="gstin2" [(ngModel)]="getGstNumber"
                                               class="form-control w-79" />
@@ -533,156 +684,7 @@
                                 </div>
                               </div>
                             </div>
-                            <!-- Start Billing address -->
-                            <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
-                              href="#collapseTwo">
-                              <a class="card-title">
-                                Enter Billing Address
-                              </a>
-                            </div>
-                            <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
-                              <div class="row">
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>First Name</label>
-                                    <input type="text" formControlName="first_name" class="form-control" />
-                                    <div *ngIf="f['first_name']?.invalid &&(f['first_name']?.touched || submitted)">
-                                      <small class="text-danger">
-                                        First Name is required
-                                      </small>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input type="text" formControlName="last_name" class="form-control" />
-                                    <div *ngIf="f['last_name']?.invalid &&(f['last_name']?.touched || submitted)">
-                                      <small class="text-danger">
-                                        Last Name is required
-                                      </small>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Address Line1</label>
-                                    <input type="text" formControlName="addressone" class="form-control" />
-                                    <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
-                                      <small class="text-danger">
-                                        Address Line is required
-                                      </small>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Address Line2</label>
-                                    <input type="text" formControlName="addresstwo" class="form-control" />
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>City</label>
-                                    <input type="text" readonly class="form-control" />
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>State</label>
-                                    <input type="text" readonly class="form-control" />
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Pincode</label>
-                                    <input type="text" readonly class="form-control" />
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6"></div>
-                                <div class="col-12 col-lg-6 col-sm-6"></div>
-                                <div class="col-12 col-lg-6 col-sm-6 text-right2">
-                                  <div class="form-group">
-                                    <a href="#newAddressBlock2" data-toggle="collapse" class="collapsed"
-                                      aria-expanded="false"><i class="fa fa-plus-circle"></i> Add
-                                      New Address</a>
-                                  </div>
-                                </div>
-                                <div class="col-12">
-                                  <div id="newAddressBlock2" class="collapse">
-                                    <div class="row">
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>GSTIN</label>
-                                          <div class="d-flex2 display-f">
-                                            <input type="number" class="form-control w-79" />
-                                            <button type="button" class="btn blue-btn">
-                                              Get Details
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>First Name</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>Last Name</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>Address Line1</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>Address Line2</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>City</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>State</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>Pincode</label>
-                                          <input type="text" class="form-control" />
-                                        </div>
-                                      </div>
-                                      <!--/-->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                           
                           </div>
                         </div>
                       </div>

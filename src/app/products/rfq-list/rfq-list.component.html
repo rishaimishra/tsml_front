@@ -29,8 +29,8 @@
                               <tr>
                                  <th>RFQ No.</th>
                                  <th>RFQ Date</th>
-                                 <th>Customer</th>
-                                 <th>Total Quantity</th>
+                                 <th *ngIf="!userType">Company Name</th>
+                                 <th>Total Quantity (MT)</th>
                                  <th>Status</th>
                                  <th></th>
                               </tr>
@@ -43,7 +43,7 @@
                                  <td>
                                     {{rfqItem?.created_at}}
                                  </td>
-                                 <td>{{rfqItem?.name}}</td>
+                                 <td *ngIf="!userType">{{rfqItem?.name}}</td>
                                  <td>{{rfqItem?.quantity}}</td>
                                  <td *ngIf="rfqItem?.status == 'Pending'">
                                     Pending

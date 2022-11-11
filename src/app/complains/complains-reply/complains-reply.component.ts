@@ -94,27 +94,9 @@ export class ComplainsReplyComponent implements OnInit {
   };
 
   closeStatus (compId:any) {
-    console.log(compId);
     let apiUrl = '/user/closed-remarks/' +  compId;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
       console.log(res);
     })
-      // Swal.fire({
-      //   title: 'Are you sure?',
-      //   text: "You want to close this discussion",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   confirmButtonColor: '#3085d6',
-      //   cancelButtonColor: '#d33',
-      //   confirmButtonText: 'Yes'
-      // }).then((result) => {
-      //   if (result.isConfirmed && event.target.checked == true) {
-      //     this.closeChat = true;
-          
-      //   } 
-      //   if (event.target.checked == false) {
-      //     this.closeChat = false
-      //   }
-      // })
   }
 }
