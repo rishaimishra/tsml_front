@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -95,7 +96,8 @@ export class PoComponent implements OnInit {
     private _product: ProductsService,
     private _toaster: ToastrService,
     private _state: StateCityService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private location: Location
   ) {
   }
 
@@ -360,11 +362,15 @@ export class PoComponent implements OnInit {
   }
   submitRfq() {
     this.submit = true;
-    // this.spinner.show();
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
-
+    if (!this.letterHead) {
+      Swal.fire('Leaterhead is required !');
+      return;
+    }
+    this.spinner.show();
     for (let i = 0; i < this.selectedItem.length; i++) {
+      this.spinner.hide();
       let form_data_array = this.selectedItem[i]['schedule'];
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
@@ -391,9 +397,9 @@ export class PoComponent implements OnInit {
 
   
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+      this.spinner.hide();
       if (res.message == 'success') {
         this.detailByRfq();
-        this.spinner.hide();
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -425,7 +431,7 @@ export class PoComponent implements OnInit {
       "status": 4
     }
     this._product.rfqStatusChange(rfqStatus).subscribe((res:any) => {
-      console.log(res);
+      this.spinner.hide();
     })
   };
 
@@ -629,18 +635,16 @@ export class PoComponent implements OnInit {
         this.messages = res.result;
       }
     })
-  }
+  };
   cancelprice() {
     this.messages = [];
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
-  }
-  uploadButton() {
-    this.showUpload = true;
   };
-
-
+  clickBack() {
+    this.location.back();
+  };
   poStatusRequest (statusArr:any) {
     this._product.rfqStatusData(statusArr).subscribe((res: any) => {
       if (res.message == 'status updated') {

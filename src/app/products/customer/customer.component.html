@@ -29,7 +29,7 @@
                                     <div class="rowBox">
                                         <div class="oodr-info-03">
                                             <span>Customer Name</span>
-                                            <p>{{productData.uname}}</p>
+                                            <p>Amit Singh</p>
                                         </div>
                                         <div class="oodr-info-03">
                                             <span>Categorie</span>
@@ -68,29 +68,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="acc-pro-pic" (click)="goToCustomerPage(productData?.rfq_no)">
-                                        <img src="{{ productData?.primary_image_url }}" />
-                                    </div>
-                                    <div class="acc-pro-dec">
-                                        <h3>{{ productData?.cat_name }}</h3>
-                                        <p>
-                                            Ranked among the top-seven global chrome alloy
-                                            producers, we are the leading manufacturers of High
-                                            Carbon Ferro Chrome in India. We produce various grades
-                                            of Ferro Chrome Chemical Composition: Cr - 60% Min, C -
-                                            6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max
-                                        </p>
-                                    </div>
-                             -->
-                                    <!-- <div class="acc-pro-qty">
-                                        <input type="text" class="form-control" id="qty_{{i}}" placeholder="0"
-                                            disabled="" value="{{productData.quantity}}" />
-                                    </div>
-                                    <div class="acc-pro-del pointerTab">
-                                        <button class="del-btn btn-danger" [disabled]="userType"
-                                            (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-                                    </div> -->
                                 </div>
                                 <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
                                     data-parent="#accordionExample">
@@ -591,19 +568,6 @@
                                 <p class="ml-2">{{messages}}</p>
                             </div>
                             <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
-                                <!-- <div *ngFor="let remark of messages">
-                                    <div class="remark-bdy">
-                                        <div>
-                                            <h6>Remarks</h6>
-                                            <p>{{remark.remarks}} </p>
-                                        </div>
-                                        <div>
-                                            <h6>Kam Remarks</h6>
-                                            <p>{{remark.kamsRemarks}} </p>
-                                        </div>
-                                        <p class="date">{{remark.created_at | date}}</p>
-                                    </div>
-                                </div> -->
                                 <div *ngFor="let remark of messages">
                                     <ol class="chat">
                                         <li class="other" *ngIf="remark?.remarks != null">
