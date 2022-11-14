@@ -29,10 +29,10 @@
                                     <div class="rowBox">
                                         <div class="oodr-info-03">
                                             <span>Customer Name</span>
-                                            <p>Amit Singh</p>
+                                            <p>{{productData.user_name}}</p>
                                         </div>
                                         <div class="oodr-info-03">
-                                            <span>Categorie</span>
+                                            <span>Category</span>
                                             <p>{{productData.cat_name}}</p>
                                         </div>
                                         <div class="oodr-info-01">
@@ -50,7 +50,7 @@
                                         <div class="oodr-info-01">
                                             <em>
                                                 <span>RFQ Date</span>
-                                                <p>{{productData.created_at | date: 'dd/MM/YYYY' }}</p>
+                                                <p>{{productData.dt | date: 'dd/MM/YYYY' }}</p>
                                             </em>
                                         </div>
                                         <div class="oodr-info-01">
@@ -61,10 +61,12 @@
                                             </em>
 
                                         </div>
+                                        <!-- (click)="deleteRfqById(formData?.quote_id)" -->
                                         <div class="oodr-info-02">
                                             <div class="">
-                                                <button *ngIf="userType == false" class="del-btn btn-danger" (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip"
-                                                    data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                                                <button *ngIf="userType == false" class="del-btn btn-danger"
+                                                (click)="deleteRfqById(productData?.quote_id, productData?.id)" data-toggle="modal" data-target="#remarksModel"><i
+                                                        class="fa fa-times"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +74,8 @@
                                 <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
                                     data-parent="#accordionExample">
                                     <div class="card-body">
-                                        <div class="row mt-3" *ngFor="let formData of productData['schedule'];let y = index">
+                                        <div class="row mt-3"
+                                            *ngFor="let formData of productData['schedule'];let y = index">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Sizes Offered</label>
@@ -306,7 +309,8 @@
                                                     (click)="messageBox(formData.schedule_no)">See
                                                     Remarks</span>
                                             </div>
-                                            <div class="col-lg-12 mb-3" *ngIf="userType == false && negotiationHistory?.leading > 0">
+                                            <div class="col-lg-12 mb-3"
+                                                *ngIf="userType == false && negotiationHistory?.leading > 0">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
                                                         <input type="radio" class="form-check-input"
@@ -484,7 +488,8 @@
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
                     <button type="button" class="btn btn-primary" (click)="submitRfq()"><i
                             class="fa fa-paper-plane"></i> Submit</button> &nbsp;
-                    <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
+                    <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
+                        Back</button>
                 </div>
 
                 <!-- Negotiation History list -->
@@ -731,7 +736,8 @@
                                             [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_discount{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should not be greater than
+                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should not be greater
+                                            than
                                             {{productPrice?.cam_discount}}</small>
                                     </td>
                                 </tr>
@@ -776,6 +782,29 @@
         </div>
     </div>
 
+    <!-- Delete remarks model -->
+    <div class="modal fade" id="remarksModel" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Remarks for delete</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control remarkArea"  [(ngModel)]="remarksData" id="message-text"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submitRemarks()">Submit</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 
 </html>

@@ -15,6 +15,7 @@ export class OrderPlaningFormComponent implements OnInit {
   productionForm: FormGroup;
   stateName:any = [];
   submitted: boolean = false;
+  poFile: any;
 
 
 
@@ -81,5 +82,24 @@ export class OrderPlaningFormComponent implements OnInit {
     console.log(err);
     this.spinner.hide();
   })
+  }
+
+  poFileUpload(event:any) {
+    this.poFile = event.target.files[0];
+  }
+
+  submitUpload() {
+    const fileData = new FormData();
+    fileData.append('excel', this.poFile);
+    this._complains.orderPlaningUpload(fileData).subscribe((res:any) => {
+      console.log(res);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'File Uploaded Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    })
   }
 }

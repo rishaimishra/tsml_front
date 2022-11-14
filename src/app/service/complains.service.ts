@@ -49,6 +49,10 @@ export class ComplainsService {
     return this._http.post(this.BesUrl + '/user/get_order_planning', reqParameter);
   };
 
+  orderPlaningUpload(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/monthly_prod_plan_submit', reqParameter);
+  };
+
   sendData(data:string) {
     this.subject.next(data)
   };

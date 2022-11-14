@@ -22,6 +22,7 @@ import { PoModule } from './po/po.module';
 import { ComplainsModule } from './complains/complains.module';
 import { OrderModule } from './order/order.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 
@@ -48,7 +49,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PoModule,
     ComplainsModule,
     OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MDBBootstrapModule.forRoot()
   ],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

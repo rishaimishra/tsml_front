@@ -22,6 +22,7 @@ export class ComplainsComponent implements OnInit {
   selectedFile: File;
   poNumber:any;
   poDate:any;
+  fileName:any;
 
 
   constructor(private _complainse: ComplainsService,
@@ -120,7 +121,7 @@ export class ComplainsComponent implements OnInit {
 
   onSelectFile(event:any) {
     this.selectedFile = event.target.files[0];
-    
+    this.fileName = this.selectedFile.name;
 
   }
   saveComplains() {

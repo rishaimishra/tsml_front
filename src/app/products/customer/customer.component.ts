@@ -80,7 +80,11 @@ export class CustomerComponent implements OnInit {
   messages:any;
   poRedirectArr:any = [];
   percentPrice:any;
+  remarksData: any = '';
+  deleteId:any;
 
+  @ViewChild("remarksModel")
+  remarksModel!: { show: () => void; hide: () => void; nativeElement: any };
 
   constructor(
     private _route: ActivatedRoute,
@@ -173,37 +177,33 @@ export class CustomerComponent implements OnInit {
     })
   }
 
-  deleteRfqById(id: any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let apiKey = '/user/delete_quote_by_id';
-        let apiUrl = apiKey + '/' + id;
-        this.productService.getMethod(apiUrl).subscribe((res: any) => {
-          console.log(res)
-          if (res.status == 1 && res.result == 'Quote deleted') {
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
-            this.detailByRfq();
-          } else {
-            this._toaster.error(res.result);
-            this.spinner.hide();
-          }
-        })
-      }
-    })
-  }
+  deleteRfqById(qoute_id: any, id:any) {
+    this.deleteId = qoute_id;
 
+  }
+  submitRemarks() {
+    let useriD = localStorage.getItem('USER_ID');
+    if (this.remarksData != '') {
+      let remarksReq = {
+        "quote_id": this.deleteId,
+        "kam_id": useriD,
+        "remarks": this.remarksData
+      }
+      this._product.remarksDelet(remarksReq).subscribe ((res:any) => {
+        console.log(res);
+        Swal.fire(
+          'Canceled!',
+          'Your Item has been Canceled.',
+          'success'
+        )
+        this.remarksData = '';
+        this.detailByRfq();
+
+      })
+    } else {
+      this._toaster.error('','Remarks is required!');
+    }
+  }
   goToCustomerPage(id: any) {
     this._router.navigate(['/customer', id]);
   }

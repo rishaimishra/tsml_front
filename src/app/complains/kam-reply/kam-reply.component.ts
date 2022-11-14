@@ -39,7 +39,6 @@ export class KamReplyComponent implements OnInit {
 
   complainsReply() {
     this._spiner.show();
-    // https://beas.in/mje-shop/api/user/complain-details-kam/AIT7770
     let apiUrl = '/user/complain-details-kam/'+this.compId;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
       this._spiner.hide();
@@ -47,7 +46,7 @@ export class KamReplyComponent implements OnInit {
         this._spiner.hide();
         this.compInfo = res.result;
         this.remarkAll = res.remarksData;
-        this.imageUrl = this.remarkAll.file_url
+        this.imageUrl = this.compInfo.file_url;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
@@ -101,7 +100,15 @@ export class KamReplyComponent implements OnInit {
     let apiUrl = '/user/closed-remarks/' +  compId;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
       console.log(res);
+      Swal.fire(
+        'Closed!',
+        'Discussion has been closed!',
+        'success'
+      )
     })
 }
 
+downloadComp(imageUrl:any) {
+  window.location.href = imageUrl;
+}
 }

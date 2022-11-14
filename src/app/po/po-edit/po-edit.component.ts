@@ -159,6 +159,7 @@ export class PoEditComponent implements OnInit {
         this.product_data = res.result;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
+        console.log(this.product_data);
         this.catId = this.selectedItem[0].product_id;
         this.poInfo = this.selectedItem[0];
         this.show_data = true;
@@ -342,19 +343,28 @@ export class PoEditComponent implements OnInit {
       }
 
       let reqData = {
-        rfq_number: this.productId,
+        rfq_number: this.selectedItem.rfq_no,
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
         quote_type:'',
         quote_schedules: form_data_array,
       };
-
+      console.log(reqData);
+      return;
       rfqFormArry.push(reqData);
       // console.log('rfqFormArry=', form_data_array);
     }
-    console.log('poStatusArr',poStatusArr);
-  
+    if (this.userType == false) {
+      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+      let amendPoReq = {
+        "po_no": this.productId,
+        "amdnt_no": this.productId + '/'+scheduleNo
+      }
+      this._product.amendPO(amendPoReq).subscribe((res:any) => {
+        console.log(res);
+      })
+    }
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.detailByRfq();
@@ -376,7 +386,7 @@ export class PoEditComponent implements OnInit {
 
         this.spinner.hide();
       }
-      
+
     });
   };
 

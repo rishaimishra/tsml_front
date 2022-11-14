@@ -76,10 +76,9 @@
                      </div>
                   </div>
                    <div class="col-lg-4 col-md-6 col-sm-6">
-                      <div class="down_btn_box">
-                         <div class="reply_btn"><a class="btn btn-primary"><i
-                                  class="fa fa-download"></i> Download</a></div>
-                      </div>
+                      <!-- <div class="down_btn_box">
+                         <div class="reply_btn"></div>
+                      </div> -->
                    </div>
                    <div class="col-lg-8 col-md-6 col-sm-6" *ngIf="compInfo?.complain_status != 2">
                       <div class="reply_btn_box">
@@ -99,6 +98,8 @@
                 <hr>
                 <div class="row">
                    <div class="col-lg-12">
+                     <a [href]="imageUrl" [download]="imageUrl" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please download the supporting document."><i
+                        class="fa fa-download"></i></a> &nbsp;
                       <button *ngIf="compInfo?.complain_status != 2" (click)="submitReply(compInfo?.complain_id)"class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
                       <button type="button" class="btn btn-danger" routerLink="/complains-list"><i class="fa fa-times"></i> Cancel</button>
                    </div>

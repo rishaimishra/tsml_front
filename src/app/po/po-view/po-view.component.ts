@@ -87,7 +87,8 @@ export class PoViewComponent implements OnInit {
   letterHeadFile: boolean = false;
   letterHedFile: any;
   poInfo:any;
-
+  leaterheadFile:any;
+  radioValue:any;
 
   constructor(
     private _route: ActivatedRoute,
@@ -161,6 +162,8 @@ export class PoViewComponent implements OnInit {
         this.product_data = res.result;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
+        this.leaterheadFile = this.product_data[0]['letterhead'];
+        console.log('leaterheadFile',this.leaterheadFile);
         this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
         this.poInfo = this.selectedItem[0];
@@ -613,5 +616,22 @@ export class PoViewComponent implements OnInit {
     console.log(poNo);
     this.spinner.hide();
     this._router.navigate(['/kam-reply',poNo]);
+  }
+
+  selectRadio(event:any) {
+    console.log(event.target.value);
+    this.radioValue = event.target.value;
+  }
+
+  submitStatus() {
+    let statusReq = {
+      "po_no": this.productId,
+      "status": this.radioValue
+    }
+    console.log(statusReq);
+    return;
+    this._product.acceptOrRejectPO(statusReq).subscribe((res:any) => {
+      console.log(res);
+    })
   }
 }

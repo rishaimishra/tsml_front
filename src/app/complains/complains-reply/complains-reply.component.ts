@@ -97,6 +97,11 @@ export class ComplainsReplyComponent implements OnInit {
     let apiUrl = '/user/closed-remarks/' +  compId;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
       console.log(res);
+      Swal.fire(
+        'Closed!',
+        'Discussion has been closed!',
+        'success'
+      )
     })
   }
 }

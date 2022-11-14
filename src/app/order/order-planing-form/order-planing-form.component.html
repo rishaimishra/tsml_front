@@ -9,7 +9,34 @@
         <div class="container">
             <div class="prof-form-bdy">
                 <div class="search-sec">
-                    <form [formGroup]="productionForm" (ngSubmit)="productionSave()">
+                    <div class="row">
+                        <div class="col-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Upload Order Planning Data</label>
+                                <div class="position-relative">
+                                    <input type="file" (change)="poFileUpload($event)"
+                                        class="form-control form-control-sm datepicker">
+                                    <!-- <span>
+                                        <button (click)="submitUpload()" class="btn btn-primary">Upload</button>
+                                    </span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Select Date</label>
+                                <div class="position-relative">
+                                    <input type="date"
+                                        class="form-control form-control-sm datepicker">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <button type="button" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <!-- <form [formGroup]="productionForm" (ngSubmit)="productionSave()">
                         <div class="row">
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
@@ -181,7 +208,7 @@
                                 <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
 
             </div>

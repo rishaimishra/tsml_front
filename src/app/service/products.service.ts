@@ -92,4 +92,16 @@ export class ProductsService {
   rfqStatusChange(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/quotes_status_update', reqParameter);
   };
+  // delete_quote_sche
+
+  remarksDelet(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/delete_quote_by_id', reqParameter);
+  };
+
+  acceptOrRejectPO(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/po_status_update', reqParameter);
+  };
+  amendPO(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/update_po', reqParameter);
+  };
 }
