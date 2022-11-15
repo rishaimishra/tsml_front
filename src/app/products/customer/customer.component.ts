@@ -318,7 +318,7 @@ export class CustomerComponent implements OnInit {
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
         countArr.push(form_data_array[i]['schedule_no']);
-        if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false) {
+        if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false && this.selectedItem[0]['quotest'] == 5) {
           this.spinner.hide();
           this._toaster.error('','Valid Till is required');
           return;
@@ -349,7 +349,7 @@ export class CustomerComponent implements OnInit {
       if (userTyp == 'Sales') {
         let qouteReq = {
           "rfq_no": this.productId,
-          "status": 5
+          "status": this.qtStatusUpdate
         }
         this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
           console.log(res);

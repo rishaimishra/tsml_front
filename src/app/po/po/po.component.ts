@@ -291,6 +291,7 @@ export class PoComponent implements OnInit {
             to_date: '',
             remarks: '',
             kam_price: '',
+            confirm_date:'',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -299,7 +300,6 @@ export class PoComponent implements OnInit {
           let i = this.selectedItem.length - 1;
 
           this.selectedItem[i]['schedule'] = this.quotation;
-          console.log('this.selectedItem=', this.selectedItem);
           //this.final_form_data();
         } else {
           this.product_data = '';
@@ -317,7 +317,6 @@ export class PoComponent implements OnInit {
     });
   };
   selectFile(event: any) {
-    console.log(event.target.files[0]);
     this.letterHedFile = event.target.files[0];
     let file = event.target.files[0];
     const reader = new FileReader();
@@ -450,6 +449,7 @@ export class PoComponent implements OnInit {
       to_date: '',
       remarks: '',
       kam_price: '',
+      confirm_date: '',
       valid_till: '',
       kamsRemarks: ''
     });
