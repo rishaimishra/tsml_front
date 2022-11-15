@@ -32,17 +32,18 @@ export class DailyProductionComponent implements OnInit {
   }
 
   submitForm() {
-    this.submitt = true;
-    if (this.startDate == '' || this.endDate == '' || this.uploadedFile == null || this.fg_sap == '') {
-      this.toaster.error('','Feild is required!');
+    if (this.startDate == '') {
+      Swal.fire('','Date is required');
+      return;
+    }
+    if (this.uploadedFile == null) {
+      Swal.fire('','File is required');
       return;
     }
     this.spinner.show();
     const fileData = new FormData();
 
     fileData.append('start', this.startDate);
-    fileData.append('end', this.endDate);
-    fileData.append('fg_sap', this.fg_sap);
     fileData.append('excel', this.uploadedFile);
 
     this._complains.storeDailyProd(fileData).subscribe((res:any) => {
@@ -55,9 +56,12 @@ export class DailyProductionComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
+      } else {
+        Swal.fire('Sorry!','Please upload valid file');
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
+        this.spinner.hide();
       }
     }, err => {
       console.log(err);

@@ -132,7 +132,7 @@
                               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                  <div class="card-content">
                                     <h5 class="font-15">My Profile<br></h5>
-                                    <h2 class="mb-3 font-18">John Doe</h2>
+                                    <h2 class="mb-3 font-18">{{userName}}</h2>
                                     <!-- <p class="mb-0"><span class="col-green">42%</span> Increase</p> -->
                                  </div>
                               </div>
@@ -228,6 +228,7 @@
                                     <th>Date</th>
                                     <th>Quantity (MT)</th>
                                     <th>Price (₹)</th>
+                                    <th>Amend No</th>
                                     <th>Status</th>
                                     <th></th>
                                  </tr>
@@ -238,14 +239,15 @@
                                     <td>{{po.po_date}}</td>
                                     <td>{{po.quantity}}</td>
                                     <td>....</td>
+                                    <td>{{po.amdnt_no}}</td>
                                     <td *ngIf="po.status == 2">
-                                       Pending
+                                       <span class="badge badge-warning">Pending</span>
                                     </td>
                                     <td *ngIf="po.status == 1">
-                                       Deliver
+                                       <span class="badge badge-success">Accepted</span>
                                     </td>
                                     <td *ngIf="po.status == 3">
-                                       Under Process
+                                       <span class="badge badge-danger">Rejected</span>
                                     </td>
                                     <td>
                                        <div class="cell1 tab_head_sheet_1 ">

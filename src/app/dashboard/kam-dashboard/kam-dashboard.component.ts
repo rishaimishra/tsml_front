@@ -12,7 +12,7 @@ import { ProductsService } from 'src/app/service/products.service';
 export class KamDashboardComponent implements OnInit {
   kamItems:any;
   poItems: any;
-
+  userName:any;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
   private _router: Router, private _product: ProductsService) { }
@@ -20,6 +20,7 @@ export class KamDashboardComponent implements OnInit {
   ngOnInit() {
     this.getKamItems();
     let userRol = localStorage.getItem('USER_TYPE');
+    this.userName = localStorage.getItem('USER_NAME');
     if(userRol == 'Kam') {
       // this.userType = false;
       this.getKamPoListing();

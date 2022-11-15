@@ -89,6 +89,7 @@ export class PoViewComponent implements OnInit {
   poInfo:any;
   leaterheadFile:any;
   radioValue:any;
+  poStatus:any;
 
   constructor(
     private _route: ActivatedRoute,
@@ -114,7 +115,6 @@ export class PoViewComponent implements OnInit {
 
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      console.log(res);
       this.productId = res.id;
       this.categoryid = res.categoryId;
       this.detailByRfq();
@@ -163,7 +163,7 @@ export class PoViewComponent implements OnInit {
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.leaterheadFile = this.product_data[0]['letterhead'];
-        console.log('leaterheadFile',this.leaterheadFile);
+        this.poStatus = this.product_data[0]['status'];
         this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
         this.poInfo = this.selectedItem[0];
@@ -171,7 +171,6 @@ export class PoViewComponent implements OnInit {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
         }
-        // const uniqueID = uuid.v4();
         const scheduleNo = Math.floor(1000 + Math.random() * 9000);
         this.quotation.push({
           schedule_no: scheduleNo,
@@ -186,7 +185,8 @@ export class PoViewComponent implements OnInit {
           from_date: '',
           to_date: '',
           remarks: '',
-          kam_price: 12505,
+          kam_price: '',
+          confirm_date: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -263,9 +263,6 @@ export class PoViewComponent implements OnInit {
   };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
-  };
-  sizeOffered2(event: any) {
-    console.log(event.target.value);
   };
 
   selectItems(event: any) {
@@ -401,7 +398,8 @@ export class PoViewComponent implements OnInit {
       from_date: '',
       to_date: '',
       remarks: '',
-      kam_price: 12505,
+      kam_price: '',
+      confirm_date: '',
       valid_till: '',
       kamsRemarks: ''
     });
@@ -613,13 +611,11 @@ export class PoViewComponent implements OnInit {
   };
 
   viewComplain(poNo:any) {
-    console.log(poNo);
     this.spinner.hide();
     this._router.navigate(['/kam-reply',poNo]);
   }
 
   selectRadio(event:any) {
-    console.log(event.target.value);
     this.radioValue = event.target.value;
   }
 
@@ -628,10 +624,16 @@ export class PoViewComponent implements OnInit {
       "po_no": this.productId,
       "status": this.radioValue
     }
-    console.log(statusReq);
-    return;
     this._product.acceptOrRejectPO(statusReq).subscribe((res:any) => {
-      console.log(res);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'Updated successully',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this._router.navigate(['/po-list']);
     })
   }
+
 }

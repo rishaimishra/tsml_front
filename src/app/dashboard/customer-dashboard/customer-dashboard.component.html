@@ -134,7 +134,7 @@
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content pointerTab" routerLink="/view-profile">
                           <h5 class="font-15">My Profile</h5>
-                          <h2 class="mb-3 font-18">John Doe</h2>
+                          <h2 class="mb-3 font-18">{{userName}}</h2>
                           <!-- <p class="mb-0"><span class="col-green">18%</span>
                             Increase</p> -->
                         </div>
@@ -236,6 +236,7 @@
                           <th>Date</th>
                           <th>Quantity (MT)</th>
                           <th>Price (₹)</th>
+                          <th>Amend No</th>
                           <th>Status</th>
                           <th></th>
                         </tr>
@@ -246,15 +247,16 @@
                           <td>{{po.po_date}}</td>
                           <td>{{po.quantity}}</td>
                           <td>....</td>
+                          <td>{{po.amdnt_no}}</td>
                           <td *ngIf="po.status == 2">
-                            Pending
-                          </td>
-                          <td *ngIf="po.status == 1">
-                            Deliver
-                          </td>
-                          <td *ngIf="po.status == 3">
-                            Under Process
-                          </td>
+                            <span class="badge badge-warning">Pending</span>
+                         </td>
+                         <td *ngIf="po.status == 1">
+                            <span class="badge badge-success">Accepted</span>
+                         </td>
+                         <td *ngIf="po.status == 3">
+                            <span class="badge badge-danger">Rejected</span>
+                         </td>
                           <td>
                              <div class="cell1 tab_head_sheet_1 ">
                                  <div class="add_ttrr actions-main text-center">

@@ -13,6 +13,7 @@ export class CustomerDashboardComponent implements OnInit {
   kamItems:any;
   poItems:any;
   p: number = 1;
+  userName:any;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
     private _router: Router, private _product: ProductsService) { }
@@ -20,6 +21,7 @@ export class CustomerDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getKamItems();
     let userRol = localStorage.getItem('USER_TYPE');
+    this.userName = localStorage.getItem('USER_NAME');
     if(userRol == 'Kam') {
       // this.userType = false;
       this.getKamPoListing();
@@ -30,7 +32,6 @@ export class CustomerDashboardComponent implements OnInit {
   }
 
   reedirectPage(status:any, rfqNumber:any) {
-    console.log(status, rfqNumber);
     if (status == 'Accepted') {
       this._router.navigate(['/po',rfqNumber]);
     } else {

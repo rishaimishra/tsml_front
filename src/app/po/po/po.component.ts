@@ -256,9 +256,6 @@ export class PoComponent implements OnInit {
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   };
-  sizeOffered2(event: any) {
-    console.log(event.target.value);
-  };
 
   selectItems(event: any) {
     let categoryId = event.target.value;

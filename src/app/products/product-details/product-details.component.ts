@@ -43,10 +43,14 @@ export class ProductDetailsComponent implements OnInit {
   submit: boolean = false;
   categoryid: any;
   userRole:any;
+  userType: boolean;
   
   public quotation: any[] = [];
   public quotation_value: any[] = [];
   totalQty: any;
+
+
+  
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
@@ -61,8 +65,10 @@ export class ProductDetailsComponent implements OnInit {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userRole = 'K';
+      this.userType = false;
     } else {
       this.userRole = 'C';
+      this.userType = true;
     }
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
@@ -74,7 +80,6 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   getTotalQuantity(cat_id: any) {
-    console.log(cat_id)
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['form_data'];
       console.log('form_data_array=', form_data_array);
@@ -117,6 +122,7 @@ export class ProductDetailsComponent implements OnInit {
             remarks: '',
             kam_price: '',
             valid_till: '',
+            confirm_date: '',
             kamsRemarks: ''
           });
 
@@ -138,9 +144,6 @@ export class ProductDetailsComponent implements OnInit {
   };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
-  };
-  sizeOffered2(event: any) {
-    console.log(event.target.value);
   };
 
   selectItems(event: any) {
@@ -175,6 +178,7 @@ export class ProductDetailsComponent implements OnInit {
             remarks: '',
             kam_price: '',
             valid_till: '',
+            confirm_date: '',
             kamsRemarks: ''
           });
           console.log('this.quotation=', this.quotation);
@@ -192,18 +196,16 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.product_data = '';
         }
-        //console.log('this.product_data=', this.product_data);
       },
       (err) => {
         this.spinner.hide();
-        // console.log(err);
+        console.log(err);
       }
     );
   };
 
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
-    console.log(this.proSize1);
   };
 
   ReqForQuatation() {
@@ -227,14 +229,7 @@ export class ProductDetailsComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-      // let qtyNull = reqData['quote_schedules'][i].quantity;
-      // let remarksNull = reqData['quote_schedules'][i].remarks;
-      // if (qtyNull == '' || remarksNull == '') {
-      //   this._toaster.error('please check required field');
-      //   this.spinner.hide();
-      //   return;
 
-      // }
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
     }
@@ -264,7 +259,6 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   addItem(i: any) {
-    // const uniqueID = uuid.v4();
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['form_data'];
     this.quotation.push({
@@ -282,6 +276,7 @@ export class ProductDetailsComponent implements OnInit {
       remarks: '',
       kam_price: '',
       valid_till: '',
+      confirm_date: '',
       kamsRemarks: ''
     });
     this.selectedItem[i]['form_data'] = this.quotation;

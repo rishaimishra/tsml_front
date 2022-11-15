@@ -86,6 +86,7 @@ export class PoEditComponent implements OnInit {
   letterHeadFile: boolean = false;
   letterHedFile: any;
   poInfo:any;
+  rfqNumber:any;
 
 
   constructor(
@@ -159,7 +160,7 @@ export class PoEditComponent implements OnInit {
         this.product_data = res.result;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
-        console.log(this.product_data);
+        this.rfqNumber = this.product_data[0]['rfq_no'];
         this.catId = this.selectedItem[0].product_id;
         this.poInfo = this.selectedItem[0];
         this.show_data = true;
@@ -167,7 +168,7 @@ export class PoEditComponent implements OnInit {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
         }
-        // const uniqueID = uuid.v4();
+
         const scheduleNo = Math.floor(1000 + Math.random() * 9000);
         this.quotation.push({
           schedule_no: scheduleNo,
@@ -183,6 +184,7 @@ export class PoEditComponent implements OnInit {
           to_date: '',
           remarks: '',
           kam_price: '',
+          confirm_date: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -260,9 +262,6 @@ export class PoEditComponent implements OnInit {
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   };
-  sizeOffered2(event: any) {
-    console.log(event.target.value);
-  };
 
   selectItems(event: any) {
     let categoryId = event.target.value;
@@ -298,6 +297,7 @@ export class PoEditComponent implements OnInit {
             to_date: '',
             remarks: '',
             kam_price: '',
+            confirm_date: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -319,7 +319,6 @@ export class PoEditComponent implements OnInit {
   };
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
-      console.log('value', res);
       this.priceVal = res.result;
     });
   };
@@ -343,35 +342,35 @@ export class PoEditComponent implements OnInit {
       }
 
       let reqData = {
-        rfq_number: this.selectedItem.rfq_no,
+        rfq_number: this.rfqNumber,
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
         quote_type:'',
         quote_schedules: form_data_array,
       };
-      console.log(reqData);
-      return;
+
       rfqFormArry.push(reqData);
-      // console.log('rfqFormArry=', form_data_array);
     }
-    if (this.userType == false) {
-      const scheduleNo = Math.floor(1000 + Math.random() * 9000);
-      let amendPoReq = {
-        "po_no": this.productId,
-        "amdnt_no": this.productId + '/'+scheduleNo
-      }
-      this._product.amendPO(amendPoReq).subscribe((res:any) => {
-        console.log(res);
-      })
-    }
+    
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.detailByRfq();
         this.spinner.hide();
         this._toaster.success(res.result);
         this.poStatusRequest(poStatusArr);
-        this._router.navigate(['/po-list', this.productId]);
+        this._router.navigate(['/po-list']);
+
+        if (this.userType == false) {
+          const scheduleNo = Math.floor(10 + Math.random() * 90);
+          let amendPoReq = {
+            "po_no": this.productId,
+            "amdnt_no": this.productId + '/'+scheduleNo
+          }
+          this._product.amendPO(amendPoReq).subscribe((res:any) => {
+            console.log(res);
+          })
+        }
       }
       if (res.message != 'success') {
         this._toaster.error(res.message);
@@ -391,7 +390,6 @@ export class PoEditComponent implements OnInit {
   };
 
   addItem(i: any) {
-    // const uniqueID = uuid.v4();
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['schedule'];
     this.quotation.push({
@@ -408,6 +406,7 @@ export class PoEditComponent implements OnInit {
       to_date: '',
       remarks: '',
       kam_price: '',
+      confirm_date: '',
       valid_till: '',
       kamsRemarks: ''
     });

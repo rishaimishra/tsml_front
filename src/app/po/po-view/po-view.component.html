@@ -25,7 +25,12 @@
               <option value="">--select--</option>
               <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
             </select>
+            
           </div>
+          <a type="button" [href]="'https://beas.in/mje-shop/api/download-po-pdf/'+poInfo?.po_no" 
+          target="_blank" class="btn btn-primary mb-3" data-toggle="tooltip" data-placement="top" title="Download PO">
+            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+          </a>
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
@@ -281,22 +286,22 @@
           <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="btn btn-primary leftClass" data-toggle="tooltip" data-placement="top" title="Please download the letterhead document."><i
             class="fa fa-download"></i></a> &nbsp;
             
-            <div (change)="selectRadio($event)">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="Accept" name="flexRadioDefault" id="flexRadioDefault1"/>
+            <div (change)="selectRadio($event)" *ngIf="userType && poStatus != 1">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" value="1" name="flexRadioDefault" id="flexRadioDefault1"/>
               <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
             </div>
             
             <!-- Default checked radio -->
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="Reject" name="flexRadioDefault" id="flexRadioDefault2"/>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" value="3" name="flexRadioDefault" id="flexRadioDefault2"/>
               <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
             </div>
           </div>
 
           <button type="button" (click)="raiseComplain(poInfo?.po_no,poInfo?.po_date)" *ngIf="userType" class="btn btn-primary">Raise Complaint</button>&nbsp;
           <button type="button" (click)="viewComplain(poInfo?.po_no)" *ngIf="!userType" class="btn btn-primary">View Complaint</button>&nbsp;
-          <button type="button" *ngIf="userType" (click)="submitStatus()" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+          <button type="button" *ngIf="userType && poStatus != 1" (click)="submitStatus()" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
             Submit</button> &nbsp;
           <button type="button" [routerLink]="['/po-list']" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
         </div>

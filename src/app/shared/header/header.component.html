@@ -103,7 +103,7 @@
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/register">
                            Register </a></li>
                            <!-- <li class="nav-item"><a class="nav-link" *ngIf="!userType" routerLink="/order-planing">Order Schedule</a></li> -->
-                           <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')">
+                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')">
                              <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
                                  Order Planning</a>
                                  <div class="dropdown-menu small-dd" style="color: black;">
@@ -111,7 +111,9 @@
                                      <a routerLink="/order-planing-form" class="mt-2">Order Planing Form</a><br>
                                      <a routerLink="/dispatch-plan" class="mt-2">Dispatch Plan</a>
                                    </div>
-                           </li>
+                      </li>
+                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')" routerLink="/rfq-list">
+                        Confirm RFQs </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/order-planing"> View Order Planning
                         </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userType)" routerLink="/customer-dashboard">

@@ -14,6 +14,7 @@ export class OrderPlaningComponent implements OnInit {
   orderList:any;
   dispatchPlan:any = [];
   orderPlaningForm: FormGroup;
+  dispatchList: any = [];
 
 
   constructor(private _complains: ComplainsService,
@@ -58,6 +59,9 @@ export class OrderPlaningComponent implements OnInit {
         console.log('element',this.dispatchPlan);
         
       }
+    }, err => {
+      console.log(err);
+      this.spinner.show();
     })
   }
   selectPlant(event:any) {
@@ -86,6 +90,10 @@ export class OrderPlaningComponent implements OnInit {
         text: 'Month should be same !',
       })
     }
+  }
+  onOpenDispatchForm(dispatchList: any) {
+    this.dispatchList = dispatchList;
+    console.log('dispatchList: ',this.dispatchList);
   }
 
   nxtDt: any;

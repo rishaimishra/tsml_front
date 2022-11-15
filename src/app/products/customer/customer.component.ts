@@ -82,6 +82,8 @@ export class CustomerComponent implements OnInit {
   percentPrice:any;
   remarksData: any = '';
   deleteId:any;
+  userByrole:any;
+  qtStatusUpdate:any;
 
   @ViewChild("remarksModel")
   remarksModel!: { show: () => void; hide: () => void; nativeElement: any };
@@ -100,6 +102,7 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     let userRol = localStorage.getItem('USER_TYPE');
+    this.userByrole = userRol;
     if(userRol == 'Kam') {
       this.userType = false;
     } else {
@@ -216,25 +219,6 @@ export class CustomerComponent implements OnInit {
 
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
-    console.log(this.proSize1);
-  }
-  deliveryMethod(event: any) {
-    console.log(event.target.value);
-  }
-  pickupFrom(event: any) {
-    console.log(event.target.value);
-  }
-  deliveryMethod2(event: any) {
-    console.log(event.target.value);
-  }
-  pickupfrome2(event: any) {
-    console.log(event.target.value);
-  }
-  selectlocation2(event: any) {
-    console.log(event.target.value);
-  }
-  billTo2(event: any) {
-    console.log(event.target.value);
   }
 
   getRequote(event: any) {
@@ -314,12 +298,16 @@ export class CustomerComponent implements OnInit {
       console.log('value', res);
       this.priceVal = res.result;
     });
-  }
+  };
+  selectRadio(event:any) {
+    this.qtStatusUpdate = event.target.value;
+  };
   submitRfq() {
     this.submit = true;
     let userRol = localStorage.getItem('USER_TYPE');
     let rediectStatus = [];
     let countArr = [];
+    let confrmDate = [];
     this.spinner.show();
     let rfqFormArry: any = [];
     // console.log(this.poRedirectArr);
@@ -330,12 +318,17 @@ export class CustomerComponent implements OnInit {
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
         countArr.push(form_data_array[i]['schedule_no']);
-        console.log('Arry',form_data_array[i]['valid_till']);
         if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false) {
           this.spinner.hide();
           this._toaster.error('','Valid Till is required');
           return;
         }
+        // For Tantetive date update
+        let tantetiveReq = {
+          "schedule_no": form_data_array[i]['schedule_no'],
+          "confirm_date": form_data_array[i]['confirm_date'],
+        }
+        confrmDate.push(tantetiveReq);
       }
       
       let reqData = {
@@ -347,14 +340,28 @@ export class CustomerComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
+
     };
-    // this.poRedirectArr.forEach(element => {
-    //   rediectStatus.push(element.status);
 
-    // });
-
+    let qouteSt = this.selectedItem[0]['quotest'];
+    let userTyp = localStorage.getItem('USER_TYPE');
+    if (qouteSt != 5) {
+      if (userTyp == 'Sales') {
+        let qouteReq = {
+          "rfq_no": this.productId,
+          "status": 5
+        }
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+          console.log(res);
+        })
+      }
+      else if (userTyp == 'Kam') {
+        this._product.updateTantetive(confrmDate).subscribe((res:any) => {
+          console.log(res);
+        })
+      }
+    } else {
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
-      console.log(res);
       if (res.message == 'success') {
         this.spinner.hide();
         Swal.fire({
@@ -402,6 +409,7 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+  }
 
     if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
       // const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
@@ -565,6 +573,7 @@ export class CustomerComponent implements OnInit {
     let apiUrl = '/user/quotes_history/' + this.productId;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.negotiationHistory = res.result;
+      console.log(this.negotiationHistory.length)
     })
   };
 
@@ -606,4 +615,5 @@ export class CustomerComponent implements OnInit {
   clickBack() {
     this.location.back();
   }
+
 }

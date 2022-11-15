@@ -107,10 +107,9 @@
                                                         class="inputValidation">Quantity is required</small>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3" *ngIf="userByrole != 'Sales'">
                                                 <div class="form-group">
-                                                    <label for="">Expected Ex-Works Price<small>(On Advance
-                                                            Payment)</small></label>
+                                                    <label for="">Expected Price</label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
                                                         <input type="number" [disabled]="!userType"
@@ -128,7 +127,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Delivery Method</label>
-                                                    <select (change)="deliveryMethod($event)" [disabled]="userType"
+                                                    <select [disabled]="userType"
                                                         #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                                                         name="delivery_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -144,7 +143,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Pickup From</label>
-                                                    <select (change)="pickupFrom($event)" [disabled]="userType"
+                                                    <select [disabled]="userType"
                                                         #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
                                                         name="plant_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -243,12 +242,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
                                                 <div class="form-group">
+                                                    <label for="">Tentative delivery date</label>
+                                                    <div class="">
+                                                        <input type="date" [disabled]="userType"
+                                                        [(ngModel)]="formData.confirm_date"
+                                                            class="form-control form-control-sm kamClass"
+                                                            id="confirm_date{{formData.schedule_no}}" placeholder="0">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for=""
                                                         (click)="getPrice(formData.location,formData.plant, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
                                                         price
-                                                        <span class="price-info price-info0" data-toggle="modal"
+                                                        <span *ngIf="!userType" class="price-info price-info0" data-toggle="modal"
                                                             data-target="#addPrice"><i
                                                                 class="fa fa-info-circle"></i></span></label>
                                                     <div class="pri-box">
@@ -261,17 +271,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
-                                                <div class="form-group">
+                                                <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
-                                                        <!-- <input type="date" [(ngModel)]="formData.valid_till"
-                                                            class="form-control form-control-sm datepicker"
-                                                            placeholder="To" value=""> -->
                                                         <input type="datetime-local" [disabled]="userType"
                                                             #validTill="ngModel" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
                                                         <small
-                                                            *ngIf="validTill.invalid && (validTill.dirty || validTill.touched || submit)"
+                                                            *ngIf="formData.kam_price > 0"
                                                             class="inputValidation">Valid Till is required</small>
                                                     </div>
                                                 </div>
@@ -280,7 +287,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="">Customer Remarks</label>
-                                                    <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
+                                                    <textarea [(ngModel)]="formData.remarks" [disabled]="userByrole == 'Sales'" #remarks="ngModel"
                                                         name="remarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>
@@ -310,7 +317,7 @@
                                                     Remarks</span>
                                             </div>
                                             <div class="col-lg-12 mb-3"
-                                                *ngIf="userType == false && negotiationHistory?.leading > 0">
+                                                *ngIf="formData.kam_price != null">
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
                                                         <input type="radio" class="form-check-input"
@@ -335,149 +342,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div id="deliverySchedule" class="collapse">
-                                            <div class="schedule-block" id="container">
-                                                <div class="row mydiv" id="thediv">
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Sizes Offered</label>
-                                                            <select (change)="sizeOffered2($event)"
-                                                                class="form-control form-control-sm">
-                                                                <option value="10-50">10-50</option>
-                                                                <option value="10-70">10-70</option>
-                                                                <option value="10-100">10-100</option>
-                                                                <option value="10-150">10-150</option>
-                                                            </select>
-                                                        </div>
+                                            <div class="col-lg-12 mb-3 text-right">
+                                                <div (change)="selectRadio($event)" *ngIf="userByrole == 'Sales'">
+                                                    <div class="form-check-inline">
+                                                      <input class="form-check-input" type="radio" value="5" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                                      <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Quantity (MT)</label>
-                                                            <input type="number" [(ngModel)]="quantity1"
-                                                                class="form-control form-control-sm" id=""
-                                                                placeholder="" value="" />
-                                                        </div>
+                                                    
+                                                    <!-- Default checked radio -->
+                                                    <div class="form-check-inline">
+                                                      <input class="form-check-input" type="radio" value="6" name="flexRadioDefault" id="flexRadioDefault2"/>
+                                                      <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Expected Ex-Works Price<small>(On Advance
-                                                                    Payment)</small></label>
-                                                            <div class="pri-box">
-                                                                <span>₹</span>
-                                                                <input type="number" [(ngModel)]="expectedPrice2"
-                                                                    class="form-control form-control-sm" id=""
-                                                                    placeholder="" value="" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Delivery Method</label>
-                                                            <select (change)="deliveryMethod2($event)"
-                                                                class="form-control form-control-sm">
-                                                                <option value="">Select method</option>
-                                                                <option value="FOR">FOR</option>
-                                                                <option value="Ex-Works">Ex-Works</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Pickup From</label>
-                                                            <select (change)="pickupfrome2($event)"
-                                                                class="form-control form-control-sm">
-                                                                <option value="">Select ..</option>
-                                                                <option value="Plant">Plant</option>
-                                                                <option value="Depot">Depot</option>
-                                                                <option value="Port">Port</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Location</label>
-                                                            <select (change)="selectlocation2($event)"
-                                                                class="form-control form-control-sm">
-                                                                <option>Select location</option>
-                                                                <option value="{{ state?.name }}"
-                                                                    *ngFor="let state of states">
-                                                                    {{ state?.name }}
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <div class="bil-add-new-add">
-                                                                <label for="">Bill To</label>
-                                                                <label for=""><a href="registration.html"><i
-                                                                            class="fa fa-plus-circle"></i> Add New
-                                                                        Address</a></label>
-                                                            </div>
-                                                            <select (change)="billTo2($event)"
-                                                                class="form-control form-control-sm">
-                                                                <option value="">Select</option>
-                                                                <option value="{{ state?.name }}"
-                                                                    *ngFor="let state of states">
-                                                                    {{ state?.name }}
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <div class="bil-add-new-add">
-                                                                <label for="">Ship To</label>
-                                                                <label for=""><a href="registration.html"><i
-                                                                            class="fa fa-plus-circle"></i> Add New
-                                                                        Address</a></label>
-                                                            </div>
-                                                            <select class="form-control form-control-sm">
-                                                                <option>Select</option>
-                                                                <option value="{{ state?.name }}"
-                                                                    *ngFor="let state of states">
-                                                                    {{ state?.name }}
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label for="">Proposed Delivery Date</label>
-                                                            <div class="date-rang">
-                                                                <div class="position-relative">
-                                                                    <input type="date" [(ngModel)]="deliveryDate3"
-                                                                        class="form-control form-control-sm"
-                                                                        placeholder="From" value="" />
-                                                                    <span class="over_llp"><img
-                                                                            src="assets/images/cal.png" alt="" /></span>
-                                                                </div>
-                                                                <div class="position-relative">
-                                                                    <input type="date" [(ngModel)]="deliveryDate4"
-                                                                        class="form-control form-control-sm"
-                                                                        placeholder="To" value="" />
-                                                                    <span class="over_llp"><img
-                                                                            src="assets/images/cal.png" alt="" /></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-11">
-                                                        <div class="form-group">
-                                                            <label for="">Remarks</label>
-                                                            <textarea [(ngModel)]="remarks2"
-                                                                class="form-control form-control-sm"
-                                                                rows="4"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div></div>
+                                                  </div>
                                             </div>
                                         </div>
+
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -493,7 +374,7 @@
                 </div>
 
                 <!-- Negotiation History list -->
-                <div class="history-table">
+                <div class="history-table" *ngIf="userByrole != 'Sales'">
                     <section class="sub-header-2">
                         <div class="container">
                             <h1>Negotiation History</h1>

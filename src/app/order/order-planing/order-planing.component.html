@@ -125,7 +125,7 @@
                                         <td>{{orders.fg_after_dis}}</td>
                                         <td>{{orders.dis_sum}}</td>
                                         <td><button class="btn btn-sm btn-primary" data-toggle="modal"
-                                                data-target="#myModal">Dispatch Plan</button></td>
+                                                data-target="#myModal" (click)="onOpenDispatchForm(orders.dispatch)">Dispatch Plan</button></td>
 
                                          <!-- Dispatch plan Modal -->
                             <div id="myModal" class="modal" role="dialog">
@@ -139,13 +139,13 @@
                                         <div class="modal-body">
                                             
                                             <div class="row table-op2">
-                                                <div class="top-table-op-2" *ngFor="let dispatch of orders.dispatch">
+                                                <div class="top-table-op-2" *ngFor="let dispatch of dispatchList">
                                                     {{dispatch.day}}
                                                 </div>
                                                 
                                             </div>
                                             <div class="row mt-2 table-op3">
-                                                <div class=" top-table-op-2" *ngFor="let dispatch of orders.dispatch">
+                                                <div class=" top-table-op-2" *ngFor="let dispatch of dispatchList">
                                                    <input type="text" class="form-control" value="{{dispatch.ds_qty}}" readonly name="" id="">
                                                 </div>
                                             

@@ -46,17 +46,20 @@
                                  </td>
                                  <td *ngIf="!userType">{{rfqItem?.name}}</td>
                                  <td>{{rfqItem?.quantity}}</td>
-                                 <td *ngIf="rfqItem?.status == 'Pending' && rfqItem?.quote_type != 'Kam'">
-                                    Pending<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
+                                 <td *ngIf="rfqItem?.kam_status == 0">
+                                    Under Confirmation<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
                                  </td>
-                                 <td *ngIf="rfqItem?.status == 'Pending' && rfqItem?.quote_type == 'Kam'">
+                                 <td *ngIf="rfqItem?.kam_status == 5">
                                     Under Negotiation <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
                                  </td>
-                                 <td *ngIf="rfqItem?.status == 'Accepted'">
+                                 <td *ngIf="rfqItem?.kam_status == 1">
                                     Accepted
                                  </td>
-                                 <td *ngIf="rfqItem?.status == 'Rejected'">
+                                 <td *ngIf="rfqItem?.kam_status == 2">
                                     Rejected
+                                 </td>
+                                 <td *ngIf="rfqItem?.kam_status == 4">
+                                    PO Generated
                                  </td>
                                  <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
                                  <td>

@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-12 col-lg-3">
                             <div class="form-group">
-                                <label>Start Date</label>
+                                <label>Select Date</label>
                                 <div class="position-relative">
                                     <input type="date" [(ngModel)]="startDate" #startDt="ngModel" class="form-control datepicker" required>
                                     <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
@@ -22,17 +22,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-3">
+                        <!-- <div class="col-12 col-lg-3">
                             <div class="form-group">
                                 <label>End Date</label>
                                 <div class="position-relative">
                                     <input type="date" [(ngModel)]="endDate" #endDt="ngModel" class="form-control datepicker" required>
-                                    <!-- <span class="over_llp"><img src="images/cal.png" alt=""></span> -->
+                                    
                                     <small *ngIf="endDate.invalid || endDate.dirty || endDate.touched || submitt"
                             class="inputValidation">End Date is required</small>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="col-12 col-lg-3">
                             <div class="form-group">
                                 <label>FG Stock In SAP</label>
@@ -49,7 +49,7 @@
                             <label for="">Production Upload</label>
                             <div class="custom-file mb-3">
                                 <input type="file" accept=".xlsx,.xlsm," (change)="fileUplaod($event)" class="custom-file-input" id="customFile" name="filename" required>
-                                <label class="custom-file-label" for="customFile">{{uploadedFile.name ? uploadedFile.name : 'Production Upload'}}</label>
+                                <label class="custom-file-label" for="customFile">{{uploadedFile?.name ? uploadedFile?.name : 'Production Upload'}}</label>
                                
                             </div>
                         </div>

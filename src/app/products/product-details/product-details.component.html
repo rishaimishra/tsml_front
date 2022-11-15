@@ -90,7 +90,7 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                          <label for="">Expected Price</label>
                           <div class="pri-box">
                             <span>₹</span>
                             <input type="number" #priceInput="ngModel" [(ngModel)]="formData.expected_price"
@@ -213,7 +213,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12 add-btn-sec pt-0 text-right">
-            <a (click)="ReqForQuatation()" class="btn btn-primary">Request for quotation</a>
+            <button type="button" *ngIf="userType" (click)="ReqForQuatation()" class="btn btn-primary">Request for quotation</button>
           </div>
         </div>
       </div>
