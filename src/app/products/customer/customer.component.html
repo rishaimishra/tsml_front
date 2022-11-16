@@ -368,7 +368,7 @@
                     </div>
                 </div>
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
-                    <button type="button" [disabled]="selectedItem?.quotest != 7 && userByrole != 'Sales'" class="btn btn-primary" (click)="submitRfq()"><i
+                    <button type="button" [disabled]="selectedItem[0].quotest == 7 && userByrole != 'Sales'" class="btn btn-primary" (click)="submitRfq()"><i
                             class="fa fa-paper-plane"></i> Submit</button> &nbsp;
                     <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
                         Back</button>

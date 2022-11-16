@@ -392,7 +392,6 @@ export class CustomerComponent implements OnInit {
           this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
             if (res.message == 'status updated') {
               this.spinner.hide();
-              // this._toaster.success(res.result);
             } else {
               this._toaster.error(res.message);
             }
@@ -401,7 +400,6 @@ export class CustomerComponent implements OnInit {
         if (this.statusArr.length > 0) {
           this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
             if (res.message == 'status updated') {
-              // this._toaster.success(res.message);
               this.spinner.hide();
             }
             else {

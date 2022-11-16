@@ -57,7 +57,11 @@ export class HeaderComponent implements OnInit {
     if(userRol == 'Kam') {
       this.userType = false;
       this._router.navigate(['/kam-dashboard']);
-    } else {
+    } 
+    if (userRol == 'Sales') {
+      this._router.navigate(['/sales-dashboard']);
+    }
+    else {
       this.userType = true;
       this._router.navigate(['/customer-dashboard']);
     }

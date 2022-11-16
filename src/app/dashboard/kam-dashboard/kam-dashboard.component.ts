@@ -13,6 +13,7 @@ export class KamDashboardComponent implements OnInit {
   kamItems:any;
   poItems: any;
   userName:any;
+  p: number = 1;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
   private _router: Router, private _product: ProductsService) { }

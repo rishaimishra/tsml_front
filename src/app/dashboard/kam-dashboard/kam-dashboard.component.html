@@ -158,7 +158,7 @@
                         </form>
                      </div>
                      <div class="card-body">
-                        <div class="support-ticket media pb-1 mb-3" *ngFor="let rfqItem of kamItems">
+                        <div class="support-ticket media pb-1 mb-3" *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 5, currentPage: p }">
                            <div class="media-body">
                               <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
                                  *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
@@ -175,6 +175,9 @@
                                  &nbsp;&nbsp; - 10th March, 2022</small>
                            </div>
                         </div>
+                        <div class="text-right">
+                           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                         </div>
                      </div>
                   </div>
                   <!-- Support tickets -->
