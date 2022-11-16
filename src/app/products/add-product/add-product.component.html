@@ -102,21 +102,6 @@
    </div>
    <!-- footer -->
    <app-footer></app-footer>
-   <div class="foot_arw">
-      <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
-   </div>
-   <script>
-      function Clone() {
-         var clone = document.getElementById('thediv').cloneNode(true); // "deep" clone
-         document.getElementById("container").appendChild(clone);
-      }
-
-      function Delete(button) {
-         var parent = button.parentNode;
-         var grand_father = parent.parentNode;
-         grand_father.removeChild(parent);
-      }
-   </script>
 </body>
 
 </html>

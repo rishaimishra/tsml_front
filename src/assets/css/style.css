@@ -2649,7 +2649,7 @@ button:focus { outline: none; }
 .accordion-- .card .card-header {
     background-color: #fff;
     border-bottom: 0;
-    border-radius: 10px!important;
+    
 }
 .btn-link {
     border: 2px solid #3D7EEB;
@@ -3775,3 +3775,45 @@ padding: 15px;}
         margin-left: 25px;
     }
     .oodr-info-03 span{font-weight:bold;}
+    .accordion-- .card-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    /* .accordion-- .card{padding:0 15px;} */
+    .accordion-- .card-header:after {
+        font-family: 'FontAwesome';
+        content: "\f068";
+        float: right;
+        position: absolute;
+        left: 10px;
+        color: #3d7eeb;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: 1px solid #3d7eeb;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 25px;
+    }
+    #accordion .card {
+        border: none;
+        position: relative;
+    }
+    .accordion-- .card-body {
+        flex: 1 1 auto;
+        padding: 1.25rem 7px;
+    }
+    .accordion-- .card{padding:0 20px;}
+    .accordion-- .acc-pro-pic {
+        margin-right: 10px;
+        margin-left: 30px;
+    }
+    .accordion-- .card-header{border-bottom:1px solid #ccc!important;}
+    .accordion-- .card-body {
+        border-top: none;
+    }
+    .accordion-- .card-body {
+        flex: 1 1 auto;
+        padding: 1.25rem 5px!important;
+    }

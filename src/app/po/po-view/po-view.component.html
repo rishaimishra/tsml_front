@@ -27,20 +27,18 @@
             </select>
             
           </div>
-          <a type="button" [href]="'https://beas.in/mje-shop/api/download-po-pdf/'+poInfo?.po_no" 
-          target="_blank" class="btn btn-primary mb-3" data-toggle="tooltip" data-placement="top" title="Download PO">
-            <i class="fa fa-cloud-download" aria-hidden="true"></i>
-          </a>
+          <a [href]="'https://beas.in/mje-shop/api/download-po-pdf/'+poInfo?.po_no" target="_blank"><i class="fa fa-cloud-download" aria-hidden="true"></i> Generate-Po</a>
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-            <div class="accordion--" id="accordionExample">
-              <div class="card">
-                <div class="card-header card-header--" id="headingOne">
-                  <button type="button" class="btn btn-link" data-toggle="collapse"
+            <div id="accordion" class="accordion accordion--">
+              <div class="card md-0">
+                <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
+                [attr.data-target]="'#collapseOne'+i">
+                  <!-- <button type="button" class="btn btn-link" data-toggle="collapse"
                     [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
-                  </button>
+                  </button> -->
                   <div class="acc-pro-pic pointerTab" (click)="goToCustomerPage(productData?.rfq_no)">
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
@@ -65,8 +63,7 @@
                       title="Delete"><i class="fa fa-trash"></i></button>
                   </div>
                 </div>
-                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
-                  data-parent="#accordionExample">
+                <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="
                           let formData of productData['schedule'];
@@ -101,7 +98,7 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                          <label for="">Expected Price</label>
                           <div class="pri-box">
                             <span>₹</span>
                             <input type="number" [disabled]="userType" #priceInput="ngModel"
@@ -283,8 +280,8 @@
           </div>
         </div>
         <div class="text-right pb-5" *ngIf="showButtons > 0">
-          <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="btn btn-primary leftClass" data-toggle="tooltip" data-placement="top" title="Please download the letterhead document."><i
-            class="fa fa-download"></i></a> &nbsp;
+          <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip" data-placement="top" title="Please download the letterhead document."><i
+            class="fa fa-download"></i> Download Letterhead PO</a> &nbsp;
             
             <div (change)="selectRadio($event)" *ngIf="userType && poStatus != 1">
             <div class="form-check form-check-inline">
@@ -292,7 +289,6 @@
               <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
             </div>
             
-            <!-- Default checked radio -->
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" value="3" name="flexRadioDefault" id="flexRadioDefault2"/>
               <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
@@ -313,9 +309,6 @@
   </div>
   <!-- footer -->
   <app-footer></app-footer>
-  <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
-  </div>
   <!-- price modal -->
   <div class="modal" id="addPrice">
     <div class="modal-dialog modal-lg">

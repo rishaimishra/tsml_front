@@ -213,9 +213,6 @@ export class CustomerComponent implements OnInit {
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   }
-  sizeOffered2(event: any) {
-    console.log(event.target.value);
-  }
 
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
@@ -308,12 +305,11 @@ export class CustomerComponent implements OnInit {
     let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
+
     this.spinner.show();
     let rfqFormArry: any = [];
-    // console.log(this.poRedirectArr);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
-      // countArr.push(form_data_array);
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
@@ -321,6 +317,19 @@ export class CustomerComponent implements OnInit {
         if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false && this.selectedItem[0]['quotest'] == 5) {
           this.spinner.hide();
           this._toaster.error('','Valid Till is required');
+          return;
+        }
+        if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
+          this.spinner.hide();
+          Swal.fire({
+            title: 'Sorry!',
+            text: "Tentative date is required",
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+          })
           return;
         }
         // For Tantetive date update
@@ -357,6 +366,13 @@ export class CustomerComponent implements OnInit {
       }
       else if (userTyp == 'Kam') {
         this._product.updateTantetive(confrmDate).subscribe((res:any) => {
+          console.log(res);
+        })
+        let qouteReq = {
+          "rfq_no": this.productId,
+          "status": 7
+        }
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
           console.log(res);
         })
       }
@@ -615,5 +631,4 @@ export class CustomerComponent implements OnInit {
   clickBack() {
     this.location.back();
   }
-
 }

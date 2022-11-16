@@ -35,12 +35,13 @@
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-            <div class="accordion--" id="accordionExample">
-              <div class="card">
-                <div class="card-header card-header--" id="headingOne">
-                  <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
+            <div id="accordion" class="accordion accordion--">
+              <div class="card mb-0">
+                <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
+                 [attr.data-target]="'#collapseOne'+i">
+                  <!-- <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
-                  </button>
+                  </button> -->
                   <div class="acc-pro-pic">
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
@@ -59,7 +60,8 @@
                     <input type="text" class="form-control" id="qty_{{i}}" placeholder="0" disabled="" />
                   </div>
                 </div>
-                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <!-- <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"> -->
+                  <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="
                           let formData of productData['form_data'];
@@ -224,9 +226,6 @@
   </div>
   <!-- footer -->
   <app-footer></app-footer>
-  <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
-  </div>
 
 </body>
 

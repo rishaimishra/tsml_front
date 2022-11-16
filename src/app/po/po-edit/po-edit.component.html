@@ -29,13 +29,14 @@
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-            <div class="accordion--" id="accordionExample">
-              <div class="card">
-                <div class="card-header card-header--" id="headingOne">
-                  <button type="button" class="btn btn-link" data-toggle="collapse"
+            <div id="accordion" class="accordion accordion--">
+              <div class="card md-0">
+                <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
+                [attr.data-target]="'#collapseOne'+i">
+                  <!-- <button type="button" class="btn btn-link" data-toggle="collapse"
                     [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
-                  </button>
+                  </button> -->
                   <div class="acc-pro-pic pointerTab" (click)="goToCustomerPage(productData?.rfq_no)">
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
@@ -60,8 +61,7 @@
                       title="Delete"><i class="fa fa-trash"></i></button>
                   </div>
                 </div>
-                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
-                  data-parent="#accordionExample">
+                <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="
                           let formData of productData['schedule'];
@@ -96,7 +96,7 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                          <label for="">Expected Price</label>
                           <div class="pri-box">
                             <span>₹</span>
                             <input type="number" [disabled]="userType" #priceInput="ngModel"
@@ -223,6 +223,16 @@
                           </div>
                         </div>
                       </div>
+                      <div class="col-lg-3" style="display: none;">
+                        <div class="form-group">
+                          <div class="pri-box">
+                            <span>₹</span>
+                            <input type="text" [(ngModel)]="formData.confirm_date"
+                              class="form-control form-control-sm kamClass" id="confirm_date{{formData.schedule_no}}"
+                              placeholder="0">
+                          </div>
+                        </div>
+                      </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Valid Till </label>
@@ -289,9 +299,6 @@
   </div>
   <!-- footer -->
   <app-footer></app-footer>
-  <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
-  </div>
   <!-- price modal -->
   <div class="modal" id="addPrice">
     <div class="modal-dialog modal-lg">

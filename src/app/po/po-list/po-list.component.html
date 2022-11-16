@@ -56,7 +56,9 @@
                                         <a *ngIf="po.status != 1 && userType == false" class="edt-btn btn-primary classPointer" [routerLink]="['/po-edit',po.po_no]" data-toggle="tooltip" data-placement="top" title="Amendment PO"><i class="fa fa-pencil"></i></a>
                                         <a  class="edt-btn btn-primary2 classPointer" [routerLink]="['/po-view',po.po_no]" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
                                      </div>
+                                     
                                   </td>
+                                  
                                </tr>
                             </tbody>
                          </table>
@@ -68,12 +70,4 @@
        </section>
     </div>
     <app-footer></app-footer>
-    <div class="foot_arw">
-       <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt=""></a>
-    </div>
-    <script>
-       $(function () {
-       $('[data-toggle="tooltip"]').tooltip()
-       })
-    </script>
  </body>

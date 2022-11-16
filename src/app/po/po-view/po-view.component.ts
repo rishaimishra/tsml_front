@@ -163,7 +163,7 @@ export class PoViewComponent implements OnInit {
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.leaterheadFile = this.product_data[0]['letterhead'];
-        this.poStatus = this.product_data[0]['status'];
+        this.poStatus = this.product_data[0]['po_st'];
         this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
         this.poInfo = this.selectedItem[0];

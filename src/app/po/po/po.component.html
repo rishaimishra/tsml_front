@@ -29,13 +29,14 @@
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-            <div class="accordion--" id="accordionExample">
-              <div class="card">
-                <div class="card-header card-header--" id="headingOne">
-                  <button type="button" class="btn btn-link" data-toggle="collapse"
+            <div  id="accordion" class="accordion accordion--">
+              <div class="card md-0">
+                <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
+                [attr.data-target]="'#collapseOne'+i">
+                  <!-- <button type="button" class="btn btn-link" data-toggle="collapse"
                     [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
-                  </button>
+                  </button> -->
                   <div class="acc-pro-pic pointerTab" >
                     <img src="{{ productData?.primary_image_url }}"/>
                   </div>
@@ -60,8 +61,7 @@
                       title="Delete"><i class="fa fa-trash"></i></button>
                   </div>
                 </div>
-                <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
-                  data-parent="#accordionExample">
+                <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="
                           let formData of productData['schedule'];
@@ -96,7 +96,7 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Expected Ex-Works Price<small>(On Advance Payment)</small></label>
+                          <label for="">Expected Price</label>
                           <div class="pri-box">
                             <span>₹</span>
                             <input type="number" [disabled]="userType" #priceInput="ngModel"
@@ -213,7 +213,7 @@
                           <label for=""
                             (click)="getPrice(formData.location,formData.plant, formData?.schedule_no, i, y)">Tsml's
                             price
-                            <span class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
+                            <span *ngIf="!userType" class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
                                 class="fa fa-info-circle"></i></span></label>
                           <div class="pri-box">
                             <span>₹</span>
@@ -237,7 +237,7 @@
 
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Valid Till </label>
+                          <label for="">Valid Till</label>
                           <div class="position-relative">
                             <!-- <input type="date" [(ngModel)]="formData.valid_till"
                                     class="form-control form-control-sm datepicker"
@@ -288,25 +288,18 @@
             </div>
           </div>
           <!-- upload section -->
-          <div class="form-check pl-0 display-f mb-0">
-            <b class="form-check-label font-15 ml-3" for="differentaddress">
-              Please Upload Your letterhead Here !
-            </b>
-          </div>
-          <div class="different_address">
+          <div class="different_address" *ngIf="userType">
             <hr class="custom-hr">
-            <div class="">
               <div class="row">
                 <div class="col-md-6 col-lg-4">
+                  <b class="form-check-label font-15 ml-2">Please Upload Your letterhead Here !</b>
                   <div class="form_box_area">
                     <input type="file" (change)="selectFile($event)" accept=".jpg,.jpeg,.pdf" class="form-control-file"
                       id="" >
-              
                   </div>
                   <small class="redText" *ngIf="letterHeadFile">Maximum file size:5MB (PDF, PNG, JPG)</small>
                 </div>
               </div>
-            </div>
           </div>
         </div>
         <div class="text-right pb-5">
@@ -322,9 +315,6 @@
   </div>
   <!-- footer -->
   <app-footer></app-footer>
-  <div class="foot_arw">
-    <a href="javascript:" id="return-to-top"><img src="assets/images/footarw.png" alt="" /></a>
-  </div>
   <!-- price modal -->
   <div class="modal" id="addPrice">
     <div class="modal-dialog modal-lg">

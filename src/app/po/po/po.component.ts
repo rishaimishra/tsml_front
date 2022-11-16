@@ -181,6 +181,7 @@ export class PoComponent implements OnInit {
           to_date: '',
           remarks: '',
           kam_price: '',
+          confirm_date: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -271,10 +272,7 @@ export class PoComponent implements OnInit {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
           //this.selectedItem=this.product_data;
-          console.log('data', this.selectedItem);
-          // return;
           this.show_data = true;
-          // const uniqueID = uuid.v4();
           const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation = [];
           this.quotation.push({
@@ -361,7 +359,7 @@ export class PoComponent implements OnInit {
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
     if (!this.letterHead) {
-      Swal.fire('Leaterhead is required !');
+      Swal.fire('Sorry','Leaterhead is required !');
       return;
     }
     this.spinner.show();
@@ -391,7 +389,6 @@ export class PoComponent implements OnInit {
       // console.log('rfqFormArry=', form_data_array);
     }
 
-  
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
