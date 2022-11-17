@@ -47,22 +47,22 @@
                                  <td *ngIf="!userType">{{rfqItem?.name}}</td>
                                  <td>{{rfqItem?.quantity}}</td>
                                  <td *ngIf="rfqItem?.kam_status == 0">
-                                    Under Confirmation<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
+                                    {{rfqItem?.status}}<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 5">
-                                    Confirmed <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
+                                    {{rfqItem?.status}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 1">
-                                    Accepted
+                                    {{rfqItem?.status}}
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 2">
-                                    Rejected
+                                    {{rfqItem?.status}}
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 4">
-                                    PO Generated
+                                    {{rfqItem?.status}}
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 7">
-                                    Under Process <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
+                                    {{rfqItem?.status}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
                                  </td>
                                  <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
                                  <td>
