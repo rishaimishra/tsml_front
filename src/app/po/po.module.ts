@@ -9,6 +9,7 @@ import { PoEditComponent } from './po-edit/po-edit.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { PoViewComponent } from './po-view/po-view.component';
 import { EditFRQComponent } from '../products/edit-frq/edit-frq.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
@@ -32,7 +33,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ],
   exports: [RouterModule]
 })

@@ -12,6 +12,7 @@ import { ProductsService } from 'src/app/service/products.service';
 export class RfqListComponent implements OnInit {
   rfqList: any = [];
   userType: boolean;
+  p: number = 1;
 
 
   constructor(private _products: ProductsService,

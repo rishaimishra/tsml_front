@@ -322,7 +322,7 @@
                                                 <div class="app-reg-btn">
                                                     <div class="form-check form-check-inline">
                                                         <input type="radio" class="form-check-input"
-                                                            id="inlineCheckbox0" (change)="getRequote($event)"
+                                                            id="inlineCheckbox0" [checked]="formData.quote_status == 3" (change)="getRequote($event)"
                                                             value="{{formData?.schedule_no}}"
                                                             name="fav_language_{{formData?.id}}">
                                                         <label for="inlineCheckbox0">Requote </label>

@@ -14,10 +14,6 @@ const routes: Routes = [
     path: '', redirectTo: '', pathMatch: 'full',
     component: HomeComponent
   },
-  // {
-  //   path: ' /:Pid,/:Cid', redirectTo: '', pathMatch: 'full',
-  //   component: HomeComponent
-  // },
 ];
 
 @NgModule({

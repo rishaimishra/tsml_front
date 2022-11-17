@@ -12,7 +12,7 @@ declare var $: any;
 export class PoListComponent implements OnInit {
   userType: boolean;
   poItems:any;
-
+  p: number = 1;
 
   constructor(private _products: ProductsService, private spinner:NgxSpinnerService,
     private _router: Router) {

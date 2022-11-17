@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OverviewComponent } from './overview/overview.component';
 import { FerroChromeComponent } from './ferro-chrome/ferro-chrome.component';
 import { ChromeOreComponent } from './chrome-ore/chrome-ore.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,7 +8,6 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { EditFRQComponent } from './edit-frq/edit-frq.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { SharedModule } from '../shared/shared.module';
-import { LandingModule } from '../landing/landing.module';
 import { ViewAllProductComponent } from './view-all-product/view-all-product.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { RfqListComponent } from './rfq-list/rfq-list.component';
@@ -18,13 +16,10 @@ import { RfqDetailsComponent } from './rfq-details/rfq-details.component';
 import { KamComponent } from './kam/kam.component';
 import { TruncatePipe } from './transform.pipe';
 import { CustomerComponent } from './customer/customer.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
-  {
-    path: 'overview',
-    component: OverviewComponent,
-  },
   {
     path: 'ferro-chrome',
     component: FerroChromeComponent,
@@ -77,7 +72,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    OverviewComponent,
     FerroChromeComponent,
     ChromeOreComponent,
     ProductDetailsComponent,
@@ -97,6 +91,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     SharedModule,
+    NgxPaginationModule,
   ],
 })
 export class ProductsModule {}

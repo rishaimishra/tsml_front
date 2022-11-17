@@ -11,8 +11,8 @@ import { ProductsService } from 'src/app/service/products.service';
 })
 export class CustomerDashboardComponent implements OnInit {
   kamItems:any;
-  poItems:any;
   p: number = 1;
+  poItems:any;
   userName:any;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,

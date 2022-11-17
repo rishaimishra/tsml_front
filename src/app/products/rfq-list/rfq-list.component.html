@@ -37,7 +37,7 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <tr *ngFor="let rfqItem of rfqList; let i = index">
+                              <tr *ngFor="let rfqItem of rfqList | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
                                  <td>
                                     {{rfqItem?.rfq_no}}
                                  </td>
@@ -50,7 +50,7 @@
                                     Under Confirmation<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 5">
-                                    Under Negotiation <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
+                                    Confirmed <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 1">
                                     Accepted
@@ -75,6 +75,9 @@
                               </tr>
                            </tbody>
                         </table>
+                        <div class="text-right">
+                           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                         </div>
                         <div *ngIf="rfqList?.length < 1" class="col-12 text-center mb-3"
                            style="color: gray;">
                            <b class="">Product not found !</b>

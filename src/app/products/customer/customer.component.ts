@@ -388,15 +388,7 @@ export class CustomerComponent implements OnInit {
           timer: 1500
         })
         // status update and reqoute
-        if (this.requoteArr.length > 0) {
-          this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-            if (res.message == 'status updated') {
-              this.spinner.hide();
-            } else {
-              this._toaster.error(res.message);
-            }
-          })
-        }
+        
         if (this.statusArr.length > 0) {
           this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
             if (res.message == 'status updated') {
@@ -423,6 +415,15 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+    if (this.requoteArr.length > 0) {
+      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
+        if (res.message == 'status updated') {
+          this.spinner.hide();
+        } else {
+          this._toaster.error(res.message);
+        }
+      })
+    }
   }
 
     if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {

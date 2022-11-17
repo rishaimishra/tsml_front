@@ -23,19 +23,21 @@ export class HeaderComponent implements OnInit {
   
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
-    private _product: ProductsService) { }
+    private _product: ProductsService) 
+    { 
+      this.isUserLogIn = this._auth.isLoggedIn();
+      console.log(this.isUserLogIn);
+    }
 
   ngOnInit(): void {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
-    this.isUserLogIn = this._auth.isLoggedIn();
+    
     this.userName = localStorage.getItem('USER_NAME');
     this.userRol = localStorage.getItem('USER_TYPE');
     if(this.userRol == 'Kam') {
       this.userType = false;
-      // this._router.navigate(['/kam-dashboard']);
     } else {
       this.userType = true;
-      // this._router.navigate(['/customer-dashboard']);
     }
 
     $( document ).ready(function() {
@@ -54,16 +56,18 @@ export class HeaderComponent implements OnInit {
 
   clickOnLogo() {
     let userRol = localStorage.getItem('USER_TYPE');
-    if(userRol == 'Kam') {
+    if(userRol == 'Kam' && this.isUserLogIn != false) {
       this.userType = false;
       this._router.navigate(['/kam-dashboard']);
     } 
-    else if (userRol == 'Sales') {
+    else if (userRol == 'Sales' && this.isUserLogIn != false) {
       this._router.navigate(['/sales-dashboard']);
     }
-    else {
+    else if (userRol == 'C' && this.isUserLogIn != false) {
       this.userType = true;
       this._router.navigate(['/customer-dashboard']);
+    } else {
+      this._router.navigate(['']);
     }
   }
   logOut() {
