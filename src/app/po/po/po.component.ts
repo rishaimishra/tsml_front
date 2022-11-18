@@ -355,10 +355,11 @@ export class PoComponent implements OnInit {
     })
   }
   submitRfq() {
+    let userRol = localStorage.getItem('USER_TYPE');
     this.submit = true;
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
-    if (!this.letterHead) {
+    if (!this.letterHead && userRol == 'C') {
       Swal.fire('Sorry','Leaterhead is required !');
       return;
     }

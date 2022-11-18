@@ -168,17 +168,19 @@
                          <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
                          *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
                          <div class="badge badge-pill badge-success mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 1" >{{rfqItem?.status}}</div>
+                                 *ngIf="rfqItem?.kam_status == 1" >{{rfqItem?.status_txt}}</div>
                                  <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.status}}</div>
+                                 *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.status_txt}}</div>
                                  <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 2">{{rfqItem?.status}}</div>
+                                 *ngIf="rfqItem?.kam_status == 2">{{rfqItem?.status_txt}}</div>
                                  <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 4">{{rfqItem?.status}}</div>
+                                 *ngIf="rfqItem?.kam_status == 4">{{rfqItem?.status_txt}}</div>
                                  <div class="badge badge-pill badge-info mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 0">{{rfqItem?.status}}</div>
+                                 *ngIf="rfqItem?.kam_status == 0">{{rfqItem?.status_txt}}</div>
                                  <div class="badge badge-pill badge-primary mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 5">{{rfqItem?.status}}</div>
+                                 *ngIf="rfqItem?.kam_status == 5">{{rfqItem?.status_txt}}</div>
+                                 <div class="badge badge-pill badge-warning mb-1 float-right"
+                                 *ngIf="rfqItem?.kam_status == 6">{{rfqItem?.status_txt}}</div>
 
                          <span class="font-weight-bold">RFQ Number: #{{rfqItem?.rfq_no}}</span>&nbsp;
                          <a (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no)" class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>

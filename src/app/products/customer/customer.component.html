@@ -5,7 +5,7 @@
 
 <body>
     <div class="page-content">
-        <section class="sub-header-2" *ngIf="showButtons > 0 || userByrole != 'Sales'">
+        <section class="sub-header-2" *ngIf="showButtons > 0 && userByrole != 'Sales'">
             <div class="container">
                 <h1>Price Negotiation</h1>
                 <div class="clearfix"></div>
@@ -259,12 +259,12 @@
                                                     <label for=""
                                                         (click)="getPrice(formData.location,formData.plant, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
                                                         price
-                                                        <span *ngIf="!userType" class="price-info price-info0" data-toggle="modal"
+                                                        <span *ngIf="!userType && qoutestId != 0" class="price-info price-info0" data-toggle="modal"
                                                             data-target="#addPrice"><i
                                                                 class="fa fa-info-circle"></i></span></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="text" [disabled]="userType"
+                                                        <input type="text" disabled
                                                             [(ngModel)]="formData.kam_price"
                                                             class="form-control form-control-sm kamClass"
                                                             id="camsPrice{{formData.schedule_no}}" placeholder="0">
@@ -275,7 +275,7 @@
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
-                                                        <input type="datetime-local" [disabled]="userType"
+                                                        <input type="datetime-local" [disabled]="userType || qoutestId == 0"
                                                             #validTill="ngModel" [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
                                                         <!-- <small
@@ -361,7 +361,7 @@
                             
                             <!-- Default checked radio -->
                             <div class="form-check-inline">
-                              <input class="form-check-input" type="radio" value="6" name="flexRadioDefault" id="flexRadioDefault2"/>
+                              <input class="form-check-input" type="radio" value="2" name="flexRadioDefault" id="flexRadioDefault2"/>
                               <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
                             </div>
                           </div>
@@ -615,7 +615,7 @@
                                             [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_discount{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should not be greater
+                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
                                             than
                                             {{productPrice?.cam_discount}}</small>
                                     </td>

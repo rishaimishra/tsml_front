@@ -38,15 +38,15 @@
                            </thead>
                            <tbody>
                               <tr *ngFor="let rfqItem of rfqList | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
-                                 <td>
+                                 <td *ngIf="rfqItem?.kam_status == 7">
                                     {{rfqItem?.rfq_no}}
                                  </td>
-                                 <td>
+                                 <td *ngIf="rfqItem?.kam_status == 7">
                                     {{rfqItem?.created_at}}
                                  </td>
-                                 <td *ngIf="!userType">{{rfqItem?.name}}</td>
-                                 <td>{{rfqItem?.quantity}}</td>
-                                 <td *ngIf="rfqItem?.kam_status == 0">
+                                 <td *ngIf="!userType && rfqItem?.kam_status == 7">{{rfqItem?.name}}</td>
+                                 <td *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.quantity}}</td>
+                                 <!-- <td *ngIf="rfqItem?.kam_status == 0">
                                     {{rfqItem?.status_txt}}<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 5">
@@ -63,12 +63,12 @@
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 6">
                                     {{rfqItem?.status_txt}}
-                                 </td>
+                                 </td> -->
                                  <td *ngIf="rfqItem?.kam_status == 7">
                                     {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
                                  </td>
                                  <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
-                                 <td>
+                                 <td *ngIf="rfqItem?.kam_status == 7">
                                     <div class="btn-edt-del pointerTab">
                                        <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status)"
                                           data-toggle="tooltip" data-placement="top" title="Go for price negotiation">

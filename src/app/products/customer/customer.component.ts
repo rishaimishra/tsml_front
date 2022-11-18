@@ -84,6 +84,7 @@ export class CustomerComponent implements OnInit {
   deleteId:any;
   userByrole:any;
   qtStatusUpdate:any;
+  qoutestId:any;
 
   @ViewChild("remarksModel")
   remarksModel!: { show: () => void; hide: () => void; nativeElement: any };
@@ -152,12 +153,11 @@ export class CustomerComponent implements OnInit {
     let url = '/user/get_quote_by_id' + '/' + this.productId;
     // let url = '/user/get_quote_sche_by_id/' + this.productId;
     this.productService.getMethod(url).subscribe((res: any) => {
-      console.log('resss', res);
       this.spinner.hide();
       if (res.message == 'success') {
         this.editProductId = res.result[0]['product_id'];
         this.product_data = res.result;
-
+        this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.show_data = true;
@@ -424,6 +424,15 @@ export class CustomerComponent implements OnInit {
         }
       })
     }
+    if (userRol == 'Kam') {
+      let qouteReq = {
+        "rfq_no": this.productId,
+        "status": 6
+      }
+      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+        console.log(res);
+      })
+    }
   }
 
     if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
@@ -526,10 +535,10 @@ export class CustomerComponent implements OnInit {
 
 
   calculatePrice(id: any) {
-    let cam_discount = this.priceVal.cam_discount;
-    let deliveryCost = this.priceVal.delivery_cost;
-    let miscExpense = this.priceVal.misc_expense;
-    let pricePremium = this.priceVal.price_premium;
+    let cam_discount = this.productPrice.cam_discount;
+    let deliveryCost = this.productPrice.delivery_cost;
+    let miscExpense = this.productPrice.misc_expense;
+    let pricePremium = this.productPrice.price_premium;
     let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
     let credit_cost_for45_days = this.priceVal.credit_cost_for45_days;
 
@@ -567,7 +576,8 @@ export class CustomerComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    if (_discount > cam_discount && _discount > 0 && _discount != 0) {
+
+    if (Number(cam_discount) < _discount && _discount != 0) {
       this.kamDiscount = true;
       priceValidator.push(5);
     } else {
