@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import { DecimalPipe, formatNumber, Location } from '@angular/common';
 import Swal from 'sweetalert2';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
 
@@ -74,17 +74,20 @@ export class CustomerComponent implements OnInit {
   kamDiscount: boolean = false;
   credCost: boolean = false;
   daysCost: any;
-  totalDayCost:any;
-  daysCostCount:any;
+  totalDayCost: any;
+  daysCostCount: any;
   daysCostCountCustomer: any;
-  messages:any;
-  poRedirectArr:any = [];
-  percentPrice:any;
+  messages: any;
+  poRedirectArr: any = [];
+  percentPrice: any;
   remarksData: any = '';
-  deleteId:any;
-  userByrole:any;
-  qtStatusUpdate:any;
-  qoutestId:any;
+  deleteId: any;
+  userByrole: any;
+  qtStatusUpdate: any;
+  qoutestId: any;
+  myForm: FormGroup;
+  arr: FormArray;
+  showModalIsValue: boolean = false;
 
   @ViewChild("remarksModel")
   remarksModel!: { show: () => void; hide: () => void; nativeElement: any };
@@ -99,12 +102,18 @@ export class CustomerComponent implements OnInit {
     private _fb: FormBuilder,
     private _state: StateCityService,
     private location: Location,
-  ) {$(window).scrollTop(0); }
+  ) {
 
+  }
+  get ff() { return this.myForm.controls; }
+  get t() { return this.f.arr as FormArray; }
+
+  getControl(item: AbstractControl): FormControl { return item as FormControl; }
   ngOnInit(): void {
+    $(window).scrollTop(0);
     let userRol = localStorage.getItem('USER_TYPE');
     this.userByrole = userRol;
-    if(userRol == 'Kam') {
+    if (userRol == 'Kam') {
       this.userType = false;
     } else {
       this.userType = true;
@@ -131,6 +140,17 @@ export class CustomerComponent implements OnInit {
     })
 
     this.pricaValue();
+
+    this.myForm = this._fb.group({
+      arr: this._fb.array([this.createItem()])
+    })
+  }
+
+  createItem() {
+    return this._fb.group({
+      quantity: [''],
+      to_date: ['']
+    })
   }
   get f(): { [key: string]: AbstractControl } {
     return this.priceForm.controls;
@@ -146,7 +166,6 @@ export class CustomerComponent implements OnInit {
     }
     $("#qty_" + cat_id).val(this.totalQty);
   }
-
 
   detailByRfq() {
     this.spinner.show();
@@ -164,6 +183,13 @@ export class CustomerComponent implements OnInit {
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
+          // for (let index = 0; index < form_data_array.length; index++) {
+          //   const schdleNo = form_data_array[index]['schedule_no'];
+
+          //   let apiUrl = '/user/get_quotedel_by_id/'+ schdleNo;
+          //   this._product.getMethod(apiUrl).subscribe((res:any) => {
+          //   })
+          // }
         }
       }
       if (res.status == 'Token has Expired') {
@@ -180,7 +206,7 @@ export class CustomerComponent implements OnInit {
     })
   }
 
-  deleteRfqById(qoute_id: any, id:any) {
+  deleteRfqById(qoute_id: any, id: any) {
     this.deleteId = qoute_id;
 
   }
@@ -192,7 +218,7 @@ export class CustomerComponent implements OnInit {
         "kam_id": useriD,
         "remarks": this.remarksData
       }
-      this._product.remarksDelet(remarksReq).subscribe ((res:any) => {
+      this._product.remarksDelet(remarksReq).subscribe((res: any) => {
         console.log(res);
         Swal.fire(
           'Canceled!',
@@ -204,7 +230,7 @@ export class CustomerComponent implements OnInit {
 
       })
     } else {
-      this._toaster.error('','Remarks is required!');
+      this._toaster.error('', 'Remarks is required!');
     }
   }
   goToCustomerPage(id: any) {
@@ -234,7 +260,7 @@ export class CustomerComponent implements OnInit {
     // }
     this.poRedirectArr.push(reqParam);
 
-    console.log('redirectSt',redirectSt, this.poRedirectArr);
+    console.log('redirectSt', redirectSt, this.poRedirectArr);
     let indx = this.statusArr.findIndex((item: any) => item.id == event.target.value);
     if (indx !== -1) {
       this.statusArr.splice(indx, 1);
@@ -278,7 +304,7 @@ export class CustomerComponent implements OnInit {
       "id": id,
       "status": st
     };
-    
+
     let indx = this.statusArr.findIndex((item: any) => item.id == id);
     if (indx !== -1) {
 
@@ -296,17 +322,64 @@ export class CustomerComponent implements OnInit {
       this.priceVal = res.result;
     });
   };
-  selectRadio(event:any) {
+  selectRadio(event: any) {
     this.qtStatusUpdate = event.target.value;
   };
+  ///////////////////////////////////////////////////////////////////////////////////
+  addItem() {
+    this.arr = this.myForm.get('arr') as FormArray;
+    
+    this.arr.push(this.createItem());
+  }
+
+  schduleNo: any;
+  totlQty: any;
+  resData: any;
+  deliverySchdule: any = [];
+  schduleSele(schdlNo: any, qty: any) {
+    this.schduleNo = schdlNo;
+    let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
+      this.showModalIsValue = true;
+      console.log(res)
+      this.resData = res.result;
+  
+      // for (let i = 0; i < this.resData.length; i++) {
+      //   const element = this.resData[i];
+      //   this.addItem();
+      // }
+    });
+    console.log('ggg', this.myForm.get('arr'))
+    this.totlQty = qty;
+    // this.myForm.reset();
+  }
+  onSubmit() {
+    let schdlData = this.myForm.value['arr'];
+    let setSechdule = {
+      "sche_no": this.schduleNo,
+      "schedules": schdlData
+    }
+    this.deliverySchdule.push(setSechdule);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      text: 'Added Successfully!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    console.log(setSechdule);
+    this.myForm.reset();
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////
   submitRfq() {
+    console.log(this.deliverySchdule);
     this.submit = true;
     let userRol = localStorage.getItem('USER_TYPE');
     let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
 
-    this.spinner.show();
+    // this.spinner.show();
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -316,22 +389,22 @@ export class CustomerComponent implements OnInit {
         countArr.push(form_data_array[i]['schedule_no']);
         if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false && this.selectedItem[0]['quotest'] == 5) {
           this.spinner.hide();
-          this._toaster.error('','Valid Till is required');
+          this._toaster.error('', 'Valid Till is required');
           return;
         }
-        if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
-          this.spinner.hide();
-          Swal.fire({
-            title: 'Sorry!',
-            text: "Tentative date is required",
-            icon: 'warning',
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'OK'
-          })
-          return;
-        }
+        // if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
+        //   this.spinner.hide();
+        //   Swal.fire({
+        //     title: 'Sorry!',
+        //     text: "Tentative date is required",
+        //     icon: 'warning',
+        //     showCancelButton: false,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'OK'
+        //   })
+        //   return;
+        // }
         // For Tantetive date update
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
@@ -339,7 +412,7 @@ export class CustomerComponent implements OnInit {
         }
         confrmDate.push(tantetiveReq);
       }
-      
+
       let reqData = {
         rfq_number: this.productId,
         product_id: this.editProductId,
@@ -360,85 +433,88 @@ export class CustomerComponent implements OnInit {
           "rfq_no": this.productId,
           "status": this.qtStatusUpdate
         }
-        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
           console.log(res);
         })
       }
       else if (userTyp == 'Kam') {
-        this._product.updateTantetive(confrmDate).subscribe((res:any) => {
+        // this._product.updateTantetive(confrmDate).subscribe((res:any) => {
+        //   console.log(res);
+        // })
+        this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
           console.log(res);
         })
         let qouteReq = {
           "rfq_no": this.productId,
           "status": 7
         }
-        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
           console.log(res);
         })
       }
     } else {
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
-      if (res.message == 'success') {
-        this.spinner.hide();
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          text: 'Updated successully',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        // status update and reqoute
-        
-        if (this.statusArr.length > 0) {
-          this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
-            if (res.message == 'status updated') {
-              this.spinner.hide();
-            }
-            else {
-              this._toaster.error(res.message);
-            }
-
-          })
-        }
-      }
-      if (res.message == 'error' || res.status == 0) {
-        this._toaster.error(res.message);
-        this.spinner.hide();
-      }
-      if (res.status == 'Token has Expired') {
-        this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
-        this.spinner.hide();
-      }
-
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-    });
-    if (this.requoteArr.length > 0) {
-      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-        if (res.message == 'status updated') {
+      this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+        if (res.message == 'success') {
           this.spinner.hide();
-        } else {
-          this._toaster.error(res.message);
-        }
-      })
-    }
-    if (userRol == 'Kam') {
-      let qouteReq = {
-        "rfq_no": this.productId,
-        "status": 6
-      }
-      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-        console.log(res);
-      })
-    }
-  }
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            text: 'Updated successully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          // status update and reqoute
 
-    if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+          if (this.statusArr.length > 0) {
+            this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
+              if (res.message == 'status updated') {
+                this.spinner.hide();
+              }
+              else {
+                this._toaster.error(res.message);
+              }
+
+            })
+          }
+        }
+        if (res.message == 'error' || res.status == 0) {
+          this._toaster.error(res.message);
+          this.spinner.hide();
+        }
+        if (res.status == 'Token has Expired') {
+          this._toaster.error(res.status, 'Please login again');
+          this._router.navigate(['/login']);
+          this.spinner.hide();
+        }
+
+      }, err => {
+        console.log(err);
+        this.spinner.hide();
+      });
+      if (this.requoteArr.length > 0) {
+        this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
+          if (res.message == 'status updated') {
+            this.spinner.hide();
+          } else {
+            this._toaster.error(res.message);
+          }
+        })
+      }
+      if (userRol == 'Kam') {
+        let qouteReq = {
+          "rfq_no": this.productId,
+          "status": 6
+        }
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
+          console.log(res);
+        })
+      }
+    }
+
+    if ((rediectStatus.includes('Rej') == false && rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
       // const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
       // let po_id = val;
-      this._router.navigate(['/po',this.productId]);
+      this._router.navigate(['/po', this.productId]);
     } else {
       this._router.navigate(['/rfq-list']);
     }
@@ -490,25 +566,25 @@ export class CustomerComponent implements OnInit {
   };
   selectDay(event: any) {
     this.days = event.target.value;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
-      const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
-      const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-      this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
+    const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+    const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
+    const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
+    this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
 
-      this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
+    this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
 
-      // let prcentPrice = (backendTotal - this.productPrice.bpt_price);
-      // this.percentPrice = (this.productPrice.bpt_price / prcentPrice).toFixed(2);
+    // let prcentPrice = (backendTotal - this.productPrice.bpt_price);
+    // this.percentPrice = (this.productPrice.bpt_price / prcentPrice).toFixed(2);
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-    console.log(prodId,catid, size);
+    console.log(prodId, catid, size);
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
-    
+
     this.priceForm.reset();
     let price = {
       "user_id": this.user_Id,
@@ -521,14 +597,14 @@ export class CustomerComponent implements OnInit {
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
-      Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) +
+        Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
 
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
       console.log(this.daysCostCount);
-  
+
       this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
     })
   };
@@ -614,10 +690,10 @@ export class CustomerComponent implements OnInit {
     $(".kamClass").keypress();
     this.selectedItem[firstIndx].schedule[lastIndx].kam_price = this.Totalsum1;
   };
-  messageBox(shcdlNo:any) {
+  messageBox(shcdlNo: any) {
     this.spinner.show();
     let apiUrl = '/user/view_remarks/' + shcdlNo;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         this.messages = res.result;
