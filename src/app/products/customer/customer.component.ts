@@ -343,7 +343,14 @@ export class CustomerComponent implements OnInit {
       this.showModalIsValue = true;
       console.log(res)
       this.resData = res.result;
-  
+
+      let products = this.myForm.get('arr') as FormArray;
+      products.push(this._fb.group({
+        quantity : 7777,
+        to_date : 12/12/2022
+      }));
+
+      console.log('products',products);
       // for (let i = 0; i < this.resData.length; i++) {
       //   const element = this.resData[i];
       //   this.addItem();
@@ -351,7 +358,7 @@ export class CustomerComponent implements OnInit {
     });
     console.log('ggg', this.myForm.get('arr'))
     this.totlQty = qty;
-    // this.myForm.reset();
+    this.myForm.reset();
   }
   onSubmit() {
     let schdlData = this.myForm.value['arr'];
