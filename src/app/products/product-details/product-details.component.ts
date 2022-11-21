@@ -48,7 +48,9 @@ export class ProductDetailsComponent implements OnInit {
   public quotation: any[] = [];
   public quotation_value: any[] = [];
   totalQty: any;
-
+  userAddr:any;
+  plantAddrr:any;
+  showCity:any;
 
   
   constructor(
@@ -75,6 +77,7 @@ export class ProductDetailsComponent implements OnInit {
       this.productId = res.productId;
       this.categoryid = res.categoryId;
       this.get_product_details(res.productId, res.categoryId);
+      this.getLocation();
     });
     this.setFromData();
   };
@@ -338,4 +341,33 @@ export class ProductDetailsComponent implements OnInit {
             $("#to_date_"+i).attr("min",this.nxtDt);
    
   };
+
+  getLocation () {
+    this.spinner.show();
+    let userId = localStorage.getItem('USER_ID');
+    let apiUrl = '/user/get_user_address/'+userId;
+
+    if(userId != '' || userId != null) {
+      this._product.getMethod(apiUrl).subscribe((res:any) => {
+        this.spinner.hide();
+        this.showCity = res.result.city;
+        this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
+        
+      })
+    }
+  }
+
+  selectPlant(event:any) {
+    this.spinner.show();
+    let eventValue = event.target.value;
+    let apiUrl = '/user/get_plants_by_type/'+ eventValue;
+    if (eventValue != '') {
+      this._product.getMethod(apiUrl).subscribe((res:any) => {
+        this.spinner.hide();
+        if (res.status == 1 && res.message == 'success') {
+          this.plantAddrr = res.result;
+        } 
+      })
+    }
+  }
 }

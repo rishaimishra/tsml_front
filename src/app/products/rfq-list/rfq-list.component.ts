@@ -59,10 +59,14 @@ export class RfqListComponent implements OnInit {
       }
     }) 
   }
-  goToproductDetails(rfqNo: any, status:any) {
-    if (status == 'Accepted') {
+  goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
+    if (status == 'Accepted' && kamStatus != 4) {
       this._router.navigate(['/po',rfqNo])
-    } else {
+    } 
+    else if (kamStatus == 4) {
+      this._router.navigate(['/po-list'])
+    }
+    else {
       this._router.navigate(['/negotiation',rfqNo]);
     }
   }

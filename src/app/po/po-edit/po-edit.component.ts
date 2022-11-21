@@ -482,19 +482,23 @@ export class PoEditComponent implements OnInit {
     this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any,dstAddr:any,proId:any, catId:any,size:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-
+    console.log('dstAddr',dstAddr);
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
-
     this.priceForm.reset();
+
     let price = {
       "user_id": this.user_Id,
       "pickup_from": pickup,
-      "location": location
+      "location": location,
+      "destation_location": dstAddr,
+      "pro_id": proId,
+      "cat_id": catId,
+      "size": size,
     }
 
     this._product.priceCalculation(price).subscribe((res: any) => {

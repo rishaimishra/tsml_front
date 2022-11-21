@@ -128,9 +128,9 @@
                           <select #pickUpfrom="ngModel" [disabled]="userType" [(ngModel)]="formData.plant"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select..</option>
-                            <option value="Plant">Plant</option>
-                            <option value="Depot">Depot</option>
-                            <option value="Port">Port</option>
+                            <option value="PLANT">Plant</option>
+                            <option value="DEPOT">Depot</option>
+                            <option value="PORT">Port</option>
                           </select>
                           <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
                             class="inputValidation">Pickup from is required</small>

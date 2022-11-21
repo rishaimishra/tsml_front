@@ -38,7 +38,7 @@
             <div id="accordion" class="accordion accordion--">
               <div class="card mb-0">
                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
-                 [attr.data-target]="'#collapseOne'+i">
+                  [attr.data-target]="'#collapseOne'+i">
                   <!-- <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
                   </button> -->
@@ -61,7 +61,7 @@
                   </div>
                 </div>
                 <!-- <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"> -->
-                  <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
+                <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="
                           let formData of productData['form_data'];
@@ -78,16 +78,19 @@
                             <option value="10-100">10-100</option>
                             <option value="10-150">10-150</option>
                           </select>
-                          <small *ngIf="offerInput.invalid && (offerInput.dirty || offerInput.touched || submit)" class="inputValidation">Offer size is required</small>
+                          <small *ngIf="offerInput.invalid && (offerInput.dirty || offerInput.touched || submit)"
+                            class="inputValidation">Offer size is required</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity (MT)</label>
-                          <input #qtyInput="ngModel" type="number" (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
-                            name="quantity_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
-                            placeholder="" value="formData.quantity" required/>
-                            <small *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)" class="inputValidation">Quantity is required</small>
+                          <input #qtyInput="ngModel" type="number" (change)="getTotalQuantity(i)"
+                            [(ngModel)]="formData.quantity" name="quantity_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" id="" placeholder="" value="formData.quantity"
+                            required />
+                          <small *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)"
+                            class="inputValidation">Quantity is required</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
@@ -97,8 +100,9 @@
                             <span>₹</span>
                             <input type="number" #priceInput="ngModel" [(ngModel)]="formData.expected_price"
                               name="expected_price{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
-                              placeholder="" value="" required/>
-                              <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)" class="inputValidation">Price is required</small>
+                              placeholder="" value="" required />
+                            <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
+                              class="inputValidation">Price is required</small>
                           </div>
                         </div>
                       </div>
@@ -112,33 +116,46 @@
                             <option value="FOR">FOR</option>
                             <option value="Ex-Works">Ex-Works</option>
                           </select>
-                          <small *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)" class="inputValidation">Select delivery method</small>
+                          <small
+                            *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
+                            class="inputValidation">Select delivery method</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Pickup From</label>
+                          <label for="">Pickup From</label>&nbsp;
+                          <label for="" (change)="selectPlant($event)">
+                            <input type="radio" id="contactChoice1" name="contact" value="Plant" class="mr-1" />
+                            <label for="contactChoice1">Plant</label>&nbsp;
+                            <input type="radio" id="contactChoice2" name="contact" value="Depot" class="mr-1"/>
+                            <label for="contactChoice2">Depot</label>&nbsp;
+                            <input type="radio" id="contactChoice3" name="contact" value="Port" class="mr-1"/>
+                            <label for="contactChoice3">Port</label>
+
+                          </label>
                           <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select..</option>
-                            <option value="Plant">Plant</option>
-                            <option value="Depot">Depot</option>
-                            <option value="Port">Port</option>
+                            <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
+                            <!-- <option value="Depot">Depot</option>
+                            <option value="Port">Port</option> -->
                           </select>
-                          <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)" class="inputValidation">Pickup from is required</small>
+                          <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
+                            class="inputValidation">Pickup from is required</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Location</label>
-                          <select class="form-control form-control-sm" #location="ngModel" [(ngModel)]="formData.location"
-                            name="location_{{ formData.schedule_no }}" required>
+                          <select class="form-control form-control-sm" #location="ngModel"
+                            [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
                             <option value="">Select location</option>
                             <option *ngFor="let state of states" value="{{ state?.name }}">
                               {{ state?.name }}
                             </option>
                           </select>
-                          <small *ngIf="location.invalid && (location.dirty || location.touched || submit)" class="inputValidation">Location is required</small>
+                          <small *ngIf="location.invalid && (location.dirty || location.touched || submit)"
+                            class="inputValidation">Location is required</small>
                         </div>
                       </div>
 
@@ -149,12 +166,14 @@
                           </div>
                           <select class="form-control form-control-sm" #billTo="ngModel" [(ngModel)]="formData.bill_to"
                             name="bill_to_{{ formData.schedule_no }}" required>
-                            <option value="">Bill to</option>
-                            <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
+                            <option value="" disabled>--Bill to--</option>
+                            <option value="{{ userAddr }}" data-toggle="tooltip" data-placement="top"
+                              title="{{ userAddr }}">
+                              {{ showCity }}
                             </option>
                           </select>
-                          <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)" class="inputValidation">Select bill to</small>
+                          <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
+                            class="inputValidation">Select bill to</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
@@ -164,12 +183,14 @@
                           </div>
                           <select class="form-control form-control-sm" #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                             name="ship_to_{{ formData.schedule_no }}" required>
-                            <option value="">Ship to</option>
-                            <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
+                            <option value="" disabled> --Ship to--</option>
+                            <option value="{{ userAddr }}" data-toggle="tooltip" data-placement="top"
+                              title="{{ userAddr }}">
+                              {{ showCity }}
                             </option>
                           </select>
-                          <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)" class="inputValidation">Select ship to</small>
+                          <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
+                            class="inputValidation">Select ship to</small>
                         </div>
                       </div>
                       <div class="col-lg-3">
@@ -177,17 +198,20 @@
                           <label for="">Proposed Delivery Date</label>
                           <div class="date-rang">
                             <div class="position-relative">
-                              <input type="date" [(ngModel)]="formData.from_date" (change)="setNxtData($event, formData.schedule_no)" min="{{date}}" #dlvrDate="ngModel"
+                              <input type="date" [(ngModel)]="formData.from_date"
+                                (change)="setNxtData($event, formData.schedule_no)" min="{{date}}" #dlvrDate="ngModel"
                                 name="from_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
-                                placeholder="From" required/>
-                          <small *ngIf="dlvrDate.invalid && (dlvrDate.dirty || dlvrDate.touched || submit)" class="inputValidation">Delivery date from</small>
+                                placeholder="From" required />
+                              <small *ngIf="dlvrDate.invalid && (dlvrDate.dirty || dlvrDate.touched || submit)"
+                                class="inputValidation">Delivery date from</small>
                               <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                             <div class="position-relative">
                               <input type="date" [(ngModel)]="formData.to_date" #dlvrDateTo="ngModel"
-                                name="to_date_{{ formData.schedule_no }}"  id="to_date_{{formData.schedule_no}}" class="form-control form-control-sm"
-                                placeholder="To" required/>
-                          <small *ngIf="dlvrDateTo.invalid && (dlvrDateTo.dirty || dlvrDateTo.touched || submit)" class="inputValidation">Delivery date to</small>
+                                name="to_date_{{ formData.schedule_no }}" id="to_date_{{formData.schedule_no}}"
+                                class="form-control form-control-sm" placeholder="To" required />
+                              <small *ngIf="dlvrDateTo.invalid && (dlvrDateTo.dirty || dlvrDateTo.touched || submit)"
+                                class="inputValidation">Delivery date to</small>
                               <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                           </div>
@@ -196,16 +220,18 @@
                       <div class="col-lg-12">
                         <div class="form-group">
                           <label for="">Remarks</label>
-                          <textarea [(ngModel)]="formData.remarks" #remarks="ngModel" name="remarks_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" rows="4" required></textarea>
-                          <small *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)" class="inputValidation">Remarks is required</small>
+                          <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
+                            name="remarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
+                            required></textarea>
+                          <small *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
+                            class="inputValidation">Remarks is required</small>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-12">
                       <a href="javascript:;" class="btn btn-primary my-4 float-right" data-toggle="collapse"
                         (click)="addItem(i)"><i class="fa fa-plus-circle"></i> Add New</a>
-                       
+
                     </div>
                   </div>
                 </div>
@@ -215,7 +241,8 @@
         </div>
         <div class="row">
           <div class="col-lg-12 add-btn-sec pt-0 text-right">
-            <button type="button" *ngIf="userType" (click)="ReqForQuatation()" class="btn btn-primary">Request for quotation</button>
+            <button type="button" *ngIf="userType" (click)="ReqForQuatation()" class="btn btn-primary">Request for
+              quotation</button>
           </div>
         </div>
       </div>

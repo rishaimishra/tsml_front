@@ -31,11 +31,15 @@ export class CustomerDashboardComponent implements OnInit {
     }
   }
 
-  reedirectPage(status:any, rfqNumber:any) {
+  reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
     if (status == 'Accepted') {
       this._router.navigate(['/po',rfqNumber]);
-    } else {
-      this._router.navigate(['/rfq-list']);
+    }
+    else if (kamStatus == 4) {
+      this._router.navigate(['/po-list'])
+    }
+    else {
+      this._router.navigate(['/negotiation',rfqNumber]);
     }
   }
   getKamItems() {
@@ -84,5 +88,17 @@ export class CustomerDashboardComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
+  }
+
+  goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
+    if (status == 'Accepted' && kamStatus != 4) {
+      this._router.navigate(['/po',rfqNo])
+    } 
+    else if (kamStatus == 4) {
+      this._router.navigate(['/po-list'])
+    }
+    else {
+      this._router.navigate(['/negotiation',rfqNo]);
+    }
   }
 }

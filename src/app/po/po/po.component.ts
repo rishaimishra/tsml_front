@@ -363,9 +363,8 @@ export class PoComponent implements OnInit {
       Swal.fire('Sorry','Leaterhead is required !');
       return;
     }
-    this.spinner.show();
+
     for (let i = 0; i < this.selectedItem.length; i++) {
-      this.spinner.hide();
       let form_data_array = this.selectedItem[i]['schedule'];
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
@@ -387,9 +386,9 @@ export class PoComponent implements OnInit {
       };
 
       rfqFormArry.push(reqData);
-      // console.log('rfqFormArry=', form_data_array);
     }
-
+    
+    this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
@@ -404,6 +403,7 @@ export class PoComponent implements OnInit {
         this.poStatusRequest(poStatusArr);
         this.uploadLetterHead();
         this._router.navigate(['/po-list']);
+        this.spinner.hide();
       }
       if (res.message != 'success') {
         this._toaster.error(res.message);
