@@ -243,7 +243,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
+                                            <!-- <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
                                                 <div class="form-group">
                                                     <label for="">Tentative delivery date</label>
                                                     <div class="">
@@ -253,7 +253,7 @@
                                                             id="confirm_date{{formData.schedule_no}}" placeholder="0">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-3">
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for=""
@@ -281,6 +281,21 @@
                                                         <!-- <small
                                                             *ngIf="formData.kam_price > 0 "
                                                             class="inputValidation">Valid Till is required</small> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
+                                                <div class="form-group">
+                                                    <label for="">Tentative delivery date</label>
+                                                    <div class="">
+                                                        <!-- <input type="date" [disabled]="userType"
+                                                        [(ngModel)]="formData.confirm_date"
+                                                            class="form-control form-control-sm kamClass"
+                                                            id="confirm_date{{formData.schedule_no}}" placeholder="0"> -->
+                                                            <button type="button" class="btn btn-primary mt-0"data-toggle="modal" data-target="#createSechdule" 
+                                                            (click)="schduleSele(formData.schedule_no, formData.quantity)">
+                                                                Set Sechdule <span class="badge badge-light"></span>
+                                                              </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -680,6 +695,43 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="submitRemarks()">Submit</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Sechdule popup -->
+    <div class="modal fade" id="createSechdule" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" id="staticBackdropLabel">Sechdule: <small class="ml-4">Quantity - {{totlQty}}</small></h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="myForm" *ngIf="showModalIsValue">
+                    <div formArrayName="arr" *ngFor="let a of myForm.get('arr')['controls']; let i = index">
+                      <div [formGroupName]="i" style="margin-bottom: 10px;">
+                        <div class="row">
+                            <div class="col">
+                              <input type="number" class="form-control" formControlName="quantity" value="" placeholder="Quantity">
+                            </div>
+                            <div class="col">
+                              <input type="date" class="form-control" formControlName="to_date" placeholder="Date">
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-primary btn-sm float-right" (click)="addItem()">Add</button>
+                    <!-- <button type="submit">Submit</button> -->
+                  </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="onSubmit()">OK</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

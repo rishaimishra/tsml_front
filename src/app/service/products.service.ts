@@ -111,4 +111,8 @@ export class ProductsService {
   qouteStatusUpdate(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/quotes_status_update ', reqParameter);
   };
+
+  dlvrySchdule(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/create_rfq_deliveries', reqParameter);
+  };
 }

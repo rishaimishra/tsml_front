@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import { DecimalPipe, formatNumber, Location } from '@angular/common';
 import Swal from 'sweetalert2';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
 
@@ -85,6 +85,10 @@ export class CustomerComponent implements OnInit {
   userByrole:any;
   qtStatusUpdate:any;
   qoutestId:any;
+  myForm: FormGroup;
+  arr: FormArray;
+  showModalIsValue: boolean = false;
+
 
   @ViewChild("remarksModel")
   remarksModel!: { show: () => void; hide: () => void; nativeElement: any };
@@ -101,6 +105,11 @@ export class CustomerComponent implements OnInit {
     private location: Location,
   ) {$(window).scrollTop(0); }
 
+  get ff() { return this.myForm.controls; }
+  get t() { return this.f.arr as FormArray; }
+
+  getControl(item: AbstractControl): FormControl { return item as FormControl; }
+  
   ngOnInit(): void {
     let userRol = localStorage.getItem('USER_TYPE');
     this.userByrole = userRol;
@@ -131,7 +140,19 @@ export class CustomerComponent implements OnInit {
     })
 
     this.pricaValue();
+
+    this.myForm = this._fb.group({
+      arr: this._fb.array([])
+    })
   }
+
+  createItem(qty,to_date) {
+    return this._fb.group({
+      quantity: [qty],
+      to_date: [to_date]
+    })
+  }
+
   get f(): { [key: string]: AbstractControl } {
     return this.priceForm.controls;
   }
@@ -299,6 +320,60 @@ export class CustomerComponent implements OnInit {
   selectRadio(event:any) {
     this.qtStatusUpdate = event.target.value;
   };
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    addItem() {
+      this.arr = this.myForm.get('arr') as FormArray;
+  
+      this.arr.push(this.createItem('',''));
+    }
+  
+    schduleNo: any;
+    totlQty: any;
+    resData: any;
+    deliverySchdule: any = [];
+    schduleSele(schdlNo: any, qty: any) {
+      this.myForm.reset();
+      this.schduleNo = schdlNo;
+      let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
+      this._product.getMethod(apiUrl).subscribe((res: any) => {
+        this.showModalIsValue = true;
+        console.log(res)
+        this.myForm = this._fb.group({
+          arr: this._fb.array([])
+        })
+        this.resData = res.result;
+        this.arr = this.myForm.get('arr') as FormArray;
+        for (let i of res.result) {
+          this.arr.push(this.createItem(i.qty,i.to_date));
+        }
+  
+        console.log(this.myForm.get('arr')['controls']);
+        console.log('myForm: ', this.myForm.value.arr)
+  
+      });
+      this.totlQty = qty;
+      // this.myForm.reset();
+    }
+    onSubmit() {
+      let schdlData = this.myForm.value['arr'];
+      let setSechdule = {
+        "sche_no": this.schduleNo,
+        "schedules": schdlData
+      }
+      this.deliverySchdule.push(setSechdule);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'Added Successfully!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      console.log(setSechdule);
+      this.myForm.reset();
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////
+
   submitRfq() {
     this.submit = true;
     let userRol = localStorage.getItem('USER_TYPE');
@@ -319,19 +394,19 @@ export class CustomerComponent implements OnInit {
           this._toaster.error('','Valid Till is required');
           return;
         }
-        if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
-          this.spinner.hide();
-          Swal.fire({
-            title: 'Sorry!',
-            text: "Tentative date is required",
-            icon: 'warning',
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'OK'
-          })
-          return;
-        }
+        // if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
+        //   this.spinner.hide();
+        //   Swal.fire({
+        //     title: 'Sorry!',
+        //     text: "Tentative date is required",
+        //     icon: 'warning',
+        //     showCancelButton: false,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'OK'
+        //   })
+        //   return;
+        // }
         // For Tantetive date update
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
@@ -365,9 +440,13 @@ export class CustomerComponent implements OnInit {
         })
       }
       else if (userTyp == 'Kam') {
-        this._product.updateTantetive(confrmDate).subscribe((res:any) => {
+        // this._product.updateTantetive(confrmDate).subscribe((res:any) => {
+        //   console.log(res);
+        // })
+        this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
           console.log(res);
         })
+        
         let qouteReq = {
           "rfq_no": this.productId,
           "status": 7
