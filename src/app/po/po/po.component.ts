@@ -182,6 +182,7 @@ export class PoComponent implements OnInit {
           remarks: '',
           kam_price: '',
           confirm_date: '',
+          pickup_type: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -290,6 +291,7 @@ export class PoComponent implements OnInit {
             remarks: '',
             kam_price: '',
             confirm_date:'',
+            pickup_type: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -448,6 +450,7 @@ export class PoComponent implements OnInit {
       remarks: '',
       kam_price: '',
       confirm_date: '',
+      pickup_type: '',
       valid_till: '',
       kamsRemarks: ''
     });

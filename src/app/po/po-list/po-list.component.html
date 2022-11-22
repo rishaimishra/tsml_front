@@ -43,6 +43,9 @@
                                     {{po.quantity}}
                                   </td>
                                   <td *ngIf="po.status == 2">
+                                    <span class="badge badge-primary">{{po.status_txt}}</span>
+                                 </td>
+                                 <td *ngIf="po.status == 4">
                                     <span class="badge badge-warning">{{po.status_txt}}</span>
                                  </td>
                                  <td *ngIf="po.status == 1">

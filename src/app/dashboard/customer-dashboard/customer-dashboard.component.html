@@ -260,13 +260,16 @@
                           <td>....</td>
                           <td>{{po.amdnt_no}}</td>
                           <td *ngIf="po.status == 2">
-                            <span class="badge badge-warning">{{po.status_txt}}</span>
+                            <span class="badge badge-primary">{{po.status_txt}}</span>
                          </td>
                          <td *ngIf="po.status == 1">
                             <span class="badge badge-success">{{po.status_txt}}</span>
                          </td>
                          <td *ngIf="po.status == 3">
                             <span class="badge badge-danger">{{po.status_txt}}</span>
+                         </td>
+                         <td *ngIf="po.status == 4">
+                            <span class="badge badge-warning">{{po.status_txt}}</span>
                          </td>
                           <td>
                              <div class="cell1 tab_head_sheet_1 ">

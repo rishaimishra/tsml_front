@@ -91,6 +91,7 @@ export class PoViewComponent implements OnInit {
   leaterheadFile:any;
   radioValue:any;
   poStatus:any;
+  amndNomber:any;
   downloadFile = environment.apiEndpointBase;
 
   constructor(
@@ -166,6 +167,8 @@ export class PoViewComponent implements OnInit {
         this.selectedItem = this.product_data;
         this.leaterheadFile = this.product_data[0]['letterhead'];
         this.poStatus = this.product_data[0]['po_st'];
+        this.amndNomber = this.product_data[0]['amdnt_no'];
+
         this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
         this.poInfo = this.selectedItem[0];
@@ -189,6 +192,7 @@ export class PoViewComponent implements OnInit {
           remarks: '',
           kam_price: '',
           confirm_date: '',
+          pickup_type: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -300,8 +304,9 @@ export class PoViewComponent implements OnInit {
             from_date: '',
             to_date: '',
             remarks: '',
-            kam_price: 12505,
+            kam_price: '',
             valid_till: '',
+            pickup_type: '',
             kamsRemarks: ''
           });
 
@@ -404,6 +409,7 @@ export class PoViewComponent implements OnInit {
       remarks: '',
       kam_price: '',
       confirm_date: '',
+      pickup_type: '',
       valid_till: '',
       kamsRemarks: ''
     });
@@ -479,7 +485,7 @@ export class PoViewComponent implements OnInit {
     this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
 
@@ -491,7 +497,11 @@ export class PoViewComponent implements OnInit {
     let price = {
       "user_id": this.user_Id,
       "pickup_from": pickup,
-      "location": location
+      "location": location,
+      "destation_location": shipTo,
+      "pro_id": prodId,
+      "cat_id": catid,
+      "size": size
     }
 
     this._product.priceCalculation(price).subscribe((res: any) => {
