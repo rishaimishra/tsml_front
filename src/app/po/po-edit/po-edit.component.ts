@@ -87,6 +87,7 @@ export class PoEditComponent implements OnInit {
   letterHedFile: any;
   poInfo:any;
   rfqNumber:any;
+  percentPrice:any;
 
 
   constructor(
@@ -387,6 +388,7 @@ export class PoEditComponent implements OnInit {
       }
 
     });
+    this.submitStatus();
   };
 
   addItem(i: any) {
@@ -482,43 +484,42 @@ export class PoEditComponent implements OnInit {
     this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any,dstAddr:any,proId:any, catId:any,size:any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-    console.log('dstAddr',dstAddr);
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
+    
     this.priceForm.reset();
-
     let price = {
       "user_id": this.user_Id,
       "pickup_from": pickup,
       "location": location,
-      "destation_location": dstAddr,
-      "pro_id": proId,
-      "cat_id": catId,
-      "size": size,
+      "destation_location": shipTo,
+      "pro_id": prodId,
+      "cat_id": catid,
+      "size": size
     }
-
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) +
-        Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
+      Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
 
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
       console.log(this.daysCostCount);
-
+  
       this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
     })
   };
+
   calculatePrice(id: any) {
-    let cam_discount = this.priceVal.cam_discount;
-    let deliveryCost = this.priceVal.delivery_cost;
-    let miscExpense = this.priceVal.misc_expense;
-    let pricePremium = this.priceVal.price_premium;
+    let cam_discount = this.productPrice.cam_discount;
+    let deliveryCost = this.productPrice.delivery_cost;
+    let miscExpense = this.productPrice.misc_expense;
+    let pricePremium = this.productPrice.price_premium;
     let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
     let credit_cost_for45_days = this.priceVal.credit_cost_for45_days;
 
@@ -556,19 +557,22 @@ export class PoEditComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    if (_discount < cam_discount && _discount != 0) {
+
+    if (Number(cam_discount) < _discount && _discount != 0) {
       this.kamDiscount = true;
       priceValidator.push(5);
     } else {
       this.kamDiscount = false;
     };
-
+    this.priceLimit = priceValidator;
     const total = (bptPrice + misc_expense + delivery) - price_premium;
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
 
     this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
+    let prcentPrice = (this.Totalsum1 - bptPrice);
+    this.percentPrice = (bptPrice / prcentPrice).toFixed(2);
 
   };
 
@@ -611,6 +615,23 @@ export class PoEditComponent implements OnInit {
         this._toaster.error(res.message);
       }
 
+    })
+  }
+
+  submitStatus() {
+    let statusReq = {
+      "po_no": this.productId,
+      "status": 4
+    }
+    this._product.acceptOrRejectPO(statusReq).subscribe((res:any) => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'Updated successully',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this._router.navigate(['/po-list']);
     })
   }
 }

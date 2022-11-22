@@ -27,7 +27,7 @@
             </select>
             
           </div>
-          <a [href]="'https://beas.in/mje-shop/api/download-po-pdf/'+poInfo?.po_no" target="_blank"><i class="fa fa-cloud-download" aria-hidden="true"></i> Generate-Po</a>
+          <a [href]="downloadFile+'/download-po-pdf/'+poInfo?.po_no" target="_blank"><i class="fa fa-cloud-download" aria-hidden="true"></i> Generate-Po</a>
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
@@ -283,7 +283,7 @@
           <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip" data-placement="top" title="Please download the letterhead document."><i
             class="fa fa-download"></i> Download Letterhead PO</a> &nbsp;
             
-            <div (change)="selectRadio($event)" *ngIf="userType && poStatus != 1">
+            <div (change)="selectRadio($event)" *ngIf="userType && poStatus != 1 && selectedItem?.amdnt_no != null">
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" value="1" name="flexRadioDefault" id="flexRadioDefault1"/>
               <label class="form-check-label" for="flexRadioDefault1"> Accept </label>

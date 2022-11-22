@@ -51,7 +51,9 @@ export class ProductDetailsComponent implements OnInit {
   userAddr:any;
   plantAddrr:any;
   showCity:any;
-
+  pickUptype:any;
+  locationState:any;
+  locationRes:any;
   
   constructor(
     private _route: ActivatedRoute,
@@ -85,12 +87,10 @@ export class ProductDetailsComponent implements OnInit {
   getTotalQuantity(cat_id: any) {
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['form_data'];
-      console.log('form_data_array=', form_data_array);
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
       }
-      console.log('quantity1', qty);
       this.totalQty = qty;
     }
     $("#qty_" + cat_id).val(this.totalQty);
@@ -126,6 +126,7 @@ export class ProductDetailsComponent implements OnInit {
             kam_price: '',
             valid_till: '',
             confirm_date: '',
+            pickup_type: '',
             kamsRemarks: ''
           });
 
@@ -182,6 +183,7 @@ export class ProductDetailsComponent implements OnInit {
             kam_price: '',
             valid_till: '',
             confirm_date: '',
+            pickup_type: '',
             kamsRemarks: ''
           });
           console.log('this.quotation=', this.quotation);
@@ -213,6 +215,7 @@ export class ProductDetailsComponent implements OnInit {
 
   ReqForQuatation() {
     this.spinner.show();
+
     this.submit = true;
     const val = Math.floor(1000 + Math.random() * 9000);
     let rfqNumber = val;
@@ -236,6 +239,7 @@ export class ProductDetailsComponent implements OnInit {
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
     }
+    console.log(rfqFormArry);
 
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       if (res.status == 1 && res.result != 'Quote not created') {
@@ -280,6 +284,7 @@ export class ProductDetailsComponent implements OnInit {
       kam_price: '',
       valid_till: '',
       confirm_date: '',
+      pickup_type: '',
       kamsRemarks: ''
     });
     this.selectedItem[i]['form_data'] = this.quotation;
@@ -289,7 +294,6 @@ export class ProductDetailsComponent implements OnInit {
 
   final_form_data() {
     this.quotation_value = [];
-    // console.log('this.selectedItem final fn=', this.selectedItem);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data = this.selectedItem[i]['form_data'];
 
@@ -298,7 +302,6 @@ export class ProductDetailsComponent implements OnInit {
       }
       this.quotation_value[i] = this.selectedItem[i]['form_data'];
     }
-    console.log('this.quotation_value=', this.quotation_value);
   };
 
   date: any;
@@ -350,22 +353,42 @@ export class ProductDetailsComponent implements OnInit {
     if(userId != '' || userId != null) {
       this._product.getMethod(apiUrl).subscribe((res:any) => {
         this.spinner.hide();
-        this.showCity = res.result.city;
+        this.showCity = res.result.state;
         this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
-        
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/login']);
+          this.spinner.hide();
+        }
       })
     }
   }
 
-  selectPlant(event:any) {
+  plantSele(event:any) {
+    console.log('pantId',event.target.value);
+    let apiUrl = '/user/get_plant_addr/'+ event.target.value;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.locationState = res.result['state'];
+
+        this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
+      }
+    })
+  };
+  
+  selectPlant(event:any, schdleNo:any) {
     this.spinner.show();
     let eventValue = event.target.value;
+    $('#pickupTyp_'+schdleNo).val(eventValue);
     let apiUrl = '/user/get_plants_by_type/'+ eventValue;
     if (eventValue != '') {
       this._product.getMethod(apiUrl).subscribe((res:any) => {
         this.spinner.hide();
         if (res.status == 1 && res.message == 'success') {
           this.plantAddrr = res.result;
+        }
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/login']);
+          this.spinner.hide();
         } 
       })
     }

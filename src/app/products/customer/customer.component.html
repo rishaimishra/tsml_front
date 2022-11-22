@@ -18,7 +18,7 @@
                     <!-- List start -->
 
                     <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-                        <div  id="accordion" class="accordion accordion--" *ngIf="productData.schedule.length > 0">
+                        <div id="accordion" class="accordion accordion--" *ngIf="productData.schedule.length > 0">
                             <div class="card md-0">
                                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
                                     [attr.data-target]="'#collapseOne'+i">
@@ -65,7 +65,8 @@
                                         <div class="oodr-info-02">
                                             <div class="">
                                                 <button *ngIf="userType == false" class="del-btn btn-danger"
-                                                (click)="deleteRfqById(productData?.quote_id, productData?.id)" data-toggle="modal" data-target="#remarksModel"><i
+                                                    (click)="deleteRfqById(productData?.quote_id, productData?.id)"
+                                                    data-toggle="modal" data-target="#remarksModel"><i
                                                         class="fa fa-times"></i></button>
                                             </div>
                                         </div>
@@ -73,7 +74,7 @@
                                 </div>
                                 <!-- <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
                                     data-parent="#accordionExample"> -->
-                                    <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
+                                <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                                     <div class="card-body">
                                         <div class="row mt-3"
                                             *ngFor="let formData of productData['schedule'];let y = index">
@@ -128,8 +129,8 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Delivery Method</label>
-                                                    <select [disabled]="userType"
-                                                        #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
+                                                    <select [disabled]="userType" #dlvrMethodInput="ngModel"
+                                                        [(ngModel)]="formData.delivery"
                                                         name="delivery_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
                                                         <option value="">Select ..</option>
@@ -143,15 +144,26 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <label for="">Pickup From</label>
-                                                    <select [disabled]="userType"
-                                                        #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
+                                                    <label for="">Pickup From</label> &nbsp;
+                                                    <label for=""(change)="selectPlant($event, formData.schedule_no)">
+                                                    <input type="radio" id="contactChoice1" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="Plant"
+                                                        class="mr-1" />
+                                                    <label for="contactChoice1">Plant</label>&nbsp;
+                                                    <input type="radio" id="contactChoice2" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="Depot"
+                                                        class="mr-1" />
+                                                    <label for="contactChoice2">Depot</label>&nbsp;
+                                                    <input type="radio" id="contactChoice3" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="Port"
+                                                        class="mr-1" />
+                                                    <label for="contactChoice3">Port</label>
+                                                </label>
+                                                    <select [disabled]="userType" #pickUpfrom="ngModel"
+                                                        [(ngModel)]="formData.plant"
                                                         name="plant_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
-                                                        <option value="">Select..</option>
-                                                        <option value="PLANT">Plant</option>
-                                                        <option value="DEPOT">Depot</option>
-                                                        <option value="PORT">Port</option>
+                                                        <option value="{{formData.plant}}" selected>{{formData.plant}}</option>
+                                                        <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
+                                                        <!-- <option value="DEPOT">Depot</option>
+                                                        <option value="PORT">Port</option> -->
                                                     </select>
                                                     <small
                                                         *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
@@ -183,7 +195,7 @@
                                                     <select class="form-control form-control-sm" [disabled]="userType"
                                                         #billTo="ngModel" [(ngModel)]="formData.bill_to"
                                                         name="bill_to_{{ formData.schedule_no }}" required>
-                                                        <option value="">Bill to</option>
+                                                        <option value="{{formData.bill_to}}" selected>{{formData.bill_to}}</option>
                                                         <option *ngFor="let state of states" value="{{ state?.name }}">
                                                             {{ state?.name }}
                                                         </option>
@@ -201,7 +213,7 @@
                                                     <select class="form-control form-control-sm" [disabled]="userType"
                                                         #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                                                         name="ship_to_{{ formData.schedule_no }}" required>
-                                                        <option value="">Ship to</option>
+                                                        <option value="{{formData.ship_to}}" selected>{{formData.ship_to}}</option>
                                                         <option *ngFor="let state of states" value="{{ state?.name }}">
                                                             {{ state?.name }}
                                                         </option>
@@ -257,15 +269,15 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for=""
-                                                        (click)="getPrice(formData.location,formData.plant, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
+                                                        (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
                                                         price
-                                                        <span *ngIf="!userType && qoutestId != 0" class="price-info price-info0" data-toggle="modal"
+                                                        <span *ngIf="!userType && qoutestId != 0"
+                                                            class="price-info price-info0" data-toggle="modal"
                                                             data-target="#addPrice"><i
                                                                 class="fa fa-info-circle"></i></span></label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="text" disabled
-                                                            [(ngModel)]="formData.kam_price"
+                                                        <input type="text" disabled [(ngModel)]="formData.kam_price"
                                                             class="form-control form-control-sm kamClass"
                                                             id="camsPrice{{formData.schedule_no}}" placeholder="0">
                                                     </div>
@@ -275,8 +287,9 @@
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
-                                                        <input type="datetime-local" [disabled]="userType || qoutestId == 0"
-                                                            #validTill="ngModel" [(ngModel)]="formData.valid_till"
+                                                        <input type="datetime-local"
+                                                            [disabled]="userType || qoutestId == 0" #validTill="ngModel"
+                                                            [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
                                                         <!-- <small
                                                             *ngIf="formData.kam_price > 0 "
@@ -284,7 +297,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
+                                            <div class="col-lg-12" *ngIf="!userType || userByrole == 'Sales'">
                                                 <div class="form-group">
                                                     <label for="">Tentative delivery date</label>
                                                     <div class="">
@@ -292,10 +305,13 @@
                                                         [(ngModel)]="formData.confirm_date"
                                                             class="form-control form-control-sm kamClass"
                                                             id="confirm_date{{formData.schedule_no}}" placeholder="0"> -->
-                                                            <button type="button" class="btn btn-primary mt-0"data-toggle="modal" data-target="#createSechdule" 
+                                                        <span type="button" class="badge badge-primary mt-0"
+                                                            data-toggle="modal" data-target="#createSechdule"
                                                             (click)="schduleSele(formData.schedule_no, formData.quantity)">
-                                                                Set Sechdule <span class="badge badge-light"></span>
-                                                              </button>
+                                                            Set delivery date <i class="fa fa-calendar"
+                                                                aria-hidden="true"></i><span
+                                                                class="badge badge-light"></span>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,7 +319,8 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="">Customer Remarks</label>
-                                                    <textarea [(ngModel)]="formData.remarks" [disabled]="userByrole == 'Sales'" #remarks="ngModel"
+                                                    <textarea [(ngModel)]="formData.remarks"
+                                                        [disabled]="userByrole == 'Sales'" #remarks="ngModel"
                                                         name="remarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>
@@ -332,36 +349,38 @@
                                                     (click)="messageBox(formData.schedule_no)">See
                                                     Remarks</span>
                                             </div>
-                                            <div class="col-lg-12 mb-3"
-                                                *ngIf="formData.kam_price != null">
-                                                <div class="app-reg-btn">
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="radio" class="form-check-input"
-                                                            id="inlineCheckbox0" [checked]="formData.quote_status == 3" (change)="getRequote($event)"
-                                                            value="{{formData?.schedule_no}}"
-                                                            name="fav_language_{{formData?.id}}">
-                                                        <label for="inlineCheckbox0">Requote </label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="radio" class="form-check-input"
-                                                            id="inlineCheckbox1"
-                                                            (click)="getStatus(formData?.schedule_no,1)"
-                                                            name="fav_language_{{formData?.id}}" value="Accept">
-                                                        <label for="inlineCheckbox0">Accept </label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="radio" class="form-check-input"
-                                                            id="inlineCheckbox2"
-                                                            (click)="getStatus(formData?.schedule_no,2)"
-                                                            name="fav_language_{{formData?.id}}" value="Reject">
-                                                        <label for="inlineCheckbox2">Reject </label>
+                                            <div class="col-lg-12 mb-3" *ngIf="formData.kam_price != null">
+                                                <div *ngIf="userByrole != 'Sales'">
+                                                    <div class="app-reg-btn">
+                                                        <div class="form-check form-check-inline">
+                                                            <input type="radio" class="form-check-input"
+                                                                id="inlineCheckbox0"
+                                                                [checked]="formData.quote_status == 3"
+                                                                (change)="getRequote($event)"
+                                                                value="{{formData?.schedule_no}}"
+                                                                name="fav_language_{{formData?.id}}">
+                                                            <label for="inlineCheckbox0">Requote </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input type="radio" class="form-check-input"
+                                                                id="inlineCheckbox1"
+                                                                (click)="getStatus(formData?.schedule_no,1)"
+                                                                name="fav_language_{{formData?.id}}" value="Accept">
+                                                            <label for="inlineCheckbox0">Accept </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input type="radio" class="form-check-input"
+                                                                id="inlineCheckbox2"
+                                                                (click)="getStatus(formData?.schedule_no,2)"
+                                                                name="fav_language_{{formData?.id}}" value="Reject">
+                                                            <label for="inlineCheckbox2">Reject </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
 
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -370,21 +389,24 @@
                     <div class="col-lg-12 mb-3 text-right">
                         <div (change)="selectRadio($event)" *ngIf="userByrole == 'Sales'">
                             <div class="form-check-inline">
-                              <input class="form-check-input" type="radio" value="5" name="flexRadioDefault" id="flexRadioDefault1"/>
-                              <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
+                                <input class="form-check-input" type="radio" value="5" name="flexRadioDefault"
+                                    id="flexRadioDefault1" />
+                                <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
                             </div>
-                            
+
                             <!-- Default checked radio -->
                             <div class="form-check-inline">
-                              <input class="form-check-input" type="radio" value="2" name="flexRadioDefault" id="flexRadioDefault2"/>
-                              <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
+                                <input class="form-check-input" type="radio" value="2" name="flexRadioDefault"
+                                    id="flexRadioDefault2" />
+                                <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
                             </div>
-                          </div>
+                        </div>
                     </div>
                 </div>
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
-                    <button type="button" [disabled]="selectedItem[0].quotest == 7 && userByrole != 'Sales'" class="btn btn-primary" (click)="submitRfq()"><i
-                            class="fa fa-paper-plane"></i> Submit</button> &nbsp;
+                    <button type="button" [disabled]="selectedItem[0].quotest == 7 && userByrole != 'Sales'"
+                        class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
+                    &nbsp;
                     <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
                         Back</button>
                 </div>
@@ -677,65 +699,73 @@
     </div>
 
     <!-- Delete remarks model -->
-    <div class="modal fade" id="remarksModel" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="remarksModel" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Remarks for delete</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Message:</label>
-                  <textarea class="form-control remarkArea"  [(ngModel)]="remarksData" id="message-text"></textarea>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Remarks for delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control remarkArea" [(ngModel)]="remarksData"
+                            id="message-text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="submitRemarks()">Submit</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submitRemarks()">Submit</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
     <!-- Sechdule popup -->
-    <div class="modal fade" id="createSechdule" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="createSechdule" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h6 class="modal-title" id="staticBackdropLabel">Sechdule: <small class="ml-4">Quantity - {{totlQty}}</small></h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="myForm" *ngIf="showModalIsValue">
-                    <div formArrayName="arr" *ngFor="let a of myForm.get('arr')['controls']; let i = index">
-                      <div [formGroupName]="i" style="margin-bottom: 10px;">
-                        <div class="row">
-                            <div class="col">
-                              <input type="number" class="form-control" formControlName="quantity" value="" placeholder="Quantity">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="staticBackdropLabel">Tentative delivery date: <b class="ml-4">Quantity -
+                            {{totlQty}}</b></h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="myForm" *ngIf="showModalIsValue">
+                        <div formArrayName="arr" *ngFor="let a of myForm.get('arr')['controls']; let i = index">
+                            <div [formGroupName]="i" style="margin-bottom: 10px;">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="number" class="form-control" formControlName="quantity" value=""
+                                            placeholder="Quantity">
+                                    </div>
+                                    <div class="col">
+                                        <input type="date" class="form-control" formControlName="to_date"
+                                            placeholder="Date">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                              <input type="date" class="form-control" formControlName="to_date" placeholder="Date">
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                    <br>
-                    <button type="button" class="btn btn-primary btn-sm float-right" (click)="addItem()">Add</button>
-                    <!-- <button type="submit">Submit</button> -->
-                  </form>
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-primary btn-sm float-right"
+                            [disabled]="userByrole == 'Sales'" (click)="addItem()">Add</button>
+                        <!-- <button type="submit">Submit</button> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="onSubmit(totlQty)"
+                        [disabled]="userByrole == 'Sales'">OK</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="onSubmit()">OK</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 </body>
 
 </html>

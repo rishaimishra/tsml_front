@@ -50,6 +50,10 @@ const routes: Routes = [
     component: ViewAllProductComponent,
   },
   {
+    path: 'all-product/:id',
+    component: ViewAllProductComponent,
+  },
+  {
     path: 'thank-you',
     component: ThankYouComponent,canActivate: [AuthGuard],
   },

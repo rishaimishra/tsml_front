@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ComplainsService } from 'src/app/service/complains.service';
 import Swal from 'sweetalert2';
+import {environment} from 'src/environments/environment';
 
 @Component({
   selector: 'app-complains',
@@ -23,6 +24,7 @@ export class ComplainsComponent implements OnInit {
   poNumber:any;
   poDate:any;
   fileName:any;
+  downloadFile = environment.apiEndpointBase;
 
 
   constructor(private _complainse: ComplainsService,

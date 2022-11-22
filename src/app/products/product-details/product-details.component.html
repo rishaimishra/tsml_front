@@ -121,19 +121,20 @@
                             class="inputValidation">Select delivery method</small>
                         </div>
                       </div>
+
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Pickup From</label>&nbsp;
-                          <label for="" (change)="selectPlant($event)">
-                            <input type="radio" id="contactChoice1" name="contact" value="Plant" class="mr-1" />
+                          <label for="" (change)="selectPlant($event, formData.schedule_no)" >
+                            <input type="radio" id="contactChoice1" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT" class="mr-1" />
                             <label for="contactChoice1">Plant</label>&nbsp;
-                            <input type="radio" id="contactChoice2" name="contact" value="Depot" class="mr-1"/>
+                            <input type="radio" id="contactChoice2" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT" class="mr-1"/>
                             <label for="contactChoice2">Depot</label>&nbsp;
-                            <input type="radio" id="contactChoice3" name="contact" value="Port" class="mr-1"/>
+                            <input type="radio" id="contactChoice3" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
                             <label for="contactChoice3">Port</label>
 
                           </label>
-                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
+                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant" 
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select..</option>
                             <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
@@ -167,7 +168,7 @@
                           <select class="form-control form-control-sm" #billTo="ngModel" [(ngModel)]="formData.bill_to"
                             name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="" disabled>--Bill to--</option>
-                            <option value="{{ userAddr }}" data-toggle="tooltip" data-placement="top"
+                            <option value="{{ showCity }}" data-toggle="tooltip" data-placement="top"
                               title="{{ userAddr }}">
                               {{ showCity }}
                             </option>
@@ -184,7 +185,7 @@
                           <select class="form-control form-control-sm" #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                             name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="" disabled> --Ship to--</option>
-                            <option value="{{ userAddr }}" data-toggle="tooltip" data-placement="top"
+                            <option value="{{ showCity }}" data-toggle="tooltip" data-placement="top"
                               title="{{ userAddr }}">
                               {{ showCity }}
                             </option>

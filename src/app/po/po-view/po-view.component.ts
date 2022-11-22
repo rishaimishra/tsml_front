@@ -9,6 +9,7 @@ import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 import * as uuid from 'uuid';
 declare var $: any;
+import {environment} from 'src/environments/environment'
 
 
 @Component({
@@ -90,6 +91,7 @@ export class PoViewComponent implements OnInit {
   leaterheadFile:any;
   radioValue:any;
   poStatus:any;
+  downloadFile = environment.apiEndpointBase;
 
   constructor(
     private _route: ActivatedRoute,
@@ -327,10 +329,9 @@ export class PoViewComponent implements OnInit {
 
   submitRfq() {
     this.submit = true;
-    // this.spinner.show();
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
-
+    
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
       let qty = 0;
@@ -354,9 +355,9 @@ export class PoViewComponent implements OnInit {
       rfqFormArry.push(reqData);
       // console.log('rfqFormArry=', form_data_array);
     }
-    console.log('poStatusArr',poStatusArr);
-  
+      this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+      this.spinner.hide();
       if (res.message == 'success') {
         this.detailByRfq();
         this.spinner.hide();
@@ -378,6 +379,9 @@ export class PoViewComponent implements OnInit {
         this.spinner.hide();
       }
       
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     });
   };
 

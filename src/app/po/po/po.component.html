@@ -127,7 +127,7 @@
                           <label for="">Pickup From</label>
                           <select #pickUpfrom="ngModel" [disabled]="userType" [(ngModel)]="formData.plant"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
-                            <option value="">Select..</option>
+                            <option value="{{formData.plant}}" selected>{{formData.plant}}</option>
                             <option value="PLANT">Plant</option>
                             <option value="DEPOT">Depot</option>
                             <option value="PORT">Port</option>
@@ -211,7 +211,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for=""
-                            (click)="getPrice(formData.location,formData.plant, formData?.schedule_no, i, y)">Tsml's
+                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
                             price
                             <span *ngIf="!userType" class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
                                 class="fa fa-info-circle"></i></span></label>

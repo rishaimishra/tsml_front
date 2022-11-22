@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 
@@ -19,10 +19,28 @@ export class ViewAllProductComponent implements OnInit {
 
   constructor(private _product: ProductsService,
     private _loader: NgxSpinnerService,
-    private _router: Router) { }
+    private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.showAllProducts();
+    this._route.params.subscribe((param:any) => {
+      this._loader.show();
+      let sizeFilter = {
+        product_id: param.id,
+      }
+      this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+        if (res.success == true) {
+          this.subCategory = res.subCategories;
+          this.allProductItem = res.data;
+          this._loader.hide();
+        }
+      }, err => {
+        console.log(err);
+        this._loader.hide();
+      })
+    })
+
+
   }
 
   gotoDetailsPage(productId: any, categoryId: any) {

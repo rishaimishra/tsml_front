@@ -523,7 +523,7 @@ export class PoComponent implements OnInit {
     this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
 
@@ -535,8 +535,13 @@ export class PoComponent implements OnInit {
     let price = {
       "user_id": this.user_Id,
       "pickup_from": pickup,
-      "location": location
+      "location": location,
+      "destation_location": shipTo,
+      "pro_id": prodId,
+      "cat_id": catid,
+      "size": size
     }
+
 
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;

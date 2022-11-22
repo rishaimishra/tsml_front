@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer } from 'rxjs';
 import { ComplainsService } from 'src/app/service/complains.service';
 import Swal from 'sweetalert2';
+import {environment} from 'src/environments/environment'
 
 @Component({
   selector: 'app-kam-reply',
@@ -22,6 +23,7 @@ export class KamReplyComponent implements OnInit {
   submitt: boolean = false;
   base64Image:any;
   imageUrl:any;
+  downloadFile = environment.apiEndpointBase;
 
 
   constructor(private _route: ActivatedRoute,

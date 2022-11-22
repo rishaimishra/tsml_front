@@ -88,6 +88,13 @@ export class CustomerComponent implements OnInit {
   myForm: FormGroup;
   arr: FormArray;
   showModalIsValue: boolean = false;
+  schduleNo: any;
+  totlQty: any;
+  resData: any;
+  deliverySchdule: any = [];
+  showCity:any;
+  userAddr:any;
+  plantAddrr:any;
 
 
   @ViewChild("remarksModel")
@@ -124,6 +131,7 @@ export class CustomerComponent implements OnInit {
         this.productId = res.id;
       }
     });
+    this.getLocation();
     this.states = this._state.getState();
     this.detailByRfq();
     this.getNegotiationHistory();
@@ -324,14 +332,9 @@ export class CustomerComponent implements OnInit {
     ///////////////////////////////////////////////////////////////////////////////////
     addItem() {
       this.arr = this.myForm.get('arr') as FormArray;
-  
       this.arr.push(this.createItem('',''));
     }
   
-    schduleNo: any;
-    totlQty: any;
-    resData: any;
-    deliverySchdule: any = [];
     schduleSele(schdlNo: any, qty: any) {
       this.myForm.reset();
       this.schduleNo = schdlNo;
@@ -348,28 +351,43 @@ export class CustomerComponent implements OnInit {
           this.arr.push(this.createItem(i.qty,i.to_date));
         }
   
-        console.log(this.myForm.get('arr')['controls']);
-        console.log('myForm: ', this.myForm.value.arr)
+        // console.log(this.myForm.get('arr')['controls']);
+        // console.log('myForm: ', this.myForm.value.arr)
   
       });
       this.totlQty = qty;
       // this.myForm.reset();
     }
-    onSubmit() {
+    onSubmit(totlQty:any) {
       let schdlData = this.myForm.value['arr'];
       let setSechdule = {
         "sche_no": this.schduleNo,
         "schedules": schdlData
       }
+      let qty = 0;
+      for (let i = 0; i < schdlData.length; i++) {
+        qty = qty + parseInt(schdlData[i]['quantity']);
+      }
+
+      if (qty != totlQty && qty > 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Total quantity should not exceed the RFQ quantity!',
+          // footer: '<a href="">Why do I have this issue?</a>'
+        })
+        return;
+      }
+
+      
       this.deliverySchdule.push(setSechdule);
       Swal.fire({
         position: 'center',
         icon: 'success',
-        text: 'Added Successfully!',
+        text: 'Added!',
         showConfirmButton: false,
         timer: 1500
       })
-      console.log(setSechdule);
       this.myForm.reset();
     }
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -440,9 +458,6 @@ export class CustomerComponent implements OnInit {
         })
       }
       else if (userTyp == 'Kam') {
-        // this._product.updateTantetive(confrmDate).subscribe((res:any) => {
-        //   console.log(res);
-        // })
         this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
           console.log(res);
         })
@@ -720,5 +735,41 @@ export class CustomerComponent implements OnInit {
     this.location.back();
   }
 
+  getLocation () {
+    this.spinner.show();
+    let userId = localStorage.getItem('USER_ID');
+    let apiUrl = '/user/get_user_address/'+userId;
+
+    if(userId != '' || userId != null) {
+      this._product.getMethod(apiUrl).subscribe((res:any) => {
+        this.spinner.hide();
+        this.showCity = res.result.city;
+        this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/login']);
+          this.spinner.hide();
+        }
+      })
+    }
+  }
+
+  selectPlant(event:any, schdleNo:any) {
+    this.spinner.show();
+    let eventValue = event.target.value;
+    $('#pickupTyp_'+schdleNo).val(eventValue);
+    let apiUrl = '/user/get_plants_by_type/'+ eventValue;
+    if (eventValue != '') {
+      this._product.getMethod(apiUrl).subscribe((res:any) => {
+        this.spinner.hide();
+        if (res.status == 1 && res.message == 'success') {
+          this.plantAddrr = res.result;
+        }
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/login']);
+          this.spinner.hide();
+        } 
+      })
+    }
+  }
   
 }
