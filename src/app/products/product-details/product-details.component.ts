@@ -215,7 +215,6 @@ export class ProductDetailsComponent implements OnInit {
 
   ReqForQuatation() {
     this.spinner.show();
-
     this.submit = true;
     const val = Math.floor(1000 + Math.random() * 9000);
     let rfqNumber = val;

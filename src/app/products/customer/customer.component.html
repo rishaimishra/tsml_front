@@ -114,7 +114,7 @@
                                                     <label for="">Expected Price</label>
                                                     <div class="pri-box">
                                                         <span>₹</span>
-                                                        <input type="number" [disabled]="!userType"
+                                                        <input type="number" [disabled]="!userType || formData.kam_price == null"
                                                             #priceInput="ngModel" [(ngModel)]="formData.expected_price"
                                                             name="expected_price{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" id="" placeholder=""
@@ -134,7 +134,7 @@
                                                         name="delivery_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
                                                         <option value="">Select ..</option>
-                                                        <option value="FOR">FOR</option>
+                                                        <option value="Delivery At Premises">Delivery At Premises</option>
                                                         <option value="Ex-Works">Ex-Works</option>
                                                     </select>
                                                     <small
@@ -196,9 +196,9 @@
                                                         #billTo="ngModel" [(ngModel)]="formData.bill_to"
                                                         name="bill_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.bill_to}}" selected>{{formData.bill_to}}</option>
-                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                        <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
                                                             {{ state?.name }}
-                                                        </option>
+                                                        </option> -->
                                                     </select>
                                                     <small
                                                         *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -214,9 +214,9 @@
                                                         #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                                                         name="ship_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.ship_to}}" selected>{{formData.ship_to}}</option>
-                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
+                                                        <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
                                                             {{ state?.name }}
-                                                        </option>
+                                                        </option> -->
                                                     </select>
                                                     <small
                                                         *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
@@ -332,7 +332,7 @@
                                             <!-- Kam's remarks -->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="">Kam's Remarks</label>
+                                                    <label for="">Cam's Remarks</label>
                                                     <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks"
                                                         #kamsRemarks="ngModel"
                                                         name="kamRemarks_{{ formData.schedule_no }}"
@@ -404,7 +404,7 @@
                     </div>
                 </div>
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
-                    <button type="button" [disabled]="selectedItem[0].quotest == 7 && userByrole != 'Sales'"
+                    <button type="button" *ngIf="userByrole != 'C' || selectedItem[0].quotest != 0" [disabled]="selectedItem[0].quotest == 7 && userByrole != 'Sales'"
                         class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
                     &nbsp;
                     <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
@@ -507,7 +507,7 @@
                                             <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png"
                                                     draggable="false" /></div>
                                             <div class="msg">
-                                                <p>Kam's Remarks!</p>
+                                                <p>Cam's Remarks!</p>
                                                 <p>{{remark.kamsRemarks}}</p>
                                                 <time>{{remark.created_at | date}}</time>
                                             </div>
@@ -547,7 +547,7 @@
                             </thead>
                             <tbody (change)="calculatePrice(schldId)">
                                 <tr>
-                                    <td colspan="2">BPT Price</td>
+                                    <td colspan="2">Basic Price Table</td>
                                     <td>
                                         <div class="pp-bx" id="bptId">
                                             {{productPrice?.bpt_price}}
@@ -559,7 +559,7 @@
                                             value="{{productPrice?.bpt_price}}"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Price Premium(L/F)</td>
+                                    <td colspan="2">Quality Premium</td>
                                     <td>
                                         <div class="pp-bx" id="pricePrId">
                                             {{productPrice?.price_premium}}
@@ -574,18 +574,19 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Misc Expense</td>
+                                    <td colspan="2">CAM Price Adjustment</td>
                                     <td>
-                                        <div class="pp-bx" id="miscId">
-                                            {{productPrice?.misc_expense}}
+                                        <div class="pp-bx" id="kamid">
+                                            {{productPrice?.cam_discount}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="misc_expense"
-                                            [ngClass]="{ 'is-invalid': f.misc_expense.errors && f.misc_expense.touched}"
+                                    <td><input type="number" formControlName="cam_discount"
+                                            [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="misc_expense{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="miscPrice">Misc Expense should not be less than
-                                            {{productPrice?.misc_expense}}</small>
+                                            id="_discount{{schldId}}" placeholder="">
+                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
+                                            than
+                                            {{productPrice?.cam_discount}}</small>
                                     </td>
                                 </tr>
                                 <tr>
@@ -621,7 +622,8 @@
                                     <td>
                                         <select (change)="selectDay($event)"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150">
-                                            <option value="30" selected>30 Days</option>
+                                            <option value="0" selected>0 Days</option>
+                                            <option value="30" >30 Days</option>
                                             <option value="45">45 Days</option>
                                         </select>
                                     </td>
@@ -636,27 +638,27 @@
                                             [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                             class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
-                                        <small class="addClass" *ngIf="credCost">Credit Cost not be less than Kam's
+                                        <small class="addClass" *ngIf="credCost">Credit Cost not be less than Cam's
                                             Cost</small>
 
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">KAM Discount</td>
+                                    <td colspan="2">Miscellaneous Cost</td>
                                     <td>
-                                        <div class="pp-bx" id="kamid">
-                                            {{productPrice?.cam_discount}}
+                                        <div class="pp-bx" id="miscId">
+                                            {{productPrice?.misc_expense}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="cam_discount"
-                                            [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
+                                    <td><input type="number" formControlName="misc_expense"
+                                            [ngClass]="{ 'is-invalid': f.misc_expense.errors && f.misc_expense.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_discount{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
-                                            than
-                                            {{productPrice?.cam_discount}}</small>
+                                            id="misc_expense{{schldId}}" placeholder="">
+                                        <small class="addClass" *ngIf="miscPrice">Misc Expense should not be less than
+                                            {{productPrice?.misc_expense}}</small>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td colspan="2">Final Price</td>
                                     <td>
@@ -672,7 +674,7 @@
                                 <tr>
                                     <td colspan="2">Percentage difference Between BPT & Final Price (%)</td>
                                     <td>
-                                        <div class="pp-bx">
+                                        <div class="pp-bx bgGray">
                                             {{bptAndfinal}}
                                         </div>
                                     </td>

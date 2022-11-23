@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
 
 @Component({
@@ -15,14 +16,19 @@ export class ViewAllProductComponent implements OnInit {
   subCategory: any;
   productSize: any = [];
   category:any;
+  isLogin:boolean;
 
 
   constructor(private _product: ProductsService,
     private _loader: NgxSpinnerService,
-    private _router: Router, private _route: ActivatedRoute) { }
+    private _router: Router, private _route: ActivatedRoute, private _auth: AuthService) 
+    { 
+      this.isLogin = this._auth.isLoggedIn();
+      
+    }
 
   ngOnInit(): void {
-    this.showAllProducts();
+    // this.showAllProducts();
     this._route.params.subscribe((param:any) => {
       this._loader.show();
       let sizeFilter = {
@@ -44,7 +50,11 @@ export class ViewAllProductComponent implements OnInit {
   }
 
   gotoDetailsPage(productId: any, categoryId: any) {
-    this._router.navigate(['/product-details', productId, categoryId]);
+    if (this.isLogin == true) {
+      this._router.navigate(['/product-details', productId, categoryId]);
+    } else {
+      this._router.navigate(['/login']);
+    }
   }
   clreaFilter() {
     this.showAllProducts();

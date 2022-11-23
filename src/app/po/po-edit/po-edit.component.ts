@@ -52,7 +52,7 @@ export class PoEditComponent implements OnInit {
   newDate: any;
   priceVal: any;
   priceLimit: any = [];
-  days: any = 30;
+  days: any = 0;
   Totalsum: any;
   bptAndfinal: any;
   priceForm: FormGroup;
@@ -481,7 +481,11 @@ export class PoEditComponent implements OnInit {
     const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
     const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
     this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-    this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
+    if (this.days == 0) {
+      this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
+    } else {
+      this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
+    }
   };
 
   getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
@@ -509,9 +513,11 @@ export class PoEditComponent implements OnInit {
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-      console.log(this.daysCostCount);
-  
-      this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+      if (this.days == 0) {
+        this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
+      } else {
+        this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+      }
     })
   };
 

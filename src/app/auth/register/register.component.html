@@ -263,6 +263,28 @@
                           </div>
                         </div>
                       </div>
+                      <ng-container *ngIf="intrestedIndistribution">
+                      <div class="col-12">
+                          <div class="row">
+                            <div class="col-6">
+                              <input type="text" class="form-control" placeholder="Person Name">
+                            </div>
+                            <div class="col-6">
+                              <input type="email" class="form-control" placeholder="example@gmail.com">
+                            </div>
+                          </div>
+                        </div>
+                          <div class="col-12 mt-3">
+                            <div class="row">
+                              <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Contact No.">
+                              </div>
+                              <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Address">
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
                       <!-- / -->
                       <div class="col-12 mt-2">
                         <button (click)="mobileTabContinue()" class="btn btn-primary ttab" data-toggle="tab" role="tab"

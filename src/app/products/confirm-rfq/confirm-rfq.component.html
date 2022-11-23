@@ -46,24 +46,7 @@
                                  </td>
                                  <td *ngIf="!userType && rfqItem?.kam_status == 7">{{rfqItem?.name}}</td>
                                  <td *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.quantity}}</td>
-                                 <!-- <td *ngIf="rfqItem?.kam_status == 0">
-                                    {{rfqItem?.status_txt}}<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 5">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 1">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 2">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 4">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 6">
-                                    {{rfqItem?.status_txt}}
-                                 </td> -->
+
                                  <td *ngIf="rfqItem?.kam_status == 7">
                                     {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
                                  </td>

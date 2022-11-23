@@ -122,6 +122,7 @@ export class RegisterComponent implements OnInit {
   checkedYes: boolean = false;
   checkedNo: boolean = false;
   businessChecked: boolean = false;
+  intrestedIndistribution: boolean = false;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High' },
@@ -227,12 +228,14 @@ export class RegisterComponent implements OnInit {
   }
 
   checkDistributionYes(event: any) {
+    this.intrestedIndistribution = true;
     this.distributionValue = event.target.value;
     this.checkedYes = event.target.checked;
     this.checkedNo = false;
   };
 
   checkDistributionNo(event: any) {
+    this.intrestedIndistribution = false;
     this.distributionValue = event.target.value;
     this.checkedNo = event.target.checked;
     this.checkedYes = false;

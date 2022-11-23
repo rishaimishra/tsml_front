@@ -46,7 +46,7 @@ export class CustomerComponent implements OnInit {
   proPrices: any = [];
   requoteArr: any = [];
   statusArr: any = [];
-  days: any = 30;
+  days: any = 0;
   Totalsum: any;
   bptAndfinal: any;
   priceForm: FormGroup;
@@ -588,8 +588,11 @@ export class CustomerComponent implements OnInit {
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-
+    if (this.days == 0) {
+      this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
+    } else {
       this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
+    }
 
       // let prcentPrice = (backendTotal - this.productPrice.bpt_price);
       // this.percentPrice = (this.productPrice.bpt_price / prcentPrice).toFixed(2);
@@ -598,7 +601,7 @@ export class CustomerComponent implements OnInit {
   getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
-    console.log(prodId,catid, size);
+
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
@@ -621,9 +624,11 @@ export class CustomerComponent implements OnInit {
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-      console.log(this.daysCostCount);
-  
-      this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+      if (this.days == 0) {
+        this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
+      } else {
+        this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+      }
     })
   };
 

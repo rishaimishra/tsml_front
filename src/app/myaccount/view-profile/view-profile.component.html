@@ -1,283 +1,470 @@
 <!DOCTYPE HTML>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="keywords" content="" />
-      <meta name="description" content="" />
-      
-      <style type="text/css">
-         /* ============ only desktop view ============ */
-         @media all and (min-width: 992px) {
-         .navbar .nav-item .dropdown-menu{  display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
-         .navbar .nav-item:hover .nav-link{ color: #fff;  }
-         .navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
-         .navbar .dropdown-menu.fade-up{ top:180%;  }
-         .navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
-         }  
-         /* ============ desktop view .end// ============ */
-      </style>
-   </head>
    <body>
       <app-header></app-header>
       <div class="page-content">
          <section class="prof-head">
-         <div class="container">
-            <h2>View profile</h2>
-         </div>
-      </section>
+            <div class="container">
+               <h2>View profile</h2>
+            </div>
+         </section>
          <section class="prof-form">
             <div class="container">
                <div class="prof-form-bdy">
                   <div class="row">
-                     <div class="col-lg-12">
-                        <div class="prof-form-head">
-                           Customer Information
+                     <div class="col-12 col-lg-4">
+                        <div class="customer-box">
+                           <div class="customer-box-head">Customer Information</div>
+                           <div class="customer-box-body">
+                              <div class="view-txt">
+                                 <p>
+                                    <b>First Name</b>
+                                    <span class="d-block">Text Here</span>
+                                 </p>
+                                 <p>
+                                    <b>Last Name</b>
+                                    <span class="d-block">Text Here</span>
+                                 </p>
+                                 <p>
+                                    <b>Mobile No</b>
+                                    <span class="d-block">Text Here</span>
+                                 </p>
+                                 <p>
+                                    <b>Email</b>
+                                    <span class="d-block">Text Here</span>
+                                 </p>
+                              </div>
+                           </div>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">First Name</label>
-                           <input type="" class="form-control" name="" value="Bhaiyalal Prajapati">
+                     <!--/-->
+                     <div class="col-12 col-lg-4">
+                        <div class="customer-box">
+                           <div class="customer-box-head">Customer e-KYC</div>
+                           <div class="customer-box-body">
+                              <div class="view-txt">
+                                 <p>
+                                    <b>GST Number</b>
+                                    <span class="d-block">18AABCU9603R1ZM</span>
+                                 </p>
+                                 <p>
+                                    <b>Pan Number</b>
+                                    <span class="d-block">ALWPG5809L</span>
+                                 </p>
+                              </div>
+                           </div>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Last Name</label>
-                           <input type="" class="form-control" name="" value="Prajapati">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Address Line 1</label>
-                           <input type="" class="form-control" name="" value="CF-345, Salt Lake City, Sector-1">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Address Line 2</label>
-                           <input type="" class="form-control" name="" value="CF-345, Salt Lake City, Sector-1">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">City</label>
-                           <input type="" class="form-control" name="" value="Kolkata">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">State</label>
-                           <input type="" class="form-control" name="" value="West Bengal">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Pincode</label>
-                           <input type="" class="form-control" name="" value="700 064">
+                     <!--/-->
+                  </div>
+                  <hr/>
+                  <div class="row mt-2">
+                     <div class="col-12">
+                        <div id="accordion" class="accordion">
+                           <div class="card mb-0">
+                              <div class="card-header" data-toggle="collapse" href="#collapseOne">
+                                 <a class="card-title">
+                                 Shipping Address
+                                 </a>
+                              </div>
+                              <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+                                 <div class="row">
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address 1</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address 2</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address3</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                  
+                                 </div>
+                              </div>
+                              <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                 <a class="card-title">
+                                 Billing Address 
+                                 </a>
+                              </div>
+                              <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+                                 <div class="row">
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address 1</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address 2</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address 3</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                    <div class="col-12 col-lg-4">
+                                       <div class="customer-box">
+                                          <div class="customer-box-head">Address 4</div>
+                                          <div class="customer-box-body">
+                                             <div class="view-txt">
+                                                <p>
+                                                   <b>First Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Last Name</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line1</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Address Line2</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>City</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>State</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                                <p>
+                                                   <b>Pincode</b>
+                                                   <span class="d-block">Text Here</span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!--/-->
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                      </div>
                   </div>
-                  <hr>
-                  <div class="row">
+                  <!--/-->
+                  <Hr/>
+                  <div class="row mt-2">
                      <div class="col-lg-12">
                         <div class="prof-form-head">
-                           Customer e-KYC
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Gst Number</label>
-                           <input type="" class="form-control" name="" value="18AABCU9603R1ZM">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Linked Address</label>
-                           <input type="" class="form-control" name="" value="CF-345, Salt Lake City, Sector-1">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Pan Number</label>
-                           <input type="" class="form-control" name="" value="ALWPG5809L">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Company Name</label>
-                           <input type="" class="form-control" name="" value="Beas Consultancy And Services Pvt.Ltd">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Nature of Business</label>
-                           <select class="form-control">
-                              <option>Speculative Business Income</option>
-                           </select>
-                        </div>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                     <div class="col-lg-12">
-                        <div class="prof-form-head">
-                           mobile & gst number
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Mobile Number</label>
-                           <input type="" class="form-control" name="" value="7031704698">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">GSTIN</label>
-                           <input type="" class="form-control" name="" value="18AABCU9603R1ZM">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Email Id</label>
-                           <input type="" class="form-control" name="" value="bhaiya.prajapati@gmail.com">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Organization PAN</label>
-                           <input type="" class="form-control" name="" value="ALWPG5809L">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Organization Name</label>
-                           <input type="" class="form-control" name="" value="Beas Consultancy And Services Pvt.Ltd">
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="form-group">
-                           <label for="">Organization Address</label>
-                           <input type="" class="form-control" name="" value="CF-345, Salt Lake City, Sector-1">
-                        </div>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                     <div class="col-lg-12">
-                        <div class="prof-form-head">
-                           Preferred product
+                           Preferred Product
                         </div>
                      </div>
                      <div class="col-lg-12">
                         <div class="cart-table">
-                        <div class="table-responsive">
-                           <table class="table">
-                             <thead>
-                               <tr>
-                                 <th>Product Details</th>
-                                 <th>Category</th>
-                                 <th>Subcategory</th>
-                                 <th>Size</th>
-                                 <th></th>
-                               </tr>
-                             </thead>
-                             <tbody>
-                               <tr>
-                                 <td>
-                                    <div class="product">
-                                    <figure class="product-media">
-                                       <a href="#">
-                                       <img src="assets/images/cart1.png" alt="Product image">
-                                       </a>
-                                    </figure>
-                                 </div>
-                                 </td>
-                                 <td>
-                                    <div class="product">
-                                    <div class="cart-details">
-                                       <h3 class="product-title">
-                                          <a href="#">High Carbon Ferro Chrome</a>
-                                       </h3>
-                                    </div>
-                                 </div>
-                                 </td>
-                                 <td>High Carbon Ferro Chrome - High Phos</td>
-                                 <td>10-150 mm</td>
-                               </tr>
-                               
-                               
-                             </tbody>
-                           </table>
+                           <div class="table-responsive">
+                              <table class="table">
+                                 <thead>
+                                    <tr>
+                                       <th>Product Details</th>
+                                       <th>Category</th>
+                                       <th>Subcategory</th>
+                                       <th>Size</th>
+                                       <th></th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td>
+                                          <div class="product">
+                                             <figure class="product-media">
+                                                <a href="#">
+                                                <img src="assets/images/cart1.png" alt="Product image">
+                                                </a>
+                                             </figure>
+                                          </div>
+                                       </td>
+                                       <td>
+                                          <div class="product">
+                                             <div class="cart-details">
+                                                <h3 class="product-title">
+                                                   <a href="#">High Carbon Ferro Chrome</a>
+                                                </h3>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td>High Carbon Ferro Chrome - High Phos</td>
+                                       <td>10-150 mm</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
                         </div>
-                     </div>
                      </div>
                   </div>
                   <hr>
                   <div class="row">
                      <div class="col-lg-12">
                         <div class="prof-form-head">
-                           Download documents
+                           Uploaded Documents
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download Address Proof</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Address Proof</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download Cancelled Cheque</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Cancelled Cheque</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download PAN Card</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download PAN Card</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download GST Certificate</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download GST Certificate</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download ITR of Last 2 FYS</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download ITR of Last 2 FYS</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download Form D</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Form D</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download Registration Certificates</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Registration Certificates</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download TCS</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download TCS</a>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><img src="assets/images/arrow-down.png"></span><span class="arrow-down-hovr"><img src="assets/images/arrow-down-hovr.png"></span>  Download Declaration on turnover
-section 1940 and 206 cc</a>
+                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Declaration on turnover
+                           section 1940 and 206 cc</a>
                         </div>
                      </div>
                   </div>
                   <hr>
                   <div class="row">
                      <div class="col-lg-12">
-                     <a href="#" class="btn btn-primary"><i class="fa fa-check"></i> Approve</a> &nbsp;
-                     <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> reject</button>
-                  </div>
+                        <a href="#" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
+                        <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                     </div>
                   </div>
                </div>
             </div>
          </section>
-         
       </div>
       <app-footer></app-footer>
    </body>
