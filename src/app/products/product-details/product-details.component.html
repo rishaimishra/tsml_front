@@ -63,10 +63,7 @@
                 <!-- <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"> -->
                 <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
-                    <div class="row" *ngFor="
-                          let formData of productData['form_data'];
-                          let y = index
-                        ">
+                    <div class="row" *ngFor="let formData of productData['form_data'];let y = index">
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Sizes Offered</label>
@@ -113,8 +110,9 @@
                           <select #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
-                            <option value="Delivery At Premises">Delivery At Premises</option>
-                            <option value="Ex-Works">Ex-Works</option>
+                            <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
+                            <!-- <option value="Delivery At Premises">Delivery At Premises</option>
+                            <option value="Ex-Works">Ex-Works</option> -->
                           </select>
                           <small
                             *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
@@ -134,12 +132,10 @@
                             <label for="contactChoice3">Port</label>
 
                           </label>
-                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant" 
+                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant" (change)="plantSele($event, y)"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
-                            <option value="">Select..</option>
+                            <option value="" selected>Select..</option>
                             <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
-                            <!-- <option value="Depot">Depot</option>
-                            <option value="Port">Port</option> -->
                           </select>
                           <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
                             class="inputValidation">Pickup from is required</small>

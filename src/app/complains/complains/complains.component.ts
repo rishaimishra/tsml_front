@@ -13,7 +13,7 @@ import {environment} from 'src/environments/environment';
   styleUrls: ['./complains.component.scss']
 })
 export class ComplainsComponent implements OnInit {
-  user_name:any;
+  user_Id:any;
   complainsForm: FormGroup;
   submitted: boolean = false;
   categorie: any;
@@ -47,7 +47,7 @@ export class ComplainsComponent implements OnInit {
     return this.complainsForm.controls;
   };
   ngOnInit(): void {
-    this.user_name = localStorage.getItem('USER_NAME');
+    this.user_Id = localStorage.getItem('USER_ID');
 
     this._complainse.receiveData().subscribe((res:any) => {
       this.poNumber = res[0];
@@ -132,7 +132,7 @@ export class ComplainsComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Fields are required',
+        text: 'All field are required!',
       })
       return;
     };
@@ -144,7 +144,7 @@ export class ComplainsComponent implements OnInit {
     fileData.append('com_sub_cate_2id', frm.com_sub_cate_2id);
     fileData.append('com_sub_cate_3id', frm.com_sub_cate_3id);
     fileData.append('customer_remarks', frm.customer_remarks);
-    fileData.append('customer_name', this.user_name);
+    fileData.append('user_id', this.user_Id);
     fileData.append('po_date', this.poDate);
     fileData.append('po_number', this.poNumber);
     fileData.append('complain_file', this.selectedFile);

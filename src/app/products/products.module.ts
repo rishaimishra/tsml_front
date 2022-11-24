@@ -18,6 +18,7 @@ import { TruncatePipe } from './transform.pipe';
 import { CustomerComponent } from './customer/customer.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ConfirmRfqComponent } from './confirm-rfq/confirm-rfq.component';
+import { SalesResponsComponent } from './sales-respons/sales-respons.component';
 
 
 const routes: Routes = [
@@ -81,6 +82,10 @@ const routes: Routes = [
     path: 'confirm-rfq',
     component: ConfirmRfqComponent,canActivate: [AuthGuard],
   },
+  {
+    path: 'sales-respons/:id',
+    component: SalesResponsComponent,canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
@@ -97,7 +102,8 @@ const routes: Routes = [
     KamComponent,
     TruncatePipe,
     CustomerComponent,
-    ConfirmRfqComponent
+    ConfirmRfqComponent,
+    SalesResponsComponent
   ],
   imports: [
     CommonModule,

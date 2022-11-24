@@ -114,8 +114,9 @@
                           <select #dlvrMethodInput="ngModel" [disabled]="userType" [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
-                            <option value="Delivery At Premises">Delivery At Premises</option>
-                            <option value="Ex-Works">Ex-Works</option>
+                            <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
+                            <!-- <option value="Delivery At Premises">Delivery At Premises</option>
+                            <option value="Ex-Works">Ex-Works</option> -->
                           </select>
                           <small
                             *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
@@ -461,9 +462,9 @@
                 <tr>
                   <td colspan="2">Percentage difference Between BPT & Final Price (%)</td>
                   <td>
-                    <div class="pp-bx">
+                    <!-- <div class="pp-bx">
                       {{bptAndfinal}}
-                    </div>
+                    </div> -->
                   </td>
                   <td><input type="text" formControlName="finalAmt"
                       class="form-control form-control-sm form-control form-control-sm-sm wid-150"

@@ -18,6 +18,8 @@ export class ComplainsReplyComponent implements OnInit {
   remarkReply:any;
   closeChat: boolean = false;
   remarkAll:any = [];
+  selectedFile: File;
+  fileName:any;
 
 
   constructor(private _route: ActivatedRoute,
@@ -27,23 +29,23 @@ export class ComplainsReplyComponent implements OnInit {
   ngOnInit(): void {
     const usrName:any = localStorage.getItem('USER_NAME');
     this._route.params.subscribe((param:any) => {
-      console.log(param);
       this.compId = param.id;
       this.complainsReply();
     })
   }
+  onSelectFile(event:any) {
+    this.selectedFile = event.target.files[0];
+    this.fileName = this.selectedFile.name;
+  };
 
   complainsReply() {
     this._spiner.show();
-    // https://beas.in/mje-shop/api/user/complain-details-kam/AIT7770
     let apiUrl = '/user/complain-details-kam/'+ this.compId;
-
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
+      this._spiner.hide();
       if (res.message == 'success' && res.status == 1) {
-        this._spiner.hide();
         this.compInfo = res.result;
         this.remarkAll = res.remarksData;
-        console.log(this.compInfo)
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
@@ -59,18 +61,19 @@ export class ComplainsReplyComponent implements OnInit {
   };
 
   submitReply(compId:any) {
-    if(this.remarkReply == '') {
+    const fileData = new FormData();
+    if(this.remarkReply == undefined) {
       this._toaster.error('','Remarks is required !');
       return;
-    }
-    this._spiner.show();
+    } else {
+      this._spiner.show();
     this.submitt = true;
-    let replyReq = {
-      "complain_id": compId,
-      "customer_remarks": this.remarkReply,
-    };
-    console.log(replyReq);
-    this._complains.replyComplains(replyReq).subscribe((res:any) => {
+
+    fileData.append('complain_id', compId);
+    fileData.append('customer_remarks', this.remarkReply);
+    fileData.append('cust_complain_file', this.selectedFile);
+
+    this._complains.replyComplains(fileData).subscribe((res:any) => {
       console.log(res);
       if (res.status != 0) {
         this.complainsReply();
@@ -83,6 +86,7 @@ export class ComplainsReplyComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+
       } else {
         this._spiner.hide();
       }
@@ -91,12 +95,13 @@ export class ComplainsReplyComponent implements OnInit {
       this._spiner.hide();
     })
 
+    }
+    
   };
 
   closeStatus (compId:any) {
     let apiUrl = '/user/closed-remarks/' +  compId;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
-      console.log(res);
       Swal.fire(
         'Closed!',
         'Discussion has been closed!',

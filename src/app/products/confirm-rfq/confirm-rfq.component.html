@@ -13,7 +13,7 @@
    <div class="page-content">
       <section class="sub-header-2">
          <div class="container">
-            <h1>RFQ List</h1>
+            <h1>Confirm RFQ List</h1>
             <!-- <a href="add-product.html" class="btn btn-primary add-btn-right"><i class="fa fa-plus-circle"></i> ADD</a> -->
             <div class="clearfix"></div>
          </div>
@@ -37,7 +37,7 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <tr *ngFor="let rfqItem of rfqList | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
+                              <tr *ngFor="let rfqItem of rfqList; let i = index">
                                  <td *ngIf="rfqItem?.kam_status == 7">
                                     {{rfqItem?.rfq_no}}
                                  </td>
@@ -61,9 +61,9 @@
                               </tr>
                            </tbody>
                         </table>
-                        <div class="text-right">
+                        <!-- <div class="text-right">
                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                         </div>
+                         </div> -->
                         <div *ngIf="rfqList?.length < 1" class="col-12 text-center mb-3"
                            style="color: gray;">
                            <b class="">Product not found !</b>

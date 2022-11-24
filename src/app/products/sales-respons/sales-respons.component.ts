@@ -9,13 +9,13 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
 
-
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  selector: 'app-sales-respons',
+  templateUrl: './sales-respons.component.html',
+  styleUrls: ['./sales-respons.component.scss']
 })
-export class CustomerComponent implements OnInit {
+export class SalesResponsComponent implements OnInit {
+
   public product_data: any = '';
   public show_data: boolean = false;
   public qty: Number = 1;
@@ -323,7 +323,6 @@ export class CustomerComponent implements OnInit {
   };
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
-      console.log('value', res);
       this.priceVal = res.result;
     });
   };
@@ -414,20 +413,7 @@ export class CustomerComponent implements OnInit {
           this._toaster.error('','Valid Till is required');
           return;
         }
-        // if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
-        //   this.spinner.hide();
-        //   Swal.fire({
-        //     title: 'Sorry!',
-        //     text: "Tentative date is required",
-        //     icon: 'warning',
-        //     showCancelButton: false,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'OK'
-        //   })
-        //   return;
-        // }
-        // For Tantetive date update
+
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
           "confirm_date": form_data_array[i]['confirm_date'],
@@ -447,32 +433,26 @@ export class CustomerComponent implements OnInit {
 
     };
 
-    let qouteSt = this.selectedItem[0]['quotest'];
-    let userTyp = localStorage.getItem('USER_TYPE');
-    if (qouteSt != 5 && qouteSt != 6) {
-      if (userTyp == 'Sales') {
-        let qouteReq = {
-          "rfq_no": this.productId,
-          "status": this.qtStatusUpdate
-        }
-        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-          console.log(res);
-        })
-      }
-      else if (userTyp == 'Kam') {
-        this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-          console.log(res);
-        })
+    // let qouteSt = this.selectedItem[0]['quotest'];
+    // let userTyp = localStorage.getItem('USER_TYPE');
+    // if (qouteSt != 5 && qouteSt != 6) {
+      // if (userTyp == 'Sales') {
+
+      // }
+      // else if (userTyp == 'Kam') {
+      //   this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+      //     console.log(res);
+      //   })
         
-        let qouteReq = {
-          "rfq_no": this.productId,
-          "status": 7
-        }
-        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-          console.log(res);
-        })
-      }
-    } else {
+      //   let qouteReq = {
+      //     "rfq_no": this.productId,
+      //     "status": 7
+      //   }
+      //   this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+      //     console.log(res);
+      //   })
+      // }
+    // } else {
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
@@ -520,24 +500,31 @@ export class CustomerComponent implements OnInit {
         }
       })
     }
-    if (userRol == 'Kam') {
-      let qouteReq = {
-        "rfq_no": this.productId,
-        "status": 6
-      }
-      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-        console.log(res);
-      })
+    let qouteReq = {
+      "rfq_no": this.productId,
+      "status": this.qtStatusUpdate
     }
-  }
-
-    if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      // const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
-      // let po_id = val;
-      this._router.navigate(['/po',this.productId]);
-    } else {
-      this._router.navigate(['/rfq-list']);
-    }
+    this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+      console.log(res);
+    })
+    // if (userRol == 'Kam') {
+    //   let qouteReq = {
+    //     "rfq_no": this.productId,
+    //     "status": 6
+    //   }
+    //   this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+    //     console.log(res);
+    //   })
+    // }
+  // }
+    setTimeout(() => {
+      this._router.navigate(['/confirm-rfq']);
+    }, 2000);
+    // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+    //   this._router.navigate(['/po',this.productId]);
+    // } else {
+    //   this._router.navigate(['/rfq-list']);
+    // }
   };
 
   date: any;
@@ -781,11 +768,9 @@ export class CustomerComponent implements OnInit {
 
   getDeliveryItem () {
     this._product.getDeliveryMethod().subscribe((res:any) => {
-      console.log('ress',res);
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
       } 
     })
   }
-  
 }

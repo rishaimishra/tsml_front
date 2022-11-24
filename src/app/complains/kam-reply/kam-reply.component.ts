@@ -24,7 +24,8 @@ export class KamReplyComponent implements OnInit {
   base64Image:any;
   imageUrl:any;
   downloadFile = environment.apiEndpointBase;
-
+  selectedFile: File;
+  fileName:any;
 
   constructor(private _route: ActivatedRoute,
     private _complains: ComplainsService, private _router: Router,
@@ -34,10 +35,14 @@ export class KamReplyComponent implements OnInit {
     const usrName:any = localStorage.getItem('USER_NAME');
     this._route.params.subscribe((param:any) => {
       this.compId = param.id;
-      console.log(this.compId);
       this.complainsReply();
     })
   }
+
+  onSelectFile(event:any) {
+    this.selectedFile = event.target.files[0];
+    this.fileName = this.selectedFile.name;
+  };
 
   complainsReply() {
     this._spiner.show();
@@ -65,17 +70,17 @@ export class KamReplyComponent implements OnInit {
   };
 
   submitReply(compId:any) {
+    const fileData = new FormData();
     this.submitt = true;
-    if(this.remarkReply == '') {
+    if(this.remarkReply == undefined) {
       this._toaster.error('','Remarks is required !');
       return;
     }
-    let replyReq = {
-      "complain_id": compId,
-      "kam_remarks": this.remarkReply,
-    };
+    fileData.append('complain_id', compId);
+    fileData.append('kam_remarks', this.remarkReply);
+    fileData.append('kam_complain_file', this.selectedFile);
 
-    this._complains.replyComplains(replyReq).subscribe((res:any) => {
+    this._complains.replyComplains(fileData).subscribe((res:any) => {
       console.log(res);
       if (res.status != 0) {
         this.complainsReply();
@@ -96,7 +101,7 @@ export class KamReplyComponent implements OnInit {
       this._spiner.hide();
     })
 
-  }
+  };
 
   closeStatus (compId:any) {
     let apiUrl = '/user/closed-remarks/' +  compId;
@@ -110,7 +115,7 @@ export class KamReplyComponent implements OnInit {
     })
 }
 
-downloadComp(imageUrl:any) {
-  window.location.href = imageUrl;
-}
+// downloadComp(imageUrl:any) {
+//   window.location.href = imageUrl;
+// }
 }

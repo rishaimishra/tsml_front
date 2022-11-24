@@ -49,11 +49,13 @@ export class ProductDetailsComponent implements OnInit {
   public quotation_value: any[] = [];
   totalQty: any;
   userAddr:any;
-  plantAddrr:any;
+  plantAddrr:any ;
   showCity:any;
   pickUptype:any;
   locationState:any;
   locationRes:any;
+  plantValueArray:any  = [];
+  deliveryDropList:any;
   
   constructor(
     private _route: ActivatedRoute,
@@ -74,6 +76,7 @@ export class ProductDetailsComponent implements OnInit {
       this.userRole = 'C';
       this.userType = true;
     }
+    this.getDeliveryItem();
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
@@ -360,11 +363,13 @@ export class ProductDetailsComponent implements OnInit {
         }
       })
     }
-  }
+  };
 
-  plantSele(event:any) {
-    console.log('pantId',event.target.value);
+  plantSele(event:any, i:any) {
     let apiUrl = '/user/get_plant_addr/'+ event.target.value;
+    // this.plantValueArray.push(event.target.value);
+    // console.log(this.plantValueArray,i);
+
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {
         this.locationState = res.result['state'];
@@ -391,5 +396,14 @@ export class ProductDetailsComponent implements OnInit {
         } 
       })
     }
+  };
+
+  getDeliveryItem () {
+    this._product.getDeliveryMethod().subscribe((res:any) => {
+      console.log('ress',res);
+      if (res.status == 1 && res.message == 'success') {
+        this.deliveryDropList = res.result;
+      } 
+    })
   }
 }

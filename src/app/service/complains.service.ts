@@ -25,8 +25,8 @@ export class ComplainsService {
     return this._http.post(this.BesUrl + '/user/store-complain-main', reqParameter);
   };
 
-  getComplainsList() {
-    return this._http.get(this.BesUrl + '/user/get-complain-list-kam');
+  getComplainsKamList(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get-complain-list-kam', reqParameter);
   };
 
   replyComplains(reqParameter: any) {

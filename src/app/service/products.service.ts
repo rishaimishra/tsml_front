@@ -115,4 +115,8 @@ export class ProductsService {
   dlvrySchdule(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/create_rfq_deliveries', reqParameter);
   };
+  //user/get_all_deliveries
+  getDeliveryMethod() {
+    return this._http.get(this.BesUrl + '/user/get_all_deliveries');
+  };
 }

@@ -63,7 +63,7 @@ export class ConfirmRfqComponent implements OnInit {
     // if (status == 'Accepted') {
     //   this._router.navigate(['/po',rfqNo])
     // } else {
-      this._router.navigate(['/negotiation',rfqNo]);
+      this._router.navigate(['/sales-respons',rfqNo]);
     // }
   }
 

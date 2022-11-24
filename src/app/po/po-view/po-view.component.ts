@@ -92,6 +92,7 @@ export class PoViewComponent implements OnInit {
   radioValue:any;
   poStatus:any;
   amndNomber:any;
+  deliveryDropList:any;
   downloadFile = environment.apiEndpointBase;
 
   constructor(
@@ -115,7 +116,7 @@ export class PoViewComponent implements OnInit {
     } else {
       this.userType = true;
     }
-
+    this.getDeliveryItem();
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.id;
@@ -602,13 +603,13 @@ export class PoViewComponent implements OnInit {
         this.messages = res.result;
       }
     })
-  }
+  };
   cancelprice() {
     this.messages = [];
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
-  }
+  };
 
   poStatusRequest (statusArr:any) {
     this._product.rfqStatusData(statusArr).subscribe((res: any) => {
@@ -621,7 +622,7 @@ export class PoViewComponent implements OnInit {
       }
 
     })
-  }
+  };
 
   raiseComplain(poId:any, date:any) {
     let data:any = [];
@@ -633,11 +634,11 @@ export class PoViewComponent implements OnInit {
   viewComplain(poNo:any) {
     this.spinner.hide();
     this._router.navigate(['/kam-reply',poNo]);
-  }
+  };
 
   selectRadio(event:any) {
     this.radioValue = event.target.value;
-  }
+  };
 
   submitStatus() {
     let statusReq = {
@@ -654,6 +655,13 @@ export class PoViewComponent implements OnInit {
       })
       this._router.navigate(['/po-list']);
     })
+  };
+  getDeliveryItem () {
+    this._product.getDeliveryMethod().subscribe((res:any) => {
+      console.log('ress',res);
+      if (res.status == 1 && res.message == 'success') {
+        this.deliveryDropList = res.result;
+      } 
+    })
   }
-
 }

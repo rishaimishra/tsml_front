@@ -5,12 +5,12 @@
 
 <body>
     <div class="page-content">
-        <section class="sub-header-2" *ngIf="showButtons > 0 && userByrole != 'Sales'">
+        <!-- <section class="sub-header-2" *ngIf="showButtons > 0 && userByrole != 'Sales'">
             <div class="container">
                 <h1>Price Negotiation</h1>
                 <div class="clearfix"></div>
             </div>
-        </section>
+        </section> -->
 
         <section>
             <div class="container">
@@ -109,7 +109,7 @@
                                                         class="inputValidation">Quantity is required</small>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3" *ngIf="userByrole != 'Sales'">
+                                            <!-- <div class="col-lg-3" *ngIf="userByrole != 'Sales'">
                                                 <div class="form-group">
                                                     <label for="">Expected Price</label>
                                                     <div class="pri-box">
@@ -124,7 +124,7 @@
                                                             class="inputValidation">Price is required</small>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-lg-3">
                                                 <div class="form-group">
@@ -135,6 +135,8 @@
                                                         class="form-control form-control-sm" required>
                                                         <option value="">Select ..</option>
                                                         <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
+                                                        <!-- <option value="Delivery At Premises">Delivery At Premises</option>
+                                                        <option value="Ex-Works">Ex-Works</option> -->
                                                     </select>
                                                     <small
                                                         *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
@@ -254,18 +256,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
-                                                <div class="form-group">
-                                                    <label for="">Tentative delivery date</label>
-                                                    <div class="">
-                                                        <input type="date" [disabled]="userType"
-                                                        [(ngModel)]="formData.confirm_date"
-                                                            class="form-control form-control-sm kamClass"
-                                                            id="confirm_date{{formData.schedule_no}}" placeholder="0">
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            <div class="col-lg-3">
+
+                                            <!-- <div class="col-lg-3">
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for=""
                                                         (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
@@ -281,7 +273,7 @@
                                                             id="camsPrice{{formData.schedule_no}}" placeholder="0">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-3">
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for="">Valid Till </label>
@@ -300,10 +292,6 @@
                                                 <div class="form-group">
                                                     <label for="">Tentative delivery date</label>
                                                     <div class="">
-                                                        <!-- <input type="date" [disabled]="userType"
-                                                        [(ngModel)]="formData.confirm_date"
-                                                            class="form-control form-control-sm kamClass"
-                                                            id="confirm_date{{formData.schedule_no}}" placeholder="0"> -->
                                                         <span type="button" class="badge badge-primary mt-0"
                                                             data-toggle="modal" data-target="#createSechdule"
                                                             (click)="schduleSele(formData.schedule_no, formData.quantity)">
@@ -403,7 +391,7 @@
                     </div>
                 </div>
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
-                    <button type="button" *ngIf="userByrole != 'C' || selectedItem[0].quotest != 0" [disabled]="selectedItem[0].quotest == 7 && userByrole != 'Sales'"
+                    <button type="button"
                         class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
                     &nbsp;
                     <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>

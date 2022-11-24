@@ -86,6 +86,7 @@ export class PoComponent implements OnInit {
   letterHead: any;
   letterHeadFile: boolean = false;
   letterHedFile: any;
+  deliveryDropList:any;
 
 
   constructor(
@@ -108,6 +109,7 @@ export class PoComponent implements OnInit {
     } else {
       this.userType = true;
     }
+    this.getDeliveryItem();
     //  this.userType
     this.user_Id = localStorage.getItem('USER_ID');
     this.states = this._state.getState();
@@ -663,6 +665,15 @@ export class PoComponent implements OnInit {
         this._toaster.success(res.message);
       }
 
+    })
+  }
+
+  getDeliveryItem () {
+    this._product.getDeliveryMethod().subscribe((res:any) => {
+      console.log('ress',res);
+      if (res.status == 1 && res.message == 'success') {
+        this.deliveryDropList = res.result;
+      } 
     })
   }
 }

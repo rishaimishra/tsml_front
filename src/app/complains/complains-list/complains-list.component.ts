@@ -27,12 +27,21 @@ export class ComplainsListComponent implements OnInit {
       this.userType = true;
 
     }
-    this.compalainsList();
+    this.compalainsKmList();
   }
-
-  compalainsList() {
+  userId:any = '';
+  compalainsKmList() {
+    let userRol = localStorage.getItem('USER_TYPE');
+    if (userRol == 'Kam') {
+      this.userId = "";
+    } else {
+      this.userId = localStorage.getItem('USER_ID');
+    }
+    let compListReq = {
+      "user_id": this.userId
+    }
     this._spinner.show();
-    this._complains.getComplainsList().subscribe((res:any) => {
+    this._complains.getComplainsKamList(compListReq).subscribe((res:any) => {
       if (res.status != 0 && res.message == 'success.') {
         this._spinner.hide();
         this.camplainsItems = res.result;
@@ -43,11 +52,26 @@ export class ComplainsListComponent implements OnInit {
         this._spinner.hide();
       }
     }, err => {
-      this._spinner.hide();
       console.log(err)
     })
+    this._spinner.hide();
   };
-
+  // userCompList () {
+  //   this._complains.getComplainsKamList().subscribe((res:any) => {
+  //     if (res.status != 0 && res.message == 'success.') {
+  //       this._spinner.hide();
+  //       this.camplainsItems = res.result;
+  //       console.log(this.camplainsItems);
+  //     }
+  //     if (res.status == 'Token has Expired') {
+  //       this._router.navigate(['/login']);
+  //       this._spinner.hide();
+  //     }
+  //   }, err => {
+  //     console.log(err)
+  //   })
+  //   this._spinner.hide();
+  // }
   goToreplyPage(complain_id:any) {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {

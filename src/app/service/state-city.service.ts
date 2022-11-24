@@ -122,10 +122,10 @@ export class StateCityService {
       //   key: 'NL',
       //   name: 'Nagaland',
       // },
-      // {
-      //   key: 'OR',
-      //   name: 'Odisha',
-      // },
+      {
+        key: 'OR',
+        name: 'Odisha',
+      },
       // {
       //   key: 'PY',
       //   name: 'Puducherry',
@@ -154,10 +154,10 @@ export class StateCityService {
       //   key: 'TR',
       //   name: 'Tripura',
       // },
-      {
-        key: 'UK',
-        name: 'Uttar Pradesh',
-      },
+      // {
+      //   key: 'UK',
+      //   name: 'Uttar Pradesh',
+      // },
       {
         key: 'UP',
         name: 'Uttarakhand',

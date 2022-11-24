@@ -56,7 +56,7 @@
                         <textarea class="form-control" rows="5" disabled>{{remarks.kam_remarks}}</textarea>
                      </div> -->
                      <ol class="chat">
-                        <li class="other" *ngIf="remarks?.customer_remarks != null">
+                        <li class="other" *ngIf="remarks?.customer_remarks != 'undefined'">
                            <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
                            <div class="msg">
                               <p>Customer Remarks!</p>
@@ -64,7 +64,7 @@
                               <time>{{remarks.created_at}}</time>
                            </div>
                         </li>
-                        <li class="self" *ngIf="remarks?.kam_remarks != null">
+                        <li class="self" *ngIf="remarks?.kam_remarks != 'undefined'">
                            <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                            <div class="msg">
                               <p>Kam's Remarks!</p>
@@ -83,8 +83,13 @@
                            class="inputValidation">Remarks is required</small>
                      </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6">
-
+                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer">
+                     <div *ngIf="showKamTextArea">
+                        <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
+                     <label class="custom-file-label" for="customFile">{{fileName ?
+                         fileName:'Upload Attachement'}}</label>
+                     </div>
+                     
                   </div>
                   <div class="col-lg-8 col-md-6 col-sm-6" *ngIf="compInfo?.complain_status != 2">
                      <div class="reply_btn_box">
@@ -97,6 +102,7 @@
                               </label>
                            </div>
                         </div>
+                        
                         <div class="reply_btn" *ngIf="compInfo?.complain_status != 2"><button (click)="reply()" class="btn btn-primary btn-sm"><i
                                  class="fa fa-reply"></i> Reply</button></div>
                      </div>
