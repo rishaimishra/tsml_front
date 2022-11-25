@@ -45,6 +45,7 @@ export class KamDashboardComponent implements OnInit {
   getKamItems() {
     this.spinner.show();
     this.dashboard.getKamList().subscribe((res:any) => {
+      this.spinner.hide();
       if(res.message == 'success') {
         this.spinner.hide();
         this.kamItems = res.result;
@@ -62,6 +63,7 @@ export class KamDashboardComponent implements OnInit {
   getPoListing () {
     this.spinner.show();
     this._product.getPoList().subscribe((res:any) => {
+      this.spinner.hide();
       if(res.message == 'success') {
         this.spinner.hide();
       console.log(res);
@@ -76,6 +78,7 @@ export class KamDashboardComponent implements OnInit {
   getKamPoListing () {
     this.spinner.show();
     this._product.getkamPoList().subscribe((res:any) => {
+      this.spinner.hide();
       if(res.message == 'success') {
         this.spinner.hide();
       console.log(res);

@@ -12,6 +12,9 @@ import { ComplainsService } from 'src/app/service/complains.service';
 export class ComplainsListComponent implements OnInit {
   userType: boolean;
   camplainsItems: any;
+  customerFileArr:any = [];
+  custFileDownload: boolean = false;
+  kamFileDownload: boolean = false;
 
   
   constructor(private _complains: ComplainsService,
@@ -45,7 +48,13 @@ export class ComplainsListComponent implements OnInit {
       if (res.status != 0 && res.message == 'success.') {
         this._spinner.hide();
         this.camplainsItems = res.result;
-        console.log(this.camplainsItems);
+        console.log('kkk',this.camplainsItems);
+
+        for (let i = 0; i < this.camplainsItems.length; i++) {
+          this.customerFileArr = this.camplainsItems[i]['com_file_url'];
+          console.log('ggg',this.customerFileArr);
+          
+        }
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
@@ -56,22 +65,7 @@ export class ComplainsListComponent implements OnInit {
     })
     this._spinner.hide();
   };
-  // userCompList () {
-  //   this._complains.getComplainsKamList().subscribe((res:any) => {
-  //     if (res.status != 0 && res.message == 'success.') {
-  //       this._spinner.hide();
-  //       this.camplainsItems = res.result;
-  //       console.log(this.camplainsItems);
-  //     }
-  //     if (res.status == 'Token has Expired') {
-  //       this._router.navigate(['/login']);
-  //       this._spinner.hide();
-  //     }
-  //   }, err => {
-  //     console.log(err)
-  //   })
-  //   this._spinner.hide();
-  // }
+
   goToreplyPage(complain_id:any) {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
@@ -81,5 +75,15 @@ export class ComplainsListComponent implements OnInit {
       this.userType = true;
       this._router.navigate(['/complains-reply',complain_id]);
     }
+  };
+
+  customerFileDownload() {
+    this.kamFileDownload = false;
+    this.custFileDownload = !this.custFileDownload;
+  };
+
+  kamDownload() {
+    this.custFileDownload = false;
+    this.kamFileDownload = !this.kamFileDownload;
   }
 }

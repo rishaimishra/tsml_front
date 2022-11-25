@@ -4869,3 +4869,17 @@ table.table.table-op {
 .bgGray {
     background-color: rgb(233 236 239);
 }
+.btn-edt-dell a{color:#fff;}
+.btn-edt-dell a:hover{color:#3D7EEB;}
+.ddnld-box{background: #fff;
+    padding: 8px;
+    position: absolute;
+    width: 150px;
+    text-align: center;
+    margin-top: 6px;
+    z-index: 99;
+    top: 82px;
+    right: 160px;
+    box-shadow: 2px 2px 10px #b9b3b3;}
+    .iimg-block{margin-bottom:30px;}
+    .iimg-block img{border-radius:10px;}

@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
     private _product: ProductsService) 
     { 
       this.isUserLogIn = this._auth.isLoggedIn();
-      console.log(this.isUserLogIn);
     }
 
   ngOnInit(): void {
@@ -48,6 +47,7 @@ export class HeaderComponent implements OnInit {
   this._product.getAllRequestOfRfq().subscribe((res: any) => {
     if(res.status == 'Token has Expired') {
       this.loginFalse = true;
+      localStorage.clear();
     }
   }, err => {
     console.log(err);

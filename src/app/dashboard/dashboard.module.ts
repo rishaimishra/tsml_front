@@ -7,12 +7,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SalesDashboardComponent } from './sales-dashboard/sales-dashboard.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 const routes: Routes = [
-  {path: 'customer-dashboard', component: CustomerDashboardComponent},
-  {path: 'kam-dashboard', component: KamDashboardComponent},
-  {path: 'sales-dashboard', component: SalesDashboardComponent}
+  {path: 'customer-dashboard', component: CustomerDashboardComponent, canActivate: [AuthGuard]},
+  {path: 'kam-dashboard', component: KamDashboardComponent, canActivate: [AuthGuard]},
+  {path: 'sales-dashboard', component: SalesDashboardComponent, canActivate: [AuthGuard]}
 
 ]
 

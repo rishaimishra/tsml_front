@@ -80,6 +80,20 @@
                                             *ngFor="let formData of productData['schedule'];let y = index">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
+                                                  <label for="">Grades offered</label>
+                                                  <input type="hidden"
+                                                            [(ngModel)]="formData.sub_cat_id"
+                                                            name="saubCat_{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" id=""
+                                                            value="{{formData.sub_cat_name}}" />
+                                                <input type="text" readonly
+                                                            name="saubCat_{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" id=""
+                                                            value="{{formData.sub_cat_name}}" />
+                                                </div>
+                                              </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
                                                     <label for="">Sizes Offered</label>
                                                     <select (change)="sizeOfferd($event)" [disabled]="userType"
                                                         #offerInput="ngModel" [(ngModel)]="formData.pro_size"
@@ -330,7 +344,22 @@
                                                         class="inputValidation">Remarks is required</small>
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <!-- Sales Remarks -->
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="">Sales Remarks</label>
+                                                    <textarea [(ngModel)]="formData.salesRemarks"
+                                                        #salsRemarks="ngModel"
+                                                        name="salesRemarks_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" rows="4"
+                                                        required></textarea>
+                                                    <small
+                                                        *ngIf="salsRemarks.invalid && (salsRemarks.dirty || salsRemarks.touched || submit)"
+                                                        class="inputValidation">Remarks is required</small>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
                                                 <span class="text-primary pointerTab" data-toggle="modal"
                                                     data-target="#viewMoreMessage"
                                                     (click)="messageBox(formData.schedule_no)">See
@@ -469,7 +498,7 @@
                             <div class="modal-header">
                                 <h4 class="modal-title text-uppercase">Remarks</h4>
                                 <div class="">
-                                    <button type="button" class="btn bt-sm btn-danger" (click)="cancelprice()"><i
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelprice()"><i
                                             class="fa fa-times"></i></button>
                                 </div>
 

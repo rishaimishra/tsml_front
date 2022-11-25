@@ -39,7 +39,6 @@ export class OrderPlaningComponent implements OnInit {
     this.spinner.show();
     let orderReq = {
       "start_date": '',
-      "end_date": '',
       "plant": '',
       "mat_grp": '',
       "mat_no": '',
@@ -49,7 +48,6 @@ export class OrderPlaningComponent implements OnInit {
       this.spinner.hide();
       if (res.status != 0 && res.message == 'success') {
         this.orderList = res.result;
-        console.log('order',this.orderList);
       } 
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);

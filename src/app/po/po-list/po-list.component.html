@@ -16,7 +16,8 @@
                          <table class="table">
                             <thead>
                                <tr>
-                                  <th>PO Number</th>
+                                  <th>Order Reference Number</th>
+                                  <th>Customer PO number</th>
                                   <th>Amendment No</th>
                                   <th>PO Date</th>
                                   <th>Customer Name</th>
@@ -29,6 +30,9 @@
                                <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 12, currentPage: p }">
                                   <td>
                                     {{po.po_no}}
+                                  </td>
+                                  <td>
+                                    {{po.cus_po_no}}
                                   </td>
                                   <td>
                                     {{po.amdnt_no}}

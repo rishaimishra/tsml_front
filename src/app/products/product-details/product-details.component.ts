@@ -83,6 +83,7 @@ export class ProductDetailsComponent implements OnInit {
       this.categoryid = res.categoryId;
       this.get_product_details(res.productId, res.categoryId);
       this.getLocation();
+      this.getSubCategory(this.productId);
     });
     this.setFromData();
   };
@@ -129,6 +130,8 @@ export class ProductDetailsComponent implements OnInit {
             kam_price: '',
             valid_till: '',
             confirm_date: '',
+            sub_cat_id: '',
+            salesRemarks: '',
             pickup_type: '',
             kamsRemarks: ''
           });
@@ -161,7 +164,6 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log(res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
@@ -186,6 +188,8 @@ export class ProductDetailsComponent implements OnInit {
             kam_price: '',
             valid_till: '',
             confirm_date: '',
+            sub_cat_id: '',
+            salesRemarks: '',
             pickup_type: '',
             kamsRemarks: ''
           });
@@ -286,6 +290,8 @@ export class ProductDetailsComponent implements OnInit {
       kam_price: '',
       valid_till: '',
       confirm_date: '',
+      sub_cat_id: '',
+      salesRemarks: '',
       pickup_type: '',
       kamsRemarks: ''
     });
@@ -367,9 +373,6 @@ export class ProductDetailsComponent implements OnInit {
 
   plantSele(event:any, i:any) {
     let apiUrl = '/user/get_plant_addr/'+ event.target.value;
-    // this.plantValueArray.push(event.target.value);
-    // console.log(this.plantValueArray,i);
-
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {
         this.locationState = res.result['state'];
@@ -400,10 +403,27 @@ export class ProductDetailsComponent implements OnInit {
 
   getDeliveryItem () {
     this._product.getDeliveryMethod().subscribe((res:any) => {
-      console.log('ress',res);
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
       } 
+    })
+  }
+  subCategory:any;
+  getSubCategory(catId:any) {
+    console.log(catId);
+    this.spinner.show();
+    let sizeFilter = {
+      cat_id: catId,
+    }
+    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.success == true) {
+        this.subCategory = res.subCategories;
+        console.log('dddd',this.subCategory);
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     })
   }
 }

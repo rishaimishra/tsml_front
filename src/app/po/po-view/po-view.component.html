@@ -48,7 +48,7 @@
                       Ranked among the top-seven global chrome alloy
                       producers, we are the leading manufacturers of High
                       Carbon Ferro Chrome in India. We produce various grades
-                      of Ferro Chrome Chemical Composition: Cr - 60% Min, C -
+                      of Ferro Chrome. Typical Chemical Composition: Cr - 60% Min, C -
                       6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max
                     </p>
                   </div>
@@ -65,10 +65,21 @@
                 </div>
                 <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
-                    <div class="row" *ngFor="
-                          let formData of productData['schedule'];
-                          let y = index
-                        ">
+                    <div class="row" *ngFor="let formData of productData['schedule'];let y = index">
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Grades offered</label>
+                          <input type="hidden"
+                                    [(ngModel)]="formData.sub_cat_id"
+                                    name="saubCat_{{ formData.schedule_no }}"
+                                    class="form-control form-control-sm" id=""
+                                    value="{{formData.sub_cat_name}}" />
+                        <input type="text" readonly
+                                    name="saubCat_{{ formData.schedule_no }}"
+                                    class="form-control form-control-sm" id=""
+                                    value="{{formData.sub_cat_name}}" />
+                        </div>
+                      </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Sizes Offered</label>
@@ -296,6 +307,16 @@
               <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
             </div>
           </div>
+          <div class="col-md-6 col-lg-3 mt-3" *ngIf="userType == false">
+            <!-- <label class="form-check-label">Please Upload PO Attachment !</label> -->
+            <input type="text" class="form-control" [(ngModel)]="inputPONum" id="exampleInputEmail1"  placeholder="Enter PO number">
+            <div class="form_box_area mt-2">
+              <input type="file" accept=".jpg,.jpeg,.pdf" class="form-control-file"
+                id="" (change)="selectFile($event)">
+              </div>
+              <small class="redText" *ngIf="letterHeadFile">Maximum file size:5MB (PDF, PNG, JPG)</small>
+              <button class="btn btn-primary btn-sm float-left" (click)="submitPoAttachment()">Submit</button>
+            </div>
 
           <button type="button" (click)="raiseComplain(poInfo?.po_no,poInfo?.po_date)" *ngIf="userType" class="btn btn-primary">Raise Complaint</button>&nbsp;
           <button type="button" (click)="viewComplain(poInfo?.po_no)" *ngIf="!userType" class="btn btn-primary">View Complaint</button>&nbsp;
@@ -431,7 +452,7 @@
                 </tr>
 
                 <tr>
-                  <td colspan="2">Miscellaneous Cost</td>
+                  <td colspan="2">Miscellaneous Cost (Sizing, Commission etc.)</td>
                   <td>
                     <div class="pp-bx" id="miscId">
                       {{productPrice?.misc_expense}}

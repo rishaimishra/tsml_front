@@ -186,6 +186,7 @@ export class PoEditComponent implements OnInit {
           remarks: '',
           kam_price: '',
           confirm_date: '',
+          salesRemarks: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -299,6 +300,7 @@ export class PoEditComponent implements OnInit {
             remarks: '',
             kam_price: '',
             confirm_date: '',
+            salesRemarks: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -409,6 +411,7 @@ export class PoEditComponent implements OnInit {
       remarks: '',
       kam_price: '',
       confirm_date: '',
+      salesRemarks: '',
       valid_till: '',
       kamsRemarks: ''
     });
@@ -577,8 +580,8 @@ export class PoEditComponent implements OnInit {
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
 
     this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
-    let prcentPrice = (this.Totalsum1 - bptPrice);
-    this.percentPrice = (bptPrice / prcentPrice).toFixed(2);
+    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
+    this.percentPrice = totalPercent.toFixed(2);
 
   };
 

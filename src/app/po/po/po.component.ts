@@ -31,16 +31,7 @@ export class PoComponent implements OnInit {
   productId: any;
   selectedItem: any = [];
   states: any;
-  deliveryDate1: any = '';
-  deliveryDate2: any = '';
-  deliveryDate3: any = '';
-  deliveryDate4: any = '';
   remarks: any = '';
-  remarks2: any = '';
-  expectedPrice1: any = '';
-  expectedPrice2: any = '';
-  quantity1: any = [];
-  quantity2: any;
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
@@ -87,6 +78,8 @@ export class PoComponent implements OnInit {
   letterHeadFile: boolean = false;
   letterHedFile: any;
   deliveryDropList:any;
+  percentPrice:any;
+  subCategory:any;
 
 
   constructor(
@@ -117,6 +110,7 @@ export class PoComponent implements OnInit {
       this.productId = res.id;
       this.categoryid = res.categoryId;
       this.detailByRfq();
+      this.getSubCategory(this.productId);
     });
     const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
     this.po_id = val;
@@ -184,6 +178,7 @@ export class PoComponent implements OnInit {
           remarks: '',
           kam_price: '',
           confirm_date: '',
+          salesRemarks: '',
           pickup_type: '',
           valid_till: '',
           kamsRemarks: ''
@@ -269,7 +264,6 @@ export class PoComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log('addItem', res);
         //return;
         if (res.status == 1) {
           this.product_data = res.result;
@@ -294,6 +288,7 @@ export class PoComponent implements OnInit {
             kam_price: '',
             confirm_date:'',
             pickup_type: '',
+            salesRemarks: '',
             valid_till: '',
             kamsRemarks: ''
           });
@@ -358,7 +353,7 @@ export class PoComponent implements OnInit {
       }
     })
   }
-  submitRfq() {
+  submitPO() {
     let userRol = localStorage.getItem('USER_TYPE');
     this.submit = true;
     let rfqFormArry: any = [];
@@ -391,7 +386,7 @@ export class PoComponent implements OnInit {
 
       rfqFormArry.push(reqData);
     }
-    
+
     this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
@@ -453,6 +448,7 @@ export class PoComponent implements OnInit {
       kam_price: '',
       confirm_date: '',
       pickup_type: '',
+      salesRemarks: '',
       valid_till: '',
       kamsRemarks: ''
     });
@@ -462,16 +458,13 @@ export class PoComponent implements OnInit {
   };
   final_form_data() {
     this.quotation_value = [];
-    // console.log('this.selectedItem final fn=', this.selectedItem);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data = this.selectedItem[i]['schedule'];
 
       for (let k = 0; k < form_data.length; k++) {
         this.quotation_value.push(form_data[k]);
       }
-      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
     }
-    console.log('this.quotation_value=', this.quotation_value);
   };
 
   date: any;
@@ -567,12 +560,12 @@ export class PoComponent implements OnInit {
     })
   };
   calculatePrice(id: any) {
-    let cam_discount = this.priceVal.cam_discount;
-    let deliveryCost = this.priceVal.delivery_cost;
-    let miscExpense = this.priceVal.misc_expense;
-    let pricePremium = this.priceVal.price_premium;
-    let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
-    let credit_cost_for45_days = this.priceVal.credit_cost_for45_days;
+    let cam_discount = this.productPrice.cam_discount;
+    let deliveryCost = this.productPrice.delivery_cost;
+    let miscExpense = this.productPrice.misc_expense;
+    let pricePremium = this.productPrice.price_premium;
+    this.productPrice.credit_cost_for30_days;
+    this.productPrice.credit_cost_for45_days;
 
     let bptPrice = Number($("#_bptPrice" + id).val());
     let price_premium = Number($("#price_premium" + id).val());
@@ -581,7 +574,7 @@ export class PoComponent implements OnInit {
     let _credit = Number($("#_credit" + id).val());
     let _interest = Number($("#_interest" + id).val());
     let _discount = Number($("#_discount" + id).val());
-    let _total = Number($("#_total" + id).val());
+    Number($("#_total" + id).val());
 
     let priceValidator = [];
     if (price_premium < pricePremium && price_premium != 0) {
@@ -608,7 +601,7 @@ export class PoComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    if (_discount < cam_discount && _discount != 0) {
+    if (Number(cam_discount) < _discount && _discount != 0) {
       this.kamDiscount = true;
       priceValidator.push(5);
     } else {
@@ -621,6 +614,10 @@ export class PoComponent implements OnInit {
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
 
     this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
+
+    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
+    this.percentPrice = totalPercent.toFixed(2);
+
 
   };
 
@@ -666,14 +663,29 @@ export class PoComponent implements OnInit {
       }
 
     })
-  }
+  };
 
   getDeliveryItem () {
     this._product.getDeliveryMethod().subscribe((res:any) => {
-      console.log('ress',res);
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
       } 
+    })
+  };
+
+  getSubCategory(catId:any) {
+    this.spinner.show();
+    let sizeFilter = {
+      cat_id: catId,
+    }
+    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.success == true) {
+        this.subCategory = res.subCategories;
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     })
   }
 }

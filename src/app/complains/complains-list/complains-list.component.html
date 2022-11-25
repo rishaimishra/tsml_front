@@ -12,6 +12,18 @@
           <div class="container">
              <div class="row">
                 <div class="col-lg-12 pb-5">
+                  <div class="ddnld-box" *ngIf="custFileDownload">
+                     <small>Customer files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
+                     <ul *ngFor="let custdd of customerFileArr['cust_com_file']">
+                        <li><a [href]="custdd"><span></span>Download <i class="fa fa-arrow-circle-down"></i></a></li>
+                     </ul>
+                  </div>
+                  <div class="ddnld-box" *ngIf="kamFileDownload">
+                     <small>CAM files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
+                     <ul *ngFor="let kamdd of customerFileArr['kam_com_file']">
+                        <li><a [href]="kamdd"><span></span>Download <i class="fa fa-arrow-circle-down"></i></a></li>
+                     </ul>
+                  </div>
                    <div class="cart-table">
                       <div class="table-responsive">
                          <table class="table">
@@ -24,7 +36,7 @@
                                   <th>Sub Categories 1</th>
                                   <th>Sub Categories 2</th>
                                   <th>Sub Categories 3</th>
-                                  <!-- <th>Attachments</th> -->
+                                  <th>Attachments</th>
                                   <th>Remarks</th>
                                   <th></th>
                                </tr>
@@ -53,9 +65,13 @@
                                   <td>
                                      {{comp?.com_sub_cate3_name}}
                                   </td>
-                                  <!-- <td >
+                                  <td class="position-relative">
+                                    <div class="btn-edt-del btn-edt-dell">
+                                       <a class="edt-btn btn-primary pointer" (click)="customerFileDownload()" data-toggle="tooltip" data-placement="top" title="Customer Attachments"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" (click)="kamDownload()" data-toggle="tooltip" data-placement="top" title="CAM Attachments"><i class="fa fa-arrow-circle-down"></i></a>
+                                    </div>
                                     
-                                  </td> -->
+                                  </td>
                                   <td>
                                      {{comp?.remarks}}
                                   <td>

@@ -93,6 +93,7 @@ export class PoViewComponent implements OnInit {
   poStatus:any;
   amndNomber:any;
   deliveryDropList:any;
+  inputPONum: any = '';
   downloadFile = environment.apiEndpointBase;
 
   constructor(
@@ -194,6 +195,7 @@ export class PoViewComponent implements OnInit {
           kam_price: '',
           confirm_date: '',
           pickup_type: '',
+          salesRemarks: '',
           valid_till: '',
           kamsRemarks: ''
         });
@@ -307,6 +309,7 @@ export class PoViewComponent implements OnInit {
             remarks: '',
             kam_price: '',
             valid_till: '',
+            salesRemarks: '',
             pickup_type: '',
             kamsRemarks: ''
           });
@@ -411,6 +414,7 @@ export class PoViewComponent implements OnInit {
       kam_price: '',
       confirm_date: '',
       pickup_type: '',
+      salesRemarks: '',
       valid_till: '',
       kamsRemarks: ''
     });
@@ -662,6 +666,51 @@ export class PoViewComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
       } 
+    })
+  }
+
+  selectFile(event: any) {
+    this.letterHedFile = event.target.files[0];
+    let file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.letterHead = reader.result;
+    };
+    if (file.size >= 5209785) {
+      this.letterHeadFile = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.letterHeadFile = false;
+    }
+  }
+
+  submitPoAttachment() {
+    if (this.letterHedFile == null || this.inputPONum == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Both feilds is required!',
+      })
+      return;
+    }
+
+    const fileData = new FormData();
+    fileData.append('po_no', this.productId);
+    fileData.append('letterhead', this.letterHedFile);
+    fileData.append('cus_po_no', this.inputPONum);
+    
+    this._product.poAttachmentUpl(fileData).subscribe((res:any) => {
+      if (res.status == 1 && res.message == 'success') {
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          text: 'PO Updated',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     })
   }
 }

@@ -224,7 +224,6 @@ export class SalesResponsComponent implements OnInit {
         "remarks": this.remarksData
       }
       this._product.remarksDelet(remarksReq).subscribe ((res:any) => {
-        console.log(res);
         Swal.fire(
           'Canceled!',
           'Your Item has been Canceled.',
@@ -395,6 +394,14 @@ export class SalesResponsComponent implements OnInit {
 
   submitRfq() {
     this.submit = true;
+    if (this.qtStatusUpdate == undefined) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select status Accept or Reject!',
+      })
+      return;
+    }
     let userRol = localStorage.getItem('USER_TYPE');
     let rediectStatus = [];
     let countArr = [];
@@ -477,11 +484,11 @@ export class SalesResponsComponent implements OnInit {
           })
         }
       }
-      if (res.message == 'error' || res.status == 0) {
+      else if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
         this.spinner.hide();
       }
-      if (res.status == 'Token has Expired') {
+      else if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
         this._router.navigate(['/login']);
         this.spinner.hide();
@@ -500,13 +507,13 @@ export class SalesResponsComponent implements OnInit {
         }
       })
     }
-    let qouteReq = {
-      "rfq_no": this.productId,
-      "status": this.qtStatusUpdate
-    }
-    this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-      console.log(res);
-    })
+      let qouteReq = {
+        "rfq_no": this.productId,
+        "status": this.qtStatusUpdate
+      }
+      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+        console.log(res);
+      })
     // if (userRol == 'Kam') {
     //   let qouteReq = {
     //     "rfq_no": this.productId,
@@ -517,9 +524,9 @@ export class SalesResponsComponent implements OnInit {
     //   })
     // }
   // }
-    setTimeout(() => {
-      this._router.navigate(['/confirm-rfq']);
-    }, 2000);
+
+    this._router.navigate(['/confirm-rfq']);
+
     // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
     //   this._router.navigate(['/po',this.productId]);
     // } else {

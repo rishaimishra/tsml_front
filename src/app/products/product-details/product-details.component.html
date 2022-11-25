@@ -26,8 +26,8 @@
             <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
               <option value="">--select--</option>
               <option value="1" *ngIf="productId != 2">Lumps</option>
-              <option value="2" *ngIf="productId != 2">Chips</option>
-              <option value="3" *ngIf="productId != 2">Fines</option>
+              <option value="2" *ngIf="productId != 2">Chips & Fines</option>
+              <!-- <option value="3" *ngIf="productId != 2">Fines</option> -->
               <option value="4" *ngIf="productId != 1">High</option>
               <option value="5" *ngIf="productId != 1">Medium</option>
             </select>
@@ -51,7 +51,7 @@
                       Ranked among the top-seven global chrome alloy
                       producers, we are the leading manufacturers of High
                       Carbon Ferro Chrome in India. We produce various grades
-                      of Ferro Chrome Chemical Composition: Cr - 60% Min, C -
+                      of Ferro Chrome. Typical Chemical Composition: Cr - 60% Min, C -
                       6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max
                     </p>
                   </div>
@@ -64,6 +64,18 @@
                 <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="let formData of productData['form_data'];let y = index">
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Grades offered</label>
+                            <select #subCatInput="ngModel" [(ngModel)]="formData.sub_cat_id"
+                            name="subCat_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
+                            <option value="" selected>..Select..</option>
+                            <option value="{{subCat.id}}" *ngFor="let subCat of subCategory">{{subCat.sub_cat_name}}</option>
+                          </select>
+                          <small *ngIf="subCatInput.invalid && (subCatInput.dirty || subCatInput.touched || submit)"
+                            class="inputValidation">Grades offered is required</small>
+                        </div>
+                      </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Sizes Offered</label>

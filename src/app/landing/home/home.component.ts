@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   public popular_product_list: any = [];
   allNews: any;
   menuId: any;
+  isLogin:boolean;
 
 
   constructor(
@@ -28,7 +29,10 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _product: ProductsService,
     private _auth: AuthService
-  ) { }
+  ) 
+  { 
+    this.isLogin = this._auth.isLoggedIn();
+  }
 
   ngOnInit(): void {
     this.getNews();
@@ -104,9 +108,9 @@ export class HomeComponent implements OnInit {
     return this.menuId === item;
   };
   
-  gotoDetailsPage(productId:any) {
-    this._router.navigate(['/all-product',productId]);
-  }
+  // gotoDetailsPage(productId:any) {
+  //   this._router.navigate(['/all-product',productId]);
+  // }
   get_popular_product() {
     let url = '/popular-product';
     this.productService.getMethod(url).subscribe(
@@ -130,5 +134,13 @@ export class HomeComponent implements OnInit {
       console.log(err)
     }
     )
+  };
+
+  gotoDetailsPage(productId: any, categoryId: any) {
+    if (this.isLogin == true) {
+      this._router.navigate(['/product-details', productId, categoryId]);
+    } else {
+      this._router.navigate(['/login']);
+    }
   }
 }

@@ -80,6 +80,20 @@
                                             *ngFor="let formData of productData['schedule'];let y = index">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
+                                                  <label for="">Sub Category</label>
+                                                  <input type="hidden"
+                                                            [(ngModel)]="formData.sub_cat_id"
+                                                            name="saubCat_{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" id=""
+                                                            value="{{formData.sub_cat_name}}" />
+                                                <input type="text" readonly
+                                                            name="saubCat_{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" id=""
+                                                            value="{{formData.sub_cat_name}}" />
+                                                </div>
+                                              </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
                                                     <label for="">Sizes Offered</label>
                                                     <select (change)="sizeOfferd($event)" [disabled]="userType"
                                                         #offerInput="ngModel" [(ngModel)]="formData.pro_size"
@@ -319,7 +333,7 @@
                                                 <div class="form-group">
                                                     <label for="">Customer Remarks</label>
                                                     <textarea [(ngModel)]="formData.remarks"
-                                                        [disabled]="userByrole == 'Sales'" #remarks="ngModel"
+                                                        [disabled]="userByrole != 'C'" #remarks="ngModel"
                                                         name="remarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>
@@ -342,7 +356,20 @@
                                                         class="inputValidation">Remarks is required</small>
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-lg-6" *ngIf="userByrole != 'C'">
+                                                <div class="form-group">
+                                                    <label for="">Sales Remarks</label>
+                                                    <textarea [disabled]="userByrole != 'Sales'" [(ngModel)]="formData.salesRemarks"
+                                                        #salesRemarks="ngModel"
+                                                        name="salesRemarks_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" rows="4"
+                                                        required></textarea>
+                                                    <small
+                                                        *ngIf="salesRemarks.invalid && (salesRemarks.dirty || salesRemarks.touched || submit)"
+                                                        class="inputValidation">Remarks is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
                                                 <span class="text-primary pointerTab" data-toggle="modal"
                                                     data-target="#viewMoreMessage"
                                                     (click)="messageBox(formData.schedule_no)">See
@@ -643,7 +670,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Miscellaneous Cost</td>
+                                    <td colspan="2">Miscellaneous Cost (Sizing, Commission etc.)</td>
                                     <td>
                                         <div class="pp-bx" id="miscId">
                                             {{productPrice?.misc_expense}}

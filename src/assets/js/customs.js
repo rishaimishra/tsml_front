@@ -201,5 +201,7 @@ $( document ).ready(function() {
       
       $('#tree1').treed();
       
-      
+     
+         $('[data-toggle="tooltip"]').tooltip();
+       
 });

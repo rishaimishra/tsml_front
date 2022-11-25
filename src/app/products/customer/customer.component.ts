@@ -96,6 +96,7 @@ export class CustomerComponent implements OnInit {
   userAddr:any;
   plantAddrr:any;
   deliveryDropList:any;
+  subCategory:any;
 
 
   @ViewChild("remarksModel")
@@ -137,6 +138,7 @@ export class CustomerComponent implements OnInit {
     this.states = this._state.getState();
     this.detailByRfq();
     this.getNegotiationHistory();
+    this.getSubCategory(this.productId);
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
       misc_expense: ['', Validators.required],
@@ -255,14 +257,11 @@ export class CustomerComponent implements OnInit {
       "status": 'Req'
     };
     let redirectSt = event.target.value.toString();
-    // const index: number = this.poRedirectArr.indexOf(event.target.value);
     let indxId = this.poRedirectArr.findIndex((item: any) => item.id == event.target.value);
     if (indxId !== -1) {
       this.poRedirectArr.splice(indxId, 1);
     }
-    // if(this.poRedirectArr.hasOwnProperty(redirectSt) == true) {
-    //   this.poRedirectArr.splice(redirectSt, 1);
-    // }
+
     this.poRedirectArr.push(reqParam);
 
     console.log('redirectSt',redirectSt, this.poRedirectArr);
@@ -331,13 +330,12 @@ export class CustomerComponent implements OnInit {
     this.qtStatusUpdate = event.target.value;
   };
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    addItem() {
+  addItem() {
       this.arr = this.myForm.get('arr') as FormArray;
       this.arr.push(this.createItem('',''));
     };
   
-    schduleSele(schdlNo: any, qty: any) {
+  schduleSele(schdlNo: any, qty: any) {
       this.myForm.reset();
       this.schduleNo = schdlNo;
       let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
@@ -360,7 +358,7 @@ export class CustomerComponent implements OnInit {
       this.totlQty = qty;
       // this.myForm.reset();
     };
-    onSubmit(totlQty:any) {
+  onSubmit(totlQty:any) {
       let schdlData = this.myForm.value['arr'];
       let setSechdule = {
         "sche_no": this.schduleNo,
@@ -392,7 +390,6 @@ export class CustomerComponent implements OnInit {
       })
       this.myForm.reset();
     };
-    //////////////////////////////////////////////////////////////////////////////////////////
 
   submitRfq() {
     this.submit = true;
@@ -456,12 +453,10 @@ export class CustomerComponent implements OnInit {
           "status": this.qtStatusUpdate
         }
         this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-          console.log(res);
         })
       }
       else if (userTyp == 'Kam') {
         this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-          console.log(res);
         })
         
         let qouteReq = {
@@ -469,7 +464,6 @@ export class CustomerComponent implements OnInit {
           "status": 7
         }
         this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-          console.log(res);
         })
       }
     } else {
@@ -596,8 +590,6 @@ export class CustomerComponent implements OnInit {
       this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
     }
 
-      // let prcentPrice = (backendTotal - this.productPrice.bpt_price);
-      // this.percentPrice = (this.productPrice.bpt_price / prcentPrice).toFixed(2);
   };
 
   getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
@@ -640,8 +632,8 @@ export class CustomerComponent implements OnInit {
     let deliveryCost = this.productPrice.delivery_cost;
     let miscExpense = this.productPrice.misc_expense;
     let pricePremium = this.productPrice.price_premium;
-    let credit_cost_for30_days = this.priceVal.credit_cost_for30_days;
-    let credit_cost_for45_days = this.priceVal.credit_cost_for45_days;
+    this.priceVal.credit_cost_for30_days;
+    this.priceVal.credit_cost_for45_days;
 
     let bptPrice = Number($("#_bptPrice" + id).val());
     let price_premium = Number($("#price_premium" + id).val());
@@ -650,7 +642,7 @@ export class CustomerComponent implements OnInit {
     let _credit = Number($("#_credit" + id).val());
     let _interest = Number($("#_interest" + id).val());
     let _discount = Number($("#_discount" + id).val());
-    let _total = Number($("#_total" + id).val());
+    Number($("#_total" + id).val());
 
     let priceValidator = [];
     if (price_premium < pricePremium && price_premium != 0) {
@@ -691,15 +683,15 @@ export class CustomerComponent implements OnInit {
     this.daysCostCountCustomer = (total * daysCount).toFixed(2);
 
     this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
-    let prcentPrice = (this.Totalsum1 - bptPrice);
-    this.percentPrice = (bptPrice / prcentPrice).toFixed(2);
+
+    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
+    this.percentPrice = totalPercent.toFixed(2);
 
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.productId;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.negotiationHistory = res.result;
-      console.log(this.negotiationHistory.length)
     })
   };
 
@@ -781,10 +773,26 @@ export class CustomerComponent implements OnInit {
 
   getDeliveryItem () {
     this._product.getDeliveryMethod().subscribe((res:any) => {
-      console.log('ress',res);
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
       } 
+    })
+  };
+
+
+  getSubCategory(catId:any) {
+    this.spinner.show();
+    let sizeFilter = {
+      cat_id: catId,
+    }
+    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.success == true) {
+        this.subCategory = res.subCategories;
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     })
   }
   
