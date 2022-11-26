@@ -184,7 +184,6 @@ export class CustomerComponent implements OnInit {
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' + '/' + this.productId;
-    // let url = '/user/get_quote_sche_by_id/' + this.productId;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
@@ -318,11 +317,9 @@ export class CustomerComponent implements OnInit {
     else {
       this.statusArr.push(reqParam);
     }
-    // console.log('reqParam', this.statusArr);
   };
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
-      console.log('value', res);
       this.priceVal = res.result;
     });
   };
@@ -341,7 +338,6 @@ export class CustomerComponent implements OnInit {
       let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
       this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.showModalIsValue = true;
-        console.log(res)
         this.myForm = this._fb.group({
           arr: this._fb.array([])
         })
@@ -350,9 +346,7 @@ export class CustomerComponent implements OnInit {
         for (let i of res.result) {
           this.arr.push(this.createItem(i.qty,i.to_date));
         }
-  
-        // console.log(this.myForm.get('arr')['controls']);
-        // console.log('myForm: ', this.myForm.value.arr)
+
   
       });
       this.totlQty = qty;
@@ -446,16 +440,16 @@ export class CustomerComponent implements OnInit {
 
     let qouteSt = this.selectedItem[0]['quotest'];
     let userTyp = localStorage.getItem('USER_TYPE');
-    if (qouteSt != 5 && qouteSt != 6) {
-      if (userTyp == 'Sales') {
-        let qouteReq = {
-          "rfq_no": this.productId,
-          "status": this.qtStatusUpdate
-        }
-        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-        })
-      }
-      else if (userTyp == 'Kam') {
+    if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
+      // if (userTyp == 'Sales') {
+      //   let qouteReq = {
+      //     "rfq_no": this.productId,
+      //     "status": this.qtStatusUpdate
+      //   }
+      //   this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+      //   })
+      // }
+      if (userTyp == 'Kam') {
         this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
         })
         

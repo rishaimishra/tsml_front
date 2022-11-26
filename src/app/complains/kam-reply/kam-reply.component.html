@@ -56,7 +56,7 @@
                               <time>{{remarks.created_at}}</time>
                            </div>
                         </li>
-                        <li class="self  msgReply" *ngIf="remarks?.kam_remarks != 'undefined'">
+                        <li class="self  msgReply" *ngIf="remarks?.kam_remarks != null">
                            <div class="avatar" style="margin-left:10px;"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                            <div class="msg">
                               <p><b>Kam's Remarks!</b></p>
@@ -102,7 +102,7 @@
                      <!-- <a [href]="imageUrl" [download]="imageUrl" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please download the supporting document."><i
                         class="fa fa-download"></i></a> &nbsp; -->
                       <button *ngIf="compInfo?.complain_status != 2" (click)="submitReply(compInfo?.complain_id)"class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
-                      <button type="button" class="btn btn-danger" routerLink="/complains-list"><i class="fa fa-times"></i> Cancel</button>
+                      <button type="button" class="btn btn-danger" routerLink="/complains-list"><i class="fa fa-arrow-left"></i> Cancel</button>
                    </div>
                 </div>
              </div>

@@ -154,7 +154,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Location</label>
-                          <select [disabled]="userType" class="form-control form-control-sm" #location="ngModel"
+                          <select disabled class="form-control form-control-sm" #location="ngModel"
                             [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
                             <option value="{{formData.location}}" selected>{{formData.location}}</option>
                             <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
@@ -307,7 +307,7 @@
               <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
             </div>
           </div>
-          <div class="col-md-6 col-lg-3 mt-3" *ngIf="userType == false">
+          <div class="col-md-6 col-lg-3 mt-3" *ngIf="userType == false && selectedItem[0].cus_po_no == null">
             <!-- <label class="form-check-label">Please Upload PO Attachment !</label> -->
             <input type="text" class="form-control" [(ngModel)]="inputPONum" id="exampleInputEmail1"  placeholder="Enter PO number">
             <div class="form_box_area mt-2">

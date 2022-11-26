@@ -695,13 +695,14 @@ export class PoViewComponent implements OnInit {
       })
       return;
     }
-
+    this.spinner.show();
     const fileData = new FormData();
     fileData.append('po_no', this.productId);
     fileData.append('letterhead', this.letterHedFile);
     fileData.append('cus_po_no', this.inputPONum);
     
     this._product.poAttachmentUpl(fileData).subscribe((res:any) => {
+      this.spinner.hide();
       if (res.status == 1 && res.message == 'success') {
         Swal.fire({
           position: 'top',
@@ -711,6 +712,9 @@ export class PoViewComponent implements OnInit {
           timer: 1500
         })
       }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     })
   }
 }

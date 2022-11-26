@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   ) 
   { 
     this.isLogin = this._auth.isLoggedIn();
+    console.log(this.isLogin);
   }
 
   ngOnInit(): void {
@@ -108,9 +109,6 @@ export class HomeComponent implements OnInit {
     return this.menuId === item;
   };
   
-  // gotoDetailsPage(productId:any) {
-  //   this._router.navigate(['/all-product',productId]);
-  // }
   get_popular_product() {
     let url = '/popular-product';
     this.productService.getMethod(url).subscribe(

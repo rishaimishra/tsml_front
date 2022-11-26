@@ -15,6 +15,8 @@ export class ComplainsListComponent implements OnInit {
   customerFileArr:any = [];
   custFileDownload: boolean = false;
   kamFileDownload: boolean = false;
+  custFileDowld:any;
+  kamFileDownld:any;
 
   
   constructor(private _complains: ComplainsService,
@@ -22,6 +24,7 @@ export class ComplainsListComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit(): void {
+    this._spinner.show();
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
@@ -43,18 +46,12 @@ export class ComplainsListComponent implements OnInit {
     let compListReq = {
       "user_id": this.userId
     }
-    this._spinner.show();
+    
     this._complains.getComplainsKamList(compListReq).subscribe((res:any) => {
+      this._spinner.hide();
       if (res.status != 0 && res.message == 'success.') {
-        this._spinner.hide();
         this.camplainsItems = res.result;
-        console.log('kkk',this.camplainsItems);
 
-        for (let i = 0; i < this.camplainsItems.length; i++) {
-          this.customerFileArr = this.camplainsItems[i]['com_file_url'];
-          console.log('ggg',this.customerFileArr);
-          
-        }
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/login']);
@@ -77,12 +74,14 @@ export class ComplainsListComponent implements OnInit {
     }
   };
 
-  customerFileDownload() {
+  customerFileDownload(cusDownld:any) {
+    this.custFileDowld = cusDownld.cust_com_file;
     this.kamFileDownload = false;
     this.custFileDownload = !this.custFileDownload;
   };
 
-  kamDownload() {
+  kamDownload(camDownld:any) {
+    this.kamFileDownld = camDownld.kam_com_file;
     this.custFileDownload = false;
     this.kamFileDownload = !this.kamFileDownload;
   }

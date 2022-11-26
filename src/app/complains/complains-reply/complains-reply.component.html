@@ -47,16 +47,8 @@
                      <hr style="border: 1px solid;">
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12" *ngFor="let remarks of remarkAll">
-                     <!-- <div class="form-group" *ngIf="remarks?.customer_remarks != null">
-                        <label for="">Customer Remarks</label>
-                        <textarea class="form-control" rows="5" disabled>{{remarks.customer_remarks}}</textarea>
-                     </div>
-                     <div class="form-group" *ngIf="remarks?.kam_remarks != null">
-                        <label for="">Kam's Remarks</label>
-                        <textarea class="form-control" rows="5" disabled>{{remarks.kam_remarks}}</textarea>
-                     </div> -->
                      <ol class="chat">
-                        <li class="other" *ngIf="remarks?.customer_remarks != 'undefined'">
+                        <li class="other" *ngIf="remarks?.customer_remarks != null">
                            <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
                            <div class="msg">
                               <p>Customer Remarks!</p>
@@ -64,7 +56,7 @@
                               <time>{{remarks.created_at}}</time>
                            </div>
                         </li>
-                        <li class="self" *ngIf="remarks?.kam_remarks != 'undefined'">
+                        <li class="self" *ngIf="remarks?.kam_remarks != null">
                            <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                            <div class="msg">
                               <p>Kam's Remarks!</p>
@@ -95,7 +87,7 @@
                      <div class="reply_btn_box">
                         <div class="clos-btn">
                            <div class="form-check">
-                              <input class="form-check-input" [checked]="closeChat" (change)="closeStatus(compInfo?.complain_id)"
+                              <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
                                  type="checkbox" value="" id="defaultCheck1">
                               <label class="form-check-label" for="defaultCheck1">
                                  Close
@@ -113,7 +105,7 @@
                   <div class="col-lg-12">
                      <button *ngIf="compInfo?.complain_status != 2" (click)="submitReply(compInfo?.complain_id)" class="btn btn-primary"><i
                            class="fa fa-paper-plane"></i> Submit</button>&nbsp;
-                     <button type="button" routerLink="/complains-list" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                     <button type="button" routerLink="/complains-list" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
                   </div>
                </div>
             </div>

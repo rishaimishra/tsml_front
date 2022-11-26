@@ -59,6 +59,9 @@ export class ComplainsReplyComponent implements OnInit {
   reply() {
     this.showKamTextArea = !this.showKamTextArea;
   };
+  closeStatus (event:any) {
+    this.closeChat = event.target.checked;
+  };
 
   submitReply(compId:any) {
     const fileData = new FormData();
@@ -74,7 +77,6 @@ export class ComplainsReplyComponent implements OnInit {
     fileData.append('cust_complain_file', this.selectedFile);
 
     this._complains.replyComplains(fileData).subscribe((res:any) => {
-      console.log(res);
       if (res.status != 0) {
         this.complainsReply();
         this._spiner.hide();
@@ -96,17 +98,16 @@ export class ComplainsReplyComponent implements OnInit {
     })
 
     }
-    
+    if (this.closeChat == true) {
+      let apiUrl = '/user/closed-remarks/' +  compId;
+      this._complains.getMethod(apiUrl).subscribe((res:any) => {
+        Swal.fire(
+          'Closed!',
+          'Discussion has been closed!',
+          'success'
+        )
+      })
+    }
   };
 
-  closeStatus (compId:any) {
-    let apiUrl = '/user/closed-remarks/' +  compId;
-    this._complains.getMethod(apiUrl).subscribe((res:any) => {
-      Swal.fire(
-        'Closed!',
-        'Discussion has been closed!',
-        'success'
-      )
-    })
-  }
 }

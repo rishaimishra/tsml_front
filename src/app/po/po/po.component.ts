@@ -340,7 +340,6 @@ export class PoComponent implements OnInit {
     fileData.append('po_date', this.newDate);
 
     this._product.uploadLetterHeadFile(fileData).subscribe((res: any) => {
-      console.log(res);
       if (res.success) {
         this.spinner.hide();
         Swal.fire(
@@ -417,6 +416,9 @@ export class PoComponent implements OnInit {
         this.spinner.hide();
       }
       
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     });
 
     let rfqStatus = {
@@ -429,7 +431,6 @@ export class PoComponent implements OnInit {
   };
 
   addItem(i: any) {
-    // const uniqueID = uuid.v4();
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['schedule'];
     this.quotation.push({

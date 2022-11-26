@@ -14,13 +14,13 @@
                 <div class="col-lg-12 pb-5">
                   <div class="ddnld-box" *ngIf="custFileDownload">
                      <small>Customer files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
-                     <ul *ngFor="let custdd of customerFileArr['cust_com_file']">
+                     <ul *ngFor="let custdd of custFileDowld">
                         <li><a [href]="custdd"><span></span>Download <i class="fa fa-arrow-circle-down"></i></a></li>
                      </ul>
                   </div>
                   <div class="ddnld-box" *ngIf="kamFileDownload">
                      <small>CAM files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
-                     <ul *ngFor="let kamdd of customerFileArr['kam_com_file']">
+                     <ul *ngFor="let kamdd of kamFileDownld">
                         <li><a [href]="kamdd"><span></span>Download <i class="fa fa-arrow-circle-down"></i></a></li>
                      </ul>
                   </div>
@@ -29,7 +29,7 @@
                          <table class="table">
                             <thead>
                                <tr>
-                                  <th >Customer Name</th>
+                                  <th>Customer Name</th>
                                   <th>Po Number</th>
                                   <th>Po Date</th>
                                   <th>Categories</th>
@@ -37,8 +37,8 @@
                                   <th>Sub Categories 2</th>
                                   <th>Sub Categories 3</th>
                                   <th>Attachments</th>
-                                  <th>Remarks</th>
-                                  <th></th>
+                                  <th>Customer PO No.</th>
+                                  <th>View</th>
                                </tr>
                             </thead>
                             <tbody>
@@ -67,15 +67,15 @@
                                   </td>
                                   <td class="position-relative">
                                     <div class="btn-edt-del btn-edt-dell">
-                                       <a class="edt-btn btn-primary pointer" (click)="customerFileDownload()" data-toggle="tooltip" data-placement="top" title="Customer Attachments"><i class="fa fa-arrow-circle-down"></i></a>
-                                       <a class="edt-btn btn-primary pointer" (click)="kamDownload()" data-toggle="tooltip" data-placement="top" title="CAM Attachments"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" (click)="customerFileDownload(comp.com_file_url)" data-toggle="tooltip" data-placement="top" title="Customer Attachments"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" (click)="kamDownload(comp.com_file_url)" data-toggle="tooltip" data-placement="top" title="CAM Attachments"><i class="fa fa-arrow-circle-down"></i></a>
                                     </div>
                                     
                                   </td>
                                   <td>
-                                     {{comp?.remarks}}
+                                     {{comp?.cus_po_no}}
                                   <td>
-                                     <div class="btn-edt-del">
+                                     <div class="btn-edt-del btn-edt-dell">
                                         <a class="edt-btn btn-primary pointer" (click)="goToreplyPage(comp?.po_number)" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
                                      </div>
                                   </td>

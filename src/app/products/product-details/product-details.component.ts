@@ -83,7 +83,7 @@ export class ProductDetailsComponent implements OnInit {
       this.categoryid = res.categoryId;
       this.get_product_details(res.productId, res.categoryId);
       this.getLocation();
-      this.getSubCategory(this.productId);
+      this.getSubCategory(this.productId, this.categoryid);
     });
     this.setFromData();
   };
@@ -221,7 +221,6 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   ReqForQuatation() {
-    this.spinner.show();
     this.submit = true;
     const val = Math.floor(1000 + Math.random() * 9000);
     let rfqNumber = val;
@@ -245,11 +244,19 @@ export class ProductDetailsComponent implements OnInit {
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
     }
-    console.log(rfqFormArry);
 
+    for (let i = 0; i < rfqFormArry.length; i++) {
+      const element = rfqFormArry[i]['quote_schedules'];
+      if (element[i].pro_size == '' || element[i].location == '' || element[i].ship_to == '' ||
+      element[i].quantity == '' || element[i].expected_price == '' || element[i].ship_to == '') 
+      {
+        return;
+      }
+    }
+    this.spinner.show();
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
+      this.spinner.hide();
       if (res.status == 1 && res.result != 'Quote not created') {
-        this.spinner.hide();
         this._toaster.success('Request success');
         this._router.navigate(['/thank-you']);
         this.spinner.hide();
@@ -393,7 +400,7 @@ export class ProductDetailsComponent implements OnInit {
         if (res.status == 1 && res.message == 'success') {
           this.plantAddrr = res.result;
         }
-        if (res.status == 'Token has Expired') {
+        if (res.status == 'Token has Expired' || res.status =='Authorization Token not found') {
           this._router.navigate(['/login']);
           this.spinner.hide();
         } 
@@ -409,11 +416,11 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
   subCategory:any;
-  getSubCategory(catId:any) {
-    console.log(catId);
+  getSubCategory(prodId:any,catId:any) {
     this.spinner.show();
     let sizeFilter = {
-      cat_id: catId,
+      product_id: prodId,
+      cat_id: catId
     }
     this._product.filterProducts(sizeFilter).subscribe((res: any) => {
       this.spinner.hide();

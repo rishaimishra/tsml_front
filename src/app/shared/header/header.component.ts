@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
     private _product: ProductsService) 
     { 
+      this.checkLogin();
       this.isUserLogIn = this._auth.isLoggedIn();
     }
 
@@ -44,14 +45,7 @@ export class HeaderComponent implements OnInit {
         $(".shopcutBx").slideToggle("slow");
     });
   });
-  this._product.getAllRequestOfRfq().subscribe((res: any) => {
-    if(res.status == 'Token has Expired') {
-      this.loginFalse = true;
-      localStorage.clear();
-    }
-  }, err => {
-    console.log(err);
-  })
+
   }
 
   clickOnLogo() {
@@ -88,5 +82,14 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
-
+  checkLogin () {
+    this._product.getDeliveryMethod().subscribe((res: any) => {
+      if(res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
+        this.loginFalse = true;
+        localStorage.clear();
+      }
+    }, err => {
+      console.log(err);
+    })
+  }
 }

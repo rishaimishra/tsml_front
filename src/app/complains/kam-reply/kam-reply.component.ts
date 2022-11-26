@@ -69,6 +69,10 @@ export class KamReplyComponent implements OnInit {
     this.showKamTextArea = !this.showKamTextArea;
   };
 
+  closeStatus (event:any) {
+    this.closeChat = event.target.checked;
+  };
+  
   submitReply(compId:any) {
     const fileData = new FormData();
     this.submitt = true;
@@ -101,21 +105,16 @@ export class KamReplyComponent implements OnInit {
       this._spiner.hide();
     })
 
+    if (this.closeChat == true) {
+      let apiUrl = '/user/closed-remarks/' +  compId;
+      this._complains.getMethod(apiUrl).subscribe((res:any) => {
+        Swal.fire(
+          'Closed!',
+          'Discussion has been closed!',
+          'success'
+        )
+      })
+    }
   };
 
-  closeStatus (compId:any) {
-    let apiUrl = '/user/closed-remarks/' +  compId;
-    this._complains.getMethod(apiUrl).subscribe((res:any) => {
-      console.log(res);
-      Swal.fire(
-        'Closed!',
-        'Discussion has been closed!',
-        'success'
-      )
-    })
-}
-
-// downloadComp(imageUrl:any) {
-//   window.location.href = imageUrl;
-// }
 }

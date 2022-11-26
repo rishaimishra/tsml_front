@@ -186,7 +186,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Location</label>
-                                                    <select class="form-control form-control-sm" [disabled]="userType"
+                                                    <select class="form-control form-control-sm" disabled
                                                         #location="ngModel" [(ngModel)]="formData.location"
                                                         name="location_{{ formData.schedule_no }}" required>
                                                         <option value="">Select location</option>
@@ -284,7 +284,7 @@
                                                     <label for=""
                                                         (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
                                                         price
-                                                        <span *ngIf="!userType && qoutestId != 0"
+                                                        <span *ngIf="!userType && qoutestId != 0 && qoutestId != 2"
                                                             class="price-info price-info0" data-toggle="modal"
                                                             data-target="#addPrice"><i
                                                                 class="fa fa-info-circle"></i></span></label>
@@ -301,7 +301,7 @@
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
                                                         <input type="datetime-local"
-                                                            [disabled]="userType || qoutestId == 0" #validTill="ngModel"
+                                                            [disabled]="userType || qoutestId == 0 || qoutestId == 2" #validTill="ngModel"
                                                             [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
                                                         <!-- <small

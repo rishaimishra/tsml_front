@@ -493,7 +493,9 @@ export class SalesResponsComponent implements OnInit {
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
-
+      
+      this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+      })
     }, err => {
       console.log(err);
       this.spinner.hide();
