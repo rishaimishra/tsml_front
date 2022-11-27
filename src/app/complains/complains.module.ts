@@ -8,6 +8,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ComplainsListComponent } from './complains-list/complains-list.component';
 import { ComplainsReplyComponent } from './complains-reply/complains-reply.component';
 import { KamReplyComponent } from './kam-reply/kam-reply.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ]
 })
 export class ComplainsModule { }

@@ -26,10 +26,10 @@ export class StateCityService {
       //   key: 'AN',
       //   name: 'Andaman and Nicobar Islands',
       // },
-      // {
-      //   key: 'AP',
-      //   name: 'Andhra Pradesh',
-      // },
+      {
+        key: 'AP',
+        name: 'Andhra Pradesh',
+      },
       // {
       //   key: 'AR',
       //   name: 'Arunachal Pradesh',
@@ -42,10 +42,10 @@ export class StateCityService {
       //   key: 'BR',
       //   name: 'Bihar',
       // },
-      // {
-      //   key: 'CG',
-      //   name: 'Chandigarh',
-      // },
+      {
+        key: 'CG',
+        name: 'Chandigarh',
+      },
       // {
       //   key: 'CH',
       //   name: 'Chhattisgarh',
@@ -102,10 +102,10 @@ export class StateCityService {
       //   key: 'MP',
       //   name: 'Madhya Pradesh',
       // },
-      // {
-      //   key: 'MH',
-      //   name: 'Maharashtra',
-      // },
+      {
+        key: 'MH',
+        name: 'Maharashtra',
+      },
       // {
       //   key: 'MN',
       //   name: 'Manipur',

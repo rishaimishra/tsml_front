@@ -42,7 +42,7 @@
                                </tr>
                             </thead>
                             <tbody>
-                               <tr *ngFor="let comp of camplainsItems">
+                               <tr *ngFor="let comp of camplainsItems | paginate: { itemsPerPage: 10, currentPage: p }">
                                  <td>
                                     {{comp?.customer_name}}
                                     <!-- {{comp?.po_number}} -->
@@ -83,6 +83,9 @@
                               </tbody>
                               <!-- <div *ngIf="camplainsItems?.length < 0">No Data Found</div> -->
                          </table>
+                         <div class="text-right">
+                           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                         </div>
                       </div>
                    </div>
                 </div>

@@ -17,6 +17,7 @@ export class ComplainsListComponent implements OnInit {
   kamFileDownload: boolean = false;
   custFileDowld:any;
   kamFileDownld:any;
+  p: number = 1;
 
   
   constructor(private _complains: ComplainsService,

@@ -85,7 +85,6 @@ export class KamReplyComponent implements OnInit {
     fileData.append('kam_complain_file', this.selectedFile);
 
     this._complains.replyComplains(fileData).subscribe((res:any) => {
-      console.log(res);
       if (res.status != 0) {
         this.complainsReply();
         this._spiner.hide();
@@ -99,22 +98,23 @@ export class KamReplyComponent implements OnInit {
         });
       } else {
         this._spiner.hide();
+      };
+
+      if (this.closeChat == true) {
+        let apiUrl = '/user/closed-remarks/' +  compId;
+        this._complains.getMethod(apiUrl).subscribe((res:any) => {
+          window.location.reload();
+          Swal.fire(
+            'Closed!',
+            'Discussion has been closed!',
+            'success'
+          )
+        })
       }
     }, err => {
       console.log(err);
       this._spiner.hide();
     })
-
-    if (this.closeChat == true) {
-      let apiUrl = '/user/closed-remarks/' +  compId;
-      this._complains.getMethod(apiUrl).subscribe((res:any) => {
-        Swal.fire(
-          'Closed!',
-          'Discussion has been closed!',
-          'success'
-        )
-      })
-    }
   };
 
 }

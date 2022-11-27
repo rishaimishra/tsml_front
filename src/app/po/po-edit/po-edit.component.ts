@@ -642,5 +642,6 @@ export class PoEditComponent implements OnInit {
       })
       this._router.navigate(['/po-list']);
     })
-  }
+  };
+
 }

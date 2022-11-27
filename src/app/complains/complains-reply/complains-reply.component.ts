@@ -91,22 +91,24 @@ export class ComplainsReplyComponent implements OnInit {
 
       } else {
         this._spiner.hide();
+      };
+
+      if (this.closeChat == true) {
+        let apiUrl = '/user/closed-remarks/' +  compId;
+        this._complains.getMethod(apiUrl).subscribe((res:any) => {
+          window.location.reload();
+          Swal.fire(
+            'Closed!',
+            'Discussion has been closed!',
+            'success'
+          )
+        })
       }
     }, err => {
       console.log(err);
       this._spiner.hide();
     })
 
-    }
-    if (this.closeChat == true) {
-      let apiUrl = '/user/closed-remarks/' +  compId;
-      this._complains.getMethod(apiUrl).subscribe((res:any) => {
-        Swal.fire(
-          'Closed!',
-          'Discussion has been closed!',
-          'success'
-        )
-      })
     }
   };
 

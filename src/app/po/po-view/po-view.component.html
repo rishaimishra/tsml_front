@@ -322,7 +322,7 @@
           <button type="button" (click)="viewComplain(poInfo?.po_no)" *ngIf="!userType" class="btn btn-primary">View Complaint</button>&nbsp;
           <button type="button" *ngIf="userType && poStatus != 1  && amndNomber != null" (click)="submitStatus()" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
             Submit</button> &nbsp;
-          <button type="button" [routerLink]="['/po-list']" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+          <button type="button" [routerLink]="['/po-list']" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
         </div>
       </div>
     </section>

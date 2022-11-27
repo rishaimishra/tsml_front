@@ -107,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log(res);
+        console.log('hello',res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);

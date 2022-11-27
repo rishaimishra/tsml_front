@@ -700,21 +700,35 @@ export class PoViewComponent implements OnInit {
     fileData.append('po_no', this.productId);
     fileData.append('letterhead', this.letterHedFile);
     fileData.append('cus_po_no', this.inputPONum);
-    
-    this._product.poAttachmentUpl(fileData).subscribe((res:any) => {
+    let apiUrl = '/user/count_cus_po/'+this.inputPONum;
+    this._complains.getMethod(apiUrl).subscribe((res:any) => {
       this.spinner.hide();
-      if (res.status == 1 && res.message == 'success') {
+      if (res.status == 1 && res.result == 1) {
         Swal.fire({
-          position: 'top',
-          icon: 'success',
-          text: 'PO Updated',
-          showConfirmButton: false,
-          timer: 1500
+          icon: 'error',
+          title: 'Oops...',
+          text: 'PO Number Already Exist!',
+        })
+        return;
+      } else {
+        this._product.poAttachmentUpl(fileData).subscribe((res:any) => {
+          this.spinner.hide();
+          if (res.status == 1 && res.message == 'success') {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              text: 'PO Updated',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this._router.navigate(['/po-list']);
+          }
+        }, err => {
+          console.log(err);
+          this.spinner.hide();
         })
       }
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
     })
+
   }
 }
