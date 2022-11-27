@@ -75,7 +75,7 @@
                            class="inputValidation">Remarks is required</small>
                      </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer">
+                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer" *ngIf="compInfo?.complain_status != 2">
                      <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
                      <label class="custom-file-label" for="customFile">{{fileName ?
                          fileName:'Upload Attachement'}}</label>
@@ -84,12 +84,13 @@
                    <div class="col-lg-8 col-md-6 col-sm-6" *ngIf="compInfo?.complain_status != 2">
                       <div class="reply_btn_box">
                          <div class="clos-btn">
-                            <div class="form-check">
-                               <input class="form-check-input" type="checkbox" [checked]="closeChat" (change)="closeStatus(compInfo?.complain_id)" value="" id="defaultCheck1">
-                               <label class="form-check-label" for="defaultCheck1">
-                                  Close
-                               </label>
-                            </div>
+                           <div class="form-check">
+                              <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
+                                 type="checkbox" value="" id="defaultCheck1">
+                              <label class="form-check-label" for="defaultCheck1">
+                                 Close
+                              </label>
+                           </div>
                          </div>
                          <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
                                   class="fa fa-reply"></i> Reply</button></div>
@@ -102,7 +103,7 @@
                      <!-- <a [href]="imageUrl" [download]="imageUrl" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please download the supporting document."><i
                         class="fa fa-download"></i></a> &nbsp; -->
                       <button *ngIf="compInfo?.complain_status != 2" (click)="submitReply(compInfo?.complain_id)"class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
-                      <button type="button" class="btn btn-danger" routerLink="/complains-list"><i class="fa fa-arrow-left"></i> Cancel</button>
+                      <button type="button" class="btn btn-danger" routerLink="/complains-list"><i class="fa fa-arrow-left"></i> Back</button>
                    </div>
                 </div>
              </div>

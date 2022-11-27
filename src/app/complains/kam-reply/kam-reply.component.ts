@@ -75,6 +75,7 @@ export class KamReplyComponent implements OnInit {
   
   submitReply(compId:any) {
     const fileData = new FormData();
+    this._spiner.show();
     this.submitt = true;
     if(this.remarkReply == undefined) {
       this._toaster.error('','Remarks is required !');
@@ -85,9 +86,9 @@ export class KamReplyComponent implements OnInit {
     fileData.append('kam_complain_file', this.selectedFile);
 
     this._complains.replyComplains(fileData).subscribe((res:any) => {
+      this._spiner.hide();
       if (res.status != 0) {
         this.complainsReply();
-        this._spiner.hide();
         this.showKamTextArea == false;
         Swal.fire({
           position: 'center',
@@ -103,13 +104,14 @@ export class KamReplyComponent implements OnInit {
       if (this.closeChat == true) {
         let apiUrl = '/user/closed-remarks/' +  compId;
         this._complains.getMethod(apiUrl).subscribe((res:any) => {
-          window.location.reload();
+          this._spiner.hide();
           Swal.fire(
             'Closed!',
             'Discussion has been closed!',
             'success'
           )
         })
+        this._router.navigate(['/complains-list']);
       }
     }, err => {
       console.log(err);

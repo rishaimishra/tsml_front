@@ -704,7 +704,6 @@ export class PoViewComponent implements OnInit {
     fileData.append('cus_po_no', this.inputPONum);
     let apiUrl = '/user/count_cus_po/'+this.inputPONum;
     this._complains.getMethod(apiUrl).subscribe((res:any) => {
-      this.spinner.hide();
       if (res.status == 1 && res.result == 1) {
         Swal.fire({
           icon: 'error',

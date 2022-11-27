@@ -65,21 +65,20 @@ export class ComplainsReplyComponent implements OnInit {
 
   submitReply(compId:any) {
     const fileData = new FormData();
+    this._spiner.show();
     if(this.remarkReply == undefined) {
       this._toaster.error('','Remarks is required !');
       return;
     } else {
-      this._spiner.show();
     this.submitt = true;
-
     fileData.append('complain_id', compId);
     fileData.append('customer_remarks', this.remarkReply);
     fileData.append('cust_complain_file', this.selectedFile);
 
     this._complains.replyComplains(fileData).subscribe((res:any) => {
+      // this._spiner.hide();
       if (res.status != 0) {
         this.complainsReply();
-        this._spiner.hide();
         this.showKamTextArea == false;
         Swal.fire({
           position: 'center',
@@ -89,19 +88,17 @@ export class ComplainsReplyComponent implements OnInit {
           timer: 1500
         });
 
-      } else {
-        this._spiner.hide();
-      };
-
+      }
       if (this.closeChat == true) {
         let apiUrl = '/user/closed-remarks/' +  compId;
         this._complains.getMethod(apiUrl).subscribe((res:any) => {
-          window.location.reload();
+          this._spiner.hide();
           Swal.fire(
             'Closed!',
             'Discussion has been closed!',
             'success'
           )
+          this._router.navigate(['/complains-list']);
         })
       }
     }, err => {
