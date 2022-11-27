@@ -56,6 +56,7 @@ export class ProductDetailsComponent implements OnInit {
   locationRes:any;
   plantValueArray:any  = [];
   deliveryDropList:any;
+  prodcutSize: any = [];
   
   constructor(
     private _route: ActivatedRoute,
@@ -100,6 +101,19 @@ export class ProductDetailsComponent implements OnInit {
     $("#qty_" + cat_id).val(this.totalQty);
 
   };
+  subCatSelect (event:any) {
+    this.spinner.show();
+    let apiUrl = '/sub_cat_details/'+event.target.value;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      this.spinner.hide();
+      if (res.status == 1 && res.message == 'success.') {
+        this.prodcutSize = res.result['sizes'];
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.show();
+    })
+  };
 
   get_product_details(product_id: any, category_id: any) {
     this.spinner.show();
@@ -107,7 +121,6 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getMethod(url).subscribe(
       (res: any) => {
         this.spinner.hide();
-        console.log('hello',res);
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);

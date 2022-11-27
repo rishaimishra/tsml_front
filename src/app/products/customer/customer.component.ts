@@ -451,6 +451,13 @@ export class CustomerComponent implements OnInit {
       // }
       if (userTyp == 'Kam') {
         this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            text: 'Tantetive Date Added successully',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
         
         let qouteReq = {

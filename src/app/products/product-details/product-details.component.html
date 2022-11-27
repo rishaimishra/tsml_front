@@ -67,7 +67,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Grades offered</label>
-                            <select #subCatInput="ngModel" [(ngModel)]="formData.sub_cat_id"
+                            <select #subCatInput="ngModel" (change)="subCatSelect($event)" [(ngModel)]="formData.sub_cat_id"
                             name="subCat_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="" selected>..Select..</option>
                             <option value="{{subCat.id}}" *ngFor="let subCat of subCategory">{{subCat.sub_cat_name}}</option>
@@ -82,7 +82,7 @@
                           <select (change)="sizeOfferd($event)" #offerInput="ngModel" [(ngModel)]="formData.pro_size"
                             name="pro_size_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
-                            <option value="{{proSize}}" *ngFor="let proSize of productData['sizes']">{{proSize}}</option>
+                            <option value="{{proSize}}" *ngFor="let proSize of prodcutSize">{{proSize}}</option>
                             <!-- <option value="10-70">10-70</option>
                             <option value="10-100">10-100</option>
                             <option value="10-150">10-150</option> -->

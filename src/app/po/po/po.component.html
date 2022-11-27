@@ -80,20 +80,15 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Sizes Offered</label>
-                          <select (change)="sizeOfferd($event)" [disabled]="userType" #offerInput="ngModel"
-                            [(ngModel)]="formData.pro_size" name="pro_size_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" required>
-                            <option value="">Select ..</option>
-                            <option value="10-50">10-50</option>
-                            <option value="10-70">10-70</option>
-                            <option value="10-100">10-100</option>
-                            <option value="10-150">10-150</option>
-                          </select>
-                          <small *ngIf="offerInput.invalid && (offerInput.dirty || offerInput.touched || submit)"
-                            class="inputValidation">Offer size is required</small>
+                            <label for="">Sizes Offered</label>
+                            <input #qtyInput="ngModel" disabled type="text"
+                                (change)="getTotalQuantity(i)" [(ngModel)]="formData.pro_size"
+                                name="pro_size_{{ formData.schedule_no }}"
+                                class="form-control form-control-sm" id="" placeholder=""
+                                value="formData.pro_size" />
+                           
                         </div>
-                      </div>
+                    </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity (MT)</label>

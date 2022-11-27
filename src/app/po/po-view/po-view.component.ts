@@ -95,6 +95,7 @@ export class PoViewComponent implements OnInit {
   deliveryDropList:any;
   inputPONum: any = '';
   downloadFile = environment.apiEndpointBase;
+  userRole:any;
 
   constructor(
     private _route: ActivatedRoute,
@@ -112,6 +113,7 @@ export class PoViewComponent implements OnInit {
   ngOnInit(): void {
     this.user_Id = localStorage.getItem('USER_ID');
     let userRol = localStorage.getItem('USER_TYPE');
+    this.userRole = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
     } else {
