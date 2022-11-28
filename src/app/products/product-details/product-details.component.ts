@@ -57,6 +57,8 @@ export class ProductDetailsComponent implements OnInit {
   plantValueArray:any  = [];
   deliveryDropList:any;
   prodcutSize: any = [];
+  removeCatArr:any = [];
+  categori:any = [];
   
   constructor(
     private _route: ActivatedRoute,
@@ -82,9 +84,13 @@ export class ProductDetailsComponent implements OnInit {
     this._route.params.subscribe((res) => {
       this.productId = res.productId;
       this.categoryid = res.categoryId;
+      this.removeCatArr.push(this.categoryid);
+      this.removeCatArr.includes(this.categoryid)
+      this.getCategoriDetails(this.productId, this.categoryid);
       this.get_product_details(res.productId, res.categoryId);
       this.getLocation();
       this.getSubCategory(this.productId, this.categoryid);
+
     });
     this.setFromData();
   };
@@ -171,6 +177,8 @@ export class ProductDetailsComponent implements OnInit {
 
   selectItems(event: any) {
     let categoryId = event.target.value;
+    this.removeCat(categoryId);
+    this.removeCatArr.push(categoryId);
     this.categoryid = event.target.value;
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
@@ -180,7 +188,6 @@ export class ProductDetailsComponent implements OnInit {
         if (res.status == 1) {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
-          console.log('data', this.selectedItem);
           this.show_data = true;
           // const uniqueID = uuid.v4();
           const scheduleNo = Math.floor(1000 + Math.random() * 9000);
@@ -388,12 +395,13 @@ export class ProductDetailsComponent implements OnInit {
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {
         this.locationState = res.result['state'];
-
+        console.log('BBBB',res);
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
+
       }
     })
   };
-  
+
   selectPlant(event:any, schdleNo:any) {
     this.spinner.show();
     let eventValue = event.target.value;
@@ -405,6 +413,10 @@ export class ProductDetailsComponent implements OnInit {
         if (res.status == 1 && res.message == 'success') {
           this.plantAddrr = res.result;
         }
+        // for (let index = 0; index < this.plantAddrr.length; index++) {
+        //   const element = this.plantAddrr[index]['id'];
+        //   console.log('element',element);
+        // }
         if (res.status == 'Token has Expired' || res.status =='Authorization Token not found') {
           this._router.navigate(['/login']);
           this.spinner.hide();
@@ -437,5 +449,29 @@ export class ProductDetailsComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
+  }
+
+  getCategoriDetails (productId:any, catId:any) {
+    let categoryFilter = {
+      product_id: productId
+    }
+    this._product.filterProducts(categoryFilter).subscribe((res: any) => {
+      if (res.success == true) {
+        this.categori = res.getCategory;
+        this.removeCat(catId);
+        this.spinner.hide();
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  }
+
+  removeCat(i:any) {
+    let indx = this.categori.findIndex((item: any) => item.id == i);
+    if (indx !== -1) {
+      this.categori.splice(indx, 1);
+    }
+    console.log('333',this.categori);
   }
 }

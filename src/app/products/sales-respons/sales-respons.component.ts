@@ -329,7 +329,6 @@ export class SalesResponsComponent implements OnInit {
     this.qtStatusUpdate = event.target.value;
   };
 
-    ///////////////////////////////////////////////////////////////////////////////////
     addItem() {
       this.arr = this.myForm.get('arr') as FormArray;
       this.arr.push(this.createItem('',''));
@@ -350,9 +349,6 @@ export class SalesResponsComponent implements OnInit {
         for (let i of res.result) {
           this.arr.push(this.createItem(i.qty,i.to_date));
         }
-  
-        // console.log(this.myForm.get('arr')['controls']);
-        // console.log('myForm: ', this.myForm.value.arr)
   
       });
       this.totlQty = qty;
@@ -378,8 +374,6 @@ export class SalesResponsComponent implements OnInit {
         })
         return;
       }
-
-      
       this.deliverySchdule.push(setSechdule);
       Swal.fire({
         position: 'center',
@@ -390,7 +384,6 @@ export class SalesResponsComponent implements OnInit {
       })
       this.myForm.reset();
     };
-    //////////////////////////////////////////////////////////////////////////////////////////
 
   submitRfq() {
     this.submit = true;
@@ -402,8 +395,9 @@ export class SalesResponsComponent implements OnInit {
       })
       return;
     }
+    console.log(this.qtStatusUpdate);
+
     let userRol = localStorage.getItem('USER_TYPE');
-    let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
 
@@ -440,26 +434,6 @@ export class SalesResponsComponent implements OnInit {
 
     };
 
-    // let qouteSt = this.selectedItem[0]['quotest'];
-    // let userTyp = localStorage.getItem('USER_TYPE');
-    // if (qouteSt != 5 && qouteSt != 6) {
-      // if (userTyp == 'Sales') {
-
-      // }
-      // else if (userTyp == 'Kam') {
-      //   this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-      //     console.log(res);
-      //   })
-        
-      //   let qouteReq = {
-      //     "rfq_no": this.productId,
-      //     "status": 7
-      //   }
-      //   this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-      //     console.log(res);
-      //   })
-      // }
-    // } else {
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
@@ -472,17 +446,6 @@ export class SalesResponsComponent implements OnInit {
         })
         // status update and reqoute
         
-        if (this.statusArr.length > 0) {
-          this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
-            if (res.message == 'status updated') {
-              this.spinner.hide();
-            }
-            else {
-              this._toaster.error(res.message);
-            }
-
-          })
-        }
       }
       else if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -495,45 +458,21 @@ export class SalesResponsComponent implements OnInit {
       }
       
       this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-      })
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-    });
-    if (this.requoteArr.length > 0) {
-      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-        if (res.message == 'status updated') {
-          this.spinner.hide();
-        } else {
-          this._toaster.error(res.message);
-        }
-      })
-    }
+      });
+
       let qouteReq = {
         "rfq_no": this.productId,
         "status": this.qtStatusUpdate
       }
       this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-        console.log(res);
+
       })
-    // if (userRol == 'Kam') {
-    //   let qouteReq = {
-    //     "rfq_no": this.productId,
-    //     "status": 6
-    //   }
-    //   this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-    //     console.log(res);
-    //   })
-    // }
-  // }
 
-    this._router.navigate(['/confirm-rfq']);
-
-    // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-    //   this._router.navigate(['/po',this.productId]);
-    // } else {
-    //   this._router.navigate(['/rfq-list']);
-    // }
+      this._router.navigate(['/confirm-rfq']);
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    });
   };
 
   date: any;

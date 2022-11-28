@@ -25,11 +25,7 @@
             <span>Add item</span>
             <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
               <option value="">--select--</option>
-              <option value="1" *ngIf="productId != 2">Lumps</option>
-              <option value="2" *ngIf="productId != 2">Chips & Fines</option>
-              <!-- <option value="3" *ngIf="productId != 2">Fines</option> -->
-              <option value="4" *ngIf="productId != 1">High</option>
-              <option value="5" *ngIf="productId != 1">Medium</option>
+              <option value="{{cat.id}}" *ngFor="let cat of categori">{{cat.cat_name}}</option>
             </select>
           </div>
           <!-- List start -->
@@ -83,9 +79,6 @@
                             name="pro_size_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="{{proSize}}" *ngFor="let proSize of prodcutSize">{{proSize}}</option>
-                            <!-- <option value="10-70">10-70</option>
-                            <option value="10-100">10-100</option>
-                            <option value="10-150">10-150</option> -->
                           </select>
                           <small *ngIf="offerInput.invalid && (offerInput.dirty || offerInput.touched || submit)"
                             class="inputValidation">Offer size is required</small>

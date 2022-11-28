@@ -454,7 +454,7 @@ export class CustomerComponent implements OnInit {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            text: 'Tantetive Date Added successully',
+            text: 'Tentative Date Added successully',
             showConfirmButton: false,
             timer: 1500
           })
