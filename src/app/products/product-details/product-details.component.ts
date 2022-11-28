@@ -258,14 +258,6 @@ export class ProductDetailsComponent implements OnInit {
       this._state.sendRfqNumer(rfqNumberShow);
     }
 
-    for (let i = 0; i < rfqFormArry.length; i++) {
-      const element = rfqFormArry[i]['quote_schedules'];
-      if (element[i].pro_size == '' || element[i].location == '' || element[i].ship_to == '' ||
-      element[i].quantity == '' || element[i].expected_price == '' || element[i].ship_to == '') 
-      {
-        return;
-      }
-    }
     this.spinner.show();
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();

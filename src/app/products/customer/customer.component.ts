@@ -501,20 +501,20 @@ export class CustomerComponent implements OnInit {
         this._router.navigate(['/login']);
         this.spinner.hide();
       }
-
+      if (this.requoteArr.length > 0) {
+        this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
+          if (res.message == 'status updated') {
+            this.spinner.hide();
+          } else {
+            this._toaster.error(res.message);
+          }
+        })
+      }
     }, err => {
       console.log(err);
       this.spinner.hide();
     });
-    if (this.requoteArr.length > 0) {
-      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-        if (res.message == 'status updated') {
-          this.spinner.hide();
-        } else {
-          this._toaster.error(res.message);
-        }
-      })
-    }
+
     if (userRol == 'Kam') {
       let qouteReq = {
         "rfq_no": this.productId,

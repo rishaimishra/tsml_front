@@ -28,13 +28,13 @@ export class RfqListComponent implements OnInit {
       this.userType = true;
       this.rfqListing();
     }
+
   }
 
 
   rfqListing() {
     this._spinner.show();
     this._products.getAllRequestOfRfq().subscribe((res: any) => {
-      console.log(res);
       if (res.status != 0) {
         this._spinner.hide();
         this.rfqList = res.result;
@@ -48,7 +48,6 @@ export class RfqListComponent implements OnInit {
   rfqKamListing() {
     this._spinner.show();
     this._products.getAllRfqForKam().subscribe((res: any) => {
-      console.log(res);
       if (res.status != 0) {
         this._spinner.hide();
         this.rfqList = res.result;
@@ -69,5 +68,6 @@ export class RfqListComponent implements OnInit {
     else {
       this._router.navigate(['/negotiation',rfqNo]);
     }
-  }
+  };
+
 }

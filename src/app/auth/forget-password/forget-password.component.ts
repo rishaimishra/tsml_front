@@ -76,6 +76,6 @@ export class ForgetPasswordComponent implements OnInit {
           this._spinner.hide();
         
       })
-}}
+}};
 
 }

@@ -1,28 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="keywords" content="" />
-      <meta name="description" content="" />
-      <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-      <!-- <style type="text/css">
-        
-         @media all and (min-width: 992px) {
-         .navbar .nav-item .dropdown-menu{  display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
-         .navbar .nav-item:hover .nav-link{ color: #fff;  }
-         .navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
-         .navbar .dropdown-menu.fade-up{ top:180%;  }
-         .navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
-         }
-      
-         body, html {
-         height: 100%;
-         }
-      </style> -->
-   </head>
    <body>
       <!--/Header-->
       <section class="login-bg">
@@ -42,14 +20,22 @@
                            <div class="col-12">
                               <div>
                                  <label>User ID</label>
-                                 <input formControlName="email" type="text" class="form-control">
+                                 <input formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                                 <!-- <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">User is required</div>
+                                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                  </div> -->
                               </div>
                            </div>
                            <!--/-->
                            <div class="col-12 mt-3">
                               <div>
                                  <label>Password</label>
-                                 <input formControlName="password" type="password" class="form-control">
+                                 <input formControlName="password" type="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                  </div>
                               </div>
                            </div>
                            <!--/-->

@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
+import { CustomValidators } from '../login/custom1Validator';
 
 @Component({
   selector: 'app-login',
@@ -13,21 +14,32 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  submitted: boolean = false;
+
 
   constructor(private _fb: FormBuilder, private _toster: ToastrService,
     private _auth: AuthService, private _router: Router, private _spinner: NgxSpinnerService) {
     this.loginForm = this._fb.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     })
+    CustomValidators.mustMatch('password', 'password_confirm') // insert here
+  }
+
+  get f() {
+    return this.loginForm.controls;
   }
 
   ngOnInit(): void {
   }
 
   submitLogin() {
-    this._spinner.show();
-    if (!this.loginForm.invalid) {
+    this.submitted = true;
+    if (this.loginForm.invalid) { 
+      return;
+    }
+    else {
+      this._spinner.show();
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
         this._spinner.hide();
         if (res.success == true) {
@@ -36,7 +48,6 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('USER_NAME',res.data.user_name);
           localStorage.setItem('USER_ID',res.data.user_id);
           localStorage.setItem('USER_TYPE',res.data.user_type);
-          this._spinner.hide();
           
           if(res.data['user_type'] == 'Kam') {
             this._router.navigate(['/kam-dashboard']);
@@ -69,16 +80,18 @@ export class LoginComponent implements OnInit {
             })
           }
         } else {
-          this._toster.error(res.success.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid Email or Password!',
+          })
+          this._spinner.hide();
         }
+
       }, error => {
         console.log(error);
-        this._toster.error('Invalid Email or Password');
           this._spinner.hide();
       })
-    } else {
-      this._toster.error('Invalid email or password !');
-      return;
     }
   }
 }
