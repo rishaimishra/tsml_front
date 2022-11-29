@@ -18,7 +18,7 @@
                     <!-- List start -->
 
                     <div class="demo" *ngFor="let productData of selectedItem; let i = index">
-                        <div id="accordion" class="accordion accordion--" *ngIf="productData.schedule.length > 0">
+                        <div id="accordion" class="accordion accordion--" *ngIf="isSchduleArr[i] == 3 || isSchduleArr[i] == 0">
                             <div class="card md-0">
                                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
                                     [attr.data-target]="'#collapseOne'+i">
@@ -749,7 +749,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="submitRemarks()">Submit</button>
+                    <button type="button" class="btn btn-primary" (click)="submitRemarks()" data-dismiss="modal">Submit</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
                 </div>
             </div>
@@ -792,7 +792,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" (click)="onSubmit(totlQty)">OK</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

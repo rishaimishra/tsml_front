@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
+import { CustomValidators } from './custom1Validator';
 
 
 @Component({
@@ -97,6 +98,8 @@ export class CustomerComponent implements OnInit {
   plantAddrr:any;
   deliveryDropList:any;
   subCategory:any;
+  submitt: boolean = false;
+  isSchduleArr:any = [];
 
 
   @ViewChild("remarksModel")
@@ -160,8 +163,8 @@ export class CustomerComponent implements OnInit {
 
   createItem(qty,to_date) {
     return this._fb.group({
-      quantity: [qty],
-      to_date: [to_date]
+      quantity: [qty, Validators.required],
+      to_date: [to_date, Validators.required]
     })
   };
 
@@ -180,7 +183,6 @@ export class CustomerComponent implements OnInit {
     $("#qty_" + cat_id).val(this.totalQty);
   };
 
-
   detailByRfq() {
     this.spinner.show();
     let url = '/user/get_quote_by_id' + '/' + this.productId;
@@ -196,6 +198,14 @@ export class CustomerComponent implements OnInit {
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
+
+          form_data_array.forEach(element => {
+            if (element.quote_status == 3) {
+              this.isSchduleArr.push(element.quote_status);
+            } else {
+              this.isSchduleArr.push(0);
+            }
+          });
         }
       }
       if (res.status == 'Token has Expired') {
@@ -255,15 +265,13 @@ export class CustomerComponent implements OnInit {
       "id": event.target.value,
       "status": 'Req'
     };
-    let redirectSt = event.target.value.toString();
+
     let indxId = this.poRedirectArr.findIndex((item: any) => item.id == event.target.value);
     if (indxId !== -1) {
       this.poRedirectArr.splice(indxId, 1);
     }
-
     this.poRedirectArr.push(reqParam);
 
-    console.log('redirectSt',redirectSt, this.poRedirectArr);
     let indx = this.statusArr.findIndex((item: any) => item.id == event.target.value);
     if (indx !== -1) {
       this.statusArr.splice(indx, 1);
@@ -273,22 +281,18 @@ export class CustomerComponent implements OnInit {
     if (checked == true) {
       this.requoteArr.push(event.target.value);
     }
-
   };
 
   getStatus(id: any, st: number) {
-
     let indxId = this.poRedirectArr.findIndex((item: any) => item.id == id);
     if (indxId !== -1) {
       this.poRedirectArr.splice(indxId, 1);
     }
-
     const numbersArr = this.requoteArr.map(Number);
     const index: number = numbersArr.indexOf(id);
     if (index !== -1) {
       this.requoteArr.splice(index, 1);
     }
-
     if (st === 1) {
       let reqStParam = {
         "id": id,
@@ -310,7 +314,6 @@ export class CustomerComponent implements OnInit {
     
     let indx = this.statusArr.findIndex((item: any) => item.id == id);
     if (indx !== -1) {
-
       this.statusArr.splice(indx, 1);
       this.statusArr.push(reqParam);
     }
@@ -346,18 +349,31 @@ export class CustomerComponent implements OnInit {
         for (let i of res.result) {
           this.arr.push(this.createItem(i.qty,i.to_date));
         }
-
-  
       });
       this.totlQty = qty;
       // this.myForm.reset();
     };
+
   onSubmit(totlQty:any) {
+    this.submitt = true;
+    if (this.myForm.invalid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Quantity and Tentative date are required!',
+      })
+      return;
+    }
+    $("#createSechdule").hide();
+    $('body').removeClass('modal-open');
+    $(".modal-backdrop").removeClass("modal-backdrop show");
+
       let schdlData = this.myForm.value['arr'];
       let setSechdule = {
         "sche_no": this.schduleNo,
         "schedules": schdlData
       }
+
       let qty = 0;
       for (let i = 0; i < schdlData.length; i++) {
         qty = qty + parseInt(schdlData[i]['quantity']);
@@ -368,12 +384,14 @@ export class CustomerComponent implements OnInit {
           icon: 'error',
           title: 'Oops...',
           text: 'Total quantity should not exceed the RFQ quantity!',
-          // footer: '<a href="">Why do I have this issue?</a>'
         })
         return;
-      }
 
-      
+      } else {
+        let indx = this.deliverySchdule.findIndex((item: any) => item.sche_no == this.schduleNo);
+        if (indx !== -1) {
+          this.deliverySchdule.splice(indx, 1);
+        }
       this.deliverySchdule.push(setSechdule);
       Swal.fire({
         position: 'center',
@@ -383,6 +401,8 @@ export class CustomerComponent implements OnInit {
         timer: 1500
       })
       this.myForm.reset();
+      }
+
     };
 
   submitRfq() {
@@ -405,20 +425,7 @@ export class CustomerComponent implements OnInit {
           this._toaster.error('','Valid Till is required');
           return;
         }
-        // if ((form_data_array[i]['confirm_date'] == null || form_data_array[i]['confirm_date'] == '') && this.userType == false) {
-        //   this.spinner.hide();
-        //   Swal.fire({
-        //     title: 'Sorry!',
-        //     text: "Tentative date is required",
-        //     icon: 'warning',
-        //     showCancelButton: false,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'OK'
-        //   })
-        //   return;
-        // }
-        // For Tantetive date update
+
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
           "confirm_date": form_data_array[i]['confirm_date'],
@@ -435,20 +442,12 @@ export class CustomerComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-
     };
 
     let qouteSt = this.selectedItem[0]['quotest'];
     let userTyp = localStorage.getItem('USER_TYPE');
     if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
-      // if (userTyp == 'Sales') {
-      //   let qouteReq = {
-      //     "rfq_no": this.productId,
-      //     "status": this.qtStatusUpdate
-      //   }
-      //   this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-      //   })
-      // }
+
       if (userTyp == 'Kam') {
         this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
           Swal.fire({
@@ -479,7 +478,6 @@ export class CustomerComponent implements OnInit {
           timer: 1500
         })
         // status update and reqoute
-        
         if (this.statusArr.length > 0) {
           this._product.rfqStatusData(this.statusArr).subscribe((res: any) => {
             if (res.message == 'status updated') {
@@ -488,7 +486,6 @@ export class CustomerComponent implements OnInit {
             else {
               this._toaster.error(res.message);
             }
-
           })
         }
       }
@@ -527,8 +524,6 @@ export class CustomerComponent implements OnInit {
   }
 
     if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      // const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
-      // let po_id = val;
       this._router.navigate(['/po',this.productId]);
     } else {
       this._router.navigate(['/rfq-list']);

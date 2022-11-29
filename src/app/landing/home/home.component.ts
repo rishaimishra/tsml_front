@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
-    center: true,
+    center: false,
     dots: true,
     autoHeight: true,
     autoWidth: true,
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
         items: 2,
       },
       740: {
-        items: 3,
+        items: 4,
       },
       940: {
         items: 4,

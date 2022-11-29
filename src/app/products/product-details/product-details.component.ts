@@ -52,13 +52,14 @@ export class ProductDetailsComponent implements OnInit {
   plantAddrr:any ;
   showCity:any;
   pickUptype:any;
-  locationState:any;
+  locationState:any = [];
   locationRes:any;
   plantValueArray:any  = [];
   deliveryDropList:any;
   prodcutSize: any = [];
   removeCatArr:any = [];
   categori:any = [];
+  plantSelectArr:any = [];
   
   constructor(
     private _route: ActivatedRoute,
@@ -247,6 +248,7 @@ export class ProductDetailsComponent implements OnInit {
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['form_data'];
+
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
@@ -390,12 +392,17 @@ export class ProductDetailsComponent implements OnInit {
     }
   };
 
-  plantSele(event:any, i:any) {
-    let apiUrl = '/user/get_plant_addr/'+ event.target.value;
+  plantSele(event:any, schdlNo:any) {
+    this.plantSelectArr[schdlNo] = event.target.value;
+    console.log(this.plantSelectArr);
+
+
+    let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
+    let apiUrl = '/user/get_plant_addr/'+ indx.id;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.locationState = res.result['state'];
-        console.log('BBBB',res);
+        this.locationState[schdlNo] = res.result['state'];
+        console.log(this.locationState);
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
 
       }
@@ -403,6 +410,7 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   selectPlant(event:any, schdleNo:any) {
+    this.plantSelectArr[schdleNo] = null;
     this.spinner.show();
     let eventValue = event.target.value;
     $('#pickupTyp_'+schdleNo).val(eventValue);
@@ -413,10 +421,6 @@ export class ProductDetailsComponent implements OnInit {
         if (res.status == 1 && res.message == 'success') {
           this.plantAddrr = res.result;
         }
-        // for (let index = 0; index < this.plantAddrr.length; index++) {
-        //   const element = this.plantAddrr[index]['id'];
-        //   console.log('element',element);
-        // }
         if (res.status == 'Token has Expired' || res.status =='Authorization Token not found') {
           this._router.navigate(['/login']);
           this.spinner.hide();

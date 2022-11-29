@@ -137,10 +137,13 @@
                             <label for="contactChoice3">Port</label>
 
                           </label>
-                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant" (change)="plantSele($event, y)"
+                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
-                            <option value="" selected>Select..</option>
-                            <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
+                            <option selected *ngIf="plantSelectArr[formData.schedule_no] != null; else allPlant">{{plantSelectArr[formData.schedule_no]}}</option>
+                            <ng-template #allPlant>
+                              <option value="" selected>Select..</option>
+                              <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
+                            </ng-template>
                           </select>
                           <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
                             class="inputValidation">Pickup from is required</small>
@@ -151,10 +154,7 @@
                           <label for="">Location</label>
                           <select class="form-control form-control-sm" #location="ngModel"
                             [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
-                            <option value="">Select location</option>
-                            <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
-                            </option>
+                            <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
                           </select>
                           <small *ngIf="location.invalid && (location.dirty || location.touched || submit)"
                             class="inputValidation">Location is required</small>
