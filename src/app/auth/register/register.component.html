@@ -124,7 +124,6 @@
                           <label>GSTN</label>
                           <div class="d-flex2 display-f">
                             <input formControlName="gstin" type="text" class="form-control w-79" />
-
                             <button type="button" class="btn blue-btn" (click)="getGstIn()">
                               Get Details
                             </button>
@@ -141,19 +140,19 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Organization PAN</label>
-                          <input formControlName="org_pan" type="text" class="form-control" />
-                          <div *ngIf="f['org_pan']?.invalid &&(f['org_pan']?.touched || submitted)">
+                          <input formControlName="org_pan" readonly type="text" class="form-control" />
+                          <!-- <div *ngIf="f['org_pan']?.invalid &&(f['org_pan']?.touched || submitted)">
                             <small class="text-danger">
                               PAN is required
                             </small>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                       <!--/-->
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Organization Name</label>
-                          <input formControlName="org_name" [(ngModel)]="orgName" readonly type="text"
+                          <input formControlName="org_name" readonly type="text"
                             class="form-control" />
                         </div>
                       </div>
@@ -161,7 +160,7 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Organization Address</label>
-                          <input formControlName="org_address" [(ngModel)]="orgAddr" readonly type="text"
+                          <input formControlName="org_address" readonly type="text"
                             class="form-control" />
                         </div>
                       </div>
@@ -304,7 +303,7 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>GST Number</label>
-                          <input formControlName="company_gst" [(ngModel)]="gstNumber" type="text"
+                          <input formControlName="company_gst" readonly type="text"
                             class="form-control" />
                           <!-- <div *ngIf="f['company_gst']?.invalid &&(f['company_gst']?.touched || submitted)">
                             <small class="text-danger">
@@ -317,7 +316,7 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>Linked Address</label>
-                          <input formControlName="company_linked_address" [(ngModel)]="linkedAddr" readonly type="text"
+                          <input formControlName="company_linked_address" readonly type="text"
                             class="form-control" />
                         </div>
                       </div>
@@ -325,20 +324,12 @@
                       <div class="col-12 col-lg-6 col-sm-6">
                         <div class="form-group">
                           <label>PAN Number</label>
-                          <input formControlName="company_pan" type="text" class="form-control" />
-                          <div *ngIf="f['company_pan']?.invalid &&(f['company_pan']?.touched || submitted)">
+                          <input formControlName="org_pan" readonly type="text" class="form-control" />
+                          <!-- <div *ngIf="f['company_pan']?.invalid &&(f['company_pan']?.touched || submitted)">
                             <small class="text-danger">
                               Pan is required
                             </small>
-                          </div>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Company Name</label>
-                          <input formControlName="company_name" [(ngModel)]="companyName" readonly type="text"
-                            class="form-control" />
+                          </div> -->
                         </div>
                       </div>
                       <!--/-->
@@ -400,67 +391,44 @@
                            </div>
                            <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
                              <div class="row">
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>First Name</label>
-                                   <input type="text" formControlName="first_name" class="form-control" />
-                                   <div *ngIf="f['first_name']?.invalid &&(f['first_name']?.touched || submitted)">
-                                     <small class="text-danger">
-                                       First Name is required
-                                     </small>
-                                   </div>
-                                 </div>
-                               </div>
-                               <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>Last Name</label>
-                                   <input type="text" formControlName="last_name" class="form-control" />
-                                   <div *ngIf="f['last_name']?.invalid &&(f['last_name']?.touched || submitted)">
-                                     <small class="text-danger">
-                                       Last Name is required
-                                     </small>
-                                   </div>
-                                 </div>
-                               </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>Address Line1</label>
-                                   <input type="text" formControlName="addressone" class="form-control" />
-                                   <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
+                                   <input type="text" formControlName="addressone" readonly class="form-control" />
+                                   <!-- <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
                                      <small class="text-danger">
                                        Address Line is required
                                      </small>
-                                   </div>
+                                   </div> -->
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>Address Line2</label>
-                                   <input type="text" formControlName="addresstwo" class="form-control" />
+                                   <input type="text" formControlName="addresstwo" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>City</label>
-                                   <input type="text" readonly class="form-control" />
+                                   <input type="text" formControlName="city" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>State</label>
-                                   <input type="text" readonly class="form-control" />
+                                   <input type="text" formControlName="state" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>Pincode</label>
-                                   <input type="text" readonly class="form-control" />
+                                   <input type="text" formControlName="pincode" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
@@ -468,6 +436,7 @@
                                <div class="col-12 col-lg-6 col-sm-6"></div>
                                <div class="col-12 col-lg-6 col-sm-6 text-right2">
                                  <div class="form-group">
+                                  <!-- Add new For Billing address -->
                                    <a href="#newAddressBlock2" data-toggle="collapse" class="collapsed"
                                      aria-expanded="false"><i class="fa fa-plus-circle"></i> Add
                                      New Address</a>
@@ -489,50 +458,44 @@
                                      </div>
                                      <div class="col-12 col-lg-6 col-sm-6">
                                        <div class="form-group">
-                                         <label>First Name</label>
-                                         <input type="text" class="form-control" />
+                                         <label>Company Name</label>
+                                         <input type="text" readonly class="form-control" />
                                        </div>
                                      </div>
-                                     <!--/-->
-                                     <div class="col-12 col-lg-6 col-sm-6">
-                                       <div class="form-group">
-                                         <label>Last Name</label>
-                                         <input type="text" class="form-control" />
-                                       </div>
-                                     </div>
+
                                      <!--/-->
                                      <div class="col-12 col-lg-6 col-sm-6">
                                        <div class="form-group">
                                          <label>Address Line1</label>
-                                         <input type="text" class="form-control" />
+                                         <input type="text" readonly class="form-control" />
                                        </div>
                                      </div>
                                      <!--/-->
                                      <div class="col-12 col-lg-6 col-sm-6">
                                        <div class="form-group">
                                          <label>Address Line2</label>
-                                         <input type="text" class="form-control" />
+                                         <input type="text" readonly class="form-control" />
                                        </div>
                                      </div>
                                      <!--/-->
                                      <div class="col-12 col-lg-6 col-sm-6">
                                        <div class="form-group">
                                          <label>City</label>
-                                         <input type="text" class="form-control" />
+                                         <input type="text" readonly class="form-control" />
                                        </div>
                                      </div>
                                      <!--/-->
                                      <div class="col-12 col-lg-6 col-sm-6">
                                        <div class="form-group">
                                          <label>State</label>
-                                         <input type="text" class="form-control" />
+                                         <input type="text" readonly class="form-control" />
                                        </div>
                                      </div>
                                      <!--/-->
                                      <div class="col-12 col-lg-6 col-sm-6">
                                        <div class="form-group">
                                          <label>Pincode</label>
-                                         <input type="text" class="form-control" />
+                                         <input type="text" readonly class="form-control" />
                                        </div>
                                      </div>
                                      <!--/-->
@@ -549,34 +512,11 @@
                             </div>
                             <div id="collapseOne" class="card-body collapse show" data-parent="#accordion">
                               <div class="row">
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>First Name</label>
-                                    <input formControlName="first_name" type="text" class="form-control" />
-                                    <div *ngIf="f['first_name']?.invalid &&(f['first_name']?.touched || submitted)">
-                                      <small class="text-danger">
-                                        First name is required
-                                      </small>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input formControlName="last_name" type="text" class="form-control" />
-                                    <div *ngIf="f['last_name']?.invalid &&(f['last_name']?.touched || submitted)">
-                                      <small class="text-danger">
-                                        Last name is required
-                                      </small>
-                                    </div>
-                                  </div>
-                                </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line1</label>
-                                    <input formControlName="addressone" readonly [(ngModel)]="addressLine1" type="text"
+                                    <input formControlName="addressone" readonly  type="text"
                                       class="form-control" />
                                   </div>
                                 </div>
@@ -584,14 +524,14 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line2</label>
-                                    <input type="text" readonly [(ngModel)]="addressLine2" formControlName="addresstwo"
+                                    <input type="text" readonly formControlName="addresstwo"
                                       class="form-control" />
                                   </div>
                                 </div>
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>State</label>
-                                    <input type="text" formControlName="state" [(ngModel)]="stateSelect"
+                                    <input type="text" formControlName="state"
                                       class="form-control" readonly>
                                   </div>
                                 </div>
@@ -599,7 +539,7 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>City</label>
-                                    <input type="text" formControlName="city" [(ngModel)]="citySelect"
+                                    <input type="text" formControlName="city" 
                                       class="form-control" readonly>
                                   </div>
                                 </div>
@@ -607,7 +547,7 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Pincode</label>
-                                    <input type="text" readonly formControlName="pincode" [(ngModel)]="pincodeSelect"
+                                    <input type="text" readonly formControlName="pincode" 
                                       class="form-control" />
                                   </div>
                                 </div>
@@ -647,24 +587,18 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <div class="col-12 col-lg-6 col-sm-6">
-                                        <div class="form-group">
-                                          <label>First Name</label>
-                                          <input type="text" formControlName="" class="form-control" />
-                                        </div>
-                                      </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
-                                          <label>Last Name</label>
-                                          <input type="text" formControlName="" class="form-control" />
+                                          <label>Company Name</label>
+                                          <input type="text" readonly class="form-control" />
                                         </div>
                                       </div>
                                       <!--/-->
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Address Line1</label>
-                                          <input type="text" formControlName="" [(ngModel)]="addrrLine1" readonly
+                                          <input type="text"  readonly
                                             class="form-control" />
                                         </div>
                                       </div>
@@ -672,7 +606,7 @@
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Address Line2</label>
-                                          <input type="text" formControlName="" [(ngModel)]="addrrLine2" readonly
+                                          <input type="text" readonly
                                             class="form-control" />
                                         </div>
                                       </div>
@@ -680,7 +614,7 @@
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>City</label>
-                                          <input type="text" formControlName="" [(ngModel)]="billCitySelect" readonly
+                                          <input type="text" readonly
                                             class="form-control" />
                                         </div>
                                       </div>
@@ -688,7 +622,7 @@
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>State</label>
-                                          <input type="text" formControlName="" [(ngModel)]="billStateSelect" readonly
+                                          <input type="text" readonly
                                             class="form-control" />
                                         </div>
                                       </div>
@@ -696,7 +630,7 @@
                                       <div class="col-12 col-lg-6 col-sm-6">
                                         <div class="form-group">
                                           <label>Pincode</label>
-                                          <input type="text" formControlName="" [(ngModel)]="billPincodeSelect" readonly
+                                          <input type="text" readonly
                                             class="form-control" />
                                         </div>
                                       </div>

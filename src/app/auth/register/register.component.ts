@@ -298,7 +298,6 @@ export class RegisterComponent implements OnInit {
         } else {
           this.chooseProduct.splice(selectedName.name, 1);
         }
-        console.log(this.chooseProduct);
         return selectedName;
       }
       return selectedName;
@@ -658,27 +657,26 @@ export class RegisterComponent implements OnInit {
 
   };
   getGstIn() {
-    this._spinner.show();
+    // this._spinner.show();
     let gstin = this.registerForm.value.gstin;
-    console.log(gstin);
-    let apiKey = '136c3da3b6f6b3af36388cc975b7aca0';
-    let url = apiKey + '/' + gstin;
-    if (gstin) {
-      this.productService.getGstin(url).subscribe((res: any) => {
-        if (res.flag == true) {
+    let  apiUrl =  '/gst-details/' + gstin;
+    this._auth.gstApi().subscribe((res: any) => {
+      this._spinner.hide();
+        console.log(res);
           this._spinner.hide();
           this.toastr.success(res.message);
-          this.orgAddr = res.data.pradr.adr;
-          this.orgName = res.data.ctb;
-          this.gstNumber = res.data.gstin;
-          this.linkedAddr = res.data.stj;
-          this.companyName = res.data.tradeNam;
-          this.stateSelect = res.data.pradr.addr.stcd;
-          this.citySelect = res.data.pradr.addr.dst;
-          this.pincodeSelect = res.data.pradr.addr.pncd;
-          this.addressLine1 = res.data.pradr.adr;
-          this.addressLine2 = res.data.stj;
-        }
+          const withoutFirstAndLast = res.result.gstin.slice(2, -3);
+          this.registerForm.get("state").setValue(res.result.pradr.addr.stcd);
+          this.registerForm.get("city").setValue(res.result.pradr.addr.dst);
+          this.registerForm.get("pincode").setValue(res.result.pradr.addr.pncd);
+          this.registerForm.get("addressone").setValue(res.result.pradr.addr.bnm);
+          this.registerForm.get("addresstwo").setValue(res.result.pradr.addr.st);
+          this.registerForm.get("company_gst").setValue(res.result.gstin);
+          this.registerForm.get("company_linked_address").setValue(res.result.stj);
+          this.registerForm.get("org_address").setValue(res.result.pradr.addr.stcd);
+          this.registerForm.get("org_name").setValue(res.result.lgnm);
+          this.registerForm.get("org_pan").setValue(withoutFirstAndLast);
+
         if (res.flag == false) {
           this._spinner.hide();
           this.toastr.error(res.message);
@@ -687,7 +685,7 @@ export class RegisterComponent implements OnInit {
         console.log(err);
         this._spinner.hide();
       })
-    }
+    
   };
 
   gstinDetails() {

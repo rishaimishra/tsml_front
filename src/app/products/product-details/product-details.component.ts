@@ -394,8 +394,6 @@ export class ProductDetailsComponent implements OnInit {
 
   plantSele(event:any, schdlNo:any) {
     this.plantSelectArr[schdlNo] = event.target.value;
-    console.log(this.plantSelectArr);
-
 
     let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
     let apiUrl = '/user/get_plant_addr/'+ indx.id;

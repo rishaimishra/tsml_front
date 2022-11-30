@@ -100,6 +100,9 @@ export class CustomerComponent implements OnInit {
   subCategory:any;
   submitt: boolean = false;
   isSchduleArr:any = [];
+  locationState:any = [];
+  locationRes:any;
+  plantSelectArr:any = [];
 
 
   @ViewChild("remarksModel")
@@ -588,7 +591,7 @@ export class CustomerComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
 
@@ -604,7 +607,8 @@ export class CustomerComponent implements OnInit {
       "destation_location": shipTo,
       "pro_id": prodId,
       "cat_id": catid,
-      "size": size
+      "size": size,
+      "sub_cat_id": subCatId
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       this.productPrice = res.result;
@@ -747,8 +751,28 @@ export class CustomerComponent implements OnInit {
       })
     }
   };
+  plantSele(event:any, schdlNo:any) {
+    this.spinner.show();
+    this.plantSelectArr[schdlNo] = event.target.value;
+
+    let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
+    let apiUrl = '/user/get_plant_addr/'+ indx.id;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      this.spinner.hide();
+      if (res.status == 1 && res.message == 'success') {
+        this.locationState[schdlNo] = res.result['state'];
+        console.log(this.locationState);
+        this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
+
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide()
+    })
+  };
 
   selectPlant(event:any, schdleNo:any) {
+    this.plantSelectArr[schdleNo] = null;
     this.spinner.show();
     let eventValue = event.target.value;
     $('#pickupTyp_'+schdleNo).val(eventValue);

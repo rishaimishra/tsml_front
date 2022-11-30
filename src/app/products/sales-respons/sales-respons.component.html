@@ -107,7 +107,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Quantity (MT)</label>
-                                                    <input #qtyInput="ngModel" [disabled]="userType" type="number"
+                                                    <input #qtyInput="ngModel" type="number"
                                                         (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
                                                         name="quantity_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" id="" placeholder=""
@@ -166,7 +166,7 @@
                                                     <label for="contactChoice3">Port</label>
                                                 </label>
                                                     <select [disabled]="userByrole == 'C'" #pickUpfrom="ngModel"
-                                                        [(ngModel)]="formData.plant"
+                                                        [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
                                                         name="plant_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
                                                         <option value="{{formData.plant}}" selected>{{formData.plant}}</option>
@@ -185,10 +185,11 @@
                                                     <select class="form-control form-control-sm"
                                                         #location="ngModel" [(ngModel)]="formData.location"
                                                         name="location_{{ formData.schedule_no }}" required>
-                                                        <option value="">Select location</option>
-                                                        <option *ngFor="let state of states" value="{{ state?.name }}">
-                                                            {{ state?.name }}
-                                                        </option>
+                                                        <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
+                                                                <ng-template #newLocation>
+                                                                <option value="">--Select--</option>
+                                                                <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
+                                                                </ng-template>
                                                     </select>
                                                     <small
                                                         *ngIf="location.invalid && (location.dirty || location.touched || submit)"

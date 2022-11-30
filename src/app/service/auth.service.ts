@@ -47,4 +47,8 @@ export class AuthService {
   resetPassByEmail(data: any) {
     return this._http.post(this.BesUrl + '/password-update', data);
   };
+
+  gstApi() {
+    return this._http.get(this.BesUrl + '/gst_details_dummy');
+  };
 }
