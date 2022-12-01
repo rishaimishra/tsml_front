@@ -18,23 +18,36 @@
     <section>
       <div class="container">
         <div class="prod-list-detl">
-          <div class="sec-pro-cat" *ngIf="showButtons > 0">
-            <span>Add item</span>
-            <select [disabled]="userType" (change)="selectItems($event)"
-              class="form-control form-control-sm pointerTab">
-              <option value="">--select--</option>
-              <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
-            </select>
-            
+          <div class="gd-po">
+            <div class="sec-pro-cat" *ngIf="showButtons > 0">
+              <span>Add item</span>
+              <select [disabled]="userType" (change)="selectItems($event)"
+                class="form-control form-control-sm pointerTab">
+                <option value="">--select--</option>
+                <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
+              </select>
+            </div>
+
+            <div class="download-letterhead-PO-btn">
+              <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip"
+            data-placement="top" title="Please download the letterhead document."><i class="fa fa-download"></i>
+            Download Letterhead PO</a>
+
+            <a [href]="leaterheadFile" *ngIf="userType" target="_blank" class="leftClass" data-toggle="tooltip"
+            data-placement="top" title="Please download the letterhead document."><i class="fa fa-download"></i>
+            Download PO</a>
+            </div>
           </div>
-          <a [href]="downloadFile+'/download-po-pdf/'+poInfo?.po_no" target="_blank"><i class="fa fa-cloud-download" aria-hidden="true"></i> Generate-Po</a>
+
+          <a [href]="downloadFile+'/download-po-pdf/'+poInfo?.po_no" target="_blank"><i class="fa fa-cloud-download"
+              aria-hidden="true"></i> Generate-Po</a>
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
             <div id="accordion" class="accordion accordion--">
               <div class="card md-0">
                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
-                [attr.data-target]="'#collapseOne'+i">
+                  [attr.data-target]="'#collapseOne'+i">
                   <!-- <button type="button" class="btn btn-link" data-toggle="collapse"
                     [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
@@ -60,7 +73,7 @@
                   <div class="acc-pro-del pointerTab">
                     <button class="del-btn btn-danger" [disabled]="userType"
                       (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip" data-placement="top"
-                      title="Delete"><i  class="fa fa-times"></i></button>
+                      title="Delete"><i class="fa fa-times"></i></button>
                   </div>
                 </div>
                 <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
@@ -69,28 +82,22 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Grades offered</label>
-                          <input type="hidden"
-                                    [(ngModel)]="formData.sub_cat_id"
-                                    name="saubCat_{{ formData.schedule_no }}"
-                                    class="form-control form-control-sm" id=""
-                                    value="{{formData.sub_cat_name}}" />
-                        <input type="text" readonly
-                                    name="saubCat_{{ formData.schedule_no }}"
-                                    class="form-control form-control-sm" id=""
-                                    value="{{formData.sub_cat_name}}" />
+                          <input type="hidden" [(ngModel)]="formData.sub_cat_id"
+                            name="saubCat_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
+                            value="{{formData.sub_cat_name}}" />
+                          <input type="text" readonly name="saubCat_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" id="" value="{{formData.sub_cat_name}}" />
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                            <label for="">Sizes Offered</label>
-                            <input #qtyInput="ngModel" disabled type="text"
-                                (change)="getTotalQuantity(i)" [(ngModel)]="formData.pro_size"
-                                name="pro_size_{{ formData.schedule_no }}"
-                                class="form-control form-control-sm" id="" placeholder=""
-                                value="formData.pro_size" />
-                           
+                          <label for="">Sizes Offered</label>
+                          <input #qtyInput="ngModel" disabled type="text" (change)="getTotalQuantity(i)"
+                            [(ngModel)]="formData.pro_size" name="pro_size_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" id="" placeholder="" value="formData.pro_size" />
+
                         </div>
-                    </div>
+                      </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity (MT)</label>
@@ -122,7 +129,8 @@
                           <select #dlvrMethodInput="ngModel" [disabled]="userType" [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
-                            <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
+                            <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}
+                            </option>
 
                             <!-- <option value="Delivery At Premises">Delivery At Premises</option>
                             <option value="Ex-Works">Ex-Works</option> -->
@@ -134,15 +142,13 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                            <label for="">Pickup From</label>
-                            <input #qtyInput="ngModel" disabled type="text"
-                                [(ngModel)]="formData.plant"
-                                name="plant_{{ formData.schedule_no }}"
-                                class="form-control form-control-sm" id="" placeholder=""
-                                value="formData.pro_size" />
-                           
+                          <label for="">Pickup From</label>
+                          <input #qtyInput="ngModel" disabled type="text" [(ngModel)]="formData.plant"
+                            name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
+                            placeholder="" value="formData.pro_size" />
+
                         </div>
-                    </div>
+                      </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Location</label>
@@ -222,7 +228,7 @@
                             price
                             <!-- <span class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
                                 class="fa fa-info-circle"></i></span> -->
-                            </label>
+                          </label>
                           <div class="pri-box">
                             <span>₹</span>
                             <input type="text" disabled [(ngModel)]="formData.kam_price"
@@ -285,38 +291,57 @@
           </div>
         </div>
         <div class="text-right pb-5" *ngIf="showButtons > 0">
-          <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip" data-placement="top" title="Please download the letterhead document."><i
-            class="fa fa-download"></i> Download Letterhead PO</a> &nbsp;
-          <a [href]="leaterheadFile" *ngIf="userType" target="_blank" class="leftClass" data-toggle="tooltip" data-placement="top" title="Please download the letterhead document."><i
-              class="fa fa-download"></i> Download PO</a> &nbsp;
+          <!-- <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip"
+            data-placement="top" title="Please download the letterhead document."><i class="fa fa-download"></i>
+            Download Letterhead PO</a> &nbsp; -->
+          <!-- <a [href]="leaterheadFile" *ngIf="userType" target="_blank" class="leftClass" data-toggle="tooltip"
+            data-placement="top" title="Please download the letterhead document."><i class="fa fa-download"></i>
+            Download PO</a> &nbsp; -->
 
-            <div (change)="selectRadio($event)" *ngIf="userType && poStatus != 1 && amndNomber != null">
+          <div (change)="selectRadio($event)" *ngIf="userType && poStatus != 1 && amndNomber != null">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" value="1" name="flexRadioDefault" id="flexRadioDefault1"/>
+              <input class="form-check-input" type="radio" value="1" name="flexRadioDefault" id="flexRadioDefault1" />
               <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
             </div>
-            
+
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" value="3" name="flexRadioDefault" id="flexRadioDefault2"/>
+              <input class="form-check-input" type="radio" value="3" name="flexRadioDefault" id="flexRadioDefault2" />
               <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
             </div>
           </div>
-          <div class="col-md-6 col-lg-3 mt-3" *ngIf="userType == false && selectedItem[0].cus_po_no == null">
-            <!-- <label class="form-check-label">Please Upload PO Attachment !</label> -->
-            <input type="text" class="form-control" [(ngModel)]="inputPONum" id="exampleInputEmail1"  placeholder="Enter PO number">
-            <div class="form_box_area mt-2">
-              <input type="file" accept=".jpg,.jpeg,.pdf" class="form-control-file"
-                id="" (change)="selectFile($event)">
-              </div>
-              <small class="redText" *ngIf="letterHeadFile">Maximum file size:5MB (PDF, PNG, JPG)</small>
-              <button class="btn btn-primary btn-sm float-left" (click)="submitPoAttachment()">Submit</button>
-            </div>
 
-          <button type="button" (click)="raiseComplain(poInfo?.po_no,poInfo?.po_date)" *ngIf="userType" class="btn btn-primary">Raise Complaint</button>&nbsp;
-          <button type="button" (click)="viewComplain(poInfo?.po_no)" *ngIf="!userType" class="btn btn-primary">View Complaint</button>&nbsp;
-          <button type="button" *ngIf="userType && poStatus != 1  && amndNomber != null" (click)="submitStatus()" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+
+          <div class="po-frm" *ngIf="userType == false && selectedItem[0].cus_po_no == null">
+            <div class="row">
+              <div class="col-lg-3">
+                <label>PO Number</label>
+                <input type="text" class="form-control" [(ngModel)]="inputPONum" id="exampleInputEmail1"
+                  placeholder="Enter PO number">
+              </div>
+              <div class="col-lg-3">
+                <label>PO Number</label>
+                <div class="form_box_area">
+                  <input type="file" accept=".jpg,.jpeg,.pdf" class="form-control-file" id=""
+                    (change)="selectFile($event)">
+                </div>
+                <small class="redText" *ngIf="letterHeadFile">Maximum file size:5MB (PDF, PNG, JPG)</small>
+              </div>
+              <div class="col-lg-6">
+                <button class="btn btn-primary btn-sm float-left" (click)="submitPoAttachment()">Submit</button>
+              </div>
+            </div>
+          </div>
+
+
+          <button type="button" (click)="raiseComplain(poInfo?.po_no,poInfo?.po_date)" *ngIf="userType"
+            class="btn btn-primary">Raise Complaint</button>&nbsp;
+          <button type="button" (click)="viewComplain(poInfo?.po_no)" *ngIf="!userType" class="btn btn-primary">View
+            Complaint</button>&nbsp;
+          <button type="button" *ngIf="userType && poStatus != 1  && amndNomber != null" (click)="submitStatus()"
+            class="btn btn-primary"><i class="fa fa-paper-plane"></i>
             Submit</button> &nbsp;
-          <button type="button" [routerLink]="['/po-list']" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
+          <button type="button" [routerLink]="['/po-list']" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
+            Back</button>
         </div>
       </div>
     </section>
@@ -521,32 +546,32 @@
         <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
           <div *ngFor="let remark of messages">
             <ol class="chat">
-               <li class="other" *ngIf="remark?.remarks != null && userRole != 'Sales'">
-                  <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
-                  <div class="msg">
-                     <p>Customer Remarks!</p>
-                     <p>{{remark.remarks}}</p>
-                     <time>{{remark.created_at | date}}</time>
-                  </div>
-               </li>
-               <li class="other" *ngIf="remark?.salesRemarks != null && userRole != 'C'">
+              <li class="other" *ngIf="remark?.remarks != null && userRole != 'Sales'">
                 <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
                 <div class="msg">
-                   <p>Sales Remarks!</p>
-                   <p>{{remark.salesRemarks}}</p>
-                   <time>{{remark.created_at | date}}</time>
+                  <p>Customer Remarks!</p>
+                  <p>{{remark.remarks}}</p>
+                  <time>{{remark.created_at | date}}</time>
                 </div>
-             </li>
-               <li class="self" *ngIf="remark?.kamsRemarks != null">
-                  <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
-                  <div class="msg">
-                     <p>Kam's Remarks!</p>
-                     <p>{{remark.kamsRemarks}}</p>
-                     <time>{{remark.created_at | date}}</time>
-                  </div>
-               </li>
+              </li>
+              <li class="other" *ngIf="remark?.salesRemarks != null && userRole != 'C'">
+                <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false" /></div>
+                <div class="msg">
+                  <p>Sales Remarks!</p>
+                  <p>{{remark.salesRemarks}}</p>
+                  <time>{{remark.created_at | date}}</time>
+                </div>
+              </li>
+              <li class="self" *ngIf="remark?.kamsRemarks != null">
+                <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
+                <div class="msg">
+                  <p>Kam's Remarks!</p>
+                  <p>{{remark.kamsRemarks}}</p>
+                  <time>{{remark.created_at | date}}</time>
+                </div>
+              </li>
             </ol>
-        </div>
+          </div>
 
         </div>
         <!--/-->

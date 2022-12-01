@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -7,12 +7,19 @@ import { ComplainsService } from 'src/app/service/complains.service';
 import Swal from 'sweetalert2';
 import {environment} from 'src/environments/environment'
 
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import htmlToPdfmake from 'html-to-pdfmake';
+
 @Component({
   selector: 'app-kam-reply',
   templateUrl: './kam-reply.component.html',
   styleUrls: ['./kam-reply.component.scss']
 })
 export class KamReplyComponent implements OnInit {
+  @ViewChild('pdfTable') pdfTable: ElementRef;
 
   compId:any;
   compInfo:any;
@@ -119,4 +126,13 @@ export class KamReplyComponent implements OnInit {
     })
   };
 
+   downloadAsPDF() {
+    const doc = new jsPDF();
+    const pdfTable = this.pdfTable.nativeElement;
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    const documentDefinition = { content: html };
+    pdfMake.createPdf(documentDefinition).open(); 
+  }
 }
+
+

@@ -5,6 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { ComplainsService } from 'src/app/service/complains.service';
 import Swal from 'sweetalert2';
 
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import htmlToPdfmake from 'html-to-pdfmake';
+
 @Component({
   selector: 'app-complains-reply',
   templateUrl: './complains-reply.component.html',

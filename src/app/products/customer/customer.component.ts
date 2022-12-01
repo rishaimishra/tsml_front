@@ -451,27 +451,7 @@ export class CustomerComponent implements OnInit {
 
     let qouteSt = this.selectedItem[0]['quotest'];
     let userTyp = localStorage.getItem('USER_TYPE');
-    if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
 
-      if (userTyp == 'Kam') {
-        this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'Tentative Date Added successully',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-        
-        let qouteReq = {
-          "rfq_no": this.productId,
-          "status": 7
-        }
-        this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-        })
-      }
-    } else {
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
@@ -512,6 +492,26 @@ export class CustomerComponent implements OnInit {
           }
         })
       }
+      if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
+        if (userTyp == 'Kam') {
+          this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              text: 'Tentative Date Added successully',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+          
+          let qouteReq = {
+            "rfq_no": this.productId,
+            "status": 7
+          }
+          this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+          })
+        }
+      } 
     }, err => {
       console.log(err);
       this.spinner.hide();
@@ -526,7 +526,7 @@ export class CustomerComponent implements OnInit {
         console.log(res);
       })
     }
-  }
+  
 
     if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
       this._router.navigate(['/po',this.productId]);

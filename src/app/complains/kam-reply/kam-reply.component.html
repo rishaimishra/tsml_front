@@ -1,11 +1,12 @@
 <body>
     <!-- Header -->
     <app-header></app-header>
-    <div class="page-content">
+    <div class="page-content" id="pdfTable" #pdfTable>
        <section class="prof-head">
           <div class="container">
              <h2>Customer Complaints</h2>
           </div>
+          
        </section>
        <section class="prof-form">
           <div class="container">
@@ -27,7 +28,11 @@
                          </select>
                       </div>
                    </div>
-
+                   <div class="col-lg-4 col-md-6 col-sm-4 mt-3">
+                     <div class="form-group">
+                     <button class="btn btn-primary" (click)="downloadAsPDF()">Export To PDF</button>
+                     </div>
+                   </div>
                    <div class="col-12">
                      <hr style="border: 1px solid;">
                   </div>
