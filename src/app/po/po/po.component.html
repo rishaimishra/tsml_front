@@ -218,7 +218,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for=""
-                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
+                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id, i, y)">Tsml's
                             price
                             <span *ngIf="!userType" class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
                                 class="fa fa-info-circle"></i></span></label>
@@ -414,7 +414,7 @@
                 <tr>
                   <td>Credit Cost For</td>
                   <td>
-                    <select (change)="selectDay($event)"
+                    <select (change)="selectDay($event, productPrice?.price_premium_sing)"
                       class="form-control form-control-sm form-control form-control-sm-sm wid-150">
                       <option value="0" selected>0 Days</option>
                       <option value="30">30 Days</option>

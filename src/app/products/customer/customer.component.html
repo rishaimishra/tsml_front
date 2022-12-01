@@ -284,17 +284,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-lg-3" *ngIf="!userType || userByrole == 'Sales'">
-                                                <div class="form-group">
-                                                    <label for="">Tentative delivery date</label>
-                                                    <div class="">
-                                                        <input type="date" [disabled]="userType"
-                                                        [(ngModel)]="formData.confirm_date"
-                                                            class="form-control form-control-sm kamClass"
-                                                            id="confirm_date{{formData.schedule_no}}" placeholder="0">
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                                
                                                 <div class="col-lg-3">
                                                     <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                         <label for=""
@@ -320,10 +310,8 @@
                                                                 [disabled]="userType || qoutestId == 0 || qoutestId == 2"
                                                                 #validTill="ngModel" [(ngModel)]="formData.valid_till"
                                                                 class="form-control form-control-sm datepicker"
-                                                                required>
-                                                            <!-- <small
-                                                            *ngIf="formData.kam_price > 0 "
-                                                            class="inputValidation">Valid Till is required</small> -->
+                                                                >
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -331,10 +319,6 @@
                                                     <div class="form-group">
                                                         <label for="">Tentative delivery date</label>
                                                         <div class="">
-                                                            <!-- <input type="date" [disabled]="userType"
-                                                        [(ngModel)]="formData.confirm_date"
-                                                            class="form-control form-control-sm kamClass"
-                                                            id="confirm_date{{formData.schedule_no}}" placeholder="0"> -->
                                                             <span type="button" class="badge badge-primary mt-0"
                                                                 data-toggle="modal" data-target="#createSechdule"
                                                                 (click)="schduleSele(formData.schedule_no, formData.quantity)">
@@ -637,7 +621,7 @@
                                     <td><input type="number" formControlName="cam_discount"
                                             [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_discount{{schldId}}" placeholder="">
+                                            id="_discount{{schldId}}">
                                         <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
                                             than
                                             {{productPrice?.cam_discount}}</small>
@@ -674,7 +658,7 @@
                                 <tr>
                                     <td>Credit Cost For</td>
                                     <td>
-                                        <select (change)="selectDay($event)"
+                                        <select (change)="selectDay($event, productPrice?.price_premium_sing)"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150">
                                             <option value="0" selected>0 Days</option>
                                             <option value="30">30 Days</option>

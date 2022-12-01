@@ -9,7 +9,7 @@ import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 import * as uuid from 'uuid';
 declare var $: any;
-import {environment} from 'src/environments/environment'
+import { environment } from 'src/environments/environment'
 
 
 @Component({
@@ -87,15 +87,18 @@ export class PoViewComponent implements OnInit {
   letterHead: any;
   letterHeadFile: boolean = false;
   letterHedFile: any;
-  poInfo:any;
-  leaterheadFile:any;
-  radioValue:any;
-  poStatus:any;
-  amndNomber:any;
-  deliveryDropList:any;
+  poInfo: any;
+  leaterheadFile: any;
+  radioValue: any;
+  poStatus: any;
+  amndNomber: any;
+  deliveryDropList: any;
   inputPONum: any = '';
   downloadFile = environment.apiEndpointBase;
-  userRole:any;
+  userRole: any;
+  afterPrePrice: any;
+  userAfterPrePrice: any;
+  percentPrice:any;
 
   constructor(
     private _route: ActivatedRoute,
@@ -114,7 +117,7 @@ export class PoViewComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     let userRol = localStorage.getItem('USER_TYPE');
     this.userRole = localStorage.getItem('USER_TYPE');
-    if(userRol == 'Kam') {
+    if (userRol == 'Kam') {
       this.userType = false;
     } else {
       this.userType = true;
@@ -342,17 +345,17 @@ export class PoViewComponent implements OnInit {
     this.submit = true;
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
-    
+
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
-         let reqParam = {
-            "id": form_data_array[i]['schedule_no'],
-            "status": 1
-          };
-          poStatusArr.push(reqParam);
+        let reqParam = {
+          "id": form_data_array[i]['schedule_no'],
+          "status": 1
+        };
+        poStatusArr.push(reqParam);
       }
 
       let reqData = {
@@ -366,7 +369,7 @@ export class PoViewComponent implements OnInit {
       rfqFormArry.push(reqData);
       // console.log('rfqFormArry=', form_data_array);
     }
-      this.spinner.show();
+    this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
@@ -389,7 +392,7 @@ export class PoViewComponent implements OnInit {
 
         this.spinner.hide();
       }
-      
+
     }, err => {
       console.log(err);
       this.spinner.hide();
@@ -426,14 +429,12 @@ export class PoViewComponent implements OnInit {
   };
   final_form_data() {
     this.quotation_value = [];
-    // console.log('this.selectedItem final fn=', this.selectedItem);
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data = this.selectedItem[i]['schedule'];
 
       for (let k = 0; k < form_data.length; k++) {
         this.quotation_value.push(form_data[k]);
       }
-      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
     }
     console.log('this.quotation_value=', this.quotation_value);
   };
@@ -483,20 +484,7 @@ export class PoViewComponent implements OnInit {
 
   };
 
-  selectDay(event: any) {
-    this.days = event.target.value;
-    const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
-    const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
-    const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-    this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-    if (this.days == 0) {
-      this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
-    } else {
-      this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
-    }
-  };
-
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
 
@@ -512,24 +500,77 @@ export class PoViewComponent implements OnInit {
       "destation_location": shipTo,
       "pro_id": prodId,
       "cat_id": catid,
+      "sub_cat_id": subCatId,
       "size": size
     }
 
     this._product.priceCalculation(price).subscribe((res: any) => {
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/login']);
+      }
       this.productPrice = res.result;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) +
-        Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+        Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
 
+      if (this.productPrice['price_premium_sing'] == '-') {
+        this.afterPrePrice = backendTotal - Number(this.productPrice.price_premium);
+      }
+      else if (this.productPrice['price_premium_sing'] == '+') {
+        this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
+      }
+      else {
+        this.afterPrePrice = backendTotal;
+      }
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-      this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
+      const backDays = backendDaysCount.toFixed(6);
+      this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
+
       if (this.days == 0) {
-        this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
-      } else {
-        this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+        this.Totalsum = this.afterPrePrice;
+      }
+      else if (this.days == 30) {
+        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+        this.Totalsum = finalCost.toFixed(2);
+      }
+      else if (this.days == 45) {
+        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+        this.Totalsum = finalCost.toFixed(2);
+
       }
     })
   };
+
+  selectDay(event: any, priceSign: any) {
+    this.days = event.target.value;
+    const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
+    if (priceSign == '-') {
+      this.afterPrePrice = backendTotal - Number(this.productPrice.price_premium);
+    }
+    else if (priceSign == '+') {
+      this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
+    }
+    else {
+      this.afterPrePrice = backendTotal;
+    }
+    const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
+    const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
+    const backDays = backendDaysCount.toFixed(6);
+    this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
+
+    if (this.days == 0) {
+      this.Totalsum = this.afterPrePrice;
+    }
+    else if (this.days == 30) {
+      let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+      this.Totalsum = finalCost.toFixed(2);
+    }
+    else if (this.days == 45) {
+      let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+      this.Totalsum = finalCost.toFixed(2);
+    }
+  };
+
   calculatePrice(id: any) {
     let cam_discount = this.priceVal.cam_discount;
     let deliveryCost = this.priceVal.delivery_cost;
@@ -579,13 +620,42 @@ export class PoViewComponent implements OnInit {
       this.kamDiscount = false;
     };
 
-    const total = (bptPrice + misc_expense + delivery) - price_premium;
+    // const total = (bptPrice + misc_expense + delivery) - price_premium;
+    // const hanrateIntrest = Number(_interest) / 100;
+    // const daysCount = (this.days * hanrateIntrest) / 365;
+    // this.daysCostCountCustomer = (total * daysCount).toFixed(2);
+
+    // this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
+    const total = (bptPrice + misc_expense + delivery) - _discount;
+    //
+    if (this.productPrice['price_premium_sing'] == '-') {
+      this.userAfterPrePrice = total - Number(price_premium);
+    }
+    else if (this.productPrice['price_premium_sing'] == '+') {
+      this.userAfterPrePrice = total + Number(price_premium);
+    }
+    else {
+      this.userAfterPrePrice = total;
+    }
+    //
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
-    this.daysCostCountCustomer = (total * daysCount).toFixed(2);
+    const totalDays = daysCount.toFixed(6);
+    this.daysCostCountCustomer = (this.userAfterPrePrice * Number(totalDays)).toFixed(2);
 
-    this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
-
+    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum) * 100;
+    this.percentPrice = totalPercent.toFixed(2);
+    if (this.days == 0) {
+      this.Totalsum1 = this.userAfterPrePrice;
+    }
+    else if (this.days == 30) {
+      let finalCost = (Number(this.Totalsum1) + Number(this.daysCostCountCustomer));
+      this.Totalsum1 = finalCost.toFixed(2);
+    }
+    else if (this.days == 45) {
+      let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
+      this.Totalsum1 = finalCost.toFixed(2);
+    }
   };
 
   priceSave(id: any, firstIndx: any, lastIndx: any) {
@@ -617,7 +687,7 @@ export class PoViewComponent implements OnInit {
     $(".modal-backdrop").removeClass("modal-backdrop show");
   };
 
-  poStatusRequest (statusArr:any) {
+  poStatusRequest(statusArr: any) {
     this._product.rfqStatusData(statusArr).subscribe((res: any) => {
       if (res.message == 'status updated') {
         // this._toaster.success(res.message);
@@ -630,19 +700,19 @@ export class PoViewComponent implements OnInit {
     })
   };
 
-  raiseComplain(poId:any, date:any) {
-    let data:any = [];
+  raiseComplain(poId: any, date: any) {
+    let data: any = [];
     data = [poId, date];
     this._complains.sendData(data);
     this._router.navigate(['/complains']);
   };
 
-  viewComplain(poNo:any) {
+  viewComplain(poNo: any) {
     this.spinner.hide();
-    this._router.navigate(['/kam-reply',poNo]);
+    this._router.navigate(['/kam-reply', poNo]);
   };
 
-  selectRadio(event:any) {
+  selectRadio(event: any) {
     this.radioValue = event.target.value;
   };
 
@@ -651,7 +721,7 @@ export class PoViewComponent implements OnInit {
       "po_no": this.productId,
       "status": this.radioValue
     }
-    this._product.acceptOrRejectPO(statusReq).subscribe((res:any) => {
+    this._product.acceptOrRejectPO(statusReq).subscribe((res: any) => {
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -662,12 +732,12 @@ export class PoViewComponent implements OnInit {
       this._router.navigate(['/po-list']);
     })
   };
-  getDeliveryItem () {
-    this._product.getDeliveryMethod().subscribe((res:any) => {
-      console.log('ress',res);
+  getDeliveryItem() {
+    this._product.getDeliveryMethod().subscribe((res: any) => {
+      console.log('ress', res);
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
-      } 
+      }
     })
   }
 
@@ -702,8 +772,8 @@ export class PoViewComponent implements OnInit {
     fileData.append('po_no', this.productId);
     fileData.append('letterhead', this.letterHedFile);
     fileData.append('cus_po_no', this.inputPONum);
-    let apiUrl = '/user/count_cus_po/'+this.inputPONum;
-    this._complains.getMethod(apiUrl).subscribe((res:any) => {
+    let apiUrl = '/user/count_cus_po/' + this.inputPONum;
+    this._complains.getMethod(apiUrl).subscribe((res: any) => {
       if (res.status == 1 && res.result == 1) {
         Swal.fire({
           icon: 'error',
@@ -712,7 +782,7 @@ export class PoViewComponent implements OnInit {
         })
         return;
       } else {
-        this._product.poAttachmentUpl(fileData).subscribe((res:any) => {
+        this._product.poAttachmentUpl(fileData).subscribe((res: any) => {
           this.spinner.hide();
           if (res.status == 1 && res.message == 'success') {
             Swal.fire({

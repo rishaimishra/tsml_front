@@ -33,13 +33,11 @@ export class ComplainsComponent implements OnInit {
     this.complainsForm = this._fb.group({
       com_cate_id: ['', Validators.required],
       com_sub_cate_id: ['', Validators.required],
-      com_sub_cate_2id: ['', Validators.required],
-      com_sub_cate_3id: ['', Validators.required],
       customer_remarks: ['', Validators.required],
       customer_name: [''],
       po_date: [''],
       po_number: [''],
-      complain_file: ['']
+      cust_complain_file: ['']
 
     })
   }
@@ -60,8 +58,8 @@ export class ComplainsComponent implements OnInit {
   categories() {
     this._spinner.show();
     this._complainse.getCategories().subscribe((res: any) => {
+      this._spinner.hide();
       if (res.message == 'success.') {
-        this._spinner.hide();
         this.categorie = res.result;
         this.complainsForm.value.com_cate_id = this.categorie.id;
       }
@@ -80,46 +78,13 @@ export class ComplainsComponent implements OnInit {
     let catgriId = event.target.value;
     let apiKey = '/user/complain-sub-category-list/' + catgriId;
     this._complainse.getMethod(apiKey).subscribe((res: any) => {
+      this._spinner.hide();
       if (res.message == 'success.') {
         this.complainsForm.value.com_sub_cate_id = catgriId;
-        this._spinner.hide();
         this.subCatgri1 = res.result;
       }
     })
   };
-
-  selectSubCat1(event: any) {
-    this._spinner.show();
-    let subCatId = event.target.value;
-    let apiKey = '/user/complain-sub-category2-list/' + subCatId;
-    this._complainse.getMethod(apiKey).subscribe((res: any) => {
-      if (res.message == 'success.') {
-        this.complainsForm.value.com_sub_cate_2id = subCatId;
-        this._spinner.hide();
-        this.subCatgri2 = res.result;
-      }
-    })
-  };
-
-  selectSubCat2(event: any) {
-    this._spinner.show();
-    let sabCatId2 = event.target.value;
-    let apiKey = '/user/complain-sub-category3-list/' + sabCatId2;
-    this._complainse.getMethod(apiKey).subscribe((res: any) => {
-      if (res.message == 'success.') {
-        this.complainsForm.value.com_sub_cate_3id = sabCatId2;
-        this._spinner.hide();
-        this.subCatgri3 = res.result;
-      } else {
-        this._spinner.hide();
-      }
-    })
-  };
-
-  selectSubCat3(event: any) {
-    let sabCatId = event.target.value;
-    console.log(sabCatId);
-  }
 
   onSelectFile(event:any) {
     this.selectedFile = event.target.files[0];
@@ -141,13 +106,11 @@ export class ComplainsComponent implements OnInit {
     let frm = this.complainsForm.value;
     fileData.append('com_cate_id', frm.com_cate_id);
     fileData.append('com_sub_cate_id', frm.com_sub_cate_id);
-    fileData.append('com_sub_cate_2id', frm.com_sub_cate_2id);
-    fileData.append('com_sub_cate_3id', frm.com_sub_cate_3id);
     fileData.append('customer_remarks', frm.customer_remarks);
     fileData.append('user_id', this.user_Id);
     fileData.append('po_date', this.poDate);
     fileData.append('po_number', this.poNumber);
-    fileData.append('complain_file', this.selectedFile);
+    fileData.append('cust_complain_file', this.selectedFile);
 
     this._complainse.storeComplain(fileData).subscribe((res:any) => {
       if(res.status == 1 && res.result == 'success') {

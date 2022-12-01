@@ -94,12 +94,7 @@
                         <div class="form-group">
                           <label>Email ID</label>
                           <input formControlName="email" type="email" class="form-control" />
-                          <div *ngIf="
-                                f['email'].invalid &&
-                                (f['email'].dirty ||
-                                  f['email'].touched ||
-                                  submitted)
-                              ">
+                          <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched || submitted)">
                             <small class="text-danger">
                               Email is required
                             </small>
@@ -141,11 +136,6 @@
                         <div class="form-group">
                           <label>Organization PAN</label>
                           <input formControlName="org_pan" readonly type="text" class="form-control" />
-                          <!-- <div *ngIf="f['org_pan']?.invalid &&(f['org_pan']?.touched || submitted)">
-                            <small class="text-danger">
-                              PAN is required
-                            </small>
-                          </div> -->
                         </div>
                       </div>
                       <!--/-->
@@ -244,47 +234,7 @@
                         </label>
                       </div>
                       <!--/-->
-                      <!-- <div class="col-12">
-                        <div class="form-group question-form-control font--16">
-                          <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox1">Are you interested in
-                              Distribution?</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" (change)="checkDistributionYes($event)"
-                              [checked]="checkedYes" type="radio" value="Yes" />
-                            <label class="form-check-label" for="inlineCheckbox1">Yes</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" (change)="checkDistributionNo($event)" [checked]="checkedNo"
-                              type="radio" value="No" />
-                            <label class="form-check-label" for="inlineCheckbox2">No</label>
-                          </div>
-                        </div>
-                      </div> -->
-                      <!-- <ng-container *ngIf="intrestedIndistribution">
-                      <div class="col-12">
-                          <div class="row">
-                            <div class="col-6">
-                              <input type="text" class="form-control" placeholder="Person Name">
-                            </div>
-                            <div class="col-6">
-                              <input type="email" class="form-control" placeholder="example@gmail.com">
-                            </div>
-                          </div>
-                        </div>
-                          <div class="col-12 mt-3">
-                            <div class="row">
-                              <div class="col-6">
-                                <input type="text" class="form-control" placeholder="Contact No.">
-                              </div>
-                              <div class="col-6">
-                                <input type="text" class="form-control" placeholder="Address">
-                              </div>
-                            </div>
-                          </div>
-                        </ng-container> -->
-                      <!-- / -->
+
                       <div class="col-12 mt-2">
                         <button (click)="mobileTabContinue()" class="btn btn-primary ttab" data-toggle="tab" role="tab"
                           aria-controls="profile" routerLinkActive="active">
@@ -305,11 +255,6 @@
                           <label>GST Number</label>
                           <input formControlName="company_gst" readonly type="text"
                             class="form-control" />
-                          <!-- <div *ngIf="f['company_gst']?.invalid &&(f['company_gst']?.touched || submitted)">
-                            <small class="text-danger">
-                              GST is required
-                            </small>
-                          </div> -->
                         </div>
                       </div>
                       <!--/-->
@@ -325,11 +270,6 @@
                         <div class="form-group">
                           <label>PAN Number</label>
                           <input formControlName="org_pan" readonly type="text" class="form-control" />
-                          <!-- <div *ngIf="f['company_pan']?.invalid &&(f['company_pan']?.touched || submitted)">
-                            <small class="text-danger">
-                              Pan is required
-                            </small>
-                          </div> -->
                         </div>
                       </div>
                       <!--/-->
@@ -396,11 +336,6 @@
                                  <div class="form-group">
                                    <label>Address Line1</label>
                                    <input type="text" formControlName="addressone" readonly class="form-control" />
-                                   <!-- <div *ngIf="f['addressone']?.invalid &&(f['addressone']?.touched || submitted)">
-                                     <small class="text-danger">
-                                       Address Line is required
-                                     </small>
-                                   </div> -->
                                  </div>
                                </div>
                                <!--/-->
@@ -579,7 +514,7 @@
                                         <div class="form-group">
                                           <label>GSTN</label>
                                           <div class="d-flex2 display-f">
-                                            <input type="text" formControlName="gstin2" [(ngModel)]="getGstNumber"
+                                            <input type="text" formControlName="gstin2"
                                               class="form-control w-79" />
                                             <button type="button" class="btn blue-btn" (click)="gstinDetails()">
                                               Get Details

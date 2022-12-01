@@ -103,6 +103,8 @@ export class CustomerComponent implements OnInit {
   locationState:any = [];
   locationRes:any;
   plantSelectArr:any = [];
+  afterPrePrice:any;
+  userAfterPrePrice:any;
 
 
   @ViewChild("remarksModel")
@@ -577,19 +579,6 @@ export class CustomerComponent implements OnInit {
     console.log('date', this.nxtDt);
 
   };
-  selectDay(event: any) {
-    this.days = event.target.value;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
-      const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
-      const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-      this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-    if (this.days == 0) {
-      this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
-    } else {
-      this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
-    }
-
-  };
 
   getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any, i, y) {
     this.firstIndex = i;
@@ -611,21 +600,71 @@ export class CustomerComponent implements OnInit {
       "sub_cat_id": subCatId
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/login']);
+      }
       this.productPrice = res.result;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
-      Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
+      Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
 
+      if (this.productPrice['price_premium_sing'] == '-') {
+        this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
+      }
+      else if (this.productPrice['price_premium_sing'] == '+') {
+        this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
+      }
+      else {
+        this.afterPrePrice = backendTotal;
+      }
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-      this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
+      const backDays = backendDaysCount.toFixed(6);
+      this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
+
       if (this.days == 0) {
-        this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
-      } else {
-        this.Totalsum = (backendTotal - Number(this.productPrice.cam_discount) + Number(this.daysCostCount)).toFixed(2);
+        this.Totalsum = this.afterPrePrice;
+      } 
+      else if (this.days == 30){
+        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+        this.Totalsum = finalCost.toFixed(2);
+      }
+      else if (this.days == 45){
+        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+        this.Totalsum = finalCost.toFixed(2);
+
       }
     })
   };
 
+  selectDay(event: any, priceSign:any) {
+    this.days = event.target.value;
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
+      if (priceSign == '-') {
+      this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
+      }
+      else if (priceSign == '+') {
+        this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
+      }
+      else {
+        this.afterPrePrice = backendTotal;
+      }
+      const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
+      const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
+      const backDays = backendDaysCount.toFixed(6);
+      this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
+
+    if (this.days == 0) {
+      this.Totalsum = this.afterPrePrice;
+    } 
+    else if (this.days == 30){
+      let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+      this.Totalsum = finalCost.toFixed(2);
+    }
+    else if (this.days == 45){
+      let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+      this.Totalsum = finalCost.toFixed(2);
+    }
+  };
 
   calculatePrice(id: any) {
     let cam_discount = this.productPrice.cam_discount;
@@ -669,24 +708,45 @@ export class CustomerComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-
     if (Number(cam_discount) < _discount && _discount != 0) {
       this.kamDiscount = true;
       priceValidator.push(5);
     } else {
       this.kamDiscount = false;
     };
+
     this.priceLimit = priceValidator;
-    const total = (bptPrice + misc_expense + delivery) - price_premium;
+    const total = (bptPrice + misc_expense + delivery) - _discount;
+      //
+        if (this.productPrice['price_premium_sing'] == '-') {
+        this.userAfterPrePrice =   total - Number(price_premium);
+        }
+        else if (this.productPrice['price_premium_sing'] == '+') {
+          this.userAfterPrePrice =  total + Number(price_premium);
+          }
+         else {
+         this.userAfterPrePrice = total;
+        }
+    //
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
-    this.daysCostCountCustomer = (total * daysCount).toFixed(2);
-
-    this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
+    const totalDays = daysCount.toFixed(6);
+    this.daysCostCountCustomer = (this.userAfterPrePrice * Number(totalDays)).toFixed(2);
 
     let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
     this.percentPrice = totalPercent.toFixed(2);
-
+    if (this.days == 0) {
+      this.Totalsum1 = this.userAfterPrePrice;
+    } 
+    else if (this.days == 30){
+      let finalCost = (Number(this.Totalsum1) + Number(this.daysCostCountCustomer));
+      this.Totalsum1 = finalCost.toFixed(2);
+    }
+    else if (this.days == 45){
+      let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
+      this.Totalsum1 = finalCost.toFixed(2);
+    }
+        
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.productId;

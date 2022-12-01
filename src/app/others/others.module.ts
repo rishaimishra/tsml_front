@@ -4,6 +4,8 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { CookiesComponent } from './cookies/cookies.component';
+import { FaqComponent } from './faq/faq.component';
 
 
 const routes: Routes = [
@@ -11,12 +13,22 @@ const routes: Routes = [
     path: 'privacy', 
     component: PrivacyComponent
   },
+  {
+    path: 'cookies', 
+    component: CookiesComponent
+  },
+  {
+    path: 'FAQ', 
+    component: FaqComponent
+  },
 
 ];
 
 @NgModule({
   declarations: [
-    PrivacyComponent
+    PrivacyComponent,
+    CookiesComponent,
+    FaqComponent
   ],
   imports: [
     CommonModule,

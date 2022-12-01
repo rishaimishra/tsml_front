@@ -4554,7 +4554,7 @@ table.table.table-op {
 
 /*02 Nov*/
 .custom-file-label::after {
-    background: url(../images/upload.png) #3d7eeb;
+    background: url(../assets/images/upload.png) #3d7eeb;
     font-size: 0;
     background-repeat: no-repeat;
     height: 44px;
@@ -4895,3 +4895,81 @@ table.table.table-op {
         min-height: 120px;
     }
     /*end*/
+
+    /*30 Nov start*/
+.content-box {
+    border: solid 1px #C7D8DD;
+padding: 15px;
+border-radius: 4px;
+background: #fff;
+}
+.content-box ul li {
+background: url(../assets/images/about_dot.png)no-repeat;
+background-position: top 5px left;
+padding-left: 20px;
+margin: 10px 0;
+}
+.content-box ul li a {
+display: block;
+}
+.content-box ul li span {
+display: block;
+font-weight: bold;
+padding-bottom: 7.5px;
+}
+.content-box ul li ol {
+list-style-type: none;
+}
+.content-box ul li em {
+display: block;
+font-style: normal;
+margin-bottom: 1rem;
+}
+.faq-box .card {
+border: 0;
+border-radius: 0;
+}
+.faq-box .card {
+cursor: pointer;
+background: #fff;
+padding: 5px 0;
+font-size: 19px;
+font-weight: 500;
+border-radius: 6px!important;
+box-shadow: 2.5px 4.33px 21px 0px rgba(0, 0, 0, 0.05);
+    width: 100%;
+margin: 0 0 15px 0;
+}
+.faq-box .card .card-header {
+background-color: transparent;
+border-bottom: transparent;
+}
+.faq-box .card .card-header strong {
+width: 35px;
+height: 36px;
+border-radius: 5px;
+background-color: #3D7EEB;
+margin-right: 14px;
+display: inline-block;
+text-align: center;
+padding-top: 0px;
+color: #030504;
+font-size: 22px;
+font-weight: 500;
+color: #fff;
+}
+.faq-box .card .card-body {
+border-top: 1px solid rgba(0,0,0,.125);
+font-family: 'Roboto', sans-serif;
+color: #000;
+    text-align: left;
+}
+.faq-box .card .card-body {
+margin: .50rem 1.25rem;
+padding-left: 0;
+padding-right: 0;
+font-size: 1rem;
+font-weight: 400;
+line-height: 1.5;
+}
+/*30 Nov end*/
