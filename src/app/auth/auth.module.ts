@@ -36,8 +36,10 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    BrowserAnimationsModule, // required animations module
+    // BrowserAnimationsModule, 
     ToastrModule.forRoot() // ToastrModule added
   ]
 })
-export class AuthModule { }
+export class AuthModule { 
+
+}

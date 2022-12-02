@@ -57,7 +57,7 @@
                      </div>
                   </a>
                </div>
-               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/complains-list">
+               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/complains/complaints-list">
                  <a >
                     <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
                        <span class="mini-stat-icon"><i class="fa fa-comments" aria-hidden="true"></i></span>
@@ -79,7 +79,7 @@
                   </div>
                </a>
             </div>
-            <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/view-profile">
+            <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/myaccount/view-profile">
                <a>
                   <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
                      <span class="mini-stat-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -141,7 +141,7 @@
                                  &nbsp;&nbsp; - {{rfqItem.created_at}}</small>
                            </div>
                         </div>
-                      <small class="text-primary pointerTab float-right" routerLink="/rfq-list">See more...</small><br>
+                      <small class="text-primary pointerTab float-right" routerLink="/products/rfq-list">See more...</small><br>
                         <div class="text-right">
                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
                          </div>
@@ -226,7 +226,7 @@
                                     <td>
                                        <div class="cell1 tab_head_sheet_1 ">
                                           <div class="add_ttrr actions-main text-center">
-                                             <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po-view',po.po_no]"> <span>View
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po/po-view',po.po_no]"> <span>View
                                                    Details</span>
                                                 <img src="assets/images/view-act-b.png" class="blue-show" alt="">
                                              </a>
@@ -241,7 +241,7 @@
 
                               </tbody>
                            </table>
-                              <small class="text-primary pointerTab float-right mt-3" routerLink="/po-list">See more...</small><br>
+                              <small class="text-primary pointerTab float-right mt-3" routerLink="/po/po-list">See more...</small><br>
                         </div>
                      </div>
                   </div>

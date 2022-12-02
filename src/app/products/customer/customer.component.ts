@@ -215,10 +215,10 @@ export class CustomerComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       if (res.result.length < 1) {
-        this._router.navigate(['/rfq-list']);
+        this._router.navigate(['/products/rfq-list']);
       }
       else {
         this.product_data = '';
@@ -255,7 +255,7 @@ export class CustomerComponent implements OnInit {
     }
   };
   goToCustomerPage(id: any) {
-    this._router.navigate(['/customer', id]);
+    this._router.navigate(['/products/customer', id]);
   };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
@@ -480,7 +480,7 @@ export class CustomerComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
       if (this.requoteArr.length > 0) {
@@ -523,15 +523,14 @@ export class CustomerComponent implements OnInit {
         "status": 6
       }
       this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-        console.log(res);
       })
     }
   
 
     if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      this._router.navigate(['/po',this.productId]);
+      this._router.navigate(['/po/po',this.productId]);
     } else {
-      this._router.navigate(['/rfq-list']);
+      this._router.navigate(['/products/rfq-list']);
     }
   };
 
@@ -576,7 +575,6 @@ export class CustomerComponent implements OnInit {
     var nextDt: any = yyyy + '-' + mm + '-' + dd;
     this.nxtDt = nextDt;
     $("#to_date_" + i).attr("min", this.nxtDt);
-    console.log('date', this.nxtDt);
 
   };
 
@@ -601,7 +599,7 @@ export class CustomerComponent implements OnInit {
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
@@ -805,7 +803,7 @@ export class CustomerComponent implements OnInit {
         this.showCity = res.result.city;
         this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
         if (res.status == 'Token has Expired') {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
           this.spinner.hide();
         }
       })
@@ -821,7 +819,6 @@ export class CustomerComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
-        console.log(this.locationState);
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
 
       }
@@ -844,7 +841,7 @@ export class CustomerComponent implements OnInit {
           this.plantAddrr = res.result;
         }
         if (res.status == 'Token has Expired') {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
           this.spinner.hide();
         } 
       })

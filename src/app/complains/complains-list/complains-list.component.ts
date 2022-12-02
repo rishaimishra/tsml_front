@@ -68,10 +68,10 @@ export class ComplainsListComponent implements OnInit {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
-      this._router.navigate(['/kam-reply',complain_id]);
+      this._router.navigate(['/complains/kam-reply',complain_id]);
     } else {
       this.userType = true;
-      this._router.navigate(['/complains-reply',complain_id]);
+      this._router.navigate(['/complains/complaints-reply',complain_id]);
     }
   };
 

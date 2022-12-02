@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FerroChromeComponent } from './ferro-chrome/ferro-chrome.component';
 import { ChromeOreComponent } from './chrome-ore/chrome-ore.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { EditFRQComponent } from './edit-frq/edit-frq.component';
-import { AddProductComponent } from './add-product/add-product.component';
 import { SharedModule } from '../shared/shared.module';
 import { ViewAllProductComponent } from './view-all-product/view-all-product.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
@@ -23,10 +21,6 @@ import { SalesResponsComponent } from './sales-respons/sales-respons.component';
 
 const routes: Routes = [
   {
-    path: 'ferro-chrome',
-    component: FerroChromeComponent,
-  },
-  {
     path: 'chrome-ore',
     component: ChromeOreComponent,
   },
@@ -41,10 +35,6 @@ const routes: Routes = [
   {
     path: 'edit-FRQ',
     component: EditFRQComponent,canActivate: [AuthGuard],
-  },
-  {
-    path: 'add-product',
-    component: AddProductComponent,canActivate: [AuthGuard],
   },
   {
     path: 'all-product',
@@ -90,11 +80,9 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    FerroChromeComponent,
     ChromeOreComponent,
     ProductDetailsComponent,
     EditFRQComponent,
-    AddProductComponent,
     ViewAllProductComponent,
     ThankYouComponent,
     RfqListComponent,
@@ -114,4 +102,6 @@ const routes: Routes = [
     NgxPaginationModule,
   ],
 })
-export class ProductsModule {}
+export class ProductsModule {
+
+}

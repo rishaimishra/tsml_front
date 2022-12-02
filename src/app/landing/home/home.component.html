@@ -107,7 +107,7 @@
                   <div class="row product-list-inr-bg">
                     <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="product-list">
-                        <a routerLink="/product-details">
+                        <a routerLink="/products/product-details">
                           <div class="product-list-img">
                             <img src="assets/images/high-carbon.jpg" alt="product-img" />
                           </div>
@@ -119,7 +119,7 @@
                     <!--/-->
                     <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="product-list">
-                        <a routerLink="/product-details">
+                        <a routerLink="/products/product-details">
                           <div class="product-list-img">
                             <img src="assets/images/fecr-chips.jpg" alt="product-img" />
                           </div>
@@ -131,7 +131,7 @@
                     <!--/-->
                     <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="product-list">
-                        <a routerLink="/product-details">
+                        <a routerLink="/products/product-details">
                           <div class="product-list-img">
                             <img src="assets/images/fecr-fines-1.jpg" alt="product-img" />
                           </div>
@@ -142,7 +142,7 @@
                     </div>
                     <!--/-->
                     <div class="col-12 text-center mt-3">
-                      <a routerLink="/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                      <a routerLink="/products/all-product" class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                         View
                         All</a>
                     </div>
@@ -195,7 +195,7 @@
                   <div >
                     <div class="item">
                       <div class="product-list" *ngIf="isUserLogin">
-                        <a routerLink="/product-details/{{ pl.product_id }}/{{
+                        <a routerLink="/products/product-details/{{ pl.product_id }}/{{
                               pl.category_id
                             }}">
                           <div class="product-list-img">
@@ -209,7 +209,7 @@
                       </div>
                       <!-- isUserLogin -->
                       <div *ngIf="!isUserLogin" class="product-list">
-                        <a routerLink="/login">
+                        <a routerLink="/auth/login">
                           <div class="product-list-img">
                             <img src="{{ pl.primary_image_url }}" alt="product-img" />
                           </div>

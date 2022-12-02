@@ -42,6 +42,7 @@ export class ProductDetailsComponent implements OnInit {
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
+  userByrole:any;
   userRole:any;
   userType: boolean;
   
@@ -72,8 +73,8 @@ export class ProductDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let userRol = localStorage.getItem('USER_TYPE');
-    if(userRol == 'Kam') {
+    this.userByrole = localStorage.getItem('USER_TYPE');
+    if(this.userByrole == 'Kam') {
       this.userRole = 'K';
       this.userType = false;
     } else {
@@ -156,11 +157,9 @@ export class ProductDetailsComponent implements OnInit {
             kamsRemarks: ''
           });
 
-          console.log('quotation=', this.quotation);
           let i = this.selectedItem.length - 1;
           this.selectedItem[i]['form_data'] = this.quotation;
 
-          console.log('this.selectedItem=', this.selectedItem);
           this.final_form_data();
         } else {
           this.product_data = '';
@@ -180,6 +179,7 @@ export class ProductDetailsComponent implements OnInit {
     let categoryId = event.target.value;
     this.removeCat(categoryId);
     this.removeCatArr.push(categoryId);
+    // this.getSubCategory(this.productId, categoryId);
     this.categoryid = event.target.value;
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
@@ -214,17 +214,9 @@ export class ProductDetailsComponent implements OnInit {
             pickup_type: '',
             kamsRemarks: ''
           });
-          console.log('this.quotation=', this.quotation);
-          let quation_lenght = this.quotation.length - 1;
-          console.log('quation_lenght=', quation_lenght);
 
           let i = this.selectedItem.length - 1;
-          console.log(
-            'this.quotation[quation_lenght]=',
-            this.quotation[quation_lenght]
-          );
           this.selectedItem[i]['form_data'] = this.quotation;
-          console.log('this.selectedItem=', this.selectedItem);
           this.final_form_data();
         } else {
           this.product_data = '';
@@ -272,7 +264,7 @@ export class ProductDetailsComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1 && res.result != 'Quote not created') {
         this._toaster.success('Request success');
-        this._router.navigate(['/thank-you']);
+        this._router.navigate(['/products/thank-you']);
         this.spinner.hide();
 
       } 
@@ -282,7 +274,7 @@ export class ProductDetailsComponent implements OnInit {
       }
       if (res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
         this._toaster.error('Please register to submit RFQ');
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
     }, err => {
@@ -317,7 +309,6 @@ export class ProductDetailsComponent implements OnInit {
       kamsRemarks: ''
     });
     this.selectedItem[i]['form_data'] = this.quotation;
-    // console.log('this.selectedItem=', this.selectedItem);
     this.final_form_data();
   };
 
@@ -385,7 +376,7 @@ export class ProductDetailsComponent implements OnInit {
         this.showCity = res.result.state;
         this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
         if (res.status == 'Token has Expired') {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
           this.spinner.hide();
         }
       })
@@ -400,7 +391,6 @@ export class ProductDetailsComponent implements OnInit {
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
-        console.log(this.locationState);
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
 
       }
@@ -420,7 +410,7 @@ export class ProductDetailsComponent implements OnInit {
           this.plantAddrr = res.result;
         }
         if (res.status == 'Token has Expired' || res.status =='Authorization Token not found') {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
           this.spinner.hide();
         } 
       })
@@ -445,7 +435,6 @@ export class ProductDetailsComponent implements OnInit {
       this.spinner.hide();
       if (res.success == true) {
         this.subCategory = res.subCategories;
-        console.log('dddd',this.subCategory);
       }
     }, err => {
       console.log(err);
@@ -474,6 +463,5 @@ export class ProductDetailsComponent implements OnInit {
     if (indx !== -1) {
       this.categori.splice(indx, 1);
     }
-    console.log('333',this.categori);
   }
 }

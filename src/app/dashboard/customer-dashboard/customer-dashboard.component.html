@@ -111,7 +111,7 @@
 
                         </div>
                       </div>
-                      <small class="text-primary pointerTab float-right" routerLink="/rfq-list">See more...</small><br>
+                      <small class="text-primary pointerTab float-right" routerLink="/products/rfq-list">See more...</small><br>
                       <div class="text-right">
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                       </div>
@@ -197,7 +197,7 @@
                           <td>
                              <div class="cell1 tab_head_sheet_1 ">
                                  <div class="add_ttrr actions-main text-center">
-                                    <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po-view',po.po_no]"> <span>View Details</span>
+                                    <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po/po-view',po.po_no]"> <span>View Details</span>
                                     <img src="assets/images/view-act-b.png" class="blue-show" alt="">
                                     </a> 
                                    
@@ -214,7 +214,7 @@
                         </tr>
                       </tbody>
                     </table>
-                    <small class="text-primary pointerTab float-right mt-3" routerLink="/po-list">See more...</small><br>
+                    <small class="text-primary pointerTab float-right mt-3" routerLink="/po/po-list">See more...</small><br>
                     
                   </div>
                 </div>

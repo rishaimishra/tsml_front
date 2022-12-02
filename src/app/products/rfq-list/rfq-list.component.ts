@@ -41,7 +41,7 @@ export class RfqListComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this.toaster.error(res.status, 'Please login again')
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
     }) 
   }
@@ -54,19 +54,19 @@ export class RfqListComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this.toaster.error(res.status, 'Please login again')
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
     }) 
   }
   goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
     if (status == 'Accepted' && kamStatus != 4) {
-      this._router.navigate(['/po',rfqNo])
+      this._router.navigate(['/po/po',rfqNo])
     } 
     else if (kamStatus == 4) {
-      this._router.navigate(['/po-list'])
+      this._router.navigate(['/po/po-list'])
     }
     else {
-      this._router.navigate(['/negotiation',rfqNo]);
+      this._router.navigate(['/products/negotiation',rfqNo]);
     }
   };
 

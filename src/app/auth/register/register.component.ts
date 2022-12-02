@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit {
   userType: any;
   imageUrl: string = '';
   businessType: any;
-  addressProfe: any;
   selectedFile: any;
   showResetUpload: boolean = false;
   showResetUpload2: boolean = false;
@@ -77,16 +76,6 @@ export class RegisterComponent implements OnInit {
   tcsFile: any;
   isTermCondition: boolean = false;
   showFormD: boolean = false;
-  orgAddr: any = '';
-  orgName: any = '';
-  gstNumber: any = '';
-  linkedAddr: any = '';
-  companyName: any = '';
-  stateSelect: any = '';
-  citySelect: any = '';
-  pincodeSelect: any = '';
-  addressLine1: any = '';
-  addressLine2: any = '';
 
   addProof!: string | ArrayBuffer | null;
   checkBook!: string | ArrayBuffer | null;
@@ -114,11 +103,6 @@ export class RegisterComponent implements OnInit {
   isTDS_applicable: any;
   distributionValue: any;
   getGstNumber: any = '';
-  addrrLine1: any = '';
-  addrrLine2: any = '';
-  billPincodeSelect: any = '';
-  billCitySelect: any = '';
-  billStateSelect: any = '';
   checkedYes: boolean = false;
   checkedNo: boolean = false;
   businessChecked: boolean = false;
@@ -339,7 +323,6 @@ export class RegisterComponent implements OnInit {
     this.selectProduct.map((selectedName: any) => {
       if (selectedName.name == name) {
         selectedName.select = isChecked;
-        console.log(selectedName);
         return selectedName;
       }
       return selectedName;
@@ -691,7 +674,6 @@ export class RegisterComponent implements OnInit {
   gstinDetails() {
     this._spinner.show();
     let gstin = this.getGstNumber;
-    console.log(gstin);
     let apiKey = '136c3da3b6f6b3af36388cc975b7aca0';
     let url = apiKey + '/' + gstin;
     if (gstin) {
@@ -699,16 +681,7 @@ export class RegisterComponent implements OnInit {
         if (res.flag == true) {
           this._spinner.hide();
           this.toastr.success(res.message);
-          // this.orgAddr = res.data.pradr.adr;
-          // this.orgName = res.data.ctb;
-          // this.gstNumber = res.data.gstin;
-          // this.linkedAddr = res.data.stj;
-          // this.companyName = res.data.tradeNam;
-          this.billStateSelect = res.data.pradr.addr.stcd;
-          this.billCitySelect = res.data.pradr.addr.dst;
-          this.billPincodeSelect = res.data.pradr.addr.pncd;
-          this.addrrLine1 = res.data.pradr.adr;
-          this.addrrLine2 = res.data.stj;
+
         }
         if (res.flag == false) {
           this._spinner.hide();
@@ -820,7 +793,7 @@ export class RegisterComponent implements OnInit {
           this.toastr.success('Registered successfully', '');
           this.registerForm.reset();
           this._spinner.hide();
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
         }
         if (res.error.validation.email) {
           this.toastr.error(res.error.validation.email);

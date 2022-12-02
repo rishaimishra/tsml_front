@@ -56,7 +56,7 @@
                       value="{{productData.quantity}}" />
                   </div>
                   <div class="acc-pro-del pointerTab">
-                    <button class="del-btn btn-danger" [disabled]="userType"
+                    <button class="del-btn btn-danger" *ngIf="userRole == 'Kam'"
                       (click)="deleteRfqById(productData?.quote_id)" data-toggle="tooltip" data-placement="top"
                       title="Delete"><i class="fa fa-trash"></i></button>
                   </div>

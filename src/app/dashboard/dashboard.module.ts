@@ -33,4 +33,6 @@ const routes: Routes = [
     NgxPaginationModule
   ]
 })
-export class DashboardModule { }
+export class DashboardModule { 
+
+}

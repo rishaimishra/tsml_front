@@ -19,14 +19,13 @@
       <div class="container">
         <div class="prod-list-detl">
           <div class="gd-po">
-            <div class="sec-pro-cat" *ngIf="showButtons > 0">
-              <span>Add item</span>
-              <select [disabled]="userType" (change)="selectItems($event)"
-                class="form-control form-control-sm pointerTab">
-                <option value="">--select--</option>
-                <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
-              </select>
-            </div>
+              <div class="sec-pro-cat" *ngIf="showButtons > 0">
+                <span>Add item</span>
+                <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
+                  <option value="">--select--</option>
+                  <option value="{{cat.id}}" *ngFor="let cat of categori">{{cat.cat_name}}</option>
+                </select>
+              </div>
 
             <div class="download-letterhead-PO-btn">
               <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip"
@@ -340,7 +339,7 @@
           <button type="button" *ngIf="userType && poStatus != 1  && amndNomber != null" (click)="submitStatus()"
             class="btn btn-primary"><i class="fa fa-paper-plane"></i>
             Submit</button> &nbsp;
-          <button type="button" [routerLink]="['/po-list']" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
+          <button type="button" [routerLink]="['/po/po-list']" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
             Back</button>
         </div>
       </div>

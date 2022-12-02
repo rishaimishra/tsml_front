@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductsModule } from '../products/products.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { AuthModule } from '../auth/auth.module';
 
 
 const routes: Routes = [
@@ -23,13 +24,16 @@ const routes: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     FormsModule,
     SharedModule,
-    ProductsModule,
+    AuthModule,
+    // ProductsModule,
     NgImageSliderModule,
     CarouselModule
 
   ]
 })
-export class LandingModule { }
+export class LandingModule { 
+
+}

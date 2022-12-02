@@ -55,7 +55,7 @@ export class ForgetPasswordComponent implements OnInit {
             timer: 1500
           })
           this._spinner.hide();
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
         } 
           if(res.error.message == 'Email address not found !!') {
             Swal.fire({

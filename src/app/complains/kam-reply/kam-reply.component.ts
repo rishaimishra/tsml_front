@@ -63,7 +63,7 @@ export class KamReplyComponent implements OnInit {
         this.imageUrl = this.compInfo.file_url;
       }
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this._spiner.hide();
       }
     }, err => {
@@ -118,7 +118,7 @@ export class KamReplyComponent implements OnInit {
             'success'
           )
         })
-        this._router.navigate(['/complains-list']);
+        this._router.navigate(['/complains/complaints-list']);
       }
     }, err => {
       console.log(err);

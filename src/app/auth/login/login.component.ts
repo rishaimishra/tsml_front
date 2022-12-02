@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('USER_TYPE',res.data.user_type);
           
           if(res.data['user_type'] == 'Kam') {
-            this._router.navigate(['/kam-dashboard']);
+            this._router.navigate(['/dashboard/kam-dashboard']);
             Swal.fire({
               position: 'center',
               icon: 'success',
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
             })
           }
           else if (res.data['user_type'] == 'Sales') {
-            this._router.navigate(['/sales-dashboard']);
+            this._router.navigate(['/dashboard/sales-dashboard']);
             Swal.fire({
               position: 'center',
               icon: 'success',
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
             })
           }
           else if (res.data['user_type'] == 'C') {
-            this._router.navigate(['/customer-dashboard']);
+            this._router.navigate(['/dashboard/customer-dashboard']);
             Swal.fire({
               position: 'center',
               icon: 'success',
@@ -79,17 +79,14 @@ export class LoginComponent implements OnInit {
               timer: 1500
             })
           }
-        } else {
+        } 
+      }, error => {
+        console.log(error);
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'Invalid Email or Password!',
           })
-          this._spinner.hide();
-        }
-
-      }, error => {
-        console.log(error);
           this._spinner.hide();
       })
     }

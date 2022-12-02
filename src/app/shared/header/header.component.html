@@ -9,8 +9,8 @@
                <ul>
                   <li class="hedTopBtn"> <a class="sign_btn log_btn">English</a> </li>
                   <li>
-                     <a class="shopcut pointer"> <span class="cart-txt">My Cart </span>
-                        <img src="assets/images/cuticon.png" alt=""> <span class="noti"></span>
+                     <a class="shopcut pointer"> <span class="cart-txt"></span>
+                        <i class="fa fa-bell" aria-hidden="true"></i> <span class="noti"></span>
                      </a>
                      <div class="shopcutBx">
                         <div class="shopcutBx_media">
@@ -78,8 +78,8 @@
                               <div class="col-sm-6">
                                  <ul class="list-unstyled">
                                     <!-- <li><a href="overview.html">Overview </a></li> -->
-                                    <li><a routerLink="/all-product">Ferro Chrome</a></li>
-                                    <li><a routerLink="/all-product">Chrome Ore</a></li>
+                                    <li><a routerLink="/products/all-product">Ferro Chrome</a></li>
+                                    <li><a routerLink="/products/all-product">Chrome Ore</a></li>
                                  </ul>
                               </div>
                               <!-- end col-3 -->
@@ -100,27 +100,27 @@
                         </div>
                         <!-- dropdown-large.// -->
                      </li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/register">
+                     <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/auth/register">
                            Register </a></li>
                            <!-- <li class="nav-item"><a class="nav-link" *ngIf="!userType" routerLink="/order-planing">Order Schedule</a></li> -->
                      <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')">
                              <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
                                  Order Planning</a>
                                  <div class="dropdown-menu small-dd" style="color: black;">
-                                     <a routerLink="/order-planing">Order Planing</a><br>
-                                     <a routerLink="/order-planing-form" class="mt-2">Order Planing Form</a><br>
-                                     <a routerLink="/dispatch-plan" class="mt-2">Dispatch Plan</a>
+                                     <a routerLink="/order/order-planing">Order Planing</a><br>
+                                     <a routerLink="/order/order-planing-form" class="mt-2">Order Planing Form</a><br>
+                                     <a routerLink="/order/dispatch-plan" class="mt-2">Dispatch Plan</a>
                                    </div>
                       </li>
-                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')" routerLink="/confirm-rfq">
+                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')" routerLink="/products/confirm-rfq">
                         Confirm RFQs </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/order-planing"> View Order Planning
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/order/order-planing"> View Order Planning
                         </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userType)" routerLink="/customer-dashboard">
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userType)" routerLink="/dashboard/customer-dashboard">
                            Dashboard </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/kam-dashboard">
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/dashboard/kam-dashboard">
                               Dashboard </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != true || loginFalse != false)" routerLink="/login"> Login
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != true || loginFalse != false)" routerLink="/auth/login"> Login
                         </a></li>
                      <li class="nav-item"><a class="nav-link pointer" (click)="logOut()" *ngIf="(isUserLogIn != false && loginFalse != true)"> Logout </a></li>
                   </ul>

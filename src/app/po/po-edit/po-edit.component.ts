@@ -364,7 +364,7 @@ export class PoEditComponent implements OnInit {
         this.spinner.hide();
         this._toaster.success(res.result);
         this.poStatusRequest(poStatusArr);
-        this._router.navigate(['/po-list']);
+        this._router.navigate(['/po/po-list']);
 
         if (this.userType == false) {
           const scheduleNo = Math.floor(10 + Math.random() * 90);
@@ -383,7 +383,7 @@ export class PoEditComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
       else {
@@ -711,7 +711,7 @@ export class PoEditComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-      this._router.navigate(['/po-list']);
+      this._router.navigate(['/po/po-list']);
     })
   };
 

@@ -54,6 +54,7 @@ export class PoComponent implements OnInit {
 
   bptAndfinal1: any;
   schldId: any;
+  userRole:any;
 
   editProductId: any;
   submitted: boolean = false;
@@ -98,8 +99,8 @@ export class PoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let userRol = localStorage.getItem('USER_TYPE');
-    if (userRol == 'Kam') {
+    this.userRole = localStorage.getItem('USER_TYPE');
+    if (this.userRole == 'Kam') {
       this.userType = false;
     } else {
       this.userType = true;
@@ -402,7 +403,7 @@ export class PoComponent implements OnInit {
         })
         this.poStatusRequest(poStatusArr);
         this.uploadLetterHead();
-        this._router.navigate(['/po-list']);
+        this._router.navigate(['/po/po-list']);
         this.spinner.hide();
       }
       if (res.message != 'success') {
@@ -411,7 +412,7 @@ export class PoComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
       else {

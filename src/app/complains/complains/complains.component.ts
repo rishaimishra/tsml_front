@@ -51,7 +51,6 @@ export class ComplainsComponent implements OnInit {
       this.poNumber = res[0];
       this.poDate = res[1]
       
-      console.log('poData',this.poNumber, this.poDate);
     })
     this.categories();
   }
@@ -64,7 +63,7 @@ export class ComplainsComponent implements OnInit {
         this.complainsForm.value.com_cate_id = this.categorie.id;
       }
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this._spinner.hide();
       }
       else {
@@ -122,7 +121,7 @@ export class ComplainsComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-        this._router.navigate(['/complains-list']);
+        this._router.navigate(['/complains/complaints-list']);
       } 
       if (res.message == 'error' || res.status != 1) {
         this._spinner.hide();

@@ -52,14 +52,14 @@ export class HeaderComponent implements OnInit {
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam' && this.isUserLogIn != false) {
       this.userType = false;
-      this._router.navigate(['/kam-dashboard']);
+      this._router.navigate(['/dashboard/kam-dashboard']);
     } 
     else if (userRol == 'Sales' && this.isUserLogIn != false) {
-      this._router.navigate(['/sales-dashboard']);
+      this._router.navigate(['/dashboard/sales-dashboard']);
     }
     else if (userRol == 'C' && this.isUserLogIn != false) {
       this.userType = true;
-      this._router.navigate(['/customer-dashboard']);
+      this._router.navigate(['/dashboard/customer-dashboard']);
     } else {
       this._router.navigate(['']);
     }

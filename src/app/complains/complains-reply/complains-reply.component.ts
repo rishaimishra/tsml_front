@@ -54,7 +54,7 @@ export class ComplainsReplyComponent implements OnInit {
         this.remarkAll = res.remarksData;
       }
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
     }, err => {
       console.log(err);
@@ -104,7 +104,7 @@ export class ComplainsReplyComponent implements OnInit {
             'Discussion has been closed!',
             'success'
           )
-          this._router.navigate(['/complains-list']);
+          this._router.navigate(['/complains/complaints-list']);
         })
       }
     }, err => {

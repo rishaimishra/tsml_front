@@ -78,6 +78,7 @@ export class PoViewComponent implements OnInit {
   daysCostCount: any;
   daysCostCountCustomer: any;
   poRedirectArr: any = [];
+  categori:any = [];
 
   public quotation: any[] = [];
   public quotation_value: any[] = [];
@@ -169,7 +170,9 @@ export class PoViewComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1) {
         this.editProductId = res.result[0]['product_id'];
+        let catId = res.result[0]['cat_id'];
         this.product_data = res.result;
+        this.getCategoriDetails(this.editProductId, catId);
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.leaterheadFile = this.product_data[0]['letterhead'];
@@ -377,7 +380,7 @@ export class PoViewComponent implements OnInit {
         this.spinner.hide();
         this._toaster.success(res.result);
         this.poStatusRequest(poStatusArr);
-        this._router.navigate(['/po-list', this.productId]);
+        this._router.navigate(['/po/po-list', this.productId]);
       }
       if (res.message != 'success') {
         this._toaster.error(res.message);
@@ -385,7 +388,7 @@ export class PoViewComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
       else {
@@ -704,12 +707,12 @@ export class PoViewComponent implements OnInit {
     let data: any = [];
     data = [poId, date];
     this._complains.sendData(data);
-    this._router.navigate(['/complains']);
+    this._router.navigate(['/complains/complaints']);
   };
 
   viewComplain(poNo: any) {
     this.spinner.hide();
-    this._router.navigate(['/kam-reply', poNo]);
+    this._router.navigate(['/complains/kam-reply', poNo]);
   };
 
   selectRadio(event: any) {
@@ -729,7 +732,7 @@ export class PoViewComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-      this._router.navigate(['/po-list']);
+      this._router.navigate(['/po/po-list']);
     })
   };
   getDeliveryItem() {
@@ -792,7 +795,7 @@ export class PoViewComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500
             })
-            this._router.navigate(['/po-list']);
+            this._router.navigate(['/po/po-list']);
           }
         }, err => {
           console.log(err);
@@ -800,6 +803,29 @@ export class PoViewComponent implements OnInit {
         })
       }
     })
+  }
 
+  getCategoriDetails (productId:any, catId:any) {
+    let categoryFilter = {
+      product_id: productId
+    }
+    console.log('productId',productId, 'catId',catId);
+    this._product.filterProducts(categoryFilter).subscribe((res: any) => {
+      if (res.success == true) {
+        this.categori = res.getCategory;
+        this.removeCat(catId);
+        this.spinner.hide();
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  }
+
+  removeCat(i:any) {
+    let indx = this.categori.findIndex((item: any) => item.id == i);
+    if (indx !== -1) {
+      this.categori.splice(indx, 1);
+    }
   }
 }

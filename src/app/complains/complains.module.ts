@@ -12,9 +12,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
-  {path: 'complains', component: ComplainsComponent, canActivate: [AuthGuard]},
-  {path: 'complains-list', component: ComplainsListComponent, canActivate: [AuthGuard]},
-  {path: 'complains-reply/:id', component: ComplainsReplyComponent, canActivate: [AuthGuard]},
+  {path: 'complaints', component: ComplainsComponent, canActivate: [AuthGuard]},
+  {path: 'complaints-list', component: ComplainsListComponent, canActivate: [AuthGuard]},
+  {path: 'complaints-reply/:id', component: ComplainsReplyComponent, canActivate: [AuthGuard]},
   {path: 'kam-reply/:id', component: KamReplyComponent, canActivate: [AuthGuard]},
 
 ];
@@ -36,4 +36,6 @@ const routes: Routes = [
     NgxPaginationModule
   ]
 })
-export class ComplainsModule { }
+export class ComplainsModule {
+
+ }

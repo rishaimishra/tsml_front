@@ -33,13 +33,13 @@ export class CustomerDashboardComponent implements OnInit {
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
     if (status == 'Accepted') {
-      this._router.navigate(['/po',rfqNumber]);
+      this._router.navigate(['/po/po',rfqNumber]);
     }
     else if (kamStatus == 4) {
-      this._router.navigate(['/po-list'])
+      this._router.navigate(['/po/po-list'])
     }
     else {
-      this._router.navigate(['/negotiation',rfqNumber]);
+      this._router.navigate(['/products/negotiation',rfqNumber]);
     }
   }
   getKamItems() {
@@ -53,7 +53,7 @@ export class CustomerDashboardComponent implements OnInit {
         this.spinner.hide();
       }
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
 
@@ -92,13 +92,13 @@ export class CustomerDashboardComponent implements OnInit {
 
   goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
     if (status == 'Accepted' && kamStatus != 4) {
-      this._router.navigate(['/po',rfqNo])
+      this._router.navigate(['/po/po',rfqNo])
     } 
     else if (kamStatus == 4) {
-      this._router.navigate(['/po-list'])
+      this._router.navigate(['/po/po-list'])
     }
     else {
-      this._router.navigate(['/negotiation',rfqNo]);
+      this._router.navigate(['/products/negotiation',rfqNo]);
     }
   }
 }

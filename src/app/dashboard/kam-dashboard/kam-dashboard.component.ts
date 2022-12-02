@@ -32,13 +32,13 @@ export class KamDashboardComponent implements OnInit {
   }
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
     if (status == 'Accepted') {
-      this._router.navigate(['/po',rfqNumber]);
+      this._router.navigate(['/po/po',rfqNumber]);
     }
     else if (kamStatus == 4) {
-      this._router.navigate(['/po-list'])
+      this._router.navigate(['/po/po-list'])
     }
     else {
-      this._router.navigate(['/negotiation',rfqNumber]);
+      this._router.navigate(['/products/negotiation',rfqNumber]);
     }
   }
 
@@ -51,7 +51,7 @@ export class KamDashboardComponent implements OnInit {
         this.kamItems = res.result;
       };
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
 
@@ -66,7 +66,6 @@ export class KamDashboardComponent implements OnInit {
       this.spinner.hide();
       if(res.message == 'success') {
         this.spinner.hide();
-      console.log(res);
       this.poItems = res.result;
       }
     }, err => {
@@ -81,7 +80,6 @@ export class KamDashboardComponent implements OnInit {
       this.spinner.hide();
       if(res.message == 'success') {
         this.spinner.hide();
-      console.log(res);
       this.poItems = res.result;
       }
     }, err => {

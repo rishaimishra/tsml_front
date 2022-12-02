@@ -136,9 +136,9 @@ export class HomeComponent implements OnInit {
 
   gotoDetailsPage(productId: any, categoryId: any) {
     if (this.isLogin == true) {
-      this._router.navigate(['/product-details', productId, categoryId]);
+      this._router.navigate(['/products/product-details', productId, categoryId]);
     } else {
-      this._router.navigate(['/login']);
+      this._router.navigate(['/auth/login']);
     }
   }
 }

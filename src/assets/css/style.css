@@ -813,7 +813,7 @@ img.cloudzoom-gallery.active {
 
     /* prevent annoying iPad cut/paste actions */
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
 }
 
 
@@ -1963,7 +1963,7 @@ table .form_group {
     width: 100%;
 }
 
-.link-trash {}
+/* .link-trash {} */
 
 .modal-body .blue-plus-icon,
 .modal-body .red-plus-icon {
@@ -2221,9 +2221,9 @@ table .form_group {
     margin-top: 30px;
 }
 
-.tab-content>.tab-pane {
-    /* padding: 30px; */
-}
+/* .tab-content>.tab-pane {
+    
+} */
 
 label {
     font-size: 14px;
@@ -3421,7 +3421,7 @@ button:focus {
     margin-top: 25px !important;
 }
 
-.schedule-block {}
+/* .schedule-block {} */
 
 .schedule-block .row {
     margin-right: -10px;
@@ -4011,7 +4011,7 @@ small {
     border-radius: 50%;
     background-color: #fff !important;
     display: inline-block;
-    float: left;
+    /* float: left; */
     font-size: 30px;
     height: 60px;
     line-height: 60px;
@@ -4067,7 +4067,7 @@ small {
 /* Float Shadow */
 .hvr-float-shadow {
     display: block;
-    vertical-align: middle;
+    /* vertical-align: middle; */
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
@@ -4904,7 +4904,7 @@ border-radius: 4px;
 background: #fff;
 }
 .content-box ul li {
-background: url(../assets/images/about_dot.png)no-repeat;
+/* background: url(../assets/images/about_dot.png)no-repeat; */
 background-position: top 5px left;
 padding-left: 20px;
 margin: 10px 0;
