@@ -91,7 +91,7 @@ export class ProductDetailsComponent implements OnInit {
       this.getCategoriDetails(this.productId, this.categoryid);
       this.get_product_details(res.productId, res.categoryId);
       this.getLocation();
-      // this.getSubCategory(this.productId, this.categoryid);
+      this.getSubCategory(this.productId, this.categoryid);
 
     });
     this.setFromData();
