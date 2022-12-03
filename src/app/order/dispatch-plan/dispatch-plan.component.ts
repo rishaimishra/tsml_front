@@ -83,7 +83,7 @@ export class DispatchPlanComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this.toster.info('Please login again','Login failed');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
         this.spinner.hide();
       }
     }, err => {

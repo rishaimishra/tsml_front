@@ -34,7 +34,7 @@
             <div id="accordion" class="accordion accordion--">
               <div class="card mb-0">
                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
-                  [attr.data-target]="'#collapseOne'+i">
+                  [attr.data-target]="'#collapseOne'+i" (click)="getCatNdProductId(productData.product_id, productData.cat_id)">
                   <!-- <button type="button" class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i">
                     <i class="fa fa-plus"></i>
                   </button> -->

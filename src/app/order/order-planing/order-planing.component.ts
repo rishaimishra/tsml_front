@@ -50,7 +50,7 @@ export class OrderPlaningComponent implements OnInit {
         this.orderList = res.result;
       } 
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       for (let index = 0; index < this.orderList.length; index++) {
         this.dispatchPlan = this.orderList[index]['dispatch'];

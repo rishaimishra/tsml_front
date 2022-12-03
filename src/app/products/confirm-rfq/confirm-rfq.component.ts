@@ -41,7 +41,7 @@ export class ConfirmRfqComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this.toaster.error(res.status, 'Please login again')
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
     }) 
   }
@@ -55,7 +55,7 @@ export class ConfirmRfqComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this.toaster.error(res.status, 'Please login again')
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
     }) 
   }
@@ -63,7 +63,7 @@ export class ConfirmRfqComponent implements OnInit {
     // if (status == 'Accepted') {
     //   this._router.navigate(['/po',rfqNo])
     // } else {
-      this._router.navigate(['/sales-respons',rfqNo]);
+      this._router.navigate(['/products/sales-respons',rfqNo]);
     // }
   }
 

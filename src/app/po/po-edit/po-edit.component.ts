@@ -197,7 +197,7 @@ export class PoEditComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       else {
         this.product_data = '';
@@ -261,7 +261,7 @@ export class PoEditComponent implements OnInit {
   };
 
   goToCustomerPage(id: any) {
-    this._router.navigate(['/customer', id]);
+    this._router.navigate(['/products/customer', id]);
   };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
@@ -500,7 +500,7 @@ export class PoEditComponent implements OnInit {
     }
     this._product.priceCalculation(price).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 

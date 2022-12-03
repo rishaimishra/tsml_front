@@ -123,4 +123,12 @@ export class ProductsService {
   poAttachmentUpl(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/update_letterhead', reqParameter);
   };
+
+  rfqSubmitedEmail(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/quote_gen_mail', reqParameter);
+  };
+
+  salesSubmitedEmail(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/sale_accpt_mail', reqParameter);
+  };
 }

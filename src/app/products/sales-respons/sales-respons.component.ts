@@ -99,6 +99,7 @@ export class SalesResponsComponent implements OnInit {
   locationState:any = [];
   locationRes:any;
   plantSelectArr:any = [];
+  selectedUserId:any;
 
 
   @ViewChild("remarksModel")
@@ -190,6 +191,7 @@ export class SalesResponsComponent implements OnInit {
       this.spinner.hide();
       if (res.message == 'success') {
         this.editProductId = res.result[0]['product_id'];
+        this.selectedUserId = res.result[0]['user_id'];
         this.product_data = res.result;
         this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
@@ -202,11 +204,11 @@ export class SalesResponsComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
-      if (res.result.length < 1) {
-        this._router.navigate(['/rfq-list']);
-      }
+      // if (res.result.length < 1) {
+      //   this._router.navigate(['/products/rfq-list']);
+      // }
       else {
         this.product_data = '';
       }
@@ -241,7 +243,7 @@ export class SalesResponsComponent implements OnInit {
     }
   };
   goToCustomerPage(id: any) {
-    this._router.navigate(['/customer', id]);
+    this._router.navigate(['/products/customer', id]);
   };
   selecte_size(size: any, index: any) {
     this.selected_size = size;
@@ -398,7 +400,6 @@ export class SalesResponsComponent implements OnInit {
       })
       return;
     }
-    console.log(this.qtStatusUpdate);
 
     let userRol = localStorage.getItem('USER_TYPE');
     let countArr = [];
@@ -456,7 +457,7 @@ export class SalesResponsComponent implements OnInit {
       }
       else if (res.status == 'Token has Expired') {
         this._toaster.error(res.status, 'Please login again');
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
       
@@ -468,10 +469,18 @@ export class SalesResponsComponent implements OnInit {
         "status": this.qtStatusUpdate
       }
       this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-
       })
 
-      this._router.navigate(['/confirm-rfq']);
+      if (this.qtStatusUpdate == 5) {
+        let salesEmailReq = {
+          "rfq_no": this.productId,
+          "user_id": this.selectedUserId
+        }
+        this._product.salesSubmitedEmail(salesEmailReq).subscribe((res:any) => {
+          console.log(res);
+        })
+      }
+      this._router.navigate(['/products/confirm-rfq']);
     }, err => {
       console.log(err);
       this.spinner.hide();
@@ -519,7 +528,6 @@ export class SalesResponsComponent implements OnInit {
     var nextDt: any = yyyy + '-' + mm + '-' + dd;
     this.nxtDt = nextDt;
     $("#to_date_" + i).attr("min", this.nxtDt);
-    console.log('date', this.nxtDt);
 
   };
   selectDay(event: any) {
@@ -691,7 +699,7 @@ export class SalesResponsComponent implements OnInit {
         this.showCity = res.result.city;
         this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
         if (res.status == 'Token has Expired') {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
           this.spinner.hide();
         }
       })
@@ -707,7 +715,6 @@ export class SalesResponsComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
-        console.log(this.locationState);
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
 
       }
@@ -730,7 +737,7 @@ export class SalesResponsComponent implements OnInit {
           this.plantAddrr = res.result;
         }
         if (res.status == 'Token has Expired') {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
           this.spinner.hide();
         } 
       })

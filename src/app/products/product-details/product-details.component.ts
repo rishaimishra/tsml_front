@@ -131,6 +131,7 @@ export class ProductDetailsComponent implements OnInit {
         this.spinner.hide();
         if (res.status == 1) {
           this.product_data = res.result;
+          console.log('ddd',this.product_data);
           this.selectedItem.push(this.product_data);
           this.show_data = true;
           // const uniqueID = uuid.v4();
@@ -264,6 +265,7 @@ export class ProductDetailsComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1 && res.result != 'Quote not created') {
         this._toaster.success('Request success');
+        this.rfqEmailSent(rfqNumber);
         this._router.navigate(['/products/thank-you']);
         this.spinner.hide();
 
@@ -283,7 +285,16 @@ export class ProductDetailsComponent implements OnInit {
 
     });
   };
-
+  rfqEmailSent(rfqNumber:any) {
+    let userId = localStorage.getItem('USER_ID');
+    let rfqEmailReq = {
+      "rfq_no": 'RFQ'+rfqNumber,
+      "user_id": userId
+    }
+    this._product.rfqSubmitedEmail(rfqEmailReq).subscribe((res:any) => {
+      console.log(res);
+    })
+  }
   addItem(i: any) {
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['form_data'];
@@ -385,7 +396,6 @@ export class ProductDetailsComponent implements OnInit {
 
   plantSele(event:any, schdlNo:any) {
     this.plantSelectArr[schdlNo] = event.target.value;
-
     let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
     let apiUrl = '/user/get_plant_addr/'+ indx.id;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
@@ -463,5 +473,9 @@ export class ProductDetailsComponent implements OnInit {
     if (indx !== -1) {
       this.categori.splice(indx, 1);
     }
+  }
+
+  getCatNdProductId(prdId:any, catId:any) {
+    this. getSubCategory (prdId, catId);
   }
 }

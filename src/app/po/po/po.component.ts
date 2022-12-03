@@ -191,7 +191,7 @@ export class PoComponent implements OnInit {
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       else {
         this.product_data = '';
@@ -538,7 +538,7 @@ export class PoComponent implements OnInit {
 
     this._product.priceCalculation(price).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 

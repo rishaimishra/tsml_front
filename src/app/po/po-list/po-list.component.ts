@@ -57,7 +57,7 @@ export class PoListComponent implements OnInit {
       this.poItems = res.result;
       }
       if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
     }, err => {
