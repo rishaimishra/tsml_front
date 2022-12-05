@@ -131,4 +131,16 @@ export class ProductsService {
   salesSubmitedEmail(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/sale_accpt_mail', reqParameter);
   };
+
+  reqouteCount(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/update_count_requote', reqParameter);
+  };
+
+  orderConfirmEmail(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/order_cnrfm_mail', reqParameter);
+  };
+  
+  confirmRfqEmail(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/accepted_price_mail', reqParameter);
+  };
 }

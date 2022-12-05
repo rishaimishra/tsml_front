@@ -101,6 +101,7 @@ export class PoViewComponent implements OnInit {
   userAfterPrePrice: any;
   percentPrice:any;
 
+
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
@@ -734,6 +735,7 @@ export class PoViewComponent implements OnInit {
       })
       this._router.navigate(['/po/po-list']);
     })
+
   };
   getDeliveryItem() {
     this._product.getDeliveryMethod().subscribe((res: any) => {

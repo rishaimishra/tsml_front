@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { Country, State, City } from 'country-state-city';
 import { ProductsService } from 'src/app/service/products.service';
+import Swal from 'sweetalert2';
 
 declare var jQuery: any;
 declare var $: any;
@@ -640,12 +641,20 @@ export class RegisterComponent implements OnInit {
 
   };
   getGstIn() {
-    // this._spinner.show();
+    this._spinner.show();
     let gstin = this.registerForm.value.gstin;
-    let  apiUrl =  '/gst-details/' + gstin;
-    this._auth.gstApi().subscribe((res: any) => {
+    if (gstin == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please Provide Valid GST Number !',
+      })
       this._spinner.hide();
-        console.log(res);
+      return;
+    }
+    let  apiUrl =  '/gst-details/' + gstin;
+    this.productService.getMethod(apiUrl).subscribe((res: any) => {
+      this._spinner.hide();
           this._spinner.hide();
           this.toastr.success(res.message);
           const withoutFirstAndLast = res.result.gstin.slice(2, -3);

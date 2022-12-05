@@ -19,7 +19,8 @@ import htmlToPdfmake from 'html-to-pdfmake';
   styleUrls: ['./kam-reply.component.scss']
 })
 export class KamReplyComponent implements OnInit {
-  @ViewChild('pdfTable') pdfTable: ElementRef;
+  // @ViewChild('pdfTable') pdfTable: ElementRef;
+  @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
 
   compId:any;
   compInfo:any;
@@ -133,6 +134,7 @@ export class KamReplyComponent implements OnInit {
     const documentDefinition = { content: html };
     pdfMake.createPdf(documentDefinition).open(); 
   }
+
 }
 
 

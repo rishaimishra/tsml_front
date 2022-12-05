@@ -30,9 +30,9 @@
           </div>
           <!-- List start -->
 
-          <div class="demo" *ngFor="let productData of selectedItem; let i = index">
+          <div class="demo">
             <div id="accordion" class="accordion accordion--">
-              <div class="card mb-0">
+              <div class="card mb-0" *ngFor="let productData of selectedItem; let i = index">
                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
                   [attr.data-target]="'#collapseOne'+i" (click)="getCatNdProductId(productData.product_id, productData.cat_id)">
                   <div class="acc-pro-pic">

@@ -90,6 +90,7 @@ export class PoEditComponent implements OnInit {
   percentPrice:any;
   afterPrePrice:any;
   userAfterPrePrice:any;
+  categoryId:any;
 
 
   constructor(
@@ -161,6 +162,7 @@ export class PoEditComponent implements OnInit {
       if (res.status == 1) {
         this.editProductId = res.result[0]['product_id'];
         this.product_data = res.result;
+        console.log('222',this.product_data);
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.rfqNumber = this.product_data[0]['rfq_no'];
@@ -168,6 +170,7 @@ export class PoEditComponent implements OnInit {
         this.poInfo = this.selectedItem[0];
         this.show_data = true;
         for (let i = 0; i < this.selectedItem.length; i++) {
+          this.categoryId = this.selectedItem[i]['cat_id'];
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
         }
@@ -214,12 +217,13 @@ export class PoEditComponent implements OnInit {
     this.newDate = dd + '-' + mm + '-' + yyyy;
 
     this.spinner.show();
-    let sizeFilter = {
+    let subCatName = {
       product_id: this.catId,
     }
-    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+    this._product.filterProducts(subCatName).subscribe((res: any) => {
       if (res.success == true) {
         this.category = res.getCategory;
+        this.removeCat(this.categoryId);
         this.spinner.hide();
       }
     }, err => {
@@ -227,6 +231,15 @@ export class PoEditComponent implements OnInit {
       this.spinner.hide();
     })
   };
+
+  removeCat(i:any) {
+    let indx = this.category.findIndex((item: any) => item.id == i);
+    if (indx !== -1) {
+      this.category.splice(indx, 1);
+    }
+  }
+
+
   deleteRfqById(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -270,6 +283,7 @@ export class PoEditComponent implements OnInit {
   selectItems(event: any) {
     let categoryId = event.target.value;
     this.categoryid = event.target.value;
+    this.removeCat(categoryId);
     this.spinner.show();
     let url = '/product-details/' + this.editProductId + '/' + categoryId;
     this.productService.getMethod(url).subscribe(

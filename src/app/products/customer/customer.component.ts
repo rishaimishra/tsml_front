@@ -9,6 +9,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
 import { CustomValidators } from './custom1Validator';
+import { ThisReceiver } from '@angular/compiler';
 
 
 @Component({
@@ -105,6 +106,9 @@ export class CustomerComponent implements OnInit {
   plantSelectArr:any = [];
   afterPrePrice:any;
   userAfterPrePrice:any;
+  countReqoutArr:any = [];
+  countSche:any;
+  rfqUserId:any;
 
 
   @ViewChild("remarksModel")
@@ -164,6 +168,7 @@ export class CustomerComponent implements OnInit {
     this.myForm = this._fb.group({
       arr: this._fb.array([])
     })
+    this.getStatusCount();
   }
 
   createItem(qty,to_date) {
@@ -196,6 +201,7 @@ export class CustomerComponent implements OnInit {
       if (res.message == 'success') {
         this.editProductId = res.result[0]['product_id'];
         this.product_data = res.result;
+        this.rfqUserId = this.product_data[0].user_id;
         this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
@@ -203,11 +209,11 @@ export class CustomerComponent implements OnInit {
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
-
           form_data_array.forEach(element => {
             if (element.quote_status == 3) {
-              this.isSchduleArr.push(element.quote_status);
-            } else {
+              this.isSchduleArr.push(element?.quote_status);
+            } 
+            else {
               this.isSchduleArr.push(0);
             }
           });
@@ -223,7 +229,7 @@ export class CustomerComponent implements OnInit {
       else {
         this.product_data = '';
       }
-
+      this.reqouteStatus();
     })
   };
 
@@ -286,6 +292,16 @@ export class CustomerComponent implements OnInit {
     if (checked == true) {
       this.requoteArr.push(event.target.value);
     }
+
+    let reqCount = {
+      "sche_no": event.target.value,
+      "counts": 1
+    };
+
+    if (checked == true) {
+      this.countReqoutArr.push(reqCount);
+    }
+
   };
 
   getStatus(id: any, st: number) {
@@ -298,6 +314,13 @@ export class CustomerComponent implements OnInit {
     if (index !== -1) {
       this.requoteArr.splice(index, 1);
     }
+    // coutArr remove 
+    const countArr = this.countReqoutArr.map(Number);
+    const i: number = countArr.indexOf(id);
+    if (index !== -1) {
+      this.countReqoutArr.splice(index, 1);
+    }
+
     if (st === 1) {
       let reqStParam = {
         "id": id,
@@ -417,7 +440,7 @@ export class CustomerComponent implements OnInit {
     let countArr = [];
     let confrmDate = [];
 
-    this.spinner.show();
+    // this.spinner.show();
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -483,6 +506,7 @@ export class CustomerComponent implements OnInit {
         this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
+
       if (this.requoteArr.length > 0) {
         this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
           if (res.message == 'status updated') {
@@ -490,6 +514,12 @@ export class CustomerComponent implements OnInit {
           } else {
             this._toaster.error(res.message);
           }
+        })
+      }
+
+      if (this.countReqoutArr.length > 0) {
+        this._product.reqouteCount(this.countReqoutArr).subscribe((res:any) => {
+          console.log(res);
         })
       }
       if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
@@ -516,7 +546,19 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
-
+    let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
+    if (this.countSche['total'] == addCount) {
+      let userId = localStorage.getItem('USER_ID');
+      let confimerRfq = {
+        "rfq_no": this.productId,
+        "user_id": this.rfqUserId,
+        "kam_id": userId
+      }
+      this._product.confirmRfqEmail(confimerRfq).subscribe((res:any) => {
+        console.log(res);
+      })
+    } 
+    
     if (userRol == 'Kam') {
       let qouteReq = {
         "rfq_no": this.productId,
@@ -855,7 +897,12 @@ export class CustomerComponent implements OnInit {
       } 
     })
   };
-
+  reqouteStatus() {
+    let apiUrl = '/user/get_count_requote/'+ this.productId;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      console.log(res);
+    })
+  }
 
   getSubCategory(catId:any) {
     this.spinner.show();
@@ -873,4 +920,13 @@ export class CustomerComponent implements OnInit {
     })
   }
   
+  getStatusCount() {
+    let apiUrl = '/user/get_count_sche/'+this.productId;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      console.log(res);
+      if (res.status == 1 && res.message == 'success') {
+        this.countSche = res.result;
+      }
+    })
+  }
 }

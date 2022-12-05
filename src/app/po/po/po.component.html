@@ -20,7 +20,7 @@
         <div class="prod-list-detl">
           <div class="sec-pro-cat">
             <span>Add item</span>
-            <select [disabled]="userType" (change)="selectItems($event)"
+            <select disabled (change)="selectItems($event)"
               class="form-control form-control-sm pointerTab">
               <option value="">--select--</option>
               <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
@@ -310,7 +310,7 @@
           </div>
         </div>
         <div class="text-right pb-5">
-          <button type="button" class="btn btn-primary" (click)="submitPO()"><i class="fa fa-paper-plane"></i>
+          <button type="button" [disabled]="!userType" class="btn btn-primary" (click)="submitPO()"><i class="fa fa-paper-plane"></i>
             Submit</button> &nbsp;
           <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
         </div>

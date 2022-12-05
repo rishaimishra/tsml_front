@@ -83,6 +83,8 @@ export class PoComponent implements OnInit {
   subCategory:any;
   afterPrePrice:any;
   userAfterPrePrice:any;
+  rfqUserId:any;
+  rfqNumber:any;
 
 
   constructor(
@@ -156,6 +158,8 @@ export class PoComponent implements OnInit {
       if (res.status == 1) {
         this.editProductId = res.result[0]['product_id'];
         this.product_data = res.result;
+        this.rfqUserId = this.product_data[0].user_id;
+        this.rfqNumber = this.product_data[0].rfq_no;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.catId = this.selectedItem[0].product_id;
@@ -423,6 +427,14 @@ export class PoComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+
+    let orderConfirmReq = {
+      "rfq_no": this.rfqNumber,
+      "user_id": this.rfqUserId
+    }
+      this._product.orderConfirmEmail(orderConfirmReq).subscribe((res:any) => {
+        console.log(res);
+      })
 
     let rfqStatus = {
       "rfq_no": this.productId,

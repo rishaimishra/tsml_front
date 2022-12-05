@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
-import * as uuid from 'uuid';
 declare var $: any;
-import { DatepickerModule } from 'ng2-datepicker';
 import { StateCityService } from 'src/app/service/state-city.service';
 
 //import uuid from "uuid";
@@ -131,7 +128,6 @@ export class ProductDetailsComponent implements OnInit {
         this.spinner.hide();
         if (res.status == 1) {
           this.product_data = res.result;
-          console.log('ddd',this.product_data);
           this.selectedItem.push(this.product_data);
           this.show_data = true;
           // const uniqueID = uuid.v4();
@@ -180,7 +176,6 @@ export class ProductDetailsComponent implements OnInit {
     let categoryId = event.target.value;
     this.removeCat(categoryId);
     this.removeCatArr.push(categoryId);
-    // this.getSubCategory(this.productId, categoryId);
     this.categoryid = event.target.value;
     this.spinner.show();
     let url = '/product-details/' + this.productId + '/' + categoryId;
@@ -191,7 +186,6 @@ export class ProductDetailsComponent implements OnInit {
           this.product_data = res.result;
           this.selectedItem.push(this.product_data);
           this.show_data = true;
-          // const uniqueID = uuid.v4();
           const scheduleNo = Math.floor(1000 + Math.random() * 9000);
           this.quotation = [];
           this.quotation.push({
@@ -292,7 +286,7 @@ export class ProductDetailsComponent implements OnInit {
       "user_id": userId
     }
     this._product.rfqSubmitedEmail(rfqEmailReq).subscribe((res:any) => {
-      console.log(res);
+
     })
   }
   addItem(i: any) {

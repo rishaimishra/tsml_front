@@ -42,8 +42,6 @@ export class AuthService {
     return this._http.post<verifyOtpResponse>(`${environment.apiEndpointBase}/${this.VERIFY_OTP_URL}`, requestData);
   };
 
-  // http://localhost/TSML/api/password-email
-
   resetPassByEmail(data: any) {
     return this._http.post(this.BesUrl + '/password-update', data);
   };

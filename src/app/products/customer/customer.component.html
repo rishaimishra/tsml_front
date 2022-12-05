@@ -23,13 +23,9 @@
                             <div class="card md-0">
                                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
                                     [attr.data-target]="'#collapseOne'+i">
-                                    <!-- <button type="button" class="btn btn-link" data-toggle="collapse"
-                                        [attr.data-target]="'#collapseOne'+i">
-                                        <i class="fa fa-plus"></i>
-                                    </button> -->
                                     <div class="rowBox">
                                         <div class="oodr-info-03">
-                                            <span>Customer Name</span>
+                                            <span>Customer Name {{isSchduleArr[i]}}</span>
                                             <p>{{productData.user_name}}</p>
                                         </div>
                                         <div class="oodr-info-03">
@@ -73,8 +69,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne"
-                                    data-parent="#accordionExample"> -->
+
                                 <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                                     <div class="card-body">
                                         <div class="row mt-3"
@@ -379,10 +374,9 @@
                                                 <div class="col-lg-12 mb-3" *ngIf="formData.kam_price != null">
                                                     <div *ngIf="userByrole != 'Sales'">
                                                         <div class="app-reg-btn">
-                                                            <div class="form-check form-check-inline">
+                                                            <div class="form-check form-check-inline" *ngIf="formData.sche_ct != 3">
                                                                 <input type="radio" class="form-check-input"
                                                                     id="inlineCheckbox0"
-                                                                    [checked]="formData.quote_status == 3"
                                                                     (change)="getRequote($event)"
                                                                     value="{{formData?.schedule_no}}"
                                                                     name="fav_language_{{formData?.id}}">
@@ -407,26 +401,8 @@
                                                 </div>
                                             </ng-container>
                                         </div>
-
-
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 mb-3 text-right">
-                        <div (change)="selectRadio($event)" *ngIf="userByrole == 'Sales'">
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="radio" value="5" name="flexRadioDefault"
-                                    id="flexRadioDefault1" />
-                                <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
-                            </div>
-
-                            <!-- Default checked radio -->
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="radio" value="2" name="flexRadioDefault"
-                                    id="flexRadioDefault2" />
-                                <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
                             </div>
                         </div>
                     </div>

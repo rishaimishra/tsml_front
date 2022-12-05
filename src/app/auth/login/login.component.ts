@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              text: 'Welcome to KAM Dashboard',
+              text: 'Welcome to CAM Dashboard',
               showConfirmButton: false,
               timer: 1500
             })
