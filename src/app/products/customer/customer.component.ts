@@ -80,6 +80,7 @@ export class CustomerComponent implements OnInit {
   daysCostCount:any;
   daysCostCountCustomer: any;
   messages:any;
+  p: number = 1;
   poRedirectArr:any = [];
   percentPrice:any;
   remarksData: any = '';
@@ -214,7 +215,7 @@ export class CustomerComponent implements OnInit {
               this.isSchduleArr.push(element?.quote_status);
             } 
             else {
-              this.isSchduleArr.push(0);
+              this.isSchduleArr.push(element?.quote_status);
             }
           });
         }

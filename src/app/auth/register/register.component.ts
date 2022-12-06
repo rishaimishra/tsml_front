@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
+  AbstractControl,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -90,6 +92,15 @@ export class RegisterComponent implements OnInit {
 
   mobile: any;
   haveOtp: boolean = true;
+  emailId:any;
+  password:any;
+  gstNum:any;
+  orgPan:any;
+  orgName:any;
+  orgAddrs:any;
+  linkedAddr:any;
+  gstNumber:any;
+
   invildForm: boolean = true;
   addressProof: boolean = false;
   checkbook: boolean = false;
@@ -108,6 +119,9 @@ export class RegisterComponent implements OnInit {
   checkedNo: boolean = false;
   businessChecked: boolean = false;
   intrestedIndistribution: boolean = false;
+  addressForm: FormGroup;
+  arr: FormArray;
+  creds:any;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High' },
@@ -138,79 +152,101 @@ export class RegisterComponent implements OnInit {
     private _spinner: NgxSpinnerService,
     private productService: ProductsService
   ) {
-    this.registerForm = _fb.group({
-      name: ['Sam'],
-      email: ['', Validators.required, Validators.email],
-      phone: [
-        '',
-        [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')],
-      ],
-      password: ['', Validators.required],
-      gstin: ['', Validators.required],
-      gstin2: [''],
-      org_pan: ['', Validators.required],
-      org_name: [''],
-      org_address: [''],
-      pref_product: ['', Validators.required],
-      pref_product_size: ['', Validators.required],
-      user_type: [''],
-      company_gst: [''],
-      company_linked_address: [''],
-      company_pan: ['', Validators.required],
-      company_name: [''],
-      business_nature: ['', Validators.required],
-      first_name: [''],
-      last_name: [''],
+    // this.registerForm = _fb.group({
+    //   name: ['Sam'],
+    //   email: ['', Validators.required, Validators.email],
+    //   phone: ['',[Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
+    //   password: ['', Validators.required],
+    //   gstin: ['', Validators.required],
+    //   org_pan: ['', Validators.required],
+    //   org_name: [''],
+    //   org_address: [''],
+    //   pref_product: ['', Validators.required],
+    //   pref_product_size: ['', Validators.required],
+    //   user_type: [''],
+    //   company_gst: [''],
+    //   company_linked_address: [''],
+    //   // billing_address: this._fb.array([]),
+    //   addressone: [''],
+    //   addresstwo: [''],
+    //   city: [''],
+    //   state: [''],
+    //   pincode: [''],
+    //   company_pan: ['', Validators.required],
+    //   company_name: [''],
+    //   business_nature: ['', Validators.required],
+    //   first_name: [''],
+    //   pan_dt: [''],
+    //   gst_dt: [''],
+    //   formD_dt: [''],
+    //   tcs_dt: [''],
+    //   is_tcs_tds_applicable: [],
+    //   address_type: [''],
+    //   address_proof_file: ['', Validators.required],
+    //   cancel_cheque_file: ['', Validators.required],
+    //   pan_card_file: ['', Validators.required],
+    //   gst_certificate: ['', Validators.required],
+    //   turnover_declare: ['', Validators.required],
+    //   itr_last_yr: ['', Validators.required],
+    //   form_d: [''],
+    //   registration_certificate: ['', Validators.required],
+    //   tcs: ['', Validators.required],
+    //   distribution: []
+    // });
+
+  }
+
+  get ff() { return this.addressForm.controls; }
+  get t() { return this.f.arr as FormArray; }
+  getControl(item: AbstractControl): FormControl { return item as FormControl; }
+  
+  get f(): { [key: string]: AbstractControl } {
+    return this.addressForm.controls;
+  };
+
+  ngOnInit(): void {
+    this.addressForm = this._fb.group({
+      credentials: this._fb.array([this.createItem('','','','','','')])
+    })
+
+  }
+  createItem(gstin:any,state:any,city:any,addrOne:any,addrTwo:any,pincode:any) {
+    return this._fb.group({
+      addressone: [addrOne],
+      gstin: [gstin],
+      addresstwo: [addrTwo],
+      city: [city],
+      state: [state],
+      pincode: [pincode],
+    })
+  };
+
+  addItem() {
+    this.creds = this.addressForm.controls.credentials as FormArray;
+    this.creds.push (this._fb.group({
       addressone: [''],
+      gstin: [''],
       addresstwo: [''],
-      pan_dt: [''],
-      gst_dt: [''],
-      formD_dt: [''],
-      tcs_dt: [''],
       city: [''],
       state: [''],
       pincode: [''],
-      is_tcs_tds_applicable: [],
-      address_type: [''],
-      address_proof_file: ['', Validators.required],
-      cancel_cheque_file: ['', Validators.required],
-      pan_card_file: ['', Validators.required],
-      gst_certificate: ['', Validators.required],
-      turnover_declare: ['', Validators.required],
-      itr_last_yr: ['', Validators.required],
-      form_d: [''],
-      registration_certificate: ['', Validators.required],
-      tcs: ['', Validators.required],
-      distribution: []
-    });
+    }))
 
-  }
-  get f() {
-    return this.registerForm.controls;
-  }
-
-  ngOnInit(): void {
-
-    //   $( document ).ready(function() {
-    //     $(".custom-file-input").on("change", function() {
-    //       var fileName = $().val().split("\\").pop();
-    //       $().siblings(".custom-file-label").addClass("selected").html(fileName);
-    //     });
-    // });
-
-    // $('#tree1').treed();
-  }
+  };
+  saveAddr() {
+    console.log('creds',this.creds.value);
+  };
 
   checkTerms(event: any) {
     this.isTermCondition = event.target.checked;
-  }
+  };
   onCountryChange($event: any): void {
     this.states = State.getStatesOfCountry(
       JSON.parse(this.country.nativeElement.value).isoCode
     );
     this.selectedCountry = JSON.parse(this.country.nativeElement.value);
     this.cities = this.selectedState = this.selectedCity = null;
-  }
+  };
 
   checkDistributionYes(event: any) {
     this.intrestedIndistribution = true;
@@ -233,42 +269,42 @@ export class RegisterComponent implements OnInit {
     this.selectedState = JSON.parse(this.state.nativeElement.value);
     this.registerForm.value.state = this.selectedState.name;
     this.selectedCity = null;
-  }
+  };
 
   onCityChange(event: any): void {
     this.selectedCity = JSON.parse(this.city.nativeElement.value);
     this.registerForm.value.city = this.selectedCity.name;
-  }
+  };
 
   firsttab() {
     this.addressTab = false;
     this.uploadTab = false;
     this.mobileTab = true;
     this.ekycTab = false;
-  }
+  };
   mobileTabContinue() {
     this.addressTab = false;
     this.uploadTab = false;
     this.mobileTab = false;
     this.ekycTab = true;
-  }
+  };
 
   ekycTabContinue() {
     this.mobileTab = false;
     this.uploadTab = false;
     this.ekycTab = false;
     this.addressTab = true;
-  }
+  };
 
   addressTabContinue() {
     this.mobileTab = false;
     this.ekycTab = false;
     this.addressTab = false;
     this.uploadTab = true;
-  }
+  };
   selectCustomer(event: any) {
     this.userType = event.target.value;
-  }
+  };
 
   onSelectFerroChrome(event: any) {
     const productValue = event.target.value;
@@ -314,7 +350,7 @@ export class RegisterComponent implements OnInit {
       }
       return selectedName;
     });
-  }
+  };
 
   choosProductSize(event: any) {
     this.chooseProductSize = event.target.value;
@@ -337,7 +373,7 @@ export class RegisterComponent implements OnInit {
     } else {
       this.businessChecked = false;
     }
-  }
+  };
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;
   };
@@ -374,7 +410,7 @@ export class RegisterComponent implements OnInit {
   }
   checkOtp(event: any) {
     this.verifyOtp = event.target.value;
-  }
+  };
   checkVerifyOtp() {
     this._spinner.show();
     let otpVerify = {
@@ -399,7 +435,7 @@ export class RegisterComponent implements OnInit {
         }
       );
     }
-  }
+  };
 
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
@@ -420,7 +456,7 @@ export class RegisterComponent implements OnInit {
       this.addressProof = false;
     }
 
-  }
+  };
   resetUpload() {
     // this.resetFile(this.file1);
     this.addProof = null;
@@ -446,12 +482,12 @@ export class RegisterComponent implements OnInit {
     } else {
       this.checkbook = false;
     }
-  }
+  };
   resetCheckbook() {
     this.checkBook = null;
     this.cancelCheckBook = '';
     this.showResetUpload2 = false;
-  }
+  };
   uploadPan(event: any) {
     this.panUpload = event.target.files[0];
     let file = event.target.files[0];
@@ -475,7 +511,7 @@ export class RegisterComponent implements OnInit {
     this.panCardUpload = null;
     this.panUpload = '';
     this.showResetUpload3 = false;
-  }
+  };
   gstCertificateFileUpload(event: any) {
     this.gstUpload = event.target.files[0];
     let file = event.target.files[0];
@@ -523,7 +559,7 @@ export class RegisterComponent implements OnInit {
     this.turnOver = null;
     this.turnoverFile = '';
     this.showResetUpload5 = false;
-  }
+  };
   itrFileUpload(event: any) {
     this.itrFile = event.target.files[0];
     let file = event.target.files[0];
@@ -547,7 +583,7 @@ export class RegisterComponent implements OnInit {
     this.itrFileUpl = null;
     this.itrFile = '';
     this.showResetUpload6 = false;
-  }
+  };
   formDupload(event: any) {
     this.formDfile = event.target.files[0];
     let file = event.target.files[0];
@@ -565,7 +601,7 @@ export class RegisterComponent implements OnInit {
   resetFormD() {
     this.formDfile = '';
     this.showResetUpload7 = false;
-  }
+  };
   consentLetterUpload(event: any) {
     this.consentLetter = event.target.files[0];
     let file = event.target.files[0];
@@ -642,7 +678,7 @@ export class RegisterComponent implements OnInit {
   };
   getGstIn() {
     this._spinner.show();
-    let gstin = this.registerForm.value.gstin;
+    let gstin = this.gstNum;
     if (gstin == '') {
       Swal.fire({
         icon: 'error',
@@ -652,22 +688,30 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    let  apiUrl =  '/gst-details/' + gstin;
-    this.productService.getMethod(apiUrl).subscribe((res: any) => {
+    // let  apiUrl =  '/gst-details/' + gstin;
+    // this.productService.getMethod(apiUrl).subscribe((res: any) => {
+    this._auth.gstApi().subscribe((res: any) => {
       this._spinner.hide();
           this._spinner.hide();
           this.toastr.success(res.message);
           const withoutFirstAndLast = res.result.gstin.slice(2, -3);
-          this.registerForm.get("state").setValue(res.result.pradr.addr.stcd);
-          this.registerForm.get("city").setValue(res.result.pradr.addr.dst);
-          this.registerForm.get("pincode").setValue(res.result.pradr.addr.pncd);
-          this.registerForm.get("addressone").setValue(res.result.pradr.addr.bnm);
-          this.registerForm.get("addresstwo").setValue(res.result.pradr.addr.st);
-          this.registerForm.get("company_gst").setValue(res.result.gstin);
-          this.registerForm.get("company_linked_address").setValue(res.result.stj);
-          this.registerForm.get("org_address").setValue(res.result.pradr.addr.stcd);
-          this.registerForm.get("org_name").setValue(res.result.lgnm);
-          this.registerForm.get("org_pan").setValue(withoutFirstAndLast);
+          let state = res.result.pradr.addr.stcd;
+          let city = res.result.pradr.addr.dst;
+          let pincode = res.result.pradr.addr.pncd;
+          let addrOne = res.result.pradr.addr.bnm;
+          let addrTwo = res.result.pradr.addr.st;
+          let gstin = res.result.gstin;
+          this.linkedAddr = res.result.stj;
+          this.orgAddrs = res.result.pradr.addr.stcd;
+          this.orgName = res.result.lgnm;
+          this.orgPan = withoutFirstAndLast;
+          this.gstNumber = res.result.gstin;
+          
+          this.addressForm = this._fb.group({
+            credentials: this._fb.array([])
+          })
+          this.creds = this.addressForm.get('credentials') as FormArray;
+          this.creds.push(this.createItem(gstin,state,city,addrOne,addrTwo,pincode));
 
         if (res.flag == false) {
           this._spinner.hide();
@@ -707,77 +751,78 @@ export class RegisterComponent implements OnInit {
   }
   submitRegister() {
     const fileData = new FormData();
-    this._spinner.show();
-    this.submitted = true;
+    // this._spinner.show();
+    // this.submitted = true;
 
-    if (!this.addProof) {
-      this.toastr.error('', 'Address proof required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.checkBook) {
-      this.toastr.error('', 'Checkbook is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.panCardUpload) {
-      this.toastr.error('', 'Pan is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.gstFile) {
-      this.toastr.error('', 'GST certificate is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.turnOver) {
-      this.toastr.error('', 'Turnover-section is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.itrFileUpl) {
-      this.toastr.error('', 'ITR file is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.consentFile) {
-      this.toastr.error('', 'Consent Letter is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.cerftificateUpl) {
-      this.toastr.error('', 'Registration Certificates is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.tcsUplod) {
-      this.toastr.error('', 'TCS is required');
-      this._spinner.hide();
-      return;
-    }
+    // if (!this.addProof) {
+    //   this.toastr.error('', 'Address proof required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.checkBook) {
+    //   this.toastr.error('', 'Checkbook is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.panCardUpload) {
+    //   this.toastr.error('', 'Pan is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.gstFile) {
+    //   this.toastr.error('', 'GST certificate is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.turnOver) {
+    //   this.toastr.error('', 'Turnover-section is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.itrFileUpl) {
+    //   this.toastr.error('', 'ITR file is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.consentFile) {
+    //   this.toastr.error('', 'Consent Letter is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.cerftificateUpl) {
+    //   this.toastr.error('', 'Registration Certificates is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.tcsUplod) {
+    //   this.toastr.error('', 'TCS is required');
+    //   this._spinner.hide();
+    //   return;
+    // }
 
-    fileData.append('first_name', this.registerForm.value.first_name);
-    fileData.append('last_name', this.registerForm.value.last_name);
-    fileData.append('phone', this.mobileNumber);
-    fileData.append('org_pan', this.registerForm.value.org_pan);
-    fileData.append('org_name', this.registerForm.value.org_name);
-    fileData.append('org_address', this.registerForm.value.org_address);
-    fileData.append('user_type', this.userType);
-    fileData.append('pref_product_size', this.chooseProductSize);
-    fileData.append('email', this.registerForm.value.email);
-    fileData.append('name', 'John');
-    fileData.append('company_gst', this.registerForm.value.company_gst);
-    fileData.append('company_pan', this.registerForm.value.company_pan);
-    fileData.append('password', this.registerForm.value.password);
-    fileData.append('pref_product_size', this.chooseProductSize);
-    fileData.append('pref_product', this.chooseProduct);
-    fileData.append('user_type', this.userType);
-    fileData.append('business_nature', this.businessType);
-    fileData.append('addressone', this.registerForm.value.addressone);
-    fileData.append('addresstwo', this.registerForm.value.addresstwo);
-    fileData.append('state', this.selectedState?.name);
-    fileData.append('city', this.selectedCity?.name);
-    fileData.append('pincode', this.registerForm.value.pincode);
+    // fileData.append('first_name', this.registerForm.value.first_name);
+    // fileData.append('last_name', this.registerForm.value.last_name);
+    // fileData.append('phone', this.mobileNumber);
+    // fileData.append('org_pan', this.registerForm.value.org_pan);
+    // fileData.append('org_name', this.registerForm.value.org_name);
+    // fileData.append('org_address', this.registerForm.value.org_address);
+    // fileData.append('user_type', this.userType);
+    // fileData.append('pref_product_size', this.chooseProductSize);
+    fileData.append('email', this.emailId);
+    // fileData.append('name', 'John');
+    // fileData.append('company_gst', this.registerForm.value.company_gst);
+    // fileData.append('company_pan', this.registerForm.value.company_pan);
+    fileData.append('password', this.password);
+    // fileData.append('pref_product_size', this.chooseProductSize);
+    // fileData.append('pref_product', this.chooseProduct);
+    // fileData.append('user_type', this.userType);
+    // fileData.append('business_nature', this.businessType);
+    fileData.append('billing_address', this.creds.value);
+    // fileData.append('addressone', this.registerForm.value.addressone);
+    // fileData.append('addresstwo', this.registerForm.value.addresstwo);
+    // fileData.append('state', this.registerForm.value.state);
+    // fileData.append('city',this.registerForm.value.city);
+    // fileData.append('pincode', this.registerForm.value.pincode);
     fileData.append('address_proof_file', this.selectedFile);
     fileData.append('cancel_cheque_file', this.cancelCheckBook);
     fileData.append('pan_card_file', this.panUpload);
@@ -789,10 +834,10 @@ export class RegisterComponent implements OnInit {
     fileData.append('tcs', this.tcsFile);
     fileData.append('is_tcs_tds_applicable', this.isTDS_applicable);
     fileData.append('distribution', this.distributionValue);
-    fileData.append('pan_dt', this.registerForm.value.pan_dt);
-    fileData.append('gst_dt', this.registerForm.value.gst_dt);
-    fileData.append('formD_dt', this.registerForm.value.formD_dt);
-    fileData.append('tcs_dt', this.registerForm.value.tcs_dt);
+    // fileData.append('pan_dt', this.registerForm.value.pan_dt);
+    // fileData.append('gst_dt', this.registerForm.value.gst_dt);
+    // fileData.append('formD_dt', this.registerForm.value.formD_dt);
+    // fileData.append('tcs_dt', this.registerForm.value.tcs_dt);
 
 
     this._auth.register(fileData).subscribe(

@@ -19,13 +19,13 @@
       <div class="container">
         <div class="prod-list-detl">
           <div class="gd-po">
-              <div class="sec-pro-cat" *ngIf="showButtons > 0">
+              <!-- <div class="sec-pro-cat" *ngIf="showButtons > 0">
                 <span>Add item</span>
                 <select (change)="selectItems($event)" class="form-control form-control-sm pointerTab">
                   <option value="">--select--</option>
                   <option value="{{cat.id}}" *ngFor="let cat of categori">{{cat.cat_name}}</option>
                 </select>
-              </div>
+              </div> -->
 
             <div class="download-letterhead-PO-btn">
               <a [href]="leaterheadFile" *ngIf="!userType" target="_blank" class="leftClass" data-toggle="tooltip"

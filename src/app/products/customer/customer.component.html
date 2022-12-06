@@ -439,7 +439,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let history of negotiationHistory">
+                                    <tr *ngFor="let history of negotiationHistory | paginate: { itemsPerPage: 10, currentPage: p }">
                                         <td>
                                             <div class="product">
                                                 <div class="cart-details">
@@ -476,6 +476,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="text-right">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                              </div>
                         </div>
                     </div>
                 </div>
