@@ -497,6 +497,32 @@ export class CustomerComponent implements OnInit {
             }
           })
         }
+
+        // Customer notification send
+        if (this.userByrole == 'Kam') {
+          let userId = localStorage.getItem('USER_ID');
+          let salesNotiReq = {
+            "desc_no": this.productId,
+            "user_id": userId,
+            "desc": 'RFQ has been updated',
+            "url_type": 'R',
+            "sender_id": this.rfqUserId
+          }
+          this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
+          })
+        }
+          // Kam notification send
+        else {
+          let userId = localStorage.getItem('USER_ID');
+          let salesNotiReq = {
+            "desc_no": this.productId,
+            "user_id": userId,
+            "desc": 'RFQ has been updated',
+            "url_type": 'R'
+          }
+          this._product.camNotification(salesNotiReq).subscribe((res:any) => {
+          })
+        }
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -541,6 +567,17 @@ export class CustomerComponent implements OnInit {
           }
           this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
           })
+          // Sales notification send
+          let userId = localStorage.getItem('USER_ID');
+          let salesNotiReq = {
+            "desc_no": this.productId,
+            "user_id": userId,
+            "desc": 'Tentative date and quantity updated',
+            "url_type": 'R'
+          }
+          this._product.salesNoti(salesNotiReq).subscribe((res:any) => {
+          })
+
         }
       } 
     }, err => {

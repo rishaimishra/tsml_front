@@ -65,13 +65,12 @@
                            class="inputValidation">Remarks is required</small>
                      </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer" *ngIf="compInfo?.complain_status != 2">
+                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
                      <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
                      <label class="custom-file-label" for="customFile">{{fileName ?
                          fileName:'Upload Attachement'}}</label>
-                     
                   </div>
-                   <div class="col-lg-8 col-md-6 col-sm-6" *ngIf="compInfo?.complain_status != 2">
+                   <div class="col-lg-7 col-md-4 col-sm-4" *ngIf="compInfo?.complain_status != 2">
                       <div class="reply_btn_box">
                          <div class="clos-btn">
                            <div class="form-check">

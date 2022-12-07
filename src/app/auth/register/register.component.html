@@ -63,14 +63,6 @@
                           </div>
                           <!-- <div *ngIf="f['phone']?.errors?.pattern">
                             <small class="text-danger">Please, Enter 10 digit mobile number.</small>
-                          </div>
-                          <div *ngIf="
-                                f['phone']?.invalid &&
-                                (f['phone']?.touched || submitted)
-                              ">
-                            <small class="text-danger">
-                              Mobile Number is required
-                            </small>
                           </div> -->
                         </div>
                       </div>
@@ -332,7 +324,7 @@
                            </div>
                            <form [formGroup]="addressForm">
                            <div id="collapseTwo" class="card-body collapse show" data-parent="#accordion"
-                           formArrayName="credentials" *ngFor="let creds of addressForm.get('credentials')['controls']; let i = index">
+                           formArrayName="credentials" *ngFor="let billingAdd of addressForm.get('credentials')['controls']; let i = index">
                              <div class="row" [formGroupName]="i">
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
@@ -340,7 +332,7 @@
                                   <label>GSTN</label>
                                   <div class="d-flex2 display-f">
                                     <input type="text" formControlName="gstin" [readOnly]="i == 0" class="form-control w-79" />
-                                    <button type="button" class="btn blue-btn" [disabled]="i == 0">
+                                    <button type="button" (click)="billGstin(i)" class="btn blue-btn" [disabled]="i == 0">
                                       Get Details
                                     </button>
                                   </div>
@@ -350,40 +342,49 @@
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>Address Line1</label>
-                                   <input type="text" formControlName="addressone" [readOnly]="i == 0" class="form-control" />
+                                   <input type="text" formControlName="addressone" id="adr_{{i}}" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>Address Line2</label>
-                                   <input type="text" formControlName="addresstwo" [readOnly]="i == 0" class="form-control" />
+                                   <input type="text" formControlName="addresstwo" id="adrt_{{i}}" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>City</label>
-                                   <input type="text" formControlName="city" [readOnly]="i == 0" class="form-control" />
+                                   <input type="text" formControlName="city" id="city_{{i}}" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>State</label>
-                                   <input type="text" formControlName="state" [readOnly]="i == 0" class="form-control" />
+                                   <input type="text" formControlName="state" id="ste_{{i}}" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
                                <div class="col-12 col-lg-6 col-sm-6">
                                  <div class="form-group">
                                    <label>Pincode</label>
-                                   <input type="text" formControlName="pincode" [readOnly]="i == 0" class="form-control" />
+                                   <input type="text" formControlName="pincode" id="pin_{{i}}" readonly class="form-control" />
                                  </div>
                                </div>
                                <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6"></div>
-                               <div class="col-12 col-lg-6 col-sm-6"></div>
+                               <div class="col-12 col-lg-12 col-sm-6">
+                                  <div class="form-group">
+                                    <div class="form-check ml-2">
+                                      <input type="checkbox" formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
+                                      <label class="form-check-label" for="exampleCheck1">Use this as billing
+                                        address</label>
+                                    </div>
+                                  </div>
+                                </div>
+                               <!-- <div class="col-12 col-lg-6 col-sm-6"></div>
+                               <div class="col-12 col-lg-6 col-sm-6"></div> -->
                              </div>
                            </div>
                           </form>
@@ -394,25 +395,32 @@
                                 New Address</a>
                             </div>
                           </div>
-                          <div class="col-12 col-lg-12 col-sm-6 text-right2">
-                            <div class="form-group">
-                              <button class="btn btn-primary btn-sm" (click)="saveAddr()">Save</button>
-                            </div>
-                          </div>
-                          
                             <!-- Shipping address -->
                             <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
                               <a class="card-title">
                                 Enter Shipping Address
                               </a>
                             </div>
+                            <form [formGroup]="shiptingForm">
                             <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
-                              <div class="row">
+                            <ng-container formArrayName="shipping" *ngFor="let shippingAdd of shiptingForm.get('shipping')['controls'] let i = index">
+                              <div class="row" [formGroupName]="i">
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>GSTN</label>
+                                    <div class="d-flex2 display-f">
+                                      <input type="text" formControlName="gstin" [readOnly]="i == 0" class="form-control w-79" />
+                                      <button type="button" (click)="shipGstin(i)" class="btn blue-btn" [disabled]="i == 0">
+                                        Get Details
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
                                 <!--/-->
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
-                                    <label>Address Line1</label>
-                                    <input readonly type="text"
+                                    <label>Address Line1 {{i}}</label>
+                                    <input type="text" readOnly formControlName="addressone"
                                       class="form-control" />
                                   </div>
                                 </div>
@@ -420,14 +428,14 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Address Line2</label>
-                                    <input type="text"  readonly
+                                    <input type="text"  readOnly formControlName="addresstwo"
                                       class="form-control" />
                                   </div>
                                 </div>
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>State</label>
-                                    <input type="text"  readonly
+                                    <input type="text"  readOnly formControlName="state"
                                       class="form-control">
                                   </div>
                                 </div>
@@ -435,7 +443,7 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>City</label>
-                                    <input type="text" readonly
+                                    <input type="text" readOnly formControlName="city"
                                       class="form-control">
                                   </div>
                                 </div>
@@ -443,34 +451,32 @@
                                 <div class="col-12 col-lg-6 col-sm-6">
                                   <div class="form-group">
                                     <label>Pincode</label>
-                                    <input type="text"  readonly
+                                    <input type="text"  readOnly formControlName="pincode"
                                       class="form-control" />
                                   </div>
                                 </div>
                                 <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6"></div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
+                                <!-- <div class="col-12 col-lg-12 col-sm-6">
                                   <div class="form-group">
                                     <div class="form-check ml-2">
-                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                      <input type="checkbox" formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
                                       <label class="form-check-label" for="exampleCheck1">Use this as billing
                                         address</label>
                                     </div>
                                   </div>
-                                </div>
+                                </div> -->
                                 <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6 text-right2">
-                                  <div class="form-group">
-                                    <a href="#newAddressBlock" data-toggle="collapse"><i class="fa fa-plus-circle"></i>
-                                      Add
-                                      New Address</a>
-                                  </div>
-                                </div>
-                               
                               </div>
+                            </ng-container>
                             </div>
-                           
+                          </form>
+                          <div class="col-12 col-lg-12 col-sm-6 text-right2">
+                            <div class="form-group pointer text-primary">
+                              <a (click)="addShitpItem()"  data-toggle="collapse"><i class="fa fa-plus-circle"></i>
+                                Add
+                                New Address</a>
+                            </div>
+                          </div>
                           </div>
                         </div>
                       </div>
@@ -567,7 +573,7 @@
                                     <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" formControlName="pan_dt" class="form-control" />
+                                    <input type="date" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">
@@ -596,7 +602,7 @@
                                     <span style="color: #f00">*</span>
                                   </td>
                                   <td>
-                                    <input type="date" formControlName="gst_dt" class="form-control" />
+                                    <input type="date" class="form-control" />
                                   </td>
                                   <td class="position-relative">
                                     <div class="uplodimg">

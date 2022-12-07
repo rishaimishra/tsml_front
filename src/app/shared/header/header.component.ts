@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   loginFalse: boolean = false;
   userType: boolean;
   userRol:any;
+  notifications: any;
   
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
@@ -31,13 +32,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
-    
     this.userName = localStorage.getItem('USER_NAME');
     this.userRol = localStorage.getItem('USER_TYPE');
     if(this.userRol == 'Kam') {
+      this.getCamNoti();
       this.userType = false;
-    } else {
+    }
+    else if (this.userRol == 'Sales') {
+      this.getSalesNoti();
       this.userType = true;
+    }
+     else {
+      this.userType = true;
+      this.getCustNoti();
     }
 
     $( document ).ready(function() {
@@ -63,7 +70,7 @@ export class HeaderComponent implements OnInit {
     } else {
       this._router.navigate(['']);
     }
-  }
+  };
   logOut() {
     Swal.fire({
       title: 'Are you sure?',
@@ -81,7 +88,7 @@ export class HeaderComponent implements OnInit {
         this._router.navigate(['/']);
       }
     })
-  }
+  };
   checkLogin () {
     this._product.getDeliveryMethod().subscribe((res: any) => {
       if(res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
@@ -91,5 +98,64 @@ export class HeaderComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  };
+
+  getCamNoti() {
+    let userid = localStorage.getItem('USER_ID');
+    const apiUrl = '/user/get_cam_notification/'+userid;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.notifications = res.result;
+      }
+    })
+  }
+  getSalesNoti() {
+    this._product.getSalesNoti().subscribe((res:any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.notifications = res.result;
+      } 
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login']);
+      }
+    })
+  }
+
+  getCustNoti() {
+    let userid = localStorage.getItem('USER_ID');
+    const apiUrl = '/user/get_cus_notification/'+userid;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.notifications = res.result;
+      } 
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login']);
+      }
+    })
+  }
+
+  removeNoti(id:any) {
+    this._spinner.show();
+    let removeNoti = {
+      "id": id,
+      "status": 2
+    }
+    if (this.userRol == 'Kam') {
+      this._product.removeNotiCam(removeNoti).subscribe((res:any) => {
+        this._spinner.hide();
+          this.getCamNoti();
+        })
+    }
+    else if (this.userRol == 'Sales') {
+      this._product.salesRemoveNoti(removeNoti).subscribe((res:any) => {
+        this._spinner.hide();
+          this.getCamNoti();
+        })
+    }
+    else {
+      this._product.custNotiRemove(removeNoti).subscribe((res:any) => {
+        this._spinner.hide();
+          this.getCamNoti();
+        })
+    }
   }
 }

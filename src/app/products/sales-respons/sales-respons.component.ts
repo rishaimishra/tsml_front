@@ -461,6 +461,17 @@ export class SalesResponsComponent implements OnInit {
         this.spinner.hide();
       }
       
+      let userId = localStorage.getItem('USER_ID');
+        let camNotiReq = {
+          "desc": 'Sales reply updated',
+          "desc_no": this.productId,
+          "user_id": userId,
+          "url_type": 'R'
+        }
+        this._product.camNotification(camNotiReq).subscribe((res:any) => {
+          console.log(res);
+        })
+
       this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
       });
 

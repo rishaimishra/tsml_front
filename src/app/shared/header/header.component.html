@@ -9,46 +9,24 @@
                <ul>
                   <li class="hedTopBtn"> <a class="sign_btn log_btn">English</a> </li>
                   <li>
-                     <a class="shopcut pointer"> <span class="cart-txt"></span>
-                        <i class="fa fa-bell" aria-hidden="true"></i> <span class="noti"></span>
+                     <a class="shopcut pointer"> 
+                        <i class="fa fa-bell" aria-hidden="true"></i> <span class="noti">{{notifications?.length}}+</span>
                      </a>
-                     <div class="shopcutBx">
-                        <div class="shopcutBx_media">
-                           <div class="media">
-                              <em> <a href="#"> <img src="assets/images/product2.png" alt="product"> </a></em>
-                              <div class="media-body">
-                                 <p><a href="#">HC Ferro Chrome</a></p>
-                                 <b>Size: 10-50</b>
+                     <div class="shopcutBx notiBox">
+                        <div class="shopcutBx_media" *ngFor="let noti of notifications; let i = index">
+                           <div class="noti-loop">
+                              <div class="noti-pic">
+                                 <img src="https://i.imgur.com/HYcn9xO.png">
                               </div>
-                           </div>
-                           <a href="#url" class="closecut"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="shopcutBx_media">
-                           <div class="media">
-                              <em> <a href="#"> <img src="assets/images/product1.png" alt="product"> </a></em>
-                              <div class="media-body">
-                                 <p><a href="#">HC Ferro Chrome</a></p>
-                                 <b>Size: 10-50</b>
+                              <div class="noti-info">
+                                 <p>{{noti.desc}} -- {{noti.desc_no }} <span class="badge badge-warning">New</span></p>
                               </div>
-                           </div>
-                           <a href="#url" class="closecut"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="shopcutBx_media">
-                           <div class="media">
-                              <em> <a href="#"> <img src="assets/images/product3.png" alt="product"> </a></em>
-                              <div class="media-body">
-                                 <p><a href="#">HC Ferro Chrome</a></p>
-                                 <b>Size: 10-50</b>
-                              </div>
-                           </div>
-                           <a href="#url" class="closecut"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="cutview_btn">
-                           <ul>
-                              <li><a href="#url" class="sign_btn">View Cart</a></li>
-                           </ul>
+                           </div>                           
+                           <small >-- {{noti.user_id}}</small>
+                           <a (click)="removeNoti(noti.id)" class="closecut pointer text-primary"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </div>
                      </div>
+                     
                   </li>
                   <li class="login-uuser" *ngIf="isUserLogIn != false && loginFalse != true">
                      <div class="after_login"><span><i class="fa fa-user" aria-hidden="true"></i></span> Welcome,

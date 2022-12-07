@@ -30,3 +30,40 @@
        transform: rotateX(0deg);
     }
  }
+
+ .notiBox {
+    padding: 0;
+    width: 500px;
+    p {
+      font-size: 14px;      
+    margin-bottom: 0;
+    padding-right: 15px;
+      span {
+         font-weight: normal;
+      }
+    }
+    small {
+      text-align: right;
+         display: block;
+    }
+    .shopcutBx_media {      
+      a {
+         position: absolute;
+            top: 13px;
+            right: 10px;
+      }
+    }
+ }
+
+ .noti-loop {
+   display: flex;
+   .noti-pic {
+      margin-right: 10px;
+      img {
+         max-width: 16px;
+      }
+   }
+ }
+
+ .notiBox .shopcutBx_media:nth-child(even) {background: #CCC; padding: 5px 15px;}
+ .notiBox .shopcutBx_media:nth-child(odd) {background: #FFF; padding: 5px 15px;}

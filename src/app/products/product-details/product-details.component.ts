@@ -263,6 +263,16 @@ export class ProductDetailsComponent implements OnInit {
         this._router.navigate(['/products/thank-you']);
         this.spinner.hide();
 
+        let userId = localStorage.getItem('USER_ID');
+        let camNotiReq = {
+          "desc": 'RFQ has been submitted',
+          "desc_no": 'RFQ' + rfqNumber,
+          "user_id": userId,
+          "url_type": 'R'
+        }
+        this._product.camNotification(camNotiReq).subscribe((res:any) => {
+          console.log(res);
+        })
       } 
       if (res.result == 'Quote not created') {
         this._toaster.error(res.result);

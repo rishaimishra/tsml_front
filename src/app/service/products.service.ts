@@ -143,4 +143,25 @@ export class ProductsService {
   confirmRfqEmail(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/accepted_price_mail', reqParameter);
   };
+  camNotification(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/cam_notification_submit', reqParameter);
+  };
+  removeNotiCam(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/up_cam_noti', reqParameter);
+  };
+  salesNoti(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/sales_notification_submit', reqParameter);
+  };
+  getSalesNoti() {
+    return this._http.get(this.BesUrl + '/user/get_sales_notification');
+  };
+  salesRemoveNoti(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/up_sales_noti', reqParameter);
+  };
+  custNotiSubmit(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/cus_notification_submit', reqParameter);
+  };
+  custNotiRemove(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/up_cus_noti', reqParameter);
+  };
 }
