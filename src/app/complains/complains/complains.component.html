@@ -11,49 +11,55 @@
             <div class="container">
                 <div class="prof-form-bdy">
                     <form [formGroup]="complainsForm" (ngSubmit)="saveComplains()">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <label for="">Categories</label>
-                                <select (change)="selectCategories($event)" formControlName="com_cate_id" 
-                                [ngClass]="{ 'is-invalid': (f.com_cate_id.errors && f.com_cate_id.touched) || submitted}" class="form-control">
-                                    <option value="">--Categories--</option>
-                                    <option value="{{catgri.id}}" *ngFor="let catgri of categorie">{{catgri.com_cate_name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <label for="">Sub Categories 1</label>
-                                <select formControlName="com_sub_cate_id" 
-                                [ngClass]="{ 'is-invalid': f.com_sub_cate_id.errors && f.com_sub_cate_id.touched || submitted}" class="form-control">
-                                    <option value="">--Sub categories 1--</option>
-                                    <option value="{{subCat1.id}}" *ngFor="let subCat1 of subCatgri1">{{subCat1.com_sub_cate_name}}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="">Remarks</label>
-                                <textarea formControlName="customer_remarks" [ngClass]="{ 'is-invalid': f.customer_remarks.errors && f.customer_remarks.touched || submitted}"
-                                 class="form-control" rows="5"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <label for="">Upload</label>
-                            <div class="custom-file mb-3">
-                                <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input" id="customFile" name="filename">
-                                <label class="custom-file-label" for="customFile">{{fileName ?
-                                    fileName:'Upload Attachement'}}</label>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">Categories</label>
+                                    <select (change)="selectCategories($event)" formControlName="com_cate_id"
+                                        [ngClass]="{ 'is-invalid': (f.com_cate_id.errors && f.com_cate_id.touched) || submitted}"
+                                        class="form-control">
+                                        <option value="">--Categories--</option>
+                                        <option value="{{catgri.id}}" *ngFor="let catgri of categorie">
+                                            {{catgri.com_cate_name}}</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">Sub Categories 1</label>
+                                    <select formControlName="com_sub_cate_id"
+                                        [ngClass]="{ 'is-invalid': f.com_sub_cate_id.errors && f.com_sub_cate_id.touched || submitted}"
+                                        class="form-control">
+                                        <option value="">--Sub categories 1--</option>
+                                        <option value="{{subCat1.id}}" *ngFor="let subCat1 of subCatgri1">
+                                            {{subCat1.com_sub_cate_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="">Remarks</label>
+                                    <textarea formControlName="customer_remarks"
+                                        [ngClass]="{ 'is-invalid': f.customer_remarks.errors && f.customer_remarks.touched || submitted}"
+                                        class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <label for="">Upload</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" accept=".pdf" (change)="onSelectFile($event)"
+                                        class="custom-file-input" id="customFile" name="filename">
+                                    <label class="custom-file-label" for="customFile">{{fileName ?
+                                        fileName:'Upload Attachement'}}</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
-                                Submit</button>&nbsp;
+                        <hr>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+                                    Submit</button>&nbsp;
                                 <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
                             </div>
                         </div>

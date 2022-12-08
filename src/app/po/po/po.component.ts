@@ -316,7 +316,6 @@ export class PoComponent implements OnInit {
   };
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
-      console.log('value', res);
       this.priceVal = res.result;
     });
   };
@@ -427,6 +426,17 @@ export class PoComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+
+    // Cam notification for PO
+    let userId = localStorage.getItem('USER_ID');
+    let salesNotiReq = {
+      "desc_no": this.po_id,
+      "user_id": userId,
+      "desc": 'PO has been generated',
+      "url_type": 'P'
+    }
+    this._product.camNotification(salesNotiReq).subscribe((res:any) => {
+    })
 
     let orderConfirmReq = {
       "rfq_no": this.rfqNumber,

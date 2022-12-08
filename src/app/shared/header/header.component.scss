@@ -33,7 +33,9 @@
 
  .notiBox {
     padding: 0;
-    width: 500px;
+    width: 300px;
+    height: 330px;
+    overflow: auto;
     p {
       font-size: 14px;      
     margin-bottom: 0;
@@ -65,5 +67,5 @@
    }
  }
 
- .notiBox .shopcutBx_media:nth-child(even) {background: #CCC; padding: 5px 15px;}
- .notiBox .shopcutBx_media:nth-child(odd) {background: #FFF; padding: 5px 15px;}
+ .notiBox .shopcutBx_media:nth-child(even) {background: #5774ef96; padding: 5px 15px;}
+ .notiBox .shopcutBx_media:nth-child(odd) {background: #cbccf3; padding: 5px 15px;}

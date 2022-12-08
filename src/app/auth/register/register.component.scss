@@ -7,3 +7,19 @@
 .pointer {
   cursor: pointer;
 }
+
+table.table .custom-file-label {
+  height: auto;
+}
+table.table .custom-file-input:lang(en)~.custom-file-label::after {
+  height: 100%;
+}
+table.table .form-control {
+  height: auto;
+}
+.tab-content .form-control {
+  height: auto;
+}
+.tab-content .blue-btn {
+  border-radius: 0.25rem;
+}

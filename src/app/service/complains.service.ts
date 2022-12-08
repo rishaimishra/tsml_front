@@ -52,6 +52,22 @@ export class ComplainsService {
   orderPlaningUpload(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/monthly_prod_plan_submit', reqParameter);
   };
+  getDepartment() {
+    return this._http.get(this.BesUrl + '/user/get-deparment');
+  };
+
+  getDeprtEmail(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get-deparment-mail', reqParameter);
+  };
+  sendEmail(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/send-com-mail', reqParameter);
+  };
+  emailReceve(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/com-mail-confirm', reqParameter);
+  };
+  openModelSubmit(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get-com-manage-data', reqParameter);
+  };
 
   sendData(data:string) {
     this.subject.next(data)

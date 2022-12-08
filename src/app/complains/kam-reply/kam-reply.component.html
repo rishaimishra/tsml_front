@@ -83,6 +83,7 @@
                          </div>
                          <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
                                   class="fa fa-reply"></i> Reply</button></div>
+                        <div class="reply_btn ml-3"><button class="btn btn-primary btn-sm" (click)="showModel()" id="" data-toggle="modal" data-target="#myModal"> Process Complaint </button></div>
                       </div>
                    </div>
                 </div>
@@ -99,6 +100,170 @@
           </div>
        </section>
     </div>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal" role="dialog">
+         <div class="modal-dialog modal-lg">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h4 class="modal-title">Complaint Management</h4>
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 </div>
+                 <div class="modal-body">
+                     <!--1st step start -->
+                     <form [formGroup]="mailSendForm">
+                     <div class="row">
+                         <div class="col-lg-6">
+                             <div class="form-group">
+                                 <label for="formGroupExampleInput">Select Department</label>
+                                 <select class="form-control" (change)="selectDprt($event)" formControlName="depa_id">
+                                     <option value="">--Select--</option>
+                                     <option value="{{name.id}}" *ngFor="let name of departmentName">{{name.depa_name}}</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="col-lg-6">
+                             <div class="form-group">
+                                 <label for="formGroupExampleInput">Select Email</label>
+                                 <select class="form-control" formControlName="r_mail">
+                                     <option value="">--Select--</option>
+                                     <option value="{{mail.send_mail}}" *ngFor="let mail of departmentMail">{{mail.send_mail}}</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="col-lg-12">
+                             <div class="form-group">
+                                 <label for="formGroupExampleInput">Add Remarks</label>
+                                 <textarea class="form-control" formControlName="ka_remarks"></textarea>
+                             </div>
+                         </div>
+                         <div class="col-lg-8">
+                             <div class="form-group">
+                                 <div class="form-check">
+                                     <input class="form-check-input" (change)="allAttechmt($event)" [checked]="rcveEmail == 1" [disabled]="rcveEmail == 1" type="checkbox" value="" id="defaultCheck1">
+                                     <label class="form-check-label" for="defaultCheck1">
+                                         Has the mail been triggered to the concerned department {{receveEmailInfo?.is_mail_resiv}}
+                                     </label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-lg-4 text-right">
+                           <h5><span class="badge badge-primary pointer" (click)="sendMail()">Send <i class="fa fa-share" aria-hidden="true"></i></span></h5>
+                         </div>
+                        </div>
+                    </form>
+        <!--1st step end -->
+                        <form [formGroup]="uploadAttchmntForm">
+                        <div class="row">
+                         <ng-container *ngIf="rcveEmail == 1">
+                           <div class="col-lg-6 col-md-6 col-sm-6">
+                              <label for="">Uploads the interim report</label>
+                              <div class="custom-file mb-3">
+                                  <input type="file" class="custom-file-input" (change)="uploadInterim($event)" formControlName="interim_report" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile">{{interimFile?.name ?
+                                    interimFile?.name:'Upload'}}</label>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <label for="">Uploads the final report</label>
+                              <div class="custom-file mb-3">
+                                  <input type="file" class="custom-file-input" formControlName="final_report" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile"> Upload Attachment</label>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6">
+                              <div class="form-group">
+                                  <label for="formGroupExampleInput">CAPA Required</label>
+                                  <select class="form-control" (change)="capaSelect($event)">
+                                     <option value="">--Select--</option>
+                                      <option value="Yes">Yes</option>
+                                      <option value="No">No</option>
+                                  </select>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <ng-container *ngIf="showCpaUpld == true">
+                               <label for="">Upload CAPA</label>
+                               <div class="custom-file mb-3">
+                                   <input type="file" class="custom-file-input" formControlName="capa" id="customFile" name="filename">
+                                   <label class="custom-file-label" for="customFile"> Upload Attachment</label>
+                               </div>
+                            </ng-container>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="form-group">
+                                  <label for="formGroupExampleInput">Financial Settlement Required</label>
+                                  <select class="form-control" (change)="selecFinanc($event)">
+                                     <option value="">--Select--</option>
+                                      <option value="Yes">Yes</option>
+                                      <option value="No">No</option>
+                                  </select>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <ng-container *ngIf="showFinancUpld == true">
+                               <label for="">Upload financial settlement report</label>
+                               <div class="custom-file mb-3">
+                                   <input type="file" class="custom-file-input" formControlName="financial_set_repo" id="customFile" name="filename">
+                                   <label class="custom-file-label" for="customFile"> Upload Attachment</label>
+                               </div>
+                            </ng-container>
+                          </div>
+  
+                          <div class="col-lg-12">
+                              <label for="">Final approval to be uploaded</label>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <div class="custom-file mb-3">
+                                  <input type="file" class="custom-file-input" formControlName="sales_approval" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile"> Upload Head of sales approval</label>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <div class="custom-file mb-3">
+                                  <input type="file" class="custom-file-input" formControlName="marketing_head_approval" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile"> Upload Marketing Head
+                                      approval</label>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <div class="custom-file mb-3">
+                                  <input type="file" class="custom-file-input" formControlName="sr_gm_approval" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile"> Upload Sr. GM approval</label>
+                              </div>
+                          </div>
+  
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="showFinancUpld == true">
+                              <div class="custom-file mb-3">
+                                  <input type="file" class="custom-file-input"  formControlName="financial_approval_op" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile"> Upload Financial approval
+                                      (Optional)</label>
+                              </div>
+                          </div>
+                         </ng-container>
+                     </div>
+                    </form>
+                 </div>
+                 <div class="modal-footer">
+                     <div class="row">
+                         <div class="col-lg-12">
+                             <a class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
+                             <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+ 
+         </div>
+     </div>
+
     <!-- Footer -->
     <app-footer></app-footer>
  </body>

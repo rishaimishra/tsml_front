@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ComplainsService } from 'src/app/service/complains.service';
 import Swal from 'sweetalert2';
 import {environment} from 'src/environments/environment';
+import { ProductsService } from 'src/app/service/products.service';
 
 @Component({
   selector: 'app-complains',
@@ -29,7 +30,8 @@ export class ComplainsComponent implements OnInit {
 
   constructor(private _complainse: ComplainsService,
     private _spinner: NgxSpinnerService, private _fb: FormBuilder,
-    private _router: Router, private toaster: ToastrService) {
+    private _router: Router, private toaster: ToastrService,
+    private _product: ProductsService) {
     this.complainsForm = this._fb.group({
       com_cate_id: ['', Validators.required],
       com_sub_cate_id: ['', Validators.required],

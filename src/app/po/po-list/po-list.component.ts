@@ -14,7 +14,7 @@ export class PoListComponent implements OnInit {
   poItems:any;
   p: number = 1;
 
-  constructor(private _products: ProductsService, private spinner:NgxSpinnerService,
+  constructor(private _products: ProductsService, private _spinner:NgxSpinnerService,
     private _router: Router) {
   }
 
@@ -31,38 +31,36 @@ export class PoListComponent implements OnInit {
 
  
   getPoListing () {
-    this.spinner.show();
+    this._spinner.show();
     this._products.getPoList().subscribe((res:any) => {
       if(res.message == 'success') {
-        this.spinner.hide();
-      console.log(res);
-      this.poItems = res.result;
-      }
-      if (res.status == 'Token has Expired') {
-        this._router.navigate(['/login']);
-        this.spinner.hide();
-      }
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-    })
-  }
-
-  getKamPoListing () {
-    this.spinner.show();
-    this._products.getkamPoList().subscribe((res:any) => {
-      if(res.message == 'success') {
-        this.spinner.hide();
-      console.log(res);
+        this._spinner.hide();
       this.poItems = res.result;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
-        this.spinner.hide();
+        this._spinner.hide();
       }
     }, err => {
       console.log(err);
-      this.spinner.hide();
+      this._spinner.hide();
+    })
+  }
+
+  getKamPoListing () {
+    this._spinner.show();
+    this._products.getkamPoList().subscribe((res:any) => {
+      if(res.message == 'success') {
+        this._spinner.hide();
+      this.poItems = res.result;
+      }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login']);
+        this._spinner.hide();
+      }
+    }, err => {
+      console.log(err);
+      this._spinner.hide();
     })
   }
 }

@@ -1,231 +1,239 @@
 <!DOCTYPE HTML>
 <html lang="en">
-   <body>
-      <app-header></app-header>
-      <div class="page-content">
-         <section class="prof-head">
-            <div class="container">
-               <h2>Customer Dashboard &nbsp;&nbsp; FY 2022-2023</h2>
+
+<body>
+   <app-header></app-header>
+   <div class="page-content">
+      <section class="prof-head">
+         <div class="container">
+            <h2>Customer Dashboard &nbsp;&nbsp; FY 2022-2023</h2>
+         </div>
+      </section>
+
+      <section class="dashborad_sections">
+         <div class="container">
+            <div class="row ">
+
+               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
+                  <a>
+                     <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
+                        <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                        <div class="mini-stat-info text-right text-white">
+                           <span class="counter text-white">22</span>
+                           <b>Total no of orders</b>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+
+               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
+                  <a>
+                     <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
+                        <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
+                        <div class="mini-stat-info text-right text-white">
+                           <span class="counter text-white">2</span>
+                           <b> RFQ under negotiation</b>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
+                  <a>
+                     <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
+                        <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                        <div class="mini-stat-info text-right text-white">
+                           <span class="counter text-white">3</span>
+                           <b>Orders confirmed & pending for delivery (MT)</b>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/complains/complaints-list">
+                  <a>
+                     <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
+                        <span class="mini-stat-icon"><i class="fa fa-comments" aria-hidden="true"></i></span>
+                        <div class="mini-stat-info text-right text-white">
+                           <span class="counter text-white">4</span>
+                           <b>Total no. of Complaints </b>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+
+               <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/view-profile">
+                  <a>
+                     <div class="mini-stat clearfix bx-shadow bg-warning1 hvr-float-shadow">
+                        <span class="mini-stat-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                        <div class="mini-stat-info text-right text-white">
+                           <span class="counter text-white"></span>
+                           <b>My Profile </b>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+
             </div>
-         </section>
 
-         <section class="dashborad_sections">
-            <div class="container">
-               <div class="row ">
-
-            <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
-              <a>
-                 <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
-                    <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-                    <div class="mini-stat-info text-right text-white">
-                       <span class="counter text-white">22</span>
-                       <b>Total no of orders</b>
-                    </div>
-                 </div>
-              </a>
-           </div>
-
-           <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
-              <a>
-                 <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
-                    <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
-                    <div class="mini-stat-info text-right text-white">
-                       <span class="counter text-white">2</span>
-                       <b> RFQ under negotiation</b>
-                    </div>
-                 </div>
-              </a>
-           </div>
-           <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
-              <a>
-                 <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
-                    <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                    <div class="mini-stat-info text-right text-white">
-                       <span class="counter text-white">3</span>
-                       <b>Orders confirmed & pending for delivery (MT)</b>
-                    </div>
-                 </div>
-              </a>
-           </div>
-           <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/complains/complaints-list">
-             <a >
-                <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
-                   <span class="mini-stat-icon"><i class="fa fa-comments" aria-hidden="true"></i></span>
-                   <div class="mini-stat-info text-right text-white">
-                      <span class="counter text-white">4</span>
-                      <b>Total no. of Complaints </b>
-                   </div>
-                </div>
-             </a>
-          </div>
-
-        <div class="col-md-6 col-sm-6 col-lg-3 pointerTab" routerLink="/view-profile">
-           <a>
-              <div class="mini-stat clearfix bx-shadow bg-warning1 hvr-float-shadow">
-                 <span class="mini-stat-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                 <div class="mini-stat-info text-right text-white">
-                    <span class="counter text-white"></span>
-                    <b>My Profile </b>
-                 </div>
-              </div>
-           </a>
-        </div>
-       
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 col-lg-12 col-xl-5">
-              <!-- RFQ list customer-->
-              <div class="card">
-                <div class="card-header">
-                   <h4>Recent Orders</h4>
-                   <form class="card-header-form">
-                      <input type="text" name="search" class="form-control" placeholder="Search">
-                   </form>
-                </div>
-                <div class="card-body">
-                   <div class="support-ticket media pb-1 mb-3" *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }">
-                      <div class="media-body">
-                         <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
+            <div class="row">
+               <div class="col-md-6 col-lg-12 col-xl-5">
+                  <!-- RFQ list customer-->
+                  <div class="card">
+                     <div class="card-header">
+                        <h4>Recent Orders</h4>
+                        <form class="card-header-form">
+                           <input type="text" name="search" class="form-control" placeholder="Search">
+                        </form>
+                     </div>
+                     <div class="card-body">
+                        <div class="support-ticket media pb-1 mb-3"
+                           *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }">
+                           <div class="media-body">
+                              <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
                          *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
-                         <div class="badge badge-pill badge-success mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 1" >{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-warning mb-1 float-right"
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.kam_status == 1">{{rfqItem?.status_txt}}</div>
+                              <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-danger mb-1 float-right"
+                              <div class="badge badge-pill badge-danger mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 2">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-warning mb-1 float-right"
+                              <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 4">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-info mb-1 float-right"
+                              <div class="badge badge-pill badge-info mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 0">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-primary mb-1 float-right"
+                              <div class="badge badge-pill badge-primary mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 5">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-warning mb-1 float-right"
+                              <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 6">{{rfqItem?.status_txt}}</div>
 
-                         <span class="font-weight-bold">RFQ Number: #{{rfqItem?.rfq_no}}</span>&nbsp;
-                         <a (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)" class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>
-                         <p class="my-1">{{rfqItem?.pro_desc}}</p>
-                         <small class="text-muted">Name: <span class="font-weight-bold font-13">{{rfqItem?.name}}</span>
-                         &nbsp;&nbsp; - {{rfqItem?.created_at}}</small>
+                              <span class="font-weight-bold">RFQ Number: #{{rfqItem?.rfq_no}}</span>&nbsp;
+                              <a (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)"
+                                 class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>
+                              <p class="my-1">{{rfqItem?.pro_desc}}</p>
+                              <small class="text-muted">Name: <span
+                                    class="font-weight-bold font-13">{{rfqItem?.name}}</span>
+                                 &nbsp;&nbsp; - {{rfqItem?.created_at}}</small>
 
+                           </div>
                         </div>
-                      </div>
-                      <small class="text-primary pointerTab float-right" routerLink="/products/rfq-list">See more...</small><br>
-                      <div class="text-right">
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                      </div>
-                      
-                </div>
-             </div>
-              <!-- Support tickets -->
-            </div>
-            <div class="col-md-6 col-lg-12 col-xl-7">
-              <div class="card">
-                <div class="card-header">
-                  <h4>Booking History</h4>
-                </div>
-                <div class="card-body">
-                  <div class="filter-box">
-                              <div class="row">
-                                 <div class="col-12 col-lg-5">
-                                    <div class="form-group">
-                                       <label>Date</label>
-                                       <div class="position-relative">
-                                          <input type="text" class="form-control form-control-sm datepicker">
-                                          <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
-                                       </div>
+                        <small class="text-primary pointerTab float-right" routerLink="/products/rfq-list">See
+                           more...</small><br>
+                        <div class="text-right">
+                           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+
+                     </div>
+                  </div>
+                  <!-- PO Listing -->
+               </div>
+               <div class="col-md-6 col-lg-12 col-xl-7">
+                  <div class="card">
+                     <div class="card-header">
+                        <h4>Booking History</h4>
+                     </div>
+                     <div class="card-body">
+                        <div class="filter-box">
+                           <div class="row">
+                              <div class="col-12 col-lg-5">
+                                 <div class="form-group">
+                                    <label>Date</label>
+                                    <div class="position-relative">
+                                       <input type="text" class="form-control form-control-sm datepicker">
+                                       <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                                     </div>
                                  </div>
-                                 <!---/-->
-                                 <div class="col-12 col-lg-5">
-                                    <div class="form-group">
-                                       <label>Product</label>
-                                       <select class="form-control form-control-sm">
-                                          <option>
-                                             Select
-                                          </option>
-                                          <option>
-                                             XXXXX
-                                          </option>
-                                          <option>
-                                             XXXXX
-                                          </option>
-                                       </select>
-                                    </div>
+                              </div>
+                              <!---/-->
+                              <div class="col-12 col-lg-5">
+                                 <div class="form-group">
+                                    <label>Product</label>
+                                    <select class="form-control form-control-sm">
+                                       <option>
+                                          Select
+                                       </option>
+                                       <option>
+                                          XXXXX
+                                       </option>
+                                       <option>
+                                          XXXXX
+                                       </option>
+                                    </select>
                                  </div>
-                                 <!--/-->
-                                 <div class="col-12 col-lg-2">
-                                    <button type="button" class="btn btn-primary mt-4 btn-block">Search</button>
-                                 </div>
+                              </div>
+                              <!--/-->
+                              <div class="col-12 col-lg-2">
+                                 <button type="button" class="btn btn-primary mt-4 btn-block">Search</button>
                               </div>
                            </div>
-                  <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                      <thead>
-                        <tr>
-                          <th>Order Ref No.</th>
-                          <th>Cust PO No.</th>
-                          <th>Date</th>
-                          <th>Quantity (MT)</th>
-                          <th>Price (₹)</th>
-                          <th>Amend No</th>
-                          <th>Status</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let po of poItems">
-                          <td>{{po.po_no}}</td>
-                          <td>{{po.cus_po_no}}</td>
-                          <td>{{po.po_date}}</td>
-                          <td>{{po.quantity}}</td>
-                          <td>....</td>
-                          <td>{{po.amdnt_no}}</td>
-                          <td *ngIf="po.status == 2">
-                            <span class="badge badge-primary">{{po.status_txt}}</span>
-                         </td>
-                         <td *ngIf="po.status == 1">
-                            <span class="badge badge-success">{{po.status_txt}}</span>
-                         </td>
-                         <td *ngIf="po.status == 3">
-                            <span class="badge badge-danger">{{po.status_txt}}</span>
-                         </td>
-                         <td *ngIf="po.status == 4">
-                            <span class="badge badge-warning">{{po.status_txt}}</span>
-                         </td>
-                          <td>
-                             <div class="cell1 tab_head_sheet_1 ">
-                                 <div class="add_ttrr actions-main text-center">
-                                    <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po/po-view',po.po_no]"> <span>View Details</span>
-                                    <img src="assets/images/view-act-b.png" class="blue-show" alt="">
-                                    </a> 
-                                   
-                                    <a class="css-tooltip-top color-blue meet-rvw uu0" href="#"> <span>Cancel</span>
-                                       <img src="assets/images/rejectt.png" class="blue-show" alt="">
-                                    </a>
-                                   
-                                    <a class="css-tooltip-top color-blue meet-rvw uu0" href="#"> <span>Reorder</span>
-                                       <img src="assets/images/shopping-cart.png" class="blue-show" alt="">
-                                    </a>
-                                 </div>
-                              </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <small class="text-primary pointerTab float-right mt-3" routerLink="/po/po-list">See more...</small><br>
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                        </div>
+                        <div class="table-responsive">
+                           <table class="table table-hover mb-0">
+                              <thead>
+                                 <tr>
+                                    <th>Order Ref No.</th>
+                                    <th>Cust PO No.</th>
+                                    <th>Date</th>
+                                    <th>Quantity (MT)</th>
+                                    <th>Price (₹)</th>
+                                    <th>Amend No</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr *ngFor="let po of poItems">
+                                    <td>{{po.po_no}}</td>
+                                    <td>{{po.cus_po_no}}</td>
+                                    <td>{{po.po_date}}</td>
+                                    <td>{{po.quantity}}</td>
+                                    <td>....</td>
+                                    <td>{{po.amdnt_no}}</td>
+                                    <td *ngIf="po.status == 2">
+                                       <span class="badge badge-primary">{{po.status_txt}}</span>
+                                    </td>
+                                    <td *ngIf="po.status == 1">
+                                       <span class="badge badge-success">{{po.status_txt}}</span>
+                                    </td>
+                                    <td *ngIf="po.status == 3">
+                                       <span class="badge badge-danger">{{po.status_txt}}</span>
+                                    </td>
+                                    <td *ngIf="po.status == 4">
+                                       <span class="badge badge-warning">{{po.status_txt}}</span>
+                                    </td>
+                                    <td>
+                                       <div class="cell1 tab_head_sheet_1 ">
+                                          <div class="add_ttrr actions-main text-center">
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0"
+                                                [routerLink]="['/po/po-view',po.po_no]"> <span>View Details</span>
+                                                <img src="assets/images/view-act-b.png" class="blue-show" alt="">
+                                             </a>
 
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0" href="#">
+                                                <span>Cancel</span>
+                                                <img src="assets/images/rejectt.png" class="blue-show" alt="">
+                                             </a>
+
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0" href="#">
+                                                <span>Reorder</span>
+                                                <img src="assets/images/shopping-cart.png" class="blue-show" alt="">
+                                             </a>
+                                          </div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                           <small class="text-primary pointerTab float-right mt-3" routerLink="/po/po-list">See
+                              more...</small><br>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-         </section>
-         
-      </div>
-      <app-footer></app-footer>
-   </body>
+         </div>
+      </section>
+
+   </div>
+   <app-footer></app-footer>
+</body>
+
 </html>

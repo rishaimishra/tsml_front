@@ -100,6 +100,7 @@ export class PoViewComponent implements OnInit {
   afterPrePrice: any;
   userAfterPrePrice: any;
   percentPrice:any;
+  poNumber:any;
 
 
   constructor(
@@ -178,6 +179,7 @@ export class PoViewComponent implements OnInit {
         this.selectedItem = this.product_data;
         this.leaterheadFile = this.product_data[0]['letterhead'];
         this.poStatus = this.product_data[0]['po_st'];
+        this.poNumber = this.product_data[0]['user_id'];
         this.amndNomber = this.product_data[0]['amdnt_no'];
 
         this.catId = this.selectedItem[0].product_id;
@@ -340,7 +342,6 @@ export class PoViewComponent implements OnInit {
   };
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
-      console.log('value', res);
       this.priceVal = res.result;
     });
   };
@@ -796,7 +797,18 @@ export class PoViewComponent implements OnInit {
               text: 'PO Updated',
               showConfirmButton: false,
               timer: 1500
+            });
+            let userId = localStorage.getItem('USER_ID');
+            let salesNotiReq = {
+              "desc_no": this.inputPONum,
+              "user_id": userId,
+              "desc": 'Customer PO No. generated',
+              "url_type": 'P',
+              "sender_id": this.poNumber
+            }
+            this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
             })
+
             this._router.navigate(['/po/po-list']);
           }
         }, err => {

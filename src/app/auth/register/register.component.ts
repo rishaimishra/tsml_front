@@ -100,6 +100,10 @@ export class RegisterComponent implements OnInit {
   orgAddrs:any;
   linkedAddr:any;
   gstNumber:any;
+  panDate: any;
+  gstDate:any;
+  formDdate:any;
+  tcsDate:any;
 
   invildForm: boolean = true;
   addressProof: boolean = false;
@@ -131,8 +135,8 @@ export class RegisterComponent implements OnInit {
     { id: 2, select: false, name: 'Low' },
     { id: 3, select: false, name: 'Medium' },
     { id: 4, select: false, name: 'Low Silicone' },
-    { id: 5, select: false, name: 'HC Ferro Chrome (Chips)' },
-    { id: 6, select: false, name: 'HC Ferro Chrome (Fine)' },
+    { id: 5, select: false, name: 'HC Ferro Chrome (Chips & Fines)' },
+
   ];
   chromeOre = [
     { id: 1, select: false, name: 'High Grade Friable Chrome Ore' },
@@ -140,10 +144,12 @@ export class RegisterComponent implements OnInit {
   ];
 
   selectProduct = [
-    { id: 1, select: false, name: '10-150' },
-    { id: 2, select: false, name: '10-50' },
+    { id: 1, select: false, name: '10-50' },
+    { id: 2, select: false, name: '10-60' },
     { id: 3, select: false, name: '10-70' },
-    { id: 4, select: false, name: '10-100' },
+    { id: 4, select: false, name: '10-80' },
+    { id: 5, select: false, name: '10-100' },
+    { id: 6, select: false, name: '10-150' },
   ];
   address_proof_file: string | number;
 
@@ -834,54 +840,54 @@ export class RegisterComponent implements OnInit {
   }
   submitRegister() {
     const fileData = new FormData();
-    // this._spinner.show();
+    this._spinner.show();
     // this.submitted = true;
 
-    // if (!this.addProof) {
-    //   this.toastr.error('', 'Address proof required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.checkBook) {
-    //   this.toastr.error('', 'Checkbook is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.panCardUpload) {
-    //   this.toastr.error('', 'Pan is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.gstFile) {
-    //   this.toastr.error('', 'GST certificate is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.turnOver) {
-    //   this.toastr.error('', 'Turnover-section is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.itrFileUpl) {
-    //   this.toastr.error('', 'ITR file is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.consentFile) {
-    //   this.toastr.error('', 'Consent Letter is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.cerftificateUpl) {
-    //   this.toastr.error('', 'Registration Certificates is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.tcsUplod) {
-    //   this.toastr.error('', 'TCS is required');
-    //   this._spinner.hide();
-    //   return;
-    // }
+    if (!this.addProof) {
+      this.toastr.error('', 'Address proof required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.checkBook) {
+      this.toastr.error('', 'Checkbook is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.panCardUpload) {
+      this.toastr.error('', 'Pan is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.gstFile) {
+      this.toastr.error('', 'GST certificate is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.turnOver) {
+      this.toastr.error('', 'Turnover-section is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.itrFileUpl) {
+      this.toastr.error('', 'ITR file is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.consentFile) {
+      this.toastr.error('', 'Consent Letter is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.cerftificateUpl) {
+      this.toastr.error('', 'Registration Certificates is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.tcsUplod) {
+      this.toastr.error('', 'TCS is required');
+      this._spinner.hide();
+      return;
+    }
 
     // fileData.append('first_name', this.registerForm.value.first_name);
     fileData.append('user_type', 'C');
@@ -892,7 +898,7 @@ export class RegisterComponent implements OnInit {
     fileData.append('tcs_dt', this.isTDS_applicable);
     fileData.append('pref_product_size', this.chooseProductSize);
     fileData.append('email', this.emailId);
-    fileData.append('name', 'John');
+    fileData.append('name', '');
     fileData.append('company_gst', this.gstNum);
     fileData.append('company_pan', this.orgPan);
     fileData.append('password', this.password);
@@ -900,32 +906,35 @@ export class RegisterComponent implements OnInit {
     fileData.append('business_nature', this.businessType);
     fileData.append('billing_address', JSON.stringify(this.billingAdd.value));
     fileData.append('shipping_address', JSON.stringify(this.shiptingAdd.value));
-    // fileData.append('address_proof_file', this.selectedFile);
-    // fileData.append('cancel_cheque_file', this.cancelCheckBook);
-    // fileData.append('pan_card_file', this.panUpload);
-    // fileData.append('gst_certificate', this.gstUpload);
-    // fileData.append('turnover_declare', this.turnoverFile);
-    // fileData.append('itr_last_yr', this.itrFile);
-    // fileData.append('form_d', this.formDfile);
-    // fileData.append('registration_certificate', this.regisCertificate);
-    // fileData.append('tcs', this.tcsFile);
-    // fileData.append('is_tcs_tds_applicable', this.isTDS_applicable);
-    // fileData.append('distribution', this.distributionValue);
+    fileData.append('address_proof_file', this.selectedFile);
+    fileData.append('cancel_cheque_file', this.cancelCheckBook);
+    fileData.append('pan_card_file', this.panUpload);
+    fileData.append('gst_certificate', this.gstUpload);
+    fileData.append('turnover_declare', this.turnoverFile);
+    fileData.append('itr_last_yr', this.itrFile);
+    fileData.append('form_d', this.formDfile);
+    fileData.append('registration_certificate', this.regisCertificate);
+    fileData.append('tcs', this.tcsFile);
+    fileData.append('is_tcs_tds_applicable', this.isTDS_applicable);
+    fileData.append('distribution', this.distributionValue);
+    fileData.append('pan_dt', this.panDate);
+    fileData.append('gst_dt', this.gstDate);
+    fileData.append('formD_dt', this.formDdate);
+    fileData.append('tcs_dt', this.tcsDate);
 
-    // fileData.append('pan_dt', this.registerForm.value.pan_dt);
-    // fileData.append('gst_dt', this.registerForm.value.gst_dt);
-    // fileData.append('formD_dt', this.registerForm.value.formD_dt);
-
-
-
-    this._auth.register(fileData).subscribe(
-      (res: any) => {
+    this._auth.register(fileData).subscribe((res: any) => {
+      this._spinner.hide();
         if (res.success) {
-          console.log('res', res);
-          this.toastr.success('Registered successfully', '');
+          Swal.fire({
+            position: 'top',
+            icon: 'success',
+            text: 'Register Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this._router.navigate(['/auth/login']);
           this.registerForm.reset();
           this._spinner.hide();
-          this._router.navigate(['/auth/login']);
         }
         if (res.error.validation?.email) {
           this.toastr.error(res.error.validation.email);
