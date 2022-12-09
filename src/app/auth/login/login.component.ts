@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // var url = 'http://localhost/TSML/storage/app/public/images/complain/7458-medium-grade-chrome-ore.jpg';
+    // var filename = url.split('/').pop().split('?')[0].split('#')[0];
+    // alert (filename);
   }
 
   submitLogin() {

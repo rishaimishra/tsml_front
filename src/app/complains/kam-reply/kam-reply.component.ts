@@ -13,6 +13,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
 import { FormBuilder, FormGroup } from '@angular/forms';
+declare var $: any;
 
 @Component({
   selector: 'app-kam-reply',
@@ -43,11 +44,31 @@ export class KamReplyComponent implements OnInit {
   checkboxChecked: boolean = false;
   departmentName: any = [];
   departmentMail: any = [];
+  selectedFile2:any;
+  fileName2:any;
   complainId: any;
   emailReceveId: any;
   receveEmailInfo: any;
   rcveEmail: any;
   interimFile: any;
+  emailDetails:any;
+  interimFileSize: boolean = false;
+  fncReportFile:any;
+  fncRepFileSize: boolean = false;
+  cpaUpldFile:any;
+  capaFileSize: boolean = false;
+  fncSettUpldFile: any;
+  fncSetFileSize: boolean = false;
+  fncApprUpldFile:any;
+  fncApprFileSize: boolean = false;
+  mrktHeadUpldFile:any;
+  merktHetFileSize: boolean = false;
+  gmApprvlUpldFile:any;
+  gmApprvlFileSize: boolean = false;
+  fncialAprvalFile:any;
+  fncialAprvalSize: boolean = false;
+  disableIfMailrcv: boolean = false;
+
 
 
   constructor(private _route: ActivatedRoute,
@@ -92,6 +113,10 @@ export class KamReplyComponent implements OnInit {
     this.fileName = this.selectedFile.name;
   };
 
+  onSelectFile2(event:any) {
+    this.selectedFile2 = event.target.files[0];
+    this.fileName2 = this.selectedFile2.name;
+  }
   complainsReply() {
     this._spiner.show();
     let apiUrl = '/user/complain-details-kam/' + this.compId;
@@ -135,6 +160,7 @@ export class KamReplyComponent implements OnInit {
     fileData.append('kam_remarks', this.remarkReply);
     fileData.append('kam_id', camUserId);
     fileData.append('kam_complain_file', this.selectedFile);
+    fileData.append('kam_com_file_2', this.selectedFile2);
 
     this._complains.replyComplains(fileData).subscribe((res: any) => {
       this._spiner.hide();
@@ -196,13 +222,16 @@ export class KamReplyComponent implements OnInit {
     }
     this._complains.openModelSubmit(openModelreq).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'Success') {
+        this.emailDetails = res.result;
         this.emailReceveId = res.result['com_manage_id'];
         this.rcveEmail = res.result['is_mail_resiv'];
-        if (res.result['is_mail_resiv'] == 1) {
-          this.checkboxChecked == true;
-          console.log('hello');
-        }
+        this.mailSendForm.controls['ka_remarks'].setValue(res.result['ka_remarks']);
       }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login']);
+      }
+    }, err => {
+      console.log(err);
     })
   };
 
@@ -210,14 +239,37 @@ export class KamReplyComponent implements OnInit {
     const userId = localStorage.getItem('USER_ID');
     this.checkboxChecked = event.target.checked;
     if (this.checkboxChecked == true) {
-      let checkReq = {
-        "mcom_id": this.emailReceveId,
-        "kam_id": userId,
-        "po_no": this.compId
-      }
-      this._complains.emailReceve(checkReq).subscribe((res: any) => {
-        if (res.status == 1 && res.message == 'Success') {
-          this.receveEmailInfo = res.result;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You have got the mail",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (this.checkboxChecked == true) {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              text: 'Received Mail',
+              showConfirmButton: false,
+              timer: 1000
+            })
+            let checkReq = {
+              "mcom_id": this.emailReceveId,
+              "kam_id": userId,
+              "po_no": this.compId
+            }
+            this._complains.emailReceve(checkReq).subscribe((res: any) => {
+              if (res.status == 1 && res.message == 'Success') {
+                this.receveEmailInfo = res.result;
+              }
+            })
+          }
+        } else {
+          this.checkboxChecked = false;
         }
       })
     }
@@ -236,7 +288,6 @@ export class KamReplyComponent implements OnInit {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'Success') {
         this.departmentName = res.result;
-        console.log(this.departmentName);
       }
     })
   };
@@ -269,7 +320,6 @@ export class KamReplyComponent implements OnInit {
     this._complains.sendEmail(this.mailSendForm.value).subscribe((res: any) => {
       this._spiner.hide();
       if (res.status != 0 && res.message != 'error') {
-        console.log(res.result);
         Swal.fire(
           'Success',
           'Complaint Mail Sent Successfully',
@@ -282,11 +332,156 @@ export class KamReplyComponent implements OnInit {
     })
   };
 
+// Upload files
   uploadInterim(event:any) {
     this.interimFile = event.target.files[0];
-    console.log(this.interimFile);
+    let file = event.target.files[0];
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = () => {
+    //   this.cerftificateUpl = reader.result;
+    // };
+    if (file.size >= 2083914) {
+      this.interimFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.interimFileSize = false;
+    }
   };
 
+  uploadfncReport(event:any) {
+    this.fncReportFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.fncRepFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.fncRepFileSize = false;
+    }
+  };
+
+  capaFileupld(event:any) {
+    this.cpaUpldFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.capaFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.capaFileSize = false;
+    }
+  };
+
+  fncSettlmReprt(event:any) {
+    this.fncSettUpldFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.fncSetFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.fncSetFileSize = false;
+    }
+  };
+
+  fncApprUpld(event:any) {
+    this.fncApprUpldFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.fncApprFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.fncApprFileSize = false;
+    }
+  };
+
+  mrktHeadUpld(event:any) {
+    this.mrktHeadUpldFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.merktHetFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.merktHetFileSize = false;
+    }
+  };
+
+  gmApprvlUpld(event:any) {
+    this.gmApprvlUpldFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.gmApprvlFileSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.gmApprvlFileSize = false;
+    }
+  };
+
+  fncialAprvalUpld(event:any) {
+    this.fncialAprvalFile = event.target.files[0];
+    let file = event.target.files[0];
+    if (file.size >= 2083914) {
+      this.fncialAprvalSize = true;
+      event.target.value = null;
+      return;
+    } else {
+      this.fncialAprvalSize = false;
+    }
+  };
+
+  submitComplaint() {
+    this._spiner.show();
+    const fileData = new FormData();
+    let userId = localStorage.getItem('USER_ID');
+    fileData.append('kam_id', userId);
+    fileData.append('complain_id', this.complainId);
+    fileData.append('po_no', this.compId);
+    fileData.append('com_manage_id', this.emailReceveId);
+
+    fileData.append('interim_report', this.interimFile);
+    fileData.append('final_report', this.fncReportFile);
+    fileData.append('capa', this.cpaUpldFile);
+    fileData.append('financial_set_repo', this.fncSettUpldFile);
+    fileData.append('sales_approval', this.fncApprUpldFile);
+    fileData.append('marketing_head_approval', this.mrktHeadUpldFile);
+    fileData.append('sr_gm_approval', this.gmApprvlUpldFile);
+    fileData.append('financial_approval_op', this.fncialAprvalFile);
+
+    this._complains.storeComplainFiles(fileData).subscribe((res: any) => {
+    this._spiner.hide();
+      if (res.status == 1) {
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          text: 'File Uploaded successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+        $("#myModal").hide();
+        $('body').removeClass('modal-open');
+        $(".modal-backdrop").removeClass("modal-backdrop show");
+      }
+      if (res.status == 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Department name and email are required!'
+        })
+        return;
+      }
+    }, err => {
+      console.log(err);
+      this._spiner.hide();
+    })
+  }
+
+  
 }
 
 

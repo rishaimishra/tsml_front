@@ -68,6 +68,9 @@ export class ComplainsService {
   openModelSubmit(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/get-com-manage-data', reqParameter);
   };
+  storeComplainFiles(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/store-com-files', reqParameter);
+  };
 
   sendData(data:string) {
     this.subject.next(data)

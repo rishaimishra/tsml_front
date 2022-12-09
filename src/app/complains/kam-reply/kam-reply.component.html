@@ -70,22 +70,28 @@
                      <label class="custom-file-label" for="customFile">{{fileName ?
                          fileName:'Upload Attachement'}}</label>
                   </div>
-                   <div class="col-lg-7 col-md-4 col-sm-4" *ngIf="compInfo?.complain_status != 2">
-                      <div class="reply_btn_box">
-                         <div class="clos-btn">
-                           <div class="form-check">
-                              <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
-                                 type="checkbox" value="" id="defaultCheck1">
-                              <label class="form-check-label" for="defaultCheck1">
-                                 Close
-                              </label>
-                           </div>
+                  <div class="col-lg-7 col-md-4 col-sm-4" *ngIf="compInfo?.complain_status != 2">
+                    <div class="reply_btn_box">
+                       <div class="clos-btn">
+                         <div class="form-check">
+                            <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
+                               type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                               Close
+                            </label>
                          </div>
-                         <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
-                                  class="fa fa-reply"></i> Reply</button></div>
-                        <div class="reply_btn ml-3"><button class="btn btn-primary btn-sm" (click)="showModel()" id="" data-toggle="modal" data-target="#myModal"> Process Complaint </button></div>
-                      </div>
-                   </div>
+                       </div>
+                       <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
+                                class="fa fa-reply"></i> Reply</button></div>
+                      <div class="reply_btn ml-3"><button class="btn btn-primary btn-sm" (click)="showModel()" id="" data-toggle="modal" data-target="#myModal"> Process Complaint </button></div>
+                    </div>
+                 </div>
+                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
+                    <input type="file" accept=".pdf" (change)="onSelectFile2($event)" class="custom-file-input pointer" id="customFile" name="filename">
+                    <label class="custom-file-label" for="customFile">{{fileName2 ?
+                        fileName2:'Upload Attachement'}}</label>
+                 </div>
+                   
                 </div>
                 <hr>
                 <div class="row">
@@ -93,7 +99,7 @@
                      <!-- <a [href]="imageUrl" [download]="imageUrl" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please download the supporting document."><i
                         class="fa fa-download"></i></a> &nbsp; -->
                       <button *ngIf="compInfo?.complain_status != 2" (click)="submitReply(compInfo?.complain_id)"class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
-                      <button type="button" class="btn btn-danger" routerLink="/complains-list"><i class="fa fa-arrow-left"></i> Back</button>
+                      <button type="button" class="btn btn-danger" routerLink="/complains/complaints-list"><i class="fa fa-arrow-left"></i> Back</button>
                    </div>
                 </div>
              </div>
@@ -128,17 +134,18 @@
                                  <select class="form-control" formControlName="r_mail">
                                      <option value="">--Select--</option>
                                      <option value="{{mail.send_mail}}" *ngFor="let mail of departmentMail">{{mail.send_mail}}</option>
+                                     <option *ngIf="emailDetails?.r_mail != null" selected>{{emailDetails?.r_mail}}</option>
                                  </select>
                              </div>
                          </div>
                          <div class="col-lg-12">
                              <div class="form-group">
                                  <label for="formGroupExampleInput">Add Remarks</label>
-                                 <textarea class="form-control" formControlName="ka_remarks"></textarea>
+                                 <textarea class="form-control" [readonly]="rcveEmail == 1" formControlName="ka_remarks"></textarea>
                              </div>
                          </div>
                          <div class="col-lg-8">
-                             <div class="form-group">
+                             <div class="form-group" *ngIf="emailReceveId != ''">
                                  <div class="form-check">
                                      <input class="form-check-input" (change)="allAttechmt($event)" [checked]="rcveEmail == 1" [disabled]="rcveEmail == 1" type="checkbox" value="" id="defaultCheck1">
                                      <label class="form-check-label" for="defaultCheck1">
@@ -148,7 +155,7 @@
                              </div>
                          </div>
                          <div class="col-lg-4 text-right">
-                           <h5><span class="badge badge-primary pointer" (click)="sendMail()">Send <i class="fa fa-share" aria-hidden="true"></i></span></h5>
+                           <h5><span class="badge badge-primary pointer" *ngIf="rcveEmail != 1" (click)="sendMail()">Send <i class="fa fa-share" aria-hidden="true"></i></span></h5>
                          </div>
                         </div>
                     </form>
@@ -156,23 +163,42 @@
                         <form [formGroup]="uploadAttchmntForm">
                         <div class="row">
                          <ng-container *ngIf="rcveEmail == 1">
-                           <div class="col-lg-6 col-md-6 col-sm-6">
+                           <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.interim_report == null">
                               <label for="">Uploads the interim report</label>
                               <div class="custom-file mb-3">
                                   <input type="file" class="custom-file-input" (change)="uploadInterim($event)" formControlName="interim_report" id="customFile" name="filename">
                                   <label class="custom-file-label" for="customFile">{{interimFile?.name ?
-                                    interimFile?.name:'Upload'}}</label>
+                                    interimFile?.name:'Upload Attachment'}}</label>
+                                    <small class="text-danger" *ngIf="interimFileSize">Maximum file size:2MB (PDF, PNG,
+                                      JPG)</small>
                               </div>
-                          </div>
-  
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            </div>
+                            <!-- download Interim-->
+                            <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.interim_report != null">
+                                <label for="">Preview the interim report</label>
+                                <div class="custom-file mb-3">
+                                    <a class="custom-file-label" for="downloadFile1" target="_blank" [href]="emailDetails?.interim_report">Download the interim</a>
+                                </div>
+                              </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.final_report == null">
                               <label for="">Uploads the final report</label>
                               <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input" formControlName="final_report" id="customFile" name="filename">
-                                  <label class="custom-file-label" for="customFile"> Upload Attachment</label>
+                                  <input type="file" class="custom-file-input" (change)="uploadfncReport($event)" formControlName="final_report" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile">{{fncReportFile?.name ?
+                                    fncReportFile?.name:'Upload Attachment'}}</label>
+                                  <small class="text-danger" *ngIf="fncRepFileSize">Maximum file size:2MB (PDF, PNG,
+                                    JPG)</small>
                               </div>
                           </div>
-  
+                          <!-- download final report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.final_report != null">
+                            <label for="">Preview the final report</label>
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile3" target="_blank" [href]="emailDetails?.final_report">Download final report</a>
+                            </div>
+                          </div>
+
                           <div class="col-lg-6">
                               <div class="form-group">
                                   <label for="formGroupExampleInput">CAPA Required</label>
@@ -184,15 +210,26 @@
                               </div>
                           </div>
   
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.capa == null">
                             <ng-container *ngIf="showCpaUpld == true">
                                <label for="">Upload CAPA</label>
                                <div class="custom-file mb-3">
-                                   <input type="file" class="custom-file-input" formControlName="capa" id="customFile" name="filename">
-                                   <label class="custom-file-label" for="customFile"> Upload Attachment</label>
+                                   <input type="file" class="custom-file-input" (change)="capaFileupld($event)" formControlName="capa" id="customFile" name="filename">
+                                   <label class="custom-file-label" for="customFile">{{cpaUpldFile?.name ?
+                                    cpaUpldFile?.name:'Upload Attachment'}}</label>
+                                   <small class="text-danger" *ngIf="capaFileSize">Maximum file size:2MB (PDF, PNG,
+                                    JPG)</small>
                                </div>
                             </ng-container>
                           </div>
+                          <!-- download CAPA report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.capa != null">
+                            <label for="">Preview the CAPA report</label>
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile4" target="_blank" [href]="emailDetails?.capa">Download CAPA report</a>
+                            </div>
+                          </div>
+
                           <div class="col-lg-6">
                               <div class="form-group">
                                   <label for="formGroupExampleInput">Financial Settlement Required</label>
@@ -204,48 +241,93 @@
                               </div>
                           </div>
   
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.financial_set_repo == null">
                             <ng-container *ngIf="showFinancUpld == true">
                                <label for="">Upload financial settlement report</label>
                                <div class="custom-file mb-3">
-                                   <input type="file" class="custom-file-input" formControlName="financial_set_repo" id="customFile" name="filename">
-                                   <label class="custom-file-label" for="customFile"> Upload Attachment</label>
+                                   <input type="file" class="custom-file-input" (change)="fncSettlmReprt($event)" formControlName="financial_set_repo" id="customFile" name="filename">
+                                   <label class="custom-file-label" for="customFile">{{fncSettUpldFile?.name ?
+                                    fncSettUpldFile?.name:'Upload Attachment'}}</label>
+                                   <small class="text-danger" *ngIf="fncSetFileSize">Maximum file size:2MB (PDF, PNG,
+                                    JPG)</small>
                                </div>
                             </ng-container>
                           </div>
-  
-                          <div class="col-lg-12">
+                          <!-- download final settlmt report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.financial_set_repo != null">
+                            <label for="">Preview financial settlement report</label>
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile5" target="_blank" [href]="emailDetails?.financial_set_repo">Download financial settlement report</a>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12" *ngIf="emailDetails?.sales_approval == null">
                               <label for="">Final approval to be uploaded</label>
                           </div>
   
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.sales_approval == null">
                               <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input" formControlName="sales_approval" id="customFile" name="filename">
-                                  <label class="custom-file-label" for="customFile"> Upload Head of sales approval</label>
+                                  <input type="file" class="custom-file-input" (change)="fncApprUpld($event)" formControlName="sales_approval" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile">{{fncApprUpldFile?.name ?
+                                    fncApprUpldFile?.name:'Upload Attachment'}}</label>
+                                  <small class="text-danger" *ngIf="fncApprFileSize">Maximum file size:2MB (PDF, PNG,
+                                    JPG)</small>
                               </div>
                           </div>
-  
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <!-- download Final approval report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.sales_approval != null">
+                            <label for="">Preview Final approval</label>
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile6" target="_blank" [href]="emailDetails?.sales_approval">Download Sales approval</a>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.marketing_head_approval == null">
                               <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input" formControlName="marketing_head_approval" id="customFile" name="filename">
-                                  <label class="custom-file-label" for="customFile"> Upload Marketing Head
-                                      approval</label>
+                                  <input type="file" class="custom-file-input" (change)="mrktHeadUpld($event)" formControlName="marketing_head_approval" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile">{{mrktHeadUpldFile?.name ?
+                                    mrktHeadUpldFile?.name:'Upload Attachment'}}</label>
+                                      <small class="text-danger" *ngIf="merktHetFileSize">Maximum file size:2MB (PDF, PNG,
+                                        JPG)</small>
                               </div>
                           </div>
-  
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <!-- download Final approval report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.marketing_head_approval != null">
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile6" target="_blank" [href]="emailDetails?.marketing_head_approval">Download marketing head</a>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.sr_gm_approval == null">
                               <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input" formControlName="sr_gm_approval" id="customFile" name="filename">
-                                  <label class="custom-file-label" for="customFile"> Upload Sr. GM approval</label>
+                                  <input type="file" class="custom-file-input" (change)="gmApprvlUpld($event)" formControlName="sr_gm_approval" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile">{{gmApprvlUpldFile?.name ?
+                                    gmApprvlUpldFile?.name:'Upload Attachment'}}</label>
+                                  <small class="text-danger" *ngIf="gmApprvlFileSize">Maximum file size:2MB (PDF, PNG,
+                                    JPG)</small>
                               </div>
                           </div>
-  
-                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="showFinancUpld == true">
+                          <!-- download Final approval report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.sr_gm_approval != null">
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile6" target="_blank" [href]="emailDetails?.sr_gm_approval">Download GM report</a>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="showFinancUpld == true || emailDetails?.financial_approval_op == null">
                               <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input"  formControlName="financial_approval_op" id="customFile" name="filename">
-                                  <label class="custom-file-label" for="customFile"> Upload Financial approval
-                                      (Optional)</label>
+                                  <input type="file" class="custom-file-input" (change)="fncialAprvalUpld($event)" formControlName="financial_approval_op" id="customFile" name="filename">
+                                  <label class="custom-file-label" for="customFile"> {{fncialAprvalFile?.name ?
+                                    fncialAprvalFile?.name:'Upload Attachment (Optional)'}}</label>
+                                      <small class="text-danger" *ngIf="fncialAprvalSize">Maximum file size:2MB (PDF, PNG,
+                                        JPG)</small>
                               </div>
+                          </div>
+                          <!-- download Final approval report-->
+                          <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.financial_approval_op != null">
+                            <div class="custom-file mb-3">
+                                <a class="custom-file-label" for="downloadFile6" target="_blank" [href]="emailDetails?.financial_approval_op">Download financial approval</a>
+                            </div>
                           </div>
                          </ng-container>
                      </div>
@@ -254,8 +336,8 @@
                  <div class="modal-footer">
                      <div class="row">
                          <div class="col-lg-12">
-                             <a class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
-                             <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                             <a class="btn btn-primary" type="button" (click)="submitComplaint()"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
+                             <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger"><i class="fa fa-times"></i> Close</button>
                          </div>
                      </div>
                  </div>
