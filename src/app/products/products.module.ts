@@ -17,6 +17,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ConfirmRfqComponent } from './confirm-rfq/confirm-rfq.component';
 import { SalesResponsComponent } from './sales-respons/sales-respons.component';
+import { SalesGuard } from '../Guard/sales.guard';
 
 
 const routes: Routes = [
@@ -66,15 +67,15 @@ const routes: Routes = [
   },
   {
     path: 'confirm-rfq/:id',
-    component: ConfirmRfqComponent,canActivate: [AuthGuard],
+    component: ConfirmRfqComponent,canActivate: [SalesGuard],
   },
   {
     path: 'confirm-rfq',
-    component: ConfirmRfqComponent,canActivate: [AuthGuard],
+    component: ConfirmRfqComponent,canActivate: [SalesGuard],
   },
   {
     path: 'sales-respons/:id',
-    component: SalesResponsComponent,canActivate: [AuthGuard],
+    component: SalesResponsComponent,canActivate: [SalesGuard],
   },
 ];
 
