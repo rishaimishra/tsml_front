@@ -8,6 +8,9 @@ import { AuthGuard } from '../auth/auth.guard';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DispatchPlanComponent } from './dispatch-plan/dispatch-plan.component';
+import { SoComponent } from './so/so.component';
+import { PrepareScComponent } from './prepare-sc/prepare-sc.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
@@ -15,6 +18,8 @@ const routes: Routes = [
   {path: 'order-planing-form', component: OrderPlaningFormComponent, canActivate: [AuthGuard]},
   {path: 'daily-production', component: DailyProductionComponent, canActivate: [AuthGuard]},
   {path: 'dispatch-plan', component: DispatchPlanComponent, canActivate: [AuthGuard]},
+  {path: 'prepare-so', component: SoComponent, canActivate: [AuthGuard]},
+  {path: 'prepare-sc', component: PrepareScComponent, canActivate: [AuthGuard]},
 
 ];
 
@@ -23,12 +28,15 @@ const routes: Routes = [
     OrderPlaningFormComponent,
     OrderPlaningComponent,
     DailyProductionComponent,
-    DispatchPlanComponent
+    DispatchPlanComponent,
+    SoComponent,
+    PrepareScComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     RouterModule.forChild(routes),
     FormsModule
   ]

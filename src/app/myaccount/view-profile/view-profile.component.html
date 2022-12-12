@@ -18,21 +18,31 @@
                            <div class="customer-box-body">
                               <div class="view-txt">
                                  <p>
-                                    <b>First Name</b>
-                                    <span class="d-block">Text Here</span>
+                                    <b>Company Name</b>
+                                    <span class="d-block">{{customer_information.name}}</span>
                                  </p>
-                                 <p>
+                                 <!-- <p>
                                     <b>Last Name</b>
                                     <span class="d-block">Text Here</span>
-                                 </p>
+                                 </p> -->
                                  <p>
                                     <b>Mobile No</b>
-                                    <span class="d-block">Text Here</span>
+                                    <!-- <div class="col"> -->
+                                       <input type="number" [(ngModel)]="custPhoneNo" class="form-control" value=""
+                                           placeholder="Phone No">
+                                   <!-- </div> -->
+                                    <!-- <span class="d-block">{{customer_information.phone}}</span> -->
                                  </p>
                                  <p>
                                     <b>Email</b>
-                                    <span class="d-block">Text Here</span>
+                                    <span class="d-block">{{customer_information.email}}</span>
                                  </p>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-12" (click)="onUpdateMob();">
+                                    <a class="btn btn-primary"><i class="fa fa-paper-plane"></i> Update Mobile No</a>&nbsp;
+                                    <!-- <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button> -->
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -45,11 +55,11 @@
                               <div class="view-txt">
                                  <p>
                                     <b>GST Number</b>
-                                    <span class="d-block">18AABCU9603R1ZM</span>
+                                    <span class="d-block">{{customer_kyc.company_gst}}</span>
                                  </p>
                                  <p>
                                     <b>Pan Number</b>
-                                    <span class="d-block">ALWPG5809L</span>
+                                    <span class="d-block">{{customer_kyc.company_pan}}</span>
                                  </p>
                               </div>
                            </div>
@@ -69,114 +79,38 @@
                               </div>
                               <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
                                  <div class="row">
-                                    <div class="col-12 col-lg-4">
+                                    <div class="col-12 col-lg-4" *ngFor="let item of shipping_address; let i = index">
                                        <div class="customer-box">
-                                          <div class="customer-box-head">Address 1</div>
+                                          <div class="customer-box-head">Address {{i+1}}</div>
                                           <div class="customer-box-body">
                                              <div class="view-txt">
                                                 <p>
-                                                   <b>First Name</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <b>Company Name</b>
+                                                   <span class="d-block">{{item.first_name}}</span>
                                                 </p>
                                                 <p>
-                                                   <b>Last Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line1</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line2</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>City</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>State</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Pincode</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <!--/-->
-                                    <div class="col-12 col-lg-4">
-                                       <div class="customer-box">
-                                          <div class="customer-box-head">Address 2</div>
-                                          <div class="customer-box-body">
-                                             <div class="view-txt">
-                                                <p>
-                                                   <b>First Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Last Name</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <b>Gstin</b>
+                                                   <span class="d-block">{{item.gstin}}</span>
                                                 </p>
                                                 <p>
                                                    <b>Address Line1</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.addressone}}</span>
                                                 </p>
                                                 <p>
                                                    <b>Address Line2</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.addresstwo}}</span>
                                                 </p>
                                                 <p>
                                                    <b>City</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.city}}</span>
                                                 </p>
                                                 <p>
                                                    <b>State</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.state}}</span>
                                                 </p>
                                                 <p>
                                                    <b>Pincode</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <!--/-->
-                                    <div class="col-12 col-lg-4">
-                                       <div class="customer-box">
-                                          <div class="customer-box-head">Address3</div>
-                                          <div class="customer-box-body">
-                                             <div class="view-txt">
-                                                <p>
-                                                   <b>First Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Last Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line1</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line2</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>City</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>State</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Pincode</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.pincode}}</span>
                                                 </p>
                                              </div>
                                           </div>
@@ -193,45 +127,45 @@
                               </div>
                               <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
                                  <div class="row">
-                                    <div class="col-12 col-lg-4">
+                                    <div class="col-12 col-lg-4" *ngFor="let item of billing_address; let i = index">
                                        <div class="customer-box">
-                                          <div class="customer-box-head">Address 1</div>
+                                          <div class="customer-box-head">Address {{i+1}}</div>
                                           <div class="customer-box-body">
                                              <div class="view-txt">
                                                 <p>
-                                                   <b>First Name</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <b>Company Name</b>
+                                                   <span class="d-block">{{item.first_name}}</span>
                                                 </p>
                                                 <p>
-                                                   <b>Last Name</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <b>Gstin</b>
+                                                   <span class="d-block">{{item.gstin}}</span>
                                                 </p>
                                                 <p>
                                                    <b>Address Line1</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.addressone}}</span>
                                                 </p>
                                                 <p>
                                                    <b>Address Line2</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.addresstwo}}</span>
                                                 </p>
                                                 <p>
                                                    <b>City</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.city}}</span>
                                                 </p>
                                                 <p>
                                                    <b>State</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.state}}</span>
                                                 </p>
                                                 <p>
                                                    <b>Pincode</b>
-                                                   <span class="d-block">Text Here</span>
+                                                   <span class="d-block">{{item.pincode}}</span>
                                                 </p>
                                              </div>
                                           </div>
                                        </div>
                                     </div>
                                     <!--/-->
-                                    <div class="col-12 col-lg-4">
+                                    <!-- <div class="col-12 col-lg-4">
                                        <div class="customer-box">
                                           <div class="customer-box-head">Address 2</div>
                                           <div class="customer-box-body">
@@ -267,83 +201,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <!--/-->
-                                    <div class="col-12 col-lg-4">
-                                       <div class="customer-box">
-                                          <div class="customer-box-head">Address 3</div>
-                                          <div class="customer-box-body">
-                                             <div class="view-txt">
-                                                <p>
-                                                   <b>First Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Last Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line1</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line2</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>City</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>State</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Pincode</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <!--/-->
-                                    <div class="col-12 col-lg-4">
-                                       <div class="customer-box">
-                                          <div class="customer-box-head">Address 4</div>
-                                          <div class="customer-box-body">
-                                             <div class="view-txt">
-                                                <p>
-                                                   <b>First Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Last Name</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line1</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Address Line2</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>City</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>State</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                                <p>
-                                                   <b>Pincode</b>
-                                                   <span class="d-block">Text Here</span>
-                                                </p>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
+                                    </div> -->
                                     <!--/-->
                                  </div>
                               </div>
@@ -408,60 +266,60 @@
                            Uploaded Documents
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.address_proof_file != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Address Proof</a>
+                           <a [href]="file_link+'/'+documents.address_proof_file" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Address Proof</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.cancel_cheque_file != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Cancelled Cheque</a>
+                           <a [href]="file_link+'/'+documents.cancel_cheque_file" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Cancelled Cheque</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.pan_card_file != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download PAN Card</a>
+                           <a [href]="file_link+'/'+documents.pan_card_file" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download PAN Card</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6"*ngIf="documents?.gst_certificate != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download GST Certificate</a>
+                           <a [href]="file_link+'/'+documents.gst_certificate" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download GST Certificate</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.itr_last_yr != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download ITR of Last 2 FYS</a>
+                           <a [href]="file_link+'/'+documents.itr_last_yr" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download ITR of Last 2 FYS</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.form_d != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Form D</a>
+                           <a [href]="file_link+'/'+documents.form_d" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Form D</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.registration_certificate != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Registration Certificates</a>
+                           <a [href]="file_link+'/'+documents.registration_certificate" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Registration Certificates</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.tcs != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download TCS</a>
+                           <a [href]="file_link+'/'+documents.tcs" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download TCS</a>
                         </div>
                      </div>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="documents?.turnover_declare != null">
                         <div class="form-group download-documents">
-                           <a href="#"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Declaration on turnover
+                           <a [href]="file_link+'/'+documents.turnover_declare" target="_blank"><span class="arrow-down"><i class="fa fa-eye" aria-hidden="true"></i></span><span class="arrow-down-hovr"><i class="fa fa-eye blue-eeye" aria-hidden="true"></i></span>  Download Declaration on turnover
                            section 1940 and 206 cc</a>
                         </div>
                      </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <!-- <div class="row">
                      <div class="col-lg-12">
                         <a href="#" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
                         <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
                      </div>
-                  </div>
+                  </div> -->
                </div>
             </div>
          </section>

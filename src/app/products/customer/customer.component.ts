@@ -8,8 +8,6 @@ import Swal from 'sweetalert2';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
-import { CustomValidators } from './custom1Validator';
-import { ThisReceiver } from '@angular/compiler';
 
 
 @Component({
@@ -88,6 +86,7 @@ export class CustomerComponent implements OnInit {
   userByrole:any;
   qtStatusUpdate:any;
   qoutestId:any;
+
   myForm: FormGroup;
   arr: FormArray;
   showModalIsValue: boolean = false;
@@ -110,6 +109,15 @@ export class CustomerComponent implements OnInit {
   countReqoutArr:any = [];
   countSche:any;
   rfqUserId:any;
+  pickupType:any;
+  
+
+  sub_catId :any;
+  sizes :any;
+  schedule_no :any;
+  plant_location :any;
+  compPrice:any;
+  tsmlPriceArr: any = [];
 
 
   @ViewChild("remarksModel")
@@ -147,6 +155,7 @@ export class CustomerComponent implements OnInit {
         this.productId = res.id;
       }
     });
+
     this.getLocation();
     this.states = this._state.getState();
     this.detailByRfq();
@@ -161,11 +170,10 @@ export class CustomerComponent implements OnInit {
       cam_discount: ['', Validators.required],
       totalSum: [''],
       finalAmt: [''],
-
     })
 
     this.pricaValue();
-
+    this.getCompPrice();
     this.myForm = this._fb.group({
       arr: this._fb.array([])
     })
@@ -584,6 +592,10 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+    // component price save here
+    this._product.saveComPrice(this.tsmlPriceArr).subscribe((res:any) => {
+      console.log('save price',res)
+    })
     let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
     if (this.countSche['total'] == addCount) {
       let userId = localStorage.getItem('USER_ID');
@@ -658,9 +670,14 @@ export class CustomerComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
+    this.sub_catId = subCatId;
+    this.sizes = size;
+    this.schedule_no = schedule_no;
+    this.plant_location = location;
+    this.pickupType = plant;
 
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
@@ -833,11 +850,81 @@ export class CustomerComponent implements OnInit {
     })
   };
 
+
   priceSave(id: any, firstIndx: any, lastIndx: any) {
     if (!this.priceForm.valid) {
       this.submitted = true;
       return;
     };
+    let plantReqst = {
+      "data": this.pickupType
+    }
+    this._product.getIdbyPlant(plantReqst).subscribe((res:any) => {
+      let plantId = res.result
+
+      if (res.status == 1 && res.message == 'success' ) {
+        let bptPrice = $('#_bptPrice'+id).val();
+        let pricPrem = $('#price_premium'+id).val();
+        let discount = $('#_discount'+id).val();
+        let delivery = $('#delivery'+id).val();
+        let interest = $('#_interest'+id).val();
+        let credit = $('#_credit'+id).val();
+        let miscEx = $('#misc_expense'+id).val();
+        let total = $('#_total'+id).val();
+        let diffPrice = $('#_bptAndfinal'+id).val();
+    
+        let componentArr = [
+          {
+            "comp": this.compPrice[0].code,
+            "value": bptPrice
+          },
+          {
+            "comp": this.compPrice[1].code,
+            "value": pricPrem
+          },
+          {
+            "comp": this.compPrice[2].code,
+            "value": discount
+          },
+          {
+            "comp": this.compPrice[3].code,
+            "value": delivery
+          },
+          {
+            "comp": this.compPrice[4].code,
+            "value": interest
+          },
+          {
+            "comp": this.compPrice[5].code,
+            "value": credit
+          },
+          {
+            "comp": this.compPrice[6].code,
+            "value": miscEx
+          },
+          {
+            "comp": this.compPrice[7].code,
+            "value": total
+          },
+          {
+            "comp": this.compPrice[8].code,
+            "value": diffPrice
+          }
+        ]
+        let compPriceArr = {
+          "sub_cat_id": this.sub_catId,
+          "size": this.sizes,
+          "plant": plantId,
+          "rfq_no": this.productId,
+          "schedule": this.schedule_no,
+          "components": componentArr
+        }
+        this.tsmlPriceArr.push(compPriceArr);
+        console.log('compPriceArr',compPriceArr);
+      }
+  
+    })
+
     $("#camsPrice" + id).val(this.Totalsum1);
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
@@ -938,9 +1025,8 @@ export class CustomerComponent implements OnInit {
   reqouteStatus() {
     let apiUrl = '/user/get_count_requote/'+ this.productId;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
-      console.log(res);
     })
-  }
+  };
 
   getSubCategory(catId:any) {
     this.spinner.show();
@@ -956,7 +1042,7 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
   
   getStatusCount() {
     let apiUrl = '/user/get_count_sche/'+this.productId;
@@ -965,6 +1051,12 @@ export class CustomerComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         this.countSche = res.result;
       }
+    })
+  };
+
+  getCompPrice() {
+    this._product.getPriceComp().subscribe((res:any) => {
+      this.compPrice = res.result;
     })
   }
 }

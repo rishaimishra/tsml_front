@@ -14,6 +14,10 @@ export class ProductsService {
     return this._http.get(this.BesUrl + url_paremter);
   };
 
+  postMethopd(url,params: any) {
+    return this._http.post(this.BesUrl+url, params);
+  };
+  
   getGstin(url_paremter: any) {
     return this._http.get('https://sheet.gstincheck.co.in/check/' + url_paremter);
   };
@@ -163,5 +167,15 @@ export class ProductsService {
   };
   custNotiRemove(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/up_cus_noti', reqParameter);
+  };
+  saveComPrice(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/price_break_save', reqParameter);
+  };
+  getIdbyPlant(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get_plant_id', reqParameter);
+  };
+
+  getPriceComp() {
+    return this._http.get(this.BesUrl + '/user/get_price_comp');
   };
 }

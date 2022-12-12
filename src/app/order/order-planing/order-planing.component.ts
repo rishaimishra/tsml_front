@@ -54,7 +54,6 @@ export class OrderPlaningComponent implements OnInit {
       }
       for (let index = 0; index < this.orderList.length; index++) {
         this.dispatchPlan = this.orderList[index]['dispatch'];
-        console.log('element',this.dispatchPlan);
         
       }
     }, err => {
@@ -67,7 +66,6 @@ export class OrderPlaningComponent implements OnInit {
     this.orderPlaningForm.value['plant'] = plantSele;
   }
   searchOrderPlan() {
-    console.log(this.orderPlaningForm.value);
     var today: any = new Date(this.orderPlaningForm.value['start_date']);
     var startYesr = today.getFullYear();
     var startMonth = today.getMonth() + 1;
@@ -78,7 +76,6 @@ export class OrderPlaningComponent implements OnInit {
 
     if (startYesr == endYaer && startMonth == endMonth) {
       this._complains.OrderPlaning(this.orderPlaningForm.value).subscribe((res:any) => {
-        console.log(res);
         this.OrderPlaning();
       })
     } else {
@@ -91,7 +88,6 @@ export class OrderPlaningComponent implements OnInit {
   }
   onOpenDispatchForm(dispatchList: any) {
     this.dispatchList = dispatchList;
-    console.log('dispatchList: ',this.dispatchList);
   }
 
   nxtDt: any;

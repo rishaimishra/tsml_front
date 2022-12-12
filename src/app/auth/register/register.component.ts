@@ -792,7 +792,9 @@ export class RegisterComponent implements OnInit {
           let addrOne = res.result.pradr.addr.bnm;
           let addrTwo = res.result.pradr.addr.st;
           let gstin = res.result.gstin;
+          let companyName = res.result.lgnm;
           // $('#adr_'+i).val(addrOne);
+          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('company_name').patchValue(companyName);
           ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
           ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addresstwo').patchValue(addrTwo);
           ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
@@ -819,7 +821,9 @@ export class RegisterComponent implements OnInit {
           let addrOne = res.result.pradr.addr.bnm;
           let addrTwo = res.result.pradr.addr.st;
           let gstin = res.result.gstin;
+          let company = res.result.lgnm;
           // $('#adr_'+i).val(addrOne);
+          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('company_name').patchValue(company);
           ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
           ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addresstwo').patchValue(addrTwo);
           ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('city').patchValue(city);

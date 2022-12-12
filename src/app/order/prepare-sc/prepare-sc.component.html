@@ -1,0 +1,336 @@
+<app-header></app-header>
+<div class="page-content">
+    <section class="sub-header-2">
+       <div class="container">
+          <h1>Prepare Sales Contract</h1>
+          <div class="clearfix"></div>
+       </div>
+    </section>
+    <section class="add-prod-pg">
+       <div class="container">
+          <div class="row">
+             <div class="col-lg-12">
+                <div class="cart-table">
+                   <div class="table-responsive">
+                      <table class="table table-op">
+                         <thead>
+                            <tr>
+                               <th>PO No</th>
+                               <th>PO Date</th>
+                               <th>Customer Name</th>
+                               <th>RFQ No</th>
+                               <th>RFQ Date</th>
+                               <th></th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 8, currentPage: p }">
+                               <td>{{po.po_no}}</td>
+                               <td>{{po.po_date}}</td>
+                               <td>{{po.user}}</td>
+                               <td>{{po.rfq_no}}</td>
+                               <td>{{po.rfq_date}}</td>
+                               <td align="right">
+                                <button (click)="prepareSc(po.po_no)" class="btn btn-sm btn-primary">Prepare SC</button>
+                            </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                      <div class="text-right">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+             <div class="" *ngIf="showSc">
+                <div class="prof-form-bdy mb-5">
+                   <div class="po-summery">
+                      <div class="half-summery">
+                         <ul>
+                            <li>
+                               <span>PO No: </span> {{poNumber}}
+                            </li>
+                            <li>
+                               <span>PO Date: </span> {{scData?.po_date | date: 'dd/MM/YYYY'}}
+                            </li>
+                            <li>
+                               <span>Customer Name: </span> {{scData?.cus_name}}
+                            </li>
+                            <li>
+                               <span>RFQ No: </span> {{scData?.rfq_no}}
+                            </li>
+                         </ul>
+                      </div>
+                   </div>
+                   <form [formGroup]="scForm">
+                   <div class="row mt-2">
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Contract Type</label>
+                            <select class="form-control form-control-sm" formControlName="contract_ty">
+                               <option value="">--Select--</option>
+                               <option value="{{contract.contract_type_code}}" *ngFor="let contract of contractTyp">{{contract.contract_type_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sales Organization</label>
+                            <select class="form-control form-control-sm" formControlName="sales_org">
+                               <option value="">--Select--</option>
+                               <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Distribution Channel</label>
+                            <select class="form-control form-control-sm" (change)="selectDist($event)" formControlName="dis_chnl">
+                               <option value="">--Select--</option>
+                               <option value="{{dst.distr_chan_code}}" *ngFor="let dst of distribution">{{dst.distr_chan_terms_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Division</label>
+                            <select class="form-control form-control-sm" formControlName="div">
+                               <option value="">--Select--</option>
+                               <option value="{{divi.distri_chanal_id}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sales office</label>
+                            <select class="form-control form-control-sm" formControlName="sales_ofc">
+                                <option value="">--Select--</option>
+                               <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sales Group</label>
+                            <select class="form-control form-control-sm" formControlName="sales_grp">
+                               <option value="">--Select--</option>
+                               <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Qty Contract TSML</label>
+                            <input type="text" formControlName="qty_cont" class="form-control form-control-sm">
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Net Value</label>
+                            <input type="text" formControlName="net_val" class="form-control form-control-sm">
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sold-To-Party</label>
+                            <input type="text" formControlName="sold_to_party" class="form-control form-control-sm">
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Ship-To-Party</label>
+                            <input type="text" formControlName="ship_to_party" class="form-control form-control-sm">
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Cust.Referance</label>
+                            <input type="text" formControlName="cus_ref" class="form-control form-control-sm">
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Cust. Ref. Date</label>
+                            <div class="position-relative">
+                               <input type="text" formControlName="cus_ref_dt" class="form-control form-control-sm datepicker">
+                               <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Shp. Cond.</label>
+                            <select class="form-control form-control-sm" formControlName="shp_cond">
+                                <option value="">--Select--</option>
+                                <option value="{{dlvrMode.delivery_mode_code}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
+                            </select>
+                         </div>
+                      </div>
+                   </div>
+                </form>
+                   <div class="row">
+                      <div class="col-lg-12">
+                         <div class="cart-table">
+                            <div class="table-responsive">
+                               <table class="table table-op">
+                                  <thead>
+                                     <tr>
+                                        <th>Material</th>
+                                        <th>Order Quantity</th>
+                                        <th>Plant</th>
+                                        <th></th>
+                                     </tr>
+                                  </thead>
+                                  <tbody>
+                                     <tr>
+                                        <td>{{scData?.mat_code}}</td>
+                                        <td>...</td>
+                                        <td>...</td>
+                                        <td align="right">
+                                            <button class="btn btn-sm btn-primary ui1" (click)="updateInfo()">Update Info</button>
+                                        </td>
+                                     </tr>
+                                  </tbody>
+                               </table>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="ui1Bx" id="targetForm" *ngIf="showUpdateInfo">
+                      <div class="row">
+                         <div class="col-lg-12">
+                            <div class="cart-table">
+                               <div class="table-responsive">
+                                  <table class="table table-op">
+                                     <thead>
+                                        <tr>
+                                           <th>Cnty</th>
+                                           <th>Description</th>
+                                           <th>Amount</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody *ngFor="let item of scData['price_det']">
+                                        <td>{{item.cnty}}</td>
+                                        <td>{{item.des}}</td>
+                                        <td>{{item.amt}}</td>
+                                     </tbody>
+                                  </table>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-12">
+                            <div class="po-summery">
+                               <div class="row">
+                                  <div class="col-12 col-lg-4">
+                                     <div class="form-group">
+                                        <label>Incoterms</label>
+                                        <input type="text" class="form-control form-control-sm">
+                                     </div>
+                                  </div>
+                                  <div class="col-12 col-lg-4">
+                                     <div class="form-group">
+                                        <label>Payment Terms</label>
+                                        <input type="text" class="form-control form-control-sm">
+                                     </div>
+                                  </div>
+                                  <div class="col-12 col-lg-4">
+                                     <div class="form-group">
+                                        <label>Feight</label>
+                                        <select class="form-control form-control-sm">
+                                           <option value="">--Select--</option>
+                                           <option value="{{item.freight_code}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
+                                        </select>
+                                     </div>
+                                  </div>
+                                  <div class="col-12 col-lg-4">
+                                     <div class="form-group">
+                                        <label>Customer Group</label>
+                                        <select class="form-control form-control-sm">
+                                           <option> Select</option>
+                                           <option>XXXXX</option>
+                                           <option>XXXXX</option>
+                                        </select>
+                                     </div>
+                                  </div>
+                                  <div class="col-12 col-lg-4">
+                                     <div class="form-group">
+                                        <label>Feight Indicator</label>
+                                        <select class="form-control form-control-sm">
+                                           <option value="">--Select--</option>
+                                           <option value="{{indi.freight_indication_code}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
+                                        </select>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                         <!--/-->
+                         <div class="col-12">
+                            <div class="cart-table">
+                               <div class="table-responsive">
+                                  <table class="table table-op">
+                                     <thead>
+                                        <tr>
+                                           <th>Material</th>
+                                           <th>Characteristics</th>
+                                           <th>Minimum</th>
+                                           <th>Maximum</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                        <td>...</td>
+                                        <td>...</td>
+                                        <td>...</td>
+                                        <td>...</td>
+                                     </tbody>
+                                  </table>
+                               </div>
+                            </div>
+                         </div>
+                         <!--/-->
+                         <div class="col-12">
+                            <div class="cart-table">
+                               <div class="table-responsive">
+                                  <table class="table table-op">
+                                     <thead>
+                                        <tr>
+                                           <th>Material</th>
+                                           <th>Characteristics</th>
+                                           <th>Permissible Percentage</th>
+                                           <th>UOM</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                        <td>...</td>
+                                        <td>...</td>
+                                        <td>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                   <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                             </div>
+                                        </td>
+                                        <td>...</td>
+                                     </tbody>
+                                  </table>
+                               </div>
+                            </div>
+                         </div>
+                         <!--/-->
+                      </div>
+                   </div>
+                </div>
+                <div class="row mb-5">
+                   <div class="col-lg-12">
+                      <a href="#" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
+                      <button type="button" (click)="backTo()" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                   </div>
+                </div>
+             </div>
+
+             <!-- Footer -->
+            <app-footer></app-footer>
