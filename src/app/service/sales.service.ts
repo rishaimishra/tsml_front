@@ -52,4 +52,28 @@ export class SalesService {
   getFreightIndicat() {
     return this._http.get(this.BesUrl + '/user/get_sap_freight_indi');
   };
+
+  getCustGroup() {
+    return this._http.get(this.BesUrl + '/user/get_sap_customer_group');
+  };
+  
+  getIncoterms() {
+    return this._http.get(this.BesUrl + '/user/get_sap_incoterms');
+  };
+
+  paymentTerms() {
+    return this._http.get(this.BesUrl + '/user/get-sap-payment-terms');
+  };
+
+  submitSalesCnt(request) {
+    return this._http.post(this.BesUrl + '/user/sales_cnt_submit', request);
+  };
+
+  getOrderType() {
+    return this._http.get(this.BesUrl + '/user/get-order-type');
+  };
+
+  submitSalesSo(request) {
+    return this._http.post(this.BesUrl + '/user/so_submit', request);
+  };
 }

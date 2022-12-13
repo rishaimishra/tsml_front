@@ -80,7 +80,7 @@
                             <label>Sales Organization</label>
                             <select class="form-control form-control-sm" formControlName="sales_org">
                                <option value="">--Select--</option>
-                               <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
+                               <option value="{{org.id}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -98,7 +98,7 @@
                             <label>Division</label>
                             <select class="form-control form-control-sm" formControlName="div">
                                <option value="">--Select--</option>
-                               <option value="{{divi.distri_chanal_id}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
+                               <option value="{{divi.id}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -107,7 +107,7 @@
                             <label>Sales office</label>
                             <select class="form-control form-control-sm" formControlName="sales_ofc">
                                 <option value="">--Select--</option>
-                               <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
+                               <option value="{{slcOfc.id}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -116,7 +116,7 @@
                             <label>Sales Group</label>
                             <select class="form-control form-control-sm" formControlName="sales_grp">
                                <option value="">--Select--</option>
-                               <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
+                               <option value="{{sapGp.id}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -164,7 +164,7 @@
                             <label>Shp. Cond.</label>
                             <select class="form-control form-control-sm" formControlName="shp_cond">
                                 <option value="">--Select--</option>
-                                <option value="{{dlvrMode.delivery_mode_code}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
+                                <option value="{{dlvrMode.id}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -184,12 +184,12 @@
                                      </tr>
                                   </thead>
                                   <tbody>
-                                     <tr>
-                                        <td>{{scData?.mat_code}}</td>
-                                        <td>...</td>
-                                        <td>...</td>
+                                     <tr *ngFor="let item of scInfo; let i = index">
+                                        <td>{{item.mat_code}}</td>
+                                        <td>{{item.odr_qty}}</td>
+                                        <td>{{item.pcode}}</td>
                                         <td align="right">
-                                            <button class="btn btn-sm btn-primary ui1" (click)="updateInfo()">Update Info</button>
+                                            <button class="btn btn-sm btn-primary ui1" (click)="updateInfo(i)">Update Info</button>
                                         </td>
                                      </tr>
                                   </tbody>
@@ -211,7 +211,7 @@
                                            <th>Amount</th>
                                         </tr>
                                      </thead>
-                                     <tbody *ngFor="let item of scData['price_det']">
+                                     <tbody *ngFor="let item of priceInfo.price_det">
                                         <td>{{item.cnty}}</td>
                                         <td>{{item.des}}</td>
                                         <td>{{item.amt}}</td>
@@ -224,48 +224,56 @@
                       <div class="row">
                          <div class="col-12">
                             <div class="po-summery">
+                              <form [formGroup]="updateInfoForm">
                                <div class="row">
                                   <div class="col-12 col-lg-4">
-                                     <div class="form-group">
-                                        <label>Incoterms</label>
-                                        <input type="text" class="form-control form-control-sm">
-                                     </div>
-                                  </div>
-                                  <div class="col-12 col-lg-4">
-                                     <div class="form-group">
-                                        <label>Payment Terms</label>
-                                        <input type="text" class="form-control form-control-sm">
-                                     </div>
-                                  </div>
+                                    <div class="form-group">
+                                       <label>Incoterms</label>
+                                       <select class="form-control form-control-sm" formControlName="incoterms">
+                                          <option value="">--Select--</option>
+                                          <option value="{{item.id}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-lg-4">
+                                    <div class="form-group">
+                                       <label>Payment Terms</label>
+                                       <select class="form-control form-control-sm" formControlName="pay_terms">
+                                          <option value="">--Select--</option>
+                                          <option value="{{item.id}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
+                                       </select>
+                                    </div>
+                                 </div>
+
                                   <div class="col-12 col-lg-4">
                                      <div class="form-group">
                                         <label>Feight</label>
-                                        <select class="form-control form-control-sm">
+                                        <select class="form-control form-control-sm" formControlName="freight">
                                            <option value="">--Select--</option>
-                                           <option value="{{item.freight_code}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
+                                           <option value="{{item.id}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
                                         </select>
                                      </div>
                                   </div>
                                   <div class="col-12 col-lg-4">
                                      <div class="form-group">
                                         <label>Customer Group</label>
-                                        <select class="form-control form-control-sm">
-                                           <option> Select</option>
-                                           <option>XXXXX</option>
-                                           <option>XXXXX</option>
+                                        <select class="form-control form-control-sm" formControlName="cus_grp">
+                                           <option value="">--Select--</option>
+                                           <option value="{{custGrp.id}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
                                         </select>
                                      </div>
                                   </div>
                                   <div class="col-12 col-lg-4">
                                      <div class="form-group">
                                         <label>Feight Indicator</label>
-                                        <select class="form-control form-control-sm">
+                                        <select class="form-control form-control-sm" formControlName="fr_ind">
                                            <option value="">--Select--</option>
-                                           <option value="{{indi.freight_indication_code}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
+                                           <option value="{{indi.id}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
                                         </select>
                                      </div>
                                   </div>
                                </div>
+                              </form>
                             </div>
                          </div>
                          <!--/-->
@@ -281,11 +289,11 @@
                                            <th>Maximum</th>
                                         </tr>
                                      </thead>
-                                     <tbody>
+                                     <tbody *ngFor="let spc of specs[0]">
+                                        <td>{{priceInfo.mat_code}}</td>
                                         <td>...</td>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>...</td>
+                                        <td>{{spc.min}}</td>
+                                        <td>{{spc.max}}</td>
                                      </tbody>
                                   </table>
                                </div>
@@ -305,16 +313,16 @@
                                         </tr>
                                      </thead>
                                      <tbody>
-                                        <td>...</td>
+                                        <td>{{priceInfo.mat_code}}</td>
                                         <td>...</td>
                                         <td>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
-                                                   <input type="text" class="form-control form-control-sm">
+                                                   <input type="number" [(ngModel)]="permissPerc" class="form-control form-control-sm">
                                                 </div>
                                              </div>
                                         </td>
-                                        <td>...</td>
+                                        <td class="mt-0">%</td>
                                      </tbody>
                                   </table>
                                </div>
@@ -326,7 +334,7 @@
                 </div>
                 <div class="row mb-5">
                    <div class="col-lg-12">
-                      <a href="#" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</a>&nbsp;
+                      <button type="button" class="btn btn-primary" (click)="submitSc()"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
                       <button type="button" (click)="backTo()" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
                    </div>
                 </div>
