@@ -65,33 +65,44 @@
                            class="inputValidation">Remarks is required</small>
                      </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
-                     <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
-                     <label class="custom-file-label" for="customFile">{{fileName ?
-                         fileName:'Upload Attachement'}}</label>
+                  
+
+                  <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
+                      <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
+                      <label class="custom-file-label" for="customFile">{{fileName ?
+                          fileName:'Upload Attachement'}}</label>
+                   </div>
                   </div>
-                  <div class="col-lg-7 col-md-4 col-sm-4" *ngIf="compInfo?.complain_status != 2">
-                    <div class="reply_btn_box">
-                       <div class="clos-btn">
-                         <div class="form-check">
-                            <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
-                               type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                               Close
-                            </label>
+                  <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
+                      <input type="file" accept=".pdf" (change)="onSelectFile2($event)" class="custom-file-input pointer" id="customFile" name="filename">
+                      <label class="custom-file-label" for="customFile">{{fileName2 ?
+                          fileName2:'Upload Attachement'}}</label>
+                   </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 col-md-4 col-sm-4" *ngIf="compInfo?.complain_status != 2">
+                      <div class="reply_btn_box">
+                         <div class="clos-btn">
+                           <div class="form-check">
+                              <input class="form-check-input" [checked]="closeChat" (change)="closeStatus($event)"
+                                 type="checkbox" value="" id="defaultCheck1">
+                              <label class="form-check-label" for="defaultCheck1">
+                                 Close
+                              </label>
+                           </div>
                          </div>
-                       </div>
-                       <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
-                                class="fa fa-reply"></i> Reply</button></div>
-                      <div class="reply_btn ml-3"><button class="btn btn-primary btn-sm" (click)="showModel()" id="" data-toggle="modal" data-target="#myModal"> Process Complaint </button></div>
-                    </div>
-                 </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
-                    <input type="file" accept=".pdf" (change)="onSelectFile2($event)" class="custom-file-input pointer" id="customFile" name="filename">
-                    <label class="custom-file-label" for="customFile">{{fileName2 ?
-                        fileName2:'Upload Attachement'}}</label>
-                 </div>
+                         <div class="reply_btn"><button (click)="reply()" class="btn btn-primary btn-sm" ><i
+                                  class="fa fa-reply"></i> Reply</button></div>
+                        <div class="reply_btn ml-3"><button class="btn btn-primary btn-sm" (click)="showModel()" id="" data-toggle="modal" data-target="#myModal"> Process Complaint </button></div>
+                      </div>
+                   </div>
+                  </div>
+
+                  
                    
+                  
                 </div>
                 <hr>
                 <div class="row">
@@ -176,7 +187,7 @@
                             <!-- download Interim-->
                             <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.interim_report != null">
                                 <label for="">Preview the interim report</label>
-                                <div class="custom-file mb-3">
+                                <div class="custom-file mb-3 custom-file-download">
                                     <a class="custom-file-label" for="downloadFile1" target="_blank" [href]="emailDetails?.interim_report">Download the interim</a>
                                 </div>
                               </div>
@@ -194,7 +205,7 @@
                           <!-- download final report-->
                           <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.final_report != null">
                             <label for="">Preview the final report</label>
-                            <div class="custom-file mb-3">
+                            <div class="custom-file mb-3 custom-file-download">
                                 <a class="custom-file-label" for="downloadFile3" target="_blank" [href]="emailDetails?.final_report">Download final report</a>
                             </div>
                           </div>
@@ -225,7 +236,7 @@
                           <!-- download CAPA report-->
                           <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.capa != null">
                             <label for="">Preview the CAPA report</label>
-                            <div class="custom-file mb-3">
+                            <div class="custom-file mb-3 custom-file-download">
                                 <a class="custom-file-label" for="downloadFile4" target="_blank" [href]="emailDetails?.capa">Download CAPA report</a>
                             </div>
                           </div>
@@ -256,7 +267,7 @@
                           <!-- download final settlmt report-->
                           <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.financial_set_repo != null">
                             <label for="">Preview financial settlement report</label>
-                            <div class="custom-file mb-3">
+                            <div class="custom-file mb-3 custom-file-download">
                                 <a class="custom-file-label" for="downloadFile5" target="_blank" [href]="emailDetails?.financial_set_repo">Download financial settlement report</a>
                             </div>
                           </div>
@@ -277,7 +288,7 @@
                           <!-- download Final approval report-->
                           <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.sales_approval != null">
                             <label for="">Preview Final approval</label>
-                            <div class="custom-file mb-3">
+                            <div class="custom-file mb-3 custom-file-download">
                                 <a class="custom-file-label" for="downloadFile6" target="_blank" [href]="emailDetails?.sales_approval">Download Sales approval</a>
                             </div>
                           </div>

@@ -105,7 +105,7 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Quantity (MT)</label>
-                                                        <input #qtyInput="ngModel" [disabled]="userType" type="number"
+                                                        <input #qtyInput="ngModel" disabled type="number"
                                                             (change)="getTotalQuantity(i)"
                                                             [(ngModel)]="formData.quantity"
                                                             name="quantity_{{ formData.schedule_no }}"
@@ -122,7 +122,7 @@
                                                         <div class="pri-box">
                                                             <span>₹</span>
                                                             <input type="number"
-                                                                [disabled]="!userType || formData.kam_price == null"
+                                                            disabled
                                                                 #priceInput="ngModel"
                                                                 [(ngModel)]="formData.expected_price"
                                                                 name="expected_price{{ formData.schedule_no }}"
@@ -138,7 +138,7 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Delivery Method</label>
-                                                        <select [disabled]="userByrole == 'C'"
+                                                        <select disabled
                                                             #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                                                             name="delivery_{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" required>
@@ -192,7 +192,7 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Location</label>
-                                                        <select class="form-control form-control-sm" #location="ngModel"
+                                                        <select disabled class="form-control form-control-sm" #location="ngModel"
                                                             [(ngModel)]="formData.location"
                                                             name="location_{{ formData.schedule_no }}" required>
                                                             <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
@@ -213,7 +213,7 @@
                                                             <label for="">Bill To</label>
                                                         </div>
                                                         <select class="form-control form-control-sm"
-                                                            [disabled]="userType" #billTo="ngModel"
+                                                        disabled #billTo="ngModel"
                                                             [(ngModel)]="formData.bill_to"
                                                             name="bill_to_{{ formData.schedule_no }}" required>
                                                             <option value="{{formData.bill_to}}" selected>
@@ -233,7 +233,7 @@
                                                             <label for="">Ship To</label>
                                                         </div>
                                                         <select class="form-control form-control-sm"
-                                                            [disabled]="userType" #shipTo="ngModel"
+                                                        disabled #shipTo="ngModel"
                                                             [(ngModel)]="formData.ship_to"
                                                             name="ship_to_{{ formData.schedule_no }}" required>
                                                             <option value="{{formData.ship_to}}" selected>
@@ -252,7 +252,7 @@
                                                         <label for="">Proposed Delivery Date</label>
                                                         <div class="date-rang">
                                                             <div class="position-relative">
-                                                                <input type="date" [disabled]="userType"
+                                                                <input type="date" disabled
                                                                     [(ngModel)]="formData.from_date" #dlvrDate="ngModel"
                                                                     (change)="setNxtData($event, formData.schedule_no)"
                                                                     min="{{date}}"
@@ -265,7 +265,7 @@
                                                                 <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                                                             </div>
                                                             <div class="position-relative">
-                                                                <input type="date" [disabled]="userType"
+                                                                <input type="date" disabled
                                                                     [(ngModel)]="formData.to_date" #dlvrDateTo="ngModel"
                                                                     id="to_date_{{formData.schedule_no}}"
                                                                     name="to_date_{{ formData.schedule_no }}"
@@ -281,11 +281,11 @@
                                                 </div>
                                                 
                                                 <div class="col-lg-3">
-                                                    <div class="form-group" *ngIf="userByrole != 'Sales'">
+                                                    <div class="form-group">
                                                         <label for=""
                                                             (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant, i, y)">Tsml's
                                                             price
-                                                            <span *ngIf="!userType && qoutestId != 0 && qoutestId != 2"
+                                                            <span
                                                                 class="price-info price-info0" data-toggle="modal"
                                                                 data-target="#addPrice"><i
                                                                     class="fa fa-info-circle"></i></span></label>
@@ -302,7 +302,7 @@
                                                         <label for="">Valid Till </label>
                                                         <div class="position-relative">
                                                             <input type="datetime-local"
-                                                                [disabled]="userType || qoutestId == 0 || qoutestId == 2"
+                                                            disabled
                                                                 #validTill="ngModel" [(ngModel)]="formData.valid_till"
                                                                 class="form-control form-control-sm datepicker"
                                                                 >
@@ -329,7 +329,7 @@
                                                     <div class="form-group">
                                                         <label for="">Customer Remarks</label>
                                                         <textarea [(ngModel)]="formData.remarks"
-                                                            [disabled]="userByrole != 'C'" #remarks="ngModel"
+                                                        disabled #remarks="ngModel"
                                                             name="remarks_{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" rows="4"
                                                             required></textarea>
@@ -342,7 +342,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="">Cam's Remarks</label>
-                                                        <textarea [disabled]="userType"
+                                                        <textarea disabled
                                                             [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                                                             name="kamRemarks_{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" rows="4"
@@ -352,55 +352,32 @@
                                                             class="inputValidation">Remarks is required</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6" *ngIf="userByrole != 'C'">
-                                                    <div class="form-group">
-                                                        <label for="">Sales Remarks</label>
-                                                        <textarea [disabled]="userByrole != 'Sales'"
-                                                            [(ngModel)]="formData.salesRemarks" #salesRemarks="ngModel"
-                                                            name="salesRemarks_{{ formData.schedule_no }}"
-                                                            class="form-control form-control-sm" rows="4"
-                                                            required></textarea>
-                                                        <small
-                                                            *ngIf="salesRemarks.invalid && (salesRemarks.dirty || salesRemarks.touched || submit)"
-                                                            class="inputValidation">Remarks is required</small>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-12">
                                                     <span class="text-primary pointerTab" data-toggle="modal"
                                                         data-target="#viewMoreMessage"
                                                         (click)="messageBox(formData.schedule_no)">See
                                                         Remarks</span>
                                                 </div>
-                                                <div class="col-lg-12 mb-3" *ngIf="productData.quotest == 6">
-                                                    <div *ngIf="userByrole != 'Sales'">
-                                                        <div class="app-reg-btn">
-                                                            <div class="form-check form-check-inline" *ngIf="formData.sche_ct != 3">
-                                                                <input type="radio" class="form-check-input"
-                                                                    id="inlineCheckbox0"
-                                                                    (change)="getRequote($event)"
-                                                                    value="{{formData?.schedule_no}}"
-                                                                    name="fav_language_{{formData?.id}}">
-                                                                <label for="inlineCheckbox0">Requote </label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio" class="form-check-input"
-                                                                    id="inlineCheckbox1"
-                                                                    (click)="getStatus(formData?.schedule_no,1)"
-                                                                    name="fav_language_{{formData?.id}}" value="Accept">
-                                                                <label for="inlineCheckbox0">Accept </label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio" class="form-check-input"
-                                                                    id="inlineCheckbox2"
-                                                                    (click)="getStatus(formData?.schedule_no,2)"
-                                                                    name="fav_language_{{formData?.id}}" value="Reject">
-                                                                <label for="inlineCheckbox2">Reject </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             </ng-container>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-3 text-right">
+                                <div (change)="selectRadio($event)">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" type="radio" value="6" name="flexRadioDefault"
+                                            id="flexRadioDefault1" />
+                                        <label class="form-check-label" for="flexRadioDefault1"> Accept </label>
+                                    </div>
+        
+                                    <!-- Default checked radio -->
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" type="radio" value="2" name="flexRadioDefault"
+                                            id="flexRadioDefault2" />
+                                        <label class="form-check-label" for="flexRadioDefault2"> Reject </label>
                                     </div>
                                 </div>
                             </div>
@@ -414,73 +391,6 @@
                     &nbsp;
                     <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
                         Back</button>
-                </div>
-
-                <!-- Negotiation History list -->
-                <div class="history-table" *ngIf="userByrole != 'Sales'">
-                    <section class="sub-header-2">
-                        <div class="container">
-                            <h1>Negotiation History</h1>
-                        </div>
-                    </section>
-                    <div class="container">
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Product Details</th>
-                                        <th>RFQ Number</th>
-                                        <th *ngIf="!userType">Name</th>
-                                        <th>Remarks</th>
-                                        <th>RFQ Date</th>
-                                        <th>Ex-Works Price (₹)</th>
-                                        <th>Tsml's Price (₹)</th>
-                                        <th colspan="2" class="text-center">Valid Till </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let history of negotiationHistory | paginate: { itemsPerPage: 10, currentPage: p }">
-                                        <td>
-                                            <div class="product">
-                                                <div class="cart-details">
-                                                    <h3 class="product-title">
-                                                        <a>{{history?.pro_name}}</a>
-                                                    </h3>
-                                                    <p>Sizes : {{history?.size}}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {{history?.rfq_no}}
-                                        </td>
-                                        <td *ngIf="!userType">
-                                            {{history?.name}}
-                                        </td>
-                                        <td>
-                                            {{history?.remarks}}
-                                        </td>
-                                        <td>
-                                            <div class="white-space-nowrap">{{history?.rfq_date}}</div>
-                                        </td>
-                                        <td>
-                                            <div class="hst-exp-price">
-                                                <b>{{history?.expected_price}}</b>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="kam-price">
-                                                <b>{{history?.kam_price}}</b>
-                                            </div>
-                                        </td>
-                                        <td>{{history?.valid_till}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="text-right">
-                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                              </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Message modal -->
@@ -570,10 +480,11 @@
                                             {{productPrice?.bpt_price}}
                                         </div>
                                     </td>
-                                    <td><input type="number" readonly
+                                    <td><input type="number" readonly 
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_bptPrice{{schldId}}" placeholder=""
-                                            value="{{productPrice?.bpt_price}}"></td>
+                                            value="{{productPrice?.bpt_price}}">
+                                        </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Quality Premium</td>
@@ -628,7 +539,7 @@
                                             {{productPrice?.interest_rate }}
                                         </div>
                                     </td>
-                                    <td><input type="number"
+                                    <td><input type="number" formControlName="interest_rate"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_interest{{schldId}}" value="{{productPrice?.interest_rate }}" readonly>
 
@@ -651,7 +562,7 @@
                                             <span>{{daysCostCount}}</span>
                                         </div>
                                     </td>
-                                    <td><input type="number" readonly
+                                    <td><input type="number" readonly formControlName="creditCoast"
                                             [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                             class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">

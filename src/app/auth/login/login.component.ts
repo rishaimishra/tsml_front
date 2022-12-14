@@ -80,6 +80,26 @@ export class LoginComponent implements OnInit {
               timer: 1500
             })
           }
+          else if (res.data['user_type'] == 'SM') {
+            this._router.navigate(['/dashboard/manager-dashboard']);
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              text: 'Welcome to Customer Dashboard',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+          else if (res.data['user_type'] == 'PLANT') {
+            this._router.navigate(['/dashboard/plant-dashboard']);
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              text: 'Welcome to Customer Dashboard',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
         } 
       }, error => {
         console.log(error);

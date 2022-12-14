@@ -58,6 +58,7 @@ export class ProductDetailsComponent implements OnInit {
   removeCatArr:any = [];
   categori:any = [];
   plantSelectArr:any = [];
+  isTermCondition: boolean = false;
   
   constructor(
     private _route: ActivatedRoute,
@@ -437,7 +438,7 @@ export class ProductDetailsComponent implements OnInit {
         this.deliveryDropList = res.result;
       } 
     })
-  }
+  };
   subCategory:any;
   getSubCategory(prodId:any,catId:any) {
     this.spinner.show();
@@ -454,7 +455,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
 
   getCategoriDetails (productId:any, catId:any) {
     let categoryFilter = {
@@ -470,14 +471,18 @@ export class ProductDetailsComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
+
+  checkTerms(event: any) {
+    this.isTermCondition = event.target.checked;
+  };
 
   removeCat(i:any) {
     let indx = this.categori.findIndex((item: any) => item.id == i);
     if (indx !== -1) {
       this.categori.splice(indx, 1);
     }
-  }
+  };
 
   getCatNdProductId(prdId:any, catId:any) {
     this.getSubCategory (prdId, catId);

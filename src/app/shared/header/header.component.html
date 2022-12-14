@@ -49,7 +49,7 @@
                <div class="collapse navbar-collapse" id="main_nav">
                   <ul class="navbar-nav ml-auto">
                      <li class="nav-item"><a class="nav-link" routerLink="/"> Home </a></li>
-                     <li class="nav-item dropdown">
+                     <li class="nav-item dropdown" *ngIf="userRol != 'SM'">
                         <a class="nav-link  dropdown-toggle" href="javascript:;" data-toggle="dropdown">Products</a>
                         <div class="dropdown-menu dropdown-large">
                            <div class="row g-3">
@@ -81,7 +81,7 @@
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/auth/register">
                            Register </a></li>
                            <!-- <li class="nav-item"><a class="nav-link" *ngIf="!userType" routerLink="/order-planing">Order Schedule</a></li> -->
-                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')">
+                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales' && userRol != 'SM')">
                              <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
                                  Order Planning</a>
                                  <div class="dropdown-menu small-dd" style="color: black;">
@@ -90,14 +90,21 @@
                                      <a routerLink="/order/dispatch-plan" class="mt-2">Dispatch Plan</a>
                                    </div>
                       </li>
-                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales')" routerLink="/products/confirm-rfq">
+                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'SM')" routerLink="/sales-manager/rfq-list">Confirm RFQs</a></li>
+                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales' && userRol != 'SM')" routerLink="/products/confirm-rfq">
                         Confirm RFQs </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/order/order-planing"> View Order Planning
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType && userRol != 'SM')" routerLink="/order/order-planing"> View Order Planning
                         </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userType)" routerLink="/dashboard/customer-dashboard">
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userType && userRol != 'SM' && userRol != 'PLANT')" routerLink="/dashboard/customer-dashboard">
                            Dashboard </a></li>
-                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType)" routerLink="/dashboard/kam-dashboard">
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && !userType && userRol != 'SM' && userRol != 'PLANT')" routerLink="/dashboard/kam-dashboard">
                               Dashboard </a></li>
+                     <!-- For sales manager dashboard -->
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'SM')" routerLink="/dashboard/manager-dashboard">
+                        Dashboard </a></li>
+                        <!-- For Plant dashboard -->
+                        <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'PLANT')" routerLink="/dashboard/plant-dashboard">
+                           Dashboard </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != true || loginFalse != false)" routerLink="/auth/login"> Login
                         </a></li>
                      <li class="nav-item"><a class="nav-link pointer" (click)="logOut()" *ngIf="(isUserLogIn != false && loginFalse != true)"> Logout </a></li>

@@ -13,7 +13,7 @@
    <div class="page-content">
       <section class="sub-header-2">
          <div class="container">
-            <h1>RFQ List</h1>
+            <h1>Confirm RFQ List</h1>
             <!-- <a href="add-product.html" class="btn btn-primary add-btn-right"><i class="fa fa-plus-circle"></i> ADD</a> -->
             <div class="clearfix"></div>
          </div>
@@ -37,43 +37,23 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <tr *ngFor="let rfqItem of rfqList | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
-                                 <td>
+                              <tr *ngFor="let rfqItem of rfqList; let i = index">
+                                 <td *ngIf="rfqItem?.kam_status == 8">
                                     {{rfqItem?.rfq_no}}
                                  </td>
-                                 <td>
+                                 <td *ngIf="rfqItem?.kam_status == 8">
                                     {{rfqItem?.created_at}}
                                  </td>
-                                 <td *ngIf="!userType">{{rfqItem?.name}}</td>
-                                 <td>{{rfqItem?.quantity}}</td>
-                                 <td *ngIf="rfqItem?.kam_status == 0">
-                                    {{rfqItem?.status_txt}}<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 5">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 1">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 2">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 4">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 6">
-                                    {{rfqItem?.status_txt}}
-                                 </td>
-                                 <td *ngIf="rfqItem?.kam_status == 7">
+                                 <td *ngIf="!userType && rfqItem?.kam_status == 8">{{rfqItem?.name}}</td>
+                                 <td *ngIf="rfqItem?.kam_status == 8">{{rfqItem?.quantity}}</td>
+
+                                 <td *ngIf="rfqItem?.kam_status == 8">
                                     {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
                                  </td>
-                                 <td *ngIf="rfqItem?.kam_status == 8">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales manager response" aria-hidden="true"></i>
-                                 </td>
                                  <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
-                                 <td>
+                                 <td *ngIf="rfqItem?.kam_status == 8">
                                     <div class="btn-edt-del pointerTab">
-                                       <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status, rfqItem.kam_status)"
+                                       <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status)"
                                           data-toggle="tooltip" data-placement="top" title="Go for price negotiation">
                                           <i class="fa fa-eye" aria-hidden="true"></i></a>
                                     </div>
@@ -81,12 +61,12 @@
                               </tr>
                            </tbody>
                         </table>
-                        <div class="text-right">
+                        <!-- <div class="text-right">
                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                         </div>
+                         </div> -->
                         <div *ngIf="rfqList?.length < 1" class="col-12 text-center mb-3"
                            style="color: gray;">
-                           <b class="">RFQ not found !</b>
+                           <b class="">Product not found !</b>
                         </div>
                      </div>
                   </div>

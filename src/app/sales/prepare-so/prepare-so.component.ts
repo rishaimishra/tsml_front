@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
@@ -19,11 +20,17 @@ export class PrepareSoComponent implements OnInit {
   paymentGu:any = '';
   fncilDoc:any = '';
   orderType: any;
+  p: number = 1;
+  orgSales:any =[];
+  sapDivision:any = [];
+  salesOffic:any = [];
+  sapGroup:any = [];
+
 
 
 
   constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
-    private _fb: FormBuilder) { }
+    private _fb: FormBuilder, private _router: Router) { }
 
   ngOnInit(): void {
     this.getPolist();
@@ -95,15 +102,62 @@ export class PrepareSoComponent implements OnInit {
     this._sales.getSapContractType().subscribe((res:any) => {
       if (res.status ==1 && res.message == 'success') {
         this.contType = res.result;
+        this.salesOrg();
+      }
+    })
+  };
+  salesOrg() {
+    this._sales.getSalesOrg().subscribe((res: any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.orgSales = res.result;
         this.getDistribution();
       }
     })
-  }
+  };
 
   getDistribution() {
     this._sales.getSalesDistri().subscribe((res:any) => {
       if (res.status ==1 && res.message == 'success') {
         this.distribution = res.result;
+      }
+    })
+  };
+
+  selectDist(event: any) {
+    let divData = event.target.value;
+    this.getsapDivin(divData);
+  }
+  getsapDivin(divData: any) {
+    let divReq = {
+      "distr_chan_code": divData
+    }
+    this._sales.getSapDivi(divReq).subscribe((res: any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.sapDivision = res.result;
+        this.getOffice();
+      }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login'])
+      }
+    })
+  };
+
+  getOffice() {
+    this._sales.getSaleOffice().subscribe((res: any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.salesOffic = res.result;
+        this.getSapGroup();
+      }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login'])
+      }
+    })
+  };
+
+  getSapGroup() {
+    this._sales.getSalesSapGroup().subscribe((res: any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.sapGroup = res.result;
       }
     })
   };

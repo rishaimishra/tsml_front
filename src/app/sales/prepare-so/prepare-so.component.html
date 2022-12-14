@@ -24,7 +24,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let po of salesPo">
+                                    <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 10, currentPage: p }">
                                         <td>{{po.po_no}}</td>
                                         <td>{{po.po_date}}</td>
                                         <td>{{po.user}}</td>
@@ -33,9 +33,11 @@
                                         <td align="right"><button (click)="prepareSo(po.sc_no, po.po_no)" class="btn btn-sm btn-primary">Prepare SO</button>
                                         </td>
                                     </tr>
-
                                 </tbody>
                             </table>
+                            <div class="text-right">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                              </div>
                         </div>
                     </div>
                 </div>
@@ -63,7 +65,7 @@
                                 <div class="form-group">
                                     <label>Order Type</label>
                                     <select class="form-control form-control-sm" [(ngModel)]="orderType">
-                                        <option value="">--Select--</option>
+                                        <option selected value="">--Select--</option>
                                         <option value="{{item.id}}" *ngFor="let item of contType">{{item.contract_type_dec}}</option>
                                     </select>
                                 </div>
@@ -73,18 +75,16 @@
                                     <label>Sales Organization</label>
                                     <select class="form-control form-control-sm">
                                         <option selected value="{{soDetails?.sales_orgerms_dec}}">{{soDetails?.sales_orgerms_dec}}</option>
-                                        <!-- <option>XXXXX</option>
-                                        <option>XXXXX</option> -->
+                                        <option value="{{org.id}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Distribution Channel</label>
-                                    <select class="form-control form-control-sm">
+                                    <select class="form-control form-control-sm" (change)="selectDist($event)">
                                         <option selected value="{{soDetails?.distr_chan_terms_dec}}">{{soDetails?.distr_chan_terms_dec}}</option>
-                                        <!-- <option>XXXXX</option>
-                                        <option>XXXXX</option> -->
+                                        <option value="{{dst.distr_chan_code}}" *ngFor="let dst of distribution">{{dst.distr_chan_terms_dec}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -93,8 +93,7 @@
                                     <label>Division</label>
                                     <select class="form-control form-control-sm">
                                         <option selected value="{{soDetails?.division_dec}}">{{soDetails?.division_dec}}</option>
-                                        <!-- <option>XXXXX</option>
-                                        <option>XXXXX</option> -->
+                                        <option value="{{divi.id}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -103,8 +102,7 @@
                                     <label>Sales office</label>
                                     <select class="form-control form-control-sm">
                                         <option selected value="{{soDetails?.sales_office_dec}}">{{soDetails?.sales_office_dec}}</option>
-                                        <!-- <option>XXXXX</option>
-                                        <option>XXXXX</option> -->
+                                        <option value="{{slcOfc.id}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -113,8 +111,7 @@
                                     <label>Sales Group</label>
                                     <select class="form-control form-control-sm">
                                         <option selected value="{{soDetails?.sales_group_dec}}">{{soDetails?.sales_group_dec}}</option>
-                                        <!-- <option>XXXXX</option>
-                                        <option>XXXXX</option> -->
+                                        <option value="{{sapGp.id}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -124,16 +121,6 @@
                                     <input type="text" value="{{soDetails?.sc_no}}" class="form-control form-control-sm" readonly>
                                 </div>
                             </div>
-                            <!-- <div class="col-12 col-lg-3">
-                                <div class="form-group">
-                                    <label>Payment Guarantee Proc</label>
-                                    <select class="form-control form-control-sm">
-                                        <option> Select</option>
-                                        <option>XXXXX</option>
-                                        <option>XXXXX</option>
-                                    </select>
-                                </div>
-                            </div> -->
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Payment Guarantee Proc</label>

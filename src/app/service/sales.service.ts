@@ -76,4 +76,7 @@ export class SalesService {
   submitSalesSo(request) {
     return this._http.post(this.BesUrl + '/user/so_submit', request);
   };
+  submitManagerRfq(request) {
+    return this._http.post(this.BesUrl + '/user/get_price_break', request);
+  };
 }

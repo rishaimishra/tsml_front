@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-prepare-sc',
@@ -39,6 +40,7 @@ export class PrepareScComponent implements OnInit {
   incotermsInfo: any = [];
   paymentInfo: any = [];
   matCodeId:any;
+  percentArr:any = [];
 
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
@@ -60,6 +62,8 @@ export class PrepareScComponent implements OnInit {
       qty_cont: [''],
       net_val: [''],
       sold_to_party: [''],
+      sold_to_addr: [''],
+      ship_to_addr: [''],
       ship_to_party: [''],
       cus_ref: [''],
       cus_ref_dt: [''],
@@ -98,24 +102,18 @@ export class PrepareScComponent implements OnInit {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.contractTyp = res.result;
+        this.salesOrg();
       }
     })
-    this.salesOrg();
-    this.getSapGroup();
-    this.getDistriChnl();
-    this.getOffice();
     this.getdlvrMode();
-    this.getFreight();
-    this.getFreightIndic();
-    this.custGroup();
     this.incoterms();
-    this.paymentTerms();
   };
 
   salesOrg() {
     this._sales.getSalesOrg().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.orgSales = res.result;
+        this.getDistriChnl();
       }
     })
   };
@@ -149,6 +147,7 @@ export class PrepareScComponent implements OnInit {
     this._sales.getSapDivi(divReq).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.sapDivision = res.result;
+        this.getOffice();
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -160,6 +159,7 @@ export class PrepareScComponent implements OnInit {
     this._sales.getSaleOffice().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.salesOffic = res.result;
+        this.getSapGroup();
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -182,6 +182,7 @@ export class PrepareScComponent implements OnInit {
     this._sales.getSapFreight().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.freightItems = res.result;
+        this.custGroup();
       }
     })
   };
@@ -198,6 +199,7 @@ export class PrepareScComponent implements OnInit {
     this._sales.getCustGroup().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.customerGrp = res.result;
+        this.getFreightIndic();
       }
     })
   };
@@ -206,6 +208,7 @@ export class PrepareScComponent implements OnInit {
     this._sales.getIncoterms().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.incotermsInfo = res.result;
+        this.paymentTerms();
       }
     })
   };
@@ -214,17 +217,30 @@ export class PrepareScComponent implements OnInit {
     this._sales.paymentTerms().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.paymentInfo = res.result;
+        this.getFreight();
       }
     })
   };
 
   updateInfo(index: any) {
+    this.permissPerc = '';
     let updatItem = this.scInfo[index];
     this.priceInfo = this.scInfo[index];
     this.showUpdateInfo = !this.showUpdateInfo;
     this.getSpec(this.priceInfo['specs']);
     this.matCodeId = updatItem['mat_code'];
-    console.log(this.matCodeId);
+  };
+
+  percent(value:any, matCode:any) {
+    let matCodValue = $('#mat_code'+matCode).html();
+    let charecValue = $('#charact'+matCode).html();
+    let permiPerce = {
+      "mat_code": matCodValue,
+      "perm_percent": value,
+      "umo": '%',
+      "character": charecValue
+    }
+    this.percentArr.push(permiPerce);
   };
 
   prepareSc(poNumber: any) {
@@ -237,12 +253,17 @@ export class PrepareScComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         this.scData = res.result[0];
         this.scInfo = res.result;
+        let addrOne = this.scData.addressone;
+        let addrTwo = this.scData.addresstwo;
+        let fullAddr = (addrOne + ' '+ addrTwo);
         this.scForm.get('qty_cont').setValue(this.scData.qty_ct);
         this.scForm.get('net_val').setValue(this.scData.net_value);
         this.scForm.get('sold_to_party').setValue(this.scData.user_code);
         this.scForm.get('ship_to_party').setValue(this.scData.user_code);
         this.scForm.get('cus_ref').setValue(this.scData.cus_po_no);
         this.scForm.get('cus_ref_dt').setValue(this.scData.po_date);
+        this.scForm.get('sold_to_addr').setValue(fullAddr);
+        this.scForm.get('ship_to_addr').setValue(fullAddr);
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
@@ -297,11 +318,6 @@ export class PrepareScComponent implements OnInit {
     for (let i = 0; i < this.scInfo.length; i++) {
       const element = this.scInfo[i];
       this.getSpec(this.scInfo[i]['specs']);
-      let permiPerce = {
-        "mat_code": this.scInfo[i].mat_code,
-        "perm_percent": this.permissPerc,
-        "umo": '%'
-      }
 
       let material =
         { 
@@ -312,14 +328,14 @@ export class PrepareScComponent implements OnInit {
           "price_det": element['price_det'],
           "specs": this.specs[i],
           "total": this.scInfo[i].total,
-          "inco_form": this.updateInfoForm.value,
-          "per_percent": permiPerce
+          "per_percent": this.percentArr[i]
         }
       seFormDataArr.push(material);
     }
     let fullData = {
       "po_details": this.scForm.value,
-      "material": seFormDataArr,
+      "inco_form": this.updateInfoForm.value,
+      "material": seFormDataArr
     }
 
     this._sales.submitSalesCnt(fullData).subscribe((res:any) => {

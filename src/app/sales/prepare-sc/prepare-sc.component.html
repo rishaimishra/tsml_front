@@ -24,7 +24,7 @@
                             </tr>
                          </thead>
                          <tbody>
-                            <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 8, currentPage: p }">
+                            <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 9, currentPage: p }">
                                <td>{{po.po_no}}</td>
                                <td>{{po.po_date}}</td>
                                <td>{{po.user}}</td>
@@ -64,7 +64,8 @@
                          </ul>
                       </div>
                    </div>
-                   <form [formGroup]="scForm">
+               <!-- 1st form -->
+                  <form [formGroup]="scForm">
                    <div class="row mt-2">
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
@@ -132,25 +133,40 @@
                             <input type="text" formControlName="net_val" class="form-control form-control-sm">
                          </div>
                       </div>
-                      <div class="col-12 col-lg-3">
+                      <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Sold-To-Party</label>
                             <input type="text" formControlName="sold_to_party" class="form-control form-control-sm">
                          </div>
                       </div>
-                      <div class="col-12 col-lg-3">
+                      <!-- sold to party address -->
+                      <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                           <label>Sold-To-Party Address</label>
+                           <textarea type="text" formControlName="sold_to_addr" class="form-control form-control-sm"></textarea>
+                        </div>
+                     </div>
+                     <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                           <label>Cust.Referance</label>
+                           <input type="text" formControlName="cus_ref" class="form-control form-control-sm">
+                        </div>
+                     </div>
+                      <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Ship-To-Party</label>
                             <input type="text" formControlName="ship_to_party" class="form-control form-control-sm">
                          </div>
                       </div>
-                      <div class="col-12 col-lg-3">
-                         <div class="form-group">
-                            <label>Cust.Referance</label>
-                            <input type="text" formControlName="cus_ref" class="form-control form-control-sm">
-                         </div>
-                      </div>
-                      <div class="col-12 col-lg-3">
+                      <!-- ship to party address -->
+                      <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                           <label>Ship-To-Party Address</label>
+                           <textarea type="text" formControlName="ship_to_addr" class="form-control form-control-sm"></textarea>
+                        </div>
+                     </div>
+                      
+                      <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Cust. Ref. Date</label>
                             <div class="position-relative">
@@ -159,7 +175,7 @@
                             </div>
                          </div>
                       </div>
-                      <div class="col-12 col-lg-3">
+                      <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Shp. Cond.</label>
                             <select class="form-control form-control-sm" formControlName="shp_cond">
@@ -179,6 +195,7 @@
                                      <tr>
                                         <th>Material</th>
                                         <th>Order Quantity</th>
+                                        <th>Value</th>
                                         <th>Plant</th>
                                         <th></th>
                                      </tr>
@@ -187,6 +204,7 @@
                                      <tr *ngFor="let item of scInfo; let i = index">
                                         <td>{{item.mat_code}}</td>
                                         <td>{{item.odr_qty}}</td>
+                                        <td>{{item.total}}</td>
                                         <td>{{item.pcode}}</td>
                                         <td align="right">
                                             <button class="btn btn-sm btn-primary ui1" (click)="updateInfo(i)">Update Info</button>
@@ -222,60 +240,6 @@
                          </div>
                       </div>
                       <div class="row">
-                         <div class="col-12">
-                            <div class="po-summery">
-                              <form [formGroup]="updateInfoForm">
-                               <div class="row">
-                                  <div class="col-12 col-lg-4">
-                                    <div class="form-group">
-                                       <label>Incoterms</label>
-                                       <select class="form-control form-control-sm" formControlName="incoterms">
-                                          <option value="">--Select--</option>
-                                          <option value="{{item.id}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="col-12 col-lg-4">
-                                    <div class="form-group">
-                                       <label>Payment Terms</label>
-                                       <select class="form-control form-control-sm" formControlName="pay_terms">
-                                          <option value="">--Select--</option>
-                                          <option value="{{item.id}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
-                                       </select>
-                                    </div>
-                                 </div>
-
-                                  <div class="col-12 col-lg-4">
-                                     <div class="form-group">
-                                        <label>Feight</label>
-                                        <select class="form-control form-control-sm" formControlName="freight">
-                                           <option value="">--Select--</option>
-                                           <option value="{{item.id}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
-                                        </select>
-                                     </div>
-                                  </div>
-                                  <div class="col-12 col-lg-4">
-                                     <div class="form-group">
-                                        <label>Customer Group</label>
-                                        <select class="form-control form-control-sm" formControlName="cus_grp">
-                                           <option value="">--Select--</option>
-                                           <option value="{{custGrp.id}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
-                                        </select>
-                                     </div>
-                                  </div>
-                                  <div class="col-12 col-lg-4">
-                                     <div class="form-group">
-                                        <label>Feight Indicator</label>
-                                        <select class="form-control form-control-sm" formControlName="fr_ind">
-                                           <option value="">--Select--</option>
-                                           <option value="{{indi.id}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
-                                        </select>
-                                     </div>
-                                  </div>
-                               </div>
-                              </form>
-                            </div>
-                         </div>
                          <!--/-->
                          <div class="col-12">
                             <div class="cart-table">
@@ -313,12 +277,12 @@
                                         </tr>
                                      </thead>
                                      <tbody>
-                                        <td>{{priceInfo.mat_code}}</td>
-                                        <td>...</td>
+                                        <td id="mat_code{{matCodeId}}">{{priceInfo.mat_code}}</td>
+                                        <td id="charact{{matCodeId}}"> ...</td>
                                         <td>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
-                                                   <input type="number" [(ngModel)]="permissPerc" class="form-control form-control-sm">
+                                                   <input type="number" id="_per{{matCodeId}}" (change)="percent(permissPerc,matCodeId)" [(ngModel)]="permissPerc" class="form-control form-control-sm">
                                                 </div>
                                              </div>
                                         </td>
@@ -330,6 +294,63 @@
                          </div>
                          <!--/-->
                       </div>
+                   </div>
+                   <!-- 2nd Form -->
+                   <div class="row">
+                     <div class="col-12">
+                        <div class="po-summery">
+                          <form [formGroup]="updateInfoForm">
+                           <div class="row">
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group">
+                                   <label>Incoterms</label>
+                                   <select class="form-control form-control-sm" formControlName="incoterms">
+                                      <option value="">--Select--</option>
+                                      <option value="{{item.id}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
+                                   </select>
+                                </div>
+                             </div>
+                             <div class="col-12 col-lg-4">
+                                <div class="form-group">
+                                   <label>Payment Terms</label>
+                                   <select class="form-control form-control-sm" formControlName="pay_terms">
+                                      <option value="">--Select--</option>
+                                      <option value="{{item.id}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
+                                   </select>
+                                </div>
+                             </div>
+
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Feight</label>
+                                    <select class="form-control form-control-sm" formControlName="freight">
+                                       <option value="">--Select--</option>
+                                       <option value="{{item.id}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Customer Group</label>
+                                    <select class="form-control form-control-sm" formControlName="cus_grp">
+                                       <option value="">--Select--</option>
+                                       <option value="{{custGrp.id}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Feight Indicator</label>
+                                    <select class="form-control form-control-sm" formControlName="fr_ind">
+                                       <option value="">--Select--</option>
+                                       <option value="{{indi.id}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                          </form>
+                        </div>
+                     </div>
                    </div>
                 </div>
                 <div class="row mb-5">

@@ -7,15 +7,15 @@ import { DecimalPipe, formatNumber, Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
+import { SalesService } from 'src/app/service/sales.service';
 declare var $: any;
 
-
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  selector: 'app-manager',
+  templateUrl: './manager.component.html',
+  styleUrls: ['./manager.component.scss']
 })
-export class CustomerComponent implements OnInit {
+export class ManagerComponent implements OnInit {
   public product_data: any = '';
   public show_data: boolean = false;
   public qty: Number = 1;
@@ -133,6 +133,7 @@ export class CustomerComponent implements OnInit {
     private _fb: FormBuilder,
     private _state: StateCityService,
     private location: Location,
+    private _sales: SalesService,
   ) {$(window).scrollTop(0); }
 
   get ff() { return this.myForm.controls; }
@@ -444,12 +445,21 @@ export class CustomerComponent implements OnInit {
 
   submitRfq() {
     this.submit = true;
+    if (this.qtStatusUpdate == undefined) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select status Accept or Reject!',
+      })
+      return;
+    }
+
     let userRol = localStorage.getItem('USER_TYPE');
     let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
 
-    // this.spinner.show();
+    this.spinner.show();
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -485,6 +495,7 @@ export class CustomerComponent implements OnInit {
     let userTyp = localStorage.getItem('USER_TYPE');
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+      this.spinner.hide();
       if (res.message == 'success') {
         this.spinner.hide();
         Swal.fire({
@@ -505,32 +516,16 @@ export class CustomerComponent implements OnInit {
             }
           })
         }
-
-        // Customer notification send
-        if (this.userByrole == 'Kam') {
           let userId = localStorage.getItem('USER_ID');
           let salesNotiReq = {
             "desc_no": this.productId,
             "user_id": userId,
-            "desc": 'RFQ has been updated',
-            "url_type": 'R',
-            "sender_id": this.rfqUserId
-          }
-          this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
-          })
-        }
-          // Kam notification send
-        else {
-          let userId = localStorage.getItem('USER_ID');
-          let salesNotiReq = {
-            "desc_no": this.productId,
-            "user_id": userId,
-            "desc": 'RFQ has been updated',
+            "desc": 'Sales manager replyed',
             "url_type": 'R'
           }
           this._product.camNotification(salesNotiReq).subscribe((res:any) => {
           })
-        }
+        
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -592,9 +587,18 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+
+    // Accept reject here
+    let qouteReq = {
+      "rfq_no": this.productId,
+      "status": this.qtStatusUpdate
+    }
+    this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+      this._router.navigate(['/sales-manager/rfq-list']);
+    })
+
     // component price save here
     this._product.saveComPrice(this.tsmlPriceArr).subscribe((res:any) => {
-      console.log('save price',res)
     })
     let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
     if (this.countSche['total'] == addCount) {
@@ -609,21 +613,18 @@ export class CustomerComponent implements OnInit {
       })
     } 
     
-    if (userRol == 'Kam' && qouteSt == 5) {
-      let qouteReq = {
+      let qoutesReq = {
         "rfq_no": this.productId,
-        "status": 8
+        "status": 6
       }
-      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+      this._product.qouteStatusUpdate(qoutesReq).subscribe((res:any) => {
       })
-    }
-  
-
-    if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      this._router.navigate(['/po/po',this.productId]);
-    } else {
-      this._router.navigate(['/products/rfq-list']);
-    }
+    // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+    //   this._router.navigate(['/po/po',this.productId]);
+    // } 
+    // else {
+    //   this._router.navigate(['/sales-manager/rfq-list']);
+    // }
   };
 
   date: any;
@@ -727,6 +728,22 @@ export class CustomerComponent implements OnInit {
         let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
         this.Totalsum = finalCost.toFixed(2);
 
+      }
+    })
+    let managerReq = {
+      "rfq_no": this.productId,
+      "sche_no": schedule_no
+    }
+    this._sales.submitManagerRfq(managerReq).subscribe((res:any) => {
+      if(res.status == 1) {
+        this.priceForm.controls['price_premium'].setValue(res.result[1].value);
+        this.priceForm.controls['cam_discount'].setValue(res.result[2].value);
+        this.priceForm.controls['delivery_cost'].setValue(res.result[3].value);
+        this.priceForm.controls['interest_rate'].setValue(res.result[4].value);
+        this.priceForm.controls['creditCoast'].setValue(res.result[5].value);
+        this.priceForm.controls['misc_expense'].setValue(res.result[6].value);
+        this.priceForm.controls['totalSum'].setValue(res.result[7].value);
+        this.priceForm.controls['finalAmt'].setValue(res.result[8].value);
       }
     })
   };

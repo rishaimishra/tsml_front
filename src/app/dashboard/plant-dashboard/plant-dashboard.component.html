@@ -1,0 +1,123 @@
+<app-header></app-header>
+ <div class="page-content">
+    <div class="container">
+       <div class="row">
+          <div class="col-12">
+             <h3 class="text-dark mt-4 mb-0">Plant Dashboard</h3>
+          </div>
+       </div>
+       <div class="row mt-3">
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">8000</span>
+                            <b>Volume Confirmed</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-warning1  hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">600</span>
+                            <b>Volume (Under Negotiation)</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a href="#">
+                      <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">4000 MT</span>
+                            <b> Ex-Plant Confirmed Orders</b>
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                   <a routerLink="/plant/do-entry">
+                      <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
+                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                         <div class="mini-stat-info text-right text-white">
+                            <span class="counter text-white">DO Entry</span>
+                            <!-- <b>Ex-Depot Confirmed Orders</b> -->
+                         </div>
+                      </div>
+                   </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3">
+                  <a routerLink="/plant/do-view">
+                     <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
+                        <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                        <div class="mini-stat-info text-right text-white">
+                           <span class="counter text-white">View DO</span>
+                           <!-- <b>DAP Confirmed Orders</b> -->
+                        </div>
+                     </div>
+                  </a>
+               </div>
+             </div>
+       <!--Top Four Blocks-->
+       <!--Graphs-->
+       <div class="row">
+          <div class="col-12 mt-2">
+             <div class="month-year-search">
+                <!-- <div class="form-group">
+                   <label>Select Month</label>
+                   <select class="form-control">
+                      <option>Select</option>
+                   </select>
+                </div> -->
+                <div class="form-group">
+                  <a href="#" class="btn btn-primary btn-block mt-41"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
+                </div>
+                <div class="form-group">
+                   <label>Select Year</label>
+                   <select class="form-control">
+                      <option>Select Year</option>
+                   </select>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="row mt-2 mb-5">
+          <div class="col-12 col-lg-6 grid-margin stretch-card">
+             <div class="card">
+                <!-- <div class="card-body px-0 pb-0 border-bottom">
+                   <div class="px-4">
+                      <h4 class="card-title ml-1">Region Wise Product Sale</h4>
+                   </div>
+                </div> -->
+                <div class="card-body">
+                   <!-- <canvas id="myChart" style="width:100%;max-width:600px"></canvas> -->
+                   <img style="width:100%;max-width:600px" src="assets/images/G3.png" alt="">
+                </div>
+             </div>
+          </div>
+          <!--/-->
+          <div class="col-12 col-lg-6 grid-margin stretch-card">
+             <div class="card">
+                <!-- <div class="card-body px-0 pb-0 border-bottom">
+                   <div class="px-4">
+                      <h4 class="card-title ml-1">Category Wise Product Sale</h4>
+                   </div>
+                </div> -->
+                <div class="card-body">
+                    <!-- <canvas id="myChart2" style="width:100%;max-width:600px"></canvas> -->
+                    <img style="width:100%;max-width:600px" src="assets/images/G4.png" alt="">
+                </div>
+             </div>
+          </div>
+          <!--/-->
+       <!--/Graphs-->
+    </div>
+ </div>
+ </div>
+ <app-footer></app-footer>
+
