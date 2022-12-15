@@ -331,7 +331,7 @@
                                 <div class="form-group">
                                   <label>GSTN</label>
                                   <div class="d-flex2 display-f">
-                                    <input type="text" formControlName="gstin" [readOnly]="i == 0" class="form-control w-79" />
+                                    <input type="text" formControlName="gstin" (keyup)="gstNumbr($event)" [readOnly]="i == 0" class="form-control w-79" />
                                     <button type="button" (click)="billGstin(i)" class="btn blue-btn" [disabled]="i == 0">
                                       Get Details
                                     </button>
@@ -416,7 +416,7 @@
                                   <div class="form-group">
                                     <label>GSTN</label>
                                     <div class="d-flex2 display-f">
-                                      <input type="text" formControlName="gstin" [readOnly]="i == 0" class="form-control w-79" />
+                                      <input type="text" formControlName="gstin" (keyup)="shipGstNum($event)" [readOnly]="i == 0" class="form-control w-79" />
                                       <button type="button" (click)="shipGstin(i)" class="btn blue-btn" [disabled]="i == 0">
                                         Get Details
                                       </button>

@@ -173,7 +173,7 @@
         <!--1st step end -->
                         <form [formGroup]="uploadAttchmntForm">
                         <div class="row">
-                         <ng-container *ngIf="rcveEmail == 1">
+                         <ng-container *ngIf="checkboxChecked == true || rcveEmail == 1">
                            <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="emailDetails?.interim_report == null">
                               <label for="">Uploads the interim report</label>
                               <div class="custom-file mb-3">

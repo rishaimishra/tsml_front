@@ -250,13 +250,13 @@ export class KamReplyComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           if (this.checkboxChecked == true) {
-            Swal.fire({
-              position: 'top',
-              icon: 'success',
-              text: 'Received Mail',
-              showConfirmButton: false,
-              timer: 1000
-            })
+            // Swal.fire({
+            //   position: 'top',
+            //   icon: 'success',
+            //   text: 'Received Mail',
+            //   showConfirmButton: false,
+            //   timer: 1000
+            // })
             let checkReq = {
               "mcom_id": this.emailReceveId,
               "kam_id": userId,
@@ -326,6 +326,9 @@ export class KamReplyComponent implements OnInit {
           'success'
         )
       }
+      $("#myModal").hide();
+      $('body').removeClass('modal-open');
+      $(".modal-backdrop").removeClass("modal-backdrop show");
     }, err => {
       console.log(err);
       this._spiner.hide();

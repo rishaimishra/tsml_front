@@ -14,6 +14,7 @@ export class CustomerDashboardComponent implements OnInit {
   p: number = 1;
   poItems:any;
   userName:any;
+  statusRfq:any = [];
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
     private _router: Router, private _product: ProductsService) { }
@@ -29,7 +30,7 @@ export class CustomerDashboardComponent implements OnInit {
       // this.userType = true;
       this.getPoListing();
     }
-  }
+  };
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
     if (status == 'Accepted') {
@@ -41,13 +42,20 @@ export class CustomerDashboardComponent implements OnInit {
     else {
       this._router.navigate(['/products/negotiation',rfqNumber]);
     }
-  }
+  };
   getKamItems() {
     this.spinner.show();
     this._product.getAllRequestOfRfq().subscribe((res:any) => {
       if(res.message == 'success') {
         this.spinner.hide();
         this.kamItems = res.result;
+        
+        const rfqNum = [];
+        for (let i = 0; i < this.kamItems.length; i++) {
+          let rfqNumbr = this.kamItems[i]['rfq_no'];
+          rfqNum.push(rfqNumbr);
+        }
+        this.getRfqStatus(rfqNum);
       };
       if (res.message == 'not found') {
         this.spinner.hide();
@@ -61,8 +69,24 @@ export class CustomerDashboardComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
 
+  getRfqStatus(rfqNumbr) {
+    this.spinner.show();
+    let request = {
+      "rfq_no": rfqNumbr
+    }
+    this._product.getRfqStatusCust(request).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.status == 1) {
+        this.statusRfq = res.result;
+        console.log(this.statusRfq);
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  };
   getPoListing () {
     this.spinner.show();
     this._product.getPoList().subscribe((res:any) => {
@@ -74,21 +98,20 @@ export class CustomerDashboardComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
 
   getKamPoListing () {
     this.spinner.show();
     this._product.getkamPoList().subscribe((res:any) => {
       if(res.message == 'success') {
         this.spinner.hide();
-      console.log(res);
       this.poItems = res.result;
       }
     }, err => {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
 
   goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
     if (status == 'Accepted' && kamStatus != 4) {

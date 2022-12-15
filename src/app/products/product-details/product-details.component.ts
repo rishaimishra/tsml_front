@@ -274,6 +274,8 @@ export class ProductDetailsComponent implements OnInit {
         this._product.camNotification(camNotiReq).subscribe((res:any) => {
           console.log(res);
         })
+
+        this.statusBar('RFQ' + rfqNumber)
       } 
       if (res.result == 'Quote not created') {
         this._toaster.error(res.result);
@@ -326,6 +328,18 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.selectedItem[i]['form_data'] = this.quotation;
     this.final_form_data();
+  };
+  statusBar(rfqNumber:any) {
+    let statusRequest = {
+      "rfq_no": rfqNumber,
+      "rfq_submited": '1'
+    }
+    this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+      console.log('status',res);
+    })
+    this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+      console.log('status',res);
+    })
   };
 
   final_form_data() {

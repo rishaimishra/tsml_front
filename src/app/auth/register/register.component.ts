@@ -129,6 +129,8 @@ export class RegisterComponent implements OnInit {
   shiptArr: FormArray;
   billingAdd:any = [];
   shiptingAdd:any = [];
+  billGstNum:any;
+  shipGst:any;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High' },
@@ -161,47 +163,6 @@ export class RegisterComponent implements OnInit {
     private _spinner: NgxSpinnerService,
     private productService: ProductsService
   ) {
-    // this.registerForm = _fb.group({
-    //   name: ['Sam'],
-    //   email: ['', Validators.required, Validators.email],
-    //   phone: ['',[Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
-    //   password: ['', Validators.required],
-    //   gstin: ['', Validators.required],
-    //   org_pan: ['', Validators.required],
-    //   org_name: [''],
-    //   org_address: [''],
-    //   pref_product: ['', Validators.required],
-    //   pref_product_size: ['', Validators.required],
-    //   user_type: [''],
-    //   company_gst: [''],
-    //   company_linked_address: [''],
-    //   // billing_address: this._fb.array([]),
-    //   addressone: [''],
-    //   addresstwo: [''],
-    //   city: [''],
-    //   state: [''],
-    //   pincode: [''],
-    //   company_pan: ['', Validators.required],
-    //   company_name: [''],
-    //   business_nature: ['', Validators.required],
-    //   first_name: [''],
-    //   pan_dt: [''],
-    //   gst_dt: [''],
-    //   formD_dt: [''],
-    //   tcs_dt: [''],
-    //   is_tcs_tds_applicable: [],
-    //   address_type: [''],
-    //   address_proof_file: ['', Validators.required],
-    //   cancel_cheque_file: ['', Validators.required],
-    //   pan_card_file: ['', Validators.required],
-    //   gst_certificate: ['', Validators.required],
-    //   turnover_declare: ['', Validators.required],
-    //   itr_last_yr: ['', Validators.required],
-    //   form_d: [''],
-    //   registration_certificate: ['', Validators.required],
-    //   tcs: ['', Validators.required],
-    //   distribution: []
-    // });
 
   }
 
@@ -265,7 +226,6 @@ export class RegisterComponent implements OnInit {
       pincode: [''],
     }))
 
-    console.log('billing',this.billingAdd.value);
   };
 
   addShitpItem() {
@@ -727,8 +687,7 @@ export class RegisterComponent implements OnInit {
   };
   getGstIn() {
     this._spinner.show();
-    let gstin = this.gstNum;
-    if (gstin == '') {
+    if (this.gstNum == '') {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -737,9 +696,8 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    // let  apiUrl =  '/gst-details/' + gstin;
-    // this.productService.getMethod(apiUrl).subscribe((res: any) => {
-    this._auth.gstApi().subscribe((res: any) => {
+    this._auth.gstDetails(this.gstNum).subscribe((res: any) => {
+    // this._auth.gstApi().subscribe((res: any) => {
       this._spinner.hide();
           this._spinner.hide();
           this.toastr.success(res.message);
@@ -779,11 +737,14 @@ export class RegisterComponent implements OnInit {
       })
     
   };
+  gstNumbr(event:any) {
+    this.billGstNum = event.target.value;
+  };
 
   billGstin(i:any) {
-    this._spinner.show();
-    let gstin = this.getGstNumber;
-      this._auth.gstApi().subscribe((res: any) => {
+    this._spinner.show;
+    // this.productService.getMethod(apiUrl).subscribe((res: any) => {
+      this._auth.gstDetails(this.billGstNum).subscribe((res: any) => {
           this._spinner.hide();
           this.toastr.success(res.message);
           let state = res.result.pradr.addr.stcd;
@@ -808,11 +769,16 @@ export class RegisterComponent implements OnInit {
         console.log(err);
         this._spinner.hide();
       })
-  }
+  };
+
+  shipGstNum(event:any) {
+    this.shipGst = event.target.value;
+  };
+
   shipGstin(i:any) {
     this._spinner.show();
-    let gstin = this.getGstNumber;
-      this._auth.gstApi().subscribe((res: any) => {
+    // this.productService.getMethod(apiUrl).subscribe((res: any) => {
+      this._auth.gstDetails(this.shipGst).subscribe((res: any) => {
           this._spinner.hide();
           this.toastr.success(res.message);
           let state = res.result.pradr.addr.stcd;

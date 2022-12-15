@@ -70,6 +70,9 @@
                                  <td *ngIf="rfqItem?.kam_status == 8">
                                     {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales manager response" aria-hidden="true"></i>
                                  </td>
+                                 <td *ngIf="rfqItem?.kam_status == 9">
+                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Rejected by sales manager" aria-hidden="true"></i>
+                                 </td>
                                  <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
                                  <td>
                                     <div class="btn-edt-del pointerTab">

@@ -437,6 +437,20 @@ export class PoComponent implements OnInit {
     }
     this._product.camNotification(salesNotiReq).subscribe((res:any) => {
     })
+    let statusRequestKam = {
+      "rfq_no": this.rfqNumber,
+      "quote_closed": '1'
+    }
+    this._product.storeStatusKam(statusRequestKam).subscribe((res:any) => {
+      console.log('status',res);
+    })
+    let statusRequest = {
+      "rfq_no": this.rfqNumber,
+      "rfq_closed": '1'
+    }
+    this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+      console.log('status',res);
+    })
 
     let orderConfirmReq = {
       "rfq_no": this.rfqNumber,

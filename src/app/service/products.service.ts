@@ -178,4 +178,18 @@ export class ProductsService {
   getPriceComp() {
     return this._http.get(this.BesUrl + '/user/get_price_comp');
   };
+
+  getRfqStatusKam(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get-rfq-order-status-kam', reqParameter);
+  };
+  storeStatusKam(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/store-order-status-kam', reqParameter);
+  };
+
+  getRfqStatusCust(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/get-rfq-order-status-cust', reqParameter);
+  };
+  storeStatusCust(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/store-rfq-order-status-cust', reqParameter);
+  };
 }

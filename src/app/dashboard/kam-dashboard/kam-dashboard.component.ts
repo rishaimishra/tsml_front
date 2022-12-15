@@ -14,6 +14,7 @@ export class KamDashboardComponent implements OnInit {
   poItems: any;
   userName:any;
   p: number = 1;
+  statusRfq:any = [];
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
   private _router: Router, private _product: ProductsService) { }
@@ -29,7 +30,8 @@ export class KamDashboardComponent implements OnInit {
       // this.userType = true;
       this.getPoListing();
     }
-  }
+  };
+
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
     if (status == 'Accepted') {
       this._router.navigate(['/po/po',rfqNumber]);
@@ -40,7 +42,7 @@ export class KamDashboardComponent implements OnInit {
     else {
       this._router.navigate(['/products/negotiation',rfqNumber]);
     }
-  }
+  };
 
   getKamItems() {
     this.spinner.show();
@@ -49,6 +51,12 @@ export class KamDashboardComponent implements OnInit {
       if(res.message == 'success') {
         this.spinner.hide();
         this.kamItems = res.result;
+        const rfqNum = [];
+        for (let i = 0; i < this.kamItems.length; i++) {
+          let rfqNumbr = this.kamItems[i]['rfq_no'];
+          rfqNum.push(rfqNumbr);
+        }
+        this.getRfqStatus(rfqNum);
       };
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
@@ -59,7 +67,8 @@ export class KamDashboardComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
+  
   getPoListing () {
     this.spinner.show();
     this._product.getPoList().subscribe((res:any) => {
@@ -72,7 +81,23 @@ export class KamDashboardComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
+  getRfqStatus(rfqNumbr) {
+    this.spinner.show();
+    let request = {
+      "rfq_no": rfqNumbr
+    }
+    this._product.getRfqStatusKam(request).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.status == 1) {
+        this.statusRfq = res.result;
+        console.log(this.statusRfq);
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  };
 
   getKamPoListing () {
     this.spinner.show();

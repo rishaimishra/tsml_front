@@ -75,19 +75,70 @@
             </div>
 
             <div class="row">
-               <div class="col-md-6 col-lg-12 col-xl-5">
+               <div class="col-md-6 col-lg-12 col-xl-6">
                   <!-- RFQ list customer-->
                   <div class="card">
                      <div class="card-header">
-                        <h4>Recent Orders</h4>
+                        <h4>Recent Orders {{statusRfq.rfq_submited}}</h4>
                         <form class="card-header-form">
                            <input type="text" name="search" class="form-control" placeholder="Search">
                         </form>
                      </div>
                      <div class="card-body">
                         <div class="support-ticket media pb-1 mb-3"
-                           *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }">
+                           *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }; let i = index">
                            <div class="media-body">
+                              <div class="vip-tab">
+                                 <ul>
+                                    <li>
+                                       <a href="manage-vip-step1.html" [ngClass]="{'active':statusRfq[i]?.rfq_submited == 1}"
+                                          class="first1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step1.png" class="hoverin">
+                                          <img src="assets/images/hstep1.png" class="hovera">
+                                          <span>RFQ Submited</span>
+                                       </a>
+                                    </li>
+                                    <li><a href="manage-vip-step2.html" [ngClass]="{'active':statusRfq[i]?.quoted_by_tsml == 1}"
+                                          class="sec1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step2.png" class="hoverin">
+                                          <img src="assets/images/hstep2.png" class="hovera">
+                                          <span>Quoted By TSML</span>
+                                       </a></li>
+                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.under_negotiation == 1}"
+                                          class="thir1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step3.png" class="hoverin">
+                                          <img src="assets/images/hstep3.png" class="hovera">
+                                          <span>Under Negotiation</span>
+                                       </a></li>
+                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.final_quoted_by_tsml == 1}"
+                                          class="four1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step4.png" class="hoverin">
+                                          <img src="assets/images/hstep4.png" class="hovera">
+                                          <span>Final Quoted By TSML</span>
+                                       </a></li>
+                                    <!-- <li><a href="manage-vip-step3.html"
+                                          class="five1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step5.png" class="hoverin">
+                                          <img src="assets/images/hstep5.png" class="hovera">
+                                          <span>Requoted</span>
+                                       </a></li>
+                                    <li><a href="manage-vip-step3.html"
+                                          class="six1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step6.png" class="hoverin">
+                                          <img src="assets/images/hstep6.png" class="hovera">
+                                          <span>Under Negotiation</span>
+                                       </a></li> -->
+                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.rfq_closed == 1}"
+                                          class="seve1 css-tooltip-top color-blue meet-rvw uu0">
+                                          <img src="assets/images/step7.png" class="hoverin">
+                                          <img src="assets/images/hstep7.png" class="hovera">
+                                          <span>RFQ Closed</span>
+                                       </a></li>
+                                 </ul>
+
+                                 <div class="clearfix"></div>
+
+                              </div>
                               <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
                          *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
                               <div class="badge badge-pill badge-success mb-1 float-right"
@@ -104,14 +155,19 @@
                                  *ngIf="rfqItem?.kam_status == 5">{{rfqItem?.status_txt}}</div>
                               <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.kam_status == 6">{{rfqItem?.status_txt}}</div>
+                                 <div class="badge badge-pill badge-info mb-1 float-right"
+                                 *ngIf="rfqItem?.kam_status == 8">{{rfqItem?.status_txt}}</div>
+                              <div class="badge badge-pill badge-danger mb-1 float-right"
+                                 *ngIf="rfqItem?.kam_status == 9">{{rfqItem?.status_txt}}</div>
 
-                              <span class="font-weight-bold">RFQ Number: #{{rfqItem?.rfq_no}}</span>&nbsp;
-                              <a (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)"
-                                 class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>
-                              <p class="my-1">{{rfqItem?.pro_desc}}</p>
-                              <small class="text-muted">Name: <span
-                                    class="font-weight-bold font-13">{{rfqItem?.name}}</span>
-                                 &nbsp;&nbsp; - {{rfqItem?.created_at}}</small>
+                              <span class="font-weight-bold text-primary pointerTab"
+                                 (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">RFQ
+                                 Number: {{rfqItem?.rfq_no}}</span>&nbsp;
+                              <!-- <a
+                                 class="pointerTab text-primary">{{rfqItem?.cat_name}}</a> -->
+                              <!-- <p class="my-1">{{rfqItem?.pro_desc}}</p> -->
+                              <small class="text-muted">
+                                 {{rfqItem?.created_at}}</small>
 
                            </div>
                         </div>
@@ -125,7 +181,7 @@
                   </div>
                   <!-- PO Listing -->
                </div>
-               <div class="col-md-6 col-lg-12 col-xl-7">
+               <div class="col-md-6 col-lg-12 col-xl-6">
                   <div class="card">
                      <div class="card-header">
                         <h4>Booking History</h4>

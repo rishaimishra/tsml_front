@@ -27,7 +27,7 @@ export class SalesResponsComponent implements OnInit {
   user_Id: any;
   addItems: boolean = false;
   title: any = '';
-  productId: any;
+  rfqNum: any;
   selectedItem: any = [];
   states: any;
   deliveryDate1: any = '';
@@ -134,7 +134,7 @@ export class SalesResponsComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
-        this.productId = res.id;
+        this.rfqNum = res.id;
       }
     });
     this.getLocation();
@@ -185,8 +185,8 @@ export class SalesResponsComponent implements OnInit {
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_quote_by_id' + '/' + this.productId;
-    // let url = '/user/get_quote_sche_by_id/' + this.productId;
+    let url = '/user/get_quote_by_id' + '/' + this.rfqNum;
+    // let url = '/user/get_quote_sche_by_id/' + this.rfqNum;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
@@ -427,7 +427,7 @@ export class SalesResponsComponent implements OnInit {
       }
       
       let reqData = {
-        rfq_number: this.productId,
+        rfq_number: this.rfqNum,
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
@@ -464,7 +464,7 @@ export class SalesResponsComponent implements OnInit {
       let userId = localStorage.getItem('USER_ID');
         let camNotiReq = {
           "desc": 'Sales reply updated',
-          "desc_no": this.productId,
+          "desc_no": this.rfqNum,
           "user_id": userId,
           "url_type": 'R'
         }
@@ -475,8 +475,17 @@ export class SalesResponsComponent implements OnInit {
       this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
       });
 
+      let statusRequest = {
+        "rfq_no": this.rfqNum,
+        "reverted_by_sales_plaing": '1'
+      }
+
+      this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+        console.log('status',res);
+      });
+
       let qouteReq = {
-        "rfq_no": this.productId,
+        "rfq_no": this.rfqNum,
         "status": this.qtStatusUpdate
       }
       this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
@@ -484,7 +493,7 @@ export class SalesResponsComponent implements OnInit {
 
       if (this.qtStatusUpdate == 5) {
         let salesEmailReq = {
-          "rfq_no": this.productId,
+          "rfq_no": this.rfqNum,
           "user_id": this.selectedUserId
         }
         this._product.salesSubmitedEmail(salesEmailReq).subscribe((res:any) => {
@@ -653,7 +662,7 @@ export class SalesResponsComponent implements OnInit {
 
   };
   getNegotiationHistory() {
-    let apiUrl = '/user/quotes_history/' + this.productId;
+    let apiUrl = '/user/quotes_history/' + this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.negotiationHistory = res.result;
       console.log(this.negotiationHistory.length)

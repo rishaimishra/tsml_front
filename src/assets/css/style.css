@@ -4975,3 +4975,83 @@ font-weight: 400;
 line-height: 1.5;
 }
 /*30 Nov end*/
+
+.vip-tab {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.vip-tab ul li {
+    float: left;
+}
+.vip-tab ul li a.active, .vip-tab ul li a.active:after, .vip-tab ul li a:hover, .vip-tab ul li a:hover:after {
+    background: #3d7eeb;
+    color: #fff;
+}
+.vip-tab ul li a.sec1, .vip-tab ul li a.first1 {
+    box-shadow: 5px 0 7px -2px rgb(0 0 0 / 19%);
+}
+.vip-tab ul li a.first1 {
+    padding-left: 15px;
+    z-index: 8;
+}
+.vip-tab ul li a {
+    height: 22px;
+    background: #e3e5e8;
+    display: block;
+    padding: 0 44px 0 49px;
+    line-height: 22px;
+    text-transform: capitalize;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 12px;
+    color: #4c4a49;
+    position: relative;
+    border-radius: 0 25px 25px 0;
+}
+.vip-tab ul li a.sec1 {
+    margin-left: -30px;
+    z-index: 7;
+    box-shadow: 5px 0 7px -2px rgb(0 0 0 / 19%);
+}
+.vip-tab ul li a.thir1 {
+    margin-left: -30px;
+    z-index: 6;
+    box-shadow: 5px 0 7px -2px rgb(0 0 0 / 19%);
+}
+.vip-tab ul li a.four1 {
+    margin-left: -30px;
+    z-index: 5;
+    box-shadow: 5px 0 7px -2px rgb(0 0 0 / 19%);
+}
+.vip-tab ul li a.five1 {
+    margin-left: -30px;
+    z-index: 4;
+    box-shadow: 5px 0 7px -2px rgb(0 0 0 / 19%);
+}
+.vip-tab ul li a.six1 {
+    margin-left: -30px;
+    z-index: 3;
+    box-shadow: 5px 0 7px -2px rgb(0 0 0 / 19%);
+}
+.vip-tab ul li a.seve1 {
+    margin-left: -30px;
+    z-index: 2;
+}
+.vip-tab ul li a .hovera {
+    display: none;
+}
+.vip-tab ul li a .hoverin {
+    display: inline-block;
+}
+.vip-tab ul li a:hover .hoverin, .vip-tab ul li a.active .hoverin {
+    display: none;
+}
+.vip-tab ul li a:hover .hovera, .vip-tab ul li a.active .hovera {
+    display: inline-block;
+}
+.vip-tab ul li a img {
+    max-width: 16px;
+}
+.vip-tab .css-tooltip-top span:before {
+    display: none;
+}

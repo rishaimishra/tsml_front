@@ -27,7 +27,7 @@ export class ManagerComponent implements OnInit {
   user_Id: any;
   addItems: boolean = false;
   title: any = '';
-  productId: any;
+  rfqNum: any;
   selectedItem: any = [];
   states: any;
   deliveryDate1: any = '';
@@ -153,7 +153,7 @@ export class ManagerComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
-        this.productId = res.id;
+        this.rfqNum = res.id;
       }
     });
 
@@ -161,7 +161,7 @@ export class ManagerComponent implements OnInit {
     this.states = this._state.getState();
     this.detailByRfq();
     this.getNegotiationHistory();
-    this.getSubCategory(this.productId);
+    this.getSubCategory(this.rfqNum);
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
       misc_expense: ['', Validators.required],
@@ -205,7 +205,7 @@ export class ManagerComponent implements OnInit {
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_quote_by_id' + '/' + this.productId;
+    let url = '/user/get_quote_by_id' + '/' + this.rfqNum;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
@@ -481,7 +481,7 @@ export class ManagerComponent implements OnInit {
       }
       
       let reqData = {
-        rfq_number: this.productId,
+        rfq_number: this.rfqNum,
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
@@ -518,14 +518,42 @@ export class ManagerComponent implements OnInit {
         }
           let userId = localStorage.getItem('USER_ID');
           let salesNotiReq = {
-            "desc_no": this.productId,
+            "desc_no": this.rfqNum,
             "user_id": userId,
             "desc": 'Sales manager replyed',
             "url_type": 'R'
           }
           this._product.camNotification(salesNotiReq).subscribe((res:any) => {
           })
-        
+         if(this.qtStatusUpdate == 6) {
+          let statusRequest = {
+            "rfq_no": this.rfqNum,
+            "quoted_by_tsml": '1'
+          }
+          this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+            console.log('status',res);
+          })
+          let statusRequestKam = {
+            "rfq_no": this.rfqNum,
+            "price_accepted": '1'
+          }
+          this._product.storeStatusKam(statusRequestKam).subscribe((res:any) => {
+            console.log('status',res);
+          })
+         } 
+         if (this.qtStatusUpdate == 9) {
+          let statusRequestKam = {
+            "rfq_no": this.rfqNum,
+            "price_rejected": '1'
+          }
+          this._product.storeStatusKam(statusRequestKam).subscribe((res:any) => {
+            console.log('status',res);
+          })
+         }
+          
+          // this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+          //   console.log('status',res);
+          // })
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -565,7 +593,7 @@ export class ManagerComponent implements OnInit {
           })
           
           let qouteReq = {
-            "rfq_no": this.productId,
+            "rfq_no": this.rfqNum,
             "status": 7
           }
           this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
@@ -573,7 +601,7 @@ export class ManagerComponent implements OnInit {
           // Sales notification send
           let userId = localStorage.getItem('USER_ID');
           let salesNotiReq = {
-            "desc_no": this.productId,
+            "desc_no": this.rfqNum,
             "user_id": userId,
             "desc": 'Tentative date and quantity updated',
             "url_type": 'R'
@@ -590,7 +618,7 @@ export class ManagerComponent implements OnInit {
 
     // Accept reject here
     let qouteReq = {
-      "rfq_no": this.productId,
+      "rfq_no": this.rfqNum,
       "status": this.qtStatusUpdate
     }
     this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
@@ -604,7 +632,7 @@ export class ManagerComponent implements OnInit {
     if (this.countSche['total'] == addCount) {
       let userId = localStorage.getItem('USER_ID');
       let confimerRfq = {
-        "rfq_no": this.productId,
+        "rfq_no": this.rfqNum,
         "user_id": this.rfqUserId,
         "kam_id": userId
       }
@@ -613,14 +641,14 @@ export class ManagerComponent implements OnInit {
       })
     } 
     
-      let qoutesReq = {
-        "rfq_no": this.productId,
-        "status": 6
-      }
-      this._product.qouteStatusUpdate(qoutesReq).subscribe((res:any) => {
-      })
+      // let qoutesReq = {
+      //   "rfq_no": this.rfqNum,
+      //   "status": 6
+      // }
+      // this._product.qouteStatusUpdate(qoutesReq).subscribe((res:any) => {
+      // })
     // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-    //   this._router.navigate(['/po/po',this.productId]);
+    //   this._router.navigate(['/po/po',this.rfqNum]);
     // } 
     // else {
     //   this._router.navigate(['/sales-manager/rfq-list']);
@@ -731,7 +759,7 @@ export class ManagerComponent implements OnInit {
       }
     })
     let managerReq = {
-      "rfq_no": this.productId,
+      "rfq_no": this.rfqNum,
       "sche_no": schedule_no
     }
     this._sales.submitManagerRfq(managerReq).subscribe((res:any) => {
@@ -861,7 +889,7 @@ export class ManagerComponent implements OnInit {
         
   };
   getNegotiationHistory() {
-    let apiUrl = '/user/quotes_history/' + this.productId;
+    let apiUrl = '/user/quotes_history/' + this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.negotiationHistory = res.result;
     })
@@ -932,7 +960,7 @@ export class ManagerComponent implements OnInit {
           "sub_cat_id": this.sub_catId,
           "size": this.sizes,
           "plant": plantId,
-          "rfq_no": this.productId,
+          "rfq_no": this.rfqNum,
           "schedule": this.schedule_no,
           "components": componentArr
         }
@@ -1040,7 +1068,7 @@ export class ManagerComponent implements OnInit {
     })
   };
   reqouteStatus() {
-    let apiUrl = '/user/get_count_requote/'+ this.productId;
+    let apiUrl = '/user/get_count_requote/'+ this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
     })
   };
@@ -1062,7 +1090,7 @@ export class ManagerComponent implements OnInit {
   };
   
   getStatusCount() {
-    let apiUrl = '/user/get_count_sche/'+this.productId;
+    let apiUrl = '/user/get_count_sche/'+this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       console.log(res);
       if (res.status == 1 && res.message == 'success') {
