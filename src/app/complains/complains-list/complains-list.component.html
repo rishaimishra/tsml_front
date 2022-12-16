@@ -15,13 +15,13 @@
                   <div class="ddnld-box" *ngIf="custFileDownload">
                      <small>Customer files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
                      <ul *ngFor="let custdd of custFileDowld">
-                        <li><a [href]="custdd"><span></span>Download <i class="fa fa-arrow-circle-down"></i></a></li>
+                        <li><a *ngIf="custdd != null" target="_blank" [href]="baseFilePath+''+custdd"><span></span>{{custdd}} <i class="fa fa-arrow-circle-down"></i></a></li>
                      </ul>
                   </div>
                   <div class="ddnld-box" *ngIf="kamFileDownload">
                      <small>CAM files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
                      <ul *ngFor="let kamdd of kamFileDownld">
-                        <li><a [href]="kamdd"><span></span>Download <i class="fa fa-arrow-circle-down"></i></a></li>
+                        <li><a *ngIf="kamdd != null" target="_blank" [href]="baseFilePath+''+kamdd"><span></span>{{kamdd}} <i class="fa fa-arrow-circle-down"></i></a></li>
                      </ul>
                   </div>
                    <div class="cart-table">
@@ -30,8 +30,8 @@
                             <thead>
                                <tr>
                                   <th>Customer Name</th>
-                                  <th>Po Number</th>
-                                  <th>Order Ref No.</th>
+                                  <th>Order Ref No</th>
+                                  <th>Po Date</th>
                                   <th>Categories</th>
                                   <th>Sub Categories</th>
                                   <th>Attachments</th>
@@ -62,7 +62,18 @@
                                        <a class="edt-btn btn-primary pointer" (click)="customerFileDownload(comp.com_file_url)" data-toggle="tooltip" data-placement="top" title="Customer Attachments"><i class="fa fa-arrow-circle-down"></i></a>
                                        <a class="edt-btn btn-primary pointer" (click)="kamDownload(comp.com_file_url)" data-toggle="tooltip" data-placement="top" title="CAM Attachments"><i class="fa fa-arrow-circle-down"></i></a>
                                     </div>
-                                    
+                                    <!-- <div class="ddnld-box" *ngIf="custFileDownload">
+                                       <small>Customer files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
+                                       <ul *ngFor="let custdd of comp['com_file_url']['cust_com_file']">
+                                          <li><a target="_blank" [href]="baseFilePath+''+custdd"><span></span>Hello <i class="fa fa-arrow-circle-down"></i></a></li>
+                                       </ul>
+                                    </div>
+                                    <div class="ddnld-box" *ngIf="kamFileDownload">
+                                       <small>CAM files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
+                                       <ul *ngFor="let kamdd of kamFileDownld">
+                                          <li><a *ngIf="kamdd != null" target="_blank" [href]="baseFilePath+''+kamdd"><span></span>{{kamdd}} <i class="fa fa-arrow-circle-down"></i></a></li>
+                                       </ul>
+                                    </div> -->
                                   </td>
                                   <td>
                                      {{comp?.cus_po_no}}

@@ -10,6 +10,7 @@
        </section>
        <section class="prof-form">
           <div class="container">
+            <b class="mb-2" *ngIf="compInfo?.cus_po_no != null">Order Number - {{compInfo?.cus_po_no}}</b>
              <div class="prof-form-bdy">
                 <div class="row" id="pdfTable" #pdfTable>
                    <div class="col-lg-4 col-md-6 col-sm-6">
@@ -22,14 +23,14 @@
                    </div>
                    <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="form-group">
-                         <label for="">Sub Categories 1</label>
+                         <label for="">Sub Categories</label>
                          <select class="form-control" disabled>
                             <option>{{compInfo?.com_sub_cate_name}}</option>
                          </select>
                       </div>
                    </div>
                    <div class="col-lg-4 col-md-6 col-sm-4 mt-3">
-                     <div class="form-group">
+                     <div class="form-group text-right">
                      <button class="btn btn-primary" (click)="downloadAsPDF()">Export To PDF</button>
                      </div>
                    </div>
@@ -66,7 +67,6 @@
                      </div>
                   </div>
                   
-
                   <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
                       <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">

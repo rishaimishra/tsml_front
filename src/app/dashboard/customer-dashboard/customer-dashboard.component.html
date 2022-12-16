@@ -81,7 +81,7 @@
                      <div class="card-header">
                         <h4>Recent Orders {{statusRfq.rfq_submited}}</h4>
                         <form class="card-header-form">
-                           <input type="text" name="search" class="form-control" placeholder="Search">
+                           <input type="text" name="search" class="form-control" placeholder="Search by rfq number">
                         </form>
                      </div>
                      <div class="card-body">
@@ -142,23 +142,31 @@
                               <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
                          *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
                               <div class="badge badge-pill badge-success mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 1">{{rfqItem?.status_txt}}</div>
-                              <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.status_txt}}</div>
-                              <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 2">{{rfqItem?.status_txt}}</div>
-                              <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 4">{{rfqItem?.status_txt}}</div>
-                              <div class="badge badge-pill badge-info mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 0">{{rfqItem?.status_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'RFQ Closed'">{{rfqItem?.st_txt}}</div>
+
+                              <!-- <div class="badge badge-pill badge-warning mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 7">{{rfqItem?.st_txt}}</div> -->
+
                               <div class="badge badge-pill badge-primary mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 5">{{rfqItem?.status_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'Rfq Submited'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-info mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'quoted_by_tsml'">{{rfqItem?.st_txt}}</div>
+
                               <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 6">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-info mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 8">{{rfqItem?.status_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'under_negotiation'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'final_quoted_by_tsml'">{{rfqItem?.st_txt}}</div>
+
+                              <!-- <div class="badge badge-pill badge-warning mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 6">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-info mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 8">{{rfqItem?.st_txt}}</div>
+
                               <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 9">{{rfqItem?.status_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 9">{{rfqItem?.st_txt}}</div> -->
 
                               <span class="font-weight-bold text-primary pointerTab"
                                  (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">RFQ
@@ -189,34 +197,16 @@
                      <div class="card-body">
                         <div class="filter-box">
                            <div class="row">
-                              <div class="col-12 col-lg-5">
-                                 <div class="form-group">
-                                    <label>Date</label>
-                                    <div class="position-relative">
-                                       <input type="text" class="form-control form-control-sm datepicker">
-                                       <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
-                                    </div>
-                                 </div>
-                              </div>
+                              
                               <!---/-->
                               <div class="col-12 col-lg-5">
                                  <div class="form-group">
-                                    <label>Product</label>
-                                    <select class="form-control form-control-sm">
-                                       <option>
-                                          Select
-                                       </option>
-                                       <option>
-                                          XXXXX
-                                       </option>
-                                       <option>
-                                          XXXXX
-                                       </option>
-                                    </select>
+                                    <label>Search</label>
+                                    <input type="text" placeholder="Order ref no / Cust po no" class="form-control form-control-sm">
                                  </div>
                               </div>
                               <!--/-->
-                              <div class="col-12 col-lg-2">
+                              <div class="col-12 col-lg-3">
                                  <button type="button" class="btn btn-primary mt-4 btn-block">Search</button>
                               </div>
                            </div>

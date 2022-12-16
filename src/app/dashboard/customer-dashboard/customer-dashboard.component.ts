@@ -33,7 +33,7 @@ export class CustomerDashboardComponent implements OnInit {
   };
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
-    if (status == 'Accepted') {
+    if (status == 'Accepted' && kamStatus != 4) {
       this._router.navigate(['/po/po',rfqNumber]);
     }
     else if (kamStatus == 4) {

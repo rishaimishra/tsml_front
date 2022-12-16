@@ -403,8 +403,8 @@ export class ProductDetailsComponent implements OnInit {
     if(userId != '' || userId != null) {
       this._product.getMethod(apiUrl).subscribe((res:any) => {
         this.spinner.hide();
-        this.showCity = res.result.state;
-        this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
+        this.showCity = res.result?.state;
+        this.userAddr = res.result?.addressone + res.result?.addresstwo + res.result?.city + res.result?.state + res.result?.pincode;
         if (res.status == 'Token has Expired') {
           this._router.navigate(['/auth/login']);
           this.spinner.hide();

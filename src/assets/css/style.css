@@ -1644,7 +1644,7 @@ button.increment-quantity1 {
 }
 
 .prof-form {
-    padding: 35px 0 50px 0;
+    padding: 11px 0 50px 0;
 }
 
 .prof-form-bdy {
@@ -4876,7 +4876,7 @@ table.table.table-op {
 .ddnld-box{background: #fff;
     padding: 8px;
     position: absolute;
-    width: 150px;
+    width: 272px;
     text-align: center;
     margin-top: 6px;
     z-index: 99;
@@ -5054,4 +5054,16 @@ line-height: 1.5;
 }
 .vip-tab .css-tooltip-top span:before {
     display: none;
+}
+/*16.12.22*/
+.ddnld-box ul{border-bottom:1px solid #ccc;}
+.rrfq-check .container-check .checkmark {
+    position: absolute;
+    top: 4px;
+    left: inherit;
+    right: 222px;
+    height: 12px;
+    width: 12px;
+    background-color: #fff;
+    border-radius: 0 !important;
 }

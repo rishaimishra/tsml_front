@@ -18,6 +18,7 @@ export class ViewProfileComponent implements OnInit {
   documents: any;
   file_link = '';
   custPhoneNo: any = '';
+  
   constructor(private authService: AuthService,
      private spinner: NgxSpinnerService,
      private productService: ProductsService) { }
@@ -38,19 +39,19 @@ export class ViewProfileComponent implements OnInit {
       if (res.message == 'success') {
         this.data = res;
       }
+    }, err => {
+      console.log(err);
     })
   }
 
   onUpdateMob() {
     let useriD = localStorage.getItem('USER_ID');
-    console.log(this.custPhoneNo,useriD)
     this.spinner.show();
     var params  ={
       mobile: this.custPhoneNo,
       kam_id: useriD
     }
     this.productService.postMethopd('/user/phone-update', params).subscribe((res: any) => {
-      console.log(res)
       this.spinner.hide();
       if (res.success) {
         Swal.fire({

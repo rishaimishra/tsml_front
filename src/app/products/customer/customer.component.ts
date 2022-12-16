@@ -971,7 +971,7 @@ export class CustomerComponent implements OnInit {
     })
   };
   cancelprice() {
-    $("#addPrice").hide();
+    $("#viewMoreMessage").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
 

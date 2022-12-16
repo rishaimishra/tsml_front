@@ -21,7 +21,7 @@ declare var $: any;
   styleUrls: ['./kam-reply.component.scss']
 })
 export class KamReplyComponent implements OnInit {
-  // @ViewChild('pdfTable') pdfTable: ElementRef;
+  
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
 
   compId: any;
@@ -153,6 +153,7 @@ export class KamReplyComponent implements OnInit {
     this.submitt = true;
     if (this.remarkReply == undefined) {
       this._toaster.error('', 'Remarks is required !');
+      this._spiner.hide();
       return;
     }
     let camUserId = localStorage.getItem('USER_ID');
@@ -174,6 +175,7 @@ export class KamReplyComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+        this._router.navigate(['/complains/complaints-list']);
       } else {
         this._spiner.hide();
       };

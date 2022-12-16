@@ -9,8 +9,9 @@
       </section>
       <section class="prof-form">
          <div class="container">
+            <b class="mb-2" *ngIf="compInfo?.cus_po_no != null">Order Number - {{compInfo?.cus_po_no}}</b>
             <div class="prof-form-bdy">
-               <div class="row">
+               <div class="row" id="pdfTable" #pdfTable>
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="form-group">
                         <label for="">Categories</label>
@@ -21,13 +22,17 @@
                   </div>
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="form-group">
-                        <label for="">Sub Categories 1</label>
+                        <label for="">Sub Categories</label>
                         <select class="form-control" disabled>
                            <option>{{compInfo?.com_sub_cate_name}}</option>
                         </select>
                      </div>
                   </div>
-
+                  <div class="col-lg-4 col-md-6 col-sm-4 mt-3">
+                     <div class="form-group text-right">
+                     <button class="btn btn-primary btn-sm" (click)="downloadAsPDF()">Export To PDF</button>
+                     </div>
+                   </div>
                   <div class="col-12">
                      <hr style="border: 1px solid;">
                   </div>
@@ -60,7 +65,7 @@
                            class="inputValidation">Remarks is required</small>
                      </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer" *ngIf="compInfo?.complain_status != 2">
+                  <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
                      <div *ngIf="showKamTextArea">
                         <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
                      <label class="custom-file-label" for="customFile">{{fileName ?
@@ -68,7 +73,7 @@
                      </div>
                      
                   </div>
-                  <div class="col-lg-8 col-md-6 col-sm-6" *ngIf="compInfo?.complain_status != 2">
+                  <div class="col-lg-7 col-md-6 col-sm-6 ml-5" *ngIf="compInfo?.complain_status != 2">
                      <div class="reply_btn_box">
                         <div class="clos-btn">
                            <div class="form-check">

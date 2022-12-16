@@ -367,8 +367,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <span class="text-primary pointerTab" data-toggle="modal"
-                                                        data-target="#viewMoreMessage"
-                                                        (click)="messageBox(formData.schedule_no)">See
+                                                    (click)="messageBox(formData.schedule_no)" data-target="#viewMoreMessage">See
                                                         Remarks</span>
                                                 </div>
                                                 <div class="col-lg-12 mb-3" *ngIf="productData.quotest == 6">
@@ -490,7 +489,7 @@
                             <div class="modal-header">
                                 <h4 class="modal-title text-uppercase">Remarks</h4>
                                 <div class="">
-                                    <button type="button" class="btn bt-sm btn-danger" (click)="cancelprice()"><i
+                                    <button type="button" class="btn bt-sm btn-danger" aria-label="Close" (click)="cancelprice()"><i
                                             class="fa fa-times"></i></button>
                                 </div>
 

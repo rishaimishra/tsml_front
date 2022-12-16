@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiEndpointBase:'https://beas.in/mje-shop/api',
+  filePath:'https://beas.in/mje-shop/storage/app/public/images/complain/',
 };
 
 /*

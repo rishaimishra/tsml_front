@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,7 @@ import htmlToPdfmake from 'html-to-pdfmake';
   styleUrls: ['./complains-reply.component.scss']
 })
 export class ComplainsReplyComponent implements OnInit {
+  @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   compId:any;
   submitt: boolean = false;
   compInfo:any;
@@ -114,5 +115,11 @@ export class ComplainsReplyComponent implements OnInit {
 
     }
   };
-
+  downloadAsPDF() {
+    const doc = new jsPDF();
+    const pdfTable = this.pdfTable.nativeElement;
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    const documentDefinition = { content: html };
+    pdfMake.createPdf(documentDefinition).open();
+  };
 }

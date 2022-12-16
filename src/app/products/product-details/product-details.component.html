@@ -237,10 +237,10 @@
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="form-group">
+        <div class="col-12" *ngIf="userByrole == 'C'">
+          <div class="form-group text-right rrfq-check">
             <label class="container-check">I agree to the
-              <a routerLink="/others/privacy"><u>terms and conditions</u></a>
+              <a routerLink="/others/privacy" target="blank"><u>terms and conditions</u></a>
               <input type="checkbox" (change)="checkTerms($event)" [checked]="isTermCondition"/>
               <span class="checkmark"></span>
             </label>

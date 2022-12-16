@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ComplainsService } from 'src/app/service/complains.service';
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-complains-list',
@@ -10,6 +11,7 @@ import { ComplainsService } from 'src/app/service/complains.service';
   styleUrls: ['./complains-list.component.scss']
 })
 export class ComplainsListComponent implements OnInit {
+  
   userType: boolean;
   camplainsItems: any;
   customerFileArr:any = [];
@@ -18,6 +20,7 @@ export class ComplainsListComponent implements OnInit {
   custFileDowld:any;
   kamFileDownld:any;
   p: number = 1;
+  baseFilePath = environment.filePath;
 
   
   constructor(private _complains: ComplainsService,

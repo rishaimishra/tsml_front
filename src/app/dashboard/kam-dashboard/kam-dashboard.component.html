@@ -110,7 +110,7 @@
                      <div class="card-header">
                         <h4>Recent Orders</h4>
                         <form class="card-header-form">
-                           <input type="text" name="search" class="form-control" placeholder="Search">
+                           <input type="text" name="search" class="form-control" placeholder="Search by Rfq no">
                         </form>
                      </div>
                      <div class="card-body">
@@ -119,38 +119,40 @@
                               <div class="vip-tab">
                                  <ul>
                                     <li>
-                                       <a href="manage-vip-step1.html" [ngClass]="{'active':statusRfq[i]?.rfq_submited == 1}"
+                                       <a [ngClass]="{'active':statusRfq[i]?.rfq_submited == 1}"
                                           class="active first1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step1.png" class="hoverin">
                                           <img src="assets/images/hstep1.png" class="hovera">
                                           <span>RFQ Submited</span>
                                        </a>
                                     </li>
-                                    <li><a href="manage-vip-step2.html" [ngClass]="{'active':statusRfq[i]?.approve_pending_from_sales == 1}"
+                                    <li><a [ngClass]="{'active':statusRfq[i]?.approve_pending_from_sales == 1}"
                                           class="sec1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step2.png" class="hoverin">
                                           <img src="assets/images/hstep2.png" class="hovera">
                                           <span>Approval Pending From Sales</span>
                                        </a></li>
-                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.reverted_by_sales_plaing == 1}"
+                                    <li><a [ngClass]="{'active':statusRfq[i]?.reverted_by_sales_plaing == 1}"
                                           class="thir1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step3.png" class="hoverin">
                                           <img src="assets/images/hstep3.png" class="hovera">
                                           <span>Reverted by SP</span>
                                        </a></li>
-                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.price_approved_awaited == 1}"
+                                    <li><a [ngClass]="{'active':statusRfq[i]?.price_approved_awaited == 1}"
                                           class="four1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step4.png" class="hoverin">
                                           <img src="assets/images/hstep4.png" class="hovera">
                                           <span>Price Approval Awaited</span>
                                        </a></li>
-                                       <li><a href="manage-vip-step3.html" *ngIf="statusRfq[i]?.price_accepted == 1" [ngClass]="{'active':statusRfq[i]?.price_accepted == 1}"
+                                       <li><a  *ngIf="statusRfq[i]?.price_accepted == 1
+                                          " [ngClass]="{'active':statusRfq[i]?.price_accepted == 1}"
                                           class="seve1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step7.png" class="hoverin">
                                           <img src="assets/images/hstep7.png" class="hovera">
                                           <span>Price Accepted</span>
                                        </a></li>
-                                       <li><a href="manage-vip-step3.html" *ngIf="statusRfq[i]?.price_rejected == 1" [ngClass]="{'active':statusRfq[i]?.price_rejected == 1}"
+                                       <li><a *ngIf="statusRfq[i]?.price_rejected == 1
+                                          && statusRfq[i]?.price_accepted ==  null" [ngClass]="{'active':statusRfq[i]?.price_rejected == 1}"
                                           class="seve1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step7.png" class="hoverin">
                                           <img src="assets/images/hstep7.png" class="hovera">
@@ -162,13 +164,13 @@
                                           <img src="assets/images/hstep5.png" class="hovera">
                                           <span>Requoted</span>
                                        </a></li> -->
-                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.under_negotiation == 1}"
+                                    <li><a [ngClass]="{'active':statusRfq[i]?.under_negotiation == 1}"
                                           class="six1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step6.png" class="hoverin">
                                           <img src="assets/images/hstep6.png" class="hovera">
                                           <span>Under Negotiation</span>
                                        </a></li>
-                                    <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.quote_closed == 1}"
+                                    <li><a [ngClass]="{'active':statusRfq[i]?.quote_closed == 1}"
                                           class="seve1 css-tooltip-top color-blue meet-rvw uu0">
                                           <img src="assets/images/step7.png" class="hoverin">
                                           <img src="assets/images/hstep7.png" class="hovera">
@@ -180,26 +182,29 @@
                                  <div class="clearfix"></div>
 
                               </div>
-                              <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
-                                 <div class="badge badge-pill badge-success mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 1" >{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 7">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 2">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 4">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-info mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 0">{{rfqItem?.status_txt}}</div>
                                  <div class="badge badge-pill badge-primary mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 5">{{rfqItem?.status_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'Rfq Submited'">{{rfqItem?.st_txt}}</div>
+
                                  <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 6">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-info mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 8">{{rfqItem?.status_txt}}</div>
-                                 <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.kam_status == 9">{{rfqItem?.status_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'Approve pending from Sales'">{{rfqItem?.st_txt}}</div>
+
+                                 <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Reverted By Sales Planning'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-warning mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Price Approval Awaited'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Price Accepted'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-danger mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Price Rejected'">{{rfqItem?.st_txt}}</div>
+                              
+                              <div class="badge badge-pill badge-info mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Under Negotiation'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Quote Closed'">{{rfqItem?.st_txt}}</div>
 
                               <span class="font-weight-bold text-primary pointerTab" (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">RFQ Number: {{rfqItem?.rfq_no}}</span>&nbsp;
                               <!-- <a class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>
@@ -224,7 +229,7 @@
                      <div class="card-body">
                         <div class="filter-box">
                            <div class="row">
-                              <div class="col-12 col-lg-5">
+                              <!-- <div class="col-12 col-lg-5">
                                  <div class="form-group">
                                     <label>Date</label>
                                     <div class="position-relative">
@@ -232,26 +237,16 @@
                                        <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                                     </div>
                                  </div>
-                              </div>
+                              </div> -->
                               <!---/-->
                               <div class="col-12 col-lg-5">
                                  <div class="form-group">
-                                    <label>Product</label>
-                                    <select class="form-control form-control-sm">
-                                       <option>
-                                          Select
-                                       </option>
-                                       <option>
-                                          XXXXX
-                                       </option>
-                                       <option>
-                                          XXXXX
-                                       </option>
-                                    </select>
+                                    <label>Search</label>
+                                    <input type="text" placeholder="Order ref no / Cust po no" class="form-control form-control-sm">
                                  </div>
                               </div>
                               <!--/-->
-                              <div class="col-12 col-lg-2">
+                              <div class="col-12 col-lg-3">
                                  <button type="button" class="btn btn-primary mt-4 btn-block">Search</button>
                               </div>
                            </div>
