@@ -168,9 +168,9 @@
                               <div class="badge badge-pill badge-danger mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 9">{{rfqItem?.st_txt}}</div> -->
 
-                              <span class="font-weight-bold text-primary pointerTab"
-                                 (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">RFQ
-                                 Number: {{rfqItem?.rfq_no}}</span>&nbsp;
+                              <span class="font-weight-bold">RFQ
+                                 Number: <b class="text-primary pointerTab"
+                                 (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">{{rfqItem?.rfq_no}}</b></span>&nbsp;
                               <!-- <a
                                  class="pointerTab text-primary">{{rfqItem?.cat_name}}</a> -->
                               <!-- <p class="my-1">{{rfqItem?.pro_desc}}</p> -->

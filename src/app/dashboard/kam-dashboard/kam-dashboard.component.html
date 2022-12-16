@@ -206,7 +206,8 @@
                               <div class="badge badge-pill badge-success mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'Quote Closed'">{{rfqItem?.st_txt}}</div>
 
-                              <span class="font-weight-bold text-primary pointerTab" (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">RFQ Number: {{rfqItem?.rfq_no}}</span>&nbsp;
+                              <span class="font-weight-bold">RFQ Number: 
+                                 <b (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)" class="text-primary pointerTab">{{rfqItem?.rfq_no}}</b></span>&nbsp;
                               <!-- <a class="pointerTab text-primary">{{rfqItem?.cat_name}}</a>
                               <p class="my-1">{{rfqItem?.pro_desc}}</p> -->
                               <small class="text-muted">
