@@ -21,18 +21,16 @@
         <!-- The slideshow --> 
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img style="height: 382px; width:100%;" src="assets/images/tsml-first-image.jpg" alt="image" />
+            <img style="height: 382px; width:100%;" src="assets/images/nebanner1.png" alt="image" />
           </div>
-
-          <div class="carousel-item">
+          <!-- <div class="carousel-item">
             <img style="height: 382px; width:100%;" src="assets/images/tsmlImage1.jpg" alt="image" />
-          </div>
-          
-          <div class="carousel-item">
+          </div> -->
+          <!-- <div class="carousel-item">
              <img style="height: 382px; width:100%;" src="assets/images/tsmlImage2.jpg" alt="image" />
-          </div>
+          </div> -->
           <div class="carousel-item">
-            <img src="assets/images/slide2.jpg" alt="image" />
+            <img src="assets/images/newbanner2.png" alt="image" />
             <div class="carousel-caption">
               <p>Helping maintain biodiversity in areas of operation.</p>
             </div>
@@ -40,7 +38,7 @@
           <div class="carousel-item">
             <img src="assets/images/slide3.jpg" alt="image" />
             <div class="carousel-caption">
-              <p>Proud to be mining sustainability champions.Everyday.</p>
+              <p>Proud to be mining sustainability champion, everyday</p>
             </div>
           </div>
         </div>
@@ -60,11 +58,13 @@
           <div class="col-12">
             <ul class="nav nav-tabs" id="myTab" role="tablist" *ngIf="list.length > 0">
               <p class="pr-title">Our Products</p>
-              <li class="nav-item" *ngFor="let product_menu of list">
+              <!-- <li class="nav-item" *ngFor="let product_menu of list">
                 <a class="nav-link pointerTab" data-toggle="tab" role="tab" aria-controls="home" [ngClass]="{active: isActive(product_menu.id)}"
                   (click)="get_product_by_menu_id(product_menu.id)">{{ product_menu.pro_name }}</a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link pointerTab" data-toggle="tab" role="tab" aria-controls="home" >Ferro Chrome & Chrome Ore</a>
               </li>
-
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="fc" role="tabpanel">

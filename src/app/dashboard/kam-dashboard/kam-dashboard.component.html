@@ -6,7 +6,7 @@
    <div class="page-content">
       <section class="prof-head">
          <div class="container">
-            <h2>CAM Dashboard &nbsp;&nbsp; FY 2022-2023</h2>
+            <h2>CAM Dashboard -&nbsp;&nbsp;FY23</h2>
          </div>
       </section>
       <section class="dashborad_sections">
@@ -116,74 +116,40 @@
                      <div class="card-body">
                         <div class="support-ticket media pb-1 mb-3" *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }; let i = index">
                            <div class="media-body">
-                              <div class="vip-tab">
-                                 <ul>
-                                    <li>
-                                       <a [ngClass]="{'active':statusRfq[i]?.rfq_submited == 1}"
-                                          class="active first1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step1.png" class="hoverin">
-                                          <img src="assets/images/hstep1.png" class="hovera">
-                                          <span>RFQ Submited</span>
-                                       </a>
-                                    </li>
-                                    <li><a [ngClass]="{'active':statusRfq[i]?.approve_pending_from_sales == 1}"
-                                          class="sec1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step2.png" class="hoverin">
-                                          <img src="assets/images/hstep2.png" class="hovera">
-                                          <span>Approval Pending From Sales</span>
-                                       </a></li>
-                                    <li><a [ngClass]="{'active':statusRfq[i]?.reverted_by_sales_plaing == 1}"
-                                          class="thir1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step3.png" class="hoverin">
-                                          <img src="assets/images/hstep3.png" class="hovera">
-                                          <span>Reverted by SP</span>
-                                       </a></li>
-                                    <li><a [ngClass]="{'active':statusRfq[i]?.price_approved_awaited == 1}"
-                                          class="four1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step4.png" class="hoverin">
-                                          <img src="assets/images/hstep4.png" class="hovera">
-                                          <span>Price Approval Awaited</span>
-                                       </a></li>
-                                       <li><a  *ngIf="statusRfq[i]?.price_accepted == 1
-                                          " [ngClass]="{'active':statusRfq[i]?.price_accepted == 1}"
-                                          class="seve1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step7.png" class="hoverin">
-                                          <img src="assets/images/hstep7.png" class="hovera">
-                                          <span>Price Accepted</span>
-                                       </a></li>
-                                       <li><a *ngIf="statusRfq[i]?.price_rejected == 1
-                                          && statusRfq[i]?.price_accepted ==  null" [ngClass]="{'active':statusRfq[i]?.price_rejected == 1}"
-                                          class="seve1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step7.png" class="hoverin">
-                                          <img src="assets/images/hstep7.png" class="hovera">
-                                          <span>Price Rejected</span>
-                                       </a></li>
-                                    <!-- <li><a href="manage-vip-step3.html" [ngClass]="{'active':statusRfq[i]?.requated == 1}"
-                                          class="five1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step5.png" class="hoverin">
-                                          <img src="assets/images/hstep5.png" class="hovera">
-                                          <span>Requoted</span>
-                                       </a></li> -->
-                                    <li><a [ngClass]="{'active':statusRfq[i]?.under_negotiation == 1}"
-                                          class="six1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step6.png" class="hoverin">
-                                          <img src="assets/images/hstep6.png" class="hovera">
-                                          <span>Under Negotiation</span>
-                                       </a></li>
-                                    <li><a [ngClass]="{'active':statusRfq[i]?.quote_closed == 1}"
-                                          class="seve1 css-tooltip-top color-blue meet-rvw uu0">
-                                          <img src="assets/images/step7.png" class="hoverin">
-                                          <img src="assets/images/hstep7.png" class="hovera">
-                                          <span>Quote Closed</span>
-                                       </a></li>
-                                       
-                                 </ul>
+                              <div class="stepwizard col-md-offset-3 mb-2">
+                                 <div class="stepwizard-row setup-panel">
+                                   <div class="stepwizard-step" >
+                                     <a type="button" [ngClass]="{'active':statusRfq[i]?.rfq_submited == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>New Enquiry</span></a>
+                                   </div>
+                                   <div class="stepwizard-step">
+                                     <a type="button" [ngClass]="{'active':statusRfq[i]?.approve_pending_from_sales == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Approval Pending From Sales</span></a>
+                                   </div>
+                                   <div class="stepwizard-step">
+                                     <a type="button" [ngClass]="{'active':statusRfq[i]?.reverted_by_sales_plaing == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Reverted by SP</span></a>
+                                   </div>
+                                   <div class="stepwizard-step">
+                                      <a type="button" [ngClass]="{'active':statusRfq[i]?.price_approved_awaited == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Approval Awaited</span></a>
+                                    </div>
+                                    <div class="stepwizard-step">
+                                      <a type="button" *ngIf="statusRfq[i]?.price_accepted == 1
+                                      " [ngClass]="{'active':statusRfq[i]?.price_accepted == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Accepted</span></a>
+                                    </div>
+                                    <div class="stepwizard-step">
+                                      <a type="button" *ngIf="statusRfq[i]?.price_rejected == 1
+                                      && statusRfq[i]?.price_accepted ==  null" [ngClass]="{'active':statusRfq[i]?.price_rejected == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Rejected</span></a>
+                                    </div>
 
-                                 <div class="clearfix"></div>
+                                    <div class="stepwizard-step">
+                                       <a type="button" [ngClass]="{'active':statusRfq[i]?.under_negotiation == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Under Negotiation</span></a>
+                                     </div>
+                                     <div class="stepwizard-step">
+                                       <a type="button" [ngClass]="{'active':statusRfq[i]?.quote_closed == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Quote Closed</span></a>
+                                     </div>
+                                 </div>
+                               </div>
 
-                              </div>
-                                 <div class="badge badge-pill badge-primary mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 'Rfq Submited'">{{rfqItem?.st_txt}}</div>
+                                 <div class="badge badge-pill badge-warning mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'New Enquiry'">{{rfqItem?.st_txt}}</div>
 
                                  <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'Approve pending from Sales'">{{rfqItem?.st_txt}}</div>
@@ -252,7 +218,7 @@
                               </div>
                            </div>
                         </div>
-                        <div class="">
+                        <div class="table-responsive">
                            <table class="table table-hover mb-0">
                               <thead>
                                  <tr>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ComplainsService } from 'src/app/service/complains.service';
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment.prod'
 
 @Component({
   selector: 'app-complains-list',

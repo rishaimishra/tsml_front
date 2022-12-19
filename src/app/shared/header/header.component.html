@@ -55,7 +55,6 @@
                            <div class="row g-3">
                               <div class="col-sm-6">
                                  <ul class="list-unstyled">
-                                    <!-- <li><a href="overview.html">Overview </a></li> -->
                                     <li><a routerLink="">Ferro Chrome</a></li>
                                     <li><a routerLink="">Chrome Ore</a></li>
                                  </ul>
@@ -72,16 +71,17 @@
                                     across the globe and strive to become a key player in mining and Ferro Alloys
                                     business.</h6>
                               </div>
-                              <!-- end col-3 -->
                            </div>
-                           <!-- end row -->
                         </div>
-                        <!-- dropdown-large.// -->
                      </li>
+                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true)"
+                     ><a class="nav-link" routerLink="/plant/do-list">View Do</a></li>
+                     <!-- <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'PLANT')"
+                     ><a class="nav-link" routerLink="/plant/do-entry">Do Entry</a></li> -->
+
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/auth/register">
                            Register </a></li>
-                           <!-- <li class="nav-item"><a class="nav-link" *ngIf="!userType" routerLink="/order-planing">Order Schedule</a></li> -->
-                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales' && userRol != 'SM')">
+                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales' && userRol != 'SM' && userRol != 'OPT')">
                              <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
                                  Order Planning</a>
                                  <div class="dropdown-menu small-dd" style="color: black;">
@@ -90,6 +90,16 @@
                                      <a routerLink="/order/dispatch-plan" class="mt-2">Dispatch Plan</a>
                                    </div>
                       </li>
+                      <!-- Oder proccesing team -->
+                      <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'OPT' && userRol != 'sales')">
+                        <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
+                           Add Information</a>
+                            <div class="dropdown-menu small-dd" style="color: black;">
+                                <a routerLink="/sales/prepare-sc">Add Sales Contract</a><br>
+                                <a routerLink="/sales/prepare-so" class="mt-2">Add Sales Order</a><br>
+                              </div>
+                        </li>
+
                       <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'SM')" routerLink="/sales-manager/rfq-list">Confirm RFQs</a></li>
                       <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales' && userRol != 'SM')" routerLink="/products/confirm-rfq">
                         Confirm RFQs </a></li>

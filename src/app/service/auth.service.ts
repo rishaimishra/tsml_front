@@ -50,7 +50,7 @@ export class AuthService {
     return this._http.get(this.BesUrl + '/gst_details_dummy');
   };
 
-  gstDetails(request: any) {
-    return this._http.post('http://172.16.2.102:6082/getGstDetails', request);
-  };
+  // gstDetails(request: any) {
+  //   return this._http.post('http://172.16.2.102:6082/getGstDetails', request);
+  // };
 }

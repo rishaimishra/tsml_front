@@ -557,13 +557,13 @@
                             <thead>
                                 <tr>
                                     <th scope="col" colspan="2">Pricing Components</th>
-                                    <th scope="col">Calculated Price (₹)</th>
-                                    <th scope="col">Updated Price (₹)</th>
+                                    <th scope="col">Guideline Price (₹)</th>
+                                    <th scope="col">Quoted Price (₹)</th>
                                 </tr>
                             </thead>
                             <tbody (change)="calculatePrice(schldId)">
                                 <tr>
-                                    <td colspan="2">Basic Price Table</td>
+                                    <td colspan="2">Basic Price (High Phos 10-150mm)</td>
                                     <td>
                                         <div class="pp-bx" id="bptId">
                                             {{productPrice?.bpt_price}}
@@ -575,7 +575,7 @@
                                             value="{{productPrice?.bpt_price}}"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Quality Premium</td>
+                                    <td colspan="2">Price Premium</td>
                                     <td>
                                         <div class="pp-bx" id="pricePrId">
                                             {{productPrice?.price_premium}}
@@ -589,22 +589,7 @@
                                             than {{productPrice?.price_premium}}</small>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">CAM Price Adjustment</td>
-                                    <td>
-                                        <div class="pp-bx" id="kamid">
-                                            {{productPrice?.cam_discount}}
-                                        </div>
-                                    </td>
-                                    <td><input type="number" formControlName="cam_discount"
-                                            [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
-                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_discount{{schldId}}">
-                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
-                                            than
-                                            {{productPrice?.cam_discount}}</small>
-                                    </td>
-                                </tr>
+                                
                                 <tr>
                                     <td colspan="2">Delivery Cost</td>
                                     <td>
@@ -667,14 +652,27 @@
                                         </div>
                                     </td>
                                     <td><input type="number" formControlName="misc_expense"
-                                            [ngClass]="{ 'is-invalid': f.misc_expense.errors && f.misc_expense.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="misc_expense{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="miscPrice">Misc Expense should not be less than
-                                            {{productPrice?.misc_expense}}</small>
+                                        <!-- <small class="addClass" *ngIf="miscPrice">Misc Expense should not be less than
+                                            {{productPrice?.misc_expense}}</small> -->
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td colspan="2">Proposed Price Adjustment</td>
+                                    <td>
+                                        <div class="pp-bx" id="kamid">
+                                            {{productPrice?.cam_discount}}
+                                        </div>
+                                    </td>
+                                    <td><input type="number" formControlName="cam_discount"
+                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                            id="_discount{{schldId}}">
+                                        <!-- <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
+                                            than
+                                            {{productPrice?.cam_discount}}</small> -->
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="2">Final Price</td>
                                     <td>
@@ -688,7 +686,7 @@
                                             id="_total{{schldId}}" placeholder="" value="{{Totalsum1}}"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Percentage difference Between BPT & Final Price (%)</td>
+                                    <td colspan="2">Percentage difference between BPT & Final Price (%)</td>
                                     <td>
                                         <!-- <div class="pp-bx bgGray">
                                             {{bptAndfinal}}

@@ -6,18 +6,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
+import { DoDetailsComponent } from './do-details/do-details.component';
 
 
 const routes: Routes = [
   {path: 'do-entry', component: DoEntryComponent},
-  {path: 'do-view', component: ViewDoComponent}
+  {path: 'do-list', component: ViewDoComponent},
+  {path: 'do-details/:id', component: DoDetailsComponent}
 ]
 
 
 @NgModule({
   declarations: [
     DoEntryComponent,
-    ViewDoComponent
+    ViewDoComponent,
+    DoDetailsComponent
   ],
   imports: [
     CommonModule,

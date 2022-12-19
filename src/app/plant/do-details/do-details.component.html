@@ -1,0 +1,137 @@
+<app-header></app-header>
+<div class="page-content">
+    <section class="sub-header-2">
+        <div class="container">
+            <h1>Delivery Order Details</h1>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <section class="add-prod-pg">
+            <div class="container">
+                <section class="add-prod-pg">
+                    <div class="row">
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>SO</label>
+                                <!-- <select disabled class="form-control form-control-sm" [(ngModel)]="data.so_no">
+                                    <option value=""> Select</option>
+                                    <option *ngFor="let item of soList" [value]="item.so_no">{{item.so_no}}</option>
+                                </select> -->
+                                <input readonly [(ngModel)]="data.so_no" type="text" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>DO No</label>
+                                <input readonly [(ngModel)]="data.do_no" type="text" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Invoice No</label>
+                                <input readonly type="text" [(ngModel)]="data.invoice_no" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Invoice Date</label>
+                                <div class="position-relative">
+                                    <input readonly type="text" [(ngModel)]="data.invoice_date" class="form-control form-control-sm datepicker">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Material Grade</label>
+                                <select disabled class="form-control form-control-sm" [(ngModel)]="data.material_grade">
+                                    <option value=""> Select</option>
+                                    <option *ngFor="let item of materialGradeList" [value]="item.id">{{item.sub_cat_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>DO Quantity (MT)</label>
+                                <input readonly type="text" [(ngModel)]="data.do_quantity" class="form-control form-control-sm datepicker">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Date of despatch</label>
+                                <div class="position-relative">
+                                    <input readonly type="text" [(ngModel)]="data.despatch_date" class="form-control form-control-sm datepicker">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Truck No</label>
+                                <input readonly type="text" [(ngModel)]="data.truck_no" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Driver No</label>
+                                <input readonly type="text" [(ngModel)]="data.driver_no" class="form-control form-control-sm" >
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-9"></div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea readonly [(ngModel)]="data.premarks" class="form-control" style="height:80px;"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <section class="add-prod-pg mx-3 mt-3">
+                    <div class="">
+                        <div class="prof-form-bdy mb-5">
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <h6 class="text-center">View Documents</h6>
+                                </div>
+                                <div class="col-12 col-lg-12">
+                                    <div class="form-group text-center">
+
+                                        <a *ngIf="data.lr_file != null" target="_blank" type="file" class="btn btn-primary" [href]='data.lr_file'>View LR <i
+                                                class="fa fa-eye" aria-hidden="true"></i>
+                                            <!-- <input type="file" accept=".png, .jpg, .jpeg, .pdf" #fileLR hidden
+                                                (change)="onGetLrDoc($event)"> -->
+                                        </a>&nbsp;
+
+
+                                        <a *ngIf="data.e_waybill_file != null" target="_blank" type="file" class="btn btn-primary" [href]='data.e_waybill_file'>View e-waybill <i class="fa fa-eye"
+                                                aria-hidden="true"></i>
+                                            </a>&nbsp;
+
+                                        <a *ngIf="data.test_certificate_file != null" target="_blank" type="file" class="btn btn-primary" [href]='data.test_certificate_file'>Test Certificate <i class="fa fa-eye"
+                                                aria-hidden="true"></i>
+                                               
+                                            </a>&nbsp;
+
+                                        <a *ngIf="data.e_invoice_file != null" target="_blank" type="file" class="btn btn-primary" [href]='data.e_invoice_file'> View e-Invoice <i class="fa fa-eye"
+                                                aria-hidden="true"></i>
+                                            </a>&nbsp;
+
+                                        <a *ngIf="data.misc_doc_file != null" target="_blank" type="file" class="btn btn-primary" [href]='data.misc_doc_file'>View Misc. Doc <i class="fa fa-eye"
+                                                aria-hidden="true"></i>
+                                            </a>
+
+                                        <!-- <div class="col-12 my-3">
+                                            <button href="javascript:;" type="submit"
+                                                class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i>
+                                                Submit</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+    </section>
+</div>
+<app-footer></app-footer>

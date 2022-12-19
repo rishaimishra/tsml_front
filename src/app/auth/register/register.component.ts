@@ -696,23 +696,23 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    this._auth.gstDetails(this.gstNum).subscribe((res: any) => {
-    // this._auth.gstApi().subscribe((res: any) => {
+    let apiUrl = '/gst_details_dummy/'+this.gstNum;
+    this.productService.getMethod(apiUrl).subscribe((res: any) => {
       this._spinner.hide();
           this._spinner.hide();
           this.toastr.success(res.message);
-          const withoutFirstAndLast = res.result.gstin.slice(2, -3);
-          let state = res.result.pradr.addr.stcd;
-          let city = res.result.pradr.addr.dst;
-          let pincode = res.result.pradr.addr.pncd;
-          let addrOne = res.result.pradr.addr.bnm;
-          let addrTwo = res.result.pradr.addr.st;
-          let gstin = res.result.gstin;
-          this.linkedAddr = res.result.stj;
-          this.orgAddrs = res.result.pradr.addr.stcd;
-          this.orgName = res.result.lgnm;
+          const withoutFirstAndLast = res.data.gstin.slice(2, -3);
+          let state = res.data.pradr.addr.stcd;
+          let city = res.data.pradr.addr.dst;
+          let pincode = res.data.pradr.addr.pncd;
+          let addrOne = res.data.pradr.addr.bnm;
+          let addrTwo = res.data.pradr.addr.st;
+          let gstin = res.data.gstin;
+          this.linkedAddr = res.data.stj;
+          this.orgAddrs = res.data.pradr.addr.stcd;
+          this.orgName = res.data.lgnm;
           this.orgPan = withoutFirstAndLast;
-          this.gstNumber = res.result.gstin;
+          this.gstNumber = res.data.gstin;
           
           this.addressForm = this._fb.group({
             credentials: this._fb.array([])
@@ -743,17 +743,17 @@ export class RegisterComponent implements OnInit {
 
   billGstin(i:any) {
     this._spinner.show;
-    // this.productService.getMethod(apiUrl).subscribe((res: any) => {
-      this._auth.gstDetails(this.billGstNum).subscribe((res: any) => {
+    let apiUrl = '/gst_details_dummy/'+this.billGstNum;
+    this.productService.getMethod(apiUrl).subscribe((res: any) => {
           this._spinner.hide();
           this.toastr.success(res.message);
-          let state = res.result.pradr.addr.stcd;
-          let city = res.result.pradr.addr.dst;
-          let pincode = res.result.pradr.addr.pncd;
-          let addrOne = res.result.pradr.addr.bnm;
-          let addrTwo = res.result.pradr.addr.st;
-          let gstin = res.result.gstin;
-          let companyName = res.result.lgnm;
+          let state = res.data.pradr.addr.stcd;
+          let city = res.data.pradr.addr.dst;
+          let pincode = res.data.pradr.addr.pncd;
+          let addrOne = res.data.pradr.addr.bnm;
+          let addrTwo = res.data.pradr.addr.st;
+          let gstin = res.data.gstin;
+          let companyName = res.data.lgnm;
           // $('#adr_'+i).val(addrOne);
           ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('company_name').patchValue(companyName);
           ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
@@ -777,17 +777,17 @@ export class RegisterComponent implements OnInit {
 
   shipGstin(i:any) {
     this._spinner.show();
-    // this.productService.getMethod(apiUrl).subscribe((res: any) => {
-      this._auth.gstDetails(this.shipGst).subscribe((res: any) => {
+    let apiUrl = '/gst_details_dummy/'+this.shipGst;
+    this.productService.getMethod(apiUrl).subscribe((res: any) => {
           this._spinner.hide();
           this.toastr.success(res.message);
-          let state = res.result.pradr.addr.stcd;
-          let city = res.result.pradr.addr.dst;
-          let pincode = res.result.pradr.addr.pncd;
-          let addrOne = res.result.pradr.addr.bnm;
-          let addrTwo = res.result.pradr.addr.st;
-          let gstin = res.result.gstin;
-          let company = res.result.lgnm;
+          let state = res.data.pradr.addr.stcd;
+          let city = res.data.pradr.addr.dst;
+          let pincode = res.data.pradr.addr.pncd;
+          let addrOne = res.data.pradr.addr.bnm;
+          let addrTwo = res.data.pradr.addr.st;
+          let gstin = res.data.gstin;
+          let company = res.data.lgnm;
           // $('#adr_'+i).val(addrOne);
           ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('company_name').patchValue(company);
           ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);

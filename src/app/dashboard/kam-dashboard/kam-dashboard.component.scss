@@ -8,3 +8,56 @@
 .mini-stat-icon { 
     float: left;
 }
+
+.stepwizard-step p {
+    margin-top: 10px;
+}
+.stepwizard-row {
+    display: table-row;
+}
+.stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+}
+.stepwizard-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}
+.stepwizard-row:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #5774ef;
+    transform: translateY(50%);
+}
+.stepwizard-step {
+    display: table-cell;
+    // text-align: center;
+    position: relative;
+}
+.btn-circle {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    padding: 3px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+a.btn.btn-primary.btn-circle {
+    margin-top: 0;
+}
+a.btn.btn-default.btn-circle {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn-circle.active {
+    border: 2px solid #3d7eeb!important;
+    background: #3d7eeb!important;
+    color: #fff!important;
+}

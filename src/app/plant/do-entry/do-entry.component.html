@@ -7,118 +7,192 @@
         </div>
     </section>
     <section class="add-prod-pg">
-        <div class="container">
-            <section class="add-prod-pg">
-                <div class="row">
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>SO</label>
-                            <select class="form-control form-control-sm">
-                                <option> Select</option>
-                                <option>XXXXX</option>
-                                <option>XXXXX</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>DO No</label>
-                            <input type="text" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>Invoice No</label>
-                            <input type="text" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>Invoice Date</label>
-                            <div class="position-relative">
-                                <input type="text" class="form-control form-control-sm datepicker">
-                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+        <form [formGroup]="entryForm" (ngSubmit)="submit()">
+            <div class="container">
+                <section class="add-prod-pg">
+                    <div class="row">
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>SO</label>
+                                <select class="form-control form-control-sm" formControlName="so_no"
+                                    [ngClass]="{ 'is-invalid': submitted && f['so_no'].errors }" (change)="onChangeSo($event)">
+                                    <option value=""> Select</option>
+                                    <option *ngFor="let item of soList" [value]="item.so_no">{{item.so_no}}</option>
+                                </select>
+                                <div *ngIf="submitted && f.so_no.errors" class="invalid-feedback">
+                                    <div *ngIf="f.so_no.errors.required">SO is required</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>Material Grade</label>
-                            <select class="form-control form-control-sm">
-                                <option> Select</option>
-                                <option>XXXXX</option>
-                                <option>XXXXX</option>
-                            </select>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>DO No</label>
+                                <input type="text" class="form-control form-control-sm" formControlName="do_no"
+                                    [ngClass]="{ 'is-invalid': submitted && f['do_no'].errors }">
+                                <div *ngIf="submitted && f.do_no.errors" class="invalid-feedback">
+                                    <div *ngIf="f.do_no.errors.required">Do No is required</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>DO Quantity</label>
-                            <select class="form-control form-control-sm">
-                                <option> Select</option>
-                                <option>XXXXX</option>
-                                <option>XXXXX</option>
-                            </select>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Invoice No</label>
+                                <input type="text" class="form-control form-control-sm" formControlName="invoice_no"
+                                    [ngClass]="{ 'is-invalid': submitted && f['invoice_no'].errors }">
+                                <div *ngIf="submitted && f.invoice_no.errors" class="invalid-feedback">
+                                    <div *ngIf="f.invoice_no.errors.required">Invoice No is required</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Invoice Date</label>
+                                <div class="position-relative">
+                                    <input type="date" class="form-control form-control-sm datepicker"
+                                        formControlName="invoice_date"
+                                        [ngClass]="{ 'is-invalid': submitted && f['invoice_date'].errors }">
+                                    <!-- <span class="over_llp">
+                                        <img src="assets/images/cal.png" alt="">
+                                    </span> -->
+                                    <div *ngIf="submitted && f.invoice_date.errors" class="invalid-feedback">
+                                        <div *ngIf="f.invoice_date.errors.required">Invoice Date is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Material Grade</label>
+                                <select class="form-control form-control-sm" formControlName="material_grade"
+                                    [ngClass]="{ 'is-invalid': submitted && f['material_grade'].errors }">
+                                    <option value=""> Select</option>
+                                    <option *ngFor="let item of materialGradeList" [value]="item.id">{{item.sub_cat_name}}</option>
+                                </select>
+                                <div *ngIf="submitted && f.material_grade.errors" class="invalid-feedback">
+                                    <div *ngIf="f.material_grade.errors.required">Material Grade is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>DO Quantity (MT)</label>
+                                <input type="text" class="form-control form-control-sm datepicker"
+                                        formControlName="do_quantity"
+                                        [ngClass]="{ 'is-invalid': submitted && f['do_quantity'].errors }">
+                                <div *ngIf="submitted && f.do_quantity.errors" class="invalid-feedback">
+                                    <div *ngIf="f.do_quantity.errors.required">Material Grade is required</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>Date of despatch</label>
-                            <div class="position-relative">
-                                <input type="text" class="form-control form-control-sm datepicker">
-                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Date of despatch</label>
+                                <div class="position-relative">
+                                    <input type="date" class="form-control form-control-sm datepicker"
+                                        formControlName="despatch_date"
+                                        [ngClass]="{ 'is-invalid': submitted && f['despatch_date'].errors }">
+                                    <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                                    <div *ngIf="submitted && f.despatch_date.errors" class="invalid-feedback">
+                                        <div *ngIf="f.despatch_date.errors.required">Material Grade is required</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>Truck No</label>
-                            <input type="text" class="form-control form-control-sm">
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Truck No</label>
+                                <input type="text" class="form-control form-control-sm" formControlName="truck_no"
+                                    [ngClass]="{ 'is-invalid': submitted && f['truck_no'].errors }">
+                                <div *ngIf="submitted && f.truck_no.errors" class="invalid-feedback">
+                                    <div *ngIf="f.truck_no.errors.required">Material Grade is required</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="form-group">
-                            <label>Driver No</label>
-                            <input type="text" class="form-control form-control-sm">
+                        <div class="col-12 col-lg-3">
+                            <div class="form-group">
+                                <label>Driver No</label>
+                                <input type="text" class="form-control form-control-sm" formControlName="driver_no"
+                                    [ngClass]="{ 'is-invalid': submitted && f['driver_no'].errors }">
+                                <div *ngIf="submitted && f.driver_no.errors" class="invalid-feedback">
+                                    <div *ngIf="f.driver_no.errors.required">Material Grade is required</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-9"></div>
-                    <div class="col-12 col-lg-6">
-                        <div class="form-group">
-                            <label>Remarks</label>
-                            <textarea class="form-control" style="height:80px;"></textarea>
+                        <div class="col-12 col-lg-9"></div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control" style="height:80px;" formControlName="premarks"
+                                    [ngClass]="{ 'is-invalid': submitted && f['premarks'].errors }"></textarea>
+                                <div *ngIf="submitted && f.premarks.errors" class="invalid-feedback">
+                                    <div *ngIf="f.premarks.errors.required">Material Grade is required</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-            </section>
-            <section class="add-prod-pg mx-3 mt-3">
-                <div class="">
-                    <div class="prof-form-bdy mb-5">
-                        <div class="row">
-                            <div class="col-12 col-lg-12">
-                                <h6 class="text-center">Upload Documents</h6>
-                            </div>
-                            <div class="col-12 col-lg-12">
-                                <div class="form-group text-center">
-                                    <a href="#" class="btn btn-primary">Upload LR <i class="fa fa-upload"
-                                            aria-hidden="true"></i></a>&nbsp;
-                                    <a href="#" class="btn btn-primary">Upload e-waybill <i class="fa fa-upload"
-                                            aria-hidden="true"></i></a>&nbsp;
-                                    <a href="#" class="btn btn-primary">Test Certificate <i class="fa fa-upload"
-                                            aria-hidden="true"></i></a>&nbsp;
-                                    <a href="#" class="btn btn-primary">e-Invoice <i class="fa fa-upload"
-                                            aria-hidden="true"></i></a>&nbsp;
-                                    <a href="#" class="btn btn-primary">Misc. Doc <i class="fa fa-upload"
-                                            aria-hidden="true"></i></a>
+                    </div>
+                </section>
+                <section class="add-prod-pg mx-3 mt-3">
+                    <div class="">
+                        <div class="prof-form-bdy mb-5">
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <h6 class="text-center">Upload Documents</h6>
+                                </div>
+                                <div class="col-12 col-lg-12">
+                                    <div class="form-group text-center">
+
+                                        <a type="file" class="btn btn-primary" (click)="fileLR.click()">Upload LR <i
+                                                class="fa fa-upload" aria-hidden="true"></i>
+                                            <input type="file" accept=".png, .jpg, .jpeg, .pdf" #fileLR hidden
+                                                (change)="onGetLrDoc($event)">
+                                        </a>&nbsp;
+
+
+                                        <a type="file" class="btn btn-primary" (click)="Ewaybill.click()">Upload e-waybill <i class="fa fa-upload"
+                                                aria-hidden="true"></i>
+                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #Ewaybill hidden
+                                                (change)="onGetEwaybillDoc($event)">
+                                            </a>&nbsp;
+
+                                        <a type="file" class="btn btn-primary" (click)="TestCertificate.click()">Test Certificate <i class="fa fa-upload"
+                                                aria-hidden="true"></i>
+                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #TestCertificate hidden
+                                                (change)="onGetTestCertificate($event)">
+                                            </a>&nbsp;
+
+                                        <a type="file" class="btn btn-primary" (click)="EInvoice.click()">e-Invoice <i class="fa fa-upload"
+                                                aria-hidden="true"></i>
+                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #EInvoice hidden
+                                                (change)="onGetEInvoice($event)">
+                                            </a>&nbsp;
+
+                                        <a type="file" class="btn btn-primary"  (click)="misDoc.click()">Misc. Doc <i class="fa fa-upload"
+                                                aria-hidden="true"></i>
+                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #misDoc hidden
+                                                (change)="onGetMisDoc($event)">
+                                            </a>
+
+                                        <!-- <div class="col-12 my-3">
+                                            <button href="javascript:;" type="submit"
+                                                class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i>
+                                                Submit</button>
+                                        </div> -->
+                                        <div class="add-btn-sec pt-2 pb-2 text-right mt-3">
+                                            <button class="btn btn-primary" type="submit"><i
+                                                class="fa fa-check"></i>Submit</button>&nbsp;
+                                            <button type="button" class="btn btn-danger">
+                                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                                          </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+        </form>
     </section>
 </div>
 <app-footer></app-footer>

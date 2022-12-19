@@ -428,16 +428,6 @@ export class PoComponent implements OnInit {
       this.spinner.hide();
     });
 
-    // Cam notification for PO
-    let userId = localStorage.getItem('USER_ID');
-    let salesNotiReq = {
-      "desc_no": this.po_id,
-      "user_id": userId,
-      "desc": 'PO has been generated',
-      "url_type": 'P'
-    }
-    this._product.camNotification(salesNotiReq).subscribe((res:any) => {
-    })
     let statusRequestKam = {
       "rfq_no": this.rfqNumber,
       "quote_closed": '1'
@@ -466,6 +456,17 @@ export class PoComponent implements OnInit {
     this._product.rfqStatusChange(rfqStatus).subscribe((res:any) => {
       this.spinner.hide();
     })
+
+        // Cam notification for PO
+        let userId = localStorage.getItem('USER_ID');
+        let salesNotiReq = {
+          "desc_no": this.po_id,
+          "user_id": userId,
+          "desc": 'PO has been generated',
+          "url_type": 'P'
+        }
+        this._product.camNotification(salesNotiReq).subscribe((res:any) => {
+        })
   };
 
   addItem(i: any) {

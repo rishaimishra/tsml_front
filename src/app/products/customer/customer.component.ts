@@ -163,7 +163,7 @@ export class CustomerComponent implements OnInit {
     this.getSubCategory(this.rfqNum);
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
-      misc_expense: ['', Validators.required],
+      misc_expense: [''],
       delivery_cost: ['', Validators.required],
       creditCoast: [''],
       interest_rate: [''],
@@ -813,12 +813,12 @@ export class CustomerComponent implements OnInit {
     } else {
       this.premiumPrice = false;
     };
-    if (misc_expense < miscExpense && misc_expense != 0) {
-      this.miscPrice = true;
-      priceValidator.push(2);
-    } else {
-      this.miscPrice = false;
-    };
+    // if (misc_expense < miscExpense && misc_expense != 0) {
+    //   this.miscPrice = true;
+    //   priceValidator.push(2);
+    // } else {
+    //   this.miscPrice = false;
+    // };
     if (delivery < deliveryCost && delivery != 0) {
       this.deliveryCost = true;
       priceValidator.push(3);
@@ -831,12 +831,12 @@ export class CustomerComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    if (Number(cam_discount) < _discount && _discount != 0) {
-      this.kamDiscount = true;
-      priceValidator.push(5);
-    } else {
-      this.kamDiscount = false;
-    };
+    // if (Number(cam_discount) < _discount && _discount != 0) {
+    //   this.kamDiscount = true;
+    //   priceValidator.push(5);
+    // } else {
+    //   this.kamDiscount = false;
+    // };
 
     this.priceLimit = priceValidator;
     const total = (bptPrice + misc_expense + delivery) - _discount;

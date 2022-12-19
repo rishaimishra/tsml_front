@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              text: 'Welcome to Customer Dashboard',
+              text: 'Welcome to Sales Manager Dashboard',
               showConfirmButton: false,
               timer: 1500
             })
@@ -95,7 +95,17 @@ export class LoginComponent implements OnInit {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              text: 'Welcome to Customer Dashboard',
+              text: 'Welcome to Plant Dashboard',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+          else if (res.data['user_type'] == 'OPT') {
+            this._router.navigate(['/dashboard/plant-dashboard']);
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              text: 'Welcome',
               showConfirmButton: false,
               timer: 1500
             })

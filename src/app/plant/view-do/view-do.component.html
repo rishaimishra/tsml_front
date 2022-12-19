@@ -9,8 +9,8 @@
     <section class="add-prod-pg">
        <div class="container">
           <div class="row">
-             <div class="col-12 text-right">
-                <a class="btn btn-sm btn-primary" href="do-entry.html">Add DO</a>
+             <div class="col-12 text-right" *ngIf="userByRole == 'PLANT'">
+                <b class="btn btn-sm btn-primary" type="button" (click)="onAdd();">Add DO</b>
              </div>
              <div class="col-12 mt-3">
                 <div class="cart-table">
@@ -20,50 +20,26 @@
                             <tr>
                                <th>SO No</th>
                                <th>SO Date</th>
-                               <th>SO Quantity</th>
+                               <th>SO Quantity (MT)</th>
                                <th>DO No.</th>
                                <th>DO Date</th>
-                               <th>DO Quantity</th>
+                               <th>DO Quantity (MT)</th>
                                <th>Customer</th>
+                               <th>Action</th>
                             </tr>
                          </thead>
                          <tbody>
-                            <tr>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td align="right"><button class="btn btn-sm btn-primary">View Details</button></td>
+                            <tr *ngFor="let item of soList">
+                               <!-- <td>{{item.so_no}}</td> -->
+                               <td>{{item.so_no}}</td>
+                               <td>{{item.so_date}}</td>
+                               <td>{{item.qty_cont}}</td>
+                               <td>{{item.do_no}}</td>
+                               <td>{{item.do_date}}</td>
+                               <td>{{item.do_quantity}}</td>
+                               <td>{{item.cus_name}}</td>
+                               <td><button class="btn btn-sm btn-primary" (click)="onView(item.do_id)">View Details</button></td>
                             </tr>
-                            <tr>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td align="right"><button class="btn btn-sm btn-primary">View Details</button></td>
-                            </tr>
-                            <tr>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td align="right"><button class="btn btn-sm btn-primary">View Details</button></td>
-                            </tr>
-                           <!--  <tr>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td>...</td>
-                               <td align="right"><button class="btn btn-sm btn-primary">Prepare SC</button></td>
-                            </tr> -->
                          </tbody>
                       </table>
                    </div>
