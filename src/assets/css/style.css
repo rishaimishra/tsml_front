@@ -4035,35 +4035,35 @@ small {
 }
 
 .bg-pink {
-    background-color: #ea4b8b !important;
+    background-color:#4FC3F7 !important;
 }
 
 .bg-info {
-    background: #7f59b0 !important;
+    background: #75cef7!important;
 }
 
 .bg-warning1 {
-    background: #63c5ea;
+    background:#0288D1;
 }
 
 .bg-success1 {
-    background: #fcb424;
+    background: #03A9F4;
 }
 
 .bg-info .mini-stat-icon i {
-    color: #7f59b0;
+    color: #75cef7;
 }
 
 .bg-warning1 .mini-stat-icon i {
-    color: #63c5ea;
+    color:#50a4f7;
 }
 
 .bg-pink .mini-stat-icon i {
-    color: #ea4b8b;
+    color: #70c0f9;
 }
 
 .bg-success1 .mini-stat-icon i {
-    color: #fcb424;
+    color: #50a4f7;
 }
 
 /* Float Shadow */
@@ -5067,3 +5067,8 @@ line-height: 1.5;
     background-color: #fff;
     border-radius: 0 !important;
 }
+.srch-plus{display: inline-block;
+height: 34px;
+width: 23%;}
+.srch-input{display: inline-block;
+width: 46%;}

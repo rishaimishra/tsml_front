@@ -39,27 +39,28 @@ export class ProductDetailsComponent implements OnInit {
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
-  userByrole:any;
-  userRole:any;
+  userByrole: any;
+  userRole: any;
   userType: boolean;
-  
+
   public quotation: any[] = [];
   public quotation_value: any[] = [];
   totalQty: any;
-  userAddr:any;
-  plantAddrr:any ;
-  showCity:any;
-  pickUptype:any;
-  locationState:any = [];
-  locationRes:any;
-  plantValueArray:any  = [];
-  deliveryDropList:any;
+  userAddr: any;
+  plantAddrr: any;
+  showCity: any;
+  pickUptype: any;
+  locationState: any = [];
+  locationRes: any;
+  plantValueArray: any = [];
+  deliveryDropList: any;
   prodcutSize: any = [];
-  removeCatArr:any = [];
-  categori:any = [];
-  plantSelectArr:any = [];
+  removeCatArr: any = [];
+  categori: any = [];
+  plantSelectArr: any = [];
   isTermCondition: boolean = false;
-  
+  disableItem: boolean = false;
+
   constructor(
     private _route: ActivatedRoute,
     private productService: ProductsService,
@@ -72,7 +73,7 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userByrole = localStorage.getItem('USER_TYPE');
-    if(this.userByrole == 'Kam') {
+    if (this.userByrole == 'Kam') {
       this.userRole = 'K';
       this.userType = false;
     } else {
@@ -95,6 +96,35 @@ export class ProductDetailsComponent implements OnInit {
     this.setFromData();
   };
 
+  delectDlvryMethode(event: any, schdl: any, i: any, y: any) {
+    let dlvrItem = event.target.value;
+    if (dlvrItem == 'Ex-Works') {
+      $('#pickupTyp_' + schdl + '_c').hide();
+      $('#picLable' + schdl).hide();
+    } else {
+      $('#pickupTyp_' + schdl + '_c').show();
+      $('#picLable' + schdl).show();
+    }
+    if (dlvrItem == 'DAP (Delivered at Place)') {
+      this.disableItem = true;
+      $('#pickup_from_' + schdl).prop('disabled', true);
+      $('#loca_' + schdl).prop('disabled', true);
+      $('#pickupTyp_' + schdl + '_a').prop('disabled', true);
+      $('#pickupTyp_' + schdl + '_b').prop('disabled', true);
+      $('#pickupTyp_' + schdl + '_c').prop('disabled', true);
+      this.selectedItem[i]['form_data'][y].plant = '';
+      this.selectedItem[i]['form_data'][y].pickup_type = '';
+      this.selectedItem[i]['form_data'][y].location = '';
+    } else {
+      this.disableItem = false;
+      $('#pickup_from_' + schdl).prop('disabled', false);
+      $('#loca_' + schdl).prop('disabled', false);
+      $('#pickupTyp_' + schdl + '_a').prop('disabled', false);
+      $('#pickupTyp_' + schdl + '_b').prop('disabled', false);
+      $('#pickupTyp_' + schdl + '_c').prop('disabled', false);
+    }
+  };
+
   getTotalQuantity(cat_id: any) {
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['form_data'];
@@ -107,10 +137,10 @@ export class ProductDetailsComponent implements OnInit {
     $("#qty_" + cat_id).val(this.totalQty);
 
   };
-  subCatSelect (event:any) {
+  subCatSelect(event: any) {
     this.spinner.show();
-    let apiUrl = '/sub_cat_details/'+event.target.value;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    let apiUrl = '/sub_cat_details/' + event.target.value;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success.') {
         this.prodcutSize = res.result['sizes'];
@@ -271,12 +301,12 @@ export class ProductDetailsComponent implements OnInit {
           "user_id": userId,
           "url_type": 'R'
         }
-        this._product.camNotification(camNotiReq).subscribe((res:any) => {
+        this._product.camNotification(camNotiReq).subscribe((res: any) => {
           console.log(res);
         })
 
         this.statusBar('RFQ' + rfqNumber)
-      } 
+      }
       if (res.result == 'Quote not created') {
         this._toaster.error(res.result);
         this.spinner.hide();
@@ -292,13 +322,13 @@ export class ProductDetailsComponent implements OnInit {
 
     });
   };
-  rfqEmailSent(rfqNumber:any) {
+  rfqEmailSent(rfqNumber: any) {
     let userId = localStorage.getItem('USER_ID');
     let rfqEmailReq = {
-      "rfq_no": 'RFQ'+rfqNumber,
+      "rfq_no": 'RFQ' + rfqNumber,
       "user_id": userId
     }
-    this._product.rfqSubmitedEmail(rfqEmailReq).subscribe((res:any) => {
+    this._product.rfqSubmitedEmail(rfqEmailReq).subscribe((res: any) => {
 
     })
   }
@@ -329,16 +359,16 @@ export class ProductDetailsComponent implements OnInit {
     this.selectedItem[i]['form_data'] = this.quotation;
     this.final_form_data();
   };
-  statusBar(rfqNumber:any) {
+  statusBar(rfqNumber: any) {
     let statusRequest = {
       "rfq_no": rfqNumber,
       "rfq_submited": '1'
     }
-    this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
-      console.log('status',res);
+    this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
+      console.log('status', res);
     })
-    this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-      console.log('status',res);
+    this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
+      console.log('status', res);
     })
   };
 
@@ -355,53 +385,51 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   date: any;
-  setFromData()
-  {
-    var today:any = new Date();
+  setFromData() {
+    var today: any = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
     if (dd < 10) {
-        dd = '0' + dd;
+      dd = '0' + dd;
     }
     if (mm < 10) {
-        mm = '0' + mm;
+      mm = '0' + mm;
     }
     // var today:any = dd + '/' + mm + '/' + yyyy;
-    var today:any = yyyy + '-' + mm + '-' + dd;
-            this.date = today;
-    
+    var today: any = yyyy + '-' + mm + '-' + dd;
+    this.date = today;
+
   };
 
   nxtDt: any;
-  setNxtData(event:any, i:any)
-  {
+  setNxtData(event: any, i: any) {
     let day = new Date(event.target.value);
-    let nextDay:any = new Date(day);
+    let nextDay: any = new Date(day);
     nextDay.setDate(day.getDate() + 1);
     var dd = nextDay.getDate();
     var mm = nextDay.getMonth() + 1;
     var yyyy = nextDay.getFullYear();
     if (dd < 10) {
-        dd = '0' + dd;
+      dd = '0' + dd;
     }
     if (mm < 10) {
-        mm = '0' + mm;
+      mm = '0' + mm;
     }
     // var today:any = dd + '/' + mm + '/' + yyyy;
-    var nextDt:any = yyyy + '-' + mm + '-' + dd;
-            this.nxtDt = nextDt;
-            $("#to_date_"+i).attr("min",this.nxtDt);
-   
+    var nextDt: any = yyyy + '-' + mm + '-' + dd;
+    this.nxtDt = nextDt;
+    $("#to_date_" + i).attr("min", this.nxtDt);
+
   };
 
-  getLocation () {
+  getLocation() {
     this.spinner.show();
     let userId = localStorage.getItem('USER_ID');
-    let apiUrl = '/user/get_user_address/'+userId;
+    let apiUrl = '/user/get_user_address/' + userId;
 
-    if(userId != '' || userId != null) {
-      this._product.getMethod(apiUrl).subscribe((res:any) => {
+    if (userId != '' || userId != null) {
+      this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.spinner.hide();
         this.showCity = res.result?.state;
         this.userAddr = res.result?.addressone + res.result?.addresstwo + res.result?.city + res.result?.state + res.result?.pincode;
@@ -413,11 +441,11 @@ export class ProductDetailsComponent implements OnInit {
     }
   };
 
-  plantSele(event:any, schdlNo:any) {
+  plantSele(event: any, schdlNo: any) {
     this.plantSelectArr[schdlNo] = event.target.value;
     let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
-    let apiUrl = '/user/get_plant_addr/'+ indx.id;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    let apiUrl = '/user/get_plant_addr/' + indx.id;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
@@ -426,35 +454,35 @@ export class ProductDetailsComponent implements OnInit {
     })
   };
 
-  selectPlant(event:any, schdleNo:any) {
+  selectPlant(event: any, schdleNo: any) {
     this.plantSelectArr[schdleNo] = null;
     this.spinner.show();
     let eventValue = event.target.value;
-    $('#pickupTyp_'+schdleNo).val(eventValue);
-    let apiUrl = '/user/get_plants_by_type/'+ eventValue;
+    $('#pickupTyp_' + schdleNo).val(eventValue);
+    let apiUrl = '/user/get_plants_by_type/' + eventValue;
     if (eventValue != '') {
-      this._product.getMethod(apiUrl).subscribe((res:any) => {
+      this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.spinner.hide();
         if (res.status == 1 && res.message == 'success') {
           this.plantAddrr = res.result;
         }
-        if (res.status == 'Token has Expired' || res.status =='Authorization Token not found') {
+        if (res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
           this._router.navigate(['/auth/login']);
           this.spinner.hide();
-        } 
+        }
       })
     }
   };
 
-  getDeliveryItem () {
-    this._product.getDeliveryMethod().subscribe((res:any) => {
+  getDeliveryItem() {
+    this._product.getDeliveryMethod().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
-      } 
+      }
     })
   };
-  subCategory:any;
-  getSubCategory(prodId:any,catId:any) {
+  subCategory: any;
+  getSubCategory(prodId: any, catId: any) {
     this.spinner.show();
     let sizeFilter = {
       product_id: prodId,
@@ -471,7 +499,7 @@ export class ProductDetailsComponent implements OnInit {
     })
   };
 
-  getCategoriDetails (productId:any, catId:any) {
+  getCategoriDetails(productId: any, catId: any) {
     let categoryFilter = {
       product_id: productId
     }
@@ -491,14 +519,14 @@ export class ProductDetailsComponent implements OnInit {
     this.isTermCondition = event.target.checked;
   };
 
-  removeCat(i:any) {
+  removeCat(i: any) {
     let indx = this.categori.findIndex((item: any) => item.id == i);
     if (indx !== -1) {
       this.categori.splice(indx, 1);
     }
   };
 
-  getCatNdProductId(prdId:any, catId:any) {
-    this.getSubCategory (prdId, catId);
+  getCatNdProductId(prdId: any, catId: any) {
+    this.getSubCategory(prdId, catId);
   }
 }

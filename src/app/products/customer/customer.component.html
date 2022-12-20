@@ -138,7 +138,7 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Delivery Method</label>
-                                                        <select [disabled]="userByrole == 'C'"
+                                                        <select [disabled]="userByrole == 'C' || formData.delivery == 'DAP (Delivered at Place)'" (change)="delectDlvryMethode($event, formData.schedule_no, i,y)"
                                                             #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                                                             name="delivery_{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" required>
@@ -161,22 +161,22 @@
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_a"
                                                                 name="contact{{ formData.schedule_no }}_a" value="PLANT"
-                                                                class="mr-1" />
+                                                                class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
                                                             <label for="contactChoice1">Plant</label>&nbsp;
                                                             <input type="radio" id="contactChoice2"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_b"
                                                                 name="contact{{ formData.schedule_no }}_b" value="DEPOT"
-                                                                class="mr-1" />
+                                                                class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
                                                             <label for="contactChoice2">Depot</label>&nbsp;
                                                             <input type="radio" id="contactChoice3"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_c"
                                                                 name="contact{{ formData.schedule_no }}_c" value="PORT"
-                                                                class="mr-1" />
+                                                                class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
                                                             <label for="contactChoice3">Port</label>
                                                         </label>
-                                                        <select [disabled]="userByrole == 'C'" #pickUpfrom="ngModel"
+                                                        <select [disabled]="userByrole == 'C' || formData.delivery == 'DAP (Delivered at Place)'" id="pickup_from_{{formData.schedule_no}}" #pickUpfrom="ngModel"
                                                             (change)="plantSele($event, formData.schedule_no)"
                                                             [(ngModel)]="formData.plant"
                                                             name="plant_{{ formData.schedule_no }}"
@@ -192,8 +192,8 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Location</label>
-                                                        <select class="form-control form-control-sm" #location="ngModel"
-                                                            [(ngModel)]="formData.location"
+                                                        <select class="form-control form-control-sm" id="loca_{{formData.schedule_no}}" #location="ngModel"
+                                                            [(ngModel)]="formData.location" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"
                                                             name="location_{{ formData.schedule_no }}" required>
                                                             <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
                                                                 <ng-template #newLocation>
@@ -283,8 +283,8 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                         <label for=""
-                                                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant, i, y)">Tsml's
-                                                            price
+                                                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,
+                                                            productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery, i, y)">Tsml's price
                                                             <span *ngIf="!userType && qoutestId != 0 && qoutestId != 2"
                                                                 class="price-info price-info0" data-toggle="modal"
                                                                 data-target="#addPrice"><i
@@ -581,10 +581,11 @@
                                             {{productPrice?.price_premium}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="price_premium"
-                                            [ngClass]="{ 'is-invalid': f.price_premium.errors && f.price_premium.touched}"
-                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="price_premium{{schldId}}" value="" placeholder="">
+                                    <td>
+                                        <input type="number" formControlName="price_premium"
+                                        [ngClass]="{ 'is-invalid': f.price_premium.errors && f.price_premium.touched}"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="price_premium{{schldId}}" value="" placeholder="">
                                         <small class="addClass" *ngIf="premiumPrice">Price Premium should not be less
                                             than {{productPrice?.price_premium}}</small>
                                     </td>
@@ -597,12 +598,10 @@
                                             {{productPrice?.delivery_cost}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="delivery_cost"
-                                            [ngClass]="{ 'is-invalid': f.delivery_cost.errors && f.delivery_cost.touched}"
+                                    <td><input type="number" [readOnly]="isDap" formControlName="delivery_cost"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="delivery{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="deliveryCost">Delivery cost should not be less
-                                            than {{productPrice?.delivery_cost}}</small>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -665,12 +664,15 @@
                                             {{productPrice?.cam_discount}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="cam_discount"
-                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                    <td>
+                                        <input type="number" formControlName="cam_discount"
+                                            class="form-control form-control-sm form-control srch-input form-control-sm-sm wid-150"
                                             id="_discount{{schldId}}">
-                                        <!-- <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
-                                            than
-                                            {{productPrice?.cam_discount}}</small> -->
+                                        <select  name="status" (change)="selectPlusMins($event)" class="form-control col-lg-3 rm06 ng-pristine ng-valid ng-touched srch-plus">
+                                            <option value="+">+</option>
+                                            <option value="-">-</option>
+                                        </select>
+                                       
                                     </td>
                                 </tr>
                                 <tr>
@@ -683,7 +685,7 @@
                                     <td><input type="number" readonly formControlName="totalSum"
                                             [ngClass]="{ 'is-invalid': f.totalSum.errors && f.totalSum.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_total{{schldId}}" placeholder="" value="{{Totalsum1}}"></td>
+                                            id="_total{{schldId}}" placeholder="" value="{{totalValue}}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Percentage difference between BPT & Final Price (%)</td>
@@ -705,7 +707,7 @@
                         <button class="btn btn-primary" [disabled]="userType"
                             (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i>
                             Ok</button>&nbsp;
-                        <button type="button" class="btn btn-danger" (click)="cancelprice()"><i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" (click)="cancelprice()"><i class="fa fa-times"></i>
                             Cancel</button>
                     </div>
                 </div>

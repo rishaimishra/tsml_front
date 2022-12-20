@@ -111,16 +111,14 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Delivery Method</label>
-                          <select #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
+                          <select #dlvrMethodInput="ngModel" (change)="delectDlvryMethode($event, formData.schedule_no, i,y)" [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
-                            <!-- <option value="Delivery At Premises">Delivery At Premises</option>
-                            <option value="Ex-Works">Ex-Works</option> -->
                           </select>
-                          <small
+                          <!-- <small
                             *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
-                            class="inputValidation">Select delivery method</small>
+                            class="inputValidation">Select delivery method</small> -->
                         </div>
                       </div>
 
@@ -128,15 +126,15 @@
                         <div class="form-group">
                           <label for="">Pickup From</label>&nbsp;
                           <label for="" (change)="selectPlant($event, formData.schedule_no)" >
-                            <input type="radio" id="contactChoice1" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT" class="mr-1" />
+                            <input type="radio"  [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT" class="mr-1" />
                             <label for="contactChoice1">Plant</label>&nbsp;
-                            <input type="radio" id="contactChoice2" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT" class="mr-1"/>
+                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT" class="mr-1"/>
                             <label for="contactChoice2">Depot</label>&nbsp;
-                            <input type="radio" id="contactChoice3" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
-                            <label for="contactChoice3">Port</label>
+                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
+                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Port</label>
 
                           </label>
-                          <select #pickUpfrom="ngModel" [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
+                          <select #pickUpfrom="ngModel" id="pickup_from_{{formData.schedule_no}}" [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
                             name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option selected *ngIf="plantSelectArr[formData.schedule_no] != null; else allPlant">{{plantSelectArr[formData.schedule_no]}}</option>
                             <ng-template #allPlant>
@@ -144,19 +142,18 @@
                               <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
                             </ng-template>
                           </select>
-                          <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
-                            class="inputValidation">Pickup from is required</small>
+                          <!-- <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
+                            class="inputValidation">Pickup from is required</small> -->
                         </div>
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Location</label>
-                          <select class="form-control form-control-sm" #location="ngModel"
+                          <select id="loca_{{formData.schedule_no}}" class="form-control form-control-sm" #location="ngModel"
                             [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
                             <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
                           </select>
-                          <small *ngIf="location.invalid && (location.dirty || location.touched || submit)"
-                            class="inputValidation">Location is required</small>
+                          
                         </div>
                       </div>
 

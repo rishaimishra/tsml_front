@@ -110,6 +110,7 @@ export class CustomerComponent implements OnInit {
   countSche:any;
   rfqUserId:any;
   pickupType:any;
+  afterDiscount:any;
   
 
   sub_catId :any;
@@ -118,6 +119,12 @@ export class CustomerComponent implements OnInit {
   plant_location :any;
   compPrice:any;
   tsmlPriceArr: any = [];
+  plusMinus:any;
+  daysVal:any;
+  getDays:any;
+  daysCal:any;
+  totalValue:any;
+  isDap: boolean = false;
 
 
   @ViewChild("remarksModel")
@@ -164,10 +171,10 @@ export class CustomerComponent implements OnInit {
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
       misc_expense: [''],
-      delivery_cost: ['', Validators.required],
+      delivery_cost: [''],
       creditCoast: [''],
       interest_rate: [''],
-      cam_discount: ['', Validators.required],
+      cam_discount: [''],
       totalSum: [''],
       finalAmt: [''],
     })
@@ -255,7 +262,6 @@ export class CustomerComponent implements OnInit {
         "remarks": this.remarksData
       }
       this._product.remarksDelet(remarksReq).subscribe ((res:any) => {
-        console.log(res);
         Swal.fire(
           'Canceled!',
           'Your Item has been Canceled.',
@@ -556,10 +562,8 @@ export class CustomerComponent implements OnInit {
           "under_negotiation": '1'
         }
         this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-          console.log('status',res);
         })
         this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
-          console.log('status',res);
         })
       }
 
@@ -570,13 +574,6 @@ export class CustomerComponent implements OnInit {
       if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
         if (userTyp == 'Kam') {
           this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-            // Swal.fire({
-            //   position: 'center',
-            //   icon: 'success',
-            //   text: 'Tentative Date Added successully',
-            //   showConfirmButton: false,
-            //   timer: 1500
-            // })
           })
           
           if(qouteSt != 9) {
@@ -603,7 +600,6 @@ export class CustomerComponent implements OnInit {
               "approve_pending_from_sales": '1'
             }
             this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-              console.log('status',res);
             })
           
         }
@@ -624,7 +620,6 @@ export class CustomerComponent implements OnInit {
         "kam_id": userId
       }
       this._product.confirmRfqEmail(confimerRfq).subscribe((res:any) => {
-        console.log(res);
       })
     } 
     
@@ -642,7 +637,6 @@ export class CustomerComponent implements OnInit {
       }
 
       this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-        console.log('status',res);
       })
     }
   
@@ -698,7 +692,7 @@ export class CustomerComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant:any,dlvr:any, i:any, y:any) {
     this.firstIndex = i;
     this.lastIndex = y;
     this.sub_catId = subCatId;
@@ -707,6 +701,20 @@ export class CustomerComponent implements OnInit {
     this.plant_location = location;
     this.pickupType = plant;
 
+    if (dlvr == 'DAP (Delivered at Place)') {
+      this.isDap = true;
+    } else {
+      this.isDap = false;
+    }
+    //
+    // if (dlvrItem == 'Ex-Works') {
+    //   $('#pickupTyp_' + schdl + '_c').hide();
+    //   $('#picLable' + schdl).hide();
+    // } else {
+    //   $('#pickupTyp_' + schdl + '_c').show();
+    //   $('#picLable' + schdl).show();
+    // }
+    //
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
@@ -722,14 +730,15 @@ export class CustomerComponent implements OnInit {
       "size": size,
       "sub_cat_id": subCatId
     }
+    // - Number(this.productPrice.cam_discount) + Number(this.productPrice.misc_expense)
+
     this._product.priceCalculation(price).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
-      Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
-
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost) ;
+      
       if (this.productPrice['price_premium_sing'] == '-') {
         this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
       }
@@ -739,29 +748,43 @@ export class CustomerComponent implements OnInit {
       else {
         this.afterPrePrice = backendTotal;
       }
+
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       const backDays = backendDaysCount.toFixed(6);
       this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
 
+
       if (this.days == 0) {
-        this.Totalsum = this.afterPrePrice;
+        this.getDays = this.afterPrePrice;
       } 
       else if (this.days == 30){
-        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-        this.Totalsum = finalCost.toFixed(2);
+        let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+        this.getDays = finalCost.toFixed(2);
       }
       else if (this.days == 45){
-        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-        this.Totalsum = finalCost.toFixed(2);
+        let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+        this.getDays = finalCost.toFixed(2);
+      }
 
+      let totl =  Number(this.getDays) + Number(this.productPrice.misc_expense);
+
+      if (this.plusMinus == '-') {
+        this.Totalsum =  totl - Number(this.productPrice.cam_discount);
+      }
+      else {
+        this.Totalsum = totl + Number(this.productPrice.cam_discount);
       }
     })
   };
 
+  selectPlusMins(event:any) {
+    this.plusMinus = event.target.value;
+  };
+
   selectDay(event: any, priceSign:any) {
     this.days = event.target.value;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
       if (priceSign == '-') {
       this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
       }
@@ -771,22 +794,33 @@ export class CustomerComponent implements OnInit {
       else {
         this.afterPrePrice = backendTotal;
       }
+
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       const backDays = backendDaysCount.toFixed(6);
       this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
 
     if (this.days == 0) {
-      this.Totalsum = this.afterPrePrice;
+      this.daysVal = this.afterPrePrice;
     } 
     else if (this.days == 30){
-      let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-      this.Totalsum = finalCost.toFixed(2);
+      let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+      this.daysVal = finalCost.toFixed(2);
     }
     else if (this.days == 45){
       let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
-      this.Totalsum = finalCost.toFixed(2);
+      this.daysVal = finalCost.toFixed(2);
     }
+
+    let misc = Number(this.daysVal) + Number(this.productPrice.misc_expense);
+
+    if (this.plusMinus == '-') {
+      this.Totalsum =  misc - Number(this.productPrice.cam_discount);
+      }
+      else {
+        this.Totalsum = misc + Number(this.productPrice.cam_discount);
+    }
+
   };
 
   calculatePrice(id: any) {
@@ -813,12 +847,7 @@ export class CustomerComponent implements OnInit {
     } else {
       this.premiumPrice = false;
     };
-    // if (misc_expense < miscExpense && misc_expense != 0) {
-    //   this.miscPrice = true;
-    //   priceValidator.push(2);
-    // } else {
-    //   this.miscPrice = false;
-    // };
+
     if (delivery < deliveryCost && delivery != 0) {
       this.deliveryCost = true;
       priceValidator.push(3);
@@ -831,15 +860,10 @@ export class CustomerComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    // if (Number(cam_discount) < _discount && _discount != 0) {
-    //   this.kamDiscount = true;
-    //   priceValidator.push(5);
-    // } else {
-    //   this.kamDiscount = false;
-    // };
 
     this.priceLimit = priceValidator;
-    const total = (bptPrice + misc_expense + delivery) - _discount;
+    const total = (bptPrice + delivery);
+    
       //
         if (this.productPrice['price_premium_sing'] == '-') {
         this.userAfterPrePrice =   total - Number(price_premium);
@@ -851,25 +875,40 @@ export class CustomerComponent implements OnInit {
          this.userAfterPrePrice = total;
         }
     //
+
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     const totalDays = daysCount.toFixed(6);
     this.daysCostCountCustomer = (this.userAfterPrePrice * Number(totalDays)).toFixed(2);
+    // let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum )* 100;
+    // this.percentPrice = totalPercent.toFixed(2);
 
-    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
-    this.percentPrice = totalPercent.toFixed(2);
+
     if (this.days == 0) {
-      this.Totalsum1 = this.userAfterPrePrice;
+      this.daysCal = this.userAfterPrePrice;
     } 
     else if (this.days == 30){
-      let finalCost = (Number(this.Totalsum1) + Number(this.daysCostCountCustomer));
-      this.Totalsum1 = finalCost.toFixed(2);
+      let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
+      this.daysCal = finalCost.toFixed(2);
     }
     else if (this.days == 45){
       let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
-      this.Totalsum1 = finalCost.toFixed(2);
+      this.daysCal = finalCost.toFixed(2);
     }
-        
+
+    let misc = Number(this.daysCal) + Number(misc_expense);
+
+    if (this.plusMinus == '-') {
+      this.totalValue =  misc - Number(_discount);
+      }
+      else if (this.plusMinus == '+'){
+        this.totalValue = misc + Number(_discount);
+      }
+      else {
+        this.totalValue = misc + Number(_discount);
+      }
+    let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum )* 100;
+    this.percentPrice = totalPercent.toFixed(2);
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.rfqNum;
@@ -948,7 +987,6 @@ export class CustomerComponent implements OnInit {
           "components": componentArr
         }
         this.tsmlPriceArr.push(compPriceArr);
-        console.log('compPriceArr',compPriceArr);
       }
   
     })
@@ -1075,7 +1113,6 @@ export class CustomerComponent implements OnInit {
   getStatusCount() {
     let apiUrl = '/user/get_count_sche/'+this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
-      console.log(res);
       if (res.status == 1 && res.message == 'success') {
         this.countSche = res.result;
       }
@@ -1087,4 +1124,31 @@ export class CustomerComponent implements OnInit {
       this.compPrice = res.result;
     })
   }
+
+  delectDlvryMethode(event: any, schdl: any, i: any, y: any) {
+    let dlvrItem = event.target.value;
+    if (dlvrItem == 'Ex-Works') {
+      $('#pickupTyp_' + schdl + '_c').hide();
+      $('#picLable' + schdl).hide();
+    } else {
+      $('#pickupTyp_' + schdl + '_c').show();
+      $('#picLable' + schdl).show();
+    }
+    if (dlvrItem == 'DAP (Delivered at Place)') {
+      $('#pickup_from_' + schdl).prop('disabled', true);
+      $('#loca_' + schdl).prop('disabled', true);
+      $('#pickupTyp_' + schdl + '_a').prop('disabled', true);
+      $('#pickupTyp_' + schdl + '_b').prop('disabled', true);
+      $('#pickupTyp_' + schdl + '_c').prop('disabled', true);
+      this.selectedItem[i]['form_data'][y].plant = '';
+      this.selectedItem[i]['form_data'][y].pickup_type = '';
+      this.selectedItem[i]['form_data'][y].location = '';
+    } else {
+      $('#pickup_from_' + schdl).prop('disabled', false);
+      $('#loca_' + schdl).prop('disabled', false);
+      $('#pickupTyp_' + schdl + '_a').prop('disabled', false);
+      $('#pickupTyp_' + schdl + '_b').prop('disabled', false);
+      $('#pickupTyp_' + schdl + '_c').prop('disabled', false);
+    }
+  };
 }
