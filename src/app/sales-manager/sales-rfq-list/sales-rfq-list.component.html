@@ -48,13 +48,13 @@
                                  <td *ngIf="rfqItem?.kam_status == 8">{{rfqItem?.quantity}}</td>
 
                                  <td *ngIf="rfqItem?.kam_status == 8">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
+                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor css-tooltip-top color-blue meet-rvw uu0" aria-hidden="true"><span>Waiting for sales response</span></i>
                                  </td>
                                  <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
                                  <td *ngIf="rfqItem?.kam_status == 8">
                                     <div class="btn-edt-del pointerTab">
-                                       <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status)"
-                                          data-toggle="tooltip" data-placement="top" title="Go for price negotiation">
+                                       <a class="edt-btn btn-primary2 pointer" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status)"
+                                          data-toggle="tooltip" data-placement="top" title="Go for action">
                                           <i class="fa fa-eye" aria-hidden="true"></i></a>
                                     </div>
                                  </td>

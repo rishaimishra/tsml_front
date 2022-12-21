@@ -92,18 +92,18 @@ export class RegisterComponent implements OnInit {
 
   mobile: any;
   haveOtp: boolean = true;
-  emailId:any;
-  password:any;
-  gstNum:any;
-  orgPan:any;
-  orgName:any;
-  orgAddrs:any;
-  linkedAddr:any;
-  gstNumber:any;
+  emailId: any;
+  password: any;
+  gstNum: any;
+  orgPan: any;
+  orgName: any;
+  orgAddrs: any;
+  linkedAddr: any;
+  gstNumber: any;
   panDate: any;
-  gstDate:any;
-  formDdate:any;
-  tcsDate:any;
+  gstDate: any;
+  formDdate: any;
+  tcsDate: any;
 
   invildForm: boolean = true;
   addressProof: boolean = false;
@@ -127,10 +127,10 @@ export class RegisterComponent implements OnInit {
   shiptingForm: FormGroup;
   arr: FormArray;
   shiptArr: FormArray;
-  billingAdd:any = [];
-  shiptingAdd:any = [];
-  billGstNum:any;
-  shipGst:any;
+  billingAdd: any = [];
+  shiptingAdd: any = [];
+  billGstNum: any;
+  shipGst: any;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High' },
@@ -162,9 +162,7 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService,
     private _spinner: NgxSpinnerService,
     private productService: ProductsService
-  ) {
-
-  }
+  ) { }
 
   get ff() { return this.addressForm.controls; }
   get t() { return this.f.arr as FormArray; }
@@ -173,7 +171,7 @@ export class RegisterComponent implements OnInit {
   get at() { return this.sf.shiptArr as FormArray; }
 
   getControl(item: AbstractControl): FormControl { return item as FormControl; }
-  
+
   get f(): { [key: string]: AbstractControl } {
     return this.addressForm.controls;
   };
@@ -183,14 +181,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.addressForm = this._fb.group({
-      credentials: this._fb.array([this.createItem('','','','','','')])
+      credentials: this._fb.array([this.createItem('', '', '', '', '', '', '')])
     })
     // Shipting Form
     this.shiptingForm = this._fb.group({
-      shipping: this._fb.array([this.createShiptItem('','','','','','')])
+      shipping: this._fb.array([this.createShiptItem('', '', '', '', '', '', '')])
     })
   }
-  createItem(gstin:any,state:any,city:any,addrOne:any,addrTwo:any,pincode:any) {
+  createItem(gstin: any, state: any, city: any, addrOne: any, addrTwo: any, pincode: any, company: any) {
     return this._fb.group({
       addressone: [addrOne],
       gstin: [gstin],
@@ -198,16 +196,18 @@ export class RegisterComponent implements OnInit {
       addresstwo: [addrTwo],
       city: [city],
       state: [state],
+      company_name: [company],
       pincode: [pincode],
     })
   };
 
-  createShiptItem(gstin:any,state:any,city:any,addrOne:any,addrTwo:any,pincode:any) {
+  createShiptItem(gstin: any, state: any, city: any, addrOne: any, addrTwo: any, pincode: any, company: any) {
     return this._fb.group({
       addressone: [addrOne],
       gstin: [gstin],
       billing: [''],
       addresstwo: [addrTwo],
+      company_name: [company],
       city: [city],
       state: [state],
       pincode: [pincode],
@@ -216,7 +216,7 @@ export class RegisterComponent implements OnInit {
 
   addItem() {
     this.billingAdd = this.addressForm.controls.credentials as FormArray;
-    this.billingAdd.push (this._fb.group({
+    this.billingAdd.push(this._fb.group({
       addressone: [''],
       gstin: [''],
       billing: [''],
@@ -230,7 +230,7 @@ export class RegisterComponent implements OnInit {
 
   addShitpItem() {
     this.shiptingAdd = this.shiptingForm.controls.shipping as FormArray;
-    this.shiptingAdd.push (this._fb.group({
+    this.shiptingAdd.push(this._fb.group({
       addressone: [''],
       gstin: [''],
       billing: [''],
@@ -239,7 +239,7 @@ export class RegisterComponent implements OnInit {
       state: [''],
       pincode: [''],
     }))
-    console.log('shipi',this.shiptingAdd.value);
+    console.log('shipi', this.shiptingAdd.value);
   };
 
   // saveAddr() {
@@ -696,113 +696,116 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    let apiUrl = '/gst_details_dummy/'+this.gstNum;
-    this.productService.getMethod(apiUrl).subscribe((res: any) => {
+    // let apiUrl = '/gst_details_dummy/'+this.gstNum;
+    // let apiUrl1 = '/gst_details_dummy_new';
+    this.productService.getMjGstIn(this.gstNum).subscribe((res: any) => {
       this._spinner.hide();
-          this._spinner.hide();
-          this.toastr.success(res.message);
-          const withoutFirstAndLast = res.data.gstin.slice(2, -3);
-          let state = res.data.pradr.addr.stcd;
-          let city = res.data.pradr.addr.dst;
-          let pincode = res.data.pradr.addr.pncd;
-          let addrOne = res.data.pradr.addr.bnm;
-          let addrTwo = res.data.pradr.addr.st;
-          let gstin = res.data.gstin;
-          this.linkedAddr = res.data.stj;
-          this.orgAddrs = res.data.pradr.addr.stcd;
-          this.orgName = res.data.lgnm;
-          this.orgPan = withoutFirstAndLast;
-          this.gstNumber = res.data.gstin;
-          
-          this.addressForm = this._fb.group({
-            credentials: this._fb.array([])
-          })
-          this.billingAdd = this.addressForm.get('credentials') as FormArray;
-          this.billingAdd.push(this.createItem(gstin,state,city,addrOne,addrTwo,pincode));
+      this.toastr.success(res.message);
+      console.log('reess', res);
+      const withoutFirstAndLast = res.data.gstin.slice(2, -3);
+      let state = res.data.pradr.addr.stcd;
+      let city = res.data.pradr.addr.dst;
+      let pincode = res.data.pradr.addr.pncd;
+      let addrOne = res.data.pradr.addr.bnm;
+      let addrTwo = res.data.pradr.addr.st;
+      let gstin = res.data.gstin;
+      this.linkedAddr = res.data.stj;
+      this.orgAddrs = res.data.pradr.addr.stcd;
+      this.orgName = res.data.tradeNam;
+      this.orgPan = withoutFirstAndLast;
+      this.gstNumber = res.data.gstin;
 
-          // shipping addr
-          this.shiptingForm = this._fb.group({
-            shipping: this._fb.array([])
-          })
-          this.shiptingAdd = this.shiptingForm.get('shipping') as FormArray;
-          this.shiptingAdd.push(this.createShiptItem(gstin,state,city,addrOne,addrTwo,pincode));
-
-        if (res.flag == false) {
-          this._spinner.hide();
-          this.toastr.error(res.message);
-        }
-      }, err => {
-        console.log(err);
-        this._spinner.hide();
+      this.addressForm = this._fb.group({
+        credentials: this._fb.array([])
       })
-    
+      this.billingAdd = this.addressForm.get('credentials') as FormArray;
+      this.billingAdd.push(this.createItem(gstin, state, city, addrOne, addrTwo, pincode, this.orgName));
+
+      // shipping addr
+      this.shiptingForm = this._fb.group({
+        shipping: this._fb.array([])
+      })
+      this.shiptingAdd = this.shiptingForm.get('shipping') as FormArray;
+      this.shiptingAdd.push(this.createShiptItem(gstin, state, city, addrOne, addrTwo, pincode, this.orgName));
+
+      if (res.flag == false) {
+        this._spinner.hide();
+        this.toastr.error(res.message);
+      }
+    }, err => {
+      console.log(err);
+      this._spinner.hide();
+    })
+
   };
-  gstNumbr(event:any) {
+  gstNumbr(event: any) {
     this.billGstNum = event.target.value;
   };
 
-  billGstin(i:any) {
+  billGstin(i: any) {
     this._spinner.show;
-    let apiUrl = '/gst_details_dummy/'+this.billGstNum;
-    this.productService.getMethod(apiUrl).subscribe((res: any) => {
-          this._spinner.hide();
-          this.toastr.success(res.message);
-          let state = res.data.pradr.addr.stcd;
-          let city = res.data.pradr.addr.dst;
-          let pincode = res.data.pradr.addr.pncd;
-          let addrOne = res.data.pradr.addr.bnm;
-          let addrTwo = res.data.pradr.addr.st;
-          let gstin = res.data.gstin;
-          let companyName = res.data.lgnm;
-          // $('#adr_'+i).val(addrOne);
-          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('company_name').patchValue(companyName);
-          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
-          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addresstwo').patchValue(addrTwo);
-          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
-          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('state').patchValue(state);
-          ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('pincode').patchValue(pincode);
-        if (res.flag == false) {
-          this._spinner.hide();
-          this.toastr.error(res.message);
-        }
-      }, err => {
-        console.log(err);
+    // let apiUrl = '/gst_details_dummy/' + this.billGstNum;
+    this.productService.getMjGstIn(this.billGstNum).subscribe((res: any) => {
+      this._spinner.hide();
+      this.toastr.success(res.message);
+      console.log(res);
+      let state = res.data.pradr.addr.stcd;
+      let city = res.data.pradr.addr.dst;
+      let pincode = res.data.pradr.addr.pncd;
+      let addrOne = res.data.pradr.addr.bnm;
+      let addrTwo = res.data.pradr.addr.st;
+      let gstin = res.data.gstin;
+      let companyName = res.data.lgnm;
+      // $('#adr_'+i).val(addrOne);
+      ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('company_name').patchValue(companyName);
+      ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
+      ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addresstwo').patchValue(addrTwo);
+      ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
+      ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('state').patchValue(state);
+      ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('pincode').patchValue(pincode);
+      if (res.flag == false) {
         this._spinner.hide();
-      })
+        this.toastr.error(res.message);
+      }
+    }, err => {
+      console.log(err);
+      this._spinner.hide();
+    })
   };
 
-  shipGstNum(event:any) {
+  shipGstNum(event: any) {
     this.shipGst = event.target.value;
   };
 
-  shipGstin(i:any) {
+  shipGstin(i: any) {
     this._spinner.show();
-    let apiUrl = '/gst_details_dummy/'+this.shipGst;
-    this.productService.getMethod(apiUrl).subscribe((res: any) => {
-          this._spinner.hide();
-          this.toastr.success(res.message);
-          let state = res.data.pradr.addr.stcd;
-          let city = res.data.pradr.addr.dst;
-          let pincode = res.data.pradr.addr.pncd;
-          let addrOne = res.data.pradr.addr.bnm;
-          let addrTwo = res.data.pradr.addr.st;
-          let gstin = res.data.gstin;
-          let company = res.data.lgnm;
-          // $('#adr_'+i).val(addrOne);
-          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('company_name').patchValue(company);
-          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
-          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addresstwo').patchValue(addrTwo);
-          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
-          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('state').patchValue(state);
-          ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('pincode').patchValue(pincode);
-        if (res.flag == false) {
-          this._spinner.hide();
-          this.toastr.error(res.message);
-        }
-      }, err => {
-        console.log(err);
+    // let apiUrl = '/gst_details_dummy/' + this.shipGst;
+    this.productService.getMjGstIn(this.shipGst).subscribe((res: any) => {
+      this._spinner.hide();
+      console.log(res);
+      this.toastr.success(res.message);
+      let state = res.data.pradr.addr.stcd;
+      let city = res.data.pradr.addr.dst;
+      let pincode = res.data.pradr.addr.pncd;
+      let addrOne = res.data.pradr.addr.bnm;
+      let addrTwo = res.data.pradr.addr.st;
+      let gstin = res.data.gstin;
+      let company = res.data.lgnm;
+      // $('#adr_'+i).val(addrOne);
+      ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('company_name').patchValue(company);
+      ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
+      ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addresstwo').patchValue(addrTwo);
+      ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
+      ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('state').patchValue(state);
+      ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('pincode').patchValue(pincode);
+      if (res.flag == false) {
         this._spinner.hide();
-      })
+        this.toastr.error(res.message);
+      }
+    }, err => {
+      console.log(err);
+      this._spinner.hide();
+    })
   }
 
   isTdsApplicable(event: any) {
@@ -894,26 +897,26 @@ export class RegisterComponent implements OnInit {
 
     this._auth.register(fileData).subscribe((res: any) => {
       this._spinner.hide();
-        if (res.success) {
-          Swal.fire({
-            position: 'top',
-            icon: 'success',
-            text: 'Register Successfully',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          this._router.navigate(['/auth/login']);
-          this.registerForm.reset();
-          this._spinner.hide();
-        }
-        if (res.error.validation?.email) {
-          this.toastr.error(res.error.validation.email);
-          this._spinner.hide();
-        } else {
-          this.toastr.error('Something went wrong !');
-          this._spinner.hide();
-        }
-      },
+      if (res.success) {
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          text: 'Register Successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this._router.navigate(['/auth/login']);
+        this.registerForm.reset();
+        this._spinner.hide();
+      }
+      if (res.error.validation?.email) {
+        this.toastr.error(res.error.validation.email);
+        this._spinner.hide();
+      } else {
+        this.toastr.error('Something went wrong !');
+        this._spinner.hide();
+      }
+    },
       (error) => {
         this.toastr.error('', error);
         this._spinner.hide();

@@ -16,7 +16,6 @@
             <div class="container">
                 <div class="prod-list-detl">
                     <!-- List start -->
-
                     <div class="demo" *ngFor="let productData of selectedItem; let i = index">
                         <div id="accordion" class="accordion accordion--"
                             *ngIf="isSchduleArr[i] == 3 || isSchduleArr[i] == 0">
@@ -25,7 +24,7 @@
                                     [attr.data-target]="'#collapseOne'+i">
                                     <div class="rowBox">
                                         <div class="oodr-info-03">
-                                            <span>Customer Name {{isSchduleArr[i]}}</span>
+                                            <span>Customer Name</span>
                                             <p>{{productData.user_name}}</p>
                                         </div>
                                         <div class="oodr-info-03">
@@ -38,12 +37,6 @@
                                                 <p>{{rfqNum}}</p>
                                             </em>
                                         </div>
-                                        <!-- <div class="oodr-info-01">
-                                            <em>
-                                                <span>Product Name</span>
-                                                <p></p>
-                                            </em>
-                                        </div> -->
                                         <div class="oodr-info-01">
                                             <em>
                                                 <span>RFQ Date</span>

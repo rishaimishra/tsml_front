@@ -225,6 +225,7 @@ export class CustomerComponent implements OnInit {
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
+
           form_data_array.forEach(element => {
             if (element.quote_status == 3) {
               this.isSchduleArr.push(element?.quote_status);
@@ -232,6 +233,7 @@ export class CustomerComponent implements OnInit {
             else {
               this.isSchduleArr.push(element?.quote_status);
             }
+
           });
         }
       }
@@ -919,10 +921,13 @@ export class CustomerComponent implements OnInit {
 
 
   priceSave(id: any, firstIndx: any, lastIndx: any) {
-    if (!this.priceForm.valid) {
-      this.submitted = true;
-      return;
-    };
+    // if (!this.priceForm.valid) {
+    //   this.submitted = true;
+    //   return;
+    // };
+
+    this.selectedItem[firstIndx].schedule[lastIndx].kam_price = this.totalValue;
+
     let plantReqst = {
       "data": this.pickupType
     }
@@ -990,13 +995,11 @@ export class CustomerComponent implements OnInit {
       }
   
     })
-
     $("#camsPrice" + id).val(this.Totalsum1);
     $("#addPrice").hide();
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
     $(".kamClass").keypress();
-    this.selectedItem[firstIndx].schedule[lastIndx].kam_price = this.Totalsum1;
   };
   messageBox(shcdlNo:any) {
     this.spinner.show();

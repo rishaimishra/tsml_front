@@ -21,6 +21,9 @@ export class HomeComponent implements OnInit {
   allNews: any;
   menuId: any;
   isLogin:boolean;
+  categoryOne:any;
+  categoryTwo:any;
+  imageUrl:any;
 
 
   constructor(
@@ -32,12 +35,12 @@ export class HomeComponent implements OnInit {
   ) 
   { 
     this.isLogin = this._auth.isLoggedIn();
-    console.log(this.isLogin);
+
   }
 
   ngOnInit(): void {
-    this.getNews();
     this.isUserLogin = this._auth.isLoggedIn();
+    this.getProducts();
   }
 
   customOptions: OwlOptions = {
@@ -54,7 +57,7 @@ export class HomeComponent implements OnInit {
         items: 1,
       },
       400: {
-        items: 2,
+        items: 4,
       },
       740: {
         items: 4,
@@ -83,7 +86,7 @@ export class HomeComponent implements OnInit {
       }
     );
     this.get_popular_product();
-  }
+  };
   get_product_by_menu_id(id: any) {
     this.menuId = id;
     this.spinner.show();
@@ -104,7 +107,7 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
-  }
+  };
   isActive(item: any) {
     return this.menuId === item;
   };
@@ -121,17 +124,6 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
-  }
-
-  getNews() {
-    this._product.getAllNews().subscribe((res: any) => {
-      if (res.status == 1) {
-        this.allNews = res.result;
-      }
-    }, (err) => {
-      console.log(err)
-    }
-    )
   };
 
   gotoDetailsPage(productId: any, categoryId: any) {
@@ -140,5 +132,18 @@ export class HomeComponent implements OnInit {
     } else {
       this._router.navigate(['/auth/login']);
     }
+  };
+
+  getProducts() {
+    let apiurl = '/product-related-category-fetch';
+    this._product.getMethod(apiurl).subscribe((res:any) => {
+      if (res.success == true) {
+        this.categoryOne = res.product_one_category;
+        this.categoryTwo = res.product_two_category;
+        this.imageUrl = res.image_url;
+      }
+    }, error => {
+      console.log(error);
+    })
   }
 }

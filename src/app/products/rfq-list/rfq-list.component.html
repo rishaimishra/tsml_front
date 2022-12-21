@@ -38,43 +38,42 @@
                            </thead>
                            <tbody>
                               <tr *ngFor="let rfqItem of rfqList | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
-                                 <td *ngIf="rfqItem?.kam_status != 4">
+                                 <td >
                                     {{rfqItem?.rfq_no}}
                                  </td>
-                                 <td *ngIf="rfqItem?.kam_status != 4">
+                                 <td >
                                     {{rfqItem?.created_at}}
                                  </td>
-                                 <td *ngIf="!userType && rfqItem?.kam_status != 4">{{rfqItem?.name}}</td>
-                                 <td *ngIf="rfqItem?.kam_status != 4">{{rfqItem?.quantity}}</td>
+                                 <td *ngIf="!userType">{{rfqItem?.name}}</td>
+                                 <td>{{rfqItem?.quantity}}</td>
+                                 <td>
+                                    {{rfqItem?.st_txt}} <i class="fa fa-info-circle ml-3 iconColor css-tooltip-top color-blue meet-rvw uu0"  aria-hidden="true"><span>{{rfqItem?.st_txt}}</span></i>
+                                 </td>
+                                 <!-- 
                                  <td *ngIf="rfqItem?.kam_status == 0 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}}<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
+                                    {{rfqItem?.st_txt}}<i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Action needed" aria-hidden="true"></i>
                                  </td>
-                                 <td *ngIf="rfqItem?.kam_status == 5 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Customer feedback awaited" aria-hidden="true"></i>
-                                 </td>
+                                 
                                  <td *ngIf="rfqItem?.kam_status == 1 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}}
+                                    {{rfqItem?.st_txt}}
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 2 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}}
+                                    {{rfqItem?.st_txt}}
                                  </td>
-                                 <!-- <td *ngIf="rfqItem?.kam_status == 4">
-                                    {{rfqItem?.status_txt}}
-                                 </td> -->
                                  <td *ngIf="rfqItem?.kam_status == 6 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}}
+                                    {{rfqItem?.st_txt}}
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 7 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
+                                    {{rfqItem?.st_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales response" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 8 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales manager response" aria-hidden="true"></i>
+                                    {{rfqItem?.st_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Waiting for sales manager response" aria-hidden="true"></i>
                                  </td>
                                  <td *ngIf="rfqItem?.kam_status == 9 && rfqItem?.kam_status != 4">
-                                    {{rfqItem?.status_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Rejected by sales manager" aria-hidden="true"></i>
-                                 </td>
-                                 <!-- <td><i class="fa fa-info-circle ml-3 iconColor" aria-hidden="true"></i></td> -->
-                                 <td *ngIf="rfqItem?.kam_status != 4">
+                                    {{rfqItem?.st_txt}} <i class="fa fa-info-circle ml-3 iconColor" data-toggle="tooltip" data-placement="top" title="Rejected by sales manager" aria-hidden="true"></i>
+                                 </td> -->
+                                 <!-- <td>{{rfqItem?.st_txt}}</td> -->
+                                 <td>
                                     <div class="btn-edt-del pointerTab">
                                        <a class="edt-btn btn-primary2" (click)="goToproductDetails(rfqItem?.rfq_no, rfqItem?.status, rfqItem.kam_status)"
                                           data-toggle="tooltip" data-placement="top" title="Go for price negotiation">

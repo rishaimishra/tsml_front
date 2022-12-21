@@ -192,4 +192,8 @@ export class ProductsService {
   storeStatusCust(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/store-rfq-order-status-cust', reqParameter);
   };
+
+  getMjGstIn(url_paremter: any) {
+    return this._http.get('https://demo-tsml.mjunction.in/tsml-api/api/gst_details_dummy/' + url_paremter);
+  };
 }
