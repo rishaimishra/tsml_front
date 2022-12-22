@@ -384,8 +384,8 @@
                                <div class="col-12 col-lg-12 col-sm-6">
                                   <div class="form-group">
                                     <div class="form-check ml-2">
-                                      <input type="checkbox" formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
-                                      <label class="form-check-label" for="exampleCheck1">Use this as shipping
+                                      <input type="checkbox" (change)="useAsShippingAddr($event)" formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
+                                      <label class="form-check-label" for="exampleCheck1">Use this as billing
                                         address</label>
                                     </div>
                                   </div>
@@ -403,7 +403,7 @@
                             </div>
                           </div>
                             <!-- Shipping address -->
-                            <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
+                            <div class="card-header collapsed" id="hideShipp" data-toggle="collapse" href="#collapseOne">
                               <a class="card-title">
                                 Enter Shipping Address
                               </a>
@@ -484,9 +484,9 @@
                             </ng-container>
                             </div>
                           </form>
-                          <div class="col-12 col-lg-12 col-sm-6 text-right2">
+                          <div class="col-12 col-lg-12 col-sm-6 text-right2"  id="hideAddBtn">
                             <div class="form-group pointer text-primary">
-                              <a (click)="addShitpItem()"  data-toggle="collapse"><i class="fa fa-plus-circle"></i>
+                              <a (click)="addShitpItem()" data-toggle="collapse"><i class="fa fa-plus-circle"></i>
                                 Add
                                 New Address</a>
                             </div>

@@ -221,6 +221,7 @@ export class RegisterComponent implements OnInit {
       gstin: [''],
       billing: [''],
       addresstwo: [''],
+      company_name: [''],
       city: [''],
       state: [''],
       pincode: [''],
@@ -235,6 +236,7 @@ export class RegisterComponent implements OnInit {
       gstin: [''],
       billing: [''],
       addresstwo: [''],
+      company_name: [''],
       city: [''],
       state: [''],
       pincode: [''],
@@ -696,24 +698,22 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    // let apiUrl = '/gst_details_dummy/'+this.gstNum;
-    // let apiUrl1 = '/gst_details_dummy_new';
+
     this.productService.getMjGstIn(this.gstNum).subscribe((res: any) => {
       this._spinner.hide();
-      this.toastr.success(res.message);
-      console.log('reess', res);
-      const withoutFirstAndLast = res.data.gstin.slice(2, -3);
-      let state = res.data.pradr.addr.stcd;
-      let city = res.data.pradr.addr.dst;
-      let pincode = res.data.pradr.addr.pncd;
-      let addrOne = res.data.pradr.addr.bnm;
-      let addrTwo = res.data.pradr.addr.st;
-      let gstin = res.data.gstin;
-      this.linkedAddr = res.data.stj;
-      this.orgAddrs = res.data.pradr.addr.stcd;
-      this.orgName = res.data.tradeNam;
+      this.toastr.success('','Success');
+      const withoutFirstAndLast = res.gstin.slice(2, -3);
+      let state = res.pradr.addr.stcd;
+      let city = res.pradr.addr.dst;
+      let pincode = res.pradr.addr.pncd;
+      let addrOne = res.pradr.addr.bnm;
+      let addrTwo = res.pradr.addr.st;
+      let gstin = res.gstin;
+      this.linkedAddr = res.stj;
+      this.orgAddrs = res.pradr.addr.stcd;
+      this.orgName = res.tradeNam;
       this.orgPan = withoutFirstAndLast;
-      this.gstNumber = res.data.gstin;
+      this.gstNumber = res.gstin;
 
       this.addressForm = this._fb.group({
         credentials: this._fb.array([])
@@ -735,6 +735,7 @@ export class RegisterComponent implements OnInit {
     }, err => {
       console.log(err);
       this._spinner.hide();
+      this.toastr.error('Please enter valid GST number.','Sorry !');
     })
 
   };
@@ -744,18 +745,16 @@ export class RegisterComponent implements OnInit {
 
   billGstin(i: any) {
     this._spinner.show;
-    // let apiUrl = '/gst_details_dummy/' + this.billGstNum;
     this.productService.getMjGstIn(this.billGstNum).subscribe((res: any) => {
       this._spinner.hide();
-      this.toastr.success(res.message);
-      console.log(res);
-      let state = res.data.pradr.addr.stcd;
-      let city = res.data.pradr.addr.dst;
-      let pincode = res.data.pradr.addr.pncd;
-      let addrOne = res.data.pradr.addr.bnm;
-      let addrTwo = res.data.pradr.addr.st;
-      let gstin = res.data.gstin;
-      let companyName = res.data.lgnm;
+      this.toastr.success('','Success');
+      let state = res.pradr.addr.stcd;
+      let city = res.pradr.addr.dst;
+      let pincode = res.pradr.addr.pncd;
+      let addrOne = res.pradr.addr.bnm;
+      let addrTwo = res.pradr.addr.st;
+      let gstin = res.gstin;
+      let companyName = res.lgnm;
       // $('#adr_'+i).val(addrOne);
       ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('company_name').patchValue(companyName);
       ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
@@ -763,13 +762,11 @@ export class RegisterComponent implements OnInit {
       ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
       ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('state').patchValue(state);
       ((this.addressForm.get('credentials') as FormArray).at(i) as FormGroup).get('pincode').patchValue(pincode);
-      if (res.flag == false) {
-        this._spinner.hide();
-        this.toastr.error(res.message);
-      }
+
     }, err => {
       console.log(err);
       this._spinner.hide();
+      this.toastr.error('Please enter valid GST number.','Sorry !');
     })
   };
 
@@ -779,18 +776,16 @@ export class RegisterComponent implements OnInit {
 
   shipGstin(i: any) {
     this._spinner.show();
-    // let apiUrl = '/gst_details_dummy/' + this.shipGst;
     this.productService.getMjGstIn(this.shipGst).subscribe((res: any) => {
       this._spinner.hide();
-      console.log(res);
-      this.toastr.success(res.message);
-      let state = res.data.pradr.addr.stcd;
-      let city = res.data.pradr.addr.dst;
-      let pincode = res.data.pradr.addr.pncd;
-      let addrOne = res.data.pradr.addr.bnm;
-      let addrTwo = res.data.pradr.addr.st;
-      let gstin = res.data.gstin;
-      let company = res.data.lgnm;
+      this.toastr.success('','Success');
+      let state = res.pradr.addr.stcd;
+      let city = res.pradr.addr.dst;
+      let pincode = res.pradr.addr.pncd;
+      let addrOne = res.pradr.addr.bnm;
+      let addrTwo = res.pradr.addr.st;
+      let gstin = res.gstin;
+      let company = res.lgnm;
       // $('#adr_'+i).val(addrOne);
       ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('company_name').patchValue(company);
       ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('addressone').patchValue(addrOne);
@@ -798,19 +793,26 @@ export class RegisterComponent implements OnInit {
       ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('city').patchValue(city);
       ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('state').patchValue(state);
       ((this.shiptingForm.get('shipping') as FormArray).at(i) as FormGroup).get('pincode').patchValue(pincode);
-      if (res.flag == false) {
-        this._spinner.hide();
-        this.toastr.error(res.message);
-      }
+
     }, err => {
       console.log(err);
       this._spinner.hide();
+      this.toastr.error('Please enter valid GST number.','Sorry !');
     })
-  }
-
+  };
+  useAsShippingAddr(event:any) {
+    let checkValue = event.target.checked;
+    if (checkValue == true) {
+      $('#hideShipp').hide();
+      $('#hideAddBtn').hide();
+    } else {
+      $('#hideShipp').show();
+      $('#hideAddBtn').show();
+    }
+  };
   isTdsApplicable(event: any) {
     this.isTDS_applicable = event.target.checked;
-  }
+  };
   submitRegister() {
     const fileData = new FormData();
     this._spinner.show();
