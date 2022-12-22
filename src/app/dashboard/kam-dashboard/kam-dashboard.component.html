@@ -109,9 +109,15 @@
                   <div class="card">
                      <div class="card-header">
                         <h4>Recent Orders</h4>
-                        <form class="card-header-form">
-                           <input type="text" name="search" class="form-control" placeholder="Search by Rfq no">
-                        </form>
+                        <div class="col-md-5 ml-5">
+                           <input type="text" placeholder="Search by rfq number" [(ngModel)]="searchValue" class="form-control">
+                         </div>
+                         <div class="input-group-append">
+                           <button class="btn btn-outline-secondary" (click)="seacrhByrfq()" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                         <div class="input-group-append ml-1">
+                            <button class="btn btn-outline-secondary" (click)="getKamItems()" type="button"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                         </div>
                      </div>
                      <div class="card-body">
                         <div class="support-ticket media pb-1 mb-3" *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }; let i = index">
@@ -196,26 +202,20 @@
                      <div class="card-body">
                         <div class="filter-box">
                            <div class="row">
-                              <!-- <div class="col-12 col-lg-5">
-                                 <div class="form-group">
-                                    <label>Date</label>
-                                    <div class="position-relative">
-                                       <input type="text" class="form-control form-control-sm datepicker">
-                                       <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
-                                    </div>
-                                 </div>
-                              </div> -->
-                              <!---/-->
                               <div class="col-12 col-lg-5">
                                  <div class="form-group">
                                     <label>Search</label>
-                                    <input type="text" placeholder="Order ref no / Cust po no" class="form-control form-control-sm">
+                                    <input type="text" placeholder="Order ref no / Cust po no" [(ngModel)]="searchPoValue" class="form-control form-control-sm">
                                  </div>
                               </div>
                               <!--/-->
-                              <div class="col-12 col-lg-3">
-                                 <button type="button" class="btn btn-primary mt-4 btn-block">Search</button>
+                              <div class="col-lg-1 mt-4">
+                                 <button type="button" class="btn btn-outline-secondary" (click)="poSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
                               </div>
+                              <div class="col-lg-3 mt-4">
+                                 <button type="button" class="btn btn-outline-secondary" (click)="getKamPoListing()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                              </div>
+                              
                            </div>
                         </div>
                         <div class="table-responsive">

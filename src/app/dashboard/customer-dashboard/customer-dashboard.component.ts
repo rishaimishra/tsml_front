@@ -15,21 +15,42 @@ export class CustomerDashboardComponent implements OnInit {
   poItems:any;
   userName:any;
   statusRfq:any = [];
+  searchValue:any;
+  searchPoValue:any;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
     private _router: Router, private _product: ProductsService) { }
 
   ngOnInit(): void {
-    this.getKamItems();
     let userRol = localStorage.getItem('USER_TYPE');
     this.userName = localStorage.getItem('USER_NAME');
-    if(userRol == 'Kam') {
-      // this.userType = false;
-      this.getKamPoListing();
-    } else {
-      // this.userType = true;
+    this.getCustRfqItems();
       this.getPoListing();
+    
+  };
+
+  poSearch() {
+    let poValReq = {
+      "search_txt": this.searchPoValue
     }
+    this._product.searchPo(poValReq).subscribe((res:any) => {
+      console.log(res);
+      if (res.status == 1) {
+        this.poItems = res.result;
+      }
+    })
+  }
+  seacrhByrfq() {
+    this.spinner.show();
+    let searchRequest = {
+      "rfq_no": this.searchValue
+    }
+    this._product.searchRfq(searchRequest).subscribe((res:any) => {
+      this.spinner.hide();
+      if (res.status == 1) {
+        this.kamItems = res.result;
+      }
+    })
   };
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
@@ -43,7 +64,8 @@ export class CustomerDashboardComponent implements OnInit {
       this._router.navigate(['/products/negotiation',rfqNumber]);
     }
   };
-  getKamItems() {
+  getCustRfqItems() {
+    this.searchValue = '';
     this.spinner.show();
     this._product.getAllRequestOfRfq().subscribe((res:any) => {
       if(res.message == 'success') {
@@ -80,7 +102,6 @@ export class CustomerDashboardComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1) {
         this.statusRfq = res.result;
-        console.log(this.statusRfq);
       }
     }, err => {
       console.log(err);
@@ -88,6 +109,7 @@ export class CustomerDashboardComponent implements OnInit {
     })
   };
   getPoListing () {
+    this.searchPoValue = '';
     this.spinner.show();
     this._product.getPoList().subscribe((res:any) => {
       if(res.message == 'success') {
@@ -100,18 +122,18 @@ export class CustomerDashboardComponent implements OnInit {
     })
   };
 
-  getKamPoListing () {
-    this.spinner.show();
-    this._product.getkamPoList().subscribe((res:any) => {
-      if(res.message == 'success') {
-        this.spinner.hide();
-      this.poItems = res.result;
-      }
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-    })
-  };
+  // getKamPoListing () {
+  //   this.spinner.show();
+  //   this._product.getkamPoList().subscribe((res:any) => {
+  //     if(res.message == 'success') {
+  //       this.spinner.hide();
+  //     this.poItems = res.result;
+  //     }
+  //   }, err => {
+  //     console.log(err);
+  //     this.spinner.hide();
+  //   })
+  // };
 
   goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
     if (status == 'Accepted' && kamStatus != 4) {

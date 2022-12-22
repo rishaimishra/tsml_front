@@ -16,20 +16,41 @@ export class KamDashboardComponent implements OnInit {
   p: number = 1;
   statusRfq:any = [];
 
+  searchValue:any;
+  searchPoValue:any;
+
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
   private _router: Router, private _product: ProductsService) { }
 
   ngOnInit() {
-    this.getKamItems();
     let userRol = localStorage.getItem('USER_TYPE');
     this.userName = localStorage.getItem('USER_NAME');
-    if(userRol == 'Kam') {
-      // this.userType = false;
+    this.getKamItems();
       this.getKamPoListing();
-    } else {
-      // this.userType = true;
-      this.getPoListing();
+  };
+
+  poSearch() {
+    let poValReq = {
+      "search_txt": this.searchPoValue
     }
+    this._product.searchPo(poValReq).subscribe((res:any) => {
+      console.log(res);
+      if (res.status == 1) {
+        this.poItems = res.result;
+      }
+    })
+  }
+  seacrhByrfq() {
+    this.spinner.show();
+    let searchRequest = {
+      "rfq_no": this.searchValue
+    }
+    this._product.searchRfq(searchRequest).subscribe((res:any) => {
+      this.spinner.hide();
+      if (res.status == 1) {
+        this.kamItems = res.result;
+      }
+    })
   };
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
@@ -45,6 +66,7 @@ export class KamDashboardComponent implements OnInit {
   };
 
   getKamItems() {
+    this.searchValue = '';
     this.spinner.show();
     this.dashboard.getKamList().subscribe((res:any) => {
       this.spinner.hide();
@@ -69,19 +91,6 @@ export class KamDashboardComponent implements OnInit {
     })
   };
   
-  getPoListing () {
-    this.spinner.show();
-    this._product.getPoList().subscribe((res:any) => {
-      this.spinner.hide();
-      if(res.message == 'success') {
-        this.spinner.hide();
-      this.poItems = res.result;
-      }
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-    })
-  };
   getRfqStatus(rfqNumbr) {
     this.spinner.show();
     let request = {
@@ -91,7 +100,6 @@ export class KamDashboardComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1) {
         this.statusRfq = res.result;
-        console.log(this.statusRfq);
       }
     }, err => {
       console.log(err);
@@ -100,6 +108,7 @@ export class KamDashboardComponent implements OnInit {
   };
 
   getKamPoListing () {
+    this.searchPoValue = '';
     this.spinner.show();
     this._product.getkamPoList().subscribe((res:any) => {
       this.spinner.hide();

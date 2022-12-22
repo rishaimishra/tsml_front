@@ -78,12 +78,22 @@
                <div class="col-md-6 col-lg-12 col-xl-6">
                   <!-- RFQ list customer-->
                   <div class="card">
-                     <div class="card-header">
+                     <div class="card-header ml-5">
                         <h4>Recent Orders {{statusRfq.rfq_submited}}</h4>
-                        <form class="card-header-form">
-                           <input type="text" name="search" class="form-control" placeholder="Search by rfq number">
-                        </form>
+                           <!-- <div class="col-6">
+                              <input type="text" name="search" (keyup)="seacrhByrfq($event)" class="form-control" placeholder="Search by rfq number">
+                           </div> -->
+                           <div class="col-md-5 ml-5">
+                              <input type="text" placeholder="Search by rfq number" [(ngModel)]="searchValue" class="form-control">
+                            </div>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="seacrhByrfq()" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                           </div>
+                            <div class="input-group-append ml-1">
+                               <button class="btn btn-outline-secondary" (click)="getCustRfqItems()" type="button"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                            </div>
                      </div>
+                     
                      <div class="card-body">
                         <div class="support-ticket media pb-1 mb-3"
                            *ngFor="let rfqItem of kamItems | paginate: { itemsPerPage: 8, currentPage: p }; let i = index">
@@ -105,21 +115,11 @@
                                         <div class="stepwizard-step">
                                           <a type="button" [ngClass]="{'active':statusRfq[i]?.rfq_closed == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>RFQ Closed</span></a>
                                         </div>
-                                        <!-- <div class="stepwizard-step">
-                                          <a type="button" class="btn btn-default btn-circle" >6</a>
-                                        </div> -->
                                      </div>
                                    </div>
                                    
-                                   
-                                   
-                              <!-- <div class="badge badge-pill badge-danger mb-1 float-right"
-                         *ngIf="rfqItem?.status == 'Cancel'">{{rfqItem?.status}}</div> -->
                               <div class="badge badge-pill badge-success mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'RFQ Closed'">{{rfqItem?.st_txt}}</div>
-
-                              <!-- <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 7">{{rfqItem?.st_txt}}</div> -->
 
                               <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'New Enquiry'">{{rfqItem?.st_txt}}</div>
@@ -133,21 +133,9 @@
                               <div class="badge badge-pill badge-success mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'Material Confirmed'">{{rfqItem?.st_txt}}</div>
 
-                              <!-- <div class="badge badge-pill badge-warning mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 6">{{rfqItem?.st_txt}}</div>
-
-                              <div class="badge badge-pill badge-info mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 8">{{rfqItem?.st_txt}}</div>
-
-                              <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 9">{{rfqItem?.st_txt}}</div> -->
-
                               <span class="font-weight-bold">RFQ
                                  Number: <b class="text-primary pointerTab"
                                  (click)="reedirectPage(rfqItem?.status, rfqItem?.rfq_no, rfqItem.kam_status)">{{rfqItem?.rfq_no}}</b></span>&nbsp;
-                              <!-- <a
-                                 class="pointerTab text-primary">{{rfqItem?.cat_name}}</a> -->
-                              <!-- <p class="my-1">{{rfqItem?.pro_desc}}</p> -->
                               <small class="text-muted">
                                  {{rfqItem?.created_at}}</small>
 
@@ -171,17 +159,19 @@
                      <div class="card-body">
                         <div class="filter-box">
                            <div class="row">
-                              
                               <!---/-->
                               <div class="col-12 col-lg-5">
                                  <div class="form-group">
                                     <label>Search</label>
-                                    <input type="text" placeholder="Order ref no / Cust po no" class="form-control form-control-sm">
+                                    <input type="text" placeholder="Order ref no / Cust po no" [(ngModel)]="searchPoValue" class="form-control form-control-sm">
                                  </div>
                               </div>
                               <!--/-->
-                              <div class="col-12 col-lg-3">
-                                 <button type="button" class="btn btn-primary mt-4 btn-block">Search</button>
+                              <div class="col-lg-1 mt-4">
+                                 <button type="button" class="btn btn-outline-secondary" (click)="poSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                              </div>
+                              <div class="col-lg-3 mt-4">
+                                 <button type="button" class="btn btn-outline-secondary" (click)="getPoListing()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                               </div>
                            </div>
                         </div>

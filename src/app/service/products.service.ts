@@ -196,4 +196,10 @@ export class ProductsService {
   getMjGstIn(url_paremter: any) {
     return this._http.get('https://demo-tsml.mjunction.in/tsml-api/api/gst_details_dummy/' + url_paremter);
   };
+  searchRfq(url_paremter: any) {
+    return this._http.post(this.BesUrl +'/user/rfq_search_list', url_paremter);
+  };
+  searchPo(url_paremter: any) {
+    return this._http.post(this.BesUrl +'/user/po_search_list', url_paremter);
+  };
 }
