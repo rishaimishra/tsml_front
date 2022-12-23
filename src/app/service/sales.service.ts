@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -9,7 +9,7 @@ export class SalesService {
   private BesUrl = environment.apiEndpointBase;
 
   constructor(private _http: HttpClient) { }
-
+  
   getMethod(url_paremter: any) {
     return this._http.get(this.BesUrl + url_paremter);
   };
@@ -65,7 +65,7 @@ export class SalesService {
     return this._http.get(this.BesUrl + '/user/get-sap-payment-terms');
   };
 
-  submitSalesCnt(request) {
+  submitSalesCnt(request:any) {
     return this._http.post(this.BesUrl + '/user/sales_cnt_submit', request);
   };
 
@@ -73,10 +73,11 @@ export class SalesService {
     return this._http.get(this.BesUrl + '/user/get-order-type');
   };
 
-  submitSalesSo(request) {
+  submitSalesSo(request:any) {
     return this._http.post(this.BesUrl + '/user/so_submit', request);
   };
-  submitManagerRfq(request) {
+  submitManagerRfq(request:any) {
     return this._http.post(this.BesUrl + '/user/get_price_break', request);
   };
+
 }

@@ -24,7 +24,7 @@
                             </tr>
                          </thead>
                          <tbody>
-                            <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 9, currentPage: p }">
+                            <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 8, currentPage: p }">
                                <td>{{po.po_no}}</td>
                                <td>{{po.po_date}}</td>
                                <td>{{po.user}}</td>
@@ -81,7 +81,7 @@
                             <label>Sales Organization</label>
                             <select class="form-control form-control-sm" formControlName="sales_org">
                                <option value="">--Select--</option>
-                               <option value="{{org.id}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
+                               <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -99,7 +99,7 @@
                             <label>Division</label>
                             <select class="form-control form-control-sm" formControlName="div">
                                <option value="">--Select--</option>
-                               <option value="{{divi.id}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
+                               <option value="{{divi.division_code}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -108,7 +108,7 @@
                             <label>Sales office</label>
                             <select class="form-control form-control-sm" formControlName="sales_ofc">
                                 <option value="">--Select--</option>
-                               <option value="{{slcOfc.id}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
+                               <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -117,7 +117,7 @@
                             <label>Sales Group</label>
                             <select class="form-control form-control-sm" formControlName="sales_grp">
                                <option value="">--Select--</option>
-                               <option value="{{sapGp.id}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
+                               <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -180,7 +180,7 @@
                             <label>Shp. Cond.</label>
                             <select class="form-control form-control-sm" formControlName="shp_cond">
                                 <option value="">--Select--</option>
-                                <option value="{{dlvrMode.id}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
+                                <option value="{{dlvrMode.delivery_mode_code}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
                             </select>
                          </div>
                       </div>
@@ -229,10 +229,18 @@
                                            <th>Amount</th>
                                         </tr>
                                      </thead>
-                                     <tbody *ngFor="let item of priceInfo.price_det">
-                                        <td>{{item.cnty}}</td>
+                                     <tbody *ngFor="let item of priceInfo.price_det; let i = index">
+                                        <!-- <td>{{item.cnty}}</td> -->
+                                        <td>
+                                          <select class="form-control form-control-sm mr-sm-2" (change)="getPrice($event, i)">
+                                             <option value="">--Select--</option>
+                                             <option value="123">123</option>
+                                             <option value="456">456</option>
+                                             <option value="789">789</option>
+                                          </select>
+                                        </td>
                                         <td>{{item.des}}</td>
-                                        <td>{{item.amt}}</td>
+                                        <td id="priceVal{{i}}">{{item.amt}}</td>
                                      </tbody>
                                   </table>
                                </div>
@@ -315,7 +323,7 @@
                                    <label>Payment Terms</label>
                                    <select class="form-control form-control-sm" formControlName="pay_terms">
                                       <option value="">--Select--</option>
-                                      <option value="{{item.id}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
+                                      <option value="{{item.payment_terms_code}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
                                    </select>
                                 </div>
                              </div>
@@ -325,7 +333,7 @@
                                     <label>Feight</label>
                                     <select class="form-control form-control-sm" formControlName="freight">
                                        <option value="">--Select--</option>
-                                       <option value="{{item.id}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
+                                       <option value="{{item.freight_dec}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
                                     </select>
                                  </div>
                               </div>
@@ -334,7 +342,7 @@
                                     <label>Customer Group</label>
                                     <select class="form-control form-control-sm" formControlName="cus_grp">
                                        <option value="">--Select--</option>
-                                       <option value="{{custGrp.id}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
+                                       <option value="{{custGrp.cus_group_code}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
                                     </select>
                                  </div>
                               </div>
@@ -343,7 +351,7 @@
                                     <label>Feight Indicator</label>
                                     <select class="form-control form-control-sm" formControlName="fr_ind">
                                        <option value="">--Select--</option>
-                                       <option value="{{indi.id}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
+                                       <option value="{{indi.freight_indication_dec}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
                                     </select>
                                  </div>
                               </div>

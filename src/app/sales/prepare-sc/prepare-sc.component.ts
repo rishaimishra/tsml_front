@@ -1,4 +1,5 @@
 import { Location } from '@angular/common';
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -311,14 +312,57 @@ export class PrepareScComponent implements OnInit {
     this.specs.push(specsData);
   };
 
+  pricValArr = [];
+  getPrice(event:any, i:any) {
+    let data = $('#priceVal'+i).html();
+    let item = event.target.value;
+    let reqParam = {
+      "id": i,
+      "CnTy": item,
+      "Amount": data
+    };
+
+    let indxId = this.pricValArr.findIndex((item: any) => item.id == i);
+    if (indxId !== -1) {
+      this.pricValArr.splice(indxId, 1);
+    }
+    this.pricValArr.push(reqParam);
+
+    console.log(this.pricValArr);
+  };
+
+
   submitSc() {
-    this._spiner.show();
+    // this._spiner.show();
+    console.log(this.percentArr);
+
     const seFormDataArr = [];
+    const sapMatArr = [];
+    const codePrice = [];
+
     this.scForm.value['po_no'] = this.poNumber;
+    for (let i = 0; i < this.pricValArr.length; i++) {
+      const element = this.pricValArr[i];
+      let codePr = {
+        "CnTy": element.CnTy,
+        "Amount": element.Amount
+      }
+      codePrice.push(codePr)
+    };
+
     for (let i = 0; i < this.scInfo.length; i++) {
       const element = this.scInfo[i];
       this.getSpec(this.scInfo[i]['specs']);
 
+      let sapMaterial = {
+        "Material": this.scInfo[i].mat_code,
+        "Quantity": this.scInfo[i].tot_qty,
+        "CustomarMaterialNumber": this.scInfo[i].mat_code,
+        "OrderQuantity": this.scInfo[i].odr_qty,
+        "Plant": this.scInfo[i].pcode
+      };
+      sapMatArr.push(sapMaterial);
+      let indxId = this.percentArr.findIndex((item: any) => item.mat_code == this.scInfo[i].mat_code);
       let material =
         { 
           "value": "100000",
@@ -328,7 +372,7 @@ export class PrepareScComponent implements OnInit {
           "price_det": element['price_det'],
           "specs": this.specs[i],
           "total": this.scInfo[i].total,
-          "per_percent": this.percentArr[i]
+          "per_percent": this.percentArr[indxId]
         }
       seFormDataArr.push(material);
     }
@@ -337,10 +381,44 @@ export class PrepareScComponent implements OnInit {
       "inco_form": this.updateInfoForm.value,
       "material": seFormDataArr
     }
+    let sapRequest = {
+        "OrganizationalData": {
+          "ContractType": this.scForm.value['contract_ty'],
+          "SalesOrganization": this.scForm.value['sales_org'],
+          "DistributionChannel": this.scForm.value['dis_chnl'],
+          "Division": this.scForm.value['div'],
+          "Salesoffice": this.scForm.value['sales_ofc'],
+          "Salesgroup": this.scForm.value['sales_grp']
+        },
+        "SoldToParty": {
+          "QtyContractTSML": this.scForm.value['qty_cont'],
+          "Sold_To_Party": this.scForm.value['sold_to_party'],
+          "Ship_To_Party": this.scForm.value['sold_to_addr'],
+          "Cust_Referance": this.scForm.value['cus_ref'],
+          "NetValue": this.scForm.value['net_val'],
+          "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
+        },
+        "Sales": {
+          "Shp_Cond": this.scForm.value['shp_cond'],
+        },
+        "Items": sapMatArr,
+        "Conditions": codePrice,
 
+        "TermsofDeliveryandPayment": {
+          "Incoterms": this.updateInfoForm.value['incoterms'],
+          "Paymentterms": this.updateInfoForm.value['pay_terms']
+        },
+        "AdditionalDataA": {
+          "Freight": this.updateInfoForm.value['freight'],
+          "CustomerGroup4": this.updateInfoForm.value['cus_grp']
+        },
+        "AdditionalDataforPricing": {
+          "FreightIndicator": this.updateInfoForm.value['fr_ind']
+        }
+    }
+    // console.log('ccc',sapRequest);
     this._sales.submitSalesCnt(fullData).subscribe((res:any) => {
     this._spiner.hide();
-      console.log(res);
         Swal.fire(
           'Success',
           'Submited Successfully',

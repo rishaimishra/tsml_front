@@ -30,11 +30,12 @@ export class KamDashboardComponent implements OnInit {
   };
 
   poSearch() {
+    this.spinner.show();
     let poValReq = {
       "search_txt": this.searchPoValue
     }
     this._product.searchPo(poValReq).subscribe((res:any) => {
-      console.log(res);
+      this.spinner.hide();
       if (res.status == 1) {
         this.poItems = res.result;
       }

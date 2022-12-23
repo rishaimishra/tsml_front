@@ -30,11 +30,12 @@ export class CustomerDashboardComponent implements OnInit {
   };
 
   poSearch() {
+    this.spinner.show();
     let poValReq = {
       "search_txt": this.searchPoValue
     }
     this._product.searchPo(poValReq).subscribe((res:any) => {
-      console.log(res);
+      this.spinner.hide();
       if (res.status == 1) {
         this.poItems = res.result;
       }
@@ -121,19 +122,6 @@ export class CustomerDashboardComponent implements OnInit {
       this.spinner.hide();
     })
   };
-
-  // getKamPoListing () {
-  //   this.spinner.show();
-  //   this._product.getkamPoList().subscribe((res:any) => {
-  //     if(res.message == 'success') {
-  //       this.spinner.hide();
-  //     this.poItems = res.result;
-  //     }
-  //   }, err => {
-  //     console.log(err);
-  //     this.spinner.hide();
-  //   })
-  // };
 
   goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
     if (status == 'Accepted' && kamStatus != 4) {
