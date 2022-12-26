@@ -7,6 +7,7 @@ import { DecimalPipe, formatNumber, Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
+import { SalesService } from 'src/app/service/sales.service';
 declare var $: any;
 
 
@@ -140,6 +141,7 @@ export class CustomerComponent implements OnInit {
     private _fb: FormBuilder,
     private _state: StateCityService,
     private location: Location,
+    private _sales: SalesService
   ) {$(window).scrollTop(0); }
 
   get ff() { return this.myForm.controls; }
@@ -187,7 +189,7 @@ export class CustomerComponent implements OnInit {
     this.getStatusCount();
   }
 
-  createItem(qty,to_date) {
+  createItem(qty:any,to_date:any) {
     return this._fb.group({
       quantity: [qty, Validators.required],
       to_date: [to_date, Validators.required]
@@ -366,11 +368,13 @@ export class CustomerComponent implements OnInit {
       this.statusArr.push(reqParam);
     }
   };
+
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
       this.priceVal = res.result;
     });
   };
+
   selectRadio(event:any) {
     this.qtStatusUpdate = event.target.value;
   };
@@ -511,6 +515,15 @@ export class CustomerComponent implements OnInit {
             else {
               this._toaster.error(res.message);
             }
+          })
+          
+          let statusRequest = {
+            "rfq_no": this.rfqNum,
+            "under_negotiation": '1'
+          }
+          this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+          })
+          this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
           })
         }
 
@@ -694,7 +707,7 @@ export class CustomerComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant:any,dlvr:any, i:any, y:any) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant:any,dlvr:any,dap:any, i:any, y:any) {
     this.firstIndex = i;
     this.lastIndex = y;
     this.sub_catId = subCatId;
@@ -730,6 +743,7 @@ export class CustomerComponent implements OnInit {
       "pro_id": prodId,
       "cat_id": catid,
       "size": size,
+      "delivery_method": dap,
       "sub_cat_id": subCatId
     }
     // - Number(this.productPrice.cam_discount) + Number(this.productPrice.misc_expense)
@@ -776,6 +790,23 @@ export class CustomerComponent implements OnInit {
       }
       else {
         this.Totalsum = totl + Number(this.productPrice.cam_discount);
+      }
+    })
+
+    let managerReq = {
+      "rfq_no": this.rfqNum,
+      "sche_no": schedule_no
+    }
+    this._sales.submitManagerRfq(managerReq).subscribe((res:any) => {
+      if(res.status == 1) {
+        this.priceForm.controls['price_premium'].setValue(res.result[1].value);
+        this.priceForm.controls['cam_discount'].setValue(res.result[2].value);
+        this.priceForm.controls['delivery_cost'].setValue(res.result[3].value);
+        this.priceForm.controls['interest_rate'].setValue(res.result[4].value);
+        this.priceForm.controls['creditCoast'].setValue(res.result[5].value);
+        this.priceForm.controls['misc_expense'].setValue(res.result[6].value);
+        this.priceForm.controls['totalSum'].setValue(res.result[7].value);
+        this.priceForm.controls['finalAmt'].setValue(res.result[8].value);
       }
     })
   };

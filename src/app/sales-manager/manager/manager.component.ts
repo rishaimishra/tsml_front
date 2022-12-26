@@ -119,6 +119,13 @@ export class ManagerComponent implements OnInit {
   compPrice:any;
   tsmlPriceArr: any = [];
 
+  plusMinus:any;
+  daysVal:any;
+  getDays:any;
+  daysCal:any;
+  totalValue:any;
+  isDap: boolean = false;
+
 
   @ViewChild("remarksModel")
   remarksModel!: { show: () => void; hide: () => void; nativeElement: any };
@@ -699,7 +706,7 @@ export class ManagerComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant:any,dlvr:any,dap:any, i:any, y:any) {
     this.firstIndex = i;
     this.lastIndex = y;
     this.sub_catId = subCatId;
@@ -707,6 +714,12 @@ export class ManagerComponent implements OnInit {
     this.schedule_no = schedule_no;
     this.plant_location = location;
     this.pickupType = plant;
+
+    if (dlvr == 'DAP (Delivered at Place)') {
+      this.isDap = true;
+    } else {
+      this.isDap = false;
+    }
 
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
@@ -721,16 +734,18 @@ export class ManagerComponent implements OnInit {
       "pro_id": prodId,
       "cat_id": catid,
       "size": size,
+      "delivery_method": dap,
       "sub_cat_id": subCatId
     }
+    // - Number(this.productPrice.cam_discount) + Number(this.productPrice.misc_expense)
+
     this._product.priceCalculation(price).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
-      Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
-
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost) ;
+      
       if (this.productPrice['price_premium_sing'] == '-') {
         this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
       }
@@ -740,24 +755,35 @@ export class ManagerComponent implements OnInit {
       else {
         this.afterPrePrice = backendTotal;
       }
+
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       const backDays = backendDaysCount.toFixed(6);
       this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
 
+
       if (this.days == 0) {
-        this.Totalsum = this.afterPrePrice;
+        this.getDays = this.afterPrePrice;
       } 
       else if (this.days == 30){
-        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-        this.Totalsum = finalCost.toFixed(2);
+        let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+        this.getDays = finalCost.toFixed(2);
       }
       else if (this.days == 45){
-        let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-        this.Totalsum = finalCost.toFixed(2);
+        let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+        this.getDays = finalCost.toFixed(2);
+      }
 
+      let totl =  Number(this.getDays) + Number(this.productPrice.misc_expense);
+
+      if (this.plusMinus == '-') {
+        this.Totalsum =  totl - Number(this.productPrice.cam_discount);
+      }
+      else {
+        this.Totalsum = totl + Number(this.productPrice.cam_discount);
       }
     })
+
     let managerReq = {
       "rfq_no": this.rfqNum,
       "sche_no": schedule_no
@@ -776,9 +802,13 @@ export class ManagerComponent implements OnInit {
     })
   };
 
+  selectPlusMins(event:any) {
+    this.plusMinus = event.target.value;
+  };
+
   selectDay(event: any, priceSign:any) {
     this.days = event.target.value;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
       if (priceSign == '-') {
       this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
       }
@@ -788,22 +818,33 @@ export class ManagerComponent implements OnInit {
       else {
         this.afterPrePrice = backendTotal;
       }
+
       const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
       const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
       const backDays = backendDaysCount.toFixed(6);
       this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
 
     if (this.days == 0) {
-      this.Totalsum = this.afterPrePrice;
+      this.daysVal = this.afterPrePrice;
     } 
     else if (this.days == 30){
-      let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-      this.Totalsum = finalCost.toFixed(2);
+      let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+      this.daysVal = finalCost.toFixed(2);
     }
     else if (this.days == 45){
       let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
-      this.Totalsum = finalCost.toFixed(2);
+      this.daysVal = finalCost.toFixed(2);
     }
+
+    let misc = Number(this.daysVal) + Number(this.productPrice.misc_expense);
+
+    if (this.plusMinus == '-') {
+      this.Totalsum =  misc - Number(this.productPrice.cam_discount);
+      }
+      else {
+        this.Totalsum = misc + Number(this.productPrice.cam_discount);
+    }
+
   };
 
   calculatePrice(id: any) {
@@ -830,12 +871,7 @@ export class ManagerComponent implements OnInit {
     } else {
       this.premiumPrice = false;
     };
-    if (misc_expense < miscExpense && misc_expense != 0) {
-      this.miscPrice = true;
-      priceValidator.push(2);
-    } else {
-      this.miscPrice = false;
-    };
+
     if (delivery < deliveryCost && delivery != 0) {
       this.deliveryCost = true;
       priceValidator.push(3);
@@ -848,15 +884,10 @@ export class ManagerComponent implements OnInit {
     } else {
       this.credCost = false;
     };
-    if (Number(cam_discount) < _discount && _discount != 0) {
-      this.kamDiscount = true;
-      priceValidator.push(5);
-    } else {
-      this.kamDiscount = false;
-    };
 
     this.priceLimit = priceValidator;
-    const total = (bptPrice + misc_expense + delivery) - _discount;
+    const total = (bptPrice + delivery);
+    
       //
         if (this.productPrice['price_premium_sing'] == '-') {
         this.userAfterPrePrice =   total - Number(price_premium);
@@ -868,25 +899,40 @@ export class ManagerComponent implements OnInit {
          this.userAfterPrePrice = total;
         }
     //
+
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     const totalDays = daysCount.toFixed(6);
     this.daysCostCountCustomer = (this.userAfterPrePrice * Number(totalDays)).toFixed(2);
+    // let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum )* 100;
+    // this.percentPrice = totalPercent.toFixed(2);
 
-    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
-    this.percentPrice = totalPercent.toFixed(2);
+
     if (this.days == 0) {
-      this.Totalsum1 = this.userAfterPrePrice;
+      this.daysCal = this.userAfterPrePrice;
     } 
     else if (this.days == 30){
-      let finalCost = (Number(this.Totalsum1) + Number(this.daysCostCountCustomer));
-      this.Totalsum1 = finalCost.toFixed(2);
+      let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
+      this.daysCal = finalCost.toFixed(2);
     }
     else if (this.days == 45){
       let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
-      this.Totalsum1 = finalCost.toFixed(2);
+      this.daysCal = finalCost.toFixed(2);
     }
-        
+
+    let misc = Number(this.daysCal) + Number(misc_expense);
+
+    if (this.plusMinus == '-') {
+      this.totalValue =  misc - Number(_discount);
+      }
+      else if (this.plusMinus == '+'){
+        this.totalValue = misc + Number(_discount);
+      }
+      else {
+        this.totalValue = misc + Number(_discount);
+      }
+    let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum )* 100;
+    this.percentPrice = totalPercent.toFixed(2);
   };
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.rfqNum;

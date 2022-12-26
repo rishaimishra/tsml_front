@@ -13,6 +13,7 @@ import { CustGuard } from '../Guard/cust.guard';
 import { ManagerDashboardComponent } from './manager-dashboard/manager-dashboard.component';
 import { PlantDashboardComponent } from './plant-dashboard/plant-dashboard.component';
 import { AuthGuard } from '../auth/auth.guard';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatPaginatorModule
   ]
 })
 export class DashboardModule { 

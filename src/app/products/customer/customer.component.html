@@ -154,22 +154,22 @@
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_a"
                                                                 name="contact{{ formData.schedule_no }}_a" value="PLANT"
-                                                                class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
+                                                                class="mr-1" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"/>
                                                             <label for="contactChoice1">Plant</label>&nbsp;
                                                             <input type="radio" id="contactChoice2"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_b"
                                                                 name="contact{{ formData.schedule_no }}_b" value="DEPOT"
-                                                                class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
+                                                                class="mr-1" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"/>
                                                             <label for="contactChoice2">Depot</label>&nbsp;
                                                             <input type="radio" id="contactChoice3"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_c"
                                                                 name="contact{{ formData.schedule_no }}_c" value="PORT"
-                                                                class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
+                                                                class="mr-1" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"/>
                                                             <label for="contactChoice3">Port</label>
                                                         </label>
-                                                        <select [disabled]="userByrole == 'C' || formData.delivery == 'DAP (Delivered at Place)'" id="pickup_from_{{formData.schedule_no}}" #pickUpfrom="ngModel"
+                                                        <select [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'" id="pickup_from_{{formData.schedule_no}}" #pickUpfrom="ngModel"
                                                             (change)="plantSele($event, formData.schedule_no)"
                                                             [(ngModel)]="formData.plant"
                                                             name="plant_{{ formData.schedule_no }}"
@@ -186,7 +186,7 @@
                                                     <div class="form-group">
                                                         <label for="">Location</label>
                                                         <select class="form-control form-control-sm" id="loca_{{formData.schedule_no}}" #location="ngModel"
-                                                            [(ngModel)]="formData.location" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"
+                                                            [(ngModel)]="formData.location" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"
                                                             name="location_{{ formData.schedule_no }}" required>
                                                             <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
                                                                 <ng-template #newLocation>
@@ -277,7 +277,7 @@
                                                     <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                         <label for=""
                                                             (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,
-                                                            productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery, i, y)">Tsml's price
+                                                            productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery,formData.delivery, i, y)">Tsml's price
                                                             <span *ngIf="!userType && qoutestId != 0 && qoutestId != 2"
                                                                 class="price-info price-info0" data-toggle="modal"
                                                                 data-target="#addPrice"><i

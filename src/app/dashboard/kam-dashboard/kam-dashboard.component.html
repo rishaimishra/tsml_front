@@ -226,19 +226,17 @@
                                     <th>Cust PO No.</th>
                                     <th>Date</th>
                                     <th>Quantity (MT)</th>
-                                    <th>Price (₹)</th>
                                     <th>Amend No</th>
                                     <th>Status</th>
                                     <th></th>
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr *ngFor="let po of poItems">
+                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }">
                                     <td>{{po.po_no}}</td>
                                     <td>{{po.cus_po_no}}</td>
                                     <td>{{po.po_date}}</td>
                                     <td>{{po.quantity}}</td>
-                                    <td>....</td>
                                     <td>{{po.amdnt_no}}</td>
                                     <td *ngIf="po.status == 2">
                                        <span class="badge badge-primary">{{po.status_txt}}</span>
@@ -271,6 +269,9 @@
                               </tbody>
                            </table>
                               <small class="text-primary pointerTab float-right mt-3" routerLink="/po/po-list">See more...</small><br>
+                        </div>
+                        <div class="text-right">
+                           <pagination-controls (pageChange)="d = $event" id="d"></pagination-controls>
                         </div>
                      </div>
                   </div>

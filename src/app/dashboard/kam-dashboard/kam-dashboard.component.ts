@@ -14,6 +14,7 @@ export class KamDashboardComponent implements OnInit {
   poItems: any;
   userName:any;
   p: number = 1;
+  d: number = 1;
   statusRfq:any = [];
 
   searchValue:any;

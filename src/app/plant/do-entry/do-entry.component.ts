@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
+import { SalesService } from 'src/app/service/sales.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-do-entry',
@@ -21,11 +23,13 @@ export class DoEntryComponent implements OnInit {
   misDoc: any;
   soList: any = [];
   materialGradeList: any = [];
+  soNum:any;
+
   constructor(private _products: ProductsService,
     private toastr: ToastrService,
     private _fb: FormBuilder,
     private _spinner: NgxSpinnerService,
-    private _router: Router) { }
+    private _router: Router, private _sales: SalesService) { }
 
   getSo() {
     this._spinner.show();
@@ -45,7 +49,8 @@ export class DoEntryComponent implements OnInit {
 
   onChangeSo(event: any) {
     this._spinner.show();
-    this._products.getMethod('/user/get_do_sub_cats/'+event.target.value).subscribe((res: any) => {
+    this.soNum = event.target.value;
+    this._products.getMethod('/user/get_do_sub_cats/'+this.soNum).subscribe((res: any) => {
       this._spinner.hide();
       if (res.message == 'success') {
         this.materialGradeList = res.result;
@@ -154,6 +159,7 @@ export class DoEntryComponent implements OnInit {
     if (this.entryForm.invalid == true) {
       return;
     }
+
     if(this.lr_file == undefined){
       this.toastr.error('', 'Please Upload LR Document');
     } 
@@ -167,46 +173,63 @@ export class DoEntryComponent implements OnInit {
       this.toastr.error('', 'Please Upload e-Invoice Document');
     } 
      else {
-      const fileData = new FormData();
-      fileData.append("user_id", this.entryForm.value.user_id);
-      fileData.append("so_no", this.entryForm.value.so_no);
-      fileData.append("do_no", this.entryForm.value.do_no);
-      fileData.append("invoice_no", this.entryForm.value.invoice_no);
-      fileData.append("invoice_date", this.entryForm.value.invoice_date);
-      fileData.append("invoice_date", this.entryForm.value.invoice_date);
-      fileData.append("material_grade", this.entryForm.value.material_grade);
-      fileData.append("do_quantity", this.entryForm.value.do_quantity);
-      fileData.append("despatch_date", this.entryForm.value.despatch_date);
-      fileData.append("truck_no", this.entryForm.value.truck_no);
-      fileData.append("driver_no", this.entryForm.value.driver_no );
-      fileData.append("premarks", this.entryForm.value.premarks);
-      fileData.append("lr_file", this.lr_file);
-      fileData.append("e_waybill_file", this.ewaybill);
-      fileData.append("test_certificate_file", this.testCertificate);
-      fileData.append("e_invoice_file", this.eInvoice);
-      fileData.append("misc_doc_file", this.misDoc);
-      fileData.append("plant_id", userId);
-
       this._spinner.show();
-      this._products.postMethopd('/user/store-do', fileData).subscribe((res: any) => {
-        this._spinner.hide();
-        if (res.status == 1) {
-          this.submitted = false;
-          this.lr_file = undefined;
-          this.ewaybill = undefined;
-          this.testCertificate = undefined;
-          this.eInvoice = undefined;
-          this.misDoc = undefined;
-          this.entryForm.reset();
-        this.toastr.success(res.message);
-        } else {
-          this.toastr.error();
+      let doQty = {
+        "so_no": this.soNum,
+        "do_quantity": this.entryForm.value['do_quantity']
+      }
+      this._sales.checkQtyDo(doQty).subscribe((res:any) => {
+        if (res.message != 'Success' && res.status == 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Sorry !',
+            text: 'DO quantity should not be greater than SO quantity !',
+          })
+          this._spinner.hide();
+          return;
+        } 
+        else {
+          const fileData = new FormData();
+          fileData.append("user_id", this.entryForm.value.user_id);
+          fileData.append("so_no", this.entryForm.value.so_no);
+          fileData.append("do_no", this.entryForm.value.do_no);
+          fileData.append("invoice_no", this.entryForm.value.invoice_no);
+          fileData.append("invoice_date", this.entryForm.value.invoice_date);
+          fileData.append("invoice_date", this.entryForm.value.invoice_date);
+          fileData.append("material_grade", this.entryForm.value.material_grade);
+          fileData.append("do_quantity", this.entryForm.value.do_quantity);
+          fileData.append("despatch_date", this.entryForm.value.despatch_date);
+          fileData.append("truck_no", this.entryForm.value.truck_no);
+          fileData.append("driver_no", this.entryForm.value.driver_no );
+          fileData.append("premarks", this.entryForm.value.premarks);
+          fileData.append("lr_file", this.lr_file);
+          fileData.append("e_waybill_file", this.ewaybill);
+          fileData.append("test_certificate_file", this.testCertificate);
+          fileData.append("e_invoice_file", this.eInvoice);
+          fileData.append("misc_doc_file", this.misDoc);
+          fileData.append("plant_id", userId);
+          
+          this._products.postMethopd('/user/store-do', fileData).subscribe((res: any) => {
+            this._spinner.hide();
+            if (res.status == 1) {
+              this.submitted = false;
+              this.lr_file = undefined;
+              this.ewaybill = undefined;
+              this.testCertificate = undefined;
+              this.eInvoice = undefined;
+              this.misDoc = undefined;
+              this.entryForm.reset();
+            this.toastr.success(res.message);
+            } else {
+              this.toastr.error();
+            }
+            this._router.navigate(['/plant/do-list']);
+          }, error => {
+            console.log(error)
+          })
         }
-        this._router.navigate(['/plant/do-list']);
-      }, error => {
-        console.log(error)
       })
-
+      
     }
   }
 

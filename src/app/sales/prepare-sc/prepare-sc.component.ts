@@ -416,7 +416,8 @@ export class PrepareScComponent implements OnInit {
           "FreightIndicator": this.updateInfoForm.value['fr_ind']
         }
     }
-    // console.log('ccc',sapRequest);
+    console.log('ccc',sapRequest);
+    return;
     this._sales.submitSalesCnt(fullData).subscribe((res:any) => {
     this._spiner.hide();
         Swal.fire(

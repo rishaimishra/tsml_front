@@ -283,7 +283,8 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for=""
-                                                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant, i, y)">Tsml's
+                                                        (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,
+                                                        productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery,formData.delivery, i, y)">Tsml's
                                                             price
                                                             <span
                                                                 class="price-info price-info0" data-toggle="modal"
@@ -468,55 +469,40 @@
                             <thead>
                                 <tr>
                                     <th scope="col" colspan="2">Pricing Components</th>
-                                    <th scope="col">Calculated Price (₹)</th>
-                                    <th scope="col">Updated Price (₹)</th>
+                                    <th scope="col">Guideline Price (₹)</th>
+                                    <th scope="col">Quoted Price (₹)</th>
                                 </tr>
                             </thead>
                             <tbody (change)="calculatePrice(schldId)">
                                 <tr>
-                                    <td colspan="2">Basic Price Table (BPT)</td>
+                                    <td colspan="2">Basic Price (High Phos 10-150mm)</td>
                                     <td>
                                         <div class="pp-bx" id="bptId">
                                             {{productPrice?.bpt_price}}
                                         </div>
                                     </td>
-                                    <td><input type="number" readonly 
+                                    <td><input type="number" readonly
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_bptPrice{{schldId}}" placeholder=""
-                                            value="{{productPrice?.bpt_price}}">
-                                        </td>
+                                            value="{{productPrice?.bpt_price}}"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Quality Premium</td>
+                                    <td colspan="2">Price Premium</td>
                                     <td>
                                         <div class="pp-bx" id="pricePrId">
                                             {{productPrice?.price_premium}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="price_premium"
-                                            [ngClass]="{ 'is-invalid': f.price_premium.errors && f.price_premium.touched}"
-                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="price_premium{{schldId}}" value="" placeholder="">
+                                    <td>
+                                        <input type="number" formControlName="price_premium"
+                                        [ngClass]="{ 'is-invalid': f.price_premium.errors && f.price_premium.touched}"
+                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                        id="price_premium{{schldId}}" value="" placeholder="">
                                         <small class="addClass" *ngIf="premiumPrice">Price Premium should not be less
                                             than {{productPrice?.price_premium}}</small>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">CAM Price Adjustment</td>
-                                    <td>
-                                        <div class="pp-bx" id="kamid">
-                                            {{productPrice?.cam_discount}}
-                                        </div>
-                                    </td>
-                                    <td><input type="number" formControlName="cam_discount"
-                                            [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
-                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_discount{{schldId}}">
-                                        <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
-                                            than
-                                            {{productPrice?.cam_discount}}</small>
-                                    </td>
-                                </tr>
+                                
                                 <tr>
                                     <td colspan="2">Delivery Cost</td>
                                     <td>
@@ -524,12 +510,10 @@
                                             {{productPrice?.delivery_cost}}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="delivery_cost"
-                                            [ngClass]="{ 'is-invalid': f.delivery_cost.errors && f.delivery_cost.touched}"
+                                    <td><input type="number" [readOnly]="isDap" formControlName="delivery_cost"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="delivery{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="deliveryCost">Delivery cost should not be less
-                                            than {{productPrice?.delivery_cost}}</small>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -539,7 +523,7 @@
                                             {{productPrice?.interest_rate }}
                                         </div>
                                     </td>
-                                    <td><input type="number" formControlName="interest_rate"
+                                    <td><input type="number"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_interest{{schldId}}" value="{{productPrice?.interest_rate }}" readonly>
 
@@ -562,7 +546,7 @@
                                             <span>{{daysCostCount}}</span>
                                         </div>
                                     </td>
-                                    <td><input type="number" readonly formControlName="creditCoast"
+                                    <td><input type="number" readonly
                                             [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                             class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
@@ -579,14 +563,30 @@
                                         </div>
                                     </td>
                                     <td><input type="number" formControlName="misc_expense"
-                                            [ngClass]="{ 'is-invalid': f.misc_expense.errors && f.misc_expense.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="misc_expense{{schldId}}" placeholder="">
-                                        <small class="addClass" *ngIf="miscPrice">Misc Expense should not be less than
-                                            {{productPrice?.misc_expense}}</small>
+                                        <!-- <small class="addClass" *ngIf="miscPrice">Misc Expense should not be less than
+                                            {{productPrice?.misc_expense}}</small> -->
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td colspan="2">Proposed Price Adjustment</td>
+                                    <td>
+                                        <div class="pp-bx" id="kamid">
+                                            {{productPrice?.cam_discount}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="number" formControlName="cam_discount"
+                                            class="form-control form-control-sm form-control srch-input form-control-sm-sm wid-150"
+                                            id="_discount{{schldId}}">
+                                        <select  name="status" (change)="selectPlusMins($event)" class="form-control col-lg-3 rm06 ng-pristine ng-valid ng-touched srch-plus">
+                                            <option value="+">+</option>
+                                            <option value="-">-</option>
+                                        </select>
+                                       
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="2">Final Price</td>
                                     <td>
@@ -597,7 +597,7 @@
                                     <td><input type="number" readonly formControlName="totalSum"
                                             [ngClass]="{ 'is-invalid': f.totalSum.errors && f.totalSum.touched}"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                            id="_total{{schldId}}" placeholder="" value="{{Totalsum1}}"></td>
+                                            id="_total{{schldId}}" placeholder="" value="{{totalValue}}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Percentage difference between BPT & Final Price (%)</td>
@@ -619,7 +619,7 @@
                         <button class="btn btn-primary" [disabled]="userType"
                             (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i>
                             Ok</button>&nbsp;
-                        <button type="button" class="btn btn-danger" (click)="cancelprice()"><i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" (click)="cancelprice()"><i class="fa fa-times"></i>
                             Cancel</button>
                     </div>
                 </div>

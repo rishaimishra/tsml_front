@@ -76,8 +76,13 @@ export class SalesService {
   submitSalesSo(request:any) {
     return this._http.post(this.BesUrl + '/user/so_submit', request);
   };
+
   submitManagerRfq(request:any) {
     return this._http.post(this.BesUrl + '/user/get_price_break', request);
+  };
+
+  checkQtyDo(request:any) {
+    return this._http.post(this.BesUrl + '/user/validate_do_qty', request);
   };
 
 }

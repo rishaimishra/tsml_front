@@ -683,6 +683,9 @@ export class PoViewComponent implements OnInit {
         this.spinner.hide();
         this.messages = res.result;
       }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login'])
+      }
     })
   };
   cancelprice() {
@@ -740,7 +743,6 @@ export class PoViewComponent implements OnInit {
   };
   getDeliveryItem() {
     this._product.getDeliveryMethod().subscribe((res: any) => {
-      console.log('ress', res);
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
       }

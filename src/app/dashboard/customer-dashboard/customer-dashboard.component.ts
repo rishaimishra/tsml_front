@@ -12,6 +12,7 @@ import { ProductsService } from 'src/app/service/products.service';
 export class CustomerDashboardComponent implements OnInit {
   kamItems:any;
   p: number = 1;
+  d: number = 1;
   poItems:any;
   userName:any;
   statusRfq:any = [];
