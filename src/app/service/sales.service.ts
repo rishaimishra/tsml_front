@@ -85,4 +85,8 @@ export class SalesService {
     return this._http.post(this.BesUrl + '/user/validate_do_qty', request);
   };
 
+  poStatus(request:any) {
+    return this._http.post(this.BesUrl + '/user/po_status_update', request);
+  };
+
 }

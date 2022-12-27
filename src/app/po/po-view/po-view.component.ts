@@ -101,6 +101,7 @@ export class PoViewComponent implements OnInit {
   userAfterPrePrice: any;
   percentPrice:any;
   poNumber:any;
+  poSunnry:any;
 
 
   constructor(
@@ -129,6 +130,7 @@ export class PoViewComponent implements OnInit {
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.id;
+      console.log(this.productId);
       this.categoryid = res.categoryId;
       this.detailByRfq();
     });
@@ -220,8 +222,8 @@ export class PoViewComponent implements OnInit {
       else {
         this.product_data = '';
       }
-
     })
+    this.getScSoDetails();
   };
 
   getCategory() {
@@ -747,7 +749,7 @@ export class PoViewComponent implements OnInit {
         this.deliveryDropList = res.result;
       }
     })
-  }
+  };
 
   selectFile(event: any) {
     this.letterHedFile = event.target.files[0];
@@ -764,7 +766,7 @@ export class PoViewComponent implements OnInit {
     } else {
       this.letterHeadFile = false;
     }
-  }
+  };
 
   submitPoAttachment() {
     if (this.letterHedFile == null || this.inputPONum == '') {
@@ -819,7 +821,7 @@ export class PoViewComponent implements OnInit {
         })
       }
     })
-  }
+  };
 
   getCategoriDetails (productId:any, catId:any) {
     let categoryFilter = {
@@ -836,12 +838,22 @@ export class PoViewComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
-  }
+  };
 
   removeCat(i:any) {
     let indx = this.categori.findIndex((item: any) => item.id == i);
     if (indx !== -1) {
       this.categori.splice(indx, 1);
     }
+  };
+
+  getScSoDetails() {
+    let apiUrl = '/user/get_po_summary/'+this.productId;
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      console.log(res);
+      if(res.status ==1) {
+        this.poSunnry = res.result;
+      }
+    })
   }
 }

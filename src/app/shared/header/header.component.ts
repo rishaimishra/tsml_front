@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   userType: boolean;
   userRol:any;
   notifications: any;
+  userId:any;
   
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
@@ -34,6 +35,8 @@ export class HeaderComponent implements OnInit {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
     this.userName = localStorage.getItem('USER_NAME');
     this.userRol = localStorage.getItem('USER_TYPE');
+    this.userId = localStorage.getItem('USER_ID');
+
     if(this.userRol == 'Kam') {
       this.getCamNoti();
       this.userType = false;
@@ -108,7 +111,7 @@ export class HeaderComponent implements OnInit {
         this.notifications = res.result;
       }
     })
-  }
+  };
   getSalesNoti() {
     this._product.getSalesNoti().subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {
@@ -118,7 +121,7 @@ export class HeaderComponent implements OnInit {
         this._router.navigate(['/auth/login']);
       }
     })
-  }
+  };
 
   getCustNoti() {
     let userid = localStorage.getItem('USER_ID');
@@ -131,7 +134,7 @@ export class HeaderComponent implements OnInit {
         this._router.navigate(['/auth/login']);
       }
     })
-  }
+  };
 
   removeNoti(id:any) {
     this._spinner.show();
@@ -157,5 +160,24 @@ export class HeaderComponent implements OnInit {
           this.getCamNoti();
         })
     }
+  };
+
+  clearAllNoti() {
+    this._spinner.show();
+    let clearMessage = {
+      "user_type": this.userRol,
+      "user_id": this.userId
+    };
+    this._auth.clearNoti(clearMessage).subscribe((res:any) => {
+      this._spinner.hide();
+      this.ngOnInit();
+      console.log(res);
+      if (res.status == 'Token has Expired'){
+        this._router.navigate(['/auth/login'])
+      }
+    }, err => {
+      console.log(err);
+      this._spinner.hide();
+    })
   }
 }

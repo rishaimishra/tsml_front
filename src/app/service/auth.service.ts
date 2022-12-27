@@ -53,4 +53,7 @@ export class AuthService {
   // gstDetails(request: any) {
   //   return this._http.post('http://172.16.2.102:6082/getGstDetails', request);
   // };
+  clearNoti(request:any) {
+    return this._http.post(this.BesUrl + '/user/clear_notification', request);
+  };
 }

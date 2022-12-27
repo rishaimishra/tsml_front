@@ -128,11 +128,18 @@
                                           class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>RFQ
                                              Closed</span></a>
                                     </div>
+
+                                    <div class="stepwizard-step">
+                                       <a type="button" [ngClass]="{'active':statusRfq[i]?.sc_created == 1}"
+                                          class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>SC Created</span></a>
+                                    </div>
+                                    
+                                    <div class="stepwizard-step">
+                                       <a type="button" [ngClass]="{'active':statusRfq[i]?.so_created == 1}"
+                                          class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>SO Created</span></a>
+                                    </div>
                                  </div>
                               </div>
-
-                              <div class="badge badge-pill badge-success mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 'RFQ Closed'">{{rfqItem?.st_txt}}</div>
 
                               <div class="badge badge-pill badge-warning mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'New Enquiry'">{{rfqItem?.st_txt}}</div>
@@ -145,6 +152,15 @@
 
                               <div class="badge badge-pill badge-success mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'Material Confirmed'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'RFQ Closed'">{{rfqItem?.st_txt}}</div>
+                              
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'SO Created'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'SC Created'">{{rfqItem?.st_txt}}</div>
 
                               <span class="font-weight-bold">RFQ
                                  Number: <b class="text-primary pointerTab"
@@ -222,6 +238,12 @@
                                     </td>
                                     <td *ngIf="po.status == 4">
                                        <span class="badge badge-warning">{{po.status_txt}}</span>
+                                    </td>
+                                    <td *ngIf="po.status == 6">
+                                       <span class="badge badge-success">{{po.status_txt}}</span>
+                                    </td>
+                                    <td *ngIf="po.status == 5">
+                                       <span class="badge badge-success">{{po.status_txt}}</span>
                                     </td>
                                     <td>
                                        <div class="cell1 tab_head_sheet_1 ">

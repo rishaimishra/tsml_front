@@ -12,6 +12,8 @@
           <h2>PO date: <b>{{poInfo?.po_date}}</b></h2>
           <div class="clearfix"></div>
         </div>
+        <p class="ptag" *ngIf="poSunnry?.sc_no != null">Sales Contract Number: <b>{{poSunnry?.sc_no}}</b></p>
+        <p class="ptag" *ngIf="poSunnry?.so_no != null">Sales Order Number: <b>{{poSunnry?.so_no}}</b></p>
       </div>
     </section>
 

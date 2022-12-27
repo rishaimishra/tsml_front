@@ -798,7 +798,7 @@ export class CustomerComponent implements OnInit {
       "sche_no": schedule_no
     }
     this._sales.submitManagerRfq(managerReq).subscribe((res:any) => {
-      if(res.status == 1) {
+      if(res.status == 1 && res.result.length > 0) {
         this.priceForm.controls['price_premium'].setValue(res.result[1].value);
         this.priceForm.controls['cam_discount'].setValue(res.result[2].value);
         this.priceForm.controls['delivery_cost'].setValue(res.result[3].value);
@@ -973,9 +973,10 @@ export class CustomerComponent implements OnInit {
         let interest = $('#_interest'+id).val();
         let credit = $('#_credit'+id).val();
         let miscEx = $('#misc_expense'+id).val();
+        let _discount = $('#_discount'+id).val();
         let total = $('#_total'+id).val();
         let diffPrice = $('#_bptAndfinal'+id).val();
-    
+
         let componentArr = [
           {
             "comp": this.compPrice[0].code,
@@ -987,23 +988,23 @@ export class CustomerComponent implements OnInit {
           },
           {
             "comp": this.compPrice[2].code,
-            "value": discount
-          },
-          {
-            "comp": this.compPrice[3].code,
             "value": delivery
           },
           {
-            "comp": this.compPrice[4].code,
+            "comp": this.compPrice[3].code,
             "value": interest
           },
           {
-            "comp": this.compPrice[5].code,
+            "comp": this.compPrice[4].code,
             "value": credit
           },
           {
-            "comp": this.compPrice[6].code,
+            "comp": this.compPrice[5].code,
             "value": miscEx
+          },
+          {
+            "comp": this.compPrice[6].code,
+            "value": _discount
           },
           {
             "comp": this.compPrice[7].code,
@@ -1014,6 +1015,7 @@ export class CustomerComponent implements OnInit {
             "value": diffPrice
           }
         ]
+        console.log(componentArr);
         let compPriceArr = {
           "sub_cat_id": this.sub_catId,
           "size": this.sizes,

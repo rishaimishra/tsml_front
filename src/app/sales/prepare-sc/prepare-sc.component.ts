@@ -40,8 +40,11 @@ export class PrepareScComponent implements OnInit {
   permissPerc: any = '';
   incotermsInfo: any = [];
   paymentInfo: any = [];
-  matCodeId:any;
-  percentArr:any = [];
+  matCodeId: any;
+  percentArr: any = [];
+  rfqNo: any;
+  rfqNumber:any;
+  userId:any;
 
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
@@ -232,9 +235,9 @@ export class PrepareScComponent implements OnInit {
     this.matCodeId = updatItem['mat_code'];
   };
 
-  percent(value:any, matCode:any) {
-    let matCodValue = $('#mat_code'+matCode).html();
-    let charecValue = $('#charact'+matCode).html();
+  percent(value: any, matCode: any) {
+    let matCodValue = $('#mat_code' + matCode).html();
+    let charecValue = $('#charact' + matCode).html();
     let permiPerce = {
       "mat_code": matCodValue,
       "perm_percent": value,
@@ -254,9 +257,11 @@ export class PrepareScComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         this.scData = res.result[0];
         this.scInfo = res.result;
+        this.rfqNumber = this.scData['rfq_no'];
+        this.userId = this.scData['user_id'];
         let addrOne = this.scData.addressone;
         let addrTwo = this.scData.addresstwo;
-        let fullAddr = (addrOne + ' '+ addrTwo);
+        let fullAddr = (addrOne + ' ' + addrTwo);
         this.scForm.get('qty_cont').setValue(this.scData.qty_ct);
         this.scForm.get('net_val').setValue(this.scData.net_value);
         this.scForm.get('sold_to_party').setValue(this.scData.user_code);
@@ -313,8 +318,8 @@ export class PrepareScComponent implements OnInit {
   };
 
   pricValArr = [];
-  getPrice(event:any, i:any) {
-    let data = $('#priceVal'+i).html();
+  getPrice(event: any, i: any) {
+    let data = $('#priceVal' + i).html();
     let item = event.target.value;
     let reqParam = {
       "id": i,
@@ -333,9 +338,6 @@ export class PrepareScComponent implements OnInit {
 
 
   submitSc() {
-    // this._spiner.show();
-    console.log(this.percentArr);
-
     const seFormDataArr = [];
     const sapMatArr = [];
     const codePrice = [];
@@ -343,6 +345,7 @@ export class PrepareScComponent implements OnInit {
     this.scForm.value['po_no'] = this.poNumber;
     for (let i = 0; i < this.pricValArr.length; i++) {
       const element = this.pricValArr[i];
+
       let codePr = {
         "CnTy": element.CnTy,
         "Amount": element.Amount
@@ -353,7 +356,7 @@ export class PrepareScComponent implements OnInit {
     for (let i = 0; i < this.scInfo.length; i++) {
       const element = this.scInfo[i];
       this.getSpec(this.scInfo[i]['specs']);
-
+      this.rfqNo = this.scInfo[i].rfq_no;
       let sapMaterial = {
         "Material": this.scInfo[i].mat_code,
         "Quantity": this.scInfo[i].tot_qty,
@@ -364,16 +367,16 @@ export class PrepareScComponent implements OnInit {
       sapMatArr.push(sapMaterial);
       let indxId = this.percentArr.findIndex((item: any) => item.mat_code == this.scInfo[i].mat_code);
       let material =
-        { 
-          "value": "100000",
-          "mat_code": this.scInfo[i].mat_code,
-          "pcode": this.scInfo[i].pcode,
-          "rfq_no": this.scInfo[i].rfq_no,
-          "price_det": element['price_det'],
-          "specs": this.specs[i],
-          "total": this.scInfo[i].total,
-          "per_percent": this.percentArr[indxId]
-        }
+      {
+        "value": "100000",
+        "mat_code": this.scInfo[i].mat_code,
+        "pcode": this.scInfo[i].pcode,
+        "rfq_no": this.scInfo[i].rfq_no,
+        "price_det": element['price_det'],
+        "specs": this.specs[i],
+        "total": this.scInfo[i].total,
+        "per_percent": this.percentArr[indxId]
+      }
       seFormDataArr.push(material);
     }
     let fullData = {
@@ -382,52 +385,89 @@ export class PrepareScComponent implements OnInit {
       "material": seFormDataArr
     }
     let sapRequest = {
-        "OrganizationalData": {
-          "ContractType": this.scForm.value['contract_ty'],
-          "SalesOrganization": this.scForm.value['sales_org'],
-          "DistributionChannel": this.scForm.value['dis_chnl'],
-          "Division": this.scForm.value['div'],
-          "Salesoffice": this.scForm.value['sales_ofc'],
-          "Salesgroup": this.scForm.value['sales_grp']
-        },
-        "SoldToParty": {
-          "QtyContractTSML": this.scForm.value['qty_cont'],
-          "Sold_To_Party": this.scForm.value['sold_to_party'],
-          "Ship_To_Party": this.scForm.value['sold_to_addr'],
-          "Cust_Referance": this.scForm.value['cus_ref'],
-          "NetValue": this.scForm.value['net_val'],
-          "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
-        },
-        "Sales": {
-          "Shp_Cond": this.scForm.value['shp_cond'],
-        },
-        "Items": sapMatArr,
-        "Conditions": codePrice,
+      "OrganizationalData": {
+        "ContractType": this.scForm.value['contract_ty'],
+        "SalesOrganization": this.scForm.value['sales_org'],
+        "DistributionChannel": this.scForm.value['dis_chnl'],
+        "Division": this.scForm.value['div'],
+        "Salesoffice": this.scForm.value['sales_ofc'],
+        "Salesgroup": this.scForm.value['sales_grp']
+      },
+      "SoldToParty": {
+        "QtyContractTSML": this.scForm.value['qty_cont'],
+        "Sold_To_Party": this.scForm.value['sold_to_party'],
+        "Ship_To_Party": this.scForm.value['sold_to_addr'],
+        "Cust_Referance": this.scForm.value['cus_ref'],
+        "NetValue": this.scForm.value['net_val'],
+        "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
+      },
+      "Sales": {
+        "Shp_Cond": this.scForm.value['shp_cond'],
+      },
+      "Items": sapMatArr,
+      "Conditions": codePrice,
 
-        "TermsofDeliveryandPayment": {
-          "Incoterms": this.updateInfoForm.value['incoterms'],
-          "Paymentterms": this.updateInfoForm.value['pay_terms']
-        },
-        "AdditionalDataA": {
-          "Freight": this.updateInfoForm.value['freight'],
-          "CustomerGroup4": this.updateInfoForm.value['cus_grp']
-        },
-        "AdditionalDataforPricing": {
-          "FreightIndicator": this.updateInfoForm.value['fr_ind']
-        }
+      "TermsofDeliveryandPayment": {
+        "Incoterms": this.updateInfoForm.value['incoterms'],
+        "Paymentterms": this.updateInfoForm.value['pay_terms']
+      },
+      "AdditionalDataA": {
+        "Freight": this.updateInfoForm.value['freight'],
+        "CustomerGroup4": this.updateInfoForm.value['cus_grp']
+      },
+      "AdditionalDataforPricing": {
+        "FreightIndicator": this.updateInfoForm.value['fr_ind']
+      }
     }
-    console.log('ccc',sapRequest);
-    return;
-    this._sales.submitSalesCnt(fullData).subscribe((res:any) => {
-    this._spiner.hide();
-        Swal.fire(
-          'Success',
-          'Submited Successfully',
-          'success'
-        )
+
+    this._spiner.show();
+    this._sales.submitSalesCnt(fullData).subscribe((res: any) => {
+      this._spiner.hide();
+      Swal.fire(
+        'Success',
+        'Submited Successfully',
+        'success'
+      )
+      let ScStatusRequest = {
+        "po_no": this.poNumber,
+        "status": '5'
+      }
+      this._sales.poStatus(ScStatusRequest).subscribe((res: any) => {
+        this._spiner.hide();
+      })
+
+      let userId = localStorage.getItem('USER_ID');
+      let camNotiReq = {
+        "desc": 'SC has been created',
+        "desc_no": this.poNumber,
+        "user_id": userId,
+        "url_type": 'PO'
+      }
+      this._product.camNotification(camNotiReq).subscribe((res: any) => {
+      })
+      let custNotiReq = {
+        "desc": 'SC has been created',
+        "desc_no": this.poNumber,
+        "user_id": userId,
+        "url_type": 'PO',
+        "sender_id": this.userId
+      }
+      this._product.custNotiSubmit(custNotiReq).subscribe((res: any) => {
+      })
+
+      // progress bar status
+      let statusRequest = {
+        "rfq_no": this.rfqNumber,
+        "sc_created": '1'
+      }
+      this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+      })
+
+      this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+      })
     }, err => {
       console.log(err);
-    this._spiner.hide();
+      this._spiner.hide();
     })
   }
   backTo() {

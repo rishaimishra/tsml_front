@@ -133,10 +133,10 @@ export class RegisterComponent implements OnInit {
   shipGst: any;
 
   ferroChrome = [
-    { id: 1, select: false, name: 'High' },
-    { id: 2, select: false, name: 'Low' },
-    { id: 3, select: false, name: 'Medium' },
-    { id: 4, select: false, name: 'Low Silicone' },
+    { id: 1, select: false, name: 'High Phos' },
+    { id: 2, select: false, name: 'Medium Phos' },
+    { id: 3, select: false, name: 'Low Phos' },
+    { id: 4, select: false, name: 'Low Silicon ' },
     { id: 5, select: false, name: 'HC Ferro Chrome (Chips & Fines)' },
 
   ];

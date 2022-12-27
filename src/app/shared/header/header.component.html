@@ -9,10 +9,11 @@
                <ul>
                   <li class="hedTopBtn"> <a class="sign_btn log_btn">English</a> </li>
                   <li>
-                     <a class="shopcut pointer"> 
+                     <!-- <a class="shopcut pointer"> 
                         <i class="fa fa-bell" aria-hidden="true"></i> <span class="noti">{{notifications?.length}}+</span>
-                     </a>
-                     <div class="shopcutBx notiBox">
+
+                     </a> -->
+                     <!-- <div class="shopcutBx notiBox">
                         <div class="shopcutBx_media" *ngFor="let noti of notifications; let i = index">
                            <div class="noti-loop">
                               <div class="noti-pic">
@@ -25,7 +26,42 @@
                            <small >-- {{noti.user_id}}</small>
                            <a (click)="removeNoti(noti.id)" class="closecut pointer text-primary"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </div>
-                     </div>
+                        <div class="text-right pointer" *ngIf="notifications?.length > 4">
+                           <span (click)="clearAllNoti()" class="badge badge-secondary">Clear All</span>
+                        </div>
+                     </div> -->
+
+                     <div class = "notification">
+                        <a href = "#">
+                        <div class = "notBtn" href = "#">
+                          <div class = "number">{{notifications?.length}}+</div>
+                          <i class="fa fa-bell" aria-hidden="true"></i>
+                            <div class = "box">
+                              <div class = "display">
+                                <div class = "nothing"> 
+                                  <!-- <i class="fas fa-child stick"></i>  -->
+                                  <div class = "cent mt-5">No any notification yet !</div>
+                                </div>
+                                <div class = "cont">
+                                   <div class = "sec" *ngFor="let noti of notifications; let i = index">
+                                     <a href = "https://codepen.io/Golez/">
+                                     <div class = "profCont">
+                                     <img class = "profile" src = "https://i.imgur.com/HYcn9xO.png">
+                                      </div>
+                                     <div class = "txt">{{noti.desc}} -- {{noti.desc_no }}</div>
+                                    <div class = "txt sub">{{noti.user_id}}<span class="dt"></span></div>
+                                    <!-- <i class="fa fa-calendar" aria-hidden="true"></i> 27 Dec.2022 -->
+                                     </a>
+                                  </div>
+                                  <div class="text-right pointer" *ngIf="notifications?.length > 1">
+                                    <span (click)="clearAllNoti()" class="badge badge-secondary">Clear All</span>
+                                 </div>
+                               </div>
+                              </div>
+                           </div>
+                        </div>
+                          </a>
+                      </div>
                      
                   </li>
                   <li class="login-uuser" *ngIf="isUserLogIn != false && loginFalse != true">

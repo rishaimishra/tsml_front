@@ -223,6 +223,7 @@ export class DoEntryComponent implements OnInit {
             } else {
               this.toastr.error();
             }
+            
             this._router.navigate(['/plant/do-list']);
           }, error => {
             console.log(error)
