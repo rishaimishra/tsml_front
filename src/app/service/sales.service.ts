@@ -88,5 +88,9 @@ export class SalesService {
   poStatus(request:any) {
     return this._http.post(this.BesUrl + '/user/po_status_update', request);
   };
+  
+  sapReq(request:any) {
+    return this._http.post('http://10.0.170.42:50000/RESTAdapter/SalesContract', request);
+  };
 
 }

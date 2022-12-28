@@ -474,4 +474,58 @@ export class PrepareScComponent implements OnInit {
     this._location.back();
   };
 
+  callApi() {
+    let data = {
+      "OrganizationalData": {
+        "ContractType": "ZFQC",
+        "SalesOrganization": 5500,
+        "DistributionChannel": 50,
+        "Division": 81,
+        "Salesoffice": 2000,
+        "ContractValidFrom":"20221127",
+        "ContractValidTo":"20221227"
+      },
+      "SoldToParty": {
+        "QtyContractTSML": 300,
+        "Sold_To_Party": 50000118,
+        "Ship_To_Party": 50000002,
+        "Cust_Referance": "SUBRATA1967",
+        "NetValue": 209000,
+        "Cust_Ref_Date": "2022-11-27"
+      },
+      "Sales": {
+        "Shp_Cond": 1
+      },
+      "Items": {
+        "Item": 10,
+        "Material": 120000109,
+        "Quantity": 300,
+        "CustomarMaterialNumber": 120000109,
+        "OrderQuantity": 100,
+        "Plant": 2200
+      },
+      "Conditions": [
+        {
+           "Itemnumber":10,
+          "CnTy": "ZPR0",
+          "Amount": 100000
+        },
+        {
+           "Itemnumber":20,
+          "CnTy": "ZPR0",
+          "Amount": 1000
+        }
+      ],
+      "AdditionalDataA": {
+        "Freight": "BARGE",
+        "CustomerGroup4": 1
+      },
+      "AdditionalDataforPricing": {
+        "FreightIndicator": "Exclusive Indicator"
+      }
+    }
+    this._sales.sapReq(data).subscribe((res:any) => {
+      console.log(res);
+    })
+  }
 }

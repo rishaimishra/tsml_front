@@ -10,8 +10,6 @@ import { verifyOptRequest, verifyOtpResponse } from '../interfaces/verify-otp';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly LOGIN_URL: String = 'login';
-  private readonly REGISTER_URL: String = 'register';
   private readonly GET_OTP_URL: String = 'send-mobile-otp';
   private readonly VERIFY_OTP_URL: String = 'verify-mobile-otp';
 
