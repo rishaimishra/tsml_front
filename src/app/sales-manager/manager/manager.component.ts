@@ -125,6 +125,7 @@ export class ManagerComponent implements OnInit {
   daysCal:any;
   totalValue:any;
   isDap: boolean = false;
+  rejectRemarks:any = '';
 
 
   @ViewChild("remarksModel")
@@ -373,6 +374,7 @@ export class ManagerComponent implements OnInit {
   };
   selectRadio(event:any) {
     this.qtStatusUpdate = event.target.value;
+    console.log(this.qtStatusUpdate);
   };
 
   addItem() {
@@ -462,7 +464,6 @@ export class ManagerComponent implements OnInit {
     }
 
     let userRol = localStorage.getItem('USER_TYPE');
-    let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
 
@@ -538,14 +539,12 @@ export class ManagerComponent implements OnInit {
             "quoted_by_tsml": '1'
           }
           this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
-            console.log('status',res);
           })
           let statusRequestKam = {
             "rfq_no": this.rfqNum,
             "price_accepted": '1'
           }
           this._product.storeStatusKam(statusRequestKam).subscribe((res:any) => {
-            console.log('status',res);
           })
          } 
          if (this.qtStatusUpdate == 9) {
@@ -554,7 +553,6 @@ export class ManagerComponent implements OnInit {
             "price_rejected": '1'
           }
           this._product.storeStatusKam(statusRequestKam).subscribe((res:any) => {
-            console.log('status',res);
           })
          }
           
@@ -647,19 +645,7 @@ export class ManagerComponent implements OnInit {
         console.log(res);
       })
     } 
-    
-      // let qoutesReq = {
-      //   "rfq_no": this.rfqNum,
-      //   "status": 6
-      // }
-      // this._product.qouteStatusUpdate(qoutesReq).subscribe((res:any) => {
-      // })
-    // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-    //   this._router.navigate(['/po/po',this.rfqNum]);
-    // } 
-    // else {
-    //   this._router.navigate(['/sales-manager/rfq-list']);
-    // }
+  
   };
 
   date: any;
@@ -1148,6 +1134,33 @@ export class ManagerComponent implements OnInit {
   getCompPrice() {
     this._product.getPriceComp().subscribe((res:any) => {
       this.compPrice = res.result;
+    })
+  };
+
+  saveRemarks() {
+    if (this.rejectRemarks == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please give a reason for reject !',
+      })
+      return;
+    }
+    let userId = localStorage.getItem('USER_ID');
+    let remarks = {
+      "user_id": userId,
+      "rfq_no": this.rfqNum,
+      "remarks": this.rejectRemarks,
+      "type":"R"
+    }
+    this.spinner.show();
+    this._sales.rejectRemarks(remarks).subscribe((res:any) => {
+      this.spinner.hide();
+      if (res.status == 1) {
+        this.submitRfq();
+        $(".modal-backdrop").removeClass("modal-backdrop show");
+        this._router.navigate(['/sales-manager/rfq-list'])
+      }
     })
   }
 }

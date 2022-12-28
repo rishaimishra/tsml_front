@@ -65,6 +65,8 @@ export class PrepareScComponent implements OnInit {
       sales_grp: [''],
       qty_cont: [''],
       net_val: [''],
+      // ContractValidFrom: [''],
+      // ContractValidTo: [''],
       sold_to_party: [''],
       sold_to_addr: [''],
       ship_to_addr: [''],
@@ -341,6 +343,8 @@ export class PrepareScComponent implements OnInit {
     const seFormDataArr = [];
     const sapMatArr = [];
     const codePrice = [];
+    const val = Math.floor(10 + Math.random() * 90);
+    console.log(val);
 
     this.scForm.value['po_no'] = this.poNumber;
     for (let i = 0; i < this.pricValArr.length; i++) {
@@ -418,7 +422,8 @@ export class PrepareScComponent implements OnInit {
       "AdditionalDataforPricing": {
         "FreightIndicator": this.updateInfoForm.value['fr_ind']
       }
-    }
+    };
+    console.log(fullData);
 
     this._spiner.show();
     this._sales.submitSalesCnt(fullData).subscribe((res: any) => {

@@ -29,7 +29,7 @@ export class AuthIntercepto implements HttpInterceptor {
         if (sapApiurl == true) {
             let basicAuth = req.clone({
                 setHeaders: {
-                    Authorization: 'Basic ' + btoa(authorizationData)
+                    Authorization: 'Basic Auth ' + btoa(authorizationData)
                 }
             });
             return next.handle(basicAuth);

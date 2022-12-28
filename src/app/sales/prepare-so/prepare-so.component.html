@@ -25,6 +25,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 10, currentPage: p }">
+                                        <ng-container *ngIf="po.sc_no != null">
                                         <td>{{po.po_no}}</td>
                                         <td>{{po.po_date}}</td>
                                         <td>{{po.user}}</td>
@@ -32,6 +33,7 @@
                                         <td>{{po.rfq_date}}</td>
                                         <td align="right"><button (click)="prepareSo(po.sc_no, po.po_no, po.rfq_no)" class="btn btn-sm btn-primary">Prepare SO</button>
                                         </td>
+                                        </ng-container>
                                     </tr>
                                 </tbody>
                             </table>
