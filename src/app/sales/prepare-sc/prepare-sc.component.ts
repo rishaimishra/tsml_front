@@ -92,6 +92,7 @@ export class PrepareScComponent implements OnInit {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.salesPo = res.result;
+        console.log(this.salesPo);
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])

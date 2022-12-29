@@ -43,6 +43,9 @@ export class AuthService {
   resetPassByEmail(data: any) {
     return this._http.post(this.BesUrl + '/password-update', data);
   };
+  submitForgetPass(data: any) {
+    return this._http.post(this.BesUrl + '/password-update', data);
+  };
 
   gstApi() {
     return this._http.get(this.BesUrl + '/gst_details_dummy');
@@ -53,5 +56,9 @@ export class AuthService {
   // };
   clearNoti(request:any) {
     return this._http.post(this.BesUrl + '/user/clear_notification', request);
+  };
+  
+  forgetPass(request:any) {
+    return this._http.post(this.BesUrl + '/password-email',  request);
   };
 }

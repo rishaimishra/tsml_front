@@ -129,6 +129,9 @@ export class ComplainsComponent implements OnInit {
         this._spinner.hide();
         this.toaster.error(res.message);
       }
+      if (res.status == 'Token has Expired') {
+        this._router.navigate(['/auth/login'])
+      }
     }, err => {
       console.log(err);
     })

@@ -850,7 +850,6 @@ export class PoViewComponent implements OnInit {
   getScSoDetails() {
     let apiUrl = '/user/get_po_summary/'+this.productId;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
-      console.log(res);
       if(res.status ==1) {
         this.poSunnry = res.result;
       }

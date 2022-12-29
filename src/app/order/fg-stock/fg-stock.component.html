@@ -1,0 +1,30 @@
+<app-header></app-header>
+<div class="page-content mb-5">
+    <section class="sub-header-2">
+        <div class="container-fluid">
+            <h1>Upload Fg-Stock Assumption</h1>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <section class="add-prod-pg">
+        <div class="container-fluid">
+            <div class="prof-form-bdy pb-5">
+                <div class="form-row mb-2">
+                  <div class="col-6">
+                    <label for="">Production Upload</label>
+                    <input type="file" accept=".jpeg, .pdf, .png, .xlsx" (change)="productionFile($event)"  class="form-control" placeholder="City">
+                  </div>
+                  <div class="col">
+                    <label for="">Select Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="productionDate" placeholder="State">
+                  </div>
+                  <div class="col mb-1">
+                    <button class="btn btn-primary btn-sm mt-4 ml-5" (click)="submitFg()">Submit</button>
+                    <button class="btn btn-dark mt-4 ml-1"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<app-footer></app-footer>

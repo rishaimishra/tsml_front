@@ -117,13 +117,15 @@
 
                      <li class="nav-item"><a class="nav-link" *ngIf="isUserLogIn == false || loginFalse == true" routerLink="/auth/register">
                            Register </a></li>
+
                      <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'Sales' && userRol != 'SM' && userRol != 'OPT')">
                              <a class="nav-link" href="javascript:;" data-toggle="dropdown">  
                                  Order Planning</a>
-                                 <div class="dropdown-menu small-dd" style="color: black;">
-                                     <a routerLink="/order/order-planing">Order Planing</a><br>
-                                     <a routerLink="/order/order-planing-form" class="mt-2">Order Planing Form</a><br>
-                                     <a routerLink="/order/dispatch-plan" class="mt-2">Dispatch Plan</a>
+                                 <div class="dropdown-menu small-dd pointer" style="color: black;">
+                                     <option routerLink="/order/order-planing">Order Planing</option>
+                                     <option routerLink="/order/order-planing-form" class="mt-2">Order Planing Form</option>
+                                     <option routerLink="/order/dispatch-plan" class="mt-2">Dispatch Plan</option>
+                                     <option routerLink="/order/fg-stock" class="mt-2">Upload FG Stock</option>
                                    </div>
                       </li>
                       <!-- Oder proccesing team -->
@@ -158,10 +160,10 @@
                </div>
                <!-- navbar-collapse.// -->
                <div class="hedbt">
-                  <a class="sebtn sharch_tog" routerLink="/sales/prepare-so" id="sharch_tog"><span class="wit-pic"><img
+                  <a class="sebtn sharch_tog" id="sharch_tog"><span class="wit-pic"><img
                            src="assets/images/magnifiying-white.png"></span><span class="blu-pic"><img
                            src="assets/images/magnifiying-black.png"></span></a>
-                  <span class="wit-pic wit-secondary-logo" routerLink="/sales/prepare-sc"><img src="assets/images/secondary-white.png"></span><span
+                  <span class="wit-pic wit-secondary-logo"><img src="assets/images/secondary-white.png"></span><span
                      class="blu-pic blu-secondary-logo"><img src="assets/images/secondary-blue.png"></span>
                </div>
 

@@ -129,7 +129,7 @@ export class ProductsService {
   };
 
   rfqSubmitedEmail(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/quote_gen_mail', reqParameter);
+    return this._http.post(this.BesUrl + '/cus_quote_gen_mail', reqParameter);
   };
 
   salesSubmitedEmail(reqParameter: any) {

@@ -1,9 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="en">
-
    <body>
       <!--/Header-->
-      <section class="login-bg">
+      <section class="login-bg" *ngIf="hideLogin">
          <div class="vertical-center">
                <div class="container">
                   <div class="row justify-content-center my-55">
@@ -21,10 +20,6 @@
                               <div>
                                  <label>User ID</label>
                                  <input formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
-                                 <!-- <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                    <div *ngIf="f.email.errors.required">User is required</div>
-                                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                                  </div> -->
                               </div>
                            </div>
                            <!--/-->
@@ -38,13 +33,14 @@
                                   </div>
                               </div>
                            </div>
-                           <!--/-->
-                           <div class="col-12 ttext-right">
+                           <!-- <div class="col-12 ttext-right">
                               <a [routerLink]="['/auth/forget-password']" class="smll-font">Reset Password?</a>
+                           </div> -->
+                           <div class="col-12 text-right">
+                              <a (click)="goToForgetPass()" class="smll-font pointer">Forget Password?</a>
                            </div>
-                           <!--/-->
                            <div class="col-12 my-3">
-                              <button href="javascript:;" type="submit" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Submit</button>
+                              <button href="javascript:;" type="submit" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
                            </div>
                            <!--/-->
                            <div class="col-12 text-center">
@@ -56,6 +52,41 @@
                   </div>
                </div>
          </div>
+      </section>
+      <!-- Forget pass --> 
+      <section class="login-bg" *ngIf="hideShowPass">
+         <div class="vertical-center">
+               <div class="container">
+                  <div class="row justify-content-center my-55">
+                     <div class="col-10 col-md-6 col-lg-4 position-relative">
+                        <div class="nav-round3"></div>
+                        <div class="row login-inner">
+                           <div class="col-12 mb-3">
+                              <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
+                           </div>
+                           <div class="col-12">
+                              <p class="log-txt">Forgot Password</p>
+                           </div>
+                           <div class="col-12">
+                              <div>
+                                 <label>Email ID</label>
+                                 <input [(ngModel)]="forgetEmail" type="email" class="form-control">
+                              </div>
+                              <div class="col-12 text-right">
+                                 <a class="smll-font pointer" (click)="backToLogin()" >Back to Login</a>
+                              </div>
+                           </div>
+                           <!--/-->
+                           
+                           <div class="col-12 my-3">
+                              <button (click)="forgetPassword()" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Send</button>
+                           </div>
+                           <!--/-->
+                         </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
       </section>
    </body>
 </html>

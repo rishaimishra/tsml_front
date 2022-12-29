@@ -15,7 +15,9 @@ import { CustomValidators } from '../login/custom1Validator';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
-
+  hideShowPass: boolean = false;
+  hideLogin: boolean = true;
+  forgetEmail:any;
 
   constructor(private _fb: FormBuilder, private _toster: ToastrService,
     private _auth: AuthService, private _router: Router, private _spinner: NgxSpinnerService) {
@@ -33,6 +35,28 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
+  goToForgetPass() {
+    this.hideLogin = false;
+    this.hideShowPass = true;
+  };
+  forgetPassword() {
+    this._spinner.show();
+    let forget = {
+      "email": this.forgetEmail
+    }
+    this._auth.forgetPass(forget).subscribe((res:any) => {
+      this._spinner.hide();
+      if (res.status == 1) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'OTP has been sent to your registered mail id !',
+        })
+        this._router.navigate(['/auth/forget-password'])
+      }
+    })
+  };
 
   submitLogin() {
     this.submitted = true;
@@ -121,5 +145,10 @@ export class LoginComponent implements OnInit {
           this._spinner.hide();
       })
     }
+  };
+
+  backToLogin() {
+    this.hideShowPass = false;
+    this.hideLogin = true;
   }
 }

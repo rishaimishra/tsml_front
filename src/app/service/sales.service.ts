@@ -95,5 +95,8 @@ export class SalesService {
   rejectRemarks(request:any) {
     return this._http.post(this.BesUrl + '/user/sm_remark_save', request);
   }
+  uploadFgStock(request:any) {
+    return this._http.post(this.BesUrl + '/user/prod-qty-upload-user', request);
+  }
 
 }

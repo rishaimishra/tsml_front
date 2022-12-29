@@ -25,6 +25,7 @@ export class ForgetPasswordComponent implements OnInit {
     {
     this.forgetPassForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
+      otp: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password_confirm: ['', [Validators.required, Validators.minLength(6)]]
     })
@@ -38,15 +39,10 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   resetPassword() {
-    this._spinner.show();
+    // this._spinner.show();
     this.submitted = true;
-    if (this.forgetPassForm.invalid) {
-      this._spinner.hide();
-      return;
-    }
-    if (this.forgetPassForm.valid) {
-      this._auth.resetPassByEmail(this.forgetPassForm.value).subscribe((res:any) => {
-        if (!this.forgetPassForm.invalid && res.message == 'Password changed successfully !!' && !res.error) {
+      this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res:any) => {
+        if (res.status == 1) {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -57,25 +53,29 @@ export class ForgetPasswordComponent implements OnInit {
           this._spinner.hide();
           this._router.navigate(['/auth/login']);
         } 
-          if(res.error.message == 'Email address not found !!') {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: res.error.message
-              // footer: '<a href="">Why do I have this issue?</a>'
-            })
-          } 
           else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: res.error.validation.password_confirm,
-              // footer: '<a href="">Why do I have this issue?</a>'
-            })
+            if(res.error.validation.otp.length > 0) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: res.error.validation.otp[0],
+              })
+            }
+            else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password should be match',
+              })
+            }
+            this._spinner.hide();
+
           }
-          this._spinner.hide();
         
+      }, err => {
+        console.log(err);
+        this._spinner.hide();
       })
-}};
+};
 
 }

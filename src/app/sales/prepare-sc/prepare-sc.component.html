@@ -16,7 +16,7 @@
                       <table class="table table-op">
                          <thead>
                             <tr>
-                               <th>PO No</th>
+                               <th>Customer PO No.</th>
                                <th>PO Date</th>
                                <th>Customer Name</th>
                                <th>RFQ No</th>
@@ -26,7 +26,7 @@
                          </thead>
                          <tbody>
                             <tr *ngFor="let po of salesPo | paginate: { itemsPerPage: 8, currentPage: p }">
-                               <td>{{po.po_no}}</td>
+                              <td>{{po.cus_po_no}}</td>
                                <td>{{po.po_date}}</td>
                                <td>{{po.user}}</td>
                                <td>{{po.rfq_no}}</td>
@@ -163,7 +163,7 @@
                      </div>
                      <div class="col-12 col-lg-4">
                         <div class="form-group">
-                           <label>Cust.Referance</label>
+                           <label>Cust Referance No.</label>
                            <input type="text" formControlName="cus_ref" class="form-control form-control-sm">
                         </div>
                      </div>
