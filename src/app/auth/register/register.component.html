@@ -186,7 +186,7 @@
                                     </li>
                                   </ul>
                                 </li>
-                                <li class="branch-main">
+                              <li class="branch-main">
                                   Chrome Ore
                                   <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
                                     data-placement="top"
@@ -222,6 +222,23 @@
                         <label *ngFor="let product of selectProduct" class="container-radio">{{product?.name}}
                           <input type="radio" (change)="choosProductSize($event)" [checked]="product.select"
                             value="{{product?.name}}" name="radio" />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                      <div class="col-12" *ngIf="chipsFinesSize" (change)="chinpsAndFinesSize($event)">
+                        <label class="container-radio">0-3
+                          <input type="radio"
+                            value="0-3" name="radio" />
+                          <span class="checkmark"></span>
+                        </label>
+                        <label class="container-radio">0-10
+                          <input type="radio"
+                            value="0-10" name="radio" />
+                          <span class="checkmark"></span>
+                        </label>
+                        <label class="container-radio">3-10
+                          <input type="radio"
+                            value="3-10" name="radio" />
                           <span class="checkmark"></span>
                         </label>
                       </div>

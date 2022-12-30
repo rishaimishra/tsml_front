@@ -131,6 +131,7 @@ export class RegisterComponent implements OnInit {
   shiptingAdd: any = [];
   billGstNum: any;
   shipGst: any;
+  chipsFinesSize: boolean = false;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High Phos' },
@@ -318,23 +319,35 @@ export class RegisterComponent implements OnInit {
   };
 
   onSelectFerroChrome(event: any) {
-    const productValue = event.target.value;
     const name = event.target.value;
     const isChecked = event.target.checked;
-
     this.ferroChrome.map((selectedName: any) => {
+      let indx = this.chooseProduct.findIndex((item: any) => item == event.target.value);
+
       if (selectedName.name == name) {
         selectedName.select = isChecked;
         if (selectedName.select == true) {
           this.chooseProduct.push(selectedName.name);
         } else {
-          this.chooseProduct.splice(selectedName.name, 1);
+          this.chooseProduct.splice(indx, 1);
+        }
+        let dd = this.chooseProduct.includes("HC Ferro Chrome (Chips & Fines)");
+        if (dd != false) {
+          this.chipsFinesSize = true;
+        } else {
+          this.chipsFinesSize = false;
         }
         return selectedName;
       }
       return selectedName;
     });
   };
+
+  chinpsAndFinesSize(event:any) {
+    let data = event.target.value;
+    this.chooseProductSize = data;
+  };
+
   onSelectChromeOre(event: any) {
     const productValue = event.target.value;
     if (productValue == 'High Grade Friable Chrome Ore') {
@@ -908,7 +921,6 @@ export class RegisterComponent implements OnInit {
           timer: 1500
         })
         this._router.navigate(['/auth/login']);
-        this.registerForm.reset();
         this._spinner.hide();
       }
       if (res.error.validation?.email) {

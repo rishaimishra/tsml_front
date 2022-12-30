@@ -18,10 +18,6 @@ export class ProductsService {
     return this._http.post(this.BesUrl+url, params);
   };
   
-  getGstin(url_paremter: any) {
-    return this._http.get('https://sheet.gstincheck.co.in/check/' + url_paremter);
-  };
-
   deleteRfq(req: any) {
     return this._http.get(this.BesUrl + '/delete_quote_by_id', req);
   };
@@ -129,11 +125,11 @@ export class ProductsService {
   };
 
   rfqSubmitedEmail(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/cus_quote_gen_mail', reqParameter);
+    return this._http.post(this.BesUrl + '/quote_gen_mail', reqParameter);
   };
 
   salesSubmitedEmail(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/sale_accpt_mail', reqParameter);
+    return this._http.post(this.BesUrl + '/sale_accpt_mail', reqParameter);
   };
 
   reqouteCount(reqParameter: any) {
@@ -141,11 +137,11 @@ export class ProductsService {
   };
 
   orderConfirmEmail(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/order_cnrfm_mail', reqParameter);
+    return this._http.post(this.BesUrl + '/order_cnrfm_mail', reqParameter);
   };
   
   confirmRfqEmail(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/accepted_price_mail', reqParameter);
+    return this._http.post(this.BesUrl + '/accepted_price_mail', reqParameter);
   };
   camNotification(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/cam_notification_submit', reqParameter);
@@ -165,6 +161,11 @@ export class ProductsService {
   custNotiSubmit(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/cus_notification_submit', reqParameter);
   };
+
+  plantNotiSubmit(reqParameter: any) {
+    return this._http.post(this.BesUrl + '/user/plant_notification_submit', reqParameter);
+  };
+
   custNotiRemove(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/up_cus_noti', reqParameter);
   };

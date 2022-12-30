@@ -102,6 +102,7 @@ export class PoViewComponent implements OnInit {
   percentPrice:any;
   poNumber:any;
   poSunnry:any;
+  rfqNumber:any;
 
 
   constructor(
@@ -130,7 +131,6 @@ export class PoViewComponent implements OnInit {
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.id;
-      console.log(this.productId);
       this.categoryid = res.categoryId;
       this.detailByRfq();
     });
@@ -183,6 +183,7 @@ export class PoViewComponent implements OnInit {
         this.poStatus = this.product_data[0]['po_st'];
         this.poNumber = this.product_data[0]['user_id'];
         this.amndNomber = this.product_data[0]['amdnt_no'];
+        this.rfqNumber = this.product_data[0]['rfq_no'];
 
         this.catId = this.selectedItem[0].product_id;
         this.show_data = true;
@@ -811,6 +812,15 @@ export class PoViewComponent implements OnInit {
               "sender_id": this.poNumber
             }
             this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
+            })
+
+            let plantNotiReq = {
+              "desc_no": this.inputPONum,
+              "user_id": userId,
+              "desc": 'PO has been generated for sales contract',
+              "rfq_no": this.rfqNumber
+            }
+            this._product.plantNotiSubmit(plantNotiReq).subscribe((res:any) => {
             })
 
             this._router.navigate(['/po/po-list']);

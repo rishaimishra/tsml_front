@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
+import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
 declare var $: any; 
 
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit {
   
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
-    private _product: ProductsService) 
+    private _product: ProductsService, private _sales: SalesService) 
     { 
       this.checkLogin();
       this.isUserLogIn = this._auth.isLoggedIn();
@@ -44,6 +45,9 @@ export class HeaderComponent implements OnInit {
     else if (this.userRol == 'Sales') {
       this.getSalesNoti();
       this.userType = true;
+    }
+    else if (this.userRol == 'OPT') {
+      this.getPlantMsg();
     }
      else {
       this.userType = true;
@@ -136,6 +140,12 @@ export class HeaderComponent implements OnInit {
     })
   };
 
+  getPlantMsg() {
+    let userId = localStorage.getItem('USER_ID');
+    this._sales.getPlantNoti(userId).subscribe((res:any) => {
+      console.log(res);
+    })
+  }
   removeNoti(id:any) {
     this._spinner.show();
     let removeNoti = {

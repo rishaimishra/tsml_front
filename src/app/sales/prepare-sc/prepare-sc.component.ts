@@ -344,8 +344,8 @@ export class PrepareScComponent implements OnInit {
     const seFormDataArr = [];
     const sapMatArr = [];
     const codePrice = [];
-    const val = Math.floor(10 + Math.random() * 90);
-    console.log(val);
+    // const val = Math.floor(10 + Math.random() * 90);
+    // console.log(val);
 
     this.scForm.value['po_no'] = this.poNumber;
     for (let i = 0; i < this.pricValArr.length; i++) {
@@ -471,6 +471,15 @@ export class PrepareScComponent implements OnInit {
 
       this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
       })
+
+      // let sc_mail = {
+      //   "sc_no":"SC1234",
+      //   "po_no":"AIT1234",
+      //   "user_id":2
+      // }
+      // this._sales.sendScMail(sc_mail).subscribe((res:any) => {
+      //   console.log(res);
+      // })
     }, err => {
       console.log(err);
       this._spiner.hide();

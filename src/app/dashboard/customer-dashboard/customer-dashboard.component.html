@@ -138,6 +138,10 @@
                                        <a type="button" [ngClass]="{'active':statusRfq[i]?.so_created == 1}"
                                           class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>SO Created</span></a>
                                     </div>
+                                    <div class="stepwizard-step">
+                                       <a type="button" [ngClass]="{'active':statusRfq[i]?.do_created == 1}"
+                                          class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>Invoice Generated</span></a>
+                                    </div>
                                  </div>
                               </div>
 
@@ -161,6 +165,9 @@
 
                               <div class="badge badge-pill badge-success mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'SC Created'">{{rfqItem?.st_txt}}</div>
+
+                              <div class="badge badge-pill badge-success mb-1 float-right"
+                                 *ngIf="rfqItem?.st_txt == 'Invoice Generated'">{{rfqItem?.st_txt}}</div>
 
                               <span class="font-weight-bold">RFQ
                                  Number: <b class="text-primary pointerTab"

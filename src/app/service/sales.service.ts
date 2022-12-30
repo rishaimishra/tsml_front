@@ -73,6 +73,10 @@ export class SalesService {
     return this._http.get(this.BesUrl + '/user/get-order-type');
   };
 
+  getPlantNoti(request:any) {
+    return this._http.get(this.BesUrl + '/user/get_plant_notification/'+ request);
+  };
+
   submitSalesSo(request:any) {
     return this._http.post(this.BesUrl + '/user/so_submit', request);
   };
@@ -95,8 +99,12 @@ export class SalesService {
   rejectRemarks(request:any) {
     return this._http.post(this.BesUrl + '/user/sm_remark_save', request);
   }
+
   uploadFgStock(request:any) {
     return this._http.post(this.BesUrl + '/user/prod-qty-upload-user', request);
+  }
+  sendScMail(request:any) {
+    return this._http.post(this.BesUrl + '/sc_mail', request);
   }
 
 }

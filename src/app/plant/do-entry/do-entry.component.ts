@@ -23,7 +23,7 @@ export class DoEntryComponent implements OnInit {
   misDoc: any;
   soList: any = [];
   materialGradeList: any = [];
-  soNum:any;
+  soNum: any;
 
   constructor(private _products: ProductsService,
     private toastr: ToastrService,
@@ -50,7 +50,7 @@ export class DoEntryComponent implements OnInit {
   onChangeSo(event: any) {
     this._spinner.show();
     this.soNum = event.target.value;
-    this._products.getMethod('/user/get_do_sub_cats/'+this.soNum).subscribe((res: any) => {
+    this._products.getMethod('/user/get_do_sub_cats/' + this.soNum).subscribe((res: any) => {
       this._spinner.hide();
       if (res.message == 'success') {
         this.materialGradeList = res.result;
@@ -160,25 +160,27 @@ export class DoEntryComponent implements OnInit {
       return;
     }
 
-    if(this.lr_file == undefined){
+    let indx = this.soList.findIndex((item: any) => item.so_no == this.entryForm.value.so_no);
+
+    if (this.lr_file == undefined) {
       this.toastr.error('', 'Please Upload LR Document');
-    } 
-    if(this.ewaybill == undefined){
+    }
+    if (this.ewaybill == undefined) {
       this.toastr.error('', 'Please Upload e-waybill Document');
-    } 
-    if(this.testCertificate == undefined){
+    }
+    if (this.testCertificate == undefined) {
       this.toastr.error('', 'Please Upload testn certificate Document');
-    } 
-    if(this.eInvoice == undefined){
+    }
+    if (this.eInvoice == undefined) {
       this.toastr.error('', 'Please Upload e-Invoice Document');
-    } 
-     else {
+    }
+    else {
       this._spinner.show();
       let doQty = {
         "so_no": this.soNum,
         "do_quantity": this.entryForm.value['do_quantity']
       }
-      this._sales.checkQtyDo(doQty).subscribe((res:any) => {
+      this._sales.checkQtyDo(doQty).subscribe((res: any) => {
         if (res.message != 'Success' && res.status == 0) {
           Swal.fire({
             icon: 'error',
@@ -187,7 +189,7 @@ export class DoEntryComponent implements OnInit {
           })
           this._spinner.hide();
           return;
-        } 
+        }
         else {
           const fileData = new FormData();
           fileData.append("user_id", this.entryForm.value.user_id);
@@ -200,7 +202,7 @@ export class DoEntryComponent implements OnInit {
           fileData.append("do_quantity", this.entryForm.value.do_quantity);
           fileData.append("despatch_date", this.entryForm.value.despatch_date);
           fileData.append("truck_no", this.entryForm.value.truck_no);
-          fileData.append("driver_no", this.entryForm.value.driver_no );
+          fileData.append("driver_no", this.entryForm.value.driver_no);
           fileData.append("premarks", this.entryForm.value.premarks);
           fileData.append("lr_file", this.lr_file);
           fileData.append("e_waybill_file", this.ewaybill);
@@ -208,7 +210,7 @@ export class DoEntryComponent implements OnInit {
           fileData.append("e_invoice_file", this.eInvoice);
           fileData.append("misc_doc_file", this.misDoc);
           fileData.append("plant_id", userId);
-          
+
           this._products.postMethopd('/user/store-do', fileData).subscribe((res: any) => {
             this._spinner.hide();
             if (res.status == 1) {
@@ -219,18 +221,49 @@ export class DoEntryComponent implements OnInit {
               this.eInvoice = undefined;
               this.misDoc = undefined;
               this.entryForm.reset();
-            this.toastr.success(res.message);
+              this.toastr.success(res.message);
             } else {
               this.toastr.error();
             }
-            
+            let statusRequestKam = {
+              "rfq_no": this.soList[indx].rfq_no,
+              "do_created": '1'
+            }
+            this._products.storeStatusKam(statusRequestKam).subscribe((res: any) => {
+            })
+            let statusRequest = {
+              "rfq_no": this.soList[indx].rfq_no,
+              "do_created": '1'
+            }
+            this._products.storeStatusCust(statusRequest).subscribe((res: any) => {
+            })
+
+            // Cam notification for PO
+            let userId = localStorage.getItem('USER_ID');
+            let camNotiReq = {
+              "desc_no": this.soList[indx].rfq_no,
+              "user_id": userId,
+              "desc": 'Invoice Uploaded',
+              "url_type": 'R'
+            }
+            this._products.camNotification(camNotiReq).subscribe((res: any) => {
+            })
+            let custNotiReq = {
+              "desc_no": this.soList[indx].rfq_no,
+              "user_id": userId,
+              "desc": 'Invoice Generated',
+              "url_type": 'R'
+              // "sender_id": 
+            }
+            this._products.custNotiSubmit(custNotiReq).subscribe((res: any) => {
+            })
             this._router.navigate(['/plant/do-list']);
           }, error => {
             console.log(error)
           })
         }
       })
-      
+
     }
   }
 

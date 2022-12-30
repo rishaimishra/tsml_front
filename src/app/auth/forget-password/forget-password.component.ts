@@ -21,8 +21,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(private _auth: AuthService,
     private _fb: FormBuilder, private _toaster: ToastrService, private _spinner: NgxSpinnerService,
-    private _router: Router) 
-    {
+    private _router: Router) {
     this.forgetPassForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required, Validators.email]],
@@ -39,43 +38,41 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   resetPassword() {
-    // this._spinner.show();
+    this._spinner.show();
     this.submitted = true;
-      this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res:any) => {
-        if (res.status == 1) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'Password changed successfully !!',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          this._spinner.hide();
-          this._router.navigate(['/auth/login']);
-        } 
-          else {
-            if(res.error.validation.otp.length > 0) {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: res.error.validation.otp[0],
-              })
-            }
-            else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Password should be match',
-              })
-            }
-            this._spinner.hide();
-
-          }
-        
-      }, err => {
-        console.log(err);
+    this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res: any) => {
+      if (res.status == 1) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          text: 'Password changed successfully !!',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this._spinner.hide();
-      })
-};
+        this._router.navigate(['/auth/login']);
+      }
+      else if (res.error.validation.password_confirm?.length > 0 && res.error.validation.password_confirm != undefined) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry !',
+          text: 'New password and confirm password must match',
+        })
+        this._spinner.hide();
+      }
+      else if (res.error.validation.otp?.length > 0 && res.error.validation.otp != undefined) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry !',
+          text: res.error.validation.otp[0],
+        })
+        this._spinner.hide();
+      }
+
+    }, err => {
+      console.log(err);
+      this._spinner.hide();
+    })
+  };
 
 }
