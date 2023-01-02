@@ -5,7 +5,7 @@
 
 <body>
     <div class="page-content">
-        <section class="sub-header-2" *ngIf="showButtons > 0 && userByrole != 'Sales'">
+        <section class="sub-header-2" *ngIf="showButtons > 0">
             <div class="container">
                 <h1>Price Negotiation</h1>
                 <div class="clearfix"></div>
@@ -131,7 +131,9 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Delivery Method</label>
-                                                        <select [disabled]="userByrole == 'C' || formData.delivery == 'DAP (Delivered at Place)'" (change)="delectDlvryMethode($event, formData.schedule_no, i,y)"
+                                                        <select
+                                                            [disabled]="userByrole == 'C' || formData.delivery == 'DAP (Delivered at Place)'"
+                                                            (change)="delectDlvryMethode($event, formData.schedule_no, i,y)"
                                                             #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                                                             name="delivery_{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" required>
@@ -154,28 +156,37 @@
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_a"
                                                                 name="contact{{ formData.schedule_no }}_a" value="PLANT"
-                                                                class="mr-1" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"/>
+                                                                class="mr-1"
+                                                                [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'" />
                                                             <label for="contactChoice1">Plant</label>&nbsp;
                                                             <input type="radio" id="contactChoice2"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_b"
                                                                 name="contact{{ formData.schedule_no }}_b" value="DEPOT"
-                                                                class="mr-1" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"/>
+                                                                class="mr-1"
+                                                                [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'" />
                                                             <label for="contactChoice2">Depot</label>&nbsp;
                                                             <input type="radio" id="contactChoice3"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_c"
-                                                                name="contact{{ formData.schedule_no }}_c" value="PORT"
-                                                                class="mr-1" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"/>
-                                                            <label for="contactChoice3">Port</label>
+                                                                name="contact{{ formData.schedule_no }}_c" value="MINES"
+                                                                class="mr-1"
+                                                                [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'" />
+                                                            <label for="contactChoice3">Mines</label>
                                                         </label>
-                                                        <select [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'" id="pickup_from_{{formData.schedule_no}}" #pickUpfrom="ngModel"
+                                                        <select
+                                                            [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"
+                                                            id="pickup_from_{{formData.schedule_no}}"
+                                                            #pickUpfrom="ngModel"
                                                             (change)="plantSele($event, formData.schedule_no)"
                                                             [(ngModel)]="formData.plant"
                                                             name="plant_{{ formData.schedule_no }}"
                                                             class="form-control form-control-sm" required>
-                                                            <option value="{{formData.plant}}" selected>{{formData.plant}}</option>
-                                                            <option  value="{{plantItem.name}}" selected *ngFor="let plantItem of plantAddrr">{{plantItem.name? plantItem.name :formData.plant}}</option>
+                                                            <option value="{{formData.plant}}" selected>
+                                                                {{formData.plant}}</option>
+                                                            <option value="{{plantItem.name}}" selected
+                                                                *ngFor="let plantItem of plantAddrr">{{plantItem.name?
+                                                                plantItem.name :formData.plant}}</option>
                                                         </select>
                                                         <small
                                                             *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
@@ -185,14 +196,20 @@
                                                 <div class="col-lg-3">
                                                     <div class="form-group">
                                                         <label for="">Location</label>
-                                                        <select class="form-control form-control-sm" id="loca_{{formData.schedule_no}}" #location="ngModel"
-                                                            [(ngModel)]="formData.location" [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"
+                                                        <select class="form-control form-control-sm"
+                                                            id="loca_{{formData.schedule_no}}" #location="ngModel"
+                                                            [(ngModel)]="formData.location"
+                                                            [disabled]="userByrole == 'C' && formData.delivery == 'DAP (Delivered at Place)'"
                                                             name="location_{{ formData.schedule_no }}" required>
-                                                            <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
-                                                                <ng-template #newLocation>
+                                                            <option value="{{formData.location}}"
+                                                                *ngIf="locationState[formData.schedule_no] == null; else newLocation">
+                                                                {{formData.location}}</option>
+                                                            <ng-template #newLocation>
                                                                 <option value="">--Select--</option>
-                                                                <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
-                                                                </ng-template>
+                                                                <option selected
+                                                                    value="{{locationState[formData.schedule_no]}}">
+                                                                    {{locationState[formData.schedule_no]}}</option>
+                                                            </ng-template>
                                                         </select>
                                                         <small
                                                             *ngIf="location.invalid && (location.dirty || location.touched || submit)"
@@ -272,12 +289,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col-lg-3">
                                                     <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                         <label for=""
                                                             (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,
-                                                            productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery,formData.delivery, i, y)">Tsml's price
+                                                            productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery,formData.delivery, i, y)">TSML's
+                                                            price
                                                             <span *ngIf="!userType && qoutestId != 0 && qoutestId != 2"
                                                                 class="price-info price-info0" data-toggle="modal"
                                                                 data-target="#addPrice"><i
@@ -297,9 +315,8 @@
                                                             <input type="datetime-local"
                                                                 [disabled]="userType || qoutestId == 0 || qoutestId == 2"
                                                                 #validTill="ngModel" [(ngModel)]="formData.valid_till"
-                                                                class="form-control form-control-sm datepicker"
-                                                                >
-                                                            
+                                                                class="form-control form-control-sm datepicker">
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -317,6 +334,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Payment terms -->
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="bil-add-new-add">
+                                                            <label for="">Payment Terms</label>
+                                                        </div>
+                                                        <input type="text" readonly placeholder="Advance Payment"
+                                                            class="form-control form-control-sm"
+                                                            name="paymentsTerm_{{ formData.schedule_no }}"
+                                                            [(ngModel)]="formData.pay_term">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-9" *ngIf="formData.credit_days == 0"><label class="mt-4 text-white badge badge-info">Full payment in advance.</label></div>
+                                                <div class="col-lg-9" *ngIf="formData.credit_days == 30"><label class="mt-4 text-white badge badge-info">30 Days Credit.</label></div>
+                                                <div class="col-lg-9" *ngIf="formData.credit_days == 45"><label class="mt-4 text-white badge badge-info">45 Days Credit.</label></div>
+                                                
                                                 <!-- customer remarks -->
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
@@ -360,16 +393,17 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <span class="text-primary pointerTab" data-toggle="modal"
-                                                    (click)="messageBox(formData.schedule_no)" data-target="#viewMoreMessage">See
+                                                        (click)="messageBox(formData.schedule_no)"
+                                                        data-target="#viewMoreMessage">See
                                                         Remarks</span>
                                                 </div>
                                                 <div class="col-lg-12 mb-3" *ngIf="productData.quotest == 6">
                                                     <div *ngIf="userByrole != 'Sales'">
                                                         <div class="app-reg-btn">
-                                                            <div class="form-check form-check-inline" *ngIf="formData.sche_ct != 3">
+                                                            <div class="form-check form-check-inline"
+                                                                *ngIf="formData.sche_ct != 3">
                                                                 <input type="radio" class="form-check-input"
-                                                                    id="inlineCheckbox0"
-                                                                    (change)="getRequote($event)"
+                                                                    id="inlineCheckbox0" (change)="getRequote($event)"
                                                                     value="{{formData?.schedule_no}}"
                                                                     name="fav_language_{{formData?.id}}">
                                                                 <label for="inlineCheckbox0">Requote </label>
@@ -401,8 +435,8 @@
                 </div>
                 <div class="text-right pb-5" *ngIf="showButtons > 0">
                     <button type="button" *ngIf="userByrole != 'C' || selectedItem[0].quotest != 0"
-                        [disabled]="(selectedItem[0].quotest == 7 && userByrole != 'Sales') || selectedItem[0].quotest == 8" class="btn btn-primary"
-                        (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
+                        [disabled]="(selectedItem[0].quotest == 7 && userByrole != 'Sales') || selectedItem[0].quotest == 8"
+                        class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
                     &nbsp;
                     <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
                         Back</button>
@@ -431,7 +465,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let history of negotiationHistory | paginate: { itemsPerPage: 10, currentPage: p }">
+                                    <tr
+                                        *ngFor="let history of negotiationHistory | paginate: { itemsPerPage: 10, currentPage: p }">
                                         <td>
                                             <div class="product">
                                                 <div class="cart-details">
@@ -470,7 +505,7 @@
                             </table>
                             <div class="text-right">
                                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -482,8 +517,8 @@
                             <div class="modal-header">
                                 <h4 class="modal-title text-uppercase">Remarks</h4>
                                 <div class="">
-                                    <button type="button" class="btn bt-sm btn-danger" aria-label="Close" (click)="cancelprice()"><i
-                                            class="fa fa-times"></i></button>
+                                    <button type="button" class="btn bt-sm btn-danger" aria-label="Close"
+                                        (click)="cancelprice()"><i class="fa fa-times"></i></button>
                                 </div>
 
                             </div>
@@ -576,14 +611,14 @@
                                     </td>
                                     <td>
                                         <input type="number" formControlName="price_premium"
-                                        [ngClass]="{ 'is-invalid': f.price_premium.errors && f.price_premium.touched}"
-                                        class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="price_premium{{schldId}}" value="" placeholder="">
+                                            [ngClass]="{ 'is-invalid': f.price_premium.errors && f.price_premium.touched}"
+                                            class="form-control form-control-sm form-control form-control-sm-sm wid-150"
+                                            id="price_premium{{schldId}}" value="" placeholder="">
                                         <small class="addClass" *ngIf="premiumPrice">Price Premium should not be less
                                             than {{productPrice?.price_premium}}</small>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td colspan="2">Delivery Cost</td>
                                     <td>
@@ -594,7 +629,7 @@
                                     <td><input type="number" [readOnly]="isDap" formControlName="delivery_cost"
                                             class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="delivery{{schldId}}" placeholder="">
-                                        
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -661,11 +696,12 @@
                                         <input type="number" formControlName="cam_discount"
                                             class="form-control form-control-sm form-control srch-input form-control-sm-sm wid-150"
                                             id="_discount{{schldId}}">
-                                        <select  name="status" (change)="selectPlusMins($event)" class="form-control col-lg-3 rm06 ng-pristine ng-valid ng-touched srch-plus">
+                                        <select name="status" (change)="selectPlusMins($event)"
+                                            class="form-control col-lg-3 rm06 ng-pristine ng-valid ng-touched srch-plus">
                                             <option value="+">+</option>
                                             <option value="-">-</option>
                                         </select>
-                                       
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -700,7 +736,8 @@
                         <button class="btn btn-primary" [disabled]="userType"
                             (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i>
                             Ok</button>&nbsp;
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" (click)="cancelprice()"><i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close"
+                            (click)="cancelprice()"><i class="fa fa-times"></i>
                             Cancel</button>
                     </div>
                 </div>

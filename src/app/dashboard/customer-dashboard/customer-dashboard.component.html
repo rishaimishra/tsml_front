@@ -43,7 +43,7 @@
                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
                            <span class="counter text-white">3</span>
-                           <b>Orders confirmed & pending for delivery (MT)</b>
+                           <b>Orders confirmed & pending for delivery</b>
                         </div>
                      </div>
                   </a>
@@ -79,7 +79,7 @@
                   <!-- RFQ list customer-->
                   <div class="card">
                      <div class="card-header ml-5">
-                        <h4>Recent Orders {{statusRfq.rfq_submited}}</h4>
+                        <h4>Recent enquiry {{statusRfq.rfq_submited}}</h4>
                         <!-- <div class="col-6">
                               <input type="text" name="search" (keyup)="seacrhByrfq($event)" class="form-control" placeholder="Search by rfq number">
                            </div> -->
@@ -118,11 +118,11 @@
                                           class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>Under
                                              Negotiation</span></a>
                                     </div>
-                                    <div class="stepwizard-step">
+                                    <!-- <div class="stepwizard-step">
                                        <a type="button" [ngClass]="{'active':statusRfq[i]?.final_quoted_by_tsml == 1}"
                                           class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>Material
                                              Confirmed</span></a>
-                                    </div>
+                                    </div> -->
                                     <div class="stepwizard-step">
                                        <a type="button" [ngClass]="{'active':statusRfq[i]?.rfq_closed == 1}"
                                           class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>RFQ
@@ -190,8 +190,8 @@
                <div class="col-md-6 col-lg-12 col-xl-6">
                   <div class="card">
                      <div class="card-header">
-                        <h4>Booking History</h4>
-                     </div>
+                        <h4>Confirmed order list</h4>
+                     </div> <br>
                      <div class="card-body">
                         <div class="filter-box">
                            <div class="row">

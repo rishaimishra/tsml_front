@@ -220,7 +220,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for=""
-                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id, i, y)">Tsml's
+                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id, i, y)">TSML's
                             price
                             <span *ngIf="!userType" class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
                                 class="fa fa-info-circle"></i></span></label>
@@ -273,7 +273,7 @@
                       <!-- Kam remarks -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="">Kam's Remarks</label>
+                          <label for="">Cam's Remarks</label>
                           <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                             name="kamRemarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
@@ -381,7 +381,7 @@
                       [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                       class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                       id="_discount{{schldId}}" placeholder="">
-                    <small class="addClass" *ngIf="kamDiscount">Kam discount should be less
+                    <small class="addClass" *ngIf="kamDiscount">Cam discount should be less
                       than
                       {{productPrice?.cam_discount}}</small>
                   </td>
@@ -434,7 +434,7 @@
                       [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                       class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                       id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
-                    <small class="addClass" *ngIf="credCost">Credit Cost not be less than Kam's
+                    <small class="addClass" *ngIf="credCost">Credit Cost not be less than Cam's
                       Cost</small>
 
                   </td>
@@ -527,7 +527,7 @@
                  <li class="self" *ngIf="remark?.kamsRemarks != null">
                     <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                     <div class="msg">
-                       <p>Kam's Remarks!</p>
+                       <p>Cam's Remarks!</p>
                        <p>{{remark.kamsRemarks}}</p>
                        <time>{{remark.created_at | date}}</time>
                     </div>

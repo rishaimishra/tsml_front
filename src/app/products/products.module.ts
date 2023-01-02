@@ -58,11 +58,11 @@ const routes: Routes = [
     component: RfqDetailsComponent,canActivate: [AuthGuard],
   },
   {
-    path: 'negotiation/:id',
+    path: 'customer/:id',
     component: CustomerComponent,canActivate: [AuthGuard],
   },
   {
-    path: 'kam/:id',
+    path: 'cam/:id',
     component: KamComponent,canActivate: [AuthGuard],
   },
   {

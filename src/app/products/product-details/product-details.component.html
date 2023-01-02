@@ -55,7 +55,7 @@
                     <input type="text" class="form-control" id="qty_{{i}}" placeholder="0" disabled="" />
                   </div>
                 </div>
-                <!-- <div [attr.id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"> -->
+                
                 <div [attr.id]="'collapseOne'+i" class="card-body collapse" data-parent="#accordion">
                   <div class="card-body">
                     <div class="row" *ngFor="let formData of productData['form_data'];let y = index">
@@ -116,9 +116,6 @@
                             <option value="">Select ..</option>
                             <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
                           </select>
-                          <!-- <small
-                            *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
-                            class="inputValidation">Select delivery method</small> -->
                         </div>
                       </div>
 
@@ -130,8 +127,12 @@
                             <label for="contactChoice1">Plant</label>&nbsp;
                             <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT" class="mr-1"/>
                             <label for="contactChoice2">Depot</label>&nbsp;
-                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
-                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Port</label>
+                            <!-- <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
+                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Port</label> -->
+                            <ng-container *ngIf="productData?.cat_name == 'Friable Chrome Ore'">
+                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="MINES" class="mr-1"/>
+                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Mines</label>
+                            </ng-container>
 
                           </label>
                           <select #pickUpfrom="ngModel" id="pickup_from_{{formData.schedule_no}}" [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
@@ -142,8 +143,6 @@
                               <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
                             </ng-template>
                           </select>
-                          <!-- <small *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
-                            class="inputValidation">Pickup from is required</small> -->
                         </div>
                       </div>
                       <div class="col-lg-3">
@@ -202,7 +201,7 @@
                                 placeholder="From" required />
                               <small *ngIf="dlvrDate.invalid && (dlvrDate.dirty || dlvrDate.touched || submit)"
                                 class="inputValidation">Delivery date from</small>
-                              <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                            
                             </div>
                             <div class="position-relative">
                               <input type="date" [(ngModel)]="formData.to_date" #dlvrDateTo="ngModel"
@@ -210,9 +209,19 @@
                                 class="form-control form-control-sm" placeholder="To" required />
                               <small *ngIf="dlvrDateTo.invalid && (dlvrDateTo.dirty || dlvrDateTo.touched || submit)"
                                 class="inputValidation">Delivery date to</small>
-                              <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
+                              
                             </div>
                           </div>
+                        </div>
+                      </div>
+                      <!-- Payment terms -->
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <div class="bil-add-new-add">
+                            <label for="">Payment Terms</label>
+                          </div>
+                          <input type="text" readonly placeholder ="Advance Payment" class="form-control form-control-sm"
+                          name="paymentsTerm_{{ formData.schedule_no }}" [(ngModel)]="formData.pay_term">
                         </div>
                       </div>
                       <div class="col-lg-12">

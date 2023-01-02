@@ -623,9 +623,11 @@ export class CustomerComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     });
+
     // component price save here
     this._product.saveComPrice(this.tsmlPriceArr).subscribe((res:any) => {
     })
+    
     let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
     if (this.countSche['total'] == addCount) {
       let userId = localStorage.getItem('USER_ID');

@@ -210,7 +210,7 @@
                         <div class="form-group">
                           <label for=""
                           (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,
-                          productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery, i, y)">Tsml's
+                          productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery, i, y)">TSML's
                             price
                             <span class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
                                 class="fa fa-info-circle"></i></span></label>
@@ -261,7 +261,7 @@
                       <!-- Kam remarks -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="">Kam's Remarks</label>
+                          <label for="">Cam's Remarks</label>
                           <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                             name="kamRemarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
@@ -503,7 +503,7 @@
               <li class="self" *ngIf="remark?.kamsRemarks != null">
                 <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                 <div class="msg">
-                  <p>Kam's Remarks!</p>
+                  <p>Cam's Remarks!</p>
                   <p>{{remark.kamsRemarks}}</p>
                   <time>{{remark.created_at | date}}</time>
                 </div>

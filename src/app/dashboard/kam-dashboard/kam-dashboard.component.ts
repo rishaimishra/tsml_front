@@ -56,14 +56,18 @@ export class KamDashboardComponent implements OnInit {
   };
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
+    let userType = localStorage.getItem('USER_TYPE');
     if (status == 'Accepted' && kamStatus != 4) {
       this._router.navigate(['/po/po',rfqNumber]);
     }
     else if (kamStatus == 4) {
       this._router.navigate(['/po/po-list'])
     }
+    else if (userType == 'C') {
+      this._router.navigate(['/products/customer',rfqNumber]);
+    }
     else {
-      this._router.navigate(['/products/negotiation',rfqNumber]);
+      this._router.navigate(['/products/cam',rfqNumber]);
     }
   };
 

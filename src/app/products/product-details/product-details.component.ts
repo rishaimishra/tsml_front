@@ -98,13 +98,13 @@ export class ProductDetailsComponent implements OnInit {
 
   delectDlvryMethode(event: any, schdl: any, i: any, y: any) {
     let dlvrItem = event.target.value;
-    if (dlvrItem == 'Ex-Works') {
-      $('#pickupTyp_' + schdl + '_c').hide();
-      $('#picLable' + schdl).hide();
-    } else {
-      $('#pickupTyp_' + schdl + '_c').show();
-      $('#picLable' + schdl).show();
-    }
+    // if (dlvrItem == 'Ex-Works') {
+    //   $('#pickupTyp_' + schdl + '_c').hide();
+    //   $('#picLable' + schdl).hide();
+    // } else {
+    //   $('#pickupTyp_' + schdl + '_c').show();
+    //   $('#picLable' + schdl).show();
+    // }
     if (dlvrItem == 'DAP (Delivered at Place)') {
       this.disableItem = true;
       $('#pickup_from_' + schdl).prop('disabled', true);
@@ -175,6 +175,7 @@ export class ProductDetailsComponent implements OnInit {
             ship_to: '',
             from_date: '',
             to_date: '',
+            pay_term: 'Advance Payment',
             remarks: '',
             kam_price: '',
             valid_till: '',
@@ -231,6 +232,7 @@ export class ProductDetailsComponent implements OnInit {
             ship_to: '',
             from_date: '',
             to_date: '',
+            pay_term: 'Advance Payment',
             remarks: '',
             kam_price: '',
             valid_till: '',
@@ -347,6 +349,7 @@ export class ProductDetailsComponent implements OnInit {
       ship_to: '',
       from_date: '',
       to_date: '',
+      pay_term: 'Advance Payment',
       remarks: '',
       kam_price: '',
       valid_till: '',

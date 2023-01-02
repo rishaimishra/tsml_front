@@ -116,7 +116,7 @@ export class PoComponent implements OnInit {
       this.categoryid = res.categoryId;
       this.detailByRfq();
       this.getSubCategory(this.productId);
-      this.finalRuotedTsml();
+      // this.finalRuotedTsml();
     });
     const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
     this.po_id = val;
@@ -800,12 +800,12 @@ export class PoComponent implements OnInit {
     })
   };
 
-  finalRuotedTsml() {
-    let statusRequest = {
-      "rfq_no": this.productId,
-      "final_quoted_by_tsml": '1'
-    }
-    this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
-    })
-  }
+  // finalRuotedTsml() {
+  //   let statusRequest = {
+  //     "rfq_no": this.productId,
+  //     "final_quoted_by_tsml": '1'
+  //   }
+  //   this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+  //   })
+  // }
 }

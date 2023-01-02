@@ -63,7 +63,7 @@ export class CustomerDashboardComponent implements OnInit {
       this._router.navigate(['/po/po-list'])
     }
     else {
-      this._router.navigate(['/products/negotiation',rfqNumber]);
+      this._router.navigate(['/products/customer',rfqNumber]);
     }
   };
   getCustRfqItems() {
@@ -125,14 +125,18 @@ export class CustomerDashboardComponent implements OnInit {
   };
 
   goToproductDetails(rfqNo: any, status:any, kamStatus:any) {
+    let userType = localStorage.getItem('USER_TYPE');
     if (status == 'Accepted' && kamStatus != 4) {
       this._router.navigate(['/po/po',rfqNo])
     } 
     else if (kamStatus == 4) {
       this._router.navigate(['/po/po-list'])
     }
+    else if (userType == 'C') {
+      this._router.navigate(['/products/customer',rfqNo]);
+    }
     else {
-      this._router.navigate(['/products/negotiation',rfqNo]);
+      this._router.navigate(['/products/cam',rfqNo]);
     }
   }
 }
