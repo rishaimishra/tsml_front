@@ -27,25 +27,25 @@ export class KamComponent implements OnInit {
   public error_message: String = '';
   userType: boolean;
   user_Id: any;
-  addItems: boolean = false;
-  title: any = '';
+  // addItems: boolean = false;
+  // title: any = '';
   rfqNum: any;
   selectedItem: any = [];
-  states: any;
-  deliveryDate1: any = '';
-  deliveryDate2: any = '';
-  deliveryDate3: any = '';
-  deliveryDate4: any = '';
-  remarks: any = '';
-  remarks2: any = '';
-  expectedPrice1: any = '';
-  expectedPrice2: any = '';
-  quantity1: any = [];
-  quantity2: any;
-  proSize1: any;
+  // states: any;
+  // deliveryDate1: any = '';
+  // deliveryDate2: any = '';
+  // deliveryDate3: any = '';
+  // deliveryDate4: any = '';
+  // remarks: any = '';
+  // remarks2: any = '';
+  // expectedPrice1: any = '';
+  // expectedPrice2: any = '';
+  // quantity1: any = [];
+  // quantity2: any;
+  // proSize1: any;
   submit: boolean = false;
-  categoryid: any;
-  proPrices: any = [];
+  // categoryid: any;
+  // proPrices: any = [];
   requoteArr: any = [];
   statusArr: any = [];
   days: any = 0;
@@ -65,18 +65,18 @@ export class KamComponent implements OnInit {
   showButtons: any;
   kamsRemarks: any = '';
 
-  public quotation: any[] = [];
-  public quotation_value: any[] = [];
+  // public quotation: any[] = [];
+  // public quotation_value: any[] = [];
   totalQty: any;
   editProductId: any;
   submitted: boolean = false;
   premiumPrice: boolean = false;
-  miscPrice: boolean = false;
+  // miscPrice: boolean = false;
   deliveryCost: boolean = false;
-  kamDiscount: boolean = false;
+  // kamDiscount: boolean = false;
   credCost: boolean = false;
-  daysCost: any;
-  totalDayCost:any;
+  // daysCost: any;
+  // totalDayCost:any;
   daysCostCount:any;
   daysCostCountCustomer: any;
   messages:any;
@@ -168,7 +168,7 @@ export class KamComponent implements OnInit {
     });
 
     this.getLocation();
-    this.states = this._state.getState();
+    // this.states = this._state.getState();
     this.detailByRfq();
     this.getNegotiationHistory();
     this.getSubCategory(this.rfqNum);
@@ -288,9 +288,9 @@ export class KamComponent implements OnInit {
     this.selected_size = size;
   };
 
-  sizeOfferd(event: any) {
-    this.proSize1 = event.target.value;
-  };
+  // sizeOfferd(event: any) {
+  //   this.proSize1 = event.target.value;
+  // };
 
   getRequote(event: any) {
     let reqParam = {
@@ -457,12 +457,11 @@ export class KamComponent implements OnInit {
 
   submitRfq() {
     this.submit = true;
-
     let userRol = localStorage.getItem('USER_TYPE');
     let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
-
+    this.spinner.show();
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -475,14 +474,19 @@ export class KamComponent implements OnInit {
           this._toaster.error('','Valid Till is required');
           return;
         }
-
+        
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
           "confirm_date": form_data_array[i]['confirm_date'],
         }
         confrmDate.push(tantetiveReq);
         let indxId = this.creditDays.findIndex((item: any) => item.id == form_data_array[i]['schedule_no']);
-        form_data_array[i]['credit_days'] = this.creditDays[indxId].days;
+        if (this.creditDays[indxId]?.days == undefined) {
+          form_data_array[i]['credit_days'] = '';
+        } else {
+          form_data_array[i]['credit_days'] = this.creditDays[indxId]?.days;
+        }
+
       }
       
       let reqData = {
@@ -499,7 +503,6 @@ export class KamComponent implements OnInit {
     let qouteSt = this.selectedItem[0]['quotest'];
     let userTyp = localStorage.getItem('USER_TYPE');
 
-    this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
@@ -530,9 +533,6 @@ export class KamComponent implements OnInit {
           this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
           })
         }
-
-        // Customer notification send
-        if (this.userByrole == 'Kam') {
           let userId = localStorage.getItem('USER_ID');
           let salesNotiReq = {
             "desc_no": this.rfqNum,
@@ -543,19 +543,6 @@ export class KamComponent implements OnInit {
           }
           this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
           })
-        }
-          // Kam notification send
-        else {
-          let userId = localStorage.getItem('USER_ID');
-          let salesNotiReq = {
-            "desc_no": this.rfqNum,
-            "user_id": userId,
-            "desc": 'RFQ has been updated',
-            "url_type": 'R'
-          }
-          this._product.camNotification(salesNotiReq).subscribe((res:any) => {
-          })
-        }
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -591,7 +578,7 @@ export class KamComponent implements OnInit {
         })
       }
       if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
-        if (userTyp == 'Kam') {
+        // if (userTyp == 'Kam') {
           this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
           })
           
@@ -621,7 +608,7 @@ export class KamComponent implements OnInit {
             this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
             })
           
-        }
+        // }
       } 
     }, err => {
       console.log(err);
@@ -644,7 +631,7 @@ export class KamComponent implements OnInit {
       })
     } 
     
-    if (userRol == 'Kam' && (qouteSt == 5 || qouteSt == 9)) {
+    if (qouteSt == 5 || qouteSt == 9) {
       let qouteReq = {
         "rfq_no": this.rfqNum,
         "status": 8

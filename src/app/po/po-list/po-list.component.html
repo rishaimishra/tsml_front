@@ -64,10 +64,18 @@
                                  <td *ngIf="po.status == 6">
                                     <span class="badge badge-success">{{po.status_txt}}</span>
                                  </td>
+                                 <td *ngIf="po.status == 7">
+                                    <span class="badge badge-success">{{po.status_txt}}</span>
+                                 </td>
+                                 <td *ngIf="po.status == 8">
+                                    <span class="badge badge-success">{{po.status_txt}}</span>
+                                 </td>
                                   <td>
                                      <div class="btn-edt-del" style="justify-content: flex-start;">
-                                        <a *ngIf="po.status != 1 && userType == false" class="edt-btn btn-primary classPointer" [routerLink]="['/po/po-edit',po.po_no]" data-toggle="tooltip" data-placement="top" title="Amendment PO"><i class="fa fa-pencil"></i></a>
-                                        <a  class="edt-btn btn-primary2 classPointer" [routerLink]="['/po/po-view',po.po_no]" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                       <ng-container *ngIf="po.status == 2 || po.status == 3 || po.status == 4">
+                                          <a *ngIf="po.status != 1 && userType == false" class="edt-btn btn-primary classPointer" [routerLink]="['/po/po-edit',po.po_no]" data-toggle="tooltip" data-placement="top" title="Amendment PO"><i class="fa fa-pencil"></i></a>
+                                       </ng-container>
+                                       <a  class="edt-btn btn-primary2 classPointer" [routerLink]="['/po/po-view',po.po_no]" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
                                      </div>
                                      
                                   </td>

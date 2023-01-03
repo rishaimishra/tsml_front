@@ -64,7 +64,7 @@
                           <label for="">Grades offered</label>
                             <select #subCatInput="ngModel" (change)="subCatSelect($event)" [(ngModel)]="formData.sub_cat_id"
                             name="subCat_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
-                            <option value="" selected>..Select..</option>
+                            <option value="" selected>Select..</option>
                             <option value="{{subCat.id}}" *ngFor="let subCat of subCategory">{{subCat.sub_cat_name}}</option>
                           </select>
                           <small *ngIf="subCatInput.invalid && (subCatInput.dirty || subCatInput.touched || submit)"

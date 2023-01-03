@@ -255,6 +255,7 @@ export class DoEntryComponent implements OnInit {
               "url_type": 'R'
               // "sender_id": 
             }
+            this.setPoStatus(this.soList[indx].po_no);
             this._products.custNotiSubmit(custNotiReq).subscribe((res: any) => {
             })
             this._router.navigate(['/plant/do-list']);
@@ -266,5 +267,12 @@ export class DoEntryComponent implements OnInit {
 
     }
   }
-
+  setPoStatus(poNum:any) {
+    let ScStatusRequest = {
+      "po_no": poNum,
+      "status": '7'
+    }
+    this._sales.poStatus(ScStatusRequest).subscribe((res: any) => {
+    })
+  }
 }

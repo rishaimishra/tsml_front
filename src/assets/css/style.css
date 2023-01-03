@@ -3740,7 +3740,7 @@ a {
 .dashborad_sections .card .card-body,
 .dashborad_sections .card .card-footer {
     background-color: transparent;
-    padding: 20px 25px;
+    padding: 20px 16px;
 }
 
 .dashborad_sections .card .card-header h4+.card-header-action,

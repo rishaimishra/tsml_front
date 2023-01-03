@@ -105,6 +105,7 @@ export class PoEditComponent implements OnInit {
   daysCal:any;
   totalValue:any;
   isDap: boolean = false;
+  creditDays: any = [];
 
 
   constructor(
@@ -348,6 +349,7 @@ export class PoEditComponent implements OnInit {
     this.submit = true;
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
+    let confrmDate = [];
 
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -359,6 +361,18 @@ export class PoEditComponent implements OnInit {
             "status": 1
           };
           poStatusArr.push(reqParam);
+
+          let tantetiveReq = {
+            "schedule_no": form_data_array[i]['schedule_no'],
+            "confirm_date": form_data_array[i]['confirm_date'],
+          }
+          confrmDate.push(tantetiveReq);
+          let indxId = this.creditDays.findIndex((item: any) => item.id == form_data_array[i]['schedule_no']);
+          if (this.creditDays[indxId]?.days == undefined) {
+            form_data_array[i]['credit_days'] = '';
+          } else {
+            form_data_array[i]['credit_days'] = this.creditDays[indxId]?.days;
+          }
       }
 
       let reqData = {
@@ -513,15 +527,7 @@ export class PoEditComponent implements OnInit {
     } else {
       this.isDap = false;
     }
-    //
-    // if (dlvrItem == 'Ex-Works') {
-    //   $('#pickupTyp_' + schdl + '_c').hide();
-    //   $('#picLable' + schdl).hide();
-    // } else {
-    //   $('#pickupTyp_' + schdl + '_c').show();
-    //   $('#picLable' + schdl).show();
-    // }
-    //
+
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
@@ -719,10 +725,6 @@ export class PoEditComponent implements OnInit {
   };
 
   priceSave(id: any, firstIndx: any, lastIndx: any) {
-    // if (!this.priceForm.valid) {
-    //   this.submitted = true;
-    //   return;
-    // };
     this.selectedItem[firstIndx].schedule[lastIndx].kam_price = this.totalValue;
     $("#camsPrice" + id).val(this.Totalsum1);
     $("#addPrice").hide();

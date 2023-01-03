@@ -463,7 +463,8 @@ export class PoComponent implements OnInit {
           "desc_no": this.po_id,
           "user_id": userId,
           "desc": 'PO has been generated',
-          "url_type": 'P'
+          "url_type": 'P',
+          "sender_id": this.rfqUserId
         }
         this._product.camNotification(salesNotiReq).subscribe((res:any) => {
         })

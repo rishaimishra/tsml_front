@@ -488,7 +488,11 @@ export class ManagerComponent implements OnInit {
         }
         confrmDate.push(tantetiveReq);
         let indxId = this.creditDays.findIndex((item: any) => item.id == form_data_array[i]['schedule_no']);
-        form_data_array[i]['credit_days'] = this.creditDays[indxId].days;
+        if (this.creditDays[indxId]?.days == undefined) {
+          form_data_array[i]['credit_days'] = '';
+        } else {
+          form_data_array[i]['credit_days'] = this.creditDays[indxId].days;
+        }
       }
 
       let reqData = {
