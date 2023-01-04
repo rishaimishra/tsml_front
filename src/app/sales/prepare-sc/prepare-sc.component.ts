@@ -45,6 +45,7 @@ export class PrepareScComponent implements OnInit {
   rfqNo: any;
   rfqNumber:any;
   userId:any;
+  itemNumbr: any = [];
 
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
@@ -65,8 +66,8 @@ export class PrepareScComponent implements OnInit {
       sales_grp: [''],
       qty_cont: [''],
       net_val: [''],
-      // ContractValidFrom: [''],
-      // ContractValidTo: [''],
+      ContractValidFrom: [''],
+      ContractValidTo: [''],
       sold_to_party: [''],
       sold_to_addr: [''],
       ship_to_addr: [''],
@@ -92,7 +93,6 @@ export class PrepareScComponent implements OnInit {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.salesPo = res.result;
-        console.log(this.salesPo);
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -336,7 +336,6 @@ export class PrepareScComponent implements OnInit {
     }
     this.pricValArr.push(reqParam);
 
-    console.log(this.pricValArr);
   };
 
 
@@ -344,32 +343,43 @@ export class PrepareScComponent implements OnInit {
     const seFormDataArr = [];
     const sapMatArr = [];
     const codePrice = [];
-    // const val = Math.floor(10 + Math.random() * 90);
-    // console.log(val);
-
     this.scForm.value['po_no'] = this.poNumber;
+    // let n = 10;
+    // for (let i = 1; i <= this.scInfo.length; ++i) {
+    //   this.itemNumbr = ( n * i);
+    // }
+
     for (let i = 0; i < this.pricValArr.length; i++) {
       const element = this.pricValArr[i];
-
-      let codePr = {
-        "CnTy": element.CnTy,
-        "Amount": element.Amount
+      let n = 10;
+      for(let y = 1; y <= this.scInfo.length; ++y) {
+        let itemNumbr = ( n * y);
+        let codePr = {
+          "ItemNumber": itemNumbr,
+          "CnTy": element.CnTy,
+          "Amount": element.Amount
+        }
+        codePrice.push(codePr)
       }
-      codePrice.push(codePr)
     };
 
     for (let i = 0; i < this.scInfo.length; i++) {
       const element = this.scInfo[i];
       this.getSpec(this.scInfo[i]['specs']);
       this.rfqNo = this.scInfo[i].rfq_no;
-      let sapMaterial = {
-        "Material": this.scInfo[i].mat_code,
-        "Quantity": this.scInfo[i].tot_qty,
-        "CustomarMaterialNumber": this.scInfo[i].mat_code,
-        "OrderQuantity": this.scInfo[i].odr_qty,
-        "Plant": this.scInfo[i].pcode
-      };
-      sapMatArr.push(sapMaterial);
+      let n = 10;
+      for(let y = 1; y <= this.scInfo.length; ++y) {
+        let itemNumbr = ( n * y);
+        let sapMaterial = {
+          "item": itemNumbr,
+          "Material": this.scInfo[i].mat_code,
+          "Quantity": this.scInfo[i].tot_qty,
+          "CustomarMaterialNumber": this.scInfo[i].mat_code,
+          "OrderQuantity": this.scInfo[i].odr_qty,
+          "Plant": this.scInfo[i].pcode
+        };
+        sapMatArr.push(sapMaterial);
+      }
       let indxId = this.percentArr.findIndex((item: any) => item.mat_code == this.scInfo[i].mat_code);
       let material =
       {
@@ -383,20 +393,26 @@ export class PrepareScComponent implements OnInit {
         "per_percent": this.percentArr[indxId]
       }
       seFormDataArr.push(material);
-    }
+    };
+
     let fullData = {
       "po_details": this.scForm.value,
       "inco_form": this.updateInfoForm.value,
       "material": seFormDataArr
-    }
+    };
+
     let sapRequest = {
       "OrganizationalData": {
         "ContractType": this.scForm.value['contract_ty'],
         "SalesOrganization": this.scForm.value['sales_org'],
         "DistributionChannel": this.scForm.value['dis_chnl'],
         "Division": this.scForm.value['div'],
+        "ContractValidFrom": this.scForm.value['ContractValidFrom'],
+        "ContractValidTo": this.scForm.value['ContractValidTo'],
         "Salesoffice": this.scForm.value['sales_ofc'],
-        "Salesgroup": this.scForm.value['sales_grp']
+        "Salesgroup": this.scForm.value['sales_grp'],
+        "Incoterms": this.updateInfoForm.value['incoterms'],
+        "Paymentterms": this.updateInfoForm.value['pay_terms']
       },
       "SoldToParty": {
         "QtyContractTSML": this.scForm.value['qty_cont'],
@@ -412,10 +428,6 @@ export class PrepareScComponent implements OnInit {
       "Items": sapMatArr,
       "Conditions": codePrice,
 
-      "TermsofDeliveryandPayment": {
-        "Incoterms": this.updateInfoForm.value['incoterms'],
-        "Paymentterms": this.updateInfoForm.value['pay_terms']
-      },
       "AdditionalDataA": {
         "Freight": this.updateInfoForm.value['freight'],
         "CustomerGroup4": this.updateInfoForm.value['cus_grp']
@@ -424,8 +436,60 @@ export class PrepareScComponent implements OnInit {
         "FreightIndicator": this.updateInfoForm.value['fr_ind']
       }
     };
-    console.log(fullData);
-
+    // demo json
+    let domojson = {
+      "OrganizationalData": {
+        "ContractType": "ZFQC",
+        "SalesOrganization": 5500,
+        "DistributionChannel": 50,
+        "Division": 81,
+        "Salesoffice": 2000,
+        "ContractValidFrom":"20221127",
+        "ContractValidTo":"20221227",
+        "Incoterms":"A01",
+        "Paymentterms":"Z001"
+      },
+      "SoldToParty": {
+        "QtyContractTSML": 300,
+        "Sold_To_Party": 50000118,
+        "Ship_To_Party": 50000002,
+        "Cust_Referance": "SUBRATA1967",
+        "NetValue": 209000,
+        "Cust_Ref_Date": "20221127"
+      },
+      "Sales": {
+        "Shp_Cond": 1
+      },
+      "Items": {
+        "Item": 10,
+        "Material": 120000109,
+        "Quantity": 300,
+        "CustomarMaterialNumber": 120000109,
+        "OrderQuantity": 100,
+        "Plant": 2200
+        
+      },
+      "Conditions": [
+        {
+           "ItemNumber":10,
+          "CnTy": "ZPR0",
+          "Amount": 100000
+        }
+      ],
+      "AdditionalDataA": {
+        "Freight": "B1",
+        "CustomerGroup4": "DOM"
+      },
+      "AdditionalDataforPricing": {
+        "FreightIndicator": "X"
+      }
+    }
+    
+    this._sales.sapReq(domojson).subscribe((res:any) => {
+      console.log('res',res);
+    })
+    console.log(sapRequest);
+    return;
     this._spiner.show();
     this._sales.submitSalesCnt(fullData).subscribe((res: any) => {
       this._spiner.hide();
@@ -444,7 +508,7 @@ export class PrepareScComponent implements OnInit {
 
       let userId = localStorage.getItem('USER_ID');
       let camNotiReq = {
-        "desc": 'SC has been created',
+        "desc": 'Sales contract has been created',
         "desc_no": this.poNumber,
         "user_id": userId,
         "url_type": 'PO'
@@ -452,7 +516,7 @@ export class PrepareScComponent implements OnInit {
       this._product.camNotification(camNotiReq).subscribe((res: any) => {
       })
       let custNotiReq = {
-        "desc": 'SC has been created',
+        "desc": 'Sales contract has been created',
         "desc_no": this.poNumber,
         "user_id": userId,
         "url_type": 'PO',
@@ -489,58 +553,4 @@ export class PrepareScComponent implements OnInit {
     this._location.back();
   };
 
-  callApi() {
-    let data = {
-      "OrganizationalData": {
-        "ContractType": "ZFQC",
-        "SalesOrganization": 5500,
-        "DistributionChannel": 50,
-        "Division": 81,
-        "Salesoffice": 2000,
-        "ContractValidFrom":"20221127",
-        "ContractValidTo":"20221227"
-      },
-      "SoldToParty": {
-        "QtyContractTSML": 300,
-        "Sold_To_Party": 50000118,
-        "Ship_To_Party": 50000002,
-        "Cust_Referance": "SUBRATA1967",
-        "NetValue": 209000,
-        "Cust_Ref_Date": "2022-11-27"
-      },
-      "Sales": {
-        "Shp_Cond": 1
-      },
-      "Items": {
-        "Item": 10,
-        "Material": 120000109,
-        "Quantity": 300,
-        "CustomarMaterialNumber": 120000109,
-        "OrderQuantity": 100,
-        "Plant": 2200
-      },
-      "Conditions": [
-        {
-           "Itemnumber":10,
-          "CnTy": "ZPR0",
-          "Amount": 100000
-        },
-        {
-           "Itemnumber":20,
-          "CnTy": "ZPR0",
-          "Amount": 1000
-        }
-      ],
-      "AdditionalDataA": {
-        "Freight": "BARGE",
-        "CustomerGroup4": 1
-      },
-      "AdditionalDataforPricing": {
-        "FreightIndicator": "Exclusive Indicator"
-      }
-    }
-    this._sales.sapReq(data).subscribe((res:any) => {
-      console.log(res);
-    })
-  }
 }

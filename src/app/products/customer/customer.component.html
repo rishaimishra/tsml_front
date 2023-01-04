@@ -314,9 +314,10 @@
                                                             [(ngModel)]="formData.pay_term">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-9" ><label class="mt-4 text-white badge badge-info" *ngIf="formData.credit_days == 0">Full payment in advance.</label></div>
-                                                <div class="col-lg-9" ><label class="mt-4 text-white badge badge-info" *ngIf="formData.credit_days == 30">30 Days Credit.</label></div>
-                                                <div class="col-lg-9" ><label class="mt-4 text-white badge badge-info" *ngIf="formData.credit_days == 45">45 Days Credit.</label></div>
+                                                <div class="col-lg-9" *ngIf="formData.credit_days == ''"><label class="mt-4 text-white badge badge-info"></label></div>
+                                                <div class="col-lg-9"  *ngIf="formData.credit_days == 0"><label class="mt-4 text-white badge badge-info">Full payment in advance.</label></div>
+                                                <div class="col-lg-9" *ngIf="formData.credit_days == 30"><label class="mt-4 text-white badge badge-info" >30 Days Credit.</label></div>
+                                                <div class="col-lg-9" *ngIf="formData.credit_days == 45"><label class="mt-4 text-white badge badge-info" >45 Days Credit.</label></div>
                                                 
                                                 <!-- customer remarks -->
                                                 <div class="col-lg-6">

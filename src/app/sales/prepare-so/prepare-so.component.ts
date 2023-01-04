@@ -107,7 +107,7 @@ export class PrepareSoComponent implements OnInit {
 
       let userId = localStorage.getItem('USER_ID');
       let camNotiReq = {
-        "desc": 'SO has been created',
+        "desc": 'Sales order has been created',
         "desc_no": this.poNumber,
         "user_id": userId,
         "url_type": 'P'
@@ -115,7 +115,7 @@ export class PrepareSoComponent implements OnInit {
       this._product.camNotification(camNotiReq).subscribe((res: any) => {
       })
       let notiReqCust = {
-        "desc": 'SO has been created',
+        "desc": 'Sales order has been created',
         "desc_no": this.poNumber,
         "user_id": userId,
         "url_type": 'P',

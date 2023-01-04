@@ -23,7 +23,7 @@ export class AuthIntercepto implements HttpInterceptor {
 
         let sapApiurl = jwtToken.url.includes(this.sapApiUrl);
         let username = 'MJUNCTION_M_PI_QA';
-        let password = 'Welcome';
+        let password = 'Welcome@123';
 
         let authorizationData = 'Basic ' + btoa(username + ':' + password);
         if (sapApiurl == true) {
