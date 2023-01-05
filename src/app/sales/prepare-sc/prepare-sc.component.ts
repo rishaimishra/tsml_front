@@ -440,118 +440,16 @@ export class PrepareScComponent implements OnInit {
         "FreightIndicator": this.updateInfoForm.value['fr_ind']
       }
     };
-    // demo json
-    // let domojson = {
-    //   "OrganizationalData": {
-    //     "ContractType": "ZFQC",
-    //     "SalesOrganization": 5500,
-    //     "DistributionChannel": 50,
-    //     "Division": 81,
-    //     "Salesoffice": 2000,
-    //     "ContractValidFrom":"20221127",
-    //     "ContractValidTo":"20221227",
-    //     "Incoterms":"A01",
-    //     "Paymentterms":"Z001"
-    //   },
-    //   "SoldToParty": {
-    //     "QtyContractTSML": 300,
-    //     "Sold_To_Party": 50000118,
-    //     "Ship_To_Party": 50000002,
-    //     "Cust_Referance": "SUBRATA1967",
-    //     "NetValue": 209000,
-    //     "Cust_Ref_Date": "20221127"
-    //   },
-    //   "Sales": {
-    //     "Shp_Cond": 1
-    //   },
-    //   "Items": {
-    //     "Item": 10,
-    //     "Material": 120000109,
-    //     "Quantity": 300,
-    //     "CustomarMaterialNumber": 120000109,
-    //     "OrderQuantity": 100,
-    //     "Plant": 2200
-        
-    //   },
-    //   "Conditions": [
-    //     {
-    //        "ItemNumber":10,
-    //       "CnTy": "ZPR0",
-    //       "Amount": 100000
-    //     }
-    //   ],
-    //   "AdditionalDataA": {
-    //     "Freight": "B1",
-    //     "CustomerGroup4": "DOM"
-    //   },
-    //   "AdditionalDataforPricing": {
-    //     "FreightIndicator": "X"
-    //   }
-    // }
-    
-    // var settings = {
-    //   "url": "http://10.0.170.42:50000/RESTAdapter/SalesContract",
-    //   "method": "POST",
-    //   "timeout": 0,
-    //   "headers": {
-    //     "Authorization": "Basic TUpVTkNUSU9OX01fUElfUUE6V2VsY29tZUAxMjM=",
-    //     "Content-Type": "application/json",
-    //     "Cookie": "saplb_*=(J2EE7400520)7400550"
-    //   },
-    //   "data": JSON.stringify({
-    //     "OrganizationalData": {
-    //       "ContractType": "ZFQC",
-    //       "SalesOrganization": 5500,
-    //       "DistributionChannel": 50,
-    //       "Division": 81,
-    //       "Salesoffice": 2000,
-    //       "ContractValidFrom": "20221127",
-    //       "ContractValidTo": "20221227",
-    //       "Incoterms": "A01",
-    //       "Paymentterms": "Z001"
-    //     },
-    //     "SoldToParty": {
-    //       "QtyContractTSML": 300,
-    //       "Sold_To_Party": 50000118,
-    //       "Ship_To_Party": 50000002,
-    //       "Cust_Referance": "SUBRATA1967",
-    //       "NetValue": 209000,
-    //       "Cust_Ref_Date": "20221127"
-    //     },
-    //     "Sales": {
-    //       "Shp_Cond": 1
-    //     },
-    //     "Items": {
-    //       "Item": 10,
-    //       "Material": 120000109,
-    //       "Quantity": 300,
-    //       "CustomarMaterialNumber": 120000109,
-    //       "OrderQuantity": 100,
-    //       "Plant": 2200
-    //     },
-    //     "Conditions": [
-    //       {
-    //         "ItemNumber": 10,
-    //         "CnTy": "ZPR0",
-    //         "Amount": 100000
-    //       }
-    //     ],
-    //     "AdditionalDataA": {
-    //       "Freight": "B1",
-    //       "CustomerGroup4": "DOM"
-    //     },
-    //     "AdditionalDataforPricing": {
-    //       "FreightIndicator": "X"
-    //     }
-    //   }),
-    // };
-    
-    // $.ajax(settings).done(function (response:any) {
-    //   console.log(response);
-    // });
-
+    this._spiner.show();
     this._sales.sapReq(sapRequest).subscribe((res:any) => {
+    this._spiner.hide();
       console.log('res',res);
+      if (res.SalesContractRes.Status == 'S') {
+        alert(res.SalesContractRes.Message);
+      }
+    }, err => {
+      console.log(err);
+      this._spiner.hide();
     })
     console.log(sapRequest);
     return;

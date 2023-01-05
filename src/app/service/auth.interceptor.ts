@@ -22,17 +22,16 @@ export class AuthIntercepto implements HttpInterceptor {
         });
 
         let sapApiurl = jwtToken.url.includes(this.sapApiUrl);
-        let username = 'MJUNCTION_M_PI_QA';
+        let username = 'MJUNCTION_M_PI_DEV';
         let password = 'Welcome@123';
-
-        let authorizationData = 'Basic ' + btoa(username + ':' + password);
+        
+        let authorizationData = btoa(username + ':' + password);
         if (sapApiurl == true) {
-            // let authService = this.inject.get(AuthService);
             let basicAuth = req.clone({
                 setHeaders: {
                     'Content-Type':  'application/json',
-                    Authorization: 'Basic ' + 'TUpVTkNUSU9OX01fUElfUUE6V2VsY29tZUAxMjM='
-                    // Authorization: 'Basic ' + btoa(authorizationData)
+                    // Authorization: 'Basic ' + 'TUpVTkNUSU9OX01fUElfUUE6V2VsY29tZUAxMjM='
+                    Authorization: 'Basic ' + authorizationData
                 }
             });
             return next.handle(basicAuth);

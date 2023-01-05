@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-prepare-so',
@@ -20,7 +21,6 @@ export class PrepareSoComponent implements OnInit {
   poNumber: any;
   paymentGu: any = '';
   fncilDoc: any = '';
-  orderType: any;
   p: number = 1;
   orgSales: any = [];
   sapDivision: any = [];
@@ -29,8 +29,12 @@ export class PrepareSoComponent implements OnInit {
   rfqNumber:any;
   userid:any;
 
-
-
+  odrType:any;
+  salesOrgniz:any;
+  disChanel:any;
+  divisin:any;
+  salesOffice:any;
+  salesGroup:any;
 
   constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
     private _fb: FormBuilder, private _router: Router,
@@ -81,13 +85,43 @@ export class PrepareSoComponent implements OnInit {
       pay_proc: this.paymentGu,
       fin_doc_no: this.fncilDoc,
       user_id: this.soDetails.uid,
-      order_type: this.orderType,
+      order_type: this.odrType,
       sales_org: this.soDetails.id,
       dis_chnl: this.soDetails.disid,
       division: this.soDetails.divid,
       sales_ofc: this.soDetails.ofcid,
       sales_grp: this.soDetails.salesid
     };
+
+    let contNum = $('#contrtNum').val();
+    let sapSoReq = {
+      "OrganizationalData": {
+        "OrderType": this.odrType,
+        "SalesOrganization": this.salesOrgniz,
+        "DistributionChannel": this.disChanel,
+        "Division": this.divisin,
+        "Salesoffice": this.salesOffice,
+        "Salesgroup": this.salesGroup
+      },
+      "Contract": {
+        "ContractNumber": contNum
+      }
+      
+    }
+    this._spiner.show();
+    this._sales.sapSoReq(sapSoReq).subscribe((res:any) => {
+      console.log(res);
+      this._spiner.hide();
+      if (res.Status == 'S') {
+        alert(res.Message);
+      }
+    }, err => {
+      console.log(err)
+      this._spiner.hide()
+    })
+
+    return;
+    
     this._spiner.show();
     this._sales.submitSalesSo(submitSoData).subscribe((res: any) => {
       Swal.fire(
@@ -114,6 +148,8 @@ export class PrepareSoComponent implements OnInit {
       }
       this._product.camNotification(camNotiReq).subscribe((res: any) => {
       })
+
+      // notification
       let notiReqCust = {
         "desc": 'Sales order has been created',
         "desc_no": this.poNumber,
@@ -140,7 +176,8 @@ export class PrepareSoComponent implements OnInit {
       console.log(err);
       this._spiner.hide();
     })
-  }
+  };
+
   getContract() {
     this._sales.getSapContractType().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
@@ -149,6 +186,7 @@ export class PrepareSoComponent implements OnInit {
       }
     })
   };
+
   salesOrg() {
     this._sales.getSalesOrg().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
@@ -169,7 +207,8 @@ export class PrepareSoComponent implements OnInit {
   selectDist(event: any) {
     let divData = event.target.value;
     this.getsapDivin(divData);
-  }
+  };
+
   getsapDivin(divData: any) {
     let divReq = {
       "distr_chan_code": divData
@@ -203,5 +242,5 @@ export class PrepareSoComponent implements OnInit {
         this.sapGroup = res.result;
       }
     })
-  };
+  }
 }
