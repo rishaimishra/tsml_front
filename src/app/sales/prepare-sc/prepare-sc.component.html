@@ -248,9 +248,7 @@
                                         <td>
                                           <select class="form-control form-control-sm mr-sm-2" (change)="getPrice($event, i)">
                                              <option value="">--Select--</option>
-                                             <option value="123">123</option>
-                                             <option value="456">456</option>
-                                             <option value="789">789</option>
+                                             <option value="ZPR0">ZPR0</option>
                                           </select>
                                         </td>
                                         <td>{{item.des}}</td>
@@ -328,7 +326,7 @@
                                    <label>Incoterms</label>
                                    <select class="form-control form-control-sm" formControlName="incoterms">
                                       <option value="">--Select--</option>
-                                      <option value="{{item.id}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
+                                      <option value="{{item.incoterms_code}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
                                    </select>
                                 </div>
                              </div>
@@ -347,7 +345,7 @@
                                     <label>Feight</label>
                                     <select class="form-control form-control-sm" formControlName="freight">
                                        <option value="">--Select--</option>
-                                       <option value="{{item.freight_dec}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
+                                       <option value="{{item.freight_code}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
                                     </select>
                                  </div>
                               </div>
@@ -365,7 +363,7 @@
                                     <label>Feight Indicator</label>
                                     <select class="form-control form-control-sm" formControlName="fr_ind">
                                        <option value="">--Select--</option>
-                                       <option value="{{indi.freight_indication_dec}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
+                                       <option value="{{indi.freight_indication_code}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
                                     </select>
                                  </div>
                               </div>

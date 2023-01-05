@@ -338,17 +338,21 @@ export class PrepareScComponent implements OnInit {
 
   };
 
-
   submitSc() {
     const seFormDataArr = [];
     const sapMatArr = [];
     const codePrice = [];
     this.scForm.value['po_no'] = this.poNumber;
-    // let n = 10;
-    // for (let i = 1; i <= this.scInfo.length; ++i) {
-    //   this.itemNumbr = ( n * i);
-    // }
+    var from = this.scForm.value['ContractValidFrom'];
+    var dd = from.replace('-','');
+    var mm = dd.replace('-','');
+    this.scForm.value['ContractValidFrom'] = mm;
 
+    var till = this.scForm.value['ContractValidTo'];
+    var tilldd = till.replace('-','');
+    var tillmm = tilldd.replace('-','');
+    this.scForm.value['ContractValidTo'] = tillmm;
+    
     for (let i = 0; i < this.pricValArr.length; i++) {
       const element = this.pricValArr[i];
       let n = 10;
@@ -400,7 +404,7 @@ export class PrepareScComponent implements OnInit {
       "inco_form": this.updateInfoForm.value,
       "material": seFormDataArr
     };
-
+    
     let sapRequest = {
       "OrganizationalData": {
         "ContractType": this.scForm.value['contract_ty'],
@@ -417,7 +421,7 @@ export class PrepareScComponent implements OnInit {
       "SoldToParty": {
         "QtyContractTSML": this.scForm.value['qty_cont'],
         "Sold_To_Party": this.scForm.value['sold_to_party'],
-        "Ship_To_Party": this.scForm.value['sold_to_addr'],
+        "Ship_To_Party": this.scForm.value['ship_to_party'],
         "Cust_Referance": this.scForm.value['cus_ref'],
         "NetValue": this.scForm.value['net_val'],
         "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
@@ -437,55 +441,116 @@ export class PrepareScComponent implements OnInit {
       }
     };
     // demo json
-    let domojson = {
-      "OrganizationalData": {
-        "ContractType": "ZFQC",
-        "SalesOrganization": 5500,
-        "DistributionChannel": 50,
-        "Division": 81,
-        "Salesoffice": 2000,
-        "ContractValidFrom":"20221127",
-        "ContractValidTo":"20221227",
-        "Incoterms":"A01",
-        "Paymentterms":"Z001"
-      },
-      "SoldToParty": {
-        "QtyContractTSML": 300,
-        "Sold_To_Party": 50000118,
-        "Ship_To_Party": 50000002,
-        "Cust_Referance": "SUBRATA1967",
-        "NetValue": 209000,
-        "Cust_Ref_Date": "20221127"
-      },
-      "Sales": {
-        "Shp_Cond": 1
-      },
-      "Items": {
-        "Item": 10,
-        "Material": 120000109,
-        "Quantity": 300,
-        "CustomarMaterialNumber": 120000109,
-        "OrderQuantity": 100,
-        "Plant": 2200
+    // let domojson = {
+    //   "OrganizationalData": {
+    //     "ContractType": "ZFQC",
+    //     "SalesOrganization": 5500,
+    //     "DistributionChannel": 50,
+    //     "Division": 81,
+    //     "Salesoffice": 2000,
+    //     "ContractValidFrom":"20221127",
+    //     "ContractValidTo":"20221227",
+    //     "Incoterms":"A01",
+    //     "Paymentterms":"Z001"
+    //   },
+    //   "SoldToParty": {
+    //     "QtyContractTSML": 300,
+    //     "Sold_To_Party": 50000118,
+    //     "Ship_To_Party": 50000002,
+    //     "Cust_Referance": "SUBRATA1967",
+    //     "NetValue": 209000,
+    //     "Cust_Ref_Date": "20221127"
+    //   },
+    //   "Sales": {
+    //     "Shp_Cond": 1
+    //   },
+    //   "Items": {
+    //     "Item": 10,
+    //     "Material": 120000109,
+    //     "Quantity": 300,
+    //     "CustomarMaterialNumber": 120000109,
+    //     "OrderQuantity": 100,
+    //     "Plant": 2200
         
-      },
-      "Conditions": [
-        {
-           "ItemNumber":10,
-          "CnTy": "ZPR0",
-          "Amount": 100000
-        }
-      ],
-      "AdditionalDataA": {
-        "Freight": "B1",
-        "CustomerGroup4": "DOM"
-      },
-      "AdditionalDataforPricing": {
-        "FreightIndicator": "X"
-      }
-    }
+    //   },
+    //   "Conditions": [
+    //     {
+    //        "ItemNumber":10,
+    //       "CnTy": "ZPR0",
+    //       "Amount": 100000
+    //     }
+    //   ],
+    //   "AdditionalDataA": {
+    //     "Freight": "B1",
+    //     "CustomerGroup4": "DOM"
+    //   },
+    //   "AdditionalDataforPricing": {
+    //     "FreightIndicator": "X"
+    //   }
+    // }
     
-    this._sales.sapReq(domojson).subscribe((res:any) => {
+    // var settings = {
+    //   "url": "http://10.0.170.42:50000/RESTAdapter/SalesContract",
+    //   "method": "POST",
+    //   "timeout": 0,
+    //   "headers": {
+    //     "Authorization": "Basic TUpVTkNUSU9OX01fUElfUUE6V2VsY29tZUAxMjM=",
+    //     "Content-Type": "application/json",
+    //     "Cookie": "saplb_*=(J2EE7400520)7400550"
+    //   },
+    //   "data": JSON.stringify({
+    //     "OrganizationalData": {
+    //       "ContractType": "ZFQC",
+    //       "SalesOrganization": 5500,
+    //       "DistributionChannel": 50,
+    //       "Division": 81,
+    //       "Salesoffice": 2000,
+    //       "ContractValidFrom": "20221127",
+    //       "ContractValidTo": "20221227",
+    //       "Incoterms": "A01",
+    //       "Paymentterms": "Z001"
+    //     },
+    //     "SoldToParty": {
+    //       "QtyContractTSML": 300,
+    //       "Sold_To_Party": 50000118,
+    //       "Ship_To_Party": 50000002,
+    //       "Cust_Referance": "SUBRATA1967",
+    //       "NetValue": 209000,
+    //       "Cust_Ref_Date": "20221127"
+    //     },
+    //     "Sales": {
+    //       "Shp_Cond": 1
+    //     },
+    //     "Items": {
+    //       "Item": 10,
+    //       "Material": 120000109,
+    //       "Quantity": 300,
+    //       "CustomarMaterialNumber": 120000109,
+    //       "OrderQuantity": 100,
+    //       "Plant": 2200
+    //     },
+    //     "Conditions": [
+    //       {
+    //         "ItemNumber": 10,
+    //         "CnTy": "ZPR0",
+    //         "Amount": 100000
+    //       }
+    //     ],
+    //     "AdditionalDataA": {
+    //       "Freight": "B1",
+    //       "CustomerGroup4": "DOM"
+    //     },
+    //     "AdditionalDataforPricing": {
+    //       "FreightIndicator": "X"
+    //     }
+    //   }),
+    // };
+    
+    // $.ajax(settings).done(function (response:any) {
+    //   console.log(response);
+    // });
+
+    this._sales.sapReq(sapRequest).subscribe((res:any) => {
       console.log('res',res);
     })
     console.log(sapRequest);
