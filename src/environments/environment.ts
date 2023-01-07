@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiEndpointBase:'https://beas.in/mje-shop/api',
-  sapApiEndpointBase:'https://esalesdev.tatasteelmining.com:50001/RESTAdapter',
+  sapApiEndpointBase:'https://15.207.150.126:50001/RESTAdapter',
   filePath:'https://beas.in/mje-shop/storage/app/public/images/complain/',
 };
 

@@ -366,6 +366,9 @@ export class PrepareScComponent implements OnInit {
         codePrice.push(codePr)
       }
     };
+    let username = 'MJUNCTION_M_PI_DEV';
+    let password = 'Welcome@123';
+    let authorizationData = 'Basic ' + btoa(username + ':' + password);
 
     for (let i = 0; i < this.scInfo.length; i++) {
       const element = this.scInfo[i];
@@ -440,13 +443,18 @@ export class PrepareScComponent implements OnInit {
         "FreightIndicator": this.updateInfoForm.value['fr_ind']
       }
     };
+    
+    let screquest = {
+      "scData": sapRequest,
+      "basic_auth": authorizationData
+    }
     this._spiner.show();
-    this._sales.sapReq(sapRequest).subscribe((res:any) => {
+    this._sales.salesContract(screquest).subscribe((res:any) => {
     this._spiner.hide();
       console.log('res',res);
-      if (res.SalesContractRes.Status == 'S') {
-        alert(res.SalesContractRes.Message);
-      }
+      // if (res.SalesContractRes.Status == 'S') {
+      //   alert(res.SalesContractRes.Message);
+      // }
     }, err => {
       console.log(err);
       this._spiner.hide();
@@ -516,4 +524,73 @@ export class PrepareScComponent implements OnInit {
     this._location.back();
   };
 
+  checkSubmit() {
+    var settings = {
+      "url": "https://esalesdev.tatasteelmining.com:50001/RESTAdapter/SalesContract",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Authorization": "Basic TUpVTkNUSU9OX01fUElfREVWOldlbGNvbWVAMTIz",
+        "Content-Type": "application/json"
+      },
+      "data": JSON.stringify({
+        "OrganizationalData": {
+          "ContractType": "JSDQ",
+          "SalesOrganization": "5500",
+          "DistributionChannel": "51",
+          "Division": "51",
+          "ContractValidFrom": "20230107",
+          "ContractValidTo": "20230108",
+          "Salesoffice": "2000",
+          "Salesgroup": "100",
+          "Incoterms": "A03",
+          "Paymentterms": "B6P3"
+        },
+        "SoldToParty": {
+          "QtyContractTSML": 100,
+          "Sold_To_Party": "0050001234",
+          "Ship_To_Party": "0050001234",
+          "Cust_Referance": "CUST3366",
+          "NetValue": 107269.29,
+          "Cust_Ref_Date": "2023-01-03"
+        },
+        "Sales": {
+          "Shp_Cond": "2"
+        },
+        "Items": [
+          {
+            "item": 10,
+            "Material": "120000112",
+            "Quantity": 100,
+            "CustomarMaterialNumber": "120000112",
+            "OrderQuantity": "100",
+            "Plant": "2202"
+          }
+        ],
+        "Conditions": [
+          {
+            "ItemNumber": 10,
+            "CnTy": "ZPR0",
+            "Amount": "100000"
+          },
+          {
+            "ItemNumber": 10,
+            "CnTy": "ZPR0",
+            "Amount": "0"
+          }
+        ],
+        "AdditionalDataA": {
+          "Freight": "B1",
+          "CustomerGroup4": "DOM"
+        },
+        "AdditionalDataforPricing": {
+          "FreightIndicator": "X"
+        }
+      }),
+    };
+    
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+  }
 }

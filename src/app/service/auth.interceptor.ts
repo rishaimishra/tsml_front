@@ -30,7 +30,6 @@ export class AuthIntercepto implements HttpInterceptor {
             let basicAuth = req.clone({
                 setHeaders: {
                     'Content-Type':  'application/json',
-                    // Authorization: 'Basic ' + 'TUpVTkNUSU9OX01fUElfUUE6V2VsY29tZUAxMjM='
                     Authorization: 'Basic ' + authorizationData
                 }
             });

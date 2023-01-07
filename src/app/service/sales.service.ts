@@ -92,11 +92,17 @@ export class SalesService {
   poStatus(request:any) {
     return this._http.post(this.BesUrl + '/user/po_status_update', request);
   };
+
   sapReq(request:any) {
-    return this._http.post('https://esalesdev.tatasteelmining.com:50001/RESTAdapter/SalesContract', request);
+    return this._http.post('https://15.207.150.126:50001/RESTAdapter/SalesContract', request);
   };
+
   sapSoReq(request:any) {
-    return this._http.post('https://esalesdev.tatasteelmining.com:50001/RESTAdapter/SalesOrder', request);
+    return this._http.post('https://15.207.150.126:50001/RESTAdapter/SalesOrder', request);
+  };
+
+  salesContract(request:any) {
+    return this._http.post(this.BesUrl +'/sap_sales_contarct', request);
   };
   
   rejectRemarks(request:any) {
