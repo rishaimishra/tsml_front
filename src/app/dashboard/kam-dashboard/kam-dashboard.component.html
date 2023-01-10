@@ -109,7 +109,7 @@
                   <div class="card">
                      <div class="card-header">
                         <h4>Recent enquiry</h4>
-                        <div class="col-md-5 ml-5">
+                        <div class="col ml-5">
                            <input type="text" placeholder="Search by rfq number" [(ngModel)]="searchValue" class="form-control">
                          </div>
                          <div class="input-group-append">
@@ -221,26 +221,20 @@
                   <div class="card">
                      <div class="card-header">
                         <h4>Confirmed order list</h4>
+                        <div class="col ml-5">
+                           <input type="text" placeholder="Order ref no / Cust po no" [(ngModel)]="searchPoValue"
+                              class="form-control">
+                        </div>
+                        <div class="input-group-append">
+                           <button class="btn btn-outline-secondary" (click)="poSearch()" type="button"><i
+                                 class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                        <div class="input-group-append ml-1">
+                           <button class="btn btn-outline-secondary" (click)="getKamPoListing()" type="button"><i
+                                 class="fa fa-refresh" aria-hidden="true"></i></button>
+                        </div>
                      </div>
                      <div class="card-body">
-                        <div class="filter-box">
-                           <div class="row">
-                              <div class="col-12 col-lg-5">
-                                 <div class="form-group">
-                                    <label>Search</label>
-                                    <input type="text" placeholder="Order ref no / Cust po no" [(ngModel)]="searchPoValue" class="form-control form-control-sm">
-                                 </div>
-                              </div>
-                              <!--/-->
-                              <div class="col-lg-1 mt-4">
-                                 <button type="button" class="btn btn-outline-secondary" (click)="poSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
-                              </div>
-                              <div class="col-lg-3 mt-4">
-                                 <button type="button" class="btn btn-outline-secondary" (click)="getKamPoListing()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                              </div>
-                              
-                           </div>
-                        </div>
                         <div class="table-responsive">
                            <table class="table table-hover mb-0">
                               <thead>

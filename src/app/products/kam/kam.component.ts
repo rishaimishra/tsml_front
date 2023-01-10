@@ -128,6 +128,9 @@ export class KamComponent implements OnInit {
   totalValue:any;
   isDap: boolean = false;
   creditDays: any = [];
+  catId:any;
+  prodcutSize:any;
+
 
 
   @ViewChild("remarksModel")
@@ -171,7 +174,6 @@ export class KamComponent implements OnInit {
     // this.states = this._state.getState();
     this.detailByRfq();
     this.getNegotiationHistory();
-    this.getSubCategory(this.rfqNum);
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
       misc_expense: [''],
@@ -220,6 +222,7 @@ export class KamComponent implements OnInit {
       this.spinner.hide();
       if (res.message == 'success') {
         this.editProductId = res.result[0]['product_id'];
+        this.catId = res.result[0]['cat_id'];
         this.product_data = res.result;
         this.rfqUserId = this.product_data[0].user_id;
         this.qoutestId = this.product_data[0].quotest;
@@ -1077,6 +1080,7 @@ export class KamComponent implements OnInit {
 
     let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
     let apiUrl = '/user/get_plant_addr/'+ indx.id;
+    this.getSubCategory(this.editProductId, this.catId, indx.id);
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success') {
@@ -1123,22 +1127,56 @@ export class KamComponent implements OnInit {
     })
   };
 
-  getSubCategory(catId:any) {
+  // getSubCategory(catId:any) {
+  //   this.spinner.show();
+  //   let sizeFilter = {
+  //     cat_id: catId,
+  //   }
+  //   this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+  //     this.spinner.hide();
+  //     if (res.success == true) {
+  //       this.subCategory = res.subCategories;
+  //     }
+  //   }, err => {
+  //     console.log(err);
+  //     this.spinner.hide();
+  //   })
+  // };
+
+  getSubCategory(prodId: any, catId: any, plantId:any) {
     this.spinner.show();
     let sizeFilter = {
+      product_id: prodId,
       cat_id: catId,
+      plant_id: plantId
     }
-    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+    this._product.getSubcat(sizeFilter).subscribe((res: any) => {
       this.spinner.hide();
-      if (res.success == true) {
-        this.subCategory = res.subCategories;
+      if (res.message == 'success.') {
+        this.subCategory = res.result;
+        console.log(this.subCategory);
       }
     }, err => {
       console.log(err);
       this.spinner.hide();
     })
   };
-  
+
+  subCatSelect(event: any) {
+    this.spinner.show();
+    let apiUrl = '/sub_cat_details/' + event.target.value;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.status == 1 && res.message == 'success.') {
+        this.prodcutSize = res.result['sizes'];
+        console.log('ffff',this.prodcutSize);
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.show();
+    })
+  };
+
   getStatusCount() {
     let apiUrl = '/user/get_count_sche/'+this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res:any) => {

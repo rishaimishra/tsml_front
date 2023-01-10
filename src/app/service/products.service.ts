@@ -53,6 +53,10 @@ export class ProductsService {
     return this._http.post(this.BesUrl + '/filter-product-menu', requestData);
   };
 
+  getSubcat(requestData: any) {
+    return this._http.post(this.BesUrl + '/subcategory-product-menu', requestData);
+  };
+
   deleteKamRfq(reqParameter: any) {
     return this._http.post(this.BesUrl + '/user/delete_quote_sche', reqParameter);
   };

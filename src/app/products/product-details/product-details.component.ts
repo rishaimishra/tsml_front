@@ -90,7 +90,6 @@ export class ProductDetailsComponent implements OnInit {
       this.getCategoriDetails(this.productId, this.categoryid);
       this.get_product_details(res.productId, res.categoryId);
       this.getLocation();
-      this.getSubCategory(this.productId, this.categoryid);
 
     });
     this.setFromData();
@@ -448,7 +447,7 @@ export class ProductDetailsComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
-
+        // this.getSubCategory(this.productId, this.categoryid, indx.id);
       }
     })
   };
@@ -480,17 +479,19 @@ export class ProductDetailsComponent implements OnInit {
       }
     })
   };
-  subCategory: any;
-  getSubCategory(prodId: any, catId: any) {
+  subCategory: any = [];
+  getSubCategory(prodId: any, catId: any, plantId:any) {
     this.spinner.show();
     let sizeFilter = {
       product_id: prodId,
-      cat_id: catId
+      cat_id: catId,
+      plant_id: plantId
     }
-    this._product.filterProducts(sizeFilter).subscribe((res: any) => {
+    this._product.getSubcat(sizeFilter).subscribe((res: any) => {
       this.spinner.hide();
-      if (res.success == true) {
-        this.subCategory = res.subCategories;
+      if (res.message == 'success.') {
+        this.subCategory = res.result;
+        console.log(this.subCategory);
       }
     }, err => {
       console.log(err);
@@ -525,7 +526,7 @@ export class ProductDetailsComponent implements OnInit {
     }
   };
 
-  getCatNdProductId(prdId: any, catId: any) {
-    this.getSubCategory(prdId, catId);
+  getCatNdProductId(prdId: any, catId: any,) {
+    this.getSubCategory(prdId, catId, '');
   }
 }

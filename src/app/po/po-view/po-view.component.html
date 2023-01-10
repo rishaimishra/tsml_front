@@ -90,52 +90,8 @@
                     <div class="row" *ngFor="let formData of productData['schedule'];let y = index">
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="">Grades offered</label>
-                          <input type="hidden" [(ngModel)]="formData.sub_cat_id"
-                            name="saubCat_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
-                            value="{{formData.sub_cat_name}}" />
-                          <input type="text" readonly name="saubCat_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" id="" value="{{formData.sub_cat_name}}" />
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Sizes Offered</label>
-                          <input #qtyInput="ngModel" disabled type="text" (change)="getTotalQuantity(i)"
-                            [(ngModel)]="formData.pro_size" name="pro_size_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" id="" placeholder="" value="formData.pro_size" />
-
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Quantity (MT)</label>
-                          <input #qtyInput="ngModel" [disabled]="userType" type="number" (change)="getTotalQuantity(i)"
-                            [(ngModel)]="formData.quantity" name="quantity_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" id="" placeholder="" value="formData.quantity"
-                            required />
-                          <small *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)"
-                            class="inputValidation">Quantity is required</small>
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Expected Price</label>
-                          <div class="pri-box">
-                            <span>₹</span>
-                            <input type="number" [disabled]="userType" #priceInput="ngModel"
-                              [(ngModel)]="formData.expected_price" name="expected_price{{ formData.schedule_no }}"
-                              class="form-control form-control-sm" id="" placeholder="" value="" required />
-                            <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
-                              class="inputValidation">Price is required</small>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-lg-3">
-                        <div class="form-group">
                           <label for="">Delivery Method</label>
-                          <select #dlvrMethodInput="ngModel" [disabled]="userType" [(ngModel)]="formData.delivery"
+                          <select #dlvrMethodInput="ngModel" disabled [(ngModel)]="formData.delivery"
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}
@@ -161,9 +117,6 @@
                           <select disabled class="form-control form-control-sm" #location="ngModel"
                             [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
                             <option value="{{formData.location}}" selected>{{formData.location}}</option>
-                            <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
-                            </option> -->
                           </select>
                           <small *ngIf="location.invalid && (location.dirty || location.touched || submit)"
                             class="inputValidation">Location is required</small>
@@ -172,10 +125,54 @@
 
                       <div class="col-lg-3">
                         <div class="form-group">
+                          <label for="">Grades offered</label>
+                          <input type="hidden" [(ngModel)]="formData.sub_cat_id"
+                            name="saubCat_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
+                            value="{{formData.sub_cat_name}}" />
+                          <input type="text" readonly name="saubCat_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" id="" value="{{formData.sub_cat_name}}" />
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Sizes Offered</label>
+                          <input #qtyInput="ngModel" disabled type="text" (change)="getTotalQuantity(i)"
+                            [(ngModel)]="formData.pro_size" name="pro_size_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" id="" placeholder="" value="formData.pro_size" />
+
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Quantity (MT)</label>
+                          <input #qtyInput="ngModel" disabled type="number" (change)="getTotalQuantity(i)"
+                            [(ngModel)]="formData.quantity" name="quantity_{{ formData.schedule_no }}"
+                            class="form-control form-control-sm" id="" placeholder="" value="formData.quantity"
+                            required />
+                          <small *ngIf="qtyInput.invalid && (qtyInput.dirty || qtyInput.touched || submit)"
+                            class="inputValidation">Quantity is required</small>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Expected Price</label>
+                          <div class="pri-box">
+                            <span>₹</span>
+                            <input type="number" disabled #priceInput="ngModel"
+                              [(ngModel)]="formData.expected_price" name="expected_price{{ formData.schedule_no }}"
+                              class="form-control form-control-sm" id="" placeholder="" value="" required />
+                            <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
+                              class="inputValidation">Price is required</small>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="form-group">
                           <div class="bil-add-new-add">
                             <label for="">Bill To</label>
                           </div>
-                          <select [disabled]="userType" class="form-control form-control-sm" #billTo="ngModel"
+                          <select disabled class="form-control form-control-sm" #billTo="ngModel"
                             [(ngModel)]="formData.bill_to" name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="">Bill to</option>
                             <option *ngFor="let state of states" value="{{ state?.name }}">
@@ -191,7 +188,7 @@
                           <div class="bil-add-new-add">
                             <label for="">Ship To</label>
                           </div>
-                          <select [disabled]="userType" class="form-control form-control-sm" #shipTo="ngModel"
+                          <select disabled class="form-control form-control-sm" #shipTo="ngModel"
                             [(ngModel)]="formData.ship_to" name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="">Ship to</option>
                             <option *ngFor="let state of states" value="{{ state?.name }}">
@@ -207,7 +204,7 @@
                           <label for="">Proposed Delivery Date</label>
                           <div class="date-rang">
                             <div class="position-relative">
-                              <input [disabled]="userType" type="date" [(ngModel)]="formData.from_date"
+                              <input disabled type="date" [(ngModel)]="formData.from_date"
                                 (change)="setNxtData($event, formData.schedule_no)" min="{{date}}" #dlvrDate="ngModel"
                                 name="from_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
                                 placeholder="From" value="" required />
@@ -216,7 +213,7 @@
                               <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                             </div>
                             <div class="position-relative">
-                              <input [disabled]="userType" type="date" [(ngModel)]="formData.to_date"
+                              <input disabled type="date" [(ngModel)]="formData.to_date"
                                 id="to_date_{{formData.schedule_no}}" #dlvrDateTo="ngModel"
                                 name="to_date_{{ formData.schedule_no }}" class="form-control form-control-sm"
                                 placeholder="To" value="" required />
@@ -250,7 +247,7 @@
                             <!-- <input type="date" [(ngModel)]="formData.valid_till"
                                     class="form-control form-control-sm datepicker"
                                     placeholder="To" value=""> -->
-                            <input type="datetime-local" [disabled]="userType" [(ngModel)]="formData.valid_till"
+                            <input type="datetime-local" disabled [(ngModel)]="formData.valid_till"
                               class="form-control form-control-sm datepicker">
                           </div>
                         </div>
@@ -262,7 +259,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="">Remarks</label>
-                          <textarea [(ngModel)]="formData.remarks" [disabled]="userType" #remarks="ngModel"
+                          <textarea [(ngModel)]="formData.remarks" disabled #remarks="ngModel"
                             name="remarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
                           <small *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
@@ -273,7 +270,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="">Cam's Remarks</label>
-                          <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
+                          <textarea disabled [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                             name="kamRemarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
                           <small *ngIf="kamsRemarks.invalid && (kamsRemarks.dirty || kamsRemarks.touched || submit)"

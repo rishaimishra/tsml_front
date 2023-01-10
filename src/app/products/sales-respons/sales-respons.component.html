@@ -80,6 +80,68 @@
                                             *ngFor="let formData of productData['schedule'];let y = index">
                                             <div class="col-lg-3">
                                                 <div class="form-group">
+                                                    <label for="">Delivery Method</label>
+                                                    <select disabled #dlvrMethodInput="ngModel"
+                                                        [(ngModel)]="formData.delivery"
+                                                        name="delivery_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="">Select ..</option>
+                                                        <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
+                                                        <!-- <option value="Delivery At Premises">Delivery At Premises</option>
+                                                        <option value="Ex-Works">Ex-Works</option> -->
+                                                    </select>
+                                                    <small
+                                                        *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
+                                                        class="inputValidation">Select delivery method</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Pickup From</label> &nbsp;
+                                                    <label for=""(change)="selectPlant($event, formData.schedule_no)">
+                                                    <input type="radio" id="contactChoice1" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT"
+                                                        class="mr-1" disabled/>
+                                                    <label for="contactChoice1">Plant</label>&nbsp;
+                                                    <input type="radio" id="contactChoice2" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT"
+                                                        class="mr-1"disabled/>
+                                                    <label for="contactChoice2">Depot</label>&nbsp;
+                                                    <input type="radio" id="contactChoice3" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="MINES"
+                                                        class="mr-1"disabled/>
+                                                    <label for="contactChoice3">Mines</label>
+                                                </label>
+                                                    <select disabled #pickUpfrom="ngModel"
+                                                        [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
+                                                        name="plant_{{ formData.schedule_no }}"
+                                                        class="form-control form-control-sm" required>
+                                                        <option value="{{formData.plant}}" selected>{{formData.plant}}</option>
+                                                        <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
+                                                        <!-- <option value="DEPOT">Depot</option>
+                                                        <option value="PORT">Port</option> -->
+                                                    </select>
+                                                    <small
+                                                        *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
+                                                        class="inputValidation">Pickup from is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Location</label>
+                                                    <select class="form-control form-control-sm"
+                                                        #location="ngModel" [(ngModel)]="formData.location" disabled
+                                                        name="location_{{ formData.schedule_no }}" required>
+                                                        <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
+                                                                <ng-template #newLocation>
+                                                                <option value="">--Select--</option>
+                                                                <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
+                                                                </ng-template>
+                                                    </select>
+                                                    <small
+                                                        *ngIf="location.invalid && (location.dirty || location.touched || submit)"
+                                                        class="inputValidation">Location is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
                                                   <label for="">Grades offered</label>
                                                   <input type="hidden"
                                                             [(ngModel)]="formData.sub_cat_id"
@@ -107,7 +169,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Quantity (MT)</label>
-                                                    <input #qtyInput="ngModel" type="number"
+                                                    <input #qtyInput="ngModel" type="number" readonly
                                                         (change)="getTotalQuantity(i)" [(ngModel)]="formData.quantity"
                                                         name="quantity_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" id="" placeholder=""
@@ -117,98 +179,16 @@
                                                         class="inputValidation">Quantity is required</small>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-lg-3" *ngIf="userByrole != 'Sales'">
-                                                <div class="form-group">
-                                                    <label for="">Expected Price</label>
-                                                    <div class="pri-box">
-                                                        <span>₹</span>
-                                                        <input type="number" [disabled]="!userType || formData.kam_price == null"
-                                                            #priceInput="ngModel" [(ngModel)]="formData.expected_price"
-                                                            name="expected_price{{ formData.schedule_no }}"
-                                                            class="form-control form-control-sm" id="" placeholder=""
-                                                            value="" required />
-                                                        <small
-                                                            *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
-                                                            class="inputValidation">Price is required</small>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label for="">Delivery Method</label>
-                                                    <select [disabled]="formData.delivery == 'DAP (Delivered at Place)'" #dlvrMethodInput="ngModel"
-                                                        [(ngModel)]="formData.delivery"
-                                                        name="delivery_{{ formData.schedule_no }}"
-                                                        class="form-control form-control-sm" required>
-                                                        <option value="">Select ..</option>
-                                                        <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
-                                                        <!-- <option value="Delivery At Premises">Delivery At Premises</option>
-                                                        <option value="Ex-Works">Ex-Works</option> -->
-                                                    </select>
-                                                    <small
-                                                        *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
-                                                        class="inputValidation">Select delivery method</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label for="">Pickup From</label> &nbsp;
-                                                    <label for=""(change)="selectPlant($event, formData.schedule_no)">
-                                                    <input type="radio" id="contactChoice1" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT"
-                                                        class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
-                                                    <label for="contactChoice1">Plant</label>&nbsp;
-                                                    <input type="radio" id="contactChoice2" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT"
-                                                        class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
-                                                    <label for="contactChoice2">Depot</label>&nbsp;
-                                                    <input type="radio" id="contactChoice3" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="MINES"
-                                                        class="mr-1" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"/>
-                                                    <label for="contactChoice3">Mines</label>
-                                                </label>
-                                                    <select [disabled]="userByrole == 'C' || formData.delivery == 'DAP (Delivered at Place)'" #pickUpfrom="ngModel"
-                                                        [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
-                                                        name="plant_{{ formData.schedule_no }}"
-                                                        class="form-control form-control-sm" required>
-                                                        <option value="{{formData.plant}}" selected>{{formData.plant}}</option>
-                                                        <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
-                                                        <!-- <option value="DEPOT">Depot</option>
-                                                        <option value="PORT">Port</option> -->
-                                                    </select>
-                                                    <small
-                                                        *ngIf="pickUpfrom.invalid && (pickUpfrom.dirty || pickUpfrom.touched || submit)"
-                                                        class="inputValidation">Pickup from is required</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label for="">Location</label>
-                                                    <select class="form-control form-control-sm"
-                                                        #location="ngModel" [(ngModel)]="formData.location" [disabled]="formData.delivery == 'DAP (Delivered at Place)'"
-                                                        name="location_{{ formData.schedule_no }}" required>
-                                                        <option value="{{formData.location}}" *ngIf="locationState[formData.schedule_no] == null; else newLocation">{{formData.location}}</option>
-                                                                <ng-template #newLocation>
-                                                                <option value="">--Select--</option>
-                                                                <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
-                                                                </ng-template>
-                                                    </select>
-                                                    <small
-                                                        *ngIf="location.invalid && (location.dirty || location.touched || submit)"
-                                                        class="inputValidation">Location is required</small>
-                                                </div>
-                                            </div>
 
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <div class="bil-add-new-add">
                                                         <label for="">Bill To</label>
                                                     </div>
-                                                    <select class="form-control form-control-sm" [disabled]="userType"
+                                                    <select class="form-control form-control-sm" disabled
                                                         #billTo="ngModel" [(ngModel)]="formData.bill_to"
                                                         name="bill_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.bill_to}}" selected>{{formData.bill_to}}</option>
-                                                        <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                                                            {{ state?.name }}
-                                                        </option> -->
                                                     </select>
                                                     <small
                                                         *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -220,13 +200,10 @@
                                                     <div class="bil-add-new-add">
                                                         <label for="">Ship To</label>
                                                     </div>
-                                                    <select class="form-control form-control-sm" [disabled]="userType"
+                                                    <select class="form-control form-control-sm" disabled
                                                         #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                                                         name="ship_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.ship_to}}" selected>{{formData.ship_to}}</option>
-                                                        <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                                                            {{ state?.name }}
-                                                        </option> -->
                                                     </select>
                                                     <small
                                                         *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
@@ -238,7 +215,7 @@
                                                     <label for="">Proposed Delivery Date</label>
                                                     <div class="date-rang">
                                                         <div class="position-relative">
-                                                            <input type="date" [disabled]="userType"
+                                                            <input type="date" disabled
                                                                 [(ngModel)]="formData.from_date" #dlvrDate="ngModel"
                                                                 (change)="setNxtData($event, formData.schedule_no)"
                                                                 min="{{date}}"
@@ -251,7 +228,7 @@
                                                             <!-- <span class="over_llp"><img src="assets/images/cal.png" alt=""></span> -->
                                                         </div>
                                                         <div class="position-relative">
-                                                            <input type="date" [disabled]="userType"
+                                                            <input type="date" disabled
                                                                 [(ngModel)]="formData.to_date" #dlvrDateTo="ngModel"
                                                                 id="to_date_{{formData.schedule_no}}"
                                                                 name="to_date_{{ formData.schedule_no }}"
@@ -266,29 +243,11 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-lg-3">
-                                                <div class="form-group" *ngIf="userByrole != 'Sales'">
-                                                    <label for=""
-                                                        (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,formData?.pro_size, i, y)">Tsml's
-                                                        price
-                                                        <span *ngIf="!userType && qoutestId != 0"
-                                                            class="price-info price-info0" data-toggle="modal"
-                                                            data-target="#addPrice"><i
-                                                                class="fa fa-info-circle"></i></span></label>
-                                                    <div class="pri-box">
-                                                        <span>₹</span>
-                                                        <input type="text" disabled [(ngModel)]="formData.kam_price"
-                                                            class="form-control form-control-sm kamClass"
-                                                            id="camsPrice{{formData.schedule_no}}" placeholder="0">
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                             <div class="col-lg-3">
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
-                                                        <input type="datetime-local"
-                                                            [disabled]="userType || qoutestId == 0" #validTill="ngModel"
+                                                        <input type="datetime-local" disabled #validTill="ngModel"
                                                             [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
                                                         <!-- <small

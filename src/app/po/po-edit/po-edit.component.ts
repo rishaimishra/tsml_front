@@ -106,6 +106,13 @@ export class PoEditComponent implements OnInit {
   totalValue:any;
   isDap: boolean = false;
   creditDays: any = [];
+  plantSelectArr:any = [];
+  subCategory:any;
+  plantAddrr:any;
+  isSchduleArr:any = [];
+  locationState:any = [];
+  locationRes:any;
+  prodcutSize:any;
 
 
   constructor(
@@ -129,7 +136,7 @@ export class PoEditComponent implements OnInit {
     }
     //  this.userType
     this.user_Id = localStorage.getItem('USER_ID');
-    this.states = this._state.getState();
+    // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = res.id;
       this.categoryid = res.categoryId;
@@ -245,6 +252,79 @@ export class PoEditComponent implements OnInit {
     })
   };
 
+  plantSele(event:any, schdlNo:any) {
+    this.spinner.show();
+    this.plantSelectArr[schdlNo] = event.target.value;
+
+    let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
+    let apiUrl = '/user/get_plant_addr/'+ indx.id;
+    this.getSubCategory(this.editProductId, this.catId, indx.id);
+    this._product.getMethod(apiUrl).subscribe((res:any) => {
+      this.spinner.hide();
+      if (res.status == 1 && res.message == 'success') {
+        this.locationState[schdlNo] = res.result['state'];
+        this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
+
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide()
+    })
+  };
+
+  selectPlant(event:any, schdleNo:any) {
+    this.plantSelectArr[schdleNo] = null;
+    this.spinner.show();
+    let eventValue = event.target.value;
+    $('#pickupTyp_'+schdleNo).val(eventValue);
+    let apiUrl = '/user/get_plants_by_type/'+ eventValue;
+    if (eventValue != '') {
+      this._product.getMethod(apiUrl).subscribe((res:any) => {
+        this.spinner.hide();
+        if (res.status == 1 && res.message == 'success') {
+          this.plantAddrr = res.result;
+        }
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/auth/login']);
+          this.spinner.hide();
+        } 
+      })
+    }
+  };
+
+  getSubCategory(prodId: any, catId: any, plantId:any) {
+    this.spinner.show();
+    let sizeFilter = {
+      product_id: prodId,
+      cat_id: catId,
+      plant_id: plantId
+    }
+    this._product.getSubcat(sizeFilter).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.message == 'success.') {
+        this.subCategory = res.result;
+
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+    })
+  };
+
+  subCatSelect(event: any) {
+    this.spinner.show();
+    let apiUrl = '/sub_cat_details/' + event.target.value;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.status == 1 && res.message == 'success.') {
+        this.prodcutSize = res.result['sizes'];
+        console.log('ffff',this.prodcutSize);
+      }
+    }, err => {
+      console.log(err);
+      this.spinner.show();
+    })
+  };
   removeCat(i:any) {
     let indx = this.category.findIndex((item: any) => item.id == i);
     if (indx !== -1) {

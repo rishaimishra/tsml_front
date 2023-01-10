@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
@@ -46,11 +46,20 @@ export class PrepareScComponent implements OnInit {
   rfqNumber:any;
   userId:any;
   itemNumbr: any = [];
+  submit: boolean = false;
 
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
     private _sales: SalesService, private _location: Location,
     private _router: Router, private _fb: FormBuilder) { }
+
+    get f() {
+      return this.scForm.controls;
+    };
+    
+    get ff() {
+      return this.updateInfoForm.controls;
+    }
 
   ngOnInit(): void {
     this.getPolist();
@@ -58,32 +67,32 @@ export class PrepareScComponent implements OnInit {
 
     this.scForm = this._fb.group({
       po_no: [''],
-      contract_ty: [''],
-      sales_org: [''],
-      dis_chnl: [''],
-      div: [''],
-      sales_ofc: [''],
-      sales_grp: [''],
-      qty_cont: [''],
-      net_val: [''],
-      ContractValidFrom: [''],
-      ContractValidTo: [''],
-      sold_to_party: [''],
-      sold_to_addr: [''],
-      ship_to_addr: [''],
-      ship_to_party: [''],
-      cus_ref: [''],
-      cus_ref_dt: [''],
+      contract_ty: ['', Validators.required],
+      sales_org: ['', Validators.required],
+      dis_chnl: ['', Validators.required],
+      div: ['', Validators.required],
+      sales_ofc: ['', Validators.required],
+      sales_grp: ['', Validators.required],
+      qty_cont: ['', Validators.required],
+      net_val: ['', Validators.required],
+      ContractValidFrom: ['', Validators.required],
+      ContractValidTo: ['', Validators.required],
+      sold_to_party: ['', Validators.required],
+      sold_to_addr: ['', Validators.required],
+      ship_to_addr: ['', Validators.required],
+      ship_to_party: ['', Validators.required],
+      cus_ref: ['', Validators.required],
+      cus_ref_dt: ['', Validators.required],
       cost_ref: [''],
-      shp_cond: [''],
+      shp_cond: ['', Validators.required],
     })
 
     this.updateInfoForm = this._fb.group({
-      incoterms: [''],
-      pay_terms: [''],
-      freight: [''],
-      cus_grp: [''],
-      fr_ind: ['']
+      incoterms: ['',Validators.required],
+      pay_terms: ['',Validators.required],
+      freight: ['',Validators.required],
+      cus_grp: ['',Validators.required],
+      fr_ind: ['',Validators.required]
     })
   }
 
@@ -342,6 +351,7 @@ export class PrepareScComponent implements OnInit {
     const seFormDataArr = [];
     const sapMatArr = [];
     const codePrice = [];
+    this.submit = true;
     this.scForm.value['po_no'] = this.poNumber;
     var from = this.scForm.value['ContractValidFrom'];
     var dd = from.replace('-','');
@@ -370,6 +380,10 @@ export class PrepareScComponent implements OnInit {
     let password = 'Welcome@123';
     let authorizationData = 'Basic ' + btoa(username + ':' + password);
 
+    if(this.scForm.invalid) {
+      alert('all fields are required !')
+      return;
+    }
     for (let i = 0; i < this.scInfo.length; i++) {
       const element = this.scInfo[i];
       this.getSpec(this.scInfo[i]['specs']);
@@ -524,73 +538,4 @@ export class PrepareScComponent implements OnInit {
     this._location.back();
   };
 
-  checkSubmit() {
-    var settings = {
-      "url": "https://esalesdev.tatasteelmining.com:50001/RESTAdapter/SalesContract",
-      "method": "POST",
-      "timeout": 0,
-      "headers": {
-        "Authorization": "Basic TUpVTkNUSU9OX01fUElfREVWOldlbGNvbWVAMTIz",
-        "Content-Type": "application/json"
-      },
-      "data": JSON.stringify({
-        "OrganizationalData": {
-          "ContractType": "JSDQ",
-          "SalesOrganization": "5500",
-          "DistributionChannel": "51",
-          "Division": "51",
-          "ContractValidFrom": "20230107",
-          "ContractValidTo": "20230108",
-          "Salesoffice": "2000",
-          "Salesgroup": "100",
-          "Incoterms": "A03",
-          "Paymentterms": "B6P3"
-        },
-        "SoldToParty": {
-          "QtyContractTSML": 100,
-          "Sold_To_Party": "0050001234",
-          "Ship_To_Party": "0050001234",
-          "Cust_Referance": "CUST3366",
-          "NetValue": 107269.29,
-          "Cust_Ref_Date": "2023-01-03"
-        },
-        "Sales": {
-          "Shp_Cond": "2"
-        },
-        "Items": [
-          {
-            "item": 10,
-            "Material": "120000112",
-            "Quantity": 100,
-            "CustomarMaterialNumber": "120000112",
-            "OrderQuantity": "100",
-            "Plant": "2202"
-          }
-        ],
-        "Conditions": [
-          {
-            "ItemNumber": 10,
-            "CnTy": "ZPR0",
-            "Amount": "100000"
-          },
-          {
-            "ItemNumber": 10,
-            "CnTy": "ZPR0",
-            "Amount": "0"
-          }
-        ],
-        "AdditionalDataA": {
-          "Freight": "B1",
-          "CustomerGroup4": "DOM"
-        },
-        "AdditionalDataforPricing": {
-          "FreightIndicator": "X"
-        }
-      }),
-    };
-    
-    $.ajax(settings).done(function (response) {
-      console.log(response);
-    });
-  }
 }

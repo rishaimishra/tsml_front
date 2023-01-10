@@ -61,6 +61,55 @@
                     <div class="row" *ngFor="let formData of productData['form_data'];let y = index">
                       <div class="col-lg-3">
                         <div class="form-group">
+                          <label for="">Delivery Method</label>
+                          <select #dlvrMethodInput="ngModel" (change)="delectDlvryMethode($event, formData.schedule_no, i,y)" [(ngModel)]="formData.delivery"
+                            name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
+                            <option value="">Select ..</option>
+                            <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Pickup From</label>&nbsp;
+                          <label for="" (change)="selectPlant($event, formData.schedule_no)" >
+                            <input type="radio"  [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT" class="mr-1" />
+                            <label for="contactChoice1">Plant</label>&nbsp;
+                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT" class="mr-1"/>
+                            <label for="contactChoice2">Depot</label>&nbsp;
+                            <!-- <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
+                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Port</label> -->
+                            <ng-container *ngIf="productData?.cat_name == 'Friable Chrome Ore'">
+                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="MINES" class="mr-1"/>
+                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Mines</label>
+                            </ng-container>
+                          </label>
+
+                          <select #pickUpfrom="ngModel" id="pickup_from_{{formData.schedule_no}}" [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
+                            name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
+                            <option selected *ngIf="plantSelectArr[formData.schedule_no] != null; else allPlant">{{plantSelectArr[formData.schedule_no]}}</option>
+                            <ng-template #allPlant>
+                              <option value="" selected>Select..</option>
+                              <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
+                            </ng-template>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label for="">Location</label>
+                          <select id="loca_{{formData.schedule_no}}" class="form-control form-control-sm" #location="ngModel"
+                            [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
+                            <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
+                          </select>
+                          
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="form-group">
                           <label for="">Grades offered</label>
                             <select #subCatInput="ngModel" (change)="subCatSelect($event)" [(ngModel)]="formData.sub_cat_id"
                             name="subCat_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
@@ -105,54 +154,6 @@
                             <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
                               class="inputValidation">Price is required</small>
                           </div>
-                        </div>
-                      </div>
-
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Delivery Method</label>
-                          <select #dlvrMethodInput="ngModel" (change)="delectDlvryMethode($event, formData.schedule_no, i,y)" [(ngModel)]="formData.delivery"
-                            name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
-                            <option value="">Select ..</option>
-                            <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Pickup From</label>&nbsp;
-                          <label for="" (change)="selectPlant($event, formData.schedule_no)" >
-                            <input type="radio"  [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_a" name="contact{{ formData.schedule_no }}_a" value="PLANT" class="mr-1" />
-                            <label for="contactChoice1">Plant</label>&nbsp;
-                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_b" name="contact{{ formData.schedule_no }}_b" value="DEPOT" class="mr-1"/>
-                            <label for="contactChoice2">Depot</label>&nbsp;
-                            <!-- <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="PORT" class="mr-1"/>
-                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Port</label> -->
-                            <ng-container *ngIf="productData?.cat_name == 'Friable Chrome Ore'">
-                            <input type="radio" [(ngModel)]="formData.pickup_type" id="pickupTyp_{{ formData.schedule_no }}_c" name="contact{{ formData.schedule_no }}_c" value="MINES" class="mr-1"/>
-                            <label for="contactChoice3" id="picLable{{ formData.schedule_no }}">Mines</label>
-                            </ng-container>
-
-                          </label>
-                          <select #pickUpfrom="ngModel" id="pickup_from_{{formData.schedule_no}}" [(ngModel)]="formData.plant" (change)="plantSele($event, formData.schedule_no)"
-                            name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
-                            <option selected *ngIf="plantSelectArr[formData.schedule_no] != null; else allPlant">{{plantSelectArr[formData.schedule_no]}}</option>
-                            <ng-template #allPlant>
-                              <option value="" selected>Select..</option>
-                              <option value="{{plantItem.name}}" *ngFor="let plantItem of plantAddrr">{{plantItem.name}}</option>
-                            </ng-template>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Location</label>
-                          <select id="loca_{{formData.schedule_no}}" class="form-control form-control-sm" #location="ngModel"
-                            [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
-                            <option selected value="{{locationState[formData.schedule_no]}}">{{locationState[formData.schedule_no]}}</option>
-                          </select>
-                          
                         </div>
                       </div>
 

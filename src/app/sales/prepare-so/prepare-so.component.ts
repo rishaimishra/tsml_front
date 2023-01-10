@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
@@ -26,22 +26,42 @@ export class PrepareSoComponent implements OnInit {
   sapDivision: any = [];
   salesOffic: any = [];
   sapGroup: any = [];
-  rfqNumber:any;
-  userid:any;
+  rfqNumber: any;
+  userid: any;
 
-  odrType:any;
-  salesOrgniz:any;
-  disChanel:any;
-  divisin:any;
-  salesOffice:any;
-  salesGroup:any;
+  odrType: any;
+  salesOrgniz: any;
+  disChanel: any;
+  divisin: any;
+  salesOffice: any;
+  salesGroup: any;
+  soForm: FormGroup;
+  submit: boolean = false;
 
   constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
     private _fb: FormBuilder, private _router: Router,
     private _product: ProductsService) { }
 
+  get f() {
+    return this.soForm.controls;
+  };
+
   ngOnInit(): void {
     this.getPolist();
+    this.soForm = this._fb.group({
+      transact_id: [''],
+      co_no: ['', Validators.required],
+      po_no: [''],
+      pay_proc: ['',Validators.required],
+      fin_doc_no: ['', Validators.required],
+      user_id: [''],
+      order_type: ['', Validators.required],
+      sales_org: ['', Validators.required],
+      dis_chnl: ['', Validators.required],
+      division: ['', Validators.required],
+      sales_ofc: ['', Validators.required],
+      sales_grp: ['', Validators.required]
+    })
   }
 
   getPolist() {
@@ -59,7 +79,7 @@ export class PrepareSoComponent implements OnInit {
     this.getContract();
   };
 
-  prepareSo(sc_no: any, po_no: any, rfqNo:any) {
+  prepareSo(sc_no: any, po_no: any, rfqNo: any) {
     this.rfqNumber = rfqNo;
     this._spiner.show();
     this.poNumber = po_no;
@@ -69,6 +89,11 @@ export class PrepareSoComponent implements OnInit {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.soDetails = res.result[0];
+        this.soForm.get('transact_id').setValue(this.soDetails.transactid);
+        this.soForm.get('co_no').setValue(this.soDetails.sc_no);
+        this.soForm.get('po_no').setValue(this.poNumber);
+        this.soForm.get('user_id').setValue(this.soDetails.uid);
+        console.log(this.soDetails.sc_no);
         this.userid = this.soDetails['uid'];
       }
     }, err => {
@@ -78,39 +103,24 @@ export class PrepareSoComponent implements OnInit {
   };
 
   submitSo() {
-    let submitSoData = {
-      transact_id: this.soDetails.transactid,
-      co_no: this.soDetails.sc_no,
-      po_no: this.poNumber,
-      pay_proc: this.paymentGu,
-      fin_doc_no: this.fncilDoc,
-      user_id: this.soDetails.uid,
-      order_type: this.odrType,
-      sales_org: this.soDetails.id,
-      dis_chnl: this.soDetails.disid,
-      division: this.soDetails.divid,
-      sales_ofc: this.soDetails.ofcid,
-      sales_grp: this.soDetails.salesid
-    };
-
-    let contNum = $('#contrtNum').val();
+    console.log(this.soForm.value);
+    this.submit = true;
     let sapSoReq = {
       "OrganizationalData": {
-        "OrderType": this.odrType,
-        "SalesOrganization": this.salesOrgniz,
-        "DistributionChannel": this.disChanel,
-        "Division": this.divisin,
-        "Salesoffice": this.salesOffice,
-        "Salesgroup": this.salesGroup
+        "OrderType": this.soForm.value['order_type'],
+        "SalesOrganization": this.soForm.value['sales_org'],
+        "DistributionChannel": this.soForm.value['dis_chnl'],
+        "Division": this.soForm.value['division'],
+        "Salesoffice": this.soForm.value['sales_ofc'],
+        "Salesgroup": this.soForm.value['sales_grp']
       },
       "Contract": {
-        "ContractNumber": contNum
+        "ContractNumber": this.soForm.value['co_no']
       }
-      
-    }
+    };
+
     this._spiner.show();
-    this._sales.sapSoReq(sapSoReq).subscribe((res:any) => {
-      console.log(res);
+    this._sales.sapSoReq(sapSoReq).subscribe((res: any) => {
       this._spiner.hide();
       if (res.Status == 'S') {
         alert(res.Message);
@@ -121,9 +131,9 @@ export class PrepareSoComponent implements OnInit {
     })
 
     return;
-    
+
     this._spiner.show();
-    this._sales.submitSalesSo(submitSoData).subscribe((res: any) => {
+    this._sales.submitSalesSo(this.soForm.value).subscribe((res: any) => {
       Swal.fire(
         'Success',
         'Submited Successfully',
@@ -171,7 +181,7 @@ export class PrepareSoComponent implements OnInit {
 
       this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
       })
-      
+
     }, err => {
       console.log(err);
       this._spiner.hide();

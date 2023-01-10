@@ -70,16 +70,17 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Contract Type</label>
-                            <select class="form-control form-control-sm" formControlName="contract_ty">
+                            <select class="form-control form-control-sm" formControlName="contract_ty" [ngClass]="{ 'is-invalid': submit && f['contract_ty'].errors }">
                                <option value="">--Select--</option>
                                <option value="{{contract.contract_type_code}}" *ngFor="let contract of contractTyp">{{contract.contract_type_dec}}</option>
                             </select>
+                            
                          </div>
                       </div>
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Sales Organization</label>
-                            <select class="form-control form-control-sm" formControlName="sales_org">
+                            <select class="form-control form-control-sm" formControlName="sales_org" [ngClass]="{ 'is-invalid': submit && f['sales_org'].errors }">
                                <option value="">--Select--</option>
                                <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
                             </select>
@@ -88,7 +89,7 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Distribution Channel</label>
-                            <select class="form-control form-control-sm" (change)="selectDist($event)" formControlName="dis_chnl">
+                            <select class="form-control form-control-sm" (change)="selectDist($event)" formControlName="dis_chnl" [ngClass]="{ 'is-invalid': submit && f['dis_chnl'].errors }">
                                <option value="">--Select--</option>
                                <option value="{{dst.distr_chan_code}}" *ngFor="let dst of distribution">{{dst.distr_chan_terms_dec}}</option>
                             </select>
@@ -97,7 +98,7 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Division</label>
-                            <select class="form-control form-control-sm" formControlName="div">
+                            <select class="form-control form-control-sm" formControlName="div" [ngClass]="{ 'is-invalid': submit && f['div'].errors }">
                                <option value="">--Select--</option>
                                <option value="{{divi.division_code}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
                             </select>
@@ -106,7 +107,7 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Sales office</label>
-                            <select class="form-control form-control-sm" formControlName="sales_ofc">
+                            <select class="form-control form-control-sm" formControlName="sales_ofc" [ngClass]="{ 'is-invalid': submit && f['sales_ofc'].errors }">
                                 <option value="">--Select--</option>
                                <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
                             </select>
@@ -115,7 +116,7 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Sales Group</label>
-                            <select class="form-control form-control-sm" formControlName="sales_grp">
+                            <select class="form-control form-control-sm" formControlName="sales_grp" [ngClass]="{ 'is-invalid': submit && f['sales_grp'].errors }">
                                <option value="">--Select--</option>
                                <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
                             </select>
@@ -124,59 +125,59 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Qty Contract TSML</label>
-                            <input type="text" formControlName="qty_cont" class="form-control form-control-sm">
+                            <input type="text" formControlName="qty_cont" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['qty_cont'].errors }">
                          </div>
                       </div>
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Net Value</label>
-                            <input type="text" formControlName="net_val" class="form-control form-control-sm">
+                            <input type="text" formControlName="net_val" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['net_val'].errors }">
                          </div>
                       </div>
 
                       <div class="col-12 col-lg-3">
                         <div class="form-group">
                            <label>Valid From</label>
-                           <input type="date" formControlName="ContractValidFrom" class="form-control form-control-sm">
+                           <input type="date" formControlName="ContractValidFrom" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ContractValidFrom'].errors }">
                         </div>
                      </div>
                      <div class="col-12 col-lg-3">
                         <div class="form-group">
                            <label>Valid To</label>
-                           <input type="date" formControlName="ContractValidTo" class="form-control form-control-sm">
+                           <input type="date" formControlName="ContractValidTo" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ContractValidTo'].errors }">
                         </div>
                      </div>
 
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Sold-To-Party</label>
-                            <input type="text" formControlName="sold_to_party" class="form-control form-control-sm">
+                            <input type="text" formControlName="sold_to_party" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_party'].errors }">
                          </div>
                       </div>
                       <!-- sold to party address -->
                       <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Sold-To-Party Address</label>
-                           <textarea type="text" formControlName="sold_to_addr" class="form-control form-control-sm"></textarea>
+                           <textarea type="text" formControlName="sold_to_addr" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_addr'].errors }"></textarea>
                         </div>
                      </div>
                      <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Cust Referance No.</label>
-                           <input type="text" formControlName="cus_ref" class="form-control form-control-sm">
+                           <input type="text" formControlName="cus_ref" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['cus_ref'].errors }">
                         </div>
                      </div>
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Ship-To-Party</label>
-                            <input type="text" formControlName="ship_to_party" class="form-control form-control-sm">
+                            <input type="text" formControlName="ship_to_party" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_party'].errors }">
                          </div>
                       </div>
                       <!-- ship to party address -->
                       <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Ship-To-Party Address</label>
-                           <textarea type="text" formControlName="ship_to_addr" class="form-control form-control-sm"></textarea>
+                           <textarea type="text" formControlName="ship_to_addr" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_addr'].errors }"></textarea>
                         </div>
                      </div>
                       
@@ -184,7 +185,7 @@
                          <div class="form-group">
                             <label>Cust. Ref. Date</label>
                             <div class="position-relative">
-                               <input type="text" formControlName="cus_ref_dt" class="form-control form-control-sm datepicker">
+                               <input type="text" formControlName="cus_ref_dt" class="form-control form-control-sm datepicker" [ngClass]="{ 'is-invalid': submit && f['cus_ref_dt'].errors }">
                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                             </div>
                          </div>
@@ -192,7 +193,7 @@
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Shp. Cond.</label>
-                            <select class="form-control form-control-sm" formControlName="shp_cond">
+                            <select class="form-control form-control-sm" formControlName="shp_cond" [ngClass]="{ 'is-invalid': submit && f['shp_cond'].errors }">
                                 <option value="">--Select--</option>
                                 <option value="{{dlvrMode.delivery_mode_code}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
                             </select>
@@ -324,7 +325,7 @@
                               <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                    <label>Incoterms</label>
-                                   <select class="form-control form-control-sm" formControlName="incoterms">
+                                   <select class="form-control form-control-sm" formControlName="incoterms" [ngClass]="{ 'is-invalid': submit && ff['incoterms'].errors }">
                                       <option value="">--Select--</option>
                                       <option value="{{item.incoterms_code}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
                                    </select>
@@ -333,7 +334,7 @@
                              <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                    <label>Payment Terms</label>
-                                   <select class="form-control form-control-sm" formControlName="pay_terms">
+                                   <select class="form-control form-control-sm" formControlName="pay_terms" [ngClass]="{ 'is-invalid': submit && ff['pay_terms'].errors }">
                                       <option value="">--Select--</option>
                                       <option value="{{item.payment_terms_code}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
                                    </select>
@@ -343,7 +344,7 @@
                               <div class="col-12 col-lg-4">
                                  <div class="form-group">
                                     <label>Feight</label>
-                                    <select class="form-control form-control-sm" formControlName="freight">
+                                    <select class="form-control form-control-sm" formControlName="freight" [ngClass]="{ 'is-invalid': submit && ff['freight'].errors }">
                                        <option value="">--Select--</option>
                                        <option value="{{item.freight_code}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
                                     </select>
@@ -352,7 +353,7 @@
                               <div class="col-12 col-lg-4">
                                  <div class="form-group">
                                     <label>Customer Group</label>
-                                    <select class="form-control form-control-sm" formControlName="cus_grp">
+                                    <select class="form-control form-control-sm" formControlName="cus_grp" [ngClass]="{ 'is-invalid': submit && ff['cus_grp'].errors }">
                                        <option value="">--Select--</option>
                                        <option value="{{custGrp.cus_group_code}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
                                     </select>
@@ -361,7 +362,7 @@
                               <div class="col-12 col-lg-4">
                                  <div class="form-group">
                                     <label>Feight Indicator</label>
-                                    <select class="form-control form-control-sm" formControlName="fr_ind">
+                                    <select class="form-control form-control-sm" formControlName="fr_ind" [ngClass]="{ 'is-invalid': submit && ff['fr_ind'].errors }">
                                        <option value="">--Select--</option>
                                        <option value="{{indi.freight_indication_code}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
                                     </select>
@@ -375,8 +376,8 @@
                 </div>
                 <div class="row mb-5">
                    <div class="col-lg-12">
-                      <button type="button" class="btn btn-primary" (click)="submitSc()"><i class="fa fa-paper-plane"></i> Submit-1</button>&nbsp;
-                      <button type="button" class="btn btn-primary" (click)="checkSubmit()"><i class="fa fa-paper-plane"></i> Submit-2</button>&nbsp;
+                      <button type="button" class="btn btn-primary" (click)="submitSc()"><i class="fa fa-paper-plane"></i> Submit</button>&nbsp;
+                      <!-- <button type="button" class="btn btn-primary" (click)="checkSubmit()"><i class="fa fa-paper-plane"></i> Submit-2</button>&nbsp; -->
                       <button type="button" (click)="backTo()" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
                    </div>
                 </div>

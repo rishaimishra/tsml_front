@@ -62,82 +62,84 @@
                                 </ul>
                             </div>
                         </div>
+                        <form [formGroup]="soForm">
                         <div class="row">
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Order Type</label>
-                                    <select class="form-control form-control-sm" [(ngModel)]="odrType">
-                                        <option selected value="">--Select--</option>
-                                        <option value="{{item.contract_type_code}}" *ngFor="let item of contType">{{item.contract_type_dec}}</option>
+                                    <select class="form-control form-control-sm" formControlName="order_type" [ngClass]="{ 'is-invalid': submit && f['order_type'].errors }">
+                                        <!-- <option selected value="">--Select--</option> -->
+                                        <option [value]="item.contract_type_code" *ngFor="let item of contType">{{item.contract_type_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Sales Organization</label>
-                                    <select class="form-control form-control-sm" [(ngModel)]="salesOrgniz">
-                                        <option selected value="{{soDetails?.sales_orgerms_dec}}">{{soDetails?.sales_orgerms_dec}}</option>
-                                        <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
+                                    <select class="form-control form-control-sm" formControlName="sales_org" [ngClass]="{ 'is-invalid': submit && f['sales_org'].errors }">
+                                        <!-- <option selected value="{{soDetails?.sales_orgerms_dec}}">{{soDetails?.sales_orgerms_dec}}</option> -->
+                                        <option [value]="org.sales_orgerms_code" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Distribution Channel</label>
-                                    <select class="form-control form-control-sm" (change)="selectDist($event)" [(ngModel)]="disChanel">
-                                        <option selected value="{{soDetails?.distr_chan_terms_dec}}">{{soDetails?.distr_chan_terms_dec}}</option>
-                                        <option value="{{dst.distr_chan_code}}" *ngFor="let dst of distribution">{{dst.distr_chan_terms_dec}}</option>
+                                    <select class="form-control form-control-sm" (change)="selectDist($event)" formControlName="dis_chnl"
+                                    [ngClass]="{ 'is-invalid': submit && f['dis_chnl'].errors }">
+                                        <!-- <option selected value="{{soDetails?.distr_chan_terms_dec}}">{{soDetails?.distr_chan_terms_dec}}</option> -->
+                                        <option [value]="dst.distr_chan_code" *ngFor="let dst of distribution">{{dst.distr_chan_terms_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Division</label>
-                                    <select class="form-control form-control-sm" [(ngModel)]="divisin">
-                                        <option selected value="{{soDetails?.division_dec}}">{{soDetails?.division_dec}}</option>
-                                        <option value="{{divi.division_code}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
+                                    <select class="form-control form-control-sm" formControlName="division" [ngClass]="{ 'is-invalid': submit && f['division'].errors }">
+                                        <!-- <option selected value="{{soDetails?.division_dec}}">{{soDetails?.division_dec}}</option> -->
+                                        <option [value]="divi.division_code" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Sales office</label>
-                                    <select class="form-control form-control-sm" [(ngModel)]="salesOffice">
-                                        <option selected value="{{soDetails?.sales_office_dec}}">{{soDetails?.sales_office_dec}}</option>
-                                        <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
+                                    <select class="form-control form-control-sm" formControlName="sales_ofc" [ngClass]="{ 'is-invalid': submit && f['sales_ofc'].errors }">
+                                        <!-- <option selected value="{{soDetails?.sales_office_dec}}">{{soDetails?.sales_office_dec}}</option> -->
+                                        <option [value]="slcOfc.sales_office_code" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Sales Group</label>
-                                    <select class="form-control form-control-sm" [(ngModel)]="salesGroup">
-                                        <option selected value="{{soDetails?.sales_group_dec}}">{{soDetails?.sales_group_dec}}</option>
-                                        <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
+                                    <select class="form-control form-control-sm" formControlName="sales_grp" [ngClass]="{ 'is-invalid': submit && f['sales_grp'].errors }">
+                                        <!-- <option selected value="{{soDetails?.sales_group_dec}}">{{soDetails?.sales_group_dec}}</option> -->
+                                        <option [value]="sapGp.sales_group_code" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Contract Number</label>
-                                    <input type="text" id="contrtNum" value="{{soDetails?.sc_no}}" class="form-control form-control-sm">
+                                    <input type="text" id="contrtNum" formControlName="co_no" [ngClass]="{ 'is-invalid': submit && f['co_no'].errors }" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Payment Guarantee Proc</label>
-                                    <input type="text" [(ngModel)]="paymentGu" class="form-control form-control-sm">
+                                    <input type="text" formControlName="pay_proc" [ngClass]="{ 'is-invalid': submit && f['pay_proc'].errors }" class="form-control form-control-sm">
 
                                 </div>
                             </div>
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>Financial Document number</label>
-                                    <input type="text" [(ngModel)]="fncilDoc" class="form-control form-control-sm">
-
+                                    <input type="text" formControlName="fin_doc_no" [ngClass]="{ 'is-invalid': submit && f['fin_doc_no'].errors }"  class="form-control form-control-sm">
                                 </div>
                             </div>
                         </div>
+                    </form>
                     </div>
                     <div class="row mb-5">
                         <div class="col-lg-12">
