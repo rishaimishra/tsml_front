@@ -125,11 +125,11 @@ export class LoginComponent implements OnInit {
             })
           }
           else if (res.data['user_type'] == 'OPT') {
-            this._router.navigate(['/dashboard/plant-dashboard']);
+            this._router.navigate(['/dashboard/opt-dashboard']);
             Swal.fire({
               position: 'center',
               icon: 'success',
-              text: 'Welcome',
+              text: 'Welcome to OPT dashboard',
               showConfirmButton: false,
               timer: 1500
             })

@@ -29,7 +29,7 @@
                                      <div class = "txt">{{noti.desc}} -- {{noti.desc_no }}</div>
                                     <div class = "txt sub">{{noti.user_id}}<span class="dt"><i class="fa fa-calendar" aria-hidden="true"></i> {{noti.date}}</span></div>
                                    
-                                    <!-- <a (click)="removeNoti(noti.id)" class="closecut pointer text-info"><i class="fa fa-times" aria-hidden="true"></i></a> -->
+                                    <a (click)="removeNoti(noti.id)" class="closecut pointer text-info"><i class="fa fa-times" aria-hidden="true"></i></a>
                                  </a>
                                   </div>
                                   <div class="text-right pointer" *ngIf="notifications?.length > 1">

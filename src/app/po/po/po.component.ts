@@ -54,7 +54,7 @@ export class PoComponent implements OnInit {
 
   bptAndfinal1: any;
   schldId: any;
-  userRole:any;
+  userRole: any;
 
   editProductId: any;
   submitted: boolean = false;
@@ -78,13 +78,13 @@ export class PoComponent implements OnInit {
   letterHead: any;
   letterHeadFile: boolean = false;
   letterHedFile: any;
-  deliveryDropList:any;
-  percentPrice:any;
-  subCategory:any;
-  afterPrePrice:any;
-  userAfterPrePrice:any;
-  rfqUserId:any;
-  rfqNumber:any;
+  deliveryDropList: any;
+  percentPrice: any;
+  subCategory: any;
+  afterPrePrice: any;
+  userAfterPrePrice: any;
+  rfqUserId: any;
+  rfqNumber: any;
 
 
   constructor(
@@ -294,7 +294,7 @@ export class PoComponent implements OnInit {
             to_date: '',
             remarks: '',
             kam_price: '',
-            confirm_date:'',
+            confirm_date: '',
             pickup_type: '',
             salesRemarks: '',
             valid_till: '',
@@ -365,7 +365,7 @@ export class PoComponent implements OnInit {
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
     if (!this.letterHead && userRol == 'C') {
-      Swal.fire('Sorry','Leaterhead is required !');
+      Swal.fire('Sorry', 'Leaterhead is required !');
       return;
     }
 
@@ -374,11 +374,11 @@ export class PoComponent implements OnInit {
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
-         let reqParam = {
-            "id": form_data_array[i]['schedule_no'],
-            "status": 1
-          };
-          poStatusArr.push(reqParam);
+        let reqParam = {
+          "id": form_data_array[i]['schedule_no'],
+          "status": 1
+        };
+        poStatusArr.push(reqParam);
       }
 
       let reqData = {
@@ -386,7 +386,7 @@ export class PoComponent implements OnInit {
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
-        quote_type:'',
+        quote_type: '',
         quote_schedules: form_data_array,
       };
 
@@ -422,7 +422,18 @@ export class PoComponent implements OnInit {
       else {
         this.spinner.hide();
       }
-      
+      // Cam notification for PO
+      let userId = localStorage.getItem('USER_ID');
+      let salesNotiReq = {
+        "desc_no": this.po_id,
+        "user_id": userId,
+        "desc": 'PO has been generated',
+        "url_type": 'P',
+        "sender_id": this.rfqUserId
+      }
+      this._product.camNotification(salesNotiReq).subscribe((res: any) => {
+      })
+
     }, err => {
       console.log(err);
       this.spinner.hide();
@@ -432,42 +443,31 @@ export class PoComponent implements OnInit {
       "rfq_no": this.rfqNumber,
       "quote_closed": '1'
     }
-    this._product.storeStatusKam(statusRequestKam).subscribe((res:any) => {
+    this._product.storeStatusKam(statusRequestKam).subscribe((res: any) => {
     })
     let statusRequest = {
       "rfq_no": this.rfqNumber,
       "rfq_closed": '1'
     }
-    this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+    this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
     })
 
     let orderConfirmReq = {
       "rfq_no": this.rfqNumber,
       "user_id": this.rfqUserId
     }
-      this._product.orderConfirmEmail(orderConfirmReq).subscribe((res:any) => {
-        console.log(res);
-      })
+    this._product.orderConfirmEmail(orderConfirmReq).subscribe((res: any) => {
+      console.log(res);
+    })
 
     let rfqStatus = {
       "rfq_no": this.productId,
       "status": 4
     }
-    this._product.rfqStatusChange(rfqStatus).subscribe((res:any) => {
+    this._product.rfqStatusChange(rfqStatus).subscribe((res: any) => {
       this.spinner.hide();
     })
 
-        // Cam notification for PO
-        let userId = localStorage.getItem('USER_ID');
-        let salesNotiReq = {
-          "desc_no": this.po_id,
-          "user_id": userId,
-          "desc": 'PO has been generated',
-          "url_type": 'P',
-          "sender_id": this.rfqUserId
-        }
-        this._product.camNotification(salesNotiReq).subscribe((res:any) => {
-        })
   };
 
   addItem(i: any) {
@@ -553,7 +553,7 @@ export class PoComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
 
@@ -578,11 +578,11 @@ export class PoComponent implements OnInit {
         this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
-      Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) +
+        Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
 
       if (this.productPrice['price_premium_sing'] == '-') {
-        this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
+        this.afterPrePrice = backendTotal - Number(this.productPrice.price_premium);
       }
       else if (this.productPrice['price_premium_sing'] == '+') {
         this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
@@ -597,12 +597,12 @@ export class PoComponent implements OnInit {
 
       if (this.days == 0) {
         this.Totalsum = this.afterPrePrice;
-      } 
-      else if (this.days == 30){
+      }
+      else if (this.days == 30) {
         let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
         this.Totalsum = finalCost.toFixed(2);
       }
-      else if (this.days == 45){
+      else if (this.days == 45) {
         let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
         this.Totalsum = finalCost.toFixed(2);
 
@@ -610,7 +610,7 @@ export class PoComponent implements OnInit {
     })
   };
 
-  selectDay(event: any, priceSign:any) {
+  selectDay(event: any, priceSign: any) {
     // this.days = event.target.value;
     // const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
     // const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
@@ -625,7 +625,7 @@ export class PoComponent implements OnInit {
     this.days = event.target.value;
     const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
     if (priceSign == '-') {
-    this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
+      this.afterPrePrice = backendTotal - Number(this.productPrice.price_premium);
     }
     else if (priceSign == '+') {
       this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
@@ -638,17 +638,17 @@ export class PoComponent implements OnInit {
     const backDays = backendDaysCount.toFixed(6);
     this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
 
-  if (this.days == 0) {
-    this.Totalsum = this.afterPrePrice;
-  } 
-  else if (this.days == 30){
-    let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
-    this.Totalsum = finalCost.toFixed(2);
-  }
-  else if (this.days == 45){
-    let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
-    this.Totalsum = finalCost.toFixed(2);
-  }
+    if (this.days == 0) {
+      this.Totalsum = this.afterPrePrice;
+    }
+    else if (this.days == 30) {
+      let finalCost = (Number(this.Totalsum) + Number(this.daysCostCount));
+      this.Totalsum = finalCost.toFixed(2);
+    }
+    else if (this.days == 45) {
+      let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
+      this.Totalsum = finalCost.toFixed(2);
+    }
   };
 
   calculatePrice(id: any) {
@@ -701,32 +701,32 @@ export class PoComponent implements OnInit {
     };
 
     const total = (bptPrice + misc_expense + delivery) - _discount;
-          //
-          if (this.productPrice['price_premium_sing'] == '-') {
-            this.userAfterPrePrice =   total - Number(price_premium);
-            }
-            else if (this.productPrice['price_premium_sing'] == '+') {
-              this.userAfterPrePrice =  total + Number(price_premium);
-              }
-             else {
-             this.userAfterPrePrice = total;
-            }
-        //
+    //
+    if (this.productPrice['price_premium_sing'] == '-') {
+      this.userAfterPrePrice = total - Number(price_premium);
+    }
+    else if (this.productPrice['price_premium_sing'] == '+') {
+      this.userAfterPrePrice = total + Number(price_premium);
+    }
+    else {
+      this.userAfterPrePrice = total;
+    }
+    //
     const hanrateIntrest = Number(_interest) / 100;
     const daysCount = (this.days * hanrateIntrest) / 365;
     const totalDays = daysCount.toFixed(6);
     this.daysCostCountCustomer = (this.userAfterPrePrice * Number(totalDays)).toFixed(2);
 
-    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum )* 100;
+    let totalPercent = ((this.Totalsum1 - this.Totalsum) / this.Totalsum) * 100;
     this.percentPrice = totalPercent.toFixed(2);
     if (this.days == 0) {
       this.Totalsum1 = this.userAfterPrePrice;
-    } 
-    else if (this.days == 30){
+    }
+    else if (this.days == 30) {
       let finalCost = (Number(this.Totalsum1) + Number(this.daysCostCountCustomer));
       this.Totalsum1 = finalCost.toFixed(2);
     }
-    else if (this.days == 45){
+    else if (this.days == 45) {
       let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
       this.Totalsum1 = finalCost.toFixed(2);
     }
@@ -764,7 +764,7 @@ export class PoComponent implements OnInit {
   clickBack() {
     this.location.back();
   };
-  poStatusRequest (statusArr:any) {
+  poStatusRequest(statusArr: any) {
     this._product.rfqStatusData(statusArr).subscribe((res: any) => {
       if (res.message == 'status updated') {
         // this._toaster.success(res.message);
@@ -777,15 +777,15 @@ export class PoComponent implements OnInit {
     })
   };
 
-  getDeliveryItem () {
-    this._product.getDeliveryMethod().subscribe((res:any) => {
+  getDeliveryItem() {
+    this._product.getDeliveryMethod().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
-      } 
+      }
     })
   };
 
-  getSubCategory(catId:any) {
+  getSubCategory(catId: any) {
     this.spinner.show();
     let sizeFilter = {
       cat_id: catId,

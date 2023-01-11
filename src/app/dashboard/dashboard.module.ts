@@ -14,14 +14,19 @@ import { ManagerDashboardComponent } from './manager-dashboard/manager-dashboard
 import { PlantDashboardComponent } from './plant-dashboard/plant-dashboard.component';
 import { AuthGuard } from '../auth/auth.guard';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { OptDashboardComponent } from './opt-dashboard/opt-dashboard.component';
+import { OptGuard } from '../Guard/opt.guard';
+import { ManagerGuard } from '../Guard/manager.guard';
+import { PlantGuard } from '../Guard/plant.guard';
 
 
 const routes: Routes = [
   {path: 'customer-dashboard', component: CustomerDashboardComponent, canActivate: [CustGuard]},
   {path: 'kam-dashboard', component: KamDashboardComponent, canActivate: [KamGuard]},
   {path: 'sales-dashboard', component: SalesDashboardComponent, canActivate: [SalesGuard]},
-  {path: 'manager-dashboard', component: ManagerDashboardComponent, canActivate:[AuthGuard]},
-  {path: 'plant-dashboard', component: PlantDashboardComponent, canActivate:[AuthGuard]}
+  {path: 'manager-dashboard', component: ManagerDashboardComponent, canActivate: [ManagerGuard]},
+  {path: 'plant-dashboard', component: PlantDashboardComponent, canActivate: [PlantGuard]},
+  {path: 'opt-dashboard', component: OptDashboardComponent, canActivate: [OptGuard]}
 
 ]
 
@@ -32,7 +37,8 @@ const routes: Routes = [
     KamDashboardComponent,
     SalesDashboardComponent,
     ManagerDashboardComponent,
-    PlantDashboardComponent
+    PlantDashboardComponent,
+    OptDashboardComponent
   ],
   imports: [
     CommonModule,
