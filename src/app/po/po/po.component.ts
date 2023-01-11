@@ -397,7 +397,7 @@ export class PoComponent implements OnInit {
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
-        this.detailByRfq();
+        // this.detailByRfq();
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -406,9 +406,9 @@ export class PoComponent implements OnInit {
           timer: 1500
         })
         this.poStatusRequest(poStatusArr);
-        this.uploadLetterHead();
-        this._router.navigate(['/po/po-list']);
+        // this.uploadLetterHead();
         this.spinner.hide();
+        this.otherApis();
       }
       if (res.message != 'success') {
         this._toaster.error(res.message);
@@ -422,22 +422,24 @@ export class PoComponent implements OnInit {
       else {
         this.spinner.hide();
       }
-      // Cam notification for PO
-      let userId = localStorage.getItem('USER_ID');
-      let salesNotiReq = {
-        "desc_no": this.po_id,
-        "user_id": userId,
-        "desc": 'PO has been generated',
-        "url_type": 'P',
-        "sender_id": this.rfqUserId
-      }
-      this._product.camNotification(salesNotiReq).subscribe((res: any) => {
-      })
 
     }, err => {
       console.log(err);
       this.spinner.hide();
     });
+  };
+  otherApis() {
+    // Cam notification for PO
+    let userId = localStorage.getItem('USER_ID');
+    let salesNotiReq = {
+      "desc_no": this.po_id,
+      "user_id": userId,
+      "desc": 'PO has been generated',
+      "url_type": 'P',
+      "sender_id": this.rfqUserId
+    }
+    this._product.camNotification(salesNotiReq).subscribe((res: any) => {
+    })
 
     let statusRequestKam = {
       "rfq_no": this.rfqNumber,
@@ -467,7 +469,7 @@ export class PoComponent implements OnInit {
     this._product.rfqStatusChange(rfqStatus).subscribe((res: any) => {
       this.spinner.hide();
     })
-
+    this._router.navigate(['/po/po-list']);
   };
 
   addItem(i: any) {
@@ -497,6 +499,7 @@ export class PoComponent implements OnInit {
     console.log('this.selectedItem=', this.selectedItem);
     this.final_form_data();
   };
+
   final_form_data() {
     this.quotation_value = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
@@ -611,17 +614,6 @@ export class PoComponent implements OnInit {
   };
 
   selectDay(event: any, priceSign: any) {
-    // this.days = event.target.value;
-    // const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
-    // const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
-    // const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-    // this.daysCostCount = (backendTotal * backendDaysCount).toFixed(2);
-    // if (this.days == 0) {
-    //   this.Totalsum = backendTotal - Number(this.productPrice.cam_discount);
-    // } else {
-    //   this.Totalsum = ((this.daysCostCount - Number(this.productPrice.cam_discount)) + backendTotal).toFixed(2);
-    // }
-
     this.days = event.target.value;
     const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + Number(this.productPrice.delivery_cost) - Number(this.productPrice.cam_discount);
     if (priceSign == '-') {

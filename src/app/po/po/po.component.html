@@ -32,10 +32,6 @@
               <div class="card md-0">
                 <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion"
                   [attr.data-target]="'#collapseOne'+i">
-                  <!-- <button type="button" class="btn btn-link" data-toggle="collapse"
-                    [attr.data-target]="'#collapseOne'+i">
-                    <i class="fa fa-plus"></i>
-                  </button> -->
                   <div class="acc-pro-pic pointerTab">
                     <img src="{{ productData?.primary_image_url }}" />
                   </div>
@@ -72,8 +68,6 @@
                             name="delivery_{{ formData.schedule_no }}" class="form-control form-control-sm" required>
                             <option value="">Select ..</option>
                             <option value="{{dlvry.methods}}" *ngFor="let dlvry of deliveryDropList">{{dlvry.methods}}</option>
-                            <!-- <option value="Delivery At Premises">Delivery At Premises</option>
-                            <option value="Ex-Works">Ex-Works</option> -->
                           </select>
                           <small
                             *ngIf="dlvrMethodInput.invalid && (dlvrMethodInput.dirty || dlvrMethodInput.touched || submit)"
@@ -241,9 +235,6 @@
                         <div class="form-group">
                           <label for="">Valid Till</label>
                           <div class="position-relative">
-                            <!-- <input type="date" [(ngModel)]="formData.valid_till"
-                                    class="form-control form-control-sm datepicker"
-                                    placeholder="To" value=""> -->
                             <input type="datetime-local" [disabled]="userType" [(ngModel)]="formData.valid_till"
                               class="form-control form-control-sm datepicker">
                           </div>
