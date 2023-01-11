@@ -161,13 +161,13 @@ export class HeaderComponent implements OnInit {
     else if (this.userRol == 'Sales') {
       this._product.salesRemoveNoti(removeNoti).subscribe((res:any) => {
         this._spinner.hide();
-          this.getCamNoti();
+          this.getSalesNoti();
         })
     }
     else {
       this._product.custNotiRemove(removeNoti).subscribe((res:any) => {
         this._spinner.hide();
-          this.getCamNoti();
+          this.getCustNoti();
         })
     }
   };
