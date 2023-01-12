@@ -647,7 +647,7 @@
                                         <span>{{daysCostCount}}</span>
                                     </div>
                                 </td>
-                                <td><input type="number" readonly
+                                <td><input type="number" readonly formControlName="creditCoast"
                                         [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                         class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
@@ -717,7 +717,7 @@
                 <p class="text-note"><i>Note: Price Quoted Excluding GST & TCS Charges</i></p>
 
                 <div class="add-btn-sec pt-2 pb-2">
-                    <button class="btn btn-primary" [disabled]="userType"
+                    <button class="btn btn-primary" [disabled]="selectedItem[0]?.quotest == 6"
                         (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i>
                         Ok</button>&nbsp;
                     <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" (click)="cancelprice()"><i class="fa fa-times"></i>
@@ -775,24 +775,27 @@
                         <div [formGroupName]="i" style="margin-bottom: 10px;">
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" class="form-control" formControlName="quantity" value=""
+                                    <input type="number" [readonly]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6 " class="form-control" formControlName="quantity" value=""
                                         placeholder="Quantity">
                                 </div>
                                 <div class="col">
-                                    <input type="date" class="form-control" formControlName="to_date"
+                                    <input type="date" [readonly]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="form-control" formControlName="to_date"
                                         placeholder="Date">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <button type="button" class="btn btn-primary btn-sm float-right"
-                        (click)="addItem()">Add</button>
+                    <!-- <button type="button" *ngIf="selectedItem[0].quotest != 5" class="btn btn-primary btn-sm float-right"
+                        (click)="addItem()">Add</button> -->
                     <!-- <button type="submit">Submit</button> -->
+                    <ng-container *ngIf="selectedItem[0]?.quotest != 5 || selectedItem[0]?.quotest != 6">
+                        <button type="button" (click)="removeItem()"  class="red-plus-icon float-right" ><i class="fa fa-minus-circle"></i></button>
+                        <button type="button" (click)="addItem()" class="blue-plus-icon btn-copy float-right" ><i class="fa fa-plus-circle"></i></button>
+                    </ng-container>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="onQtySubmit(totlQty)">OK</button>
+                <button type="button" [disabled]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="btn btn-primary" (click)="onQtySubmit(totlQty)">OK</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div>

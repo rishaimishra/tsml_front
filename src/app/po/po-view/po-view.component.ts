@@ -30,19 +30,10 @@ export class PoViewComponent implements OnInit {
   addItems: boolean = false;
   user_Id: any;
   title: any = '';
-  productId: any;
+  poNumbr: any;
   selectedItem: any = [];
-  states: any;
-  deliveryDate1: any = '';
-  deliveryDate2: any = '';
-  deliveryDate3: any = '';
-  deliveryDate4: any = '';
+  // states: any;
   remarks: any = '';
-  remarks2: any = '';
-  expectedPrice1: any = '';
-  expectedPrice2: any = '';
-  quantity1: any = [];
-  quantity2: any;
   proSize1: any;
   submit: boolean = false;
   categoryid: any;
@@ -128,9 +119,9 @@ export class PoViewComponent implements OnInit {
       this.userType = true;
     }
     this.getDeliveryItem();
-    this.states = this._state.getState();
+    // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      this.productId = res.id;
+      this.poNumbr = res.id;
       this.categoryid = res.categoryId;
       this.detailByRfq();
     });
@@ -169,7 +160,7 @@ export class PoViewComponent implements OnInit {
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_po_by_id' + '/' + this.productId;
+    let url = '/user/get_po_by_id' + '/' + this.poNumbr;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
@@ -367,7 +358,7 @@ export class PoViewComponent implements OnInit {
       }
 
       let reqData = {
-        rfq_number: this.productId,
+        rfq_number: this.poNumbr,
         product_id: this.editProductId,
         cat_id: this.selectedItem[i]['cat_id'],
         quantity: qty,
@@ -385,7 +376,7 @@ export class PoViewComponent implements OnInit {
         this.spinner.hide();
         this._toaster.success(res.result);
         this.poStatusRequest(poStatusArr);
-        this._router.navigate(['/po/po-list', this.productId]);
+        this._router.navigate(['/po/po-list', this.poNumbr]);
       }
       if (res.message != 'success') {
         this._toaster.error(res.message);
@@ -628,12 +619,6 @@ export class PoViewComponent implements OnInit {
       this.kamDiscount = false;
     };
 
-    // const total = (bptPrice + misc_expense + delivery) - price_premium;
-    // const hanrateIntrest = Number(_interest) / 100;
-    // const daysCount = (this.days * hanrateIntrest) / 365;
-    // this.daysCostCountCustomer = (total * daysCount).toFixed(2);
-
-    // this.Totalsum1 = ((this.daysCostCountCustomer - _discount) + total).toFixed(2);
     const total = (bptPrice + misc_expense + delivery) - _discount;
     //
     if (this.productPrice['price_premium_sing'] == '-') {
@@ -729,7 +714,7 @@ export class PoViewComponent implements OnInit {
 
   submitStatus() {
     let statusReq = {
-      "po_no": this.productId,
+      "po_no": this.poNumbr,
       "status": this.radioValue
     }
     this._product.acceptOrRejectPO(statusReq).subscribe((res: any) => {
@@ -780,7 +765,7 @@ export class PoViewComponent implements OnInit {
     }
     this.spinner.show();
     const fileData = new FormData();
-    fileData.append('po_no', this.productId);
+    fileData.append('po_no', this.poNumbr);
     fileData.append('letterhead', this.letterHedFile);
     fileData.append('cus_po_no', this.inputPONum);
     let apiUrl = '/user/count_cus_po/' + this.inputPONum;
@@ -858,7 +843,7 @@ export class PoViewComponent implements OnInit {
   };
 
   getScSoDetails() {
-    let apiUrl = '/user/get_po_summary/'+this.productId;
+    let apiUrl = '/user/get_po_summary/'+this.poNumbr;
     this._product.getMethod(apiUrl).subscribe((res:any) => {
       if(res.status ==1) {
         this.poSunnry = res.result;

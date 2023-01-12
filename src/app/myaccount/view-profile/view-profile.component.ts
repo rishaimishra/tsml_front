@@ -51,7 +51,7 @@ export class ViewProfileComponent implements OnInit {
       mobile: this.custPhoneNo,
       kam_id: useriD
     }
-    this.productService.postMethopd('/user/phone-update', params).subscribe((res: any) => {
+    this.productService.postMethopd('/user/update-mobile', params).subscribe((res: any) => {
       this.spinner.hide();
       if (res.success) {
         Swal.fire({

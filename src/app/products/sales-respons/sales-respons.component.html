@@ -243,20 +243,18 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3">
+                                            <!-- <div class="col-lg-3">
                                                 <div class="form-group" *ngIf="userByrole != 'Sales'">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
                                                         <input type="datetime-local" disabled #validTill="ngModel"
                                                             [(ngModel)]="formData.valid_till"
                                                             class="form-control form-control-sm datepicker" required>
-                                                        <!-- <small
-                                                            *ngIf="formData.kam_price > 0 "
-                                                            class="inputValidation">Valid Till is required</small> -->
+                                                        
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12" *ngIf="!userType || userByrole == 'Sales'">
+                                            </div> -->
+                                            <div class="col-lg-4" *ngIf="!userType || userByrole == 'Sales'">
                                                 <div class="form-group">
                                                     <label for="">Tentative delivery date</label>
                                                     <div class="">
@@ -713,21 +711,21 @@
                         <div formArrayName="arr" *ngFor="let a of myForm.get('arr')['controls']; let i = index">
                             <div [formGroupName]="i" style="margin-bottom: 10px;">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-6">
                                         <input type="number" class="form-control" formControlName="quantity" value=""
                                             placeholder="Quantity">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6">
                                         <input type="date" class="form-control" formControlName="to_date"
                                             placeholder="Date">
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                        <br>
-                        <button type="button" class="btn btn-primary btn-sm float-right"
-                             (click)="addItem()">Add</button>
-                        <!-- <button type="submit">Submit</button> -->
+                        <button type="button" (click)="removeItem()"  class="red-plus-icon float-right" ><i class="fa fa-minus-circle"></i></button>
+                        <button type="button" (click)="addItem()" class="blue-plus-icon btn-copy float-right" ><i class="fa fa-plus-circle"></i></button>
+            
                     </form>
                 </div>
                 <div class="modal-footer">

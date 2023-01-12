@@ -356,7 +356,13 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.selectedItem[i]['form_data'] = this.quotation;
     this.final_form_data();
+
   };
+
+  removeItem(i: any) {
+    this.quotation.splice(-1);
+  };
+
   statusBar(rfqNumber: any) {
     let statusRequest = {
       "rfq_no": rfqNumber,
@@ -491,7 +497,6 @@ export class ProductDetailsComponent implements OnInit {
       this.spinner.hide();
       if (res.message == 'success.') {
         this.subCategory = res.result;
-        console.log(this.subCategory);
       }
     }, err => {
       console.log(err);

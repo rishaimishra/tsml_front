@@ -164,6 +164,7 @@ export class SalesResponsComponent implements OnInit {
     return this._fb.group({
       quantity: [qty],
       to_date: [to_date]
+
     })
   };
 
@@ -338,14 +339,18 @@ export class SalesResponsComponent implements OnInit {
       this.arr = this.myForm.get('arr') as FormArray;
       this.arr.push(this.createItem('',''));
     };
-  
+    
+    removeItem() {
+      const remove:any = this.arr;
+      remove.removeAt( -1);
+    };
+
     schduleSele(schdlNo: any, qty: any) {
       this.myForm.reset();
       this.schduleNo = schdlNo;
       let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
       this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.showModalIsValue = true;
-        console.log(res)
         this.myForm = this._fb.group({
           arr: this._fb.array([])
         })
@@ -379,6 +384,9 @@ export class SalesResponsComponent implements OnInit {
         })
         return;
       }
+      $("#createSechdule").hide();
+      $('body').removeClass('modal-open');
+      $(".modal-backdrop").removeClass("modal-backdrop show");
       this.deliverySchdule.push(setSechdule);
       Swal.fire({
         position: 'center',

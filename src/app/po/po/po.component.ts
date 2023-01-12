@@ -365,7 +365,7 @@ export class PoComponent implements OnInit {
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
     if (!this.letterHead && userRol == 'C') {
-      Swal.fire('Sorry', 'Leaterhead is required !');
+      Swal.fire('Sorry !', 'Letter head PO upload is required !');
       return;
     }
 
@@ -406,10 +406,11 @@ export class PoComponent implements OnInit {
           timer: 1500
         })
         this.poStatusRequest(poStatusArr);
-        // this.uploadLetterHead();
+        this.uploadLetterHead();
         this.spinner.hide();
         this.otherApis();
       }
+
       if (res.message != 'success') {
         this._toaster.error(res.message);
         this.spinner.hide();
@@ -428,18 +429,8 @@ export class PoComponent implements OnInit {
       this.spinner.hide();
     });
   };
+
   otherApis() {
-    // Cam notification for PO
-    let userId = localStorage.getItem('USER_ID');
-    let salesNotiReq = {
-      "desc_no": this.po_id,
-      "user_id": userId,
-      "desc": 'PO has been generated',
-      "url_type": 'P',
-      "sender_id": this.rfqUserId
-    }
-    this._product.camNotification(salesNotiReq).subscribe((res: any) => {
-    })
 
     let statusRequestKam = {
       "rfq_no": this.rfqNumber,
@@ -468,6 +459,18 @@ export class PoComponent implements OnInit {
     }
     this._product.rfqStatusChange(rfqStatus).subscribe((res: any) => {
       this.spinner.hide();
+    })
+
+    // Cam notification for PO
+    let userId = localStorage.getItem('USER_ID');
+    let salesNotiReq = {
+      "desc_no": this.rfqNumber,
+      "user_id": userId,
+      "desc": this.po_id + ', PO has been generated against this',
+      "url_type": 'R',
+      "sender_id": this.rfqUserId
+    }
+    this._product.camNotification(salesNotiReq).subscribe((res: any) => {
     })
     this._router.navigate(['/po/po-list']);
   };
@@ -737,6 +740,7 @@ export class PoComponent implements OnInit {
     $(".kamClass").keypress();
     this.selectedItem[firstIndx].schedule[lastIndx].kam_price = this.Totalsum1;
   };
+
   messageBox(shcdlNo: any) {
     this.spinner.show();
     let apiUrl = '/user/view_remarks/' + shcdlNo;
@@ -747,6 +751,7 @@ export class PoComponent implements OnInit {
       }
     })
   };
+
   cancelprice() {
     this.messages = [];
     $("#addPrice").hide();

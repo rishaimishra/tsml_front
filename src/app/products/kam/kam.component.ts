@@ -388,7 +388,12 @@ export class KamComponent implements OnInit {
       this.arr = this.myForm.get('arr') as FormArray;
       this.arr.push(this.createItem('',''));
     };
-  
+    
+    removeItem() {
+      const remove:any = this.arr;
+      remove.removeAt( -1);
+    };
+
   schduleSele(schdlNo: any, qty: any) {
       this.myForm.reset();
       this.schduleNo = schdlNo;
@@ -787,13 +792,22 @@ export class KamComponent implements OnInit {
     this._sales.submitManagerRfq(managerReq).subscribe((res:any) => {
       if(res.status == 1 && res.result.length > 0) {
         this.priceForm.controls['price_premium'].setValue(res.result[1].value);
-        this.priceForm.controls['cam_discount'].setValue(res.result[2].value);
-        this.priceForm.controls['delivery_cost'].setValue(res.result[3].value);
-        this.priceForm.controls['interest_rate'].setValue(res.result[4].value);
-        this.priceForm.controls['creditCoast'].setValue(res.result[5].value);
-        this.priceForm.controls['misc_expense'].setValue(res.result[6].value);
+        this.priceForm.controls['cam_discount'].setValue(res.result[6].value);
+        this.priceForm.controls['delivery_cost'].setValue(res.result[2].value);
+        this.priceForm.controls['interest_rate'].setValue(res.result[3].value);
+        this.priceForm.controls['creditCoast'].setValue(res.result[4].value);
+        this.priceForm.controls['misc_expense'].setValue(res.result[5].value);
         this.priceForm.controls['totalSum'].setValue(res.result[7].value);
         this.priceForm.controls['finalAmt'].setValue(res.result[8].value);
+        // 
+        // this.priceForm.controls['price_premium'].setValue(res.result[1].value);
+        // this.priceForm.controls['cam_discount'].setValue(res.result[2].value);
+        // this.priceForm.controls['delivery_cost'].setValue(res.result[3].value);
+        // this.priceForm.controls['interest_rate'].setValue(res.result[4].value);
+        // this.priceForm.controls['creditCoast'].setValue(res.result[5].value);
+        // this.priceForm.controls['misc_expense'].setValue(res.result[6].value);
+        // this.priceForm.controls['totalSum'].setValue(res.result[7].value);
+        // this.priceForm.controls['finalAmt'].setValue(res.result[8].value);
       }
     })
   };

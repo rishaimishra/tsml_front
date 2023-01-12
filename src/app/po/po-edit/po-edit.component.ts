@@ -27,17 +27,10 @@ export class PoEditComponent implements OnInit {
   addItems: boolean = false;
   user_Id: any;
   title: any = '';
-  productId: any;
+  poNumbr: any;
   selectedItem: any = [];
-  states: any;
-  deliveryDate1: any = '';
-  deliveryDate2: any = '';
-  deliveryDate3: any = '';
-  deliveryDate4: any = '';
+  // states: any;
   remarks: any = '';
-  remarks2: any = '';
-  expectedPrice1: any = '';
-  expectedPrice2: any = '';
   quantity1: any = [];
   quantity2: any;
   proSize1: any;
@@ -134,11 +127,10 @@ export class PoEditComponent implements OnInit {
     } else {
       this.userType = true;
     }
-    //  this.userType
     this.user_Id = localStorage.getItem('USER_ID');
     // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      this.productId = res.id;
+      this.poNumbr = res.id;
       this.categoryid = res.categoryId;
       this.detailByRfq();
     });
@@ -177,7 +169,7 @@ export class PoEditComponent implements OnInit {
 
   detailByRfq() {
     this.spinner.show();
-    let url = '/user/get_po_by_id' + '/' + this.productId;
+    let url = '/user/get_po_by_id' + '/' + this.poNumbr;
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
@@ -479,8 +471,8 @@ export class PoEditComponent implements OnInit {
         if (this.userType == false) {
           const scheduleNo = Math.floor(10 + Math.random() * 90);
           let amendPoReq = {
-            "po_no": this.productId,
-            "amdnt_no": this.productId + '/'+scheduleNo
+            "po_no": this.poNumbr,
+            "amdnt_no": this.poNumbr + '/'+scheduleNo
           }
           this._product.amendPO(amendPoReq).subscribe((res:any) => {
             console.log(res);
@@ -845,7 +837,7 @@ export class PoEditComponent implements OnInit {
 
   submitStatus() {
     let statusReq = {
-      "po_no": this.productId,
+      "po_no": this.poNumbr,
       "status": 4
     }
     this._product.acceptOrRejectPO(statusReq).subscribe((res:any) => {

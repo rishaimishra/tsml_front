@@ -18,14 +18,14 @@
     <section>
       <div class="container">
         <div class="prod-list-detl">
-          <div class="sec-pro-cat" *ngIf="showButtons > 0">
+          <!-- <div class="sec-pro-cat" *ngIf="showButtons > 0">
             <span>Add item</span>
-            <select [disabled]="userType" (change)="selectItems($event)"
+            <select disabled (change)="selectItems($event)"
               class="form-control form-control-sm pointerTab">
               <option value="">--select--</option>
               <option value="{{catList?.id}}" *ngFor="let catList of category">{{catList?.cat_name}}</option>
             </select>
-          </div>
+          </div> -->
           <!-- List start -->
 
           <div class="demo" *ngFor="let productData of selectedItem; let i = index">
@@ -71,15 +71,7 @@
 
                         </div>
                       </div>
-                      <!-- <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Pickup From</label>
-                          <input #qtyInput="ngModel" disabled type="text" [(ngModel)]="formData.plant"
-                            name="plant_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
-                            placeholder="" value="formData.pro_size" />
 
-                        </div>
-                      </div> -->
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Pickup From</label> &nbsp;
@@ -112,20 +104,7 @@
                             class="inputValidation">Pickup from is required</small>
                         </div>
                       </div>
-                      <!-- <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Location</label>
-                          <select [disabled]="userType" class="form-control form-control-sm" #location="ngModel"
-                            [(ngModel)]="formData.location" name="location_{{ formData.schedule_no }}" required>
-                            <option value="">Select location</option>
-                            <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
-                            </option>
-                          </select>
-                          <small *ngIf="location.invalid && (location.dirty || location.touched || submit)"
-                            class="inputValidation">Location is required</small>
-                        </div>
-                      </div> -->
+
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Location</label>
@@ -146,16 +125,6 @@
                         </div>
                       </div>
 
-                      <!-- <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Grades offered</label>
-                          <input type="hidden" [(ngModel)]="formData.sub_cat_id"
-                            name="saubCat_{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
-                            value="{{formData.sub_cat_name}}" />
-                          <input type="text" readonly name="saubCat_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" id="" value="{{formData.sub_cat_name}}" />
-                        </div>
-                      </div> -->
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Grades offered</label>
@@ -168,14 +137,6 @@
                         </div>
                       </div>
 
-                      <!-- <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="">Sizes Offered</label>
-                          <input #qtyInput="ngModel" disabled type="text" (change)="getTotalQuantity(i)"
-                            [(ngModel)]="formData.pro_size" name="pro_size_{{ formData.schedule_no }}"
-                            class="form-control form-control-sm" id="" placeholder="" value="formData.pro_size" />
-                        </div>
-                      </div> -->
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Sizes Offered</label>
@@ -212,23 +173,6 @@
                           </div>
                         </div>
                       </div>
-
-                      <!-- <div class="col-lg-3">
-                        <div class="form-group">
-                          <div class="bil-add-new-add">
-                            <label for="">Bill To</label>
-                          </div>
-                          <select [disabled]="userType" class="form-control form-control-sm" #billTo="ngModel"
-                            [(ngModel)]="formData.bill_to" name="bill_to_{{ formData.schedule_no }}" required>
-                            <option value="">Bill to</option>
-                            <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
-                            </option>
-                          </select>
-                          <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
-                            class="inputValidation">Select bill to</small>
-                        </div>
-                      </div> -->
                       <div class="col-lg-3">
                         <div class="form-group">
                           <div class="bil-add-new-add">
@@ -238,30 +182,11 @@
                             name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="{{formData.bill_to}}" selected>
                               {{formData.bill_to}}</option>
-                            <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                                {{ state?.name }}
-                            </option> -->
                           </select>
                           <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
                             class="inputValidation">Select bill to</small>
                         </div>
                       </div>
-                      <!-- <div class="col-lg-3">
-                        <div class="form-group">
-                          <div class="bil-add-new-add">
-                            <label for="">Ship To</label>
-                          </div>
-                          <select [disabled]="userType" class="form-control form-control-sm" #shipTo="ngModel"
-                            [(ngModel)]="formData.ship_to" name="ship_to_{{ formData.schedule_no }}" required>
-                            <option value="">Ship to</option>
-                            <option *ngFor="let state of states" value="{{ state?.name }}">
-                              {{ state?.name }}
-                            </option>
-                          </select>
-                          <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
-                            class="inputValidation">Select ship to</small>
-                        </div>
-                      </div> -->
                       <div class="col-lg-3">
                         <div class="form-group">
                           <div class="bil-add-new-add">
@@ -271,9 +196,6 @@
                             name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="{{formData.ship_to}}" selected>
                               {{formData.ship_to}}</option>
-                            <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                                {{ state?.name }}
-                            </option> -->
                           </select>
                           <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
                             class="inputValidation">Select ship to</small>
@@ -334,9 +256,6 @@
                         <div class="form-group">
                           <label for="">Valid Till </label>
                           <div class="position-relative">
-                            <!-- <input type="date" [(ngModel)]="formData.valid_till"
-                                    class="form-control form-control-sm datepicker"
-                                    placeholder="To" value=""> -->
                             <input type="datetime-local" [disabled]="userType" [(ngModel)]="formData.valid_till"
                               class="form-control form-control-sm datepicker">
                           </div>
@@ -373,10 +292,10 @@
                           remarks</span>
                       </div>
                     </div>
-                    <div class="col-lg-12">
+                    <!-- <div class="col-lg-12">
                       <button href="javascript:;" disabled class="btn btn-primary float-right my-4"
                         data-toggle="collapse" (click)="addItem(i)"><i class="fa fa-plus-circle"></i> Add New</button>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
