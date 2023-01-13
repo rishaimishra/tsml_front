@@ -879,51 +879,51 @@ export class RegisterComponent implements OnInit {
       return;
     };
 
-    // if (!this.addProof) {
-    //   this.toastr.error('', 'Address proof required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.checkBook) {
-    //   this.toastr.error('', 'Checkbook is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.panCardUpload) {
-    //   this.toastr.error('', 'Pan is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.gstFile) {
-    //   this.toastr.error('', 'GST certificate is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.turnOver) {
-    //   this.toastr.error('', 'Turnover-section is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.itrFileUpl) {
-    //   this.toastr.error('', 'ITR file is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.consentFile) {
-    //   this.toastr.error('', 'Consent Letter is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.cerftificateUpl) {
-    //   this.toastr.error('', 'Registration Certificates is required');
-    //   this._spinner.hide();
-    //   return;
-    // };
-    // if (!this.tcsUplod) {
-    //   this.toastr.error('', 'TCS is required');
-    //   this._spinner.hide();
-    //   return;
-    // }
+    if (!this.addProof) {
+      this.toastr.error('', 'Address proof required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.checkBook) {
+      this.toastr.error('', 'Checkbook is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.panCardUpload) {
+      this.toastr.error('', 'Pan is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.gstFile) {
+      this.toastr.error('', 'GST certificate is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.turnOver) {
+      this.toastr.error('', 'Turnover-section is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.itrFileUpl) {
+      this.toastr.error('', 'ITR file is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.consentFile) {
+      this.toastr.error('', 'Consent Letter is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.cerftificateUpl) {
+      this.toastr.error('', 'Registration Certificates is required');
+      this._spinner.hide();
+      return;
+    };
+    if (!this.tcsUplod) {
+      this.toastr.error('', 'TCS is required');
+      this._spinner.hide();
+      return;
+    }
 
     // fileData.append('first_name', this.registerForm.value.first_name);
     fileData.append('user_type', 'C');
