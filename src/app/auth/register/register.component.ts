@@ -132,6 +132,9 @@ export class RegisterComponent implements OnInit {
   billGstNum: any;
   shipGst: any;
   chipsFinesSize: boolean = false;
+  emailMsg:any;
+  emailErr: boolean = true;
+  disableInput: boolean = true;
 
   ferroChrome = [
     { id: 1, select: false, name: 'High Phos' },
@@ -406,6 +409,7 @@ export class RegisterComponent implements OnInit {
     this._spinner.show();
     let mobileNu = {
       mobile_no: this.mobileNumber,
+      email: this.emailId
     };
     if (mobileNu.mobile_no == '') {
       this.toastr.error('Mobile number is required');
@@ -418,9 +422,6 @@ export class RegisterComponent implements OnInit {
           this._spinner.hide();
           this.toastr.success(res.message);
           this.mobile = res.result;
-          // setTimeout(() => {
-          //   this.mobile.otp = '';
-          // }, 30000);
           this.haveOtp = false;
         } else {
           this.toastr.error(res.message);
@@ -435,36 +436,57 @@ export class RegisterComponent implements OnInit {
   checkOtp(event: any) {
     this.verifyOtp = event.target.value;
   };
+
   checkVerifyOtp() {
+    if (this.mobileNumber == '') {
+      this.toastr.error('Mobile number is required');
+      this._spinner.hide();
+      return;
+    }
+    if (this.emailId == '') {
+      this.toastr.error('Email is required');
+      this._spinner.hide();
+      return;
+    }
+    if (this.verifyOtp == '') {
+      this.toastr.error('OTP is required');
+      this._spinner.hide();
+      return;
+    }
     this._spinner.show();
     let otpVerify = {
-      mobile_no: this.mobile.mob_number,
+      mobile_no: this.mobileNumber,
+      email: this.emailId,
       otp: this.verifyOtp,
     };
 
-    if (otpVerify.mobile_no || otpVerify.otp > 0) {
-      this._auth.verifyOtp(otpVerify).subscribe(
-        (res) => {
-          if (res.status > 0) {
-            this.mobile.otp = '';
+      this._auth.verifyOtp(otpVerify).subscribe((res:any) => {
+          if (res.status != 0) {
+            // this.mobile.otp = '';
+            this.emailId = res.result['email'],
+            this.mobileNumber = res.result['mob_number'],
+            this.verifyOtp = null;
+            this.disableInput = false;
             this._spinner.hide();
             this.toastr.success(res.message);
           } else {
             this.toastr.error(res.message);
             this._spinner.hide();
+            this.disableInput = true;
           }
-        },
-        (error) => {
+        },(error) => {
           console.log(error);
+          this._spinner.hide();
         }
       );
-    }
   };
 
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
     let file = event.target.files[0];
-    if (file != '' || file != undefined) {
+    let checkPdf = file.type.includes('/pdf');
+
+    if (file != '' || file != undefined && checkPdf == false) {
       this.showResetUpload = true;
     }
     const reader = new FileReader();
@@ -831,51 +853,77 @@ export class RegisterComponent implements OnInit {
     this._spinner.show();
     // this.submitted = true;
 
-    if (!this.addProof) {
-      this.toastr.error('', 'Address proof required');
+    if (!this.emailId) {
+      this.toastr.error('Email required !','Opps');
       this._spinner.hide();
+      this.firsttab();
       return;
     };
-    if (!this.checkBook) {
-      this.toastr.error('', 'Checkbook is required');
+    if (!this.mobileNumber) {
+      this.toastr.error('Mobile number required','Opps');
       this._spinner.hide();
+      this.firsttab();
       return;
     };
-    if (!this.panCardUpload) {
-      this.toastr.error('', 'Pan is required');
+
+    if (!this.password) {
+      this.toastr.error('Password required','Opps');
       this._spinner.hide();
+      this.firsttab();
       return;
     };
-    if (!this.gstFile) {
-      this.toastr.error('', 'GST certificate is required');
+    if (!this.gstNum) {
+      this.toastr.error('GST required','Opps');
       this._spinner.hide();
+      this.firsttab();
       return;
     };
-    if (!this.turnOver) {
-      this.toastr.error('', 'Turnover-section is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.itrFileUpl) {
-      this.toastr.error('', 'ITR file is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.consentFile) {
-      this.toastr.error('', 'Consent Letter is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.cerftificateUpl) {
-      this.toastr.error('', 'Registration Certificates is required');
-      this._spinner.hide();
-      return;
-    };
-    if (!this.tcsUplod) {
-      this.toastr.error('', 'TCS is required');
-      this._spinner.hide();
-      return;
-    }
+
+    // if (!this.addProof) {
+    //   this.toastr.error('', 'Address proof required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.checkBook) {
+    //   this.toastr.error('', 'Checkbook is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.panCardUpload) {
+    //   this.toastr.error('', 'Pan is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.gstFile) {
+    //   this.toastr.error('', 'GST certificate is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.turnOver) {
+    //   this.toastr.error('', 'Turnover-section is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.itrFileUpl) {
+    //   this.toastr.error('', 'ITR file is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.consentFile) {
+    //   this.toastr.error('', 'Consent Letter is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.cerftificateUpl) {
+    //   this.toastr.error('', 'Registration Certificates is required');
+    //   this._spinner.hide();
+    //   return;
+    // };
+    // if (!this.tcsUplod) {
+    //   this.toastr.error('', 'TCS is required');
+    //   this._spinner.hide();
+    //   return;
+    // }
 
     // fileData.append('first_name', this.registerForm.value.first_name);
     fileData.append('user_type', 'C');
@@ -936,5 +984,20 @@ export class RegisterComponent implements OnInit {
         this._spinner.hide();
       }
     );
+  }
+
+  emailvarify(event:any) {
+    this.emailId = event.target.value;
+    let email = {
+      "email": event.target.value
+    }
+    this._auth.checkEmail(email).subscribe((res:any) => {
+      if(res.result == 'It looks like you already signed up, login to your account.') {
+        this.emailErr = false;
+        this.emailMsg = res.result;
+      } else {
+        this.emailErr = true;
+      }
+    })
   }
 }

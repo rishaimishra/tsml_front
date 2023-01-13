@@ -27,390 +27,402 @@
                   <span class="nav-ttxt">Mobile & GST Verification</span><span class="nav-round"></span></a>
               </li>
               <li class="nav-item position-relative pointerClass">
+                <!-- (click)="mobileTabContinue()" -->
                 <a [ngClass]="ekycTab == true ? 'nav-link active' : 'nav-link'" data-toggle="tab"
-                  (click)="mobileTabContinue()" role="tab" aria-controls="profile"><span class="kyc-icon mr-2"></span>
+                   role="tab" aria-controls="profile"><span class="kyc-icon mr-2"></span>
                   <span class="nav-ttxt">e-KYC Customer</span><span class="nav-round"></span></a>
               </li>
               <li class="nav-item position-relative pointerClass">
+                <!-- (click)="ekycTabContinue()" -->
                 <a [ngClass]="
                       addressTab == true ? 'nav-link active' : 'nav-link'
-                    " data-toggle="tab" (click)="ekycTabContinue()" role="tab" aria-controls="address"><span
+                    " data-toggle="tab"  role="tab" aria-controls="address"><span
                     class="address-icon mr-2"></span>
                   <span class="nav-ttxt">Address</span><span class="nav-round"></span></a>
               </li>
               <li class="nav-item position-relative pointerClass">
+                <!-- (click)="addressTabContinue()" -->
                 <a [ngClass]="
                       this.uploadTab == true ? 'nav-link active' : 'nav-link'
-                    " data-toggle="tab" (click)="addressTabContinue()" role="tab" aria-controls="uploads"><span
+                    " data-toggle="tab"  role="tab" aria-controls="uploads"><span
                     class="upload-icon mr-2"></span>
                   <span class="nav-ttxt">Documents Upload</span><span class="nav-round"></span></a>
               </li>
             </ul>
             <!-- <form [formGroup]="registerForm" (ngSubmit)="submitRegister()"> -->
-              <div class="tab-content">
-                <div *ngIf="mobileTab" class="active" id="" role="tabpanel">
-                  <div class="container">
-                    <div class="row tab-bg-white">
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Mobile Number</label>
-                          <div class="d-flex2 display-f">
-                            <input (keyup)="sendOtp($event)" type="number"
-                              class="form-control w-79" />
-                            <button (click)="getOpt()" type="button" class="btn blue-btn">
+            <div class="tab-content">
+              <div *ngIf="mobileTab" class="active" id="" role="tabpanel">
+                <div class="container">
+                  <div class="row tab-bg-white">
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Email ID</label>
+                          <input type="email" (change)="emailvarify($event)" [(ngModel)]="emailId" [disabled]="!disableInput" id="contactemail" ngModel class="form-control"
+                          #emailWithPattern="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                          <div *ngIf="emailWithPattern.touched">
+                            <small class="text-danger" *ngIf="emailWithPattern.errors?.required">
+                              Email is a required field!
+                            </small>
+                            <small class="text-danger" *ngIf="emailWithPattern.errors?.pattern">
+                              This is not a valid email!!!
+                            </small>
+                          </div>
+                          <small class="text-danger" *ngIf="!emailErr">
+                            {{emailMsg}}
+                          </small>
+                      </div>
+                    </div>
+                    <!-- / -->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Mobile Number</label>
+                        <div class="d-flex2 display-f">
+                        <input (keyup)="sendOtp($event)" type="number" [(ngModel)]="mobileNumber" id="mobilNo" [disabled]="!disableInput" class="form-control" />
+                        <button (click)="getOpt()" [disabled]="!emailErr || !disableInput" type="button" class="btn blue-btn">
                               Get OTP
                             </button>
-                          </div>
-                          <!-- <div *ngIf="f['phone']?.errors?.pattern">
+                        </div>
+                        <!-- <div *ngIf="f['phone']?.errors?.pattern">
                             <small class="text-danger">Please, Enter 10 digit mobile number.</small>
                           </div> -->
+                      </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Enter OTP</label>
+                        <!-- <span class="text-primary ml-5">{{
+                          mobile?.otp
+                          }}</span> -->
+                        <div class="d-flex2 display-f">
+                          <input type="number" (change)="checkOtp($event)" value="" class="form-control w-79" />
+                          <button type="button" (click)="checkVerifyOtp()" [disabled]="!disableInput" class="btn blue-btn">
+                            Verify
+                          </button>
                         </div>
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Enter OTP</label>
-                          <span class="text-primary ml-5">{{
-                            mobile?.otp
-                            }}</span>
-                          <div class="d-flex2 display-f">
-                            <input type="number" (change)="checkOtp($event)" value="" class="form-control w-79" />
-                            <button type="button" (click)="checkVerifyOtp()" [disabled]="haveOtp" class="btn blue-btn">
-                              Verify
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Email ID</label>
-                          <input type="email" [(ngModel)]="emailId" class="form-control" />
-                          <!-- <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched || submitted)">
-                            <small class="text-danger">
-                              Email is required
-                            </small>
-                          </div> -->
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" [(ngModel)]="password" class="form-control" />
-                          <!-- <div *ngIf="f['password']?.invalid &&(f['password']?.touched || submitted)">
+                    </div>
+
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" [(ngModel)]="password" class="form-control" />
+                        <!-- <div *ngIf="f['password']?.invalid &&(f['password']?.touched || submitted)">
                             <small class="text-danger">
                               Password is required
                             </small>
                           </div> -->
-                        </div>
                       </div>
-                      <!--  -->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>GSTN</label>
-                          <div class="d-flex2 display-f">
-                            <input type="text" [(ngModel)]="gstNum" class="form-control w-79" />
-                            <button type="button" class="btn blue-btn" (click)="getGstIn()">
-                              Get Details
-                            </button>
-                          </div>
-                          <!-- <div *ngIf="f['gstin']?.invalid &&(f['gstin']?.touched || submitted)">
+                    </div>
+                    <!--  -->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>GSTN</label>
+                        <div class="d-flex2 display-f">
+                          <input type="text" [(ngModel)]="gstNum" class="form-control w-79" />
+                          <button type="button" class="btn blue-btn" (click)="getGstIn()">
+                            Get Details
+                          </button>
+                        </div>
+                        <!-- <div *ngIf="f['gstin']?.invalid &&(f['gstin']?.touched || submitted)">
                             <small class="text-danger">
                               GSTN is required
                             </small>
                           </div> -->
-                        </div>
                       </div>
+                    </div>
 
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Organization PAN</label>
-                          <input readonly [(ngModel)]="orgPan" type="text" class="form-control" />
-                        </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Organization PAN</label>
+                        <input readonly [(ngModel)]="orgPan" type="text" class="form-control" />
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Organization Name</label>
-                          <input readonly type="text" [(ngModel)]="orgName"
-                            class="form-control" />
-                        </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Organization Name</label>
+                        <input readonly type="text" [(ngModel)]="orgName" class="form-control" />
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Organization Address</label>
-                          <input readonly type="text" [(ngModel)]="orgAddrs"
-                            class="form-control" />
-                        </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Organization Address</label>
+                        <input readonly type="text" [(ngModel)]="orgAddrs" class="form-control" />
                       </div>
-                      <!--/-->
-                      <div class="col-12">
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="form-group">
-                              <label>Choose Product</label>
-                              <ul id="tree1">
-                                <li class="branch-main">
-                                  <a href="javascript:;">Ferro Chrome
-                                    <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                      data-placement="top"
-                                      title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                      <i class="fa fa-info-circle"></i>
-                                    </span>
-                                  </a>
-                                  <ul>
-                                    <li>
-                                      <a href="javascript:;">
-                                        HC Ferro Chrome (Lumps)
-                                        <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                          data-placement="top"
-                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                          <i class="fa fa-info-circle"></i> </span></a>
-                                      <ul>
-                                        <li *ngFor="let item of ferroChrome">
-                                          <a href="javascript:;">
-                                            <label class="container-check">{{item?.name}}
-                                              <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                                <i class="fa fa-info-circle"></i>
-                                              </span>
-                                              <input type="checkbox" value="{{item?.name}}" [checked]="item.select"
-                                                (change)="onSelectFerroChrome($event)" />
-                                              <span class="checkmark"></span> </label></a>
-                                        </li>
-                                      </ul>
-                                    </li>
-                                  </ul>
-                                </li>
+                    </div>
+                    <!--/-->
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label>Choose Product</label>
+                            <ul id="tree1">
                               <li class="branch-main">
-                                  Chrome Ore
+                                <a href="javascript:;">Ferro Chrome
                                   <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
                                     data-placement="top"
                                     title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                    <i class="fa fa-info-circle d-block"></i>
+                                    <i class="fa fa-info-circle"></i>
                                   </span>
-                                  <ul>
-                                    <li *ngFor="let oreItem of chromeOre">
-                                      <a href="javascript:;">
-                                        <label class="container-check">{{oreItem?.name}}
-                                          <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
-                                            <i class="fa fa-info-circle"></i>
-                                          </span>
-                                          <input type="checkbox" [checked]="oreItem.select" value="{{oreItem?.name}}" (change)="onSelectChromeOre($event)"/>
-                                          <span class="checkmark"></span>
-                                        </label>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </li>
-                              </ul>
-    
-                            </div> 
-                          </div>
-                          
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-12">
-                        <label class="d-block mt-3">Choose Product’s Size (mm)</label>
-                        <label *ngFor="let product of selectProduct" class="container-radio">{{product?.name}}
-                          <input type="radio" (change)="choosProductSize($event)" [checked]="product.select"
-                            value="{{product?.name}}" name="radio" />
-                          <span class="checkmark"></span>
-                        </label>
-                      </div>
-                      <div class="col-12" *ngIf="chipsFinesSize" (change)="chinpsAndFinesSize($event)">
-                        <label class="container-radio">0-3
-                          <input type="radio"
-                            value="0-3" name="radio" />
-                          <span class="checkmark"></span>
-                        </label>
-                        <label class="container-radio">0-10
-                          <input type="radio"
-                            value="0-10" name="radio" />
-                          <span class="checkmark"></span>
-                        </label>
-                        <label class="container-radio">3-10
-                          <input type="radio"
-                            value="3-10" name="radio" />
-                          <span class="checkmark"></span>
-                        </label>
-                      </div>
-                      <!--/-->
+                                </a>
+                                <ul>
+                                  <li>
+                                    <a href="javascript:;">
+                                      HC Ferro Chrome (Lumps)
+                                      <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                        <i class="fa fa-info-circle"></i> </span></a>
+                                    <ul>
+                                      <li *ngFor="let item of ferroChrome">
+                                        <a href="javascript:;">
+                                          <label class="container-check">{{item?.name}}
+                                            <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                              data-placement="top"
+                                              title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                              <i class="fa fa-info-circle"></i>
+                                            </span>
+                                            <input type="checkbox" value="{{item?.name}}" [checked]="item.select"
+                                              (change)="onSelectFerroChrome($event)" />
+                                            <span class="checkmark"></span> </label></a>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li class="branch-main">
+                                Chrome Ore
+                                <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                  <i class="fa fa-info-circle d-block"></i>
+                                </span>
+                                <ul>
+                                  <li *ngFor="let oreItem of chromeOre">
+                                    <a href="javascript:;">
+                                      <label class="container-check">{{oreItem?.name}}
+                                        <span class="price-info price-info0 d-inline-block" data-toggle="tooltip"
+                                          data-placement="top"
+                                          title="Technical Specification:Cr - 60% Min, C - 6-8%, Phos - 0.05% Max, S - 0.05% Max, Si - 4% Max">
+                                          <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <input type="checkbox" [checked]="oreItem.select" value="{{oreItem?.name}}"
+                                          (change)="onSelectChromeOre($event)" />
+                                        <span class="checkmark"></span>
+                                      </label>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
 
-                      <div class="col-12 mt-2">
-                        <button (click)="mobileTabContinue()" class="btn btn-primary ttab" data-toggle="tab" role="tab"
-                          aria-controls="profile" routerLinkActive="active">
-                          <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-                          Continue
-                        </button>
+                          </div>
+                        </div>
+
                       </div>
-                      <!--/-->
                     </div>
+                    <!--/-->
+                    <div class="col-12">
+                      <label class="d-block mt-3">Choose Product’s Size (mm)</label>
+                      <label *ngFor="let product of selectProduct" class="container-radio">{{product?.name}}
+                        <input type="radio" (change)="choosProductSize($event)" [checked]="product.select"
+                          value="{{product?.name}}" name="radio" />
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <div class="col-12" *ngIf="chipsFinesSize" (change)="chinpsAndFinesSize($event)">
+                      <label class="container-radio">0-3
+                        <input type="radio" value="0-3" name="radio" />
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container-radio">0-10
+                        <input type="radio" value="0-10" name="radio" />
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container-radio">3-10
+                        <input type="radio" value="3-10" name="radio" />
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <!--/-->
+
+                    <div class="col-12 mt-2">
+                      <button (click)="mobileTabContinue()" [disabled]="disableInput" class="btn btn-primary ttab" data-toggle="tab" role="tab"
+                        aria-controls="profile" routerLinkActive="active">
+                        <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+                        Continue
+                      </button>
+                    </div>
+                    <!--/-->
                   </div>
                 </div>
-                <!--/Mobile-->
-                <div *ngIf="ekycTab" class="" id="" role="tabpanel">
-                  <div class="container">
-                    <div class="row tab-bg-white">
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>GST Number</label>
-                          <input readonly type="text" [(ngModel)]="gstNumber"
-                            class="form-control" />
-                        </div>
+              </div>
+              <!--/Mobile-->
+              <div *ngIf="ekycTab" class="" id="" role="tabpanel">
+                <div class="container">
+                  <div class="row tab-bg-white">
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>GST Number</label>
+                        <input readonly type="text" [(ngModel)]="gstNumber" class="form-control" />
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Linked Address</label>
-                          <input readonly type="text" [(ngModel)]="linkedAddr"
-                            class="form-control" />
-                        </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Linked Address</label>
+                        <input readonly type="text" [(ngModel)]="linkedAddr" class="form-control" />
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>PAN Number</label>
-                          <input readonly type="text" [(ngModel)]="orgPan" class="form-control" />
-                        </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>PAN Number</label>
+                        <input readonly type="text" [(ngModel)]="orgPan" class="form-control" />
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6">
-                        <div class="form-group">
-                          <label>Nature of Business</label>
-                          <select (change)="selectBusiness($event)"
-                            class="form-control">
-                            <option value="">Select</option>
-                            <option value="Manufacturer">Manufacturer</option>
-                            <option value="Trader">Trader</option>
-                            <option value="Manufacturer & Trader">
-                              Manufacturer & Trader
-                            </option>
-                          </select>
-                          <!-- <div
+                    </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Nature of Business</label>
+                        <select (change)="selectBusiness($event)" class="form-control">
+                          <option value="">Select</option>
+                          <option value="Manufacturer">Manufacturer</option>
+                          <option value="Trader">Trader</option>
+                          <option value="Manufacturer & Trader">
+                            Manufacturer & Trader
+                          </option>
+                        </select>
+                        <!-- <div
                             *ngIf="f['business_nature']?.invalid &&(f['business_nature']?.touched || f['business_nature'].dirty || submitted)">
                             <small class="text-danger">
                               Nature of business is required
                             </small>
                           </div> -->
-                        </div>
                       </div>
-                      <!--/-->
-                      <div class="col-12 col-lg-6 col-sm-6 mt-4">
-                        <div class="form-group">
-                          <label (change)="isTdsApplicable($event)" class="container-check">Is TCS/TDS applicable?
-                            <input type="checkbox" [checked]="businessChecked" />
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                      </div>
-                      <!--/-->
-                      <div class="col-12 mt-2">
-                        <!-- <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
-                        <button (click)="ekycTabContinue()" data-toggle="tab" role="tab" aria-controls="address"
-                          class="btn btn-primary ttab" routerLinkActive="active">
-                          <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-                          Continue
-                        </button>
-                      </div>
-                      <!--/-->
                     </div>
+                    <!--/-->
+                    <div class="col-12 col-lg-6 col-sm-6 mt-4">
+                      <div class="form-group">
+                        <label (change)="isTdsApplicable($event)" class="container-check">Is TCS/TDS applicable?
+                          <input type="checkbox" [checked]="businessChecked" />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 mt-2">
+                      <!-- <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
+                      <button (click)="ekycTabContinue()" data-toggle="tab" role="tab" aria-controls="address"
+                        class="btn btn-primary ttab" routerLinkActive="active">
+                        <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+                        Continue
+                      </button>
+                    </div>
+                    <!--/-->
                   </div>
                 </div>
-                <!--/EKYC-->
-                <div *ngIf="addressTab" role="tabpanel">
-                  <div class="container">
-                    
-                    <div class="row tab-bg-white">
-                      <div class="col-12">
-                        <div id="accordion" class="accordion">
-                          <div class="card mb-0">
-                             <!-- Start Billing address -->
-                             <div class="card-header" data-toggle="collapse" data-parent="#accordion"
-                             href="#collapseTwo">
-                             <a class="card-title">
-                               Enter Billing Address
-                             </a>
-                           </div>
-                           <form [formGroup]="addressForm">
-                           <div id="collapseTwo" class="card-body collapse show" data-parent="#accordion"
-                           formArrayName="credentials" *ngFor="let billingAdd of addressForm.get('credentials')['controls']; let i = index">
-                             <div class="row" [formGroupName]="i">
-                               <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                <div class="form-group">
-                                  <label>GSTN</label>
-                                  <div class="d-flex2 display-f">
-                                    <input type="text" formControlName="gstin" (keyup)="gstNumbr($event)" [readOnly]="i == 0" class="form-control w-79" />
-                                    <button type="button" (click)="billGstin(i)" class="btn blue-btn" [disabled]="i == 0">
-                                      Get Details
-                                    </button>
+              </div>
+              <!--/EKYC-->
+              <div *ngIf="addressTab" role="tabpanel">
+                <div class="container">
+
+                  <div class="row tab-bg-white">
+                    <div class="col-12">
+                      <div id="accordion" class="accordion">
+                        <div class="card mb-0">
+                          <!-- Start Billing address -->
+                          <div class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            <a class="card-title">
+                              Enter Billing Address
+                            </a>
+                          </div>
+                          <form [formGroup]="addressForm">
+                            <div id="collapseTwo" class="card-body collapse show" data-parent="#accordion"
+                              formArrayName="credentials"
+                              *ngFor="let billingAdd of addressForm.get('credentials')['controls']; let i = index">
+                              <div class="row" [formGroupName]="i">
+                                <!--/-->
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>GSTN</label>
+                                    <div class="d-flex2 display-f">
+                                      <input type="text" formControlName="gstin" (keyup)="gstNumbr($event)"
+                                        [readOnly]="i == 0" class="form-control w-79" />
+                                      <button type="button" (click)="billGstin(i)" class="btn blue-btn"
+                                        [disabled]="i == 0">
+                                        Get Details
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
 
-                              <div class="col-12 col-lg-6 col-sm-6">
-                                <div class="form-group">
-                                  <label>Company Name</label>
-                                  <input type="text" formControlName="company_name" id="adr_{{i}}" readonly class="form-control" />
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>Company Name</label>
+                                    <input type="text" formControlName="company_name" id="adr_{{i}}" readonly
+                                      class="form-control" />
+                                  </div>
                                 </div>
-                              </div>
 
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>Address Line1</label>
-                                   <input type="text" formControlName="addressone" id="adr_{{i}}" readonly class="form-control" />
-                                 </div>
-                               </div>
-                               <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>Address Line2</label>
-                                   <input type="text" formControlName="addresstwo" id="adrt_{{i}}" readonly class="form-control" />
-                                 </div>
-                               </div>
-                               <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>City</label>
-                                   <input type="text" formControlName="city" id="city_{{i}}" readonly class="form-control" />
-                                 </div>
-                               </div>
-                               <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>State</label>
-                                   <input type="text" formControlName="state" id="ste_{{i}}" readonly class="form-control" />
-                                 </div>
-                               </div>
-                               <!--/-->
-                               <div class="col-12 col-lg-6 col-sm-6">
-                                 <div class="form-group">
-                                   <label>Pincode</label>
-                                   <input type="text" formControlName="pincode" id="pin_{{i}}" readonly class="form-control" />
-                                 </div>
-                               </div>
-                               <!--/-->
-                               <div class="col-12 col-lg-12 col-sm-6">
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>Address Line1</label>
+                                    <input type="text" formControlName="addressone" id="adr_{{i}}" readonly
+                                      class="form-control" />
+                                  </div>
+                                </div>
+                                <!--/-->
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>Address Line2</label>
+                                    <input type="text" formControlName="addresstwo" id="adrt_{{i}}" readonly
+                                      class="form-control" />
+                                  </div>
+                                </div>
+                                <!--/-->
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" formControlName="city" id="city_{{i}}" readonly
+                                      class="form-control" />
+                                  </div>
+                                </div>
+                                <!--/-->
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>State</label>
+                                    <input type="text" formControlName="state" id="ste_{{i}}" readonly
+                                      class="form-control" />
+                                  </div>
+                                </div>
+                                <!--/-->
+                                <div class="col-12 col-lg-6 col-sm-6">
+                                  <div class="form-group">
+                                    <label>Pincode</label>
+                                    <input type="text" formControlName="pincode" id="pin_{{i}}" readonly
+                                      class="form-control" />
+                                  </div>
+                                </div>
+                                <!--/-->
+                                <div class="col-12 col-lg-12 col-sm-6">
                                   <div class="form-group">
                                     <div class="form-check ml-2">
-                                      <input type="checkbox" (change)="useAsShippingAddr($event)" formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
+                                      <input type="checkbox" (change)="useAsShippingAddr($event)"
+                                        formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
                                       <label class="form-check-label" for="exampleCheck1">Use this as billing
                                         address</label>
                                     </div>
                                   </div>
                                 </div>
-                               <!-- <div class="col-12 col-lg-6 col-sm-6"></div>
+                                <!-- <div class="col-12 col-lg-6 col-sm-6"></div>
                                <div class="col-12 col-lg-6 col-sm-6"></div> -->
-                             </div>
-                           </div>
+                              </div>
+                            </div>
                           </form>
                           <div class="col-12 col-lg-12 col-sm-6 text-right2">
                             <div class="form-group">
@@ -419,75 +431,72 @@
                                 New Address</a>
                             </div>
                           </div>
-                            <!-- Shipping address -->
-                            <div class="card-header collapsed" id="hideShipp" data-toggle="collapse" href="#collapseOne">
-                              <a class="card-title">
-                                Enter Shipping Address
-                              </a>
-                            </div>
-                            <form [formGroup]="shiptingForm">
+                          <!-- Shipping address -->
+                          <div class="card-header collapsed" id="hideShipp" data-toggle="collapse" href="#collapseOne">
+                            <a class="card-title">
+                              Enter Shipping Address
+                            </a>
+                          </div>
+                          <form [formGroup]="shiptingForm">
                             <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
-                            <ng-container formArrayName="shipping" *ngFor="let shippingAdd of shiptingForm.get('shipping')['controls'] let i = index">
-                              <div class="row" [formGroupName]="i">
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>GSTN</label>
-                                    <div class="d-flex2 display-f">
-                                      <input type="text" formControlName="gstin" (keyup)="shipGstNum($event)" [readOnly]="i == 0" class="form-control w-79" />
-                                      <button type="button" (click)="shipGstin(i)" class="btn blue-btn" [disabled]="i == 0">
-                                        Get Details
-                                      </button>
+                              <ng-container formArrayName="shipping"
+                                *ngFor="let shippingAdd of shiptingForm.get('shipping')['controls'] let i = index">
+                                <div class="row" [formGroupName]="i">
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>GSTN</label>
+                                      <div class="d-flex2 display-f">
+                                        <input type="text" formControlName="gstin" (keyup)="shipGstNum($event)"
+                                          [readOnly]="i == 0" class="form-control w-79" />
+                                        <button type="button" (click)="shipGstin(i)" class="btn blue-btn"
+                                          [disabled]="i == 0">
+                                          Get Details
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Company Name</label>
-                                    <input type="text" readOnly formControlName="company_name"
-                                      class="form-control" />
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Company Name</label>
+                                      <input type="text" readOnly formControlName="company_name" class="form-control" />
+                                    </div>
                                   </div>
-                                </div>
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Address Line1</label>
-                                    <input type="text" readOnly formControlName="addressone"
-                                      class="form-control" />
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Address Line1</label>
+                                      <input type="text" readOnly formControlName="addressone" class="form-control" />
+                                    </div>
                                   </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Address Line2</label>
-                                    <input type="text"  readOnly formControlName="addresstwo"
-                                      class="form-control" />
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Address Line2</label>
+                                      <input type="text" readOnly formControlName="addresstwo" class="form-control" />
+                                    </div>
                                   </div>
-                                </div>
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>State</label>
-                                    <input type="text"  readOnly formControlName="state"
-                                      class="form-control">
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>State</label>
+                                      <input type="text" readOnly formControlName="state" class="form-control">
+                                    </div>
                                   </div>
-                                </div>
-                                <!-- / -->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>City</label>
-                                    <input type="text" readOnly formControlName="city"
-                                      class="form-control">
+                                  <!-- / -->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>City</label>
+                                      <input type="text" readOnly formControlName="city" class="form-control">
+                                    </div>
                                   </div>
-                                </div>
-                                <!--/-->
-                                <div class="col-12 col-lg-6 col-sm-6">
-                                  <div class="form-group">
-                                    <label>Pincode</label>
-                                    <input type="text"  readOnly formControlName="pincode"
-                                      class="form-control" />
+                                  <!--/-->
+                                  <div class="col-12 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                      <label>Pincode</label>
+                                      <input type="text" readOnly formControlName="pincode" class="form-control" />
+                                    </div>
                                   </div>
-                                </div>
-                                <!--/-->
-                                <!-- <div class="col-12 col-lg-12 col-sm-6">
+                                  <!--/-->
+                                  <!-- <div class="col-12 col-lg-12 col-sm-6">
                                   <div class="form-group">
                                     <div class="form-check ml-2">
                                       <input type="checkbox" formControlName="billing" value="Y" class="form-check-input" id="exampleCheck1">
@@ -496,365 +505,364 @@
                                     </div>
                                   </div>
                                 </div> -->
-                                <!--/-->
-                              </div>
-                            </ng-container>
+                                  <!--/-->
+                                </div>
+                              </ng-container>
                             </div>
                           </form>
-                          <div class="col-12 col-lg-12 col-sm-6 text-right2"  id="hideAddBtn">
+                          <div class="col-12 col-lg-12 col-sm-6 text-right2" id="hideAddBtn">
                             <div class="form-group pointer text-primary">
                               <a (click)="addShitpItem()" data-toggle="collapse"><i class="fa fa-plus-circle"></i>
                                 Add
                                 New Address</a>
                             </div>
                           </div>
-                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/-->
+                    <div class="col-12 mt-4">
+                      <!--  <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
+                      <button (click)="addressTabContinue()" data-toggle="tab" role="tab" aria-controls="uploads"
+                        class="btn btn-primary ttab" routerLinkActive="active">
+                        <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+                        Continue
+                      </button>
+                    </div>
+                    <!--/-->
+                  </div>
+
+                </div>
+              </div>
+              <!--/Address-->
+              <div *ngIf="uploadTab" class="" id="" role="tabpanel">
+                <div class="container">
+                  <div class="row tab-bg-white">
+                    <div class="col-12 mt-3">
+                      <div class="cart-table">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Document Name</th>
+                                <th>Valid Till</th>
+                                <th></th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  Address Proof
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>--</td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="getAddrssProfe($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-1" class="custom-file-input" />
+                                      <label class="custom-file-label" for="file-1">{{selectedFile?.name ?
+                                        selectedFile?.name:'Upload'}}</label>
+                                      <div *ngIf="!addProof && submitted">
+                                        <small class="text-danger">
+                                          Address proof is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload" (click)="resetUpload()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="addressProof">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Cancelled Cheque<span style="color: #f00">*</span>
+                                </td>
+                                <td>--</td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="getCancelcheck($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-2" class="custom-file-input"
+                                        name="filename" />
+                                      <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ?
+                                        cancelCheckBook?.name:'Upload'}}</label>
+                                      <div *ngIf="!checkBook && submitted">
+                                        <small class="text-danger">
+                                          Checkbook is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload2"
+                                      (click)="resetCheckbook()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="checkbook">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  PAN Card
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>
+                                  <input type="date" [(ngModel)]="panDate" class="form-control" />
+                                </td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="uploadPan($event)" accept=".png, .jpg, .jpeg, .pdf"
+                                        id="file-3" class="custom-file-input" name="filename" />
+                                      <label class="custom-file-label" for="file-3">{{panUpload?.name ?
+                                        panUpload?.name:'Upload'}}</label>
+                                      <div *ngIf="!panCardUpload && submitted">
+                                        <small class="text-danger">
+                                          Pan is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload3" (click)="resetPan()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="panCard">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  GST Certificate
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>
+                                  <input type="date" [(ngModel)]="gstDate" class="form-control" />
+                                </td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="gstCertificateFileUpload($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-4" class="custom-file-input"
+                                        name="filename" />
+                                      <label class="custom-file-label" for="file-4">{{gstUpload?.name ?
+                                        gstUpload?.name:'Upload'}}</label>
+                                      <div *ngIf="!gstFile && submitted">
+                                        <small class="text-danger">
+                                          GST Certificate is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload4" (click)="resetGst()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="gstCertificate">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Declaration on turnover-section 194Q and
+                                  206 cc <span style="color: #f00">*</span>
+                                </td>
+                                <td>--</td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="turnoverUpload($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-5" class="custom-file-input"
+                                        name="filename" />
+                                      <label class="custom-file-label" for="file-5">{{turnoverFile?.name ?
+                                        turnoverFile?.name:'Upload'}}</label>
+                                      <div *ngIf="!turnOver && submitted">
+                                        <small class="text-danger">
+                                          File is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload5"
+                                      (click)="resetTurnover()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="turnOverFile">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  ITR of last 2 FYs
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>--</td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="itrFileUpload($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-6" class="custom-file-input"
+                                        name="filename" />
+                                      <label class="custom-file-label" for="file-6">{{itrFile?.name ?
+                                        itrFile?.name:'Upload'}}</label>
+                                      <div *ngIf="!itrFileUpl && submitted">
+                                        <small class="text-danger">
+                                          ITR is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload6" (click)="resetItr()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="itrFileCheck">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr *ngIf="showFormD">
+                                <td>
+                                  Form D <span style="color: #f00">*</span>
+                                </td>
+                                <td>
+                                  <input type="date" [(ngModel)]="formDdate" class="form-control" />
+                                </td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="formDupload($event)" accept=".png, .jpg, .jpeg, .pdf"
+                                        id="file-7" class="custom-file-input" name="filename" />
+                                      <label class="custom-file-label" for="file-7">{{formDfile?.name ?
+                                        formDfile?.name:'Upload'}}</label>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload7" (click)="resetFormD()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="formD">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Consent Letter
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>--</td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="consentLetterUpload($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-8" class="custom-file-input"
+                                        name="filename" />
+                                      <label class="custom-file-label" for="file-8">{{consentLetter?.name ?
+                                        consentLetter?.name:'Upload'}}</label>
+                                      <div *ngIf="!consentFile && submitted">
+                                        <small class="text-danger">
+                                          Consent Letter is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload8" (click)="resetConsent()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="consentFileSize">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Registration Certificates
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>--</td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="regisCertificateUpload($event)"
+                                        class="custom-file-input" id="customFile" accept=".png, .jpg, .jpeg, .pdf"
+                                        name="filename">
+                                      <label class="custom-file-label" for="customFile">{{regisCertificate?.name ?
+                                        regisCertificate?.name:'Upload'}}</label>
+                                      <div *ngIf="!cerftificateUpl && submitted">
+                                        <small class="text-danger">
+                                          Consent Letter is required !
+                                        </small>
+                                      </div>
+                                    </div>
+
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload9"
+                                      (click)="resetCertificate()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="registerFileSize">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  TCS (If turnover is >Rs 10 crs)
+                                  <span style="color: #f00">*</span>
+                                </td>
+                                <td>
+                                  <input type="date" [(ngModel)]="tcsDate" class="form-control" />
+                                </td>
+                                <td class="position-relative">
+                                  <div class="uplodimg">
+                                    <div class="custom-file">
+                                      <input type="file" (change)="tcsFileUpload($event)"
+                                        accept=".png, .jpg, .jpeg, .pdf" id="file-10" class=" custom-file-input"
+                                        name="filename" />
+                                      <label class="custom-file-label" for="file-10">{{tcsFile?.name ?
+                                        tcsFile?.name:'Upload'}}</label>
+                                      <div *ngIf="!tcsUplod && submitted">
+                                        <small class="text-danger">
+                                          TCS is required !
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <a class="reg-cross pointerClass" *ngIf="showResetUpload10" (click)="resetTcs()">
+                                      <i class="fa fa-times"></i>
+                                    </a>
+                                  </div>
+                                  <small class="text-danger" *ngIf="tcsFileSize">Maximum file size:5MB (PDF, PNG,
+                                    JPG)</small>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                       <!--/-->
-                      <div class="col-12 mt-4">
-                        <!--  <button type="button" class="btn blue-btn2"><img src="assets/assets/images/save.png" alt="save">Save</button> -->
-                        <button (click)="addressTabContinue()" data-toggle="tab" role="tab" aria-controls="uploads"
-                          class="btn btn-primary ttab" routerLinkActive="active">
-                          <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-                          Continue
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="container-check">I agree to the
+                          <a routerLink="/others/privacy"><u>terms and conditions</u></a>
+                          <input type="checkbox" (change)="checkTerms($event)" [checked]="isTermCondition" />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="submit-btn-sec">
+                        <button type="submit" (click)="submitRegister()" class="btn btn-primary mr-2"
+                          [disabled]="isTermCondition != true">
+                          <i class="fa fa-paper-plane"></i> Submit
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                          <i class="fa fa-times"></i> Cancel
                         </button>
                       </div>
-                      <!--/-->
-                    </div>
-                  
-                  </div>
-                </div>
-                <!--/Address-->
-                <div *ngIf="uploadTab" class="" id="" role="tabpanel">
-                  <div class="container">
-                    <div class="row tab-bg-white">
-                      <div class="col-12 mt-3">
-                        <div class="cart-table">
-                          <div class="table-responsive">
-                            <table class="table">
-                              <thead>
-                                <tr>
-                                  <th>Document Name</th>
-                                  <th>Valid Till</th>
-                                  <th></th>
-                                  <th></th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    Address Proof
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>--</td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="getAddrssProfe($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-1" class="custom-file-input" />
-                                        <label class="custom-file-label" for="file-1">{{selectedFile?.name ?
-                                          selectedFile?.name:'Upload'}}</label>
-                                        <div *ngIf="!addProof && submitted">
-                                          <small class="text-danger">
-                                            Address proof is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload" (click)="resetUpload()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="addressProof">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>Cancelled Cheque<span style="color: #f00">*</span>
-                                  </td>
-                                  <td>--</td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="getCancelcheck($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-2" class="custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ?
-                                          cancelCheckBook?.name:'Upload'}}</label>
-                                        <div *ngIf="!checkBook && submitted">
-                                          <small class="text-danger">
-                                            Checkbook is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload2"
-                                        (click)="resetCheckbook()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="checkbook">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    PAN Card
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>
-                                    <input type="date" [(ngModel)]="panDate" class="form-control" />
-                                  </td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="uploadPan($event)" accept=".png, .jpg, .jpeg, .pdf"
-                                          id="file-3" class="custom-file-input" name="filename" />
-                                        <label class="custom-file-label" for="file-3">{{panUpload?.name ?
-                                          panUpload?.name:'Upload'}}</label>
-                                        <div *ngIf="!panCardUpload && submitted">
-                                          <small class="text-danger">
-                                            Pan is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload3" (click)="resetPan()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="panCard">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    GST Certificate
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>
-                                    <input type="date" [(ngModel)]="gstDate" class="form-control" />
-                                  </td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="gstCertificateFileUpload($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-4" class="custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-4">{{gstUpload?.name ?
-                                          gstUpload?.name:'Upload'}}</label>
-                                        <div *ngIf="!gstFile && submitted">
-                                          <small class="text-danger">
-                                            GST Certificate is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload4" (click)="resetGst()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="gstCertificate">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    Declaration on turnover-section 194Q and
-                                    206 cc <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>--</td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="turnoverUpload($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-5" class="custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-5">{{turnoverFile?.name ?
-                                          turnoverFile?.name:'Upload'}}</label>
-                                        <div *ngIf="!turnOver && submitted">
-                                          <small class="text-danger">
-                                            File is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload5"
-                                        (click)="resetTurnover()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="turnOverFile">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    ITR of last 2 FYs
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>--</td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="itrFileUpload($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-6" class="custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-6">{{itrFile?.name ?
-                                          itrFile?.name:'Upload'}}</label>
-                                        <div *ngIf="!itrFileUpl && submitted">
-                                          <small class="text-danger">
-                                            ITR is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload6" (click)="resetItr()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="itrFileCheck">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr *ngIf="showFormD">
-                                  <td>
-                                    Form D <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>
-                                    <input type="date" [(ngModel)]="formDdate" class="form-control" />
-                                  </td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="formDupload($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-7" class="custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-7">{{formDfile?.name ?
-                                          formDfile?.name:'Upload'}}</label>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload7" (click)="resetFormD()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="formD">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    Consent Letter
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>--</td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="consentLetterUpload($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-8" class="custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-8">{{consentLetter?.name ?
-                                          consentLetter?.name:'Upload'}}</label>
-                                        <div *ngIf="!consentFile && submitted">
-                                          <small class="text-danger">
-                                            Consent Letter is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload8"
-                                        (click)="resetConsent()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="consentFileSize">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    Registration Certificates
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>--</td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="regisCertificateUpload($event)"
-                                          class="custom-file-input" id="customFile" accept=".png, .jpg, .jpeg, .pdf"
-                                          name="filename">
-                                        <label class="custom-file-label" for="customFile">{{regisCertificate?.name ?
-                                          regisCertificate?.name:'Upload'}}</label>
-                                        <div *ngIf="!cerftificateUpl && submitted">
-                                          <small class="text-danger">
-                                            Consent Letter is required !
-                                          </small>
-                                        </div>
-                                      </div>
-
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload9"
-                                        (click)="resetCertificate()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="registerFileSize">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    TCS (If turnover is >Rs 10 crs)
-                                    <span style="color: #f00">*</span>
-                                  </td>
-                                  <td>
-                                    <input type="date" [(ngModel)]="tcsDate" class="form-control" />
-                                  </td>
-                                  <td class="position-relative">
-                                    <div class="uplodimg">
-                                      <div class="custom-file">
-                                        <input type="file" (change)="tcsFileUpload($event)"
-                                          accept=".png, .jpg, .jpeg, .pdf" id="file-10" class=" custom-file-input"
-                                          name="filename" />
-                                        <label class="custom-file-label" for="file-10">{{tcsFile?.name ?
-                                          tcsFile?.name:'Upload'}}</label>
-                                        <div *ngIf="!tcsUplod && submitted">
-                                          <small class="text-danger">
-                                            TCS is required !
-                                          </small>
-                                        </div>
-                                      </div>
-                                      <a class="reg-cross pointerClass" *ngIf="showResetUpload10" (click)="resetTcs()">
-                                        <i class="fa fa-times"></i>
-                                      </a>
-                                    </div>
-                                    <small class="text-danger" *ngIf="tcsFileSize">Maximum file size:5MB (PDF, PNG,
-                                      JPG)</small>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                        <!--/-->
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          <label class="container-check">I agree to the
-                            <a routerLink="/others/privacy"><u>terms and conditions</u></a>
-                            <input type="checkbox" (change)="checkTerms($event)" [checked]="isTermCondition" />
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="submit-btn-sec">
-                          <button type="submit" (click)="submitRegister()" class="btn btn-primary mr-2" [disabled]="isTermCondition != true">
-                            <i class="fa fa-paper-plane"></i> Submit
-                          </button>
-                          <button type="button" class="btn btn-danger">
-                            <i class="fa fa-times"></i> Cancel
-                          </button>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-                <!--/Upload-->
               </div>
+              <!--/Upload-->
+            </div>
             <!-- </form> -->
           </div>
         </div>

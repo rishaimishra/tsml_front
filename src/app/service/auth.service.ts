@@ -61,4 +61,8 @@ export class AuthService {
   forgetPass(request:any) {
     return this._http.post(this.BesUrl + '/password-email',  request);
   };
+
+  checkEmail(request:any) {
+    return this._http.post(this.BesUrl + '/chk_email',  request);
+  };
 }

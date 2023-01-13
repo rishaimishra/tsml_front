@@ -57,7 +57,7 @@
                         </li>
                      </ol>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="showKamTextArea">
+                  <div class="col-lg-12 col-md-12 col-sm-12 mt-3" *ngIf="showKamTextArea">
                      <div class="form-group">
                         <label for="">Cam's Remarks</label>
                         <textarea [(ngModel)]="remarkReply" #remarkRep="ngModel" class="form-control" rows="5"
@@ -68,21 +68,7 @@
                   </div>
                   
                   <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
-                      <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
-                      <label class="custom-file-label" for="customFile">{{fileName ?
-                          fileName:'Upload Attachement'}}</label>
-                   </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
-                      <input type="file" accept=".pdf" (change)="onSelectFile2($event)" class="custom-file-input pointer" id="customFile" name="filename">
-                      <label class="custom-file-label" for="customFile">{{fileName2 ?
-                          fileName2:'Upload Attachement'}}</label>
-                   </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-12 col-md-4 col-sm-4" *ngIf="compInfo?.complain_status != 2">
+                    <div class="col-lg-12 col-md-4 col-sm-4 mt-2" *ngIf="compInfo?.complain_status != 2">
                       <div class="reply_btn_box">
                          <div class="clos-btn">
                            <div class="form-check">
@@ -99,9 +85,20 @@
                       </div>
                    </div>
                   </div>
-
-                  
-                   
+                  <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
+                      <input type="file" accept=".pdf" (change)="onSelectFile($event)" class="custom-file-input pointer" id="customFile" name="filename">
+                      <label class="custom-file-label" for="customFile">{{fileName ?
+                          fileName:'Upload Attachement'}}</label>
+                   </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 mt-2 pointer ml-3" *ngIf="compInfo?.complain_status != 2">
+                      <input type="file" accept=".pdf" (change)="onSelectFile2($event)" class="custom-file-input pointer" id="customFile" name="filename">
+                      <label class="custom-file-label" for="customFile">{{fileName2 ?
+                          fileName2:'Upload Attachement'}}</label>
+                   </div>
+                  </div>
                   
                 </div>
                 <hr>
