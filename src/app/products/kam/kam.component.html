@@ -15,7 +15,6 @@
     <section>
         <div class="container">
             <div class="prod-list-detl">
-                <!-- List start -->
                 <div class="demo" *ngFor="let productData of selectedItem; let i = index">
                     <div id="accordion" class="accordion accordion--"
                         *ngIf="isSchduleArr[i] == 3 || isSchduleArr[i] == 0">
@@ -40,7 +39,7 @@
                                     <div class="oodr-info-01">
                                         <em>
                                             <span>RFQ Date</span>
-                                            <p>{{productData.dt | date: 'dd/MM/YYYY' }}</p>
+                                            <p>{{productData.dt }}</p>
                                         </em>
                                     </div>
                                     <div class="oodr-info-01">
@@ -206,14 +205,13 @@
                                                     <div class="bil-add-new-add">
                                                         <label for="">Bill To</label>
                                                     </div>
-                                                    <select class="form-control form-control-sm" #billTo="ngModel"
+                                                    <select class="form-control form-control-sm" disabled #billTo="ngModel"
                                                         [(ngModel)]="formData.bill_to"
                                                         name="bill_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.bill_to}}" selected>
                                                             {{formData.bill_to}}</option>
-                                                        <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                                                        {{ state?.name }}
-                                                    </option> -->
+                                                            <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
+                                                            title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode - {{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
                                                     </select>
                                                     <small
                                                         *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -225,14 +223,13 @@
                                                     <div class="bil-add-new-add">
                                                         <label for="">Ship To</label>
                                                     </div>
-                                                    <select class="form-control form-control-sm" #shipTo="ngModel"
+                                                    <select class="form-control form-control-sm" disabled #shipTo="ngModel"
                                                         [(ngModel)]="formData.ship_to"
                                                         name="ship_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.ship_to}}" selected>
                                                             {{formData.ship_to}}</option>
-                                                        <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
-                                                        {{ state?.name }}
-                                                    </option> -->
+                                                            <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of shipto" data-toggle="tooltip" data-placement="top"
+                                                            title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode -{{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
                                                     </select>
                                                     <small
                                                         *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
@@ -245,8 +242,7 @@
                                                     <div class="date-rang">
                                                         <div class="position-relative">
                                                             <input type="date" [(ngModel)]="formData.from_date" #dlvrDate="ngModel"
-                                                                (change)="setNxtData($event, formData.schedule_no)"
-                                                                min="{{date}}"
+                                                                (change)="setNxtData($event, formData.schedule_no)" min="{{date}}"
                                                                 name="from_date_{{ formData.schedule_no }}"
                                                                 class="form-control form-control-sm"
                                                                 placeholder="From" value="" required />
@@ -288,14 +284,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
-                                                <div class="form-group" *ngIf="userByrole != 'Sales'">
+                                                <div class="form-group">
                                                     <label for="">Valid Till </label>
                                                     <div class="position-relative">
-                                                        <input type="datetime-local"
-                                                            [disabled]="userType || qoutestId == 0 || qoutestId == 2"
-                                                            #validTill="ngModel" [(ngModel)]="formData.valid_till"
-                                                            class="form-control form-control-sm datepicker"
-                                                            >
+                                                        <input type="datetime-local" id="valid_date"
+                                                         [disabled]="userType || qoutestId == 0 || qoutestId == 2"
+                                                        name="valid_date_{{ formData.schedule_no }}"   #validTill="ngModel" [(ngModel)]="formData.valid_till"
+                                                        class="form-control form-control-sm datepicker" required>
                                                         
                                                     </div>
                                                 </div>
@@ -354,7 +349,7 @@
                                             <!-- Kam's remarks -->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="">Cam's Remarks</label>
+                                                    <label for="">CAM's Remarks</label>
                                                     <textarea [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                                                         name="kamRemarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
@@ -367,7 +362,7 @@
                                             <!-- Sales remarks -->
                                             <div class="col-lg-6" *ngIf="userByrole != 'C'">
                                                 <div class="form-group">
-                                                    <label for="">Sales Remarks</label>
+                                                    <label for="">Sales Planning Remarks</label>
                                                     <textarea [disabled]="userByrole != 'Sales'"
                                                         [(ngModel)]="formData.salesRemarks" #salesRemarks="ngModel"
                                                         name="salesRemarks_{{ formData.schedule_no }}"
@@ -419,7 +414,14 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right pb-5" *ngIf="showButtons > 0">
+            <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Sales Head's Remarks</label>
+                    <textarea class="form-control" readonly id="exampleFormControlTextarea1" rows="3">{{slsHeadMsg?.remarks}}</textarea>
+                  </div>
+            </div>
+            <div class="text-right col-8 pb-5" *ngIf="showButtons > 0">
                 <button type="button" *ngIf="userByrole != 'C' || selectedItem[0].quotest != 0"
                     [disabled]="(selectedItem[0].quotest == 7 && userByrole != 'Sales') || selectedItem[0].quotest == 8" class="btn btn-primary"
                     (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
@@ -427,7 +429,7 @@
                 <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
                     Back</button>
             </div>
-
+        </div>
 <!-- Negotiation History list -->
             <div class="history-table" *ngIf="userByrole != 'Sales'">
                 <section class="sub-header-2">
@@ -514,7 +516,7 @@
                         <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
                             <div *ngFor="let remark of messages">
                                 <ol class="chat">
-                                    <li class="other" *ngIf="remark?.remarks != null && userByrole != 'Sales'">
+                                    <li class="other" *ngIf="remark?.remarks != null">
                                         <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
                                                 draggable="false" /></div>
                                         <div class="msg">
@@ -523,11 +525,11 @@
                                             <time>{{remark.created_at | date}}</time>
                                         </div>
                                     </li>
-                                    <li class="other" *ngIf="remark?.salesRemarks != null && userByrole != 'C'">
+                                    <li class="other" *ngIf="remark?.salesRemarks != null">
                                         <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
                                                 draggable="false" /></div>
                                         <div class="msg">
-                                            <p>Sales Remarks!</p>
+                                            <p>Sales Planning Remarks!</p>
                                             <p>{{remark.salesRemarks}}</p>
                                             <time>{{remark.created_at | date}}</time>
                                         </div>
@@ -536,7 +538,7 @@
                                         <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png"
                                                 draggable="false" /></div>
                                         <div class="msg">
-                                            <p>Cam's Remarks!</p>
+                                            <p>CAM's Remarks!</p>
                                             <p>{{remark.kamsRemarks}}</p>
                                             <time>{{remark.created_at | date}}</time>
                                         </div>
@@ -611,13 +613,13 @@
                                         {{productPrice?.delivery_cost}}
                                     </div>
                                 </td>
-                                <td><input type="number" [readOnly]="isDap" formControlName="delivery_cost"
+                                <td><input type="number" [readOnly]="isDap"  formControlName="delivery_cost"
                                         class="form-control form-control-sm form-control form-control-sm-sm wid-150"
-                                        id="delivery{{schldId}}" placeholder="">
+                                        id="delivery{{schldId}}" value="0" placeholder="0">
                                     
                                 </td>
                             </tr>
-                            <tr>
+                            <tr hidden>
                                 <td colspan="2">Interest Rate ( % )</td>
                                 <td>
                                     <div class="pp-bx" id="intrId">
@@ -651,7 +653,7 @@
                                         [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                         class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                         id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
-                                    <small class="addClass" *ngIf="credCost">Credit Cost not be less than Cam's
+                                    <small class="addClass" *ngIf="credCost">Credit Cost not be less than CAM's
                                         Cost</small>
 
                                 </td>
@@ -721,7 +723,7 @@
                         (click)="priceSave(schldId, firstIndex, lastIndex)"><i class="fa fa-check"></i>
                         Ok</button>&nbsp;
                     <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" (click)="cancelprice()"><i class="fa fa-times"></i>
-                        Cancel</button>
+                        Close</button>
                 </div>
             </div>
             <!--/-->
@@ -776,7 +778,7 @@
                             <div class="row">
                                 <div class="col">
                                     <input type="number" [readonly]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6 " class="form-control" formControlName="quantity" value=""
-                                        placeholder="Quantity">
+                                        placeholder="Quantity" >
                                 </div>
                                 <div class="col">
                                     <input type="date" [readonly]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="form-control" formControlName="to_date"
@@ -796,7 +798,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" [disabled]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="btn btn-primary" (click)="onQtySubmit(totlQty)">OK</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

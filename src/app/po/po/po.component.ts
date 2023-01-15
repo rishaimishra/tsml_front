@@ -365,7 +365,7 @@ export class PoComponent implements OnInit {
     let rfqFormArry: any = [];
     let poStatusArr: any = [];
     if (!this.letterHead && userRol == 'C') {
-      Swal.fire('Sorry !', 'Letter head PO upload is required !');
+      Swal.fire('Sorry !', 'PO upload is required !');
       return;
     }
 

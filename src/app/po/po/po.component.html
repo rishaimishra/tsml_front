@@ -246,7 +246,7 @@
                       <!-- customer remarks -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="">Remarks</label>
+                          <label for="">Customer remarks</label>
                           <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
                             name="remarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
@@ -257,7 +257,7 @@
                       <!-- Kam remarks -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="">Cam's Remarks</label>
+                          <label for="">CAM's Remarks</label>
                           <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                             name="kamRemarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
@@ -285,7 +285,7 @@
             <hr class="custom-hr">
             <div class="row">
               <div class="col-md-6 col-lg-4">
-                <b class="form-check-label font-15 ml-2">Please Upload Your letterhead Here !</b>
+                <b class="form-check-label font-15 ml-2">Please upload your PO here !</b>
                 <div class="form_box_area">
                   <input type="file" (change)="selectFile($event)" accept=".jpg,.jpeg,.pdf" class="form-control-file"
                     id="">
@@ -367,7 +367,7 @@
                       [ngClass]="{ 'is-invalid': f.cam_discount.errors && f.cam_discount.touched}"
                       class="form-control form-control-sm form-control form-control-sm-sm wid-150"
                       id="_discount{{schldId}}" placeholder="">
-                    <small class="addClass" *ngIf="kamDiscount">Cam discount should be less
+                    <small class="addClass" *ngIf="kamDiscount">CAM discount should be less
                       than
                       {{productPrice?.cam_discount}}</small>
                   </td>
@@ -420,7 +420,7 @@
                       [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                       class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                       id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
-                    <small class="addClass" *ngIf="credCost">Credit Cost not be less than Cam's
+                    <small class="addClass" *ngIf="credCost">Credit Cost not be less than CAM's
                       Cost</small>
 
                   </td>
@@ -513,7 +513,7 @@
               <li class="self" *ngIf="remark?.kamsRemarks != null">
                 <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                 <div class="msg">
-                  <p>Cam's Remarks!</p>
+                  <p>CAM's Remarks!</p>
                   <p>{{remark.kamsRemarks}}</p>
                   <time>{{remark.created_at | date}}</time>
                 </div>

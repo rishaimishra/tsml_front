@@ -50,7 +50,7 @@
                         <li class="self  msgReply" *ngIf="remarks?.kam_remarks != null">
                            <div class="avatar" style="margin-left:10px;"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false" /></div>
                            <div class="msg">
-                              <p><b>Cam's Remarks!</b></p>
+                              <p><b>CAM's Remarks!</b></p>
                               <p>{{remarks.kam_remarks}}</p>
                               <time>{{remarks.created_at}}</time>
                            </div>
@@ -59,7 +59,7 @@
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12 mt-3" *ngIf="showKamTextArea">
                      <div class="form-group">
-                        <label for="">Cam's Remarks</label>
+                        <label for="">CAM's Remarks</label>
                         <textarea [(ngModel)]="remarkReply" #remarkRep="ngModel" class="form-control" rows="5"
                            required></textarea>
                         <small *ngIf="remarkRep.invalid && (remarkRep.dirty || remarkRep.touched || submitt)"

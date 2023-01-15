@@ -50,7 +50,7 @@
                                         <div class="oodr-info-01">
                                             <em>
                                                 <span>RFQ Date</span>
-                                                <p>{{productData.dt | date: 'dd/MM/YYYY' }}</p>
+                                                <p>{{productData.dt}}</p>
                                             </em>
                                         </div>
                                         <div class="oodr-info-01">
@@ -268,24 +268,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- customer remarks -->
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="">Customer Remarks</label>
-                                                    <textarea [(ngModel)]="formData.remarks"
-                                                        [disabled]="userByrole == 'Sales'" #remarks="ngModel"
-                                                        name="remarks_{{ formData.schedule_no }}"
-                                                        class="form-control form-control-sm" rows="4"
-                                                        required></textarea>
-                                                    <small
-                                                        *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
-                                                        class="inputValidation">Remarks is required</small>
-                                                </div>
-                                            </div>
                                             <!-- Kam's remarks -->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="">Cam's Remarks</label>
+                                                    <label for="">CAM's Remarks</label>
                                                     <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks"
                                                         #kamsRemarks="ngModel"
                                                         name="kamRemarks_{{ formData.schedule_no }}"
@@ -299,7 +285,7 @@
                                             <!-- Sales Remarks -->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="">Sales Remarks</label>
+                                                    <label for="">Sales Planning Remarks</label>
                                                     <textarea [(ngModel)]="formData.salesRemarks"
                                                         #salsRemarks="ngModel"
                                                         name="salesRemarks_{{ formData.schedule_no }}"
@@ -347,8 +333,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -462,12 +446,12 @@
                             <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
                                 <div *ngFor="let remark of messages">
                                     <ol class="chat">
-                                        <li class="other" *ngIf="remark?.remarks != null">
+                                        <li class="other" *ngIf="remark?.salesRemarks != null">
                                             <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
-                                                    draggable="false" /></div>
+                                             draggable="false" /></div>
                                             <div class="msg">
-                                                <p>Customer Remarks!</p>
-                                                <p>{{remark.remarks}}</p>
+                                                <p>Sales Planning Remarks!</p>
+                                                <p>{{remark.salesRemarks}}</p>
                                                 <time>{{remark.created_at | date}}</time>
                                             </div>
                                         </li>
@@ -475,7 +459,7 @@
                                             <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png"
                                                     draggable="false" /></div>
                                             <div class="msg">
-                                                <p>Cam's Remarks!</p>
+                                                <p>CAM's Remarks!</p>
                                                 <p>{{remark.kamsRemarks}}</p>
                                                 <time>{{remark.created_at | date}}</time>
                                             </div>
@@ -606,7 +590,7 @@
                                             [ngClass]="{ 'is-invalid': f.creditCoast.errors && f.creditCoast.touched}"
                                             class=" form-control form-control-sm form-control form-control-sm-sm wid-150"
                                             id="_credit{{schldId}}" value="{{daysCostCountCustomer}}" placeholder="">
-                                        <small class="addClass" *ngIf="credCost">Credit Cost not be less than Cam's
+                                        <small class="addClass" *ngIf="credCost">Credit Cost not be less than CAM's
                                             Cost</small>
 
                                     </td>
@@ -712,11 +696,11 @@
                             <div [formGroupName]="i" style="margin-bottom: 10px;">
                                 <div class="row">
                                     <div class="col-6">
-                                        <input type="number" class="form-control" formControlName="quantity" value=""
+                                        <input type="number" min="{{date}}" class="form-control" formControlName="quantity" value=""
                                             placeholder="Quantity">
                                     </div>
                                     <div class="col-6">
-                                        <input type="date" class="form-control" formControlName="to_date"
+                                        <input type="date" min="{{date}}" class="form-control" formControlName="to_date"
                                             placeholder="Date">
                                     </div>
                                 </div>

@@ -94,7 +94,8 @@ export class ManagerComponent implements OnInit {
   totlQty: any;
   resData: any;
   deliverySchdule: any = [];
-  showCity: any;
+  billto:any = [];
+  shipto:any = [];
   userAddr: any;
   plantAddrr: any;
   deliveryDropList: any;
@@ -166,9 +167,10 @@ export class ManagerComponent implements OnInit {
       }
     });
 
-    this.getLocation();
-    this.states = this._state.getState();
+    // this.states = this._state.getState();
     this.detailByRfq();
+    this.getLocation();
+    this.setFromData();
     this.getNegotiationHistory();
     this.getSubCategory(this.rfqNum);
     this.priceForm = this._fb.group({
@@ -708,9 +710,9 @@ export class ManagerComponent implements OnInit {
     this.pickupType = plant;
 
     if (dlvr == 'DAP (Delivered at Place)') {
-      this.isDap = true;
-    } else {
       this.isDap = false;
+    } else {
+      this.isDap = true;
     }
 
     $("#_bptAndfinal" + schedule_no).empty();
@@ -1061,7 +1063,8 @@ export class ManagerComponent implements OnInit {
     if (userId != '' || userId != null) {
       this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.spinner.hide();
-        this.showCity = res.result.city;
+        this.billto = res.result['bill'];
+        this.shipto = res.result['ship'];
         this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
         if (res.status == 'Token has Expired') {
           this._router.navigate(['/auth/login']);
@@ -1159,17 +1162,25 @@ export class ManagerComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Please give a reason for reject !',
+        text: 'Remarks is required !',
       })
       return;
     }
+    let type = '';
+    if (this.qtStatusUpdate == 9) {
+      type = 'R';
+    } else {
+      type = 'A';
+    }
+    
     let userId = localStorage.getItem('USER_ID');
     let remarks = {
       "user_id": userId,
       "rfq_no": this.rfqNum,
       "remarks": this.rejectRemarks,
-      "type": "R"
+      "type": type
     }
+
     this.spinner.show();
     this._sales.rejectRemarks(remarks).subscribe((res: any) => {
       this.spinner.hide();

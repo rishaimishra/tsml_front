@@ -40,7 +40,7 @@
                                         <div class="oodr-info-01">
                                             <em>
                                                 <span>RFQ Date</span>
-                                                <p>{{productData.dt | date: 'dd/MM/YYYY' }}</p>
+                                                <p>{{productData.dt }}</p>
                                             </em>
                                         </div>
                                         <div class="oodr-info-01">
@@ -328,7 +328,7 @@
                                                 <!-- Kam's remarks -->
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="">Cam's Remarks</label>
+                                                        <label for="">CAM's Remarks</label>
                                                         <textarea [disabled]="userType"
                                                             [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                                                             name="kamRemarks_{{ formData.schedule_no }}"
@@ -339,19 +339,6 @@
                                                             class="inputValidation">Remarks is required</small>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-lg-6" *ngIf="userByrole != 'C'">
-                                                    <div class="form-group">
-                                                        <label for="">Sales Remarks</label>
-                                                        <textarea [disabled]="userByrole != 'Sales'"
-                                                            [(ngModel)]="formData.salesRemarks" #salesRemarks="ngModel"
-                                                            name="salesRemarks_{{ formData.schedule_no }}"
-                                                            class="form-control form-control-sm" rows="4"
-                                                            required></textarea>
-                                                        <small
-                                                            *ngIf="salesRemarks.invalid && (salesRemarks.dirty || salesRemarks.touched || submit)"
-                                                            class="inputValidation">Remarks is required</small>
-                                                    </div>
-                                                </div> -->
                                                 <div class="col-12">
                                                     <span class="text-primary pointerTab" data-toggle="modal"
                                                         (click)="messageBox(formData.schedule_no)"
@@ -361,8 +348,8 @@
                                                 <div class="col-lg-12 mb-3" *ngIf="productData.quotest == 6">
                                                     <div>
                                                         <div class="app-reg-btn">
-                                                            <div class="form-check form-check-inline"
-                                                                *ngIf="formData.sche_ct != 3">
+                                                            <div class="form-check form-check-inline" 
+                                                                *ngIf="formData.sche_ct == 1">
                                                                 <input type="radio" class="form-check-input"
                                                                     id="inlineCheckbox0" (change)="getRequote($event)"
                                                                     value="{{formData?.schedule_no}}"
@@ -499,20 +486,12 @@
                                                 <time>{{remark.created_at | date}}</time>
                                             </div>
                                         </li>
-                                        <li class="other" *ngIf="remark?.salesRemarks != null && userByrole != 'C'">
-                                            <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
-                                                    draggable="false" /></div>
-                                            <div class="msg">
-                                                <p>Sales Remarks!</p>
-                                                <p>{{remark.salesRemarks}}</p>
-                                                <time>{{remark.created_at | date}}</time>
-                                            </div>
-                                        </li>
+
                                         <li class="self" *ngIf="remark?.kamsRemarks != null">
                                             <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png"
                                                     draggable="false" /></div>
                                             <div class="msg">
-                                                <p>Cam's Remarks!</p>
+                                                <p>CAM's Remarks!</p>
                                                 <p>{{remark.kamsRemarks}}</p>
                                                 <time>{{remark.created_at | date}}</time>
                                             </div>

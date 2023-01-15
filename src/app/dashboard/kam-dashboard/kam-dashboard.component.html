@@ -128,7 +128,7 @@
                                      <a type="button" [ngClass]="{'active':statusRfq[i]?.rfq_submited == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0"><span>New Enquiry</span></a>
                                    </div>
                                    <div class="stepwizard-step">
-                                     <a type="button" [ngClass]="{'active':statusRfq[i]?.approve_pending_from_sales == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Approval Pending From Sales</span></a>
+                                     <a type="button" [ngClass]="{'active':statusRfq[i]?.approve_pending_from_sales == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Approval Pending From Sales Planning</span></a>
                                    </div>
                                    <div class="stepwizard-step">
                                      <a type="button" [ngClass]="{'active':statusRfq[i]?.reverted_by_sales_plaing == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Reverted by SP</span></a>
@@ -138,11 +138,11 @@
                                     </div>
                                     <div class="stepwizard-step">
                                       <a type="button" *ngIf="statusRfq[i]?.price_accepted == 1
-                                      " [ngClass]="{'active':statusRfq[i]?.price_accepted == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Accepted</span></a>
+                                      " [ngClass]="{'active':statusRfq[i]?.price_accepted == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Accepted By Head</span></a>
                                     </div>
                                     <div class="stepwizard-step">
                                       <a type="button" *ngIf="statusRfq[i]?.price_rejected == 1
-                                      && statusRfq[i]?.price_accepted ==  null" [ngClass]="{'active':statusRfq[i]?.price_rejected == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Rejected</span></a>
+                                      && statusRfq[i]?.price_accepted ==  null" [ngClass]="{'active':statusRfq[i]?.price_rejected == 1}" class="btn btn-default btn-circle css-tooltip-top color-blue meet-rvw uu0" ><span>Price Rejected By Head</span></a>
                                     </div>
 
                                     <div class="stepwizard-step">
@@ -181,10 +181,10 @@
                                  *ngIf="rfqItem?.st_txt == 'Price Approval Awaited'">{{rfqItem?.st_txt}}</div>
 
                               <div class="badge badge-pill badge-success mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 'Price Accepted'">{{rfqItem?.st_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'Price Accepted By Head'">{{rfqItem?.st_txt}}</div>
 
                               <div class="badge badge-pill badge-danger mb-1 float-right"
-                                 *ngIf="rfqItem?.st_txt == 'Price Rejected'">{{rfqItem?.st_txt}}</div>
+                                 *ngIf="rfqItem?.st_txt == 'Price Rejected By Head'">{{rfqItem?.st_txt}}</div>
                               
                               <div class="badge badge-pill badge-info mb-1 float-right"
                                  *ngIf="rfqItem?.st_txt == 'Under Negotiation'">{{rfqItem?.st_txt}}</div>
@@ -240,6 +240,7 @@
                               <thead>
                                  <tr>
                                     <th>Order Ref No.</th>
+                                    <th>RFQ No.</th>
                                     <th>Cust PO No.</th>
                                     <th>Date</th>
                                     <th>Quantity (MT)</th>
@@ -249,8 +250,9 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }">
+                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }" class="pointerTab" [routerLink]="['/po/po-view',po.po_no]">
                                     <td>{{po.po_no}}</td>
+                                    <td>{{po.rfq_no}}</td>
                                     <td>{{po.cus_po_no}}</td>
                                     <td>{{po.po_date}}</td>
                                     <td>{{po.quantity}}</td>
@@ -282,7 +284,7 @@
                                     <td>
                                        <div class="cell1 tab_head_sheet_1 ">
                                           <div class="add_ttrr actions-main text-center">
-                                             <a class="css-tooltip-top color-blue meet-rvw uu0" [routerLink]="['/po/po-view',po.po_no]"> <span>View
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0"> <span>View
                                                    Details</span>
                                                 <img src="assets/images/view-act-b.png" class="blue-show" alt="">
                                              </a>

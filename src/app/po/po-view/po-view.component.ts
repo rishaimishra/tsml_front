@@ -88,6 +88,7 @@ export class PoViewComponent implements OnInit {
   inputPONum: any = '';
   downloadFile = environment.apiEndpointBase;
   userRole: any;
+  isDap: boolean = false;
   afterPrePrice: any;
   userAfterPrePrice: any;
   percentPrice:any;
@@ -483,14 +484,18 @@ export class PoViewComponent implements OnInit {
 
   };
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any, i, y) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any,dlvr:any, i, y) {
     this.firstIndex = i;
     this.lastIndex = y;
 
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
-
+    if (dlvr == 'DAP (Delivered at Place)') {
+      this.isDap = false;
+    } else {
+      this.isDap = true;
+    }
     this.priceForm.reset();
     let price = {
       "user_id": this.user_Id,
@@ -755,11 +760,11 @@ export class PoViewComponent implements OnInit {
   };
 
   submitPoAttachment() {
-    if (this.letterHedFile == null || this.inputPONum == '') {
+    if (this.inputPONum == '') {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Both feilds is required!',
+        text: 'PO number is required!',
       })
       return;
     }

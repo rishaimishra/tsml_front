@@ -215,7 +215,7 @@
                       <!-- customer remarks -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="">Remarks</label>
+                          <label for="">Customer remarks</label>
                           <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
                             name="remarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
@@ -226,7 +226,7 @@
                       <!-- Kam remarks -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="">Cam's Remarks</label>
+                          <label for="">CAM's Remarks</label>
                           <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                             name="kamRemarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
@@ -281,7 +281,7 @@
                       <p>{{remark.remarks}} </p>
                     </div>
                     <div>
-                      <h6>Cam Remarks</h6>
+                      <h6>CAM Remarks</h6>
                       <p>{{remark.kamsRemarks}} </p>
                     </div>
                     <p class="date">{{remark.created_at | date}}</p>

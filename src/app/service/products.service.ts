@@ -207,4 +207,8 @@ export class ProductsService {
   searchPo(url_paremter: any) {
     return this._http.post(this.BesUrl +'/user/po_search_list', url_paremter);
   };
+
+  submitFinalQouteMail(url_paremter: any) {
+    return this._http.post(this.BesUrl +'/sale_head_accpt_mail', url_paremter);
+  };
 }

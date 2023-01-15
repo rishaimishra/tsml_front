@@ -106,6 +106,8 @@ export class PoEditComponent implements OnInit {
   locationState:any = [];
   locationRes:any;
   prodcutSize:any;
+  billto: any = [];
+  shipto: any = [];
 
 
   constructor(
@@ -133,6 +135,7 @@ export class PoEditComponent implements OnInit {
       this.poNumbr = res.id;
       this.categoryid = res.categoryId;
       this.detailByRfq();
+      this.getLocation();
     });
     const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
     this.po_id = val;
@@ -155,6 +158,7 @@ export class PoEditComponent implements OnInit {
   get f(): { [key: string]: AbstractControl } {
     return this.priceForm.controls;
   };
+
   getTotalQuantity(cat_id: any) {
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -219,6 +223,25 @@ export class PoEditComponent implements OnInit {
       }
 
     })
+  };
+
+  getLocation() {
+    this.spinner.show();
+    let userId = localStorage.getItem('USER_ID');
+    let apiUrl = '/user/get_user_address/' + userId;
+
+    if (userId != '' || userId != null) {
+      this._product.getMethod(apiUrl).subscribe((res: any) => {
+        this.spinner.hide();
+        this.billto = res.result['bill'];
+        this.shipto = res.result['ship'];
+        // this.userAddr = res.result?.addressone + res.result?.addresstwo + res.result?.city + res.result?.state + res.result?.pincode;
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/auth/login']);
+          this.spinner.hide();
+        }
+      })
+    }
   };
 
   getCategory() {
@@ -595,9 +618,9 @@ export class PoEditComponent implements OnInit {
     this.pickupType = plant;
 
     if (dlvr == 'DAP (Delivered at Place)') {
-      this.isDap = true;
-    } else {
       this.isDap = false;
+    } else {
+      this.isDap = true;
     }
 
     $("#_bptAndfinal" + schedule_no).empty();

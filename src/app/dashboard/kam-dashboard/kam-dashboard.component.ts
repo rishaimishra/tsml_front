@@ -73,7 +73,7 @@ export class KamDashboardComponent implements OnInit {
 
   getKamItems() {
     this.searchValue = '';
-    this.spinner.show();
+    // this.spinner.show();
     this.dashboard.getKamList().subscribe((res:any) => {
       this.spinner.hide();
       if(res.message == 'success') {
@@ -97,8 +97,8 @@ export class KamDashboardComponent implements OnInit {
     })
   };
   
-  getRfqStatus(rfqNumbr) {
-    this.spinner.show();
+  getRfqStatus(rfqNumbr:any) {
+    // this.spinner.show();
     let request = {
       "rfq_no": rfqNumbr
     }
@@ -115,7 +115,7 @@ export class KamDashboardComponent implements OnInit {
 
   getKamPoListing () {
     this.searchPoValue = '';
-    this.spinner.show();
+    // this.spinner.show();
     this._product.getkamPoList().subscribe((res:any) => {
       this.spinner.hide();
       if(res.message == 'success') {

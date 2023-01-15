@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   };
 
   ngAfterViewInit() {
-    this.spinner.show();
+    // this.spinner.show();
     let url = '/product-manu';
     this.productService.getMethod(url).subscribe(
       (res: any) => {
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
   };
   get_product_by_menu_id(id: any) {
     this.menuId = id;
-    this.spinner.show();
+    // this.spinner.show();
     let url = '/index-page/' + id;
     this.productService.getMethod(url).subscribe(
       (res: any) => {

@@ -140,6 +140,7 @@ export class SalesResponsComponent implements OnInit {
     this.getLocation();
     this.states = this._state.getState();
     this.detailByRfq();
+    this.setFromData();
     this.getNegotiationHistory();
     this.priceForm = this._fb.group({
       price_premium: ['', Validators.required],
@@ -284,7 +285,6 @@ export class SalesResponsComponent implements OnInit {
   };
 
   getStatus(id: any, st: number) {
-
     let indxId = this.poRedirectArr.findIndex((item: any) => item.id == id);
     if (indxId !== -1) {
       this.poRedirectArr.splice(indxId, 1);
@@ -326,6 +326,7 @@ export class SalesResponsComponent implements OnInit {
     }
     // console.log('reqParam', this.statusArr);
   };
+  
   pricaValue() {
     this._product.getPiceValue().subscribe((res: any) => {
       this.priceVal = res.result;
@@ -364,7 +365,16 @@ export class SalesResponsComponent implements OnInit {
       this.totlQty = qty;
       // this.myForm.reset();
     };
+    
     onSubmit(totlQty:any) {
+      if (this.myForm.value.arr[0]['quantity'] == '' || this.myForm.value.arr[0]['to_date'] == '') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Quantity and Tentative date are required!',
+        })
+        return;
+      }
       let schdlData = this.myForm.value['arr'];
       let setSechdule = {
         "sche_no": this.schduleNo,
@@ -499,15 +509,15 @@ export class SalesResponsComponent implements OnInit {
       this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
       })
 
-      if (this.qtStatusUpdate == 5) {
-        let salesEmailReq = {
-          "rfq_no": this.rfqNum,
-          "user_id": this.selectedUserId
-        }
-        this._product.salesSubmitedEmail(salesEmailReq).subscribe((res:any) => {
-          console.log(res);
-        })
-      }
+      // if (this.qtStatusUpdate == 5) {
+      //   let salesEmailReq = {
+      //     "rfq_no": this.rfqNum,
+      //     "user_id": this.selectedUserId
+      //   }
+      //   this._product.salesSubmitedEmail(salesEmailReq).subscribe((res:any) => {
+      //     console.log(res);
+      //   })
+      // }
       this._router.navigate(['/products/confirm-rfq']);
     }, err => {
       console.log(err);

@@ -68,7 +68,7 @@ export class CustomerDashboardComponent implements OnInit {
   };
   getCustRfqItems() {
     this.searchValue = '';
-    this.spinner.show();
+    // this.spinner.show();
     this._product.getAllRequestOfRfq().subscribe((res:any) => {
       if(res.message == 'success') {
         this.spinner.hide();
@@ -95,8 +95,8 @@ export class CustomerDashboardComponent implements OnInit {
     })
   };
 
-  getRfqStatus(rfqNumbr) {
-    this.spinner.show();
+  getRfqStatus(rfqNumbr:any) {
+    // this.spinner.show();
     let request = {
       "rfq_no": rfqNumbr
     }
@@ -112,7 +112,7 @@ export class CustomerDashboardComponent implements OnInit {
   };
   getPoListing () {
     this.searchPoValue = '';
-    this.spinner.show();
+    // this.spinner.show();
     this._product.getPoList().subscribe((res:any) => {
       if(res.message == 'success') {
         this.spinner.hide();
