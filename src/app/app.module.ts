@@ -13,9 +13,8 @@ import { AuthIntercepto } from './service/auth.interceptor';
 import { DatepickerModule } from 'ng2-datepicker';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
-
-
+import { environment } from '../environments/environment.prod';
+import { RECAPTCHA_SETTINGS,RecaptchaSettings } from 'ng-recaptcha';
 
 
 @NgModule({
@@ -34,11 +33,18 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     DatepickerModule,
     NgxPaginationModule,
     MDBBootstrapModule.forRoot()
+
   ],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthIntercepto, multi: true},
-    Location, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+    Location, {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

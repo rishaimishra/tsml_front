@@ -355,8 +355,8 @@
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>
                                                     <small
-                                                        *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
-                                                        class="inputValidation">Remarks is required</small>
+                                                        *ngIf="kamsRemarks.invalid && (kamsRemarks.dirty || kamsRemarks.touched || submit)"
+                                                        class="inputValidation">CAM Remarks is required</small>
                                                 </div>
                                             </div>
                                             <!-- Sales remarks -->
@@ -797,7 +797,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" [disabled]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="btn btn-primary" (click)="onQtySubmit(totlQty)">OK</button>
+                <button type="button" [disabled]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="btn btn-primary" (click)="onQtySubmit(totlQty)">ADD</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>

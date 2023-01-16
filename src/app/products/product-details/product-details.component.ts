@@ -267,6 +267,12 @@ export class ProductDetailsComponent implements OnInit {
       let qty = 0;
       for (let i = 0; i < form_data_array.length; i++) {
         qty = qty + parseInt(form_data_array[i]['quantity']);
+
+        if(form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
+        || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].expected_price == "" || form_data_array[i].from_date == "" 
+        || form_data_array[i].to_date == "" || form_data_array[i].remarks == "") {
+          return;
+        }
       }
       let reqData = {
         rfq_number: 'RFQ' + rfqNumber,
@@ -280,8 +286,10 @@ export class ProductDetailsComponent implements OnInit {
 
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
-    }
 
+
+    }
+    
     this.spinner.show();
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
@@ -299,6 +307,10 @@ export class ProductDetailsComponent implements OnInit {
           "url_type": 'R'
         }
         this._product.camNotification(camNotiReq).subscribe((res: any) => {
+          console.log(res);
+        })
+
+        this._product.custNotiSubmit(camNotiReq).subscribe((res: any) => {
           console.log(res);
         })
 

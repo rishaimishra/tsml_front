@@ -3030,7 +3030,7 @@ input:focus {
     font-size: 20px;
     text-align: center;
     font-weight: 500;
-    margin-bottom: 25px;
+    margin-bottom:5px;
 }
 
 .f-logo {
@@ -5075,3 +5075,11 @@ height: 34px;
 width: 23%;}
 .srch-input{display: inline-block;
 width: 46%;}
+.g-recaptcha {
+    transform:scale(0.77);
+    transform-origin:0 0;
+}
+.login-bg .form-control {
+    height: 44px;
+    border: 1px solid #40404080;
+}

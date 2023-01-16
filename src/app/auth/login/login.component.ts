@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import { CustomValidators } from '../login/custom1Validator';
+declare var $: any;
 
 @Component({
   selector: 'app-login',
@@ -18,14 +19,17 @@ export class LoginComponent implements OnInit {
   hideShowPass: boolean = false;
   hideLogin: boolean = true;
   forgetEmail:any;
+  token: string|undefined;
 
   constructor(private _fb: FormBuilder, private _toster: ToastrService,
     private _auth: AuthService, private _router: Router, private _spinner: NgxSpinnerService) {
-    this.loginForm = this._fb.group({
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    })
-    CustomValidators.mustMatch('password', 'password_confirm') // insert here
+      this.loginForm = this._fb.group({
+        email: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]]
+      })
+      CustomValidators.mustMatch('password', 'password_confirm') // insert here
+      this.token = undefined;
+
   }
 
   get f() {
@@ -35,11 +39,25 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  clickCaptch(event:any) {
+    console.log(event);
+  };
 
+  send(form: NgForm): void {
+    if (form.invalid) {
+      for (const control of Object.keys(form.controls)) {
+        form.controls[control].markAsTouched();
+      }
+      return;
+    }
+
+  };
+  
   goToForgetPass() {
     this.hideLogin = false;
     this.hideShowPass = true;
   };
+
   forgetPassword() {
     this._spinner.show();
     let forget = {
@@ -58,8 +76,13 @@ export class LoginComponent implements OnInit {
     })
   };
 
-  submitLogin() {
+  submitLogin(form: NgForm) {
     this.submitted = true;
+    this.send(form);
+    let captchaToken = `Token [${this.token}] generated`;
+    if(this.token == undefined || captchaToken == undefined) {
+      return;
+    }
     if (this.loginForm.invalid) { 
       return;
     }
@@ -150,5 +173,6 @@ export class LoginComponent implements OnInit {
   backToLogin() {
     this.hideShowPass = false;
     this.hideLogin = true;
-  }
+  };
+  
 }

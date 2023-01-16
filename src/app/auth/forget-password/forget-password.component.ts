@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +18,7 @@ export class ForgetPasswordComponent implements OnInit {
   forgetPassForm: FormGroup;
   email: any = '';
   submitted: boolean = false;
+  token: string|undefined;
 
   constructor(private _auth: AuthService,
     private _fb: FormBuilder, private _toaster: ToastrService, private _spinner: NgxSpinnerService,
@@ -30,6 +31,7 @@ export class ForgetPasswordComponent implements OnInit {
     })
 
     CustomValidators.mustMatch('password', 'password_confirm') // insert here
+    this.token = undefined;
   }
   get f() {
     return this.forgetPassForm.controls;
@@ -37,9 +39,27 @@ export class ForgetPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  resetPassword() {
-    this._spinner.show();
+  send(form: NgForm): void {
+    if (form.invalid) {
+      for (const control of Object.keys(form.controls)) {
+        form.controls[control].markAsTouched();
+      }
+      return;
+    }
+
+  };
+  
+  forgotPassword(form: NgForm) {
     this.submitted = true;
+    this.send(form);
+    let captchaToken = `Token [${this.token}] generated`;
+    if(this.token == undefined || captchaToken == undefined) {
+      return;
+    }
+    if (this.forgetPassForm.invalid) {
+      return;
+    }
+    this._spinner.show();
     this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res: any) => {
       if (res.status == 1) {
         Swal.fire({

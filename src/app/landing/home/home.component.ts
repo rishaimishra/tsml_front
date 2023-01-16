@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
   ) 
   { 
     this.isLogin = this._auth.isLoggedIn();
-
   }
 
   ngOnInit(): void {
@@ -43,6 +42,7 @@ export class HomeComponent implements OnInit {
     this.getProducts();
   }
 
+  
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,

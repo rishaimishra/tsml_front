@@ -9,7 +9,7 @@
                      <div class="col-10 col-md-6 col-lg-4 position-relative">
                         <div class="nav-round2"></div>
                         <div class="row login-inner">
-                           <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                           <form [formGroup]="loginForm">
                            <div class="col-12 mb-3">
                               <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
                            </div>
@@ -33,20 +33,29 @@
                                   </div>
                               </div>
                            </div>
-                           <!-- <div class="col-12 ttext-right">
-                              <a [routerLink]="['/auth/forget-password']" class="smll-font">Reset Password?</a>
-                           </div> -->
-                           <div class="col-12 text-right">
-                              <a (click)="goToForgetPass()" class="smll-font pointer">Forget Password?</a>
-                           </div>
-                           <div class="col-12 my-3">
-                              <button href="javascript:;" type="submit" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
-                           </div>
-                           <!--/-->
-                           <div class="col-12 text-center">
-                              <p class="smll-font">Not a member? <a routerLink ="/auth/register" class="smll-font">Sign up</a></p>
+                           <div class="col-12 ttext-right">
+                              <a (click)="goToForgetPass()" class="smll-font pointer">Forgot Password?</a>
                            </div>
                         </form>
+
+                        <form #form="ngForm">
+                           <div class="row mt-3 ml-2">
+                             <div class="col-sm-12 mb-2">
+                               <re-captcha id="recaptcha"  name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
+                               <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
+                                 <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
+                               </div>
+                             </div>
+                           </div>
+                           <div class="col-12 my-3">
+                              <button href="javascript:;" type="button" (click)="submitLogin(form)" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
+                           </div>
+                         </form>
+                         
+                        <!--/-->
+                        <div class="col-12 text-center">
+                           <p class="smll-font">Not a member? <a routerLink ="/auth/register" class="smll-font">Sign up</a></p>
+                        </div>
                         </div>
                      </div>
                   </div>

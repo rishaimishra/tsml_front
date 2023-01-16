@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 
 const routes: Routes = [
   {
@@ -38,6 +39,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
     // BrowserAnimationsModule, 
     ToastrModule.forRoot() // ToastrModule added
   ]

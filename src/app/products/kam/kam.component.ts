@@ -474,7 +474,7 @@ export class KamComponent implements OnInit {
     let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
-    this.spinner.show();
+
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -488,6 +488,11 @@ export class KamComponent implements OnInit {
           return;
         }
         
+        if(form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
+        || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].expected_price == "" || form_data_array[i].from_date == "" 
+        || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null) {
+          return;
+        }
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
           "confirm_date": form_data_array[i]['confirm_date'],
@@ -518,10 +523,10 @@ export class KamComponent implements OnInit {
 
     let qouteSt = this.selectedItem[0]['quotest'];
     let userTyp = localStorage.getItem('USER_TYPE');
-
+    this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+      this.spinner.hide();
       if (res.message == 'success') {
-        this.spinner.hide();
         Swal.fire({
           position: 'center',
           icon: 'success',
