@@ -453,7 +453,6 @@ export class SalesResponsComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-
     };
 
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
@@ -467,7 +466,7 @@ export class SalesResponsComponent implements OnInit {
           timer: 1500
         })
         // status update and reqoute
-        
+        this.otherFuncApi();
       }
       else if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -478,37 +477,6 @@ export class SalesResponsComponent implements OnInit {
         this._router.navigate(['/auth/login']);
         this.spinner.hide();
       }
-      
-      let userId = localStorage.getItem('USER_ID');
-        let camNotiReq = {
-          "desc": 'Sales reply updated',
-          "desc_no": this.rfqNum,
-          "user_id": userId,
-          "url_type": 'R'
-        }
-        this._product.camNotification(camNotiReq).subscribe((res:any) => {
-          console.log(res);
-        })
-
-      this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-      });
-
-      let statusRequest = {
-        "rfq_no": this.rfqNum,
-        "reverted_by_sales_plaing": '1'
-      }
-
-      this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-        console.log('status',res);
-      });
-
-      let qouteReq = {
-        "rfq_no": this.rfqNum,
-        "status": this.qtStatusUpdate
-      }
-      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-      })
-
       // if (this.qtStatusUpdate == 5) {
       //   let salesEmailReq = {
       //     "rfq_no": this.rfqNum,
@@ -518,13 +486,46 @@ export class SalesResponsComponent implements OnInit {
       //     console.log(res);
       //   })
       // }
-      this._router.navigate(['/products/confirm-rfq']);
+
     }, err => {
       console.log(err);
       this.spinner.hide();
     });
   };
 
+  otherFuncApi() {
+    let userId = localStorage.getItem('USER_ID');
+    let camNotiReq = {
+      "desc": 'Sales reply updated',
+      "desc_no": this.rfqNum,
+      "user_id": userId,
+      "url_type": 'R'
+    }
+    this._product.camNotification(camNotiReq).subscribe((res:any) => {
+      console.log(res);
+    })
+
+  this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+  });
+
+  let statusRequest = {
+    "rfq_no": this.rfqNum,
+    "reverted_by_sales_plaing": '1'
+  }
+
+  this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+    console.log('status',res);
+  });
+
+  let qouteReq = {
+    "rfq_no": this.rfqNum,
+    "status": this.qtStatusUpdate
+  }
+  this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+  })
+  this._router.navigate(['/products/confirm-rfq']);
+  };
+  
   date: any;
   setFromData() {
     var today: any = new Date();

@@ -341,6 +341,8 @@ export class CustomerComponent implements OnInit {
           }
           this._product.camNotification(salesNotiReq).subscribe((res:any) => {
           })
+          this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
+          })
         }
       }
       if (res.message == 'error' || res.status == 0) {

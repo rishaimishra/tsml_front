@@ -77,17 +77,17 @@ export class KamComponent implements OnInit {
   credCost: boolean = false;
   // daysCost: any;
   // totalDayCost:any;
-  daysCostCount:any;
+  daysCostCount: any;
   daysCostCountCustomer: any;
-  messages:any;
+  messages: any;
   p: number = 1;
-  poRedirectArr:any = [];
-  percentPrice:any;
+  poRedirectArr: any = [];
+  percentPrice: any;
   remarksData: any = '';
-  deleteId:any;
-  userByrole:any;
-  qtStatusUpdate:any;
-  qoutestId:any;
+  deleteId: any;
+  userByrole: any;
+  qtStatusUpdate: any;
+  qoutestId: any;
 
   myForm: FormGroup;
   arr: FormArray;
@@ -98,41 +98,41 @@ export class KamComponent implements OnInit {
   deliverySchdule: any = [];
   billto: any = [];
   shipto: any = [];
-  userAddr:any;
-  plantAddrr:any;
-  deliveryDropList:any;
-  subCategory:any;
+  userAddr: any;
+  plantAddrr: any;
+  deliveryDropList: any;
+  subCategory: any;
   submitt: boolean = false;
-  isSchduleArr:any = [];
-  locationState:any = [];
-  locationRes:any;
-  plantSelectArr:any = [];
-  afterPrePrice:any;
-  userAfterPrePrice:any;
-  countReqoutArr:any = [];
-  countSche:any;
-  rfqUserId:any;
-  pickupType:any;
-  afterDiscount:any;
-  
+  isSchduleArr: any = [];
+  locationState: any = [];
+  locationRes: any;
+  plantSelectArr: any = [];
+  afterPrePrice: any;
+  userAfterPrePrice: any;
+  countReqoutArr: any = [];
+  countSche: any;
+  rfqUserId: any;
+  pickupType: any;
+  afterDiscount: any;
 
-  sub_catId :any;
-  sizes :any;
-  schedule_no :any;
-  plant_location :any;
-  compPrice:any;
+
+  sub_catId: any;
+  sizes: any;
+  schedule_no: any;
+  plant_location: any;
+  compPrice: any;
   tsmlPriceArr: any = [];
-  plusMinus:any;
-  daysVal:any;
-  getDays:any;
-  daysCal:any;
-  totalValue:any;
+  plusMinus: any;
+  daysVal: any;
+  getDays: any;
+  daysCal: any;
+  totalValue: any;
   isDap: boolean = false;
   creditDays: any = [];
-  catId:any;
-  prodcutSize:any;
-  slsHeadMsg:any;
-  lastQoute:any = [];
+  catId: any;
+  prodcutSize: any;
+  slsHeadMsg: any;
+  lastQoute: any = [];
 
 
 
@@ -150,17 +150,17 @@ export class KamComponent implements OnInit {
     private _state: StateCityService,
     private location: Location,
     private _sales: SalesService
-  ) {$(window).scrollTop(0); }
+  ) { $(window).scrollTop(0); }
 
   get ff() { return this.myForm.controls; }
   get t() { return this.f.arr as FormArray; }
 
   getControl(item: AbstractControl): FormControl { return item as FormControl; }
-  
+
   ngOnInit(): void {
     let userRol = localStorage.getItem('USER_TYPE');
     this.userByrole = userRol;
-    if(userRol == 'Kam') {
+    if (userRol == 'Kam') {
       this.userType = false;
     } else {
       this.userType = true;
@@ -172,7 +172,7 @@ export class KamComponent implements OnInit {
         this.rfqNum = res.id;
       }
     });
-    
+
     this.detailByRfq();
     this.setFromData();
     this.getNegotiationHistory();
@@ -195,7 +195,7 @@ export class KamComponent implements OnInit {
     this.getStatusCount();
   }
 
-  createItem(qty:any,to_date:any) {
+  createItem(qty: any, to_date: any) {
     return this._fb.group({
       quantity: [qty, Validators.required],
       to_date: [to_date, Validators.required]
@@ -240,7 +240,7 @@ export class KamComponent implements OnInit {
           form_data_array.forEach(element => {
             if (element.quote_status == 3) {
               this.isSchduleArr.push(element?.quote_status);
-            } 
+            }
             else {
               this.isSchduleArr.push(element?.quote_status);
             }
@@ -263,7 +263,7 @@ export class KamComponent implements OnInit {
     this.getSalesHed(this.rfqNum);
   };
 
-  deleteRfqById(qoute_id: any, id:any) {
+  deleteRfqById(qoute_id: any, id: any) {
     this.deleteId = qoute_id;
 
   };
@@ -275,7 +275,7 @@ export class KamComponent implements OnInit {
         "kam_id": useriD,
         "remarks": this.remarksData
       }
-      this._product.remarksDelet(remarksReq).subscribe ((res:any) => {
+      this._product.remarksDelet(remarksReq).subscribe((res: any) => {
         Swal.fire(
           'Canceled!',
           'Your Item has been Canceled.',
@@ -286,7 +286,7 @@ export class KamComponent implements OnInit {
 
       })
     } else {
-      this._toaster.error('','Remarks is required!');
+      this._toaster.error('', 'Remarks is required!');
     }
   };
 
@@ -369,7 +369,7 @@ export class KamComponent implements OnInit {
       "id": id,
       "status": st
     };
-    
+
     let indx = this.statusArr.findIndex((item: any) => item.id == id);
     if (indx !== -1) {
       this.statusArr.splice(indx, 1);
@@ -386,40 +386,40 @@ export class KamComponent implements OnInit {
     });
   };
 
-  selectRadio(event:any) {
+  selectRadio(event: any) {
     this.qtStatusUpdate = event.target.value;
   };
 
   addItem() {
-      this.arr = this.myForm.get('arr') as FormArray;
-      this.arr.push(this.createItem('',''));
-    };
-    
-    removeItem() {
-      const remove:any = this.arr;
-      remove.removeAt( -1);
-    };
+    this.arr = this.myForm.get('arr') as FormArray;
+    this.arr.push(this.createItem('', ''));
+  };
+
+  removeItem() {
+    const remove: any = this.arr;
+    remove.removeAt(-1);
+  };
 
   schduleSele(schdlNo: any, qty: any) {
-      this.myForm.reset();
-      this.schduleNo = schdlNo;
-      let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
-      this._product.getMethod(apiUrl).subscribe((res: any) => {
-        this.showModalIsValue = true;
-        this.myForm = this._fb.group({
-          arr: this._fb.array([])
-        })
-        this.resData = res.result;
-        this.arr = this.myForm.get('arr') as FormArray;
-        for (let i of res.result) {
-          this.arr.push(this.createItem(i.qty,i.to_date));
-        }
-      });
-      this.totlQty = qty;
-      // this.myForm.reset();
-    };
+    this.myForm.reset();
+    this.schduleNo = schdlNo;
+    let apiUrl = '/user/get_quotedel_by_id/' + this.schduleNo;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
+      this.showModalIsValue = true;
+      this.myForm = this._fb.group({
+        arr: this._fb.array([])
+      })
+      this.resData = res.result;
+      this.arr = this.myForm.get('arr') as FormArray;
+      for (let i of res.result) {
+        this.arr.push(this.createItem(i.qty, i.to_date));
+      }
+    });
+    this.totlQty = qty;
+    // this.myForm.reset();
+  };
 
-  onQtySubmit(totlQty:any) {
+  onQtySubmit(totlQty: any) {
     this.submitt = true;
     if (this.myForm.value.arr[0]['quantity'] == '' || this.myForm.value.arr[0]['to_date'] == '') {
       Swal.fire({
@@ -429,30 +429,30 @@ export class KamComponent implements OnInit {
       })
       return;
     }
-      let schdlData = this.myForm.value['arr'];
-      let setSechdule = {
-        "sche_no": this.schduleNo,
-        "schedules": schdlData
+    let schdlData = this.myForm.value['arr'];
+    let setSechdule = {
+      "sche_no": this.schduleNo,
+      "schedules": schdlData
+    }
+
+    let qty = 0;
+    for (let i = 0; i < schdlData.length; i++) {
+      qty = qty + parseInt(schdlData[i]['quantity']);
+    }
+
+    if (qty != totlQty && qty > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Total quantity should not exceed the RFQ quantity!',
+      })
+      return;
+
+    } else {
+      let indx = this.deliverySchdule.findIndex((item: any) => item.sche_no == this.schduleNo);
+      if (indx !== -1) {
+        this.deliverySchdule.splice(indx, 1);
       }
-
-      let qty = 0;
-      for (let i = 0; i < schdlData.length; i++) {
-        qty = qty + parseInt(schdlData[i]['quantity']);
-      }
-
-      if (qty != totlQty && qty > 0) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Total quantity should not exceed the RFQ quantity!',
-        })
-        return;
-
-      } else {
-        let indx = this.deliverySchdule.findIndex((item: any) => item.sche_no == this.schduleNo);
-        if (indx !== -1) {
-          this.deliverySchdule.splice(indx, 1);
-        }
       this.deliverySchdule.push(setSechdule);
       Swal.fire({
         position: 'center',
@@ -462,11 +462,11 @@ export class KamComponent implements OnInit {
         timer: 1500
       })
       this.myForm.reset();
-      }
-      $("#createSechdule").hide();
-      $('body').removeClass('modal-open');
-      $(".modal-backdrop").removeClass("modal-backdrop show");
-    };
+    }
+    $("#createSechdule").hide();
+    $('body').removeClass('modal-open');
+    $(".modal-backdrop").removeClass("modal-backdrop show");
+  };
 
   submitRfq() {
     this.submit = true;
@@ -474,7 +474,6 @@ export class KamComponent implements OnInit {
     let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
-
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -484,13 +483,13 @@ export class KamComponent implements OnInit {
         countArr.push(form_data_array[i]['schedule_no']);
         if ((form_data_array[i]['valid_till'] == null || form_data_array[i]['valid_till'] == '') && this.userType == false && this.selectedItem[0]['quotest'] == 5) {
           this.spinner.hide();
-          this._toaster.error('','Valid Till is required');
+          this._toaster.error('', 'Valid Till is required');
           return;
         }
-        
-        if(form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
-        || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].expected_price == "" || form_data_array[i].from_date == "" 
-        || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null) {
+
+        if (form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
+          || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].expected_price == "" || form_data_array[i].from_date == ""
+          || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null) {
           return;
         }
         let tantetiveReq = {
@@ -504,12 +503,12 @@ export class KamComponent implements OnInit {
         } else {
           form_data_array[i]['credit_days'] = this.creditDays[indxId]?.days;
         }
-        let qouteCheck = this.selectedItem[i]['schedule'][i].sche_ct;
-        this.lastQoute.push(qouteCheck);
-        console.log(this.lastQoute);
+        // let qouteCheck = this.selectedItem[i]['schedule'][i]?.sche_ct;
+        // this.lastQoute.push(qouteCheck);
+        // console.log(qouteCheck);
 
       }
-      
+
       let reqData = {
         rfq_number: this.rfqNum,
         product_id: this.editProductId,
@@ -519,6 +518,7 @@ export class KamComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
+      console.log(rfqFormArry);
     };
 
     let qouteSt = this.selectedItem[0]['quotest'];
@@ -544,36 +544,38 @@ export class KamComponent implements OnInit {
               this._toaster.error(res.message);
             }
           })
-          
+
           let statusRequest = {
             "rfq_no": this.rfqNum,
             "under_negotiation": '1'
           }
-          this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+          this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
           })
-          this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
+          this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
           })
         }
-          let userId = localStorage.getItem('USER_ID');
-          let salesNotiReq = {
-            "desc_no": this.rfqNum,
-            "user_id": userId,
-            "desc": 'RFQ has been updated',
-            "url_type": 'R',
-            "sender_id": this.rfqUserId
-          }
-          this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
-          })
+        let userId = localStorage.getItem('USER_ID');
+        let salesNotiReq = {
+          "desc_no": this.rfqNum,
+          "user_id": userId,
+          "desc": 'RFQ has been updated',
+          "url_type": 'R',
+          "sender_id": this.rfqUserId
+        }
+        this._product.custNotiSubmit(salesNotiReq).subscribe((res: any) => {
+        })
 
-          if(this.lastQoute.includes(2)) {
-            let items = {
-              rfq_no: this.rfqNum,
-              user_id: this.rfqUserId
-            }
-            this._product.submitFinalQouteMail(items).subscribe((res:any) => {
-              console.log(res)
-            })
-          }
+        // if(this.lastQoute.includes(2)) {
+        //   let items = {
+        //     rfq_no: this.rfqNum,
+        //     user_id: this.rfqUserId
+        //   }
+        //   this._product.submitFinalQouteMail(items).subscribe((res:any) => {
+        //     console.log(res)
+        //   })
+        // }
+
+        this.otherFuncApi(qouteSt);
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -585,71 +587,78 @@ export class KamComponent implements OnInit {
         this.spinner.hide();
       }
 
-      if (this.requoteArr.length > 0) {
-        this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-          if (res.message == 'status updated') {
-            this.spinner.hide();
-          } else {
-            this._toaster.error(res.message);
-          }
-        })
-
-        let statusRequest = {
-          "rfq_no": this.rfqNum,
-          "under_negotiation": '1'
-        }
-        this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-        })
-        this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
-        })
-      }
-
-      if (this.countReqoutArr.length > 0) {
-        this._product.reqouteCount(this.countReqoutArr).subscribe((res:any) => {
-        })
-      }
-      if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
-        // if (userTyp == 'Kam') {
-          this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-          })
-          
-          if(qouteSt != 9) {
-            let qouteReq = {
-              "rfq_no": this.rfqNum,
-              "status": 7
-            }
-            this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
-            })
-          }
-          // Sales notification send
-          let userId = localStorage.getItem('USER_ID');
-          let salesNotiReq = {
-            "desc_no": this.rfqNum,
-            "user_id": userId,
-            "desc": 'Tentative date and quantity updated',
-            "url_type": 'R'
-          }
-          this._product.salesNoti(salesNotiReq).subscribe((res:any) => {
-          })
-         
-            let statusRequest = {
-              "rfq_no": this.rfqNum,
-              "approve_pending_from_sales": '1'
-            }
-            this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-            })
-          
-        // }
-      } 
     }, err => {
       console.log(err);
       this.spinner.hide();
     });
 
+    // if ((rediectStatus.includes('Rej') == false && rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+    //   this._router.navigate(['/po/po', this.rfqNum]);
+    // } else {
+    // }
+  };
+
+  otherFuncApi(qouteSt:any) {
+    if (this.requoteArr.length > 0) {
+      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
+        if (res.message == 'status updated') {
+          this.spinner.hide();
+        } else {
+          this._toaster.error(res.message);
+        }
+      })
+
+      let statusRequest = {
+        "rfq_no": this.rfqNum,
+        "under_negotiation": '1'
+      }
+      this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
+      })
+      this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
+      })
+    }
+
+    if (this.countReqoutArr.length > 0) {
+      this._product.reqouteCount(this.countReqoutArr).subscribe((res: any) => {
+      })
+    }
+
+    if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
+      this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+      })
+
+      if (qouteSt != 9) {
+        let qouteReq = {
+          "rfq_no": this.rfqNum,
+          "status": 7
+        }
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
+        })
+      }
+      // Sales notification send
+      let userId = localStorage.getItem('USER_ID');
+      let salesNotiReq = {
+        "desc_no": this.rfqNum,
+        "user_id": userId,
+        "desc": 'Tentative date and quantity updated',
+        "url_type": 'R'
+      }
+      this._product.salesNoti(salesNotiReq).subscribe((res: any) => {
+      })
+
+      let statusRequest = {
+        "rfq_no": this.rfqNum,
+        "approve_pending_from_sales": '1'
+      }
+      this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
+      })
+
+    }
+
     // component price save here
-    this._product.saveComPrice(this.tsmlPriceArr).subscribe((res:any) => {
+    this._product.saveComPrice(this.tsmlPriceArr).subscribe((res: any) => {
     })
-    
+
     let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
     if (this.countSche['total'] == addCount) {
       let userId = localStorage.getItem('USER_ID');
@@ -658,16 +667,16 @@ export class KamComponent implements OnInit {
         "user_id": this.rfqUserId,
         "kam_id": userId
       }
-      this._product.confirmRfqEmail(confimerRfq).subscribe((res:any) => {
+      this._product.confirmRfqEmail(confimerRfq).subscribe((res: any) => {
       })
-    } 
-    
+    }
+
     if (qouteSt == 5 || qouteSt == 9) {
       let qouteReq = {
         "rfq_no": this.rfqNum,
         "status": 8
       }
-      this._product.qouteStatusUpdate(qouteReq).subscribe((res:any) => {
+      this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
       });
 
       let statusRequest = {
@@ -675,16 +684,10 @@ export class KamComponent implements OnInit {
         "price_approved_awaited": '1'
       }
 
-      this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
+      this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
       })
     }
-  
-
-    if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      this._router.navigate(['/po/po',this.rfqNum]);
-    } else {
-      this._router.navigate(['/products/rfq-list']);
-    }
+    this._router.navigate(['/products/rfq-list']);
   };
 
   date: any;
@@ -705,7 +708,7 @@ export class KamComponent implements OnInit {
     var today: any = yyyy + '-' + mm + '-' + dd;
     this.date = today;
     var todayValid = new Date().toISOString().slice(0, 16)
-    $("#valid_date").attr("min", todayValid) ;
+    $("#valid_date").attr("min", todayValid);
   };
 
   nxtDt: any;
@@ -732,7 +735,7 @@ export class KamComponent implements OnInit {
   };
 
 
-  getPrice(location: any, pickup: any, schedule_no: any, shipTo:any,prodId:any, catid:any,size:any,subCatId:any,plant:any,dlvr:any,dap:any, i:any, y:any) {
+  getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any, plant: any, dlvr: any, dap: any, i: any, y: any) {
     this.firstIndex = i;
     this.lastIndex = y;
     this.sub_catId = subCatId;
@@ -750,7 +753,7 @@ export class KamComponent implements OnInit {
     $("#_bptAndfinal" + schedule_no).empty();
     $("#_total" + schedule_no).empty();
     this.schldId = schedule_no;
-    
+
     this.priceForm.reset();
     let price = {
       "user_id": this.user_Id,
@@ -769,10 +772,10 @@ export class KamComponent implements OnInit {
         this._router.navigate(['/auth/login']);
       }
       this.productPrice = res.result;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost) ;
-      
+      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
+
       if (this.productPrice['price_premium_sing'] == '-') {
-        this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
+        this.afterPrePrice = backendTotal - Number(this.productPrice.price_premium);
       }
       else if (this.productPrice['price_premium_sing'] == '+') {
         this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
@@ -789,20 +792,20 @@ export class KamComponent implements OnInit {
 
       if (this.days == 0) {
         this.getDays = this.afterPrePrice;
-      } 
-      else if (this.days == 30){
+      }
+      else if (this.days == 30) {
         let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
         this.getDays = finalCost.toFixed(2);
       }
-      else if (this.days == 45){
+      else if (this.days == 45) {
         let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
         this.getDays = finalCost.toFixed(2);
       }
 
-      let totl =  Number(this.getDays) + Number(this.productPrice.misc_expense);
+      let totl = Number(this.getDays) + Number(this.productPrice.misc_expense);
 
       if (this.plusMinus == '-') {
-        this.Totalsum =  totl - Number(this.productPrice.cam_discount);
+        this.Totalsum = totl - Number(this.productPrice.cam_discount);
       }
       else {
         this.Totalsum = totl + Number(this.productPrice.cam_discount);
@@ -813,8 +816,8 @@ export class KamComponent implements OnInit {
       "rfq_no": this.rfqNum,
       "sche_no": schedule_no
     }
-    this._sales.submitManagerRfq(managerReq).subscribe((res:any) => {
-      if(res.status == 1 && res.result.length > 0) {
+    this._sales.submitManagerRfq(managerReq).subscribe((res: any) => {
+      if (res.status == 1 && res.result.length > 0) {
         this.priceForm.controls['price_premium'].setValue(res.result[1].value);
         this.priceForm.controls['cam_discount'].setValue(res.result[6].value);
         this.priceForm.controls['delivery_cost'].setValue(res.result[2].value);
@@ -828,36 +831,36 @@ export class KamComponent implements OnInit {
     })
   };
 
-  selectPlusMins(event:any) {
+  selectPlusMins(event: any) {
     this.plusMinus = event.target.value;
   };
 
-  selectDay(event: any, priceSign:any) {
+  selectDay(event: any, priceSign: any) {
     this.days = event.target.value;
-      const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
-      if (priceSign == '-') {
-      this.afterPrePrice =  backendTotal - Number(this.productPrice.price_premium);
-      }
-      else if (priceSign == '+') {
-        this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
-      }
-      else {
-        this.afterPrePrice = backendTotal;
-      }
+    const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
+    if (priceSign == '-') {
+      this.afterPrePrice = backendTotal - Number(this.productPrice.price_premium);
+    }
+    else if (priceSign == '+') {
+      this.afterPrePrice = backendTotal + Number(this.productPrice.price_premium);
+    }
+    else {
+      this.afterPrePrice = backendTotal;
+    }
 
-      const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
-      const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
-      const backDays = backendDaysCount.toFixed(6);
-      this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
+    const backendHanrateIntrest = Number(this.productPrice.interest_rate) / 100;
+    const backendDaysCount = (this.days * backendHanrateIntrest) / 365;
+    const backDays = backendDaysCount.toFixed(6);
+    this.daysCostCount = (this.afterPrePrice * Number(backDays)).toFixed(2);
 
     if (this.days == 0) {
       this.daysVal = this.afterPrePrice;
-    } 
-    else if (this.days == 30){
+    }
+    else if (this.days == 30) {
       let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
       this.daysVal = finalCost.toFixed(2);
     }
-    else if (this.days == 45){
+    else if (this.days == 45) {
       let finalCost = (Number(this.afterPrePrice) + Number(this.daysCostCount));
       this.daysVal = finalCost.toFixed(2);
     }
@@ -865,10 +868,10 @@ export class KamComponent implements OnInit {
     let misc = Number(this.daysVal) + Number(this.productPrice.misc_expense);
 
     if (this.plusMinus == '-') {
-      this.Totalsum =  misc - Number(this.productPrice.cam_discount);
-      }
-      else {
-        this.Totalsum = misc + Number(this.productPrice.cam_discount);
+      this.Totalsum = misc - Number(this.productPrice.cam_discount);
+    }
+    else {
+      this.Totalsum = misc + Number(this.productPrice.cam_discount);
     }
 
   };
@@ -913,17 +916,17 @@ export class KamComponent implements OnInit {
 
     this.priceLimit = priceValidator;
     const total = (bptPrice + delivery);
-    
-      //
-        if (this.productPrice['price_premium_sing'] == '-') {
-        this.userAfterPrePrice =   total - Number(price_premium);
-        }
-        else if (this.productPrice['price_premium_sing'] == '+') {
-          this.userAfterPrePrice =  total + Number(price_premium);
-          }
-         else {
-         this.userAfterPrePrice = total;
-        }
+
+    //
+    if (this.productPrice['price_premium_sing'] == '-') {
+      this.userAfterPrePrice = total - Number(price_premium);
+    }
+    else if (this.productPrice['price_premium_sing'] == '+') {
+      this.userAfterPrePrice = total + Number(price_premium);
+    }
+    else {
+      this.userAfterPrePrice = total;
+    }
     //
 
     const hanrateIntrest = Number(_interest) / 100;
@@ -936,12 +939,12 @@ export class KamComponent implements OnInit {
 
     if (this.days == 0) {
       this.daysCal = this.userAfterPrePrice;
-    } 
-    else if (this.days == 30){
+    }
+    else if (this.days == 30) {
       let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
       this.daysCal = finalCost.toFixed(2);
     }
-    else if (this.days == 45){
+    else if (this.days == 45) {
       let finalCost = (Number(this.userAfterPrePrice) + Number(this.daysCostCountCustomer));
       this.daysCal = finalCost.toFixed(2);
     }
@@ -949,15 +952,15 @@ export class KamComponent implements OnInit {
     let misc = Number(this.daysCal) + Number(misc_expense);
 
     if (this.plusMinus == '-') {
-      this.totalValue =  misc - Number(_discount);
-      }
-      else if (this.plusMinus == '+'){
-        this.totalValue = misc + Number(_discount);
-      }
-      else {
-        this.totalValue = misc + Number(_discount);
-      }
-    let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum )* 100;
+      this.totalValue = misc - Number(_discount);
+    }
+    else if (this.plusMinus == '+') {
+      this.totalValue = misc + Number(_discount);
+    }
+    else {
+      this.totalValue = misc + Number(_discount);
+    }
+    let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum) * 100;
     this.percentPrice = totalPercent.toFixed(2);
   };
   getNegotiationHistory() {
@@ -977,20 +980,20 @@ export class KamComponent implements OnInit {
     let plantReqst = {
       "data": this.pickupType
     }
-    this._product.getIdbyPlant(plantReqst).subscribe((res:any) => {
+    this._product.getIdbyPlant(plantReqst).subscribe((res: any) => {
       let plantId = res.result
 
-      if (res.status == 1 && res.message == 'success' ) {
-        let bptPrice = $('#_bptPrice'+id).val();
-        let pricPrem = $('#price_premium'+id).val();
-        let discount = $('#_discount'+id).val();
-        let delivery = $('#delivery'+id).val();
-        let interest = $('#_interest'+id).val();
-        let credit = $('#_credit'+id).val();
-        let miscEx = $('#misc_expense'+id).val();
-        let _discount = $('#_discount'+id).val();
-        let total = $('#_total'+id).val();
-        let diffPrice = $('#_bptAndfinal'+id).val();
+      if (res.status == 1 && res.message == 'success') {
+        let bptPrice = $('#_bptPrice' + id).val();
+        let pricPrem = $('#price_premium' + id).val();
+        let discount = $('#_discount' + id).val();
+        let delivery = $('#delivery' + id).val();
+        let interest = $('#_interest' + id).val();
+        let credit = $('#_credit' + id).val();
+        let miscEx = $('#misc_expense' + id).val();
+        let _discount = $('#_discount' + id).val();
+        let total = $('#_total' + id).val();
+        let diffPrice = $('#_bptAndfinal' + id).val();
 
         let componentArr = [
           {
@@ -1039,12 +1042,12 @@ export class KamComponent implements OnInit {
           "components": componentArr
         }
         this.tsmlPriceArr.push(compPriceArr);
-        console.log( this.tsmlPriceArr);
+        console.log(this.tsmlPriceArr);
       }
-  
+
     })
     $("#camsPrice" + id).val(this.Totalsum1);
-    let daysCrd = $('#credDays'+id).val();
+    let daysCrd = $('#credDays' + id).val();
     let daysAr = {
       "id": id,
       "days": daysCrd
@@ -1059,17 +1062,17 @@ export class KamComponent implements OnInit {
     $(".modal-backdrop").removeClass("modal-backdrop show");
     $(".kamClass").keypress();
   };
-  messageBox(shcdlNo:any) {
+  messageBox(shcdlNo: any) {
     this.spinner.show();
     let apiUrl = '/user/view_remarks/' + shcdlNo;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         this.messages = res.result;
       }
     })
   };
-  
+
   cancelprice() {
     $("#viewMoreMessage").hide();
     $('body').removeClass('modal-open');
@@ -1087,12 +1090,12 @@ export class KamComponent implements OnInit {
     this.location.back();
   };
 
-  getLocation (userId:any) {
+  getLocation(userId: any) {
     this.spinner.show();
-    let apiUrl = '/user/get_user_address/'+userId;
+    let apiUrl = '/user/get_user_address/' + userId;
 
-    if(userId != '' || userId != null) {
-      this._product.getMethod(apiUrl).subscribe((res:any) => {
+    if (userId != '' || userId != null) {
+      this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.spinner.hide();
         this.billto = res.result['bill'];
         this.shipto = res.result['ship'];
@@ -1105,13 +1108,13 @@ export class KamComponent implements OnInit {
     }
   };
 
-  plantSele(event:any, schdlNo:any) {
+  plantSele(event: any, schdlNo: any) {
     this.spinner.show();
     this.plantSelectArr[schdlNo] = event.target.value;
     let indx = this.plantAddrr.find((item: any) => item.name == event.target.value);
-    let apiUrl = '/user/get_plant_addr/'+ indx.id;
+    let apiUrl = '/user/get_plant_addr/' + indx.id;
     this.getSubCategory(this.editProductId, this.catId, indx.id);
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
@@ -1124,14 +1127,14 @@ export class KamComponent implements OnInit {
     })
   };
 
-  selectPlant(event:any, schdleNo:any) {
+  selectPlant(event: any, schdleNo: any) {
     this.plantSelectArr[schdleNo] = null;
     this.spinner.show();
     let eventValue = event.target.value;
-    $('#pickupTyp_'+schdleNo).val(eventValue);
-    let apiUrl = '/user/get_plants_by_type/'+ eventValue;
+    $('#pickupTyp_' + schdleNo).val(eventValue);
+    let apiUrl = '/user/get_plants_by_type/' + eventValue;
     if (eventValue != '') {
-      this._product.getMethod(apiUrl).subscribe((res:any) => {
+      this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.spinner.hide();
         if (res.status == 1 && res.message == 'success') {
           this.plantAddrr = res.result;
@@ -1139,21 +1142,21 @@ export class KamComponent implements OnInit {
         if (res.status == 'Token has Expired') {
           this._router.navigate(['/auth/login']);
           this.spinner.hide();
-        } 
+        }
       })
     }
   };
 
-  getDeliveryItem () {
-    this._product.getDeliveryMethod().subscribe((res:any) => {
+  getDeliveryItem() {
+    this._product.getDeliveryMethod().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.deliveryDropList = res.result;
-      } 
+      }
     })
   };
   reqouteStatus() {
-    let apiUrl = '/user/get_count_requote/'+ this.rfqNum;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    let apiUrl = '/user/get_count_requote/' + this.rfqNum;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
     })
   };
 
@@ -1173,7 +1176,7 @@ export class KamComponent implements OnInit {
   //   })
   // };
 
-  getSubCategory(prodId: any, catId: any, plantId:any) {
+  getSubCategory(prodId: any, catId: any, plantId: any) {
     this.spinner.show();
     let sizeFilter = {
       product_id: prodId,
@@ -1199,7 +1202,7 @@ export class KamComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success.') {
         this.prodcutSize = res.result['sizes'];
-        console.log('ffff',this.prodcutSize);
+        console.log('ffff', this.prodcutSize);
       }
     }, err => {
       console.log(err);
@@ -1208,8 +1211,8 @@ export class KamComponent implements OnInit {
   };
 
   getStatusCount() {
-    let apiUrl = '/user/get_count_sche/'+this.rfqNum;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    let apiUrl = '/user/get_count_sche/' + this.rfqNum;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.countSche = res.result;
       }
@@ -1217,7 +1220,7 @@ export class KamComponent implements OnInit {
   };
 
   getCompPrice() {
-    this._product.getPriceComp().subscribe((res:any) => {
+    this._product.getPriceComp().subscribe((res: any) => {
       this.compPrice = res.result;
     })
   }
@@ -1249,9 +1252,9 @@ export class KamComponent implements OnInit {
     }
   };
 
-  getSalesHed(rfqNum:any) {
-    let apiUrl = '/user/sm_remark_by_id/'+rfqNum;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+  getSalesHed(rfqNum: any) {
+    let apiUrl = '/user/sm_remark_by_id/' + rfqNum;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       console.log(res.result);
       if (res.status == 1) {
         this.slsHeadMsg = res.result;

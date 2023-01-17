@@ -135,6 +135,17 @@ export class RegisterComponent implements OnInit {
   emailMsg:any;
   emailErr: boolean = true;
   disableInput: boolean = true;
+  addrPdferor: boolean = false;
+  cancPdferor: boolean = false;
+  panPdferor: boolean = false;
+  gstPdferor: boolean = false;
+  turnPdferor: boolean = false;
+  itrPdferor: boolean = false;
+  fmDPdferor: boolean = false;
+  consntPdferor: boolean = false;
+  certPdferor: boolean = false;
+  tcsPdferor: boolean = false;
+  
 
   ferroChrome = [
     { id: 1, select: false, name: 'High Phos' },
@@ -438,29 +449,27 @@ export class RegisterComponent implements OnInit {
   };
 
   checkVerifyOtp() {
-    if (this.mobileNumber == '') {
-      this.toastr.error('Mobile number is required');
-      this._spinner.hide();
-      return;
-    }
-    if (this.emailId == '') {
-      this.toastr.error('Email is required');
-      this._spinner.hide();
-      return;
-    }
-    if (this.verifyOtp == '') {
+    // if (this.mobileNumber == '') {
+    //   this.toastr.error('Mobile number is required');
+    //   return;
+    // }
+    // if (this.emailId == '') {
+    //   this.toastr.error('Email is required');
+    //   return;
+    // }
+    if (this.verifyOtp == undefined) {
       this.toastr.error('OTP is required');
-      this._spinner.hide();
       return;
     }
-    this._spinner.show();
+    console.log(this.verifyOtp);
     let otpVerify = {
       mobile_no: this.mobileNumber,
       email: this.emailId,
       otp: this.verifyOtp,
     };
-
+    this._spinner.show();
       this._auth.verifyOtp(otpVerify).subscribe((res:any) => {
+        this._spinner.hide();
           if (res.status != 0) {
             // this.mobile.otp = '';
             this.emailId = res.result['email'],
@@ -483,9 +492,16 @@ export class RegisterComponent implements OnInit {
 
   getAddrssProfe(event: any) {
     this.selectedFile = event.target.files[0];
+      if(
+      this.selectedFile.type !== "application/pdf" ){
+        this.addrPdferor = true;
+        this.resetUpload();
+        return;
+      } else {
+        this.addrPdferor = false;
+      }
     let file = event.target.files[0];
     let checkPdf = file.type.includes('/pdf');
-
     if (file != '' || file != undefined && checkPdf == false) {
       this.showResetUpload = true;
     }
@@ -501,8 +517,8 @@ export class RegisterComponent implements OnInit {
     } else {
       this.addressProof = false;
     }
-
   };
+
   resetUpload() {
     // this.resetFile(this.file1);
     this.addProof = null;
@@ -512,6 +528,15 @@ export class RegisterComponent implements OnInit {
 
   getCancelcheck(event: any) {
     this.cancelCheckBook = event.target.files[0];
+    if(
+      this.cancelCheckBook.type !== "application/pdf" ){
+        this.cancPdferor = true;
+        this.resetCheckbook();
+        return;
+      } else {
+        this.cancPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload2 = true;
@@ -534,8 +559,18 @@ export class RegisterComponent implements OnInit {
     this.cancelCheckBook = '';
     this.showResetUpload2 = false;
   };
+
   uploadPan(event: any) {
     this.panUpload = event.target.files[0];
+    if(
+      this.panUpload.type !== "application/pdf" ){
+        this.panPdferor = true;
+        this.resetPan();
+        return;
+      } else {
+        this.panPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload3 = true;
@@ -553,13 +588,23 @@ export class RegisterComponent implements OnInit {
       this.panCard = false;
     }
   };
+
   resetPan() {
     this.panCardUpload = null;
     this.panUpload = '';
     this.showResetUpload3 = false;
   };
+
   gstCertificateFileUpload(event: any) {
     this.gstUpload = event.target.files[0];
+    if(
+      this.gstUpload.type !== "application/pdf" ){
+        this.gstPdferor = true;
+        this.resetGst();
+        return;
+      } else {
+        this.gstPdferor = false;
+      }
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload4 = true;
@@ -577,13 +622,24 @@ export class RegisterComponent implements OnInit {
       this.gstCertificate = false;
     }
   };
+
   resetGst() {
     this.gstFile = null;
     this.gstUpload = '';
     this.showResetUpload4 = false;
-  }
+  };
+
   turnoverUpload(event: any) {
     this.turnoverFile = event.target.files[0];
+    if(
+      this.turnoverFile.type !== "application/pdf" ){
+        this.turnPdferor = true;
+        this.resetTurnover();
+        return;
+      } else {
+        this.turnPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload5 = true;
@@ -606,8 +662,18 @@ export class RegisterComponent implements OnInit {
     this.turnoverFile = '';
     this.showResetUpload5 = false;
   };
+
   itrFileUpload(event: any) {
     this.itrFile = event.target.files[0];
+    if(
+      this.itrFile.type !== "application/pdf" ){
+        this.itrPdferor = true;
+        this.resetItr();
+        return;
+      } else {
+        this.itrPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload6 = true;
@@ -630,8 +696,18 @@ export class RegisterComponent implements OnInit {
     this.itrFile = '';
     this.showResetUpload6 = false;
   };
+
   formDupload(event: any) {
     this.formDfile = event.target.files[0];
+    if(
+      this.formDfile.type !== "application/pdf" ){
+        this.fmDPdferor = true;
+        this.resetFormD();
+        return;
+      } else {
+        this.fmDPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload7 = true;
@@ -648,8 +724,18 @@ export class RegisterComponent implements OnInit {
     this.formDfile = '';
     this.showResetUpload7 = false;
   };
+
   consentLetterUpload(event: any) {
     this.consentLetter = event.target.files[0];
+    if(
+      this.consentLetter.type !== "application/pdf" ){
+        this.consntPdferor = true;
+        this.resetConsent();
+        return;
+      } else {
+        this.consntPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload8 = true;
@@ -671,9 +757,18 @@ export class RegisterComponent implements OnInit {
     this.consentFile = null;
     this.consentLetter = '';
     this.showResetUpload8 = false;
-  }
+  };
+
   regisCertificateUpload(event: any) {
     this.regisCertificate = event.target.files[0];
+    if(
+      this.regisCertificate.type !== "application/pdf" ){
+        this.certPdferor = true;
+        this.resetCertificate();
+        return;
+      } else {
+        this.certPdferor = false;
+      }
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload9 = true;
@@ -691,14 +786,24 @@ export class RegisterComponent implements OnInit {
       this.registerFileSize = false;
     }
   };
+
   resetCertificate() {
     this.cerftificateUpl = null;
     this.regisCertificate = '';
     this.showResetUpload9 = false;
+  };
 
-  }
   tcsFileUpload(event: any) {
     this.tcsFile = event.target.files[0];
+    if(
+      this.tcsFile.type !== "application/pdf" ){
+        this.tcsPdferor = true;
+        this.resetTcs();
+        return;
+      } else {
+        this.tcsPdferor = false;
+      }
+
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload10 = true;

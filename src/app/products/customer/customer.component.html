@@ -349,7 +349,7 @@
                                                     <div>
                                                         <div class="app-reg-btn">
                                                             <div class="form-check form-check-inline" 
-                                                                *ngIf="formData.sche_ct == 1">
+                                                                *ngIf="formData.sche_ct != 4">
                                                                 <input type="radio" class="form-check-input"
                                                                     id="inlineCheckbox0" (change)="getRequote($event)"
                                                                     value="{{formData?.schedule_no}}"

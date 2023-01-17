@@ -250,10 +250,9 @@
                     </div>
                     <!--/-->
 
-                    <div class="col-12 mt-2">
+                    <div class="col-12 mt-2" data-toggle="tooltip" data-placement="top" title="Varify email and mobile no. to continue !">
                       <button (click)="mobileTabContinue()" [disabled]="disableInput" class="btn btn-primary ttab" data-toggle="tab" role="tab"
                         aria-controls="profile" routerLinkActive="active">
-                        <!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
                         Continue
                       </button>
                     </div>
@@ -560,10 +559,11 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="getAddrssProfe($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-1" class="custom-file-input" />
+                                      <input type="file" (change)="getAddrssProfe($event)" [ngClass]="{ 'is-invalid': addrPdferor}"
+                                        accept=".pdf" id="file-1" class="custom-file-input" />
                                       <label class="custom-file-label" for="file-1">{{selectedFile?.name ?
                                         selectedFile?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="addrPdferor">Only PDF allowed</small>
                                       <div *ngIf="!addProof && submitted">
                                         <small class="text-danger">
                                           Address proof is required !
@@ -585,11 +585,12 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="getCancelcheck($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-2" class="custom-file-input"
+                                      <input type="file" (change)="getCancelcheck($event)" [ngClass]="{ 'is-invalid': cancPdferor}"
+                                        accept=".pdf" id="file-2" class="custom-file-input"
                                         name="filename" />
                                       <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ?
                                         cancelCheckBook?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="cancPdferor">Only PDF allowed</small>
                                       <div *ngIf="!checkBook && submitted">
                                         <small class="text-danger">
                                           Checkbook is required !
@@ -616,10 +617,11 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="uploadPan($event)" accept=".png, .jpg, .jpeg, .pdf"
-                                        id="file-3" class="custom-file-input" name="filename" />
+                                      <input type="file" (change)="uploadPan($event)" accept=".pdf"
+                                      [ngClass]="{ 'is-invalid': panPdferor}" id="file-3" class="custom-file-input" name="filename" />
                                       <label class="custom-file-label" for="file-3">{{panUpload?.name ?
                                         panUpload?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="panPdferor">Only PDF allowed</small>
                                       <div *ngIf="!panCardUpload && submitted">
                                         <small class="text-danger">
                                           Pan is required !
@@ -646,10 +648,11 @@
                                   <div class="uplodimg">
                                     <div class="custom-file">
                                       <input type="file" (change)="gstCertificateFileUpload($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-4" class="custom-file-input"
+                                      [ngClass]="{ 'is-invalid': gstPdferor}" accept=".pdf" id="file-4" class="custom-file-input"
                                         name="filename" />
                                       <label class="custom-file-label" for="file-4">{{gstUpload?.name ?
                                         gstUpload?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="gstPdferor">Only PDF allowed</small>
                                       <div *ngIf="!gstFile && submitted">
                                         <small class="text-danger">
                                           GST Certificate is required !
@@ -673,11 +676,12 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="turnoverUpload($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-5" class="custom-file-input"
+                                      <input type="file" (change)="turnoverUpload($event)" [ngClass]="{ 'is-invalid': turnPdferor}"
+                                        accept=".pdf" id="file-5" class="custom-file-input"
                                         name="filename" />
                                       <label class="custom-file-label" for="file-5">{{turnoverFile?.name ?
                                         turnoverFile?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="turnPdferor">Only PDF allowed</small>
                                       <div *ngIf="!turnOver && submitted">
                                         <small class="text-danger">
                                           File is required !
@@ -702,11 +706,12 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="itrFileUpload($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-6" class="custom-file-input"
+                                      <input type="file" (change)="itrFileUpload($event)" [ngClass]="{ 'is-invalid': itrPdferor}"
+                                        accept=".pdf" id="file-6" class="custom-file-input"
                                         name="filename" />
                                       <label class="custom-file-label" for="file-6">{{itrFile?.name ?
                                         itrFile?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="itrPdferor">Only PDF allowed</small>
                                       <div *ngIf="!itrFileUpl && submitted">
                                         <small class="text-danger">
                                           ITR is required !
@@ -731,10 +736,11 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="formDupload($event)" accept=".png, .jpg, .jpeg, .pdf"
+                                      <input type="file" (change)="formDupload($event)" accept=".pdf" [ngClass]="{ 'is-invalid': fmDPdferor}"
                                         id="file-7" class="custom-file-input" name="filename" />
                                       <label class="custom-file-label" for="file-7">{{formDfile?.name ?
                                         formDfile?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="fmDPdferor">Only PDF allowed</small>
                                     </div>
                                     <a class="reg-cross pointerClass" *ngIf="showResetUpload7" (click)="resetFormD()">
                                       <i class="fa fa-times"></i>
@@ -753,11 +759,12 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="consentLetterUpload($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-8" class="custom-file-input"
+                                      <input type="file" (change)="consentLetterUpload($event)" [ngClass]="{ 'is-invalid': consntPdferor}"
+                                        accept=".pdf" id="file-8" class="custom-file-input"
                                         name="filename" />
                                       <label class="custom-file-label" for="file-8">{{consentLetter?.name ?
                                         consentLetter?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="consntPdferor">Only PDF allowed</small>
                                       <div *ngIf="!consentFile && submitted">
                                         <small class="text-danger">
                                           Consent Letter is required !
@@ -781,11 +788,12 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="regisCertificateUpload($event)"
-                                        class="custom-file-input" id="customFile" accept=".png, .jpg, .jpeg, .pdf"
+                                      <input type="file" (change)="regisCertificateUpload($event)" [ngClass]="{ 'is-invalid': certPdferor}"
+                                        class="custom-file-input" id="customFile" accept=".pdf"
                                         name="filename">
                                       <label class="custom-file-label" for="customFile">{{regisCertificate?.name ?
                                         regisCertificate?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="certPdferor">Only PDF allowed</small>
                                       <div *ngIf="!cerftificateUpl && submitted">
                                         <small class="text-danger">
                                           Consent Letter is required !
@@ -813,11 +821,12 @@
                                 <td class="position-relative">
                                   <div class="uplodimg">
                                     <div class="custom-file">
-                                      <input type="file" (change)="tcsFileUpload($event)"
-                                        accept=".png, .jpg, .jpeg, .pdf" id="file-10" class=" custom-file-input"
+                                      <input type="file" (change)="tcsFileUpload($event)" [ngClass]="{ 'is-invalid': tcsPdferor}"
+                                        accept=".pdf" id="file-10" class=" custom-file-input"
                                         name="filename" />
                                       <label class="custom-file-label" for="file-10">{{tcsFile?.name ?
                                         tcsFile?.name:'Upload'}}</label>
+                                        <small class="text-danger mt-0" *ngIf="tcsPdferor">Only PDF allowed</small>
                                       <div *ngIf="!tcsUplod && submitted">
                                         <small class="text-danger">
                                           TCS is required !

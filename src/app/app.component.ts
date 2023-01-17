@@ -14,14 +14,14 @@ export class AppComponent {
     //   event.returnValue = `You have unsaved changes, leave anyway?`;
     //   console.log(event);
     // });
-    var inFormOrLink;
-    $('a').on('click', function () { inFormOrLink = true; });
-    $('form').on('submit', function () { inFormOrLink = true; });
+    // var inFormOrLink;
+    // $('a').on('click', function () { inFormOrLink = true; });
+    // $('form').on('submit', function () { inFormOrLink = true; });
 
-    $(window).on("beforeunload", function () {
-      return inFormOrLink ? "Do you really want to close?" : null;
-    })
-    console.log(inFormOrLink);
+    // $(window).on("beforeunload", function () {
+    //   return inFormOrLink ? "Do you really want to close?" : null;
+    // })
+    // console.log(inFormOrLink);
   }
 
 }

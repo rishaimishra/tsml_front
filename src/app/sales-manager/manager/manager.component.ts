@@ -94,8 +94,8 @@ export class ManagerComponent implements OnInit {
   totlQty: any;
   resData: any;
   deliverySchdule: any = [];
-  billto:any = [];
-  shipto:any = [];
+  billto: any = [];
+  shipto: any = [];
   userAddr: any;
   plantAddrr: any;
   deliveryDropList: any;
@@ -576,6 +576,8 @@ export class ManagerComponent implements OnInit {
         this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
           this._router.navigate(['/sales-manager/rfq-list']);
         })
+
+        this.otherFuncApi(qouteSt, userTyp);
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -587,56 +589,60 @@ export class ManagerComponent implements OnInit {
         this.spinner.hide();
       }
 
-      if (this.requoteArr.length > 0) {
-        this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
-          if (res.message == 'status updated') {
-            this.spinner.hide();
-          } else {
-            this._toaster.error(res.message);
-          }
-        })
-      }
-
-      if (this.countReqoutArr.length > 0) {
-        this._product.reqouteCount(this.countReqoutArr).subscribe((res: any) => {
-          console.log(res);
-        })
-      }
-      if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
-        if (userTyp == 'Kam') {
-          this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              text: 'Tentative Date Added successully',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          })
-
-          let qouteReq = {
-            "rfq_no": this.rfqNum,
-            "status": 7
-          }
-          this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
-          })
-          // Sales notification send
-          let userId = localStorage.getItem('USER_ID');
-          let salesNotiReq = {
-            "desc_no": this.rfqNum,
-            "user_id": userId,
-            "desc": 'Tentative date and quantity updated',
-            "url_type": 'R'
-          }
-          this._product.salesNoti(salesNotiReq).subscribe((res: any) => {
-          })
-
-        }
-      }
     }, err => {
       console.log(err);
       this.spinner.hide();
     });
+
+  };
+
+  otherFuncApi(qouteSt:any, userTyp:any) {
+    if (this.requoteArr.length > 0) {
+      this._product.reqouteData(this.requoteArr).subscribe((res: any) => {
+        if (res.message == 'status updated') {
+          this.spinner.hide();
+        } else {
+          this._toaster.error(res.message);
+        }
+      })
+    }
+
+    if (this.countReqoutArr.length > 0) {
+      this._product.reqouteCount(this.countReqoutArr).subscribe((res: any) => {
+        console.log(res);
+      })
+    }
+    if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
+      if (userTyp == 'Kam') {
+        this._product.dlvrySchdule(this.deliverySchdule).subscribe((res: any) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            text: 'Tentative Date Added successully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+
+        let qouteReq = {
+          "rfq_no": this.rfqNum,
+          "status": 7
+        }
+        this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
+        })
+        // Sales notification send
+        let userId = localStorage.getItem('USER_ID');
+        let salesNotiReq = {
+          "desc_no": this.rfqNum,
+          "user_id": userId,
+          "desc": 'Tentative date and quantity updated',
+          "url_type": 'R'
+        }
+        this._product.salesNoti(salesNotiReq).subscribe((res: any) => {
+        })
+
+      }
+    }
 
     // component price save here
     this._product.saveComPrice(this.tsmlPriceArr).subscribe((res: any) => {
@@ -654,6 +660,7 @@ export class ManagerComponent implements OnInit {
       })
     }
 
+    this._router.navigate(['dashboard/manager-dashboard']);
   };
 
   date: any;
@@ -1011,7 +1018,7 @@ export class ManagerComponent implements OnInit {
     })
 
     $("#camsPrice" + id).val(this.Totalsum1);
-    let daysCrd = $('#credDays'+id).val();
+    let daysCrd = $('#credDays' + id).val();
     let daysAr = {
       "id": id,
       "days": daysCrd
@@ -1172,7 +1179,7 @@ export class ManagerComponent implements OnInit {
     } else {
       type = 'A';
     }
-    
+
     let userId = localStorage.getItem('USER_ID');
     let remarks = {
       "user_id": userId,

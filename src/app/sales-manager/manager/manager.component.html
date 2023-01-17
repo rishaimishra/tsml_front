@@ -667,24 +667,24 @@
                             <div [formGroupName]="i" style="margin-bottom: 10px;">
                                 <div class="row">
                                     <div class="col">
-                                        <input type="number" class="form-control" formControlName="quantity" value=""
+                                        <input type="number" class="form-control" readonly formControlName="quantity" value=""
                                             placeholder="Quantity">
                                     </div>
                                     <div class="col">
-                                        <input type="date" class="form-control" formControlName="to_date"
+                                        <input type="date" class="form-control" readonly formControlName="to_date"
                                             placeholder="Date">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <button type="button" class="btn btn-primary btn-sm float-right"
-                            (click)="addItem()">Add</button>
+                        <!-- <button type="button" disa class="btn btn-primary btn-sm float-right"
+                            (click)="addItem()">Add</button> -->
                         <!-- <button type="submit">Submit</button> -->
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="onSubmit(totlQty)">OK</button>
+                    <button type="button" class="btn btn-primary" (click)="onSubmit(totlQty)">ADD</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

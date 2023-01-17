@@ -304,7 +304,8 @@ export class ProductDetailsComponent implements OnInit {
           "desc": 'RFQ has been submitted',
           "desc_no": 'RFQ' + rfqNumber,
           "user_id": userId,
-          "url_type": 'R'
+          "url_type": 'R',
+          "sender_id": userId
         }
         this._product.camNotification(camNotiReq).subscribe((res: any) => {
           console.log(res);
