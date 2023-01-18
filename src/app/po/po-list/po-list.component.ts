@@ -62,5 +62,15 @@ export class PoListComponent implements OnInit {
       console.log(err);
       this._spinner.hide();
     })
+  };
+
+  viewPoPage(poNum:any) {
+    let poNumber = btoa(poNum);
+    this._router.navigate(['/po/po-view',poNumber])
+  };
+
+  poEditPage(poNum:any) {
+    let poNumber = btoa(poNum);
+    this._router.navigate(['/po/po-edit',poNumber])
   }
 }

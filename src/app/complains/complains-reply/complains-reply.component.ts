@@ -34,9 +34,8 @@ export class ComplainsReplyComponent implements OnInit {
     private _spiner: NgxSpinnerService, private _toaster: ToastrService) { }
 
   ngOnInit(): void {
-    const usrName:any = localStorage.getItem('USER_NAME');
     this._route.params.subscribe((param:any) => {
-      this.compId = param.id;
+      this.compId = atob(param.id);
       this.complainsReply();
     })
   }

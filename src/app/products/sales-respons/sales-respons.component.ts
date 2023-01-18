@@ -134,7 +134,7 @@ export class SalesResponsComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
-        this.rfqNum = res.id;
+        this.rfqNum = atob(res.id);
       }
     });
     this.getLocation();
@@ -161,7 +161,7 @@ export class SalesResponsComponent implements OnInit {
     })
   }
 
-  createItem(qty,to_date) {
+  createItem(qty:any,to_date:any) {
     return this._fb.group({
       quantity: [qty],
       to_date: [to_date]

@@ -78,6 +78,7 @@ export class HeaderComponent implements OnInit {
       this._router.navigate(['']);
     }
   };
+
   logOut() {
     Swal.fire({
       title: 'Are you sure?',
@@ -96,6 +97,7 @@ export class HeaderComponent implements OnInit {
       }
     })
   };
+
   checkLogin () {
     this._product.getDeliveryMethod().subscribe((res: any) => {
       if(res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
@@ -116,6 +118,7 @@ export class HeaderComponent implements OnInit {
       }
     })
   };
+  
   getSalesNoti() {
     this._product.getSalesNoti().subscribe((res:any) => {
       if (res.status == 1 && res.message == 'success') {

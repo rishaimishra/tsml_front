@@ -25,16 +25,15 @@ export class HomeComponent implements OnInit {
   categoryTwo:any;
   imageUrl:any;
 
-
   constructor(
     private _router: Router,
     private productService: ProductsService,
     private spinner: NgxSpinnerService,
     private _product: ProductsService,
     private _auth: AuthService
-  ) 
-  { 
-    this.isLogin = this._auth.isLoggedIn();
+    ) 
+    { 
+      this.isLogin = this._auth.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -87,6 +86,7 @@ export class HomeComponent implements OnInit {
     );
     this.get_popular_product();
   };
+
   get_product_by_menu_id(id: any) {
     this.menuId = id;
     // this.spinner.show();
@@ -146,4 +146,5 @@ export class HomeComponent implements OnInit {
       console.log(error);
     })
   }
+  
 }

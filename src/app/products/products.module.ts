@@ -18,6 +18,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ConfirmRfqComponent } from './confirm-rfq/confirm-rfq.component';
 import { SalesResponsComponent } from './sales-respons/sales-respons.component';
 import { SalesGuard } from '../Guard/sales.guard';
+import { CustGuard } from '../Guard/cust.guard';
+import { KamGuard } from '../Guard/kam.guard';
 
 
 const routes: Routes = [
@@ -59,11 +61,11 @@ const routes: Routes = [
   },
   {
     path: 'customer/:id',
-    component: CustomerComponent,canActivate: [AuthGuard],
+    component: CustomerComponent,canActivate: [CustGuard],
   },
   {
     path: 'cam/:id',
-    component: KamComponent,canActivate: [AuthGuard],
+    component: KamComponent,canActivate: [KamGuard],
   },
   {
     path: 'confirm-rfq/:id',

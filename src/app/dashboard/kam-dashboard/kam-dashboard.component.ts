@@ -24,7 +24,6 @@ export class KamDashboardComponent implements OnInit {
   private _router: Router, private _product: ProductsService) { }
 
   ngOnInit() {
-    let userRol = localStorage.getItem('USER_TYPE');
     this.userName = localStorage.getItem('USER_NAME');
     this.getKamItems();
       this.getKamPoListing();
@@ -56,18 +55,19 @@ export class KamDashboardComponent implements OnInit {
   };
 
   reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
+    let rfqNo = btoa(rfqNumber);
     let userType = localStorage.getItem('USER_TYPE');
     if (status == 'Accepted' && kamStatus != 4) {
-      this._router.navigate(['/po/po',rfqNumber]);
+      this._router.navigate(['/po/po',rfqNo]);
     }
     else if (kamStatus == 4) {
       this._router.navigate(['/po/po-list'])
     }
     else if (userType == 'C') {
-      this._router.navigate(['/products/customer',rfqNumber]);
+      this._router.navigate(['/products/customer',rfqNo]);
     }
     else {
-      this._router.navigate(['/products/cam',rfqNumber]);
+      this._router.navigate(['/products/cam',rfqNo]);
     }
   };
 
@@ -126,5 +126,10 @@ export class KamDashboardComponent implements OnInit {
       console.log(err);
       this.spinner.hide();
     })
+  }
+
+  redirectPo(poNum:any) {
+    let rfqNo = btoa(poNum);
+    this._router.navigate(['/po/po-view',rfqNo])
   }
 }

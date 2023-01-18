@@ -102,7 +102,8 @@ export class KamReplyComponent implements OnInit {
 
   ngOnInit(): void {
     this._route.params.subscribe((param: any) => {
-      this.compId = param.id;
+      // this.compId = param.id;
+      this.compId = atob(param.id);
       this.complainsReply();
       this.department();
     })

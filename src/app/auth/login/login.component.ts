@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       })
       CustomValidators.mustMatch('password', 'password_confirm') // insert here
       this.token = undefined;
-
+      
   }
 
   get f() {
@@ -39,9 +39,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  clickCaptch(event:any) {
-    console.log(event);
-  };
 
   send(form: NgForm): void {
     if (form.invalid) {
@@ -50,7 +47,6 @@ export class LoginComponent implements OnInit {
       }
       return;
     }
-
   };
   
   goToForgetPass() {
@@ -96,7 +92,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('USER_NAME',res.data.user_name);
           localStorage.setItem('USER_ID',res.data.user_id);
           localStorage.setItem('USER_TYPE',res.data.user_type);
-          
+
           if(res.data['user_type'] == 'Kam') {
             this._router.navigate(['/dashboard/kam-dashboard']);
             Swal.fire({
@@ -158,6 +154,14 @@ export class LoginComponent implements OnInit {
             })
           }
         } 
+        if (res.success == false) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Sorry!',
+            text: res.message,
+          })
+          return;
+        }
       }, error => {
         console.log(error);
           Swal.fire({

@@ -112,7 +112,7 @@ export class PoComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      this.productId = res.id;
+      this.productId = atob(res.id);
       this.categoryid = res.categoryId;
       this.detailByRfq();
       this.getSubCategory(this.productId);
@@ -226,6 +226,7 @@ export class PoComponent implements OnInit {
       this.spinner.hide();
     })
   };
+
   deleteRfqById(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -258,7 +259,6 @@ export class PoComponent implements OnInit {
       }
     })
   };
-
 
   selecte_size(size: any, index: any) {
     this.selected_size = size;

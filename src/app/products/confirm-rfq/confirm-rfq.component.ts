@@ -60,11 +60,9 @@ export class ConfirmRfqComponent implements OnInit {
     }) 
   }
   goToproductDetails(rfqNo: any, status:any) {
-    // if (status == 'Accepted') {
-    //   this._router.navigate(['/po',rfqNo])
-    // } else {
-      this._router.navigate(['/products/sales-respons',rfqNo]);
-    // }
+    let rfqNum = btoa(rfqNo);
+    this._router.navigate(['/products/sales-respons',rfqNum]);
+
   }
 
 }

@@ -68,13 +68,14 @@ export class ComplainsListComponent implements OnInit {
   };
 
   goToreplyPage(complain_id:any) {
+    let complNom = btoa(complain_id);
     let userRol = localStorage.getItem('USER_TYPE');
     if(userRol == 'Kam') {
       this.userType = false;
-      this._router.navigate(['/complains/kam-reply',complain_id]);
+      this._router.navigate(['/complains/kam-reply',complNom]);
     } else {
       this.userType = true;
-      this._router.navigate(['/complains/complaints-reply',complain_id]);
+      this._router.navigate(['/complains/complaints-reply',complNom]);
     }
   };
 

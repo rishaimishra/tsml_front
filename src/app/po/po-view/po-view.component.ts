@@ -122,7 +122,7 @@ export class PoViewComponent implements OnInit {
     this.getDeliveryItem();
     // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      this.poNumbr = res.id;
+      this.poNumbr = atob(res.id);
       this.categoryid = res.categoryId;
       this.detailByRfq();
     });
@@ -240,6 +240,7 @@ export class PoViewComponent implements OnInit {
       this.spinner.hide();
     })
   };
+
   deleteRfqById(id: any) {
     Swal.fire({
       title: 'Are you sure?',

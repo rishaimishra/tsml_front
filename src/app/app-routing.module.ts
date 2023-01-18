@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ManagerGuard } from './Guard/manager.guard';
+import { SalesGuard } from './Guard/sales.guard';
 
 const routes: Routes = 
 [
@@ -41,11 +43,12 @@ const routes: Routes =
   },
   {
     path: 'sales',
-    loadChildren: () => import('./sales/sales.module').then(m => m.SalesModule),
+    loadChildren: () => import('./sales/sales.module').then(m => m.SalesModule), canActivate: [SalesGuard],
   },
   {
     path: 'sales-manager',
     loadChildren: () => import('./sales-manager/sales-manager.module').then(m => m.SalesManagerModule),
+    canActivate: [ManagerGuard],
   },
   {
     path: 'plant',

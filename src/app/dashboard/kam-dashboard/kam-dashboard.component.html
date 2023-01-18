@@ -250,7 +250,7 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }" class="pointerTab" [routerLink]="['/po/po-view',po.po_no]">
+                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }" class="pointerTab" (click)="redirectPo(po.po_no)">
                                     <td>{{po.po_no}}</td>
                                     <td>{{po.rfq_no}}</td>
                                     <td>{{po.cus_po_no}}</td>

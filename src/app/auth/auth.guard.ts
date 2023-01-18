@@ -10,6 +10,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(private _auth: AuthService, private _router: Router) {}
   canActivate () {
+    let userType = localStorage.getItem('USER_TYPE');
     if (this._auth.isLoggedIn()) {
       return true;
     } else {

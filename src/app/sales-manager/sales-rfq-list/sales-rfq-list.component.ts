@@ -58,11 +58,8 @@ export class SalesRfqListComponent implements OnInit {
     }) 
   }
   goToproductDetails(rfqNo: any, status:any) {
-    // if (status == 'Accepted') {
-    //   this._router.navigate(['/po',rfqNo])
-    // } else {
-      this._router.navigate(['/sales-manager/manager',rfqNo]);
-    // }
+    let rfqNum = btoa(rfqNo);
+    this._router.navigate(['/sales-manager/manager',rfqNum]);
   }
 
 }

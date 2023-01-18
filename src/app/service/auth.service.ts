@@ -21,8 +21,13 @@ export class AuthService {
   register(data: any) {
     return this._http.post(this.BesUrl + '/register', data);
   };
+
   login(data: any) {
     return this._http.post(this.BesUrl + '/login', data, { withCredentials: true });
+  };
+
+  logOut(data: any) {
+    return this._http.post(this.BesUrl + '/user/logout', data);
   };
 
   isLoggedIn() {

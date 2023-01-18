@@ -169,7 +169,7 @@ export class KamComponent implements OnInit {
     this.user_Id = localStorage.getItem('USER_ID');
     this._route.params.subscribe(res => {
       if (res.id) {
-        this.rfqNum = res.id;
+        this.rfqNum = atob(res.id);
       }
     });
 
@@ -293,6 +293,7 @@ export class KamComponent implements OnInit {
   goToCustomerPage(id: any) {
     this._router.navigate(['/products/customer', id]);
   };
+  
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   };

@@ -75,9 +75,9 @@
                                   <td>
                                      <div class="btn-edt-del" style="justify-content: flex-start;">
                                        <ng-container *ngIf="po.status == 2 || po.status == 3 || po.status == 4">
-                                          <a *ngIf="po.status != 1 && userType == false" class="edt-btn btn-primary classPointer" [routerLink]="['/po/po-edit',po.po_no]" data-toggle="tooltip" data-placement="top" title="Amendment PO"><i class="fa fa-pencil"></i></a>
+                                          <a *ngIf="po.status != 1 && userType == false" class="edt-btn btn-primary classPointer" (click)="poEditPage(po.po_no)" data-toggle="tooltip" data-placement="top" title="Amendment PO"><i class="fa fa-pencil"></i></a>
                                        </ng-container>
-                                       <a  class="edt-btn btn-primary2 classPointer" [routerLink]="['/po/po-view',po.po_no]" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                       <a  class="edt-btn btn-primary2 classPointer" (click)="viewPoPage(po.po_no)" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
                                      </div>
                                      
                                   </td>

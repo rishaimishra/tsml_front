@@ -79,6 +79,7 @@ export class ProductDetailsComponent implements OnInit {
       this.userType = false;
     } else {
       this.userRole = 'C';
+      this.getLocation();
       this.userType = true;
     }
     this.getDeliveryItem();
@@ -90,7 +91,6 @@ export class ProductDetailsComponent implements OnInit {
       this.removeCatArr.includes(this.categoryid)
       this.getCategoriDetails(this.productId, this.categoryid);
       this.get_product_details(res.productId, res.categoryId);
-      this.getLocation();
 
     });
     this.setFromData();
@@ -286,8 +286,6 @@ export class ProductDetailsComponent implements OnInit {
 
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
-
-
     }
     
     this.spinner.show();
@@ -500,6 +498,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     })
   };
+
   subCategory: any = [];
   getSubCategory(prodId: any, catId: any, plantId:any) {
     this.spinner.show();
