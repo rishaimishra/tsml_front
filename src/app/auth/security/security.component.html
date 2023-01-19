@@ -1,0 +1,51 @@
+<body>
+    <section class="login-bg">
+        <div class="vertical-center">
+            <div class="container">
+                <div class="row justify-content-center my-55">
+                    <div class="col-10 col-md-6 col-lg-8 position-relative">
+                        <div class="nav-round3"></div>
+                        <form [formGroup]="securityForm" (ngSubmit)="saveForm()">
+                                <div class="col-12">
+                                    <div class="security-qs-block">
+                                        <p><i class="fa fa-shield" aria-hidden="true"></i> Security Questions</p>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-12 col-lg-6">
+                                                    <label class="d-block">Choose Security Questions</label>
+                                                    <select class="form-control" formControlName="securityone">
+                                                        <option value="">Select..</option>
+                                                        <option value="{{questn.security_question_id}}" *ngFor="let questn of questions">{{questn.s_question}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-lg-6">
+                                                    <label>Enter Your Answer</label>
+                                                    <input type="text" formControlName="answoreone" class="form-control">
+                                                </div>
+                                                <div class="col-12 col-lg-6">
+                                                    <label class="d-block">Choose Security Questions</label>
+                                                    <select class="form-control" formControlName="securitytwo">
+                                                        <option value="">Select..</option>
+                                                        <option value="{{questn.security_question_id}}" *ngFor="let questn of questions">{{questn.s_question}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-lg-6">
+                                                    <label>Enter Your Answer</label>
+                                                    <input type="text" formControlName="answoretwo" class="form-control">
+                                                </div>
+                                                <div class="col-12 col-lg-12 mt-2">
+                                                    <button class="btn btn-danger float-right">Reset </button> &nbsp;
+                                                    <button class="btn btn-primary float-right ml-2" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

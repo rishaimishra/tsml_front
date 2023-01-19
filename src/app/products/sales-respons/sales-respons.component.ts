@@ -100,6 +100,7 @@ export class SalesResponsComponent implements OnInit {
   locationRes:any;
   plantSelectArr:any = [];
   selectedUserId:any;
+  remarksArry: any = [];
 
 
   @ViewChild("remarksModel")
@@ -367,7 +368,17 @@ export class SalesResponsComponent implements OnInit {
     };
     
     onSubmit(totlQty:any) {
-      if (this.myForm.value.arr[0]['quantity'] == '' || this.myForm.value.arr[0]['to_date'] == '') {
+      // if (this.myForm.value.arr[0]['quantity'] == '' || this.myForm.value.arr[0]['to_date'] == '') {
+      //   Swal.fire({
+      //     icon: 'error',
+      //     title: 'Oops...',
+      //     text: 'Quantity and Tentative date are required!',
+      //   })
+      //   return;
+      // }
+      for (let index = 0; index < this.myForm.value.arr.length; index++) {
+        const element = this.myForm.value.arr[index];
+        if (element['quantity'] == "" || element['to_date'] == "") {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -375,6 +386,8 @@ export class SalesResponsComponent implements OnInit {
         })
         return;
       }
+      }
+
       let schdlData = this.myForm.value['arr'];
       let setSechdule = {
         "sche_no": this.schduleNo,
@@ -442,8 +455,21 @@ export class SalesResponsComponent implements OnInit {
           "confirm_date": form_data_array[i]['confirm_date'],
         }
         confrmDate.push(tantetiveReq);
+        if (form_data_array[i].salesRemarks == null ) {
+        return;
       }
-      
+      }
+      // let rmarksParam = {
+      //   rfq_no: this.rfqNum,
+      //   sche_no: form_data_array[i].schedule_no,
+      //   remarks: form_data_array[i].remarks,
+      //   camremarks: form_data_array[i].kamsRemarks,
+      //   salesremarks: form_data_array[i].salesRemarks,
+      //   from: 'Sales',
+      //   to: 'Kam'
+      // };
+      // this.remarksArry.push(rmarksParam);
+
       let reqData = {
         rfq_number: this.rfqNum,
         product_id: this.editProductId,
@@ -526,6 +552,12 @@ export class SalesResponsComponent implements OnInit {
   this._router.navigate(['/products/confirm-rfq']);
   };
   
+  // salesRemarks() {
+  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+  //     console.log(res);
+  //   })
+  // };
+
   date: any;
   setFromData() {
     var today: any = new Date();

@@ -27,25 +27,9 @@ export class KamComponent implements OnInit {
   public error_message: String = '';
   userType: boolean;
   user_Id: any;
-  // addItems: boolean = false;
-  // title: any = '';
   rfqNum: any;
   selectedItem: any = [];
-  // states: any;
-  // deliveryDate1: any = '';
-  // deliveryDate2: any = '';
-  // deliveryDate3: any = '';
-  // deliveryDate4: any = '';
-  // remarks: any = '';
-  // remarks2: any = '';
-  // expectedPrice1: any = '';
-  // expectedPrice2: any = '';
-  // quantity1: any = [];
-  // quantity2: any;
-  // proSize1: any;
   submit: boolean = false;
-  // categoryid: any;
-  // proPrices: any = [];
   requoteArr: any = [];
   statusArr: any = [];
   days: any = 0;
@@ -65,18 +49,12 @@ export class KamComponent implements OnInit {
   showButtons: any;
   kamsRemarks: any = '';
 
-  // public quotation: any[] = [];
-  // public quotation_value: any[] = [];
   totalQty: any;
   editProductId: any;
   submitted: boolean = false;
   premiumPrice: boolean = false;
-  // miscPrice: boolean = false;
   deliveryCost: boolean = false;
-  // kamDiscount: boolean = false;
   credCost: boolean = false;
-  // daysCost: any;
-  // totalDayCost:any;
   daysCostCount: any;
   daysCostCountCustomer: any;
   messages: any;
@@ -133,6 +111,7 @@ export class KamComponent implements OnInit {
   prodcutSize: any;
   slsHeadMsg: any;
   lastQoute: any = [];
+  remarksArry: any = [];
 
 
 
@@ -267,6 +246,7 @@ export class KamComponent implements OnInit {
     this.deleteId = qoute_id;
 
   };
+
   submitRemarks() {
     let useriD = localStorage.getItem('USER_ID');
     if (this.remarksData != '') {
@@ -422,7 +402,9 @@ export class KamComponent implements OnInit {
 
   onQtySubmit(totlQty: any) {
     this.submitt = true;
-    if (this.myForm.value.arr[0]['quantity'] == '' || this.myForm.value.arr[0]['to_date'] == '') {
+    for (let index = 0; index < this.myForm.value.arr.length; index++) {
+      const element = this.myForm.value.arr[index];
+      if (element['quantity'] == "" || element['to_date'] == "") {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -430,6 +412,8 @@ export class KamComponent implements OnInit {
       })
       return;
     }
+    }
+
     let schdlData = this.myForm.value['arr'];
     let setSechdule = {
       "sche_no": this.schduleNo,
@@ -455,6 +439,8 @@ export class KamComponent implements OnInit {
         this.deliverySchdule.splice(indx, 1);
       }
       this.deliverySchdule.push(setSechdule);
+      console.log(this.deliverySchdule);
+
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -489,8 +475,8 @@ export class KamComponent implements OnInit {
         }
 
         if (form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
-          || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].expected_price == "" || form_data_array[i].from_date == ""
-          || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null) {
+          || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].pickup_type == null || form_data_array[i].from_date == ""
+          || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null || form_data_array[i].plant == null || form_data_array[i].location == null) {
           return;
         }
         let tantetiveReq = {
@@ -508,6 +494,17 @@ export class KamComponent implements OnInit {
         // this.lastQoute.push(qouteCheck);
         // console.log(qouteCheck);
 
+        // let rmarksParam = {
+        //   rfq_no: this.rfqNum,
+        //   sche_no: form_data_array[i].schedule_no,
+        //   remarks: form_data_array[i].remarks,
+        //   camremarks: form_data_array[i].kamsRemarks,
+        //   salesremarks: form_data_array[i].salesRemarks,
+        //   from: 'Kam',
+        //   to: 'Sales'
+        // };
+        // this.remarksArry.push(rmarksParam);
+
       }
 
       let reqData = {
@@ -519,11 +516,10 @@ export class KamComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-      console.log(rfqFormArry);
+
     };
 
     let qouteSt = this.selectedItem[0]['quotest'];
-    let userTyp = localStorage.getItem('USER_TYPE');
     this.spinner.show();
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
@@ -577,6 +573,9 @@ export class KamComponent implements OnInit {
         // }
 
         this.otherFuncApi(qouteSt);
+        // if(qouteSt == 0) {
+        //   this.camRemarks();
+        // }
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -691,6 +690,12 @@ export class KamComponent implements OnInit {
     this._router.navigate(['/products/rfq-list']);
   };
 
+  // camRemarks() {
+  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+  //     console.log(res);
+  //   })
+  // };
+
   date: any;
   setFromData() {
     var today: any = new Date();
@@ -734,7 +739,6 @@ export class KamComponent implements OnInit {
     $("#to_date_" + i).attr("min", this.nxtDt);
 
   };
-
 
   getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any, plant: any, dlvr: any, dap: any, i: any, y: any) {
     this.firstIndex = i;
@@ -964,6 +968,7 @@ export class KamComponent implements OnInit {
     let totalPercent = ((this.totalValue - this.Totalsum) / this.Totalsum) * 100;
     this.percentPrice = totalPercent.toFixed(2);
   };
+
   getNegotiationHistory() {
     let apiUrl = '/user/quotes_history/' + this.rfqNum;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
@@ -1063,6 +1068,7 @@ export class KamComponent implements OnInit {
     $(".modal-backdrop").removeClass("modal-backdrop show");
     $(".kamClass").keypress();
   };
+
   messageBox(shcdlNo: any) {
     this.spinner.show();
     let apiUrl = '/user/view_remarks/' + shcdlNo;

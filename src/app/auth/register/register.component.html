@@ -249,9 +249,9 @@
                       </label>
                     </div>
                     <!--/-->
-
+                    <!-- [disabled]="disableInput" -->
                     <div class="col-12 mt-2" data-toggle="tooltip" data-placement="top" title="Varify email and mobile no. to continue !">
-                      <button (click)="mobileTabContinue()" [disabled]="disableInput" class="btn btn-primary ttab" data-toggle="tab" role="tab"
+                      <button (click)="mobileTabContinue()" class="btn btn-primary ttab" data-toggle="tab" role="tab"
                         aria-controls="profile" routerLinkActive="active">
                         Continue
                       </button>
@@ -847,6 +847,43 @@
                       </div>
                       <!--/-->
                     </div>
+                  
+                      <div class="col-12">
+                          <div class="security-qs-block">
+                            <p><i class="fa fa-shield" aria-hidden="true"></i> Security Questions</p>
+                            <div class="form-group">
+                              <div class="row">
+                               <div class="col-12 col-lg-6">
+                                <label class="d-block">Choose Security Questions</label>
+                                <select class="form-control">
+                                  <option value="">Select..</option>
+                                  <option value="1">In what city were you born?</option>
+                                  <option value="2">What is your first school name?</option>
+                                  <option value="3">What was your favorite food?</option>
+                                </select>
+                               </div>
+                               <div class="col-12 col-lg-6">
+                                <label>Type The Answer</label>
+                               <input type="text" class="form-control">
+                               </div>
+                               <div class="col-12 col-lg-6">
+                                <label class="d-block">Choose Security Questions</label>
+                                <select class="form-control">
+                                  <option value="">Select..</option>
+                                  <option value="1">In what city were you born?</option>
+                                  <option value="2">What is your first school name?</option>
+                                  <option value="3">What was your favorite food?</option>
+                                </select>
+                               </div>
+                               <div class="col-12 col-lg-6">
+                                <label>Type The Answer</label>
+                               <input type="text" class="form-control">
+                               </div>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                   
                     <div class="col-12">
                       <div class="form-group">
                         <label class="container-check">I agree to the

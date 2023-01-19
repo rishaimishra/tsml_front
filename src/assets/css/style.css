@@ -5083,3 +5083,29 @@ width: 46%;}
     height: 44px;
     border: 1px solid #40404080;
 }
+/*19.1.23*/
+.security-qs-block {
+    background: #d5e9ff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 12px #c5c2c2;
+}
+.security-qs-block select.form-control {
+    background: #fff url(../images/sel_icon.png)no-repeat right 14px center;
+    appearance: none;
+    -webkit-appearance: none;
+}
+.security-qs-block p{border-bottom: 1px dotted #a5b4f1;
+    padding-bottom: 10px;font-size: 17px;
+    color: #5774ef;}
+    .security-qs-block p i{width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #5774ef;
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 32px;
+        text-align: center;
+        color: #fff;
+        font-size: 20px;}

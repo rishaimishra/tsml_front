@@ -56,6 +56,10 @@ export class AuthService {
     return this._http.get(this.BesUrl + '/gst_details_dummy');
   };
 
+  getSecurityQue() {
+    return this._http.get(this.BesUrl + '/get_security_questions');
+  };
+
   clearNoti(request:any) {
     return this._http.post(this.BesUrl + '/user/clear_notification', request);
   };

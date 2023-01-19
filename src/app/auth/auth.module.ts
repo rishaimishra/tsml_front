@@ -6,10 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
+import { SecurityComponent } from './security/security.component';
 
 const routes: Routes = [
   {
@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'forget-password',
     component: ForgetPasswordComponent
+  },
+  {
+    path: 'security',
+    component: SecurityComponent
   }
 ];
 
@@ -31,7 +35,8 @@ const routes: Routes = [
     RegisterComponent,
     LoginComponent,
     ForgetPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SecurityComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +46,6 @@ const routes: Routes = [
     SharedModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    // BrowserAnimationsModule, 
     ToastrModule.forRoot() // ToastrModule added
   ]
 })

@@ -797,7 +797,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" [disabled]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6" class="btn btn-primary" (click)="onQtySubmit(totlQty)">ADD</button>
+                <button type="button" [disabled]="selectedItem[0]?.quotest == 5 || selectedItem[0]?.quotest == 6 || myForm.value.arr.length == 0" class="btn btn-primary"  (click)="onQtySubmit(totlQty)">ADD</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>

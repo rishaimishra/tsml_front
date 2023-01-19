@@ -61,6 +61,7 @@ export class ProductDetailsComponent implements OnInit {
   plantSelectArr: any = [];
   isTermCondition: boolean = false;
   disableItem: boolean = false;
+  remarksArry: any = [];
 
   constructor(
     private _route: ActivatedRoute,
@@ -273,6 +274,17 @@ export class ProductDetailsComponent implements OnInit {
         || form_data_array[i].to_date == "" || form_data_array[i].remarks == "") {
           return;
         }
+
+        // let rmarksParam = {
+        //   rfq_no: 'RFQ' + rfqNumber,
+        //   sche_no: form_data_array[i].schedule_no,
+        //   remarks: form_data_array[i].remarks,
+        //   camremarks: '',
+        //   salesremarks: '',
+        //   from: 'C',
+        //   to: 'Kam'
+        // };
+        // this.remarksArry.push(rmarksParam);
       }
       let reqData = {
         rfq_number: 'RFQ' + rfqNumber,
@@ -283,11 +295,10 @@ export class ProductDetailsComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
-
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
     }
-    
+
     this.spinner.show();
     this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
@@ -312,8 +323,8 @@ export class ProductDetailsComponent implements OnInit {
         this._product.custNotiSubmit(camNotiReq).subscribe((res: any) => {
           console.log(res);
         })
-
         this.statusBar('RFQ' + rfqNumber)
+        // this.custRemarkApi();
       }
       if (res.result == 'Quote not created') {
         this._toaster.error(res.result);
@@ -330,6 +341,13 @@ export class ProductDetailsComponent implements OnInit {
 
     });
   };
+
+  // custRemarkApi() {
+  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+  //     console.log(res);
+  //   })
+  // };
+
   rfqEmailSent(rfqNumber: any) {
     let userId = localStorage.getItem('USER_ID');
     let rfqEmailReq = {
@@ -339,7 +357,8 @@ export class ProductDetailsComponent implements OnInit {
     this._product.rfqSubmitedEmail(rfqEmailReq).subscribe((res: any) => {
 
     })
-  }
+  };
+
   addItem(i: any) {
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['form_data'];

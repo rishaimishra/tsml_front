@@ -211,4 +211,8 @@ export class ProductsService {
   submitFinalQouteMail(url_paremter: any) {
     return this._http.post(this.BesUrl +'/sale_head_accpt_mail', url_paremter);
   };
+
+  submitRfqRemarks(url_paremter: any) {
+    return this._http.post(this.BesUrl +'/user/submit_remarks', url_paremter);
+  };
 }
