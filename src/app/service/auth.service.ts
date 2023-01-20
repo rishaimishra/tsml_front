@@ -45,9 +45,6 @@ export class AuthService {
     return this._http.post<verifyOtpResponse>(`${environment.apiEndpointBase}/${this.VERIFY_OTP_URL}`, requestData);
   };
 
-  resetPassByEmail(data: any) {
-    return this._http.post(this.BesUrl + '/password-update', data);
-  };
   submitForgetPass(data: any) {
     return this._http.post(this.BesUrl + '/password-update', data);
   };
@@ -70,5 +67,25 @@ export class AuthService {
 
   checkEmail(request:any) {
     return this._http.post(this.BesUrl + '/chk_email',  request);
+  };
+
+  forceLogOut(request:any) {
+    return this._http.post(this.BesUrl + '/force_logout',  request);
+  };
+
+  setSecurityQu(request:any) {
+    return this._http.post(this.BesUrl + '/save_security_qst_ans',  request);
+  };
+
+  matchSecurityQu(request:any) {
+    return this._http.post(this.BesUrl + '/security_qstn_match',  request);
+  };
+
+  emailSecurityQu(request:any) {
+    return this._http.post(this.BesUrl + '/security_qstn_mail',  request);
+  };
+
+  passwordReset(request:any) {
+    return this._http.post(this.BesUrl + '/password-reset',  request);
   };
 }

@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'security',
     component: SecurityComponent
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   }
 ];
 

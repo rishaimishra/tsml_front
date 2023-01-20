@@ -77,23 +77,20 @@
                       <div class="form-group">
                         <label>Mobile Number</label>
                         <div class="d-flex2 display-f">
-                        <input (keyup)="sendOtp($event)" type="number" [(ngModel)]="mobileNumber" id="mobilNo" [disabled]="!disableInput" class="form-control" />
-                        <button (click)="getOpt()" [disabled]="!emailErr || !disableInput" type="button" class="btn blue-btn">
+                        <input (keyup)="sendOtp($event)" type="number" maxlength="10" [(ngModel)]="mobileNumber" id="mobilNo" [disabled]="!disableInput" class="form-control" />
+                        <button (click)="getOpt()" [disabled]="!emailErr || !disableInput || validMobile" type="button" class="btn blue-btn">
                               Get OTP
                             </button>
                         </div>
-                        <!-- <div *ngIf="f['phone']?.errors?.pattern">
+                        <div *ngIf="validMobile">
                             <small class="text-danger">Please, Enter 10 digit mobile number.</small>
-                          </div> -->
+                          </div>
                       </div>
                     </div>
                     <!--/-->
                     <div class="col-12 col-lg-6 col-sm-6">
                       <div class="form-group">
                         <label>Enter OTP</label>
-                        <!-- <span class="text-primary ml-5">{{
-                          mobile?.otp
-                          }}</span> -->
                         <div class="d-flex2 display-f">
                           <input type="number" (change)="checkOtp($event)" value="" class="form-control w-79" />
                           <button type="button" (click)="checkVerifyOtp()" [disabled]="!disableInput" class="btn blue-btn">
@@ -107,12 +104,12 @@
                     <div class="col-12 col-lg-6 col-sm-6">
                       <div class="form-group">
                         <label>Password</label>
-                        <input type="password" [(ngModel)]="password" class="form-control" />
-                        <!-- <div *ngIf="f['password']?.invalid &&(f['password']?.touched || submitted)">
+                        <input type="password" [(ngModel)]="password" #pass="ngModel" class="form-control" required/>
+                        <div *ngIf="pass?.invalid &&(pass.touched || submitted)">
                             <small class="text-danger">
                               Password is required
                             </small>
-                          </div> -->
+                          </div>
                       </div>
                     </div>
                     <!--  -->
@@ -847,7 +844,7 @@
                       </div>
                       <!--/-->
                     </div>
-                  
+                    <form [formGroup]="securityForm" (ngSubmit)="saveForm()">
                       <div class="col-12">
                           <div class="security-qs-block">
                             <p><i class="fa fa-shield" aria-hidden="true"></i> Security Questions</p>
@@ -855,35 +852,31 @@
                               <div class="row">
                                <div class="col-12 col-lg-6">
                                 <label class="d-block">Choose Security Questions</label>
-                                <select class="form-control">
+                                <select class="form-control" formControlName="securityone" [ngClass]="{ 'is-invalid': submit && tf.securityone.errors }">
                                   <option value="">Select..</option>
-                                  <option value="1">In what city were you born?</option>
-                                  <option value="2">What is your first school name?</option>
-                                  <option value="3">What was your favorite food?</option>
-                                </select>
+                                  <option value="{{questn.security_question_id}}" *ngFor="let questn of questions">{{questn.s_question}}</option>
+                              </select>
                                </div>
                                <div class="col-12 col-lg-6">
-                                <label>Type The Answer</label>
-                               <input type="text" class="form-control">
+                                <label>Enter Your Answer</label>
+                               <input type="text" formControlName="answoreone"  maxlength="20" placeholder="Max 20 characters" [ngClass]="{ 'is-invalid': submit && tf.answoreone.errors }" class="form-control">
                                </div>
                                <div class="col-12 col-lg-6">
                                 <label class="d-block">Choose Security Questions</label>
-                                <select class="form-control">
+                                <select class="form-control" formControlName="securitytwo" [ngClass]="{ 'is-invalid': submit && tf.securitytwo.errors }">
                                   <option value="">Select..</option>
-                                  <option value="1">In what city were you born?</option>
-                                  <option value="2">What is your first school name?</option>
-                                  <option value="3">What was your favorite food?</option>
-                                </select>
+                                  <option value="{{questn.security_question_id}}" *ngFor="let questn of questions">{{questn.s_question}}</option>
+                              </select>
                                </div>
                                <div class="col-12 col-lg-6">
-                                <label>Type The Answer</label>
-                               <input type="text" class="form-control">
+                                <label>Enter Your Answer</label>
+                               <input type="text" formControlName="answoretwo" maxlength="20" placeholder="Max 20 characters" [ngClass]="{ 'is-invalid': submit && tf.answoretwo.errors }" class="form-control">
                                </div>
                               </div>
                           </div>
                       </div>
                       </div>
-                   
+                    </form>
                     <div class="col-12">
                       <div class="form-group">
                         <label class="container-check">I agree to the

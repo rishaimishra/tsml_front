@@ -33,8 +33,13 @@
                                   </div>
                               </div>
                            </div>
-                           <div class="col-12 ttext-right">
-                              <a (click)="goToForgetPass()" class="smll-font pointer">Forgot Password?</a>
+                           <div class="row">
+                              <div class="col-6 ttext-left">
+                                 <a routerLink="/auth/reset-password" class="smll-font pointer ml-3">Reset Password?</a>
+                              </div>
+                              <div class="col-6 ttext-right" *ngIf="!disableLoginBtn">
+                                 <a (click)="goToForgetPass()" class="smll-font pointer mr-3 text-primary">Forgot Password?</a>
+                              </div>
                            </div>
                         </form>
 
@@ -47,8 +52,11 @@
                                </div>
                              </div>
                            </div>
-                           <div class="col-12 my-3">
+                           <div class="col-12 my-3" *ngIf="!disableLoginBtn">
                               <button href="javascript:;" type="button" (click)="submitLogin(form)" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
+                           </div>
+                           <div class="col-12 my-3" *ngIf="disableLoginBtn">
+                              <button href="javascript:;" type="button" routerLink="/auth/security" class="btn btn-primary btn-block"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Please click here to unlock your account</button>
                            </div>
                          </form>
                          

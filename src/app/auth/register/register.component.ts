@@ -127,6 +127,7 @@ export class RegisterComponent implements OnInit {
   shiptingForm: FormGroup;
   arr: FormArray;
   shiptArr: FormArray;
+  securityForm: FormGroup;
   billingAdd: any = [];
   shiptingAdd: any = [];
   billGstNum: any;
@@ -145,6 +146,9 @@ export class RegisterComponent implements OnInit {
   consntPdferor: boolean = false;
   certPdferor: boolean = false;
   tcsPdferor: boolean = false;
+  questions: any;
+  submit: boolean = false;
+  validMobile: boolean = false;
   
 
   ferroChrome = [
@@ -177,9 +181,19 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService,
     private _spinner: NgxSpinnerService,
     private productService: ProductsService
-  ) { }
+  ) 
+  { 
+    this.securityForm = this._fb.group({
+      eamil: [''],
+      securityone: ['', Validators.required],
+      answoreone: ['', Validators.required,Validators.maxLength(20)],
+      securitytwo: ['',Validators.required],
+      answoretwo: ['', Validators.required, Validators.maxLength(20)]
+    })
+  }
 
   get ff() { return this.addressForm.controls; }
+  get tf() { return this.securityForm.controls; }
   get t() { return this.f.arr as FormArray; }
 
   get fff() { return this.shiptingForm.controls; }
@@ -202,6 +216,8 @@ export class RegisterComponent implements OnInit {
     this.shiptingForm = this._fb.group({
       shipping: this._fb.array([this.createShiptItem('', '', '', '', '', '', '')])
     })
+
+    this.getQuestions();
   }
   createItem(gstin: any, state: any, city: any, addrOne: any, addrTwo: any, pincode: any, company: any) {
     return this._fb.group({
@@ -414,6 +430,12 @@ export class RegisterComponent implements OnInit {
   };
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;
+    console.log(this.mobileNumber.length);
+    if(this.mobileNumber.length> 10 || this.mobileNumber.length < 10) {
+      this.validMobile = true;
+    } else {
+      this.validMobile = false;
+    }
   };
 
   getOpt() {
@@ -953,9 +975,9 @@ export class RegisterComponent implements OnInit {
   isTdsApplicable(event: any) {
     this.isTDS_applicable = event.target.checked;
   };
+  
   submitRegister() {
     const fileData = new FormData();
-    this._spinner.show();
     // this.submitted = true;
 
     if (!this.emailId) {
@@ -1030,6 +1052,16 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    this.submit = true;
+    let value = this.securityForm.value;
+    if(this.securityForm.invalid) {
+      return;
+    }
+    if (value.securityone == value.securitytwo) {
+      Swal.fire('Question selected should not match !');
+      return;
+    }
+    this._spinner.show();
     // fileData.append('first_name', this.registerForm.value.first_name);
     fileData.append('user_type', 'C');
     fileData.append('phone', this.mobileNumber);
@@ -1069,19 +1101,26 @@ export class RegisterComponent implements OnInit {
         Swal.fire({
           position: 'top',
           icon: 'success',
-          text: 'Register Successfully',
+          text: 'Registered Successfully',
           showConfirmButton: false,
           timer: 1500
         })
         this._router.navigate(['/auth/login']);
         this._spinner.hide();
+        this.saveForm();
       }
-      if (res.error.validation?.email) {
+      else if (res.error.validation?.email) {
         this.toastr.error(res.error.validation.email);
         this._spinner.hide();
-      } else {
-        this.toastr.error('Something went wrong !');
+      } 
+      else if (res.error.validation?.company_pan.length > 0){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'GST Number already exists !',
+        })
         this._spinner.hide();
+        return;
       }
     },
       (error) => {
@@ -1089,7 +1128,34 @@ export class RegisterComponent implements OnInit {
         this._spinner.hide();
       }
     );
-  }
+  };
+
+  getQuestions() {
+    this._auth.getSecurityQue().subscribe((res:any) => {
+      console.log(res);
+      if(res.message == 'success.') {
+        this.questions = res.result;
+      }
+    })
+  };
+
+  saveForm() {
+    let value = this.securityForm.value;
+    let securityParam = [{
+      "email": this.emailId,
+      "securityone": value.securityone,
+      "answoreone": value.answoreone
+    },
+    {
+      "email": this.emailId,
+      "securityone": value.securitytwo,
+      "answoreone": value.answoretwo
+    }]
+
+    this._auth.setSecurityQu(securityParam).subscribe((res:any) => {
+      console.log(res);
+    })
+  };
 
   emailvarify(event:any) {
     this.emailId = event.target.value;

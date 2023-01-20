@@ -56,9 +56,10 @@ export class ForgetPasswordComponent implements OnInit {
     if(this.token == undefined || captchaToken == undefined) {
       return;
     }
-    if (this.forgetPassForm.invalid) {
-      return;
-    }
+    // if (this.forgetPassForm.invalid) {
+    //   return;
+    // }
+    console.log(this.forgetPassForm.value);
     this._spinner.show();
     this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res: any) => {
       if (res.status == 1) {

@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
   hideShowPass: boolean = false;
+  disableLoginBtn: boolean = false;
   hideLogin: boolean = true;
   forgetEmail:any;
   token: string|undefined;
@@ -87,7 +88,6 @@ export class LoginComponent implements OnInit {
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
         this._spinner.hide();
         if (res.success == true) {
-          
           localStorage.setItem('tokenUrl',res.token);
           localStorage.setItem('USER_NAME',res.data.user_name);
           localStorage.setItem('USER_ID',res.data.user_id);
@@ -153,27 +153,64 @@ export class LoginComponent implements OnInit {
               timer: 1500
             })
           }
-        } 
-        if (res.success == false) {
+        }
+
+        if (res.success == false && res.message == 'You are already logged in, please logout from there') {
+          Swal.fire({
+            title: 'Sorry',
+            text: "You are already logged in, please logout!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Logout !'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.forceLogout();
+            }
+          })
+          return;
+        }
+        else if (res.success == false && res.result['user_status'] == null) {
           Swal.fire({
             icon: 'error',
-            title: 'Sorry!',
+            title: 'Sorry !',
             text: res.message,
           })
           return;
         }
-      }, error => {
-        console.log(error);
+        else if(res.success == false && res.result['user_status'] == 2) {
+          this.disableLoginBtn = true;
+          let userEmail = this.loginForm.value['email'];
+          localStorage.setItem('USER_EMAIL',userEmail);
           Swal.fire({
             icon: 'error',
-            title: 'Oops...',
-            text: 'Invalid Email or Password!',
+            title: 'Sorry !',
+            text: res.message,
           })
+          return;
+        } else {
+          this.disableLoginBtn = false;
+        }
+      }, error => {
+        console.log(error);
           this._spinner.hide();
       })
     }
   };
 
+  forceLogout() {
+    let userEmail = this.loginForm.value['email'];
+    if(userEmail == null || userEmail == "") {
+      return;
+    }
+    let reqParams = {
+      "email": userEmail
+    }
+    this._auth.forceLogOut(reqParams).subscribe((res:any) => {
+      console.log(res);
+    })
+  }
   backToLogin() {
     this.hideShowPass = false;
     this.hideLogin = true;
