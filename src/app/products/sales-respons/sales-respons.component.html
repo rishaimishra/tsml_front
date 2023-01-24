@@ -271,7 +271,7 @@
                                             <!-- Kam's remarks -->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="">CAM's Remarks</label>
+                                                    <label for="">CAM's Remarks (Max. 500 characters)</label>
                                                     <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks"
                                                         #kamsRemarks="ngModel"
                                                         name="kamRemarks_{{ formData.schedule_no }}"
@@ -285,9 +285,9 @@
                                             <!-- Sales Remarks -->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="">Sales Planning Remarks</label>
+                                                    <label for="">Sales Planning Remarks (Max. 500 characters)</label>
                                                     <textarea [(ngModel)]="formData.salesRemarks"
-                                                        #salsRemarks="ngModel"
+                                                        #salsRemarks="ngModel" MaxLength="500"
                                                         name="salesRemarks_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" rows="4"
                                                         required></textarea>

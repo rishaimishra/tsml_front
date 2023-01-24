@@ -15,8 +15,6 @@ export class AppComponent {
     //   event.returnValue = `You have unsaved changes, leave anyway?`;
     //   console.log('Logout');
     // });
-
-    
   }
 
 }

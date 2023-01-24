@@ -149,6 +149,7 @@ export class RegisterComponent implements OnInit {
   questions: any;
   submit: boolean = false;
   validMobile: boolean = false;
+  errorMsg: boolean = true;
   
 
   ferroChrome = [
@@ -430,7 +431,6 @@ export class RegisterComponent implements OnInit {
   };
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;
-    console.log(this.mobileNumber.length);
     if(this.mobileNumber.length> 10 || this.mobileNumber.length < 10) {
       this.validMobile = true;
     } else {
@@ -1163,12 +1163,23 @@ export class RegisterComponent implements OnInit {
       "email": event.target.value
     }
     this._auth.checkEmail(email).subscribe((res:any) => {
-      if(res.result == 'It looks like you already signed up, login to your account.') {
+      if(res.result == 'It looks like you already signed up, please login to your account.') {
         this.emailErr = false;
         this.emailMsg = res.result;
       } else {
         this.emailErr = true;
       }
     })
+  };
+
+  passwordCheck(pass:any) {
+    var pattern = /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/;
+    this.errorMsg = pattern.test(pass);
+    if(pattern.test(pass)){
+        return true;
+    } else{
+        return false;
+    }
   }
+  
 }

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _toster: ToastrService,
     private _auth: AuthService, private _router: Router, private _spinner: NgxSpinnerService) {
       this.loginForm = this._fb.group({
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]]
       })
       CustomValidators.mustMatch('password', 'password_confirm') // insert here
@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit {
     }
     else {
       this._spinner.show();
+      let email = this.loginForm.value['email'];
       this._auth.login(this.loginForm.value).subscribe((res: any) => {
         this._spinner.hide();
         if (res.success == true) {
@@ -92,6 +93,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('USER_NAME',res.data.user_name);
           localStorage.setItem('USER_ID',res.data.user_id);
           localStorage.setItem('USER_TYPE',res.data.user_type);
+          localStorage.setItem('USER_EMAIL', email);
 
           if(res.data['user_type'] == 'Kam') {
             this._router.navigate(['/dashboard/kam-dashboard']);
@@ -210,7 +212,8 @@ export class LoginComponent implements OnInit {
     this._auth.forceLogOut(reqParams).subscribe((res:any) => {
       console.log(res);
     })
-  }
+  };
+
   backToLogin() {
     this.hideShowPass = false;
     this.hideLogin = true;

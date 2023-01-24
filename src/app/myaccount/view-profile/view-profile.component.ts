@@ -18,8 +18,12 @@ export class ViewProfileComponent implements OnInit {
   documents: any;
   file_link = '';
   custPhoneNo: any = '';
+  updateMobile: boolean = false;
+  receviedOtp: any = '';
+  validMobile: boolean = false;
+  mobileNumber: any = '';
   
-  constructor(private authService: AuthService,
+  constructor(private _auth: AuthService,
      private spinner: NgxSpinnerService,
      private productService: ProductsService) { }
 
@@ -44,14 +48,15 @@ export class ViewProfileComponent implements OnInit {
     })
   }
 
-  onUpdateMob() {
-    let useriD = localStorage.getItem('USER_ID');
+  onUpdateMob(email:any) {
     this.spinner.show();
     var params  ={
-      mobile: this.custPhoneNo,
-      kam_id: useriD
+      "mobile_no": this.custPhoneNo,
+      "email": email,
+      "otp": this.receviedOtp
+
     }
-    this.productService.postMethopd('/user/update-mobile', params).subscribe((res: any) => {
+    this._auth.verifyMobile(params).subscribe((res: any) => {
       this.spinner.hide();
       if (res.success) {
         Swal.fire({
@@ -61,6 +66,7 @@ export class ViewProfileComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
+        this.updateMobile = false;
       }
     })
     // this.productService.getMethod(url).subscribe((res: any) => {
@@ -76,6 +82,43 @@ export class ViewProfileComponent implements OnInit {
     //     this.data = res;
     //   }
     // })
+  };
+
+  getOtp(email:any) {
+    let getOtpParam = {
+      "mobile_no": this.custPhoneNo,
+      "email": email
+    }
+    this.spinner.show();
+    this._auth.getOtpMobile(getOtpParam).subscribe((res:any) => {
+      this.spinner.hide();
+      console.log(res);
+      if (res.status == 1) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: res.message,
+        })
+        this.updateMobile = true;
+      }
+    else if (res.status == 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: res.message,
+      })
+        return;
+      }
+    })
+  };
+
+  mobilNumCheck(event:any) {
+    this.mobileNumber = event.target.value;
+    if(this.mobileNumber.length> 10 || this.mobileNumber.length < 10) {
+      this.validMobile = true;
+    } else {
+      this.validMobile = false;
+    }
   }
 
 }

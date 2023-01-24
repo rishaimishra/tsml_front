@@ -88,4 +88,17 @@ export class AuthService {
   passwordReset(request:any) {
     return this._http.post(this.BesUrl + '/password-reset',  request);
   };
+
+  getOtpMobile(request:any) {
+    return this._http.post(this.BesUrl + '/user/update-mobile-number',  request);
+  };
+
+  verifyMobile(request:any) {
+    return this._http.post(this.BesUrl + '/user/update-mobile-user',  request);
+  };
+
+  save_token(request:any) {
+    return this._http.post(this.BesUrl + '/get_save_token',  request);
+  };
+
 }

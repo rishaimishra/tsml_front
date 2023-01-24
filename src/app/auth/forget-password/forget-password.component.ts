@@ -25,7 +25,7 @@ export class ForgetPasswordComponent implements OnInit {
     private _router: Router) {
     this.forgetPassForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
-      otp: ['', [Validators.required, Validators.email]],
+      otp: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password_confirm: ['', [Validators.required, Validators.minLength(6)]]
     })
@@ -59,7 +59,7 @@ export class ForgetPasswordComponent implements OnInit {
     // if (this.forgetPassForm.invalid) {
     //   return;
     // }
-    console.log(this.forgetPassForm.value);
+
     this._spinner.show();
     this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res: any) => {
       if (res.status == 1) {

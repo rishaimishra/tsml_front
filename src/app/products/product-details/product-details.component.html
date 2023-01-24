@@ -226,8 +226,8 @@
                       </div>
                       <div class="col-lg-12">
                         <div class="form-group">
-                          <label for="">Customer remarks</label>
-                          <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
+                          <label for="">Customer remarks (Max. 500 characters)</label>
+                          <textarea [(ngModel)]="formData.remarks" MaxLength="500" #remarks="ngModel"
                             name="remarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
                           <small *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"

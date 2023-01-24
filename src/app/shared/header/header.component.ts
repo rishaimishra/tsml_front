@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
     this.userName = localStorage.getItem('USER_NAME');
     this.userRol = localStorage.getItem('USER_TYPE');
     this.userId = localStorage.getItem('USER_ID');
+    this.getTokenInRes(this.userId);
 
     if(this.userRol == 'Kam') {
       this.getCamNoti();
@@ -90,10 +91,12 @@ export class HeaderComponent implements OnInit {
       confirmButtonText: 'Logout'
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem('tokenUrl');
+       this._auth.logOut('').subscribe((res:any) => {
         this.isUserLogIn = false;
         this.isUserLogIn = false;
+        localStorage.clear();
         this._router.navigate(['/']);
+       })
       }
     })
   };
@@ -148,7 +151,8 @@ export class HeaderComponent implements OnInit {
     this._sales.getPlantNoti(userId).subscribe((res:any) => {
       console.log(res);
     })
-  }
+  };
+
   removeNoti(id:any) {
     this._spinner.show();
     let removeNoti = {
@@ -192,5 +196,36 @@ export class HeaderComponent implements OnInit {
       console.log(err);
       this._spinner.hide();
     })
+  };
+
+  forceLogout() {
+    let userEmail = localStorage.getItem('USER_EMAIL');
+    let reqParams = {
+      "email": userEmail
+    }
+    this._auth.forceLogOut(reqParams).subscribe((res:any) => {
+      if(res.success == true) {
+        this.isUserLogIn = false;
+        this.isUserLogIn = false;
+        localStorage.clear();
+        this._router.navigate(['/']);
+      }
+    })
+  };
+
+  getTokenInRes(userId:any) {
+    let token = localStorage.getItem('tokenUrl');
+    let param = {
+      "userid": userId
+    }
+
+    this._auth.save_token(param).subscribe((res:any) => {
+      if(res.success == true) {
+        if(res.result.token  != token) {
+          this.forceLogout();
+        }
+      }
+    })
   }
+  
 }

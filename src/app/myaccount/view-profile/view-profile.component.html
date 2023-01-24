@@ -21,22 +21,37 @@
                                     <b>Company Name</b>
                                     <span class="d-block">{{customer_information.name}}</span>
                                  </p>
-                                 <p>
-                                    <b>Mobile No</b>
-                                       <input type="number" [(ngModel)]="custPhoneNo" class="form-control" value=""
-                                           placeholder="Phone No">
-                                 </p>
+                                 <div class="">
+                                    <div class="form-group">
+                                      <div class="d-flex2 display-f">
+                                      <input type="number" maxlength="10" (keyup)="mobilNumCheck($event)" [(ngModel)]="custPhoneNo" id="mobilNo"  class="form-control" />
+                                      <button type="button" [disabled]="validMobile" class="btn blue-btn" (click)="getOtp(customer_information.email)">
+                                            Get OTP
+                                          </button>
+                                      </div>
+                                      <div *ngIf="validMobile">
+                                       <small class="text-danger">Please, Enter 10 digit mobile number.</small>
+                                     </div>
+                                       <br>
+                                      <!-- Otp -->
+                                      <div class="d-flex2 display-f" *ngIf="updateMobile">
+                                       <input type="number" maxlength="6" [(ngModel)]="receviedOtp" id="mobilNo"  class="form-control" />
+                                       <button type="button" class="btn blue-btn" (click)="onUpdateMob(customer_information.email)">
+                                             Verify
+                                           </button>
+                                       </div>
+                                    </div>
+                                  </div>
                                  <p>
                                     <b>Email</b>
                                     <span class="d-block">{{customer_information.email}}</span>
                                  </p>
                               </div>
-                              <div class="row">
+                              <!-- <div class="row" *ngIf="updateMobile">
                                  <div class="col-lg-12" (click)="onUpdateMob();">
                                     <a class="btn btn-primary"><i class="fa fa-paper-plane"></i> Update Mobile No</a>&nbsp;
-                                    <!-- <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button> -->
                                  </div>
-                              </div>
+                              </div> -->
                            </div>
                         </div>
                      </div>

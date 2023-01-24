@@ -115,7 +115,7 @@ export class CustomerDashboardComponent implements OnInit {
     this.searchPoValue = '';
     // this.spinner.show();
     this._product.getPoList().subscribe((res:any) => {
-      if(res.message == 'success') {
+      if(res?.message == 'success') {
         this.spinner.hide();
       this.poItems = res.result;
       }
