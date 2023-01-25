@@ -2,10 +2,10 @@
 <html lang="en">
 <body>
    <header class="header_sec">
-      <div class="header_top" *ngIf="isUserLogIn != false && loginFalse != true">
-         <div class="container">
+      <div class="header_top">
+         <div class="container" >
             <div class="header_top_inr">
-               <ul>
+               <ul *ngIf="isUserLogIn != false && loginFalse != true">
                   <li class="hedTopBtn"> <a class="sign_btn log_btn">English</a> </li>
                   <li>
                      <div class = "notification">

@@ -128,6 +128,7 @@ export class ManagerComponent implements OnInit {
   isDap: boolean = false;
   rejectRemarks: any = '';
   creditDays: any = [];
+  remarksArry: any = [];
 
 
   @ViewChild("remarksModel")
@@ -495,6 +496,17 @@ export class ManagerComponent implements OnInit {
         } else {
           form_data_array[i]['credit_days'] = this.creditDays[indxId].days;
         }
+
+        let rmarksParam = {
+          rfq_no: this.rfqNum,
+          sche_no: form_data_array[i].schedule_no,
+          remarks: form_data_array[i].remarks,
+          camremarks: form_data_array[i].kamsRemarks,
+          salesremarks: form_data_array[i].salesRemarks,
+          from: 'SM',
+          to: 'Kam'
+        };
+        this.remarksArry.push(rmarksParam);
       }
 
       let reqData = {
@@ -576,7 +588,7 @@ export class ManagerComponent implements OnInit {
         this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
           this._router.navigate(['/sales-manager/rfq-list']);
         })
-
+        this.headRemarks();
         this.otherFuncApi(qouteSt, userTyp);
       }
       if (res.message == 'error' || res.status == 0) {
@@ -661,6 +673,12 @@ export class ManagerComponent implements OnInit {
     }
 
     this._router.navigate(['dashboard/manager-dashboard']);
+  };
+
+  headRemarks() {
+    this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+      console.log(res);
+    })
   };
 
   date: any;
@@ -1037,8 +1055,14 @@ export class ManagerComponent implements OnInit {
   };
   messageBox(shcdlNo: any) {
     this.spinner.show();
-    let apiUrl = '/user/view_remarks/' + shcdlNo;
-    this._product.getMethod(apiUrl).subscribe((res: any) => {
+    // let apiUrl = '/user/view_remarks/' + shcdlNo;
+    let userType = localStorage.getItem('USER_TYPE');
+    let reqParams = {
+      "rfq": this.rfqNum,
+      "sche_no": shcdlNo,
+      "user_type": userType
+    }
+    this._product.remarksList(reqParams).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         this.messages = res.result;
@@ -1197,5 +1221,11 @@ export class ManagerComponent implements OnInit {
         this._router.navigate(['/sales-manager/rfq-list'])
       }
     })
+  };
+
+  closeRemarksModel() {
+    $("#viewMoreMessage").hide();
+    $('body').removeClass('modal-open');
+    $(".modal-backdrop").removeClass("modal-backdrop show");
   }
 }

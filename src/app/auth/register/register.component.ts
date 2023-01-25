@@ -1065,6 +1065,7 @@ export class RegisterComponent implements OnInit {
     // fileData.append('first_name', this.registerForm.value.first_name);
     fileData.append('user_type', 'C');
     fileData.append('phone', this.mobileNumber);
+    fileData.append('first_name', '');
     fileData.append('org_pan', this.orgPan);
     fileData.append('org_name', this.orgName);
     fileData.append('org_address', this.orgAddrs);

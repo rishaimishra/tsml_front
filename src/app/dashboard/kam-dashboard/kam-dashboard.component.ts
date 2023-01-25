@@ -118,7 +118,7 @@ export class KamDashboardComponent implements OnInit {
     // this.spinner.show();
     this._product.getkamPoList().subscribe((res:any) => {
       this.spinner.hide();
-      if(res.message == 'success') {
+      if(res?.message == 'success') {
         this.spinner.hide();
       this.poItems = res.result;
       }

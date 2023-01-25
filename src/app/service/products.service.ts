@@ -215,4 +215,8 @@ export class ProductsService {
   submitRfqRemarks(url_paremter: any) {
     return this._http.post(this.BesUrl +'/user/submit_remarks', url_paremter);
   };
+
+  remarksList(url_paremter: any) {
+    return this._http.post(this.BesUrl +'/user/view_remarks', url_paremter);
+  };
 }

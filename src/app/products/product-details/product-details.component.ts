@@ -275,16 +275,16 @@ export class ProductDetailsComponent implements OnInit {
           return;
         }
 
-        // let rmarksParam = {
-        //   rfq_no: 'RFQ' + rfqNumber,
-        //   sche_no: form_data_array[i].schedule_no,
-        //   remarks: form_data_array[i].remarks,
-        //   camremarks: '',
-        //   salesremarks: '',
-        //   from: 'C',
-        //   to: 'Kam'
-        // };
-        // this.remarksArry.push(rmarksParam);
+        let rmarksParam = {
+          rfq_no: 'RFQ' + rfqNumber,
+          sche_no: form_data_array[i].schedule_no,
+          remarks: form_data_array[i].remarks,
+          camremarks: '',
+          salesremarks: '',
+          from: 'C',
+          to: 'Kam'
+        };
+        this.remarksArry.push(rmarksParam);
       }
       let reqData = {
         rfq_number: 'RFQ' + rfqNumber,
@@ -324,7 +324,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log(res);
         })
         this.statusBar('RFQ' + rfqNumber)
-        // this.custRemarkApi();
+        this.custRemarkApi();
       }
       if (res.result == 'Quote not created') {
         this._toaster.error(res.result);
@@ -342,11 +342,11 @@ export class ProductDetailsComponent implements OnInit {
     });
   };
 
-  // custRemarkApi() {
-  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
-  //     console.log(res);
-  //   })
-  // };
+  custRemarkApi() {
+    this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+      console.log(res);
+    })
+  };
 
   rfqEmailSent(rfqNumber: any) {
     let userId = localStorage.getItem('USER_ID');

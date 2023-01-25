@@ -374,7 +374,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <span class="text-primary pointerTab" data-toggle="modal"
+                                                <span class="text-primary pointer" data-toggle="modal"
                                                 (click)="messageBox(formData.schedule_no)" data-target="#viewMoreMessage">See
                                                     Remarks</span>
                                             </div>
@@ -416,7 +416,7 @@
             </div>
             <div class="row">
             <div class="col-4">
-                <div class="form-group">
+                <div class="form-group" *ngIf="slsHeadMsg?.length != 0">
                     <label for="exampleFormControlTextarea1">Sales Head's Remarks</label>
                     <textarea class="form-control" readonly id="exampleFormControlTextarea1" rows="3">{{slsHeadMsg?.remarks}}</textarea>
                   </div>
@@ -737,7 +737,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Remarks for delete</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Remarks for Cancellation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

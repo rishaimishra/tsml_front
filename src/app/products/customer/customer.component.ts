@@ -457,8 +457,14 @@ export class CustomerComponent implements OnInit {
 
   messageBox(shcdlNo:any) {
     this.spinner.show();
-    let apiUrl = '/user/view_remarks/' + shcdlNo;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    // let apiUrl = '/user/view_remarks/' + shcdlNo;
+    let userType = localStorage.getItem('USER_TYPE');
+    let reqParams = {
+      "rfq": this.rfqNum,
+      "sche_no": shcdlNo,
+      "user_type": userType
+    }
+    this._product.remarksList(reqParams).subscribe((res:any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         this.messages = res.result;

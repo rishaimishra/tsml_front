@@ -245,7 +245,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="">Customer remarks</label>
-                          <textarea [(ngModel)]="formData.remarks" #remarks="ngModel"
+                          <textarea [(ngModel)]="formData.remarks" [disabled]="!userType" #remarks="ngModel"
                             name="remarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
                           <small *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
@@ -256,7 +256,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="">CAM's Remarks</label>
-                          <textarea [disabled]="userType" [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
+                          <textarea disabled [(ngModel)]="formData.kamsRemarks" #kamsRemarks="ngModel"
                             name="kamRemarks_{{ formData.schedule_no }}" class="form-control form-control-sm" rows="4"
                             required></textarea>
                           <small *ngIf="kamsRemarks.invalid && (kamsRemarks.dirty || kamsRemarks.touched || submit)"

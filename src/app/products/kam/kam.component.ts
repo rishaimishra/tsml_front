@@ -493,18 +493,68 @@ export class KamComponent implements OnInit {
         // let qouteCheck = this.selectedItem[i]['schedule'][i]?.sche_ct;
         // this.lastQoute.push(qouteCheck);
         // console.log(qouteCheck);
+        let qouteSts = this.selectedItem[0]['quotest'];
 
-        // let rmarksParam = {
-        //   rfq_no: this.rfqNum,
-        //   sche_no: form_data_array[i].schedule_no,
-        //   remarks: form_data_array[i].remarks,
-        //   camremarks: form_data_array[i].kamsRemarks,
-        //   salesremarks: form_data_array[i].salesRemarks,
-        //   from: 'Kam',
-        //   to: 'Sales'
-        // };
-        // this.remarksArry.push(rmarksParam);
-
+        if (qouteSts == 0) {
+          let rmarksParam = {
+            rfq_no: this.rfqNum,
+            sche_no: form_data_array[i].schedule_no,
+            remarks: form_data_array[i].remarks,
+            camremarks: form_data_array[i].kamsRemarks,
+            salesremarks: form_data_array[i].salesRemarks,
+            from: 'Kam',
+            to: 'Sales'
+          };
+          this.remarksArry.push(rmarksParam);
+        }
+        else if (qouteSts == 5) {
+          let rmarksParam = {
+            rfq_no: this.rfqNum,
+            sche_no: form_data_array[i].schedule_no,
+            remarks: form_data_array[i].remarks,
+            camremarks: form_data_array[i].kamsRemarks,
+            salesremarks: form_data_array[i].salesRemarks,
+            from: 'Kam',
+            to: 'SM'
+          };
+          this.remarksArry.push(rmarksParam);
+        }
+        else if (qouteSts == 2) {
+          let rmarksParam = {
+            rfq_no: this.rfqNum,
+            sche_no: form_data_array[i].schedule_no,
+            remarks: form_data_array[i].remarks,
+            camremarks: form_data_array[i].kamsRemarks,
+            salesremarks: form_data_array[i].salesRemarks,
+            from: 'Kam',
+            to: 'Sales'
+          };
+          this.remarksArry.push(rmarksParam);
+        }
+        else if (qouteSts == 6) {
+          let rmarksParam = {
+            rfq_no: this.rfqNum,
+            sche_no: form_data_array[i].schedule_no,
+            remarks: form_data_array[i].remarks,
+            camremarks: form_data_array[i].kamsRemarks,
+            salesremarks: form_data_array[i].salesRemarks,
+            from: 'Kam',
+            to: 'C'
+          };
+          this.remarksArry.push(rmarksParam);
+        }
+        else if (qouteSts == 9) {
+          let rmarksParam = {
+            rfq_no: this.rfqNum,
+            sche_no: form_data_array[i].schedule_no,
+            remarks: form_data_array[i].remarks,
+            camremarks: form_data_array[i].kamsRemarks,
+            salesremarks: form_data_array[i].salesRemarks,
+            from: 'Kam',
+            to: 'SM'
+          };
+          this.remarksArry.push(rmarksParam);
+        }
       }
 
       let reqData = {
@@ -571,11 +621,9 @@ export class KamComponent implements OnInit {
         //     console.log(res)
         //   })
         // }
-
+        this.camRemarks();
         this.otherFuncApi(qouteSt);
-        // if(qouteSt == 0) {
-        //   this.camRemarks();
-        // }
+
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -690,11 +738,11 @@ export class KamComponent implements OnInit {
     this._router.navigate(['/products/rfq-list']);
   };
 
-  // camRemarks() {
-  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
-  //     console.log(res);
-  //   })
-  // };
+  camRemarks() {
+    this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+      console.log(res);
+    })
+  };
 
   date: any;
   setFromData() {
@@ -1071,8 +1119,15 @@ export class KamComponent implements OnInit {
 
   messageBox(shcdlNo: any) {
     this.spinner.show();
-    let apiUrl = '/user/view_remarks/' + shcdlNo;
-    this._product.getMethod(apiUrl).subscribe((res: any) => {
+    // let apiUrl = '/user/view_remarks/' + shcdlNo;
+    let userType = localStorage.getItem('USER_TYPE');
+    let reqParams = {
+      "rfq": this.rfqNum,
+      "sche_no": shcdlNo,
+      "user_type": userType
+    }
+
+    this._product.remarksList(reqParams).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         this.messages = res.result;
@@ -1262,7 +1317,6 @@ export class KamComponent implements OnInit {
   getSalesHed(rfqNum: any) {
     let apiUrl = '/user/sm_remark_by_id/' + rfqNum;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
-      console.log(res.result);
       if (res.status == 1) {
         this.slsHeadMsg = res.result;
       }

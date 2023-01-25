@@ -458,17 +458,17 @@ export class SalesResponsComponent implements OnInit {
         if (form_data_array[i].salesRemarks == null ) {
         return;
       }
+      let rmarksParam = {
+        rfq_no: this.rfqNum,
+        sche_no: form_data_array[i].schedule_no,
+        remarks: form_data_array[i].remarks,
+        camremarks: form_data_array[i].kamsRemarks,
+        salesremarks: form_data_array[i].salesRemarks,
+        from: 'Sales',
+        to: 'Kam'
+      };
+      this.remarksArry.push(rmarksParam);
       }
-      // let rmarksParam = {
-      //   rfq_no: this.rfqNum,
-      //   sche_no: form_data_array[i].schedule_no,
-      //   remarks: form_data_array[i].remarks,
-      //   camremarks: form_data_array[i].kamsRemarks,
-      //   salesremarks: form_data_array[i].salesRemarks,
-      //   from: 'Sales',
-      //   to: 'Kam'
-      // };
-      // this.remarksArry.push(rmarksParam);
 
       let reqData = {
         rfq_number: this.rfqNum,
@@ -481,6 +481,7 @@ export class SalesResponsComponent implements OnInit {
       rfqFormArry.push(reqData);
     };
 
+    let qouteSt = this.selectedItem[0]['quotest'];
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
@@ -492,6 +493,9 @@ export class SalesResponsComponent implements OnInit {
           timer: 1500
         })
         // status update and reqoute
+        if(qouteSt == 7) {
+          this.salesRemarks();
+        }
         this.otherFuncApi();
       }
       else if (res.message == 'error' || res.status == 0) {
@@ -552,11 +556,11 @@ export class SalesResponsComponent implements OnInit {
   this._router.navigate(['/products/confirm-rfq']);
   };
   
-  // salesRemarks() {
-  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
-  //     console.log(res);
-  //   })
-  // };
+  salesRemarks() {
+    this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+      console.log(res);
+    })
+  };
 
   date: any;
   setFromData() {
@@ -734,8 +738,14 @@ export class SalesResponsComponent implements OnInit {
   };
   messageBox(shcdlNo:any) {
     this.spinner.show();
-    let apiUrl = '/user/view_remarks/' + shcdlNo;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    // let apiUrl = '/user/view_remarks/' + shcdlNo;
+    let userType = localStorage.getItem('USER_TYPE');
+    let reqParams = {
+      "rfq": this.rfqNum,
+      "sche_no": shcdlNo,
+      "user_type": userType
+    }
+    this._product.remarksList(reqParams).subscribe((res:any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         this.messages = res.result;
