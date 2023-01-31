@@ -87,5 +87,9 @@ export class SecurityComponent implements OnInit {
         })
       }
     })
+  };
+
+  resetForm() {
+    this.securityForm.reset();
   }
 }

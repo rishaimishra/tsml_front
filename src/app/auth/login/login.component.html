@@ -1,113 +1,144 @@
 <!DOCTYPE HTML>
 <html lang="en">
-   <body>
-      <!--/Header-->
-      <section class="login-bg" *ngIf="hideLogin">
-         <div class="vertical-center">
-               <div class="container">
-                  <div class="row justify-content-center my-55">
-                     <div class="col-10 col-md-6 col-lg-4 position-relative">
-                        <div class="nav-round2"></div>
-                        <div class="row login-inner">
-                           <form [formGroup]="loginForm">
-                           <div class="col-12 mb-3">
-                              <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
-                           </div>
-                           <div class="col-12">
-                              <p class="log-txt">Login to Your Account</p>
-                           </div>
-                           <div class="col-12">
-                              <div>
-                                 <label>User ID</label>
-                                 <input formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-                                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                    <div *ngIf="f.email.errors.required">Email is required</div>
-                                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                                  </div>
-                              </div>
-                           </div>
-                           <!--/-->
-                           <div class="col-12 mt-3">
-                              <div>
-                                 <label>Password</label>
-                                 <input formControlName="password" type="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                                    <div *ngIf="f.password.errors.required">Password is required</div>
-                                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                                  </div>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-6 ttext-left">
-                                 <a routerLink="/auth/reset-password" class="smll-font pointer ml-3">Reset Password?</a>
-                              </div>
-                              <div class="col-6 ttext-right" *ngIf="!disableLoginBtn">
-                                 <a (click)="goToForgetPass()" class="smll-font pointer mr-3 text-primary">Forgot Password?</a>
-                              </div>
-                           </div>
-                        </form>
 
-                        <form #form="ngForm">
-                           <div class="row mt-3 ml-2">
-                             <div class="col-sm-12 mb-2">
-                               <re-captcha id="recaptcha"  name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
-                               <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
-                                 <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
-                               </div>
+<body>
+   <!--/Header-->
+   <section class="login-bg" *ngIf="hideLogin">
+      <div class="vertical-center">
+         <div class="container">
+            <div class="row justify-content-center my-55">
+               <div class="col-10 col-md-6 col-lg-4 position-relative">
+                  <div class="nav-round2"></div>
+                  <div class="row login-inner">
+                     <form [formGroup]="loginForm">
+                        <div class="col-12 mb-3">
+                           <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
+                        </div>
+                        <div class="col-12">
+                           <p class="log-txt">Login to Your Account</p>
+                        </div>
+                        <div class="col-12">
+                           <div>
+                              <label>User ID</label>
+                              <input formControlName="email" type="email" class="form-control"
+                                 [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                 <div *ngIf="f.email.errors.required">Email is required</div>
+                                 <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                              </div>
+                           </div>
+                        </div>
+                        <!--/-->
+                        <div class="col-12 mt-2">
+                           <div>
+                              <label>Password</label>
+                              <input formControlName="password" minlength="10" type="password" class="form-control"
+                                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                 <div *ngIf="f.password.errors.required">Password is required</div>
+                                 <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters</div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="col-12 mt-2">
+                           <div class="form-group">
+                             <label>Verify OTP</label>
+                             <div class="d-flex2 display-f">
+                               <input type="text" formControlName="logotp" [readonly]="disableLogin" MaxLength="6" class="form-control w-79 gstVal"
+                               [ngClass]="{ 'is-invalid': submitted && f.logotp.errors }" />
+                               <button type="button" class="btn blue-btn" [disabled]="!disableLogin" (click)="getOtpLogin()">
+                                 Get OTP
+                               </button>
+                              </div>
+                              <div *ngIf="submitted && f.logotp.errors" class="invalid-feedback">
+                                <div *ngIf="f.logotp.errors.required">OTP is required</div>
+                                <div *ngIf="f.logotp.errors.minlength">OTP must be at least 6 characters</div>
                              </div>
                            </div>
-                           <div class="col-12 my-3" *ngIf="!disableLoginBtn">
-                              <button href="javascript:;" type="button" (click)="submitLogin(form)" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
-                           </div>
-                           <div class="col-12 my-3" *ngIf="disableLoginBtn">
-                              <button href="javascript:;" type="button" routerLink="/auth/security" class="btn btn-primary btn-block"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Please click here to unlock your account</button>
-                           </div>
-                         </form>
-                         
-                        <!--/-->
-                        <div class="col-12 text-center">
-                           <p class="smll-font">Not a member? <a routerLink ="/auth/register" class="smll-font">Sign up</a></p>
                         </div>
+                        <div class="row resetForget">
+                           <div class="col-6 ttext-left">
+                              <a routerLink="/auth/reset-password" class="smll-font pointer ml-3">Reset Password?</a>
+                           </div>
+                           <div class="col-6 ttext-right" *ngIf="!disableLoginBtn">
+                              <a (click)="goToForgetPass()" class="smll-font pointer mr-3 text-primary">Forgot
+                                 Password?</a>
+                           </div>
                         </div>
-                     </div>
-                  </div>
-               </div>
-         </div>
-      </section>
-      <!-- Forget pass --> 
-      <section class="login-bg" *ngIf="hideShowPass">
-         <div class="vertical-center">
-               <div class="container">
-                  <div class="row justify-content-center my-55">
-                     <div class="col-10 col-md-6 col-lg-4 position-relative">
-                        <div class="nav-round3"></div>
-                        <div class="row login-inner">
-                           <div class="col-12 mb-3">
-                              <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
-                           </div>
-                           <div class="col-12">
-                              <p class="log-txt">Forgot Password</p>
-                           </div>
-                           <div class="col-12">
-                              <div>
-                                 <label>Email ID</label>
-                                 <input [(ngModel)]="forgetEmail" type="email" class="form-control">
-                              </div>
-                              <div class="col-12 text-right">
-                                 <a class="smll-font pointer" (click)="backToLogin()" >Back to Login</a>
+                     </form>
+
+                     <form #form="ngForm">
+                        <div class="row mt-3 ml-2">
+                           <div class="col-sm-12 mb-2">
+                              <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token"
+                                 required
+                                 [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)">
+                              </re-captcha>
+                              <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"
+                                 class="invalid-feedback">
+                                 <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
                               </div>
                            </div>
-                           <!--/-->
-                           
-                           <div class="col-12 my-3">
-                              <button (click)="forgetPassword()" class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Send</button>
-                           </div>
-                           <!--/-->
-                         </div>
+                        </div>
+                        <div class="col-12 my-3" *ngIf="!disableLoginBtn">
+                           <button href="javascript:;" [disabled]="disableLogin" type="button" (click)="submitLogin(form)"
+                              class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
+                        </div>
+                        <div class="col-12 my-3" *ngIf="disableLoginBtn">
+                           <button href="javascript:;" type="button" routerLink="/auth/security"
+                              class="btn btn-primary btn-block"><i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                              Please click here to unlock your account</button>
+                        </div>
+                     </form>
+
+                     <!--/-->
+                     <div class="col-12 text-center">
+                        <p class="smll-font">Not a member? <a routerLink="/auth/register" class="smll-font">Sign up</a>
+                        </p>
                      </div>
                   </div>
                </div>
             </div>
-      </section>
-   </body>
+         </div>
+      </div>
+   </section>
+   <!-- Forget pass -->
+   <section class="login-bg" *ngIf="hideShowPass">
+      <div class="vertical-center">
+         <div class="container">
+            <div class="row justify-content-center my-55">
+               <div class="col-10 col-md-6 col-lg-4 position-relative">
+                  <div class="nav-round3"></div>
+                  <div class="row login-inner">
+                     <div class="col-12 mb-3">
+                        <img src="assets/images/logo-blue.png" alt="logo" class="f-logo img-fluid">
+                     </div>
+                     <div class="col-12">
+                        <p class="log-txt">Forgot Password</p>
+                     </div>
+                     <div class="col-12">
+                        <div>
+                           <label>Email ID</label>
+                           <input [(ngModel)]="forgetEmail" type="email" class="form-control">
+                        </div>
+                        <div class="col-12 text-right">
+                           <a class="smll-font pointer" (click)="backToLogin()">Back to Login</a>
+                        </div>
+                     </div>
+                     <!--/-->
+
+                     <div class="col-12 my-3">
+                        <button (click)="forgetPassword()" class="btn btn-primary btn-block"><i
+                              class="fa fa-paper-plane"></i> Send</button>
+                     </div>
+                     <!--/-->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</body>
+
 </html>

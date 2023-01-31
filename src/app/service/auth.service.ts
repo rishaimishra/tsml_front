@@ -101,4 +101,12 @@ export class AuthService {
     return this._http.post(this.BesUrl + '/get_save_token',  request);
   };
 
+  getOtpLog(request:any) {
+    return this._http.post(this.BesUrl + '/send-login-otp',  request);
+  };
+
+  checkExpireyUser(request:any) {
+    return this._http.post(this.BesUrl + '/regis_date_log',  request);
+  };
+
 }

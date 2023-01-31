@@ -170,7 +170,7 @@ export class ManagerComponent implements OnInit {
 
     // this.states = this._state.getState();
     this.detailByRfq();
-    this.getLocation();
+    // this.getLocation();
     this.setFromData();
     this.getNegotiationHistory();
     this.getSubCategory(this.rfqNum);
@@ -497,16 +497,16 @@ export class ManagerComponent implements OnInit {
           form_data_array[i]['credit_days'] = this.creditDays[indxId].days;
         }
 
-        let rmarksParam = {
-          rfq_no: this.rfqNum,
-          sche_no: form_data_array[i].schedule_no,
-          remarks: form_data_array[i].remarks,
-          camremarks: form_data_array[i].kamsRemarks,
-          salesremarks: form_data_array[i].salesRemarks,
-          from: 'SM',
-          to: 'Kam'
-        };
-        this.remarksArry.push(rmarksParam);
+        // let rmarksParam = {
+        //   rfq_no: this.rfqNum,
+        //   sche_no: form_data_array[i].schedule_no,
+        //   remarks: '',
+        //   camremarks: form_data_array[i].kamsRemarks,
+        //   salesremarks: form_data_array[i].salesRemarks,
+        //   from: 'SM',
+        //   to: 'Kam'
+        // };
+        // this.remarksArry.push(rmarksParam);
       }
 
       let reqData = {
@@ -588,7 +588,7 @@ export class ManagerComponent implements OnInit {
         this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
           this._router.navigate(['/sales-manager/rfq-list']);
         })
-        this.headRemarks();
+        // this.headRemarks();
         this.otherFuncApi(qouteSt, userTyp);
       }
       if (res.message == 'error' || res.status == 0) {
@@ -675,11 +675,11 @@ export class ManagerComponent implements OnInit {
     this._router.navigate(['dashboard/manager-dashboard']);
   };
 
-  headRemarks() {
-    this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
-      console.log(res);
-    })
-  };
+  // headRemarks() {
+  //   this._product.submitRfqRemarks(this.remarksArry).subscribe((res:any) => {
+  //     console.log(res);
+  //   })
+  // };
 
   date: any;
   setFromData() {
@@ -1086,24 +1086,25 @@ export class ManagerComponent implements OnInit {
     this.location.back();
   };
 
-  getLocation() {
-    this.spinner.show();
-    let userId = localStorage.getItem('USER_ID');
-    let apiUrl = '/user/get_user_address/' + userId;
+  // getLocation() {
+  //   this.spinner.show();
+  //   let userId = localStorage.getItem('USER_ID');
+  //   let apiUrl = '/user/get_user_address/' + userId;
 
-    if (userId != '' || userId != null) {
-      this._product.getMethod(apiUrl).subscribe((res: any) => {
-        this.spinner.hide();
-        this.billto = res.result['bill'];
-        this.shipto = res.result['ship'];
-        this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
-        if (res.status == 'Token has Expired') {
-          this._router.navigate(['/auth/login']);
-          this.spinner.hide();
-        }
-      })
-    }
-  };
+  //   if (userId != '' || userId != null) {
+  //     this._product.getMethod(apiUrl).subscribe((res: any) => {
+  //       this.spinner.hide();
+  //       this.billto = res.result['bill'];
+  //       this.shipto = res.result['ship'];
+  //       this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
+  //       if (res.status == 'Token has Expired') {
+  //         this._router.navigate(['/auth/login']);
+  //         this.spinner.hide();
+  //       }
+  //     })
+  //   }
+  // };
+  
   plantSele(event: any, schdlNo: any) {
     this.spinner.show();
     this.plantSelectArr[schdlNo] = event.target.value;

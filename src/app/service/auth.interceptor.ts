@@ -9,7 +9,7 @@ import {environment} from 'src/environments/environment';
 
 export class AuthIntercepto implements HttpInterceptor {
     sapApiUrl = environment.sapApiEndpointBase;
-
+    expectcval:any;
     constructor(private _authService: AuthService,
         private inject: Injector) { }
 
@@ -17,7 +17,7 @@ export class AuthIntercepto implements HttpInterceptor {
         let authService = this.inject.get(AuthService);
         let jwtToken = req.clone({
             setHeaders: {
-                Authorization: 'bearer ' + authService.getToken(),
+                Authorization: 'bearer ' + authService.getToken()
             }
         });
 

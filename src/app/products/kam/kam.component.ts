@@ -207,7 +207,7 @@ export class KamComponent implements OnInit {
         this.catId = res.result[0]['cat_id'];
         this.product_data = res.result;
         this.rfqUserId = this.product_data[0].user_id;
-        this.getLocation(this.rfqUserId);
+        // this.getLocation(this.rfqUserId);
         this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
@@ -499,9 +499,9 @@ export class KamComponent implements OnInit {
           let rmarksParam = {
             rfq_no: this.rfqNum,
             sche_no: form_data_array[i].schedule_no,
-            remarks: form_data_array[i].remarks,
+            remarks: '',
             camremarks: form_data_array[i].kamsRemarks,
-            salesremarks: form_data_array[i].salesRemarks,
+            salesremarks: '',
             from: 'Kam',
             to: 'Sales'
           };
@@ -511,9 +511,9 @@ export class KamComponent implements OnInit {
           let rmarksParam = {
             rfq_no: this.rfqNum,
             sche_no: form_data_array[i].schedule_no,
-            remarks: form_data_array[i].remarks,
+            remarks: '',
             camremarks: form_data_array[i].kamsRemarks,
-            salesremarks: form_data_array[i].salesRemarks,
+            salesremarks: '',
             from: 'Kam',
             to: 'SM'
           };
@@ -523,9 +523,9 @@ export class KamComponent implements OnInit {
           let rmarksParam = {
             rfq_no: this.rfqNum,
             sche_no: form_data_array[i].schedule_no,
-            remarks: form_data_array[i].remarks,
+            remarks: '',
             camremarks: form_data_array[i].kamsRemarks,
-            salesremarks: form_data_array[i].salesRemarks,
+            salesremarks: '',
             from: 'Kam',
             to: 'Sales'
           };
@@ -535,9 +535,9 @@ export class KamComponent implements OnInit {
           let rmarksParam = {
             rfq_no: this.rfqNum,
             sche_no: form_data_array[i].schedule_no,
-            remarks: form_data_array[i].remarks,
+            remarks: '',
             camremarks: form_data_array[i].kamsRemarks,
-            salesremarks: form_data_array[i].salesRemarks,
+            salesremarks: '',
             from: 'Kam',
             to: 'C'
           };
@@ -547,9 +547,9 @@ export class KamComponent implements OnInit {
           let rmarksParam = {
             rfq_no: this.rfqNum,
             sche_no: form_data_array[i].schedule_no,
-            remarks: form_data_array[i].remarks,
+            remarks: '',
             camremarks: form_data_array[i].kamsRemarks,
-            salesremarks: form_data_array[i].salesRemarks,
+            salesremarks: '',
             from: 'Kam',
             to: 'SM'
           };
@@ -1152,23 +1152,23 @@ export class KamComponent implements OnInit {
     this.location.back();
   };
 
-  getLocation(userId: any) {
-    this.spinner.show();
-    let apiUrl = '/user/get_user_address/' + userId;
+  // getLocation(userId: any) {
+  //   this.spinner.show();
+  //   let apiUrl = '/user/get_user_address/' + userId;
 
-    if (userId != '' || userId != null) {
-      this._product.getMethod(apiUrl).subscribe((res: any) => {
-        this.spinner.hide();
-        this.billto = res.result['bill'];
-        this.shipto = res.result['ship'];
-        this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
-        if (res.status == 'Token has Expired') {
-          this._router.navigate(['/auth/login']);
-          this.spinner.hide();
-        }
-      })
-    }
-  };
+  //   if (userId != '' || userId != null) {
+  //     this._product.getMethod(apiUrl).subscribe((res: any) => {
+  //       this.spinner.hide();
+  //       this.billto = res.result['bill'];
+  //       this.shipto = res.result['ship'];
+  //       this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
+  //       if (res.status == 'Token has Expired') {
+  //         this._router.navigate(['/auth/login']);
+  //         this.spinner.hide();
+  //       }
+  //     })
+  //   }
+  // };
 
   plantSele(event: any, schdlNo: any) {
     this.spinner.show();

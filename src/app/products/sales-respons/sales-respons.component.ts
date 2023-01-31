@@ -138,7 +138,7 @@ export class SalesResponsComponent implements OnInit {
         this.rfqNum = atob(res.id);
       }
     });
-    this.getLocation();
+    // this.getLocation();
     this.states = this._state.getState();
     this.detailByRfq();
     this.setFromData();
@@ -461,8 +461,8 @@ export class SalesResponsComponent implements OnInit {
       let rmarksParam = {
         rfq_no: this.rfqNum,
         sche_no: form_data_array[i].schedule_no,
-        remarks: form_data_array[i].remarks,
-        camremarks: form_data_array[i].kamsRemarks,
+        remarks: '',
+        camremarks: '',
         salesremarks: form_data_array[i].salesRemarks,
         from: 'Sales',
         to: 'Kam'
@@ -769,23 +769,24 @@ export class SalesResponsComponent implements OnInit {
     this.location.back();
   };
 
-  getLocation () {
-    this.spinner.show();
-    let userId = localStorage.getItem('USER_ID');
-    let apiUrl = '/user/get_user_address/'+userId;
+  // getLocation () {
+  //   this.spinner.show();
+  //   let userId = localStorage.getItem('USER_ID');
+  //   let apiUrl = '/user/get_user_address/'+userId;
 
-    if(userId != '' || userId != null) {
-      this._product.getMethod(apiUrl).subscribe((res:any) => {
-        this.spinner.hide();
-        this.showCity = res.result.city;
-        this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
-        if (res.status == 'Token has Expired') {
-          this._router.navigate(['/auth/login']);
-          this.spinner.hide();
-        }
-      })
-    }
-  };
+  //   if(userId != '' || userId != null) {
+  //     this._product.getMethod(apiUrl).subscribe((res:any) => {
+  //       this.spinner.hide();
+  //       this.showCity = res.result.city;
+  //       this.userAddr = res.result.addressone + res.result.addresstwo + res.result.city + res.result.state + res.result.pincode;
+  //       if (res.status == 'Token has Expired') {
+  //         this._router.navigate(['/auth/login']);
+  //         this.spinner.hide();
+  //       }
+  //     })
+  //   }
+  // };
+
   plantSele(event:any, schdlNo:any) {
     this.spinner.show();
     this.plantSelectArr[schdlNo] = event.target.value;

@@ -10,6 +10,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 import { SecurityComponent } from './security/security.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -50,6 +52,8 @@ const routes: Routes = [
     SharedModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    MatFormFieldModule,
+    MatIconModule,
     ToastrModule.forRoot() // ToastrModule added
   ]
 })

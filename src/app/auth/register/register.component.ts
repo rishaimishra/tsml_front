@@ -150,6 +150,7 @@ export class RegisterComponent implements OnInit {
   submit: boolean = false;
   validMobile: boolean = false;
   errorMsg: boolean = true;
+  hide = true;
   
 
   ferroChrome = [
@@ -1106,6 +1107,7 @@ export class RegisterComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
+        this.checkUserExpirey();
         this._router.navigate(['/auth/login']);
         this._spinner.hide();
         this.saveForm();
@@ -1133,13 +1135,21 @@ export class RegisterComponent implements OnInit {
 
   getQuestions() {
     this._auth.getSecurityQue().subscribe((res:any) => {
-      console.log(res);
       if(res.message == 'success.') {
         this.questions = res.result;
       }
     })
   };
 
+  checkUserExpirey() {
+      let usrParam = {
+        "email": this.emailId
+      }
+      this._auth.checkExpireyUser(usrParam).subscribe((res: any) => {
+        console.log(res);
+      })
+  };
+  
   saveForm() {
     let value = this.securityForm.value;
     let securityParam = [{

@@ -26,7 +26,7 @@ export class ForgetPasswordComponent implements OnInit {
     this.forgetPassForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(10)]],
       password_confirm: ['', [Validators.required, Validators.minLength(6)]]
     })
 
@@ -62,6 +62,7 @@ export class ForgetPasswordComponent implements OnInit {
 
     this._spinner.show();
     this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res: any) => {
+      this._spinner.hide();
       if (res.status == 1) {
         Swal.fire({
           position: 'center',

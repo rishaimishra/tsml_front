@@ -414,16 +414,7 @@
                             <div class="modal-body row" *ngIf="messages != 'Quote not updated'">
                                 <div *ngFor="let remark of messages">
                                     <ol class="chat">
-                                        <li class="other" *ngIf="remark?.salesRemarks != null">
-                                            <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
-                                                    draggable="false" /></div>
-                                            <div class="msg">
-                                                <p>Sales Planning Remarks!</p>
-                                                <p>{{remark.salesRemarks}}</p>
-                                                <time>{{remark.created_at | date}}</time>
-                                            </div>
-                                        </li>
-                                        <li class="self" *ngIf="remark?.kamsRemarks != null">
+                                        <li class="other" *ngIf="remark?.kamsRemarks != null">
                                             <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png"
                                                     draggable="false" /></div>
                                             <div class="msg">
@@ -432,6 +423,16 @@
                                                 <time>{{remark.created_at | date}}</time>
                                             </div>
                                         </li>
+                                        <li class="self" *ngIf="remark?.salesRemarks != null">
+                                            <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png"
+                                                    draggable="false" /></div>
+                                            <div class="msg">
+                                                <p>Sales Planning Remarks!</p>
+                                                <p>{{remark.salesRemarks}}</p>
+                                                <time>{{remark.created_at | date}}</time>
+                                            </div>
+                                        </li>
+                                        
                                     </ol>
                                 </div>
                             </div>
