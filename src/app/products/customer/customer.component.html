@@ -213,7 +213,7 @@
                                             [(ngModel)]="formData.bill_to"
                                             name="bill_to_{{ formData.schedule_no }}" required>
                                             <option value="{{formData.bill_to}}" selected>
-                                                {{formData.bill_to}}</option>
+                                                {{formData.bill_to_state}}</option>
                                         </select>
                                         <small
                                             *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -230,7 +230,7 @@
                                             [(ngModel)]="formData.ship_to"
                                             name="ship_to_{{ formData.schedule_no }}" required>
                                             <option value="{{formData.ship_to}}" selected>
-                                                {{formData.ship_to}}</option>
+                                                {{formData.ship_to_state}}</option>
                                             <!-- <option *ngFor="let state of states" value="{{ state?.name }}">
                                             {{ state?.name }}
                                         </option> -->

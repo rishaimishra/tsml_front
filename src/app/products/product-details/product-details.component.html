@@ -168,7 +168,7 @@
                           <select class="form-control form-control-sm" #billTo="ngModel" [(ngModel)]="formData.bill_to"
                             name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="" disabled>--Bill to--</option>
-                            <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
+                            <option value="{{ biilToAdr.addr_id }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
                             title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode - {{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
                           </select>
                           <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -183,7 +183,7 @@
                           <select class="form-control form-control-sm" #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                             name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="" disabled> --Ship to--</option>
-                            <option value="{{ shipToAdr.state }}" *ngFor="let shipToAdr of shipto" data-toggle="tooltip" data-placement="top"
+                            <option value="{{ shipToAdr.addr_id }}" *ngFor="let shipToAdr of shipto" data-toggle="tooltip" data-placement="top"
                               title="{{shipToAdr.addressone}} {{shipToAdr.addresstwo}} {{shipToAdr.city}}, Pincode -{{shipToAdr.pincode}}">{{ shipToAdr.state }}</option>
                           </select>
                           <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"

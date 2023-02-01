@@ -12,11 +12,11 @@ import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
   {
     path: 'prepare-sc', 
-    component: PrepareScComponent, canActivate: [AuthGuard]
+    component: PrepareScComponent
   },
   {
     path: 'prepare-so', 
-    component: PrepareSoComponent, canActivate: [AuthGuard]
+    component: PrepareSoComponent
   },
 ];
 

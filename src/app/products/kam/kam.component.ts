@@ -320,6 +320,7 @@ export class KamComponent implements OnInit {
     if (indxId !== -1) {
       this.poRedirectArr.splice(indxId, 1);
     }
+
     const numbersArr = this.requoteArr.map(Number);
     const index: number = numbersArr.indexOf(id);
     if (index !== -1) {
@@ -359,6 +360,7 @@ export class KamComponent implements OnInit {
     else {
       this.statusArr.push(reqParam);
     }
+
   };
 
   pricaValue() {
@@ -707,17 +709,19 @@ export class KamComponent implements OnInit {
     this._product.saveComPrice(this.tsmlPriceArr).subscribe((res: any) => {
     })
 
-    let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
-    if (this.countSche['total'] == addCount) {
-      let userId = localStorage.getItem('USER_ID');
-      let confimerRfq = {
-        "rfq_no": this.rfqNum,
-        "user_id": this.rfqUserId,
-        "kam_id": userId
-      }
-      this._product.confirmRfqEmail(confimerRfq).subscribe((res: any) => {
-      })
-    }
+
+    // let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
+    // if (this.countSche['total'] == addCount) {
+    //   let userId = localStorage.getItem('USER_ID');
+    //   let confimerRfq = {
+    //     "rfq_no": this.rfqNum,
+    //     "user_id": this.rfqUserId,
+    //     "kam_id": userId
+
+    //   }
+    //   this._product.confirmRfqEmail(confimerRfq).subscribe((res: any) => {
+    //   })
+    // }
 
     if (qouteSt == 5 || qouteSt == 9) {
       let qouteReq = {
@@ -735,6 +739,24 @@ export class KamComponent implements OnInit {
       this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
       })
     }
+
+    let apiUrlKy = '/user/get_rfq_st/'+this.rfqNum
+    this._product.getMethod(apiUrlKy).subscribe((res:any) => {
+      console.log('res',res);
+      if(res.result == "Accepted") {
+        let userId = localStorage.getItem('USER_ID');
+          let confimerRfq = {
+            "rfq_no": this.rfqNum,
+            "user_id": this.rfqUserId,
+            "kam_id": userId
+    
+          }
+          this._product.confirmRfqEmail(confimerRfq).subscribe((res: any) => {
+          })
+      }
+    }, err => {
+      console.log(err);
+    })
     this._router.navigate(['/products/rfq-list']);
   };
 

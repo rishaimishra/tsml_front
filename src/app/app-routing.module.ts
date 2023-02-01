@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagerGuard } from './Guard/manager.guard';
+import { OptGuard } from './Guard/opt.guard';
 import { SalesGuard } from './Guard/sales.guard';
 
 const routes: Routes = 
@@ -43,7 +44,7 @@ const routes: Routes =
   },
   {
     path: 'sales',
-    loadChildren: () => import('./sales/sales.module').then(m => m.SalesModule), canActivate: [SalesGuard],
+    loadChildren: () => import('./sales/sales.module').then(m => m.SalesModule), canActivate: [OptGuard],
   },
   {
     path: 'sales-manager',

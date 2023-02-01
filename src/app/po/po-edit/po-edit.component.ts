@@ -136,7 +136,7 @@ export class PoEditComponent implements OnInit {
 
       this.categoryid = res.categoryId;
       this.detailByRfq();
-      this.getLocation();
+      // this.getLocation();
     });
     const val = 'AIT' + Math.floor(1000 + Math.random() * 9000);
     this.po_id = val;
@@ -226,24 +226,24 @@ export class PoEditComponent implements OnInit {
     })
   };
 
-  getLocation() {
-    this.spinner.show();
-    let userId = localStorage.getItem('USER_ID');
-    let apiUrl = '/user/get_user_address/' + userId;
+  // getLocation() {
+  //   this.spinner.show();
+  //   let userId = localStorage.getItem('USER_ID');
+  //   let apiUrl = '/user/get_user_address/' + userId;
 
-    if (userId != '' || userId != null) {
-      this._product.getMethod(apiUrl).subscribe((res: any) => {
-        this.spinner.hide();
-        this.billto = res.result['bill'];
-        this.shipto = res.result['ship'];
-        // this.userAddr = res.result?.addressone + res.result?.addresstwo + res.result?.city + res.result?.state + res.result?.pincode;
-        if (res.status == 'Token has Expired') {
-          this._router.navigate(['/auth/login']);
-          this.spinner.hide();
-        }
-      })
-    }
-  };
+  //   if (userId != '' || userId != null) {
+  //     this._product.getMethod(apiUrl).subscribe((res: any) => {
+  //       this.spinner.hide();
+  //       this.billto = res.result['bill'];
+  //       this.shipto = res.result['ship'];
+  //       // this.userAddr = res.result?.addressone + res.result?.addresstwo + res.result?.city + res.result?.state + res.result?.pincode;
+  //       if (res.status == 'Token has Expired') {
+  //         this._router.navigate(['/auth/login']);
+  //         this.spinner.hide();
+  //       }
+  //     })
+  //   }
+  // };
 
   getCategory() {
     var today = new Date();

@@ -209,9 +209,9 @@
                                                         [(ngModel)]="formData.bill_to"
                                                         name="bill_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.bill_to}}" selected>
-                                                            {{formData.bill_to}}</option>
-                                                            <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
-                                                            title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode - {{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
+                                                            {{formData.bill_to_state}}</option>
+                                                            <option value="{{ biilToAdr.bill_to }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
+                                                            title="{{biilToAdr.bill_to_addr}}">{{ biilToAdr.bill_to_state }}</option>
                                                     </select>
                                                     <small
                                                         *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -227,9 +227,9 @@
                                                         [(ngModel)]="formData.ship_to"
                                                         name="ship_to_{{ formData.schedule_no }}" required>
                                                         <option value="{{formData.ship_to}}" selected>
-                                                            {{formData.ship_to}}</option>
-                                                            <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of shipto" data-toggle="tooltip" data-placement="top"
-                                                            title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode -{{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
+                                                            {{formData.ship_to_state}}</option>
+                                                            <option value="{{ biilToAdr.ship_to }}" *ngFor="let biilToAdr of shipto" data-toggle="tooltip" data-placement="top"
+                                                            title="{{biilToAdr.ship_to_addr}}">{{ biilToAdr.ship_to_state }}</option>
                                                     </select>
                                                     <small
                                                         *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
@@ -269,7 +269,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for=""
-                                                        (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,
+                                                        (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to_state,
                                                         productData.product_id,productData.cat_id,formData?.pro_size,formData?.sub_cat_id,formData.plant,formData.delivery,formData.delivery, i, y)">TSML's price
                                                         <span *ngIf="qoutestId != 0 && qoutestId != 2"
                                                             class="price-info price-info0" data-toggle="modal"

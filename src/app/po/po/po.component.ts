@@ -30,7 +30,7 @@ export class PoComponent implements OnInit {
   title: any = '';
   productId: any;
   selectedItem: any = [];
-  states: any;
+  // states: any;
   remarks: any = '';
   proSize1: any;
   submit: boolean = false;
@@ -110,7 +110,7 @@ export class PoComponent implements OnInit {
     this.getDeliveryItem();
     //  this.userType
     this.user_Id = localStorage.getItem('USER_ID');
-    this.states = this._state.getState();
+    // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = atob(res.id);
       this.categoryid = res.categoryId;

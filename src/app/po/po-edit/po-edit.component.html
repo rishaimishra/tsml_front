@@ -150,7 +150,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for="">Quantity (MT)</label>
-                          <input #qtyInput="ngModel" [disabled]="userType" type="number" (change)="getTotalQuantity(i)"
+                          <input #qtyInput="ngModel" disabled type="number" (change)="getTotalQuantity(i)"
                             [(ngModel)]="formData.quantity" name="quantity_{{ formData.schedule_no }}"
                             class="form-control form-control-sm" id="" placeholder="" value="formData.quantity"
                             required />
@@ -176,11 +176,11 @@
                           <div class="bil-add-new-add">
                             <label for="">Bill To</label>
                           </div>
-                          <select class="form-control form-control-sm" #billTo="ngModel" [(ngModel)]="formData.bill_to"
+                          <select class="form-control form-control-sm" disabled #billTo="ngModel" [(ngModel)]="formData.bill_to"
                             name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="{{formData.bill_to}}" selected>
-                              {{formData.bill_to}}</option>
-                              <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
+                              {{formData.bill_to_state}}</option>
+                              <option value="{{ biilToAdr.addr_id }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
                               title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode - {{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
                           </select>
                           <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
@@ -192,11 +192,11 @@
                           <div class="bil-add-new-add">
                             <label for="">Ship To</label>
                           </div>
-                          <select class="form-control form-control-sm" #shipTo="ngModel" [(ngModel)]="formData.ship_to"
+                          <select class="form-control form-control-sm" disabled #shipTo="ngModel" [(ngModel)]="formData.ship_to"
                             name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="{{formData.ship_to}}" selected>
-                              {{formData.ship_to}}</option>
-                            <option value="{{ biilToAdr.state }}" *ngFor="let biilToAdr of shipto" data-toggle="tooltip" data-placement="top"
+                              {{formData.ship_to_state}}</option>
+                            <option value="{{ biilToAdr.addr_id }}" *ngFor="let biilToAdr of shipto" data-toggle="tooltip" data-placement="top"
                               title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode -{{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
                           </select>
                           <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"

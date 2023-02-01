@@ -23,7 +23,7 @@
         <div class="prod-list-detl">
           <div class="row">
           <div class="col-2">
-            <a [href]="downloadFile+'/download-po-pdf/'+poInfo?.po_no" target="_blank"><i class="fa fa-cloud-download"
+            <a [href]="downloadFile+'/download-po-pdf/'+poInfo?.po_no+'/'+userRole" target="_blank"><i class="fa fa-cloud-download"
               aria-hidden="true"></i> Order reference doc.</a>
           </div>
           <div class="col-7">
@@ -175,7 +175,7 @@
                           <select disabled class="form-control form-control-sm" #billTo="ngModel"
                             [(ngModel)]="formData.bill_to" name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="{{formData.bill_to}}" selected>
-                              {{formData.bill_to}}</option>
+                              {{formData.bill_to_state}}</option>
                           </select>
                           <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
                             class="inputValidation">Select bill to</small>
@@ -189,7 +189,7 @@
                           <select disabled class="form-control form-control-sm" #shipTo="ngModel"
                             [(ngModel)]="formData.ship_to" name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="{{formData.ship_to}}" selected>
-                              {{formData.ship_to}}</option>
+                              {{formData.ship_to_state}}</option>
                           </select>
                           <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
                             class="inputValidation">Select ship to</small>
@@ -223,7 +223,7 @@
                       <div class="col-lg-3">
                         <div class="form-group">
                           <label for=""
-                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to,productData.product_id,productData.cat_id,
+                            (click)="getPrice(formData.location,formData.pickup_type, formData?.schedule_no,formData.ship_to_state,productData.product_id,productData.cat_id,
                             formData?.pro_size,formData?.sub_cat_id,formData.delivery, i, y)">TSML's
                             price
                             <!-- <span class="price-info price-info0" data-toggle="modal" data-target="#addPrice"><i
