@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
@@ -43,23 +43,27 @@ export class PrepareScComponent implements OnInit {
   matCodeId: any;
   percentArr: any = [];
   rfqNo: any;
-  rfqNumber:any;
-  userId:any;
+  rfqNumber: any;
+  userId: any;
   itemNumbr: any = [];
   submit: boolean = false;
+  materialArr: any = [];
+
+  dynamicArray = [];
+  newDynamic;
 
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
     private _sales: SalesService, private _location: Location,
     private _router: Router, private _fb: FormBuilder) { }
 
-    get f() {
-      return this.scForm.controls;
-    };
-    
-    get ff() {
-      return this.updateInfoForm.controls;
-    }
+  get f() {
+    return this.scForm.controls;
+  };
+
+  get ff() {
+    return this.updateInfoForm.controls;
+  }
 
   ngOnInit(): void {
     this.getPolist();
@@ -88,12 +92,13 @@ export class PrepareScComponent implements OnInit {
     })
 
     this.updateInfoForm = this._fb.group({
-      incoterms: ['',Validators.required],
-      pay_terms: ['',Validators.required],
-      freight: ['',Validators.required],
-      cus_grp: ['',Validators.required],
-      fr_ind: ['',Validators.required]
+      incoterms: ['', Validators.required],
+      pay_terms: ['', Validators.required],
+      freight: ['', Validators.required],
+      cus_grp: ['', Validators.required],
+      fr_ind: ['', Validators.required]
     })
+
   }
 
   getPolist() {
@@ -238,14 +243,23 @@ export class PrepareScComponent implements OnInit {
     })
   };
 
-  updateInfo(index: any) {
-    this.permissPerc = '';
-    let updatItem = this.scInfo[index];
-    this.priceInfo = this.scInfo[index];
-    this.showUpdateInfo = !this.showUpdateInfo;
-    this.getSpec(this.priceInfo['specs']);
-    this.matCodeId = updatItem['mat_code'];
+  addRow() {
+    this.dynamicArray.push({ matCode: '', ordrQty: '', basicPrc: this.scData?.price_det[0]['amt'], cnty: '', value: '', plant: '', });
+    console.log('New row added successfully', 'New Row');
   };
+
+  deleteRow(index: any) {
+    this.dynamicArray.splice(index, 1);
+  };
+
+  // updateInfo(index: any) {
+  //   this.permissPerc = '';
+  //   let updatItem = this.scInfo[index];
+  //   this.priceInfo = this.scInfo[index];
+  //   this.showUpdateInfo = !this.showUpdateInfo;
+  //   this.getSpec(this.priceInfo['specs']);
+  //   this.matCodeId = updatItem['mat_code'];
+  // };
 
   percent(value: any, matCode: any) {
     let matCodValue = $('#mat_code' + matCode).html();
@@ -349,79 +363,43 @@ export class PrepareScComponent implements OnInit {
 
   submitSc() {
     const seFormDataArr = [];
-    const sapMatArr = [];
-    const codePrice = [];
     this.submit = true;
     this.scForm.value['po_no'] = this.poNumber;
     var from = this.scForm.value['ContractValidFrom'];
-    var dd = from.replace('-','');
-    var mm = dd.replace('-','');
+    var dd = from.replace('-', '');
+    var mm = dd.replace('-', '');
     this.scForm.value['ContractValidFrom'] = mm;
 
     var till = this.scForm.value['ContractValidTo'];
-    var tilldd = till.replace('-','');
-    var tillmm = tilldd.replace('-','');
+    var tilldd = till.replace('-', '');
+    var tillmm = tilldd.replace('-', '');
     this.scForm.value['ContractValidTo'] = tillmm;
-    
-    for (let i = 0; i < this.pricValArr.length; i++) {
-      const element = this.pricValArr[i];
-      let n = 10;
-      for(let y = 1; y <= this.scInfo.length; ++y) {
-        let itemNumbr = ( n * y);
-        let codePr = {
-          "ItemNumber": itemNumbr,
-          "CnTy": element.CnTy,
-          "Amount": element.Amount
-        }
-        codePrice.push(codePr)
-      }
-    };
-    let username = 'MJUNCTION_M_PI_DEV';
-    let password = 'Welcome@123';
-    let authorizationData = 'Basic ' + btoa(username + ':' + password);
 
-    if(this.scForm.invalid) {
+    if (this.scForm.invalid) {
       alert('all fields are required !')
       return;
     }
-    for (let i = 0; i < this.scInfo.length; i++) {
-      const element = this.scInfo[i];
-      this.getSpec(this.scInfo[i]['specs']);
-      this.rfqNo = this.scInfo[i].rfq_no;
-      let n = 10;
-      for(let y = 1; y <= this.scInfo.length; ++y) {
-        let itemNumbr = ( n * y);
-        let sapMaterial = {
-          "item": itemNumbr,
-          "Material": this.scInfo[i].mat_code,
-          "Quantity": this.scInfo[i].tot_qty,
-          "CustomarMaterialNumber": this.scInfo[i].mat_code,
-          "OrderQuantity": this.scInfo[i].odr_qty,
-          "Plant": this.scInfo[i].pcode
-        };
-        sapMatArr.push(sapMaterial);
-      }
-      let indxId = this.percentArr.findIndex((item: any) => item.mat_code == this.scInfo[i].mat_code);
-      let material =
-      {
-        "value": "100000",
-        "mat_code": this.scInfo[i].mat_code,
-        "pcode": this.scInfo[i].pcode,
-        "rfq_no": this.scInfo[i].rfq_no,
-        "price_det": element['price_det'],
-        "specs": this.specs[i],
-        "total": this.scInfo[i].total,
-        "per_percent": this.percentArr[indxId]
-      }
-      seFormDataArr.push(material);
-    };
 
-    let fullData = {
-      "po_details": this.scForm.value,
-      "inco_form": this.updateInfoForm.value,
-      "material": seFormDataArr
-    };
-    
+    for (let index = 0; index < this.dynamicArray.length; index++) {
+      const element = this.dynamicArray[index];
+      console.log('dynamicArray',index+1);
+       
+      let sapMaterial = [{
+        "item": 10* (index+1),
+        "Material": element.matCode,
+        "Quantity": element.ordrQty,
+        "CustomarMaterialNumber": element.matCode,
+        "OrderQuantity": element.ordrQty,
+        "Plant": element.plant
+      }];
+
+
+      let codePr = [{
+        "ItemNumber": 10 * (index+1),
+        "CnTy": element.cnty,
+        "Amount": element.ordrQty * element.basicPrc
+      }];
+     
     let sapRequest = {
       "OrganizationalData": {
         "ContractType": this.scForm.value['contract_ty'],
@@ -446,8 +424,8 @@ export class PrepareScComponent implements OnInit {
       "Sales": {
         "Shp_Cond": this.scForm.value['shp_cond'],
       },
-      "Items": sapMatArr,
-      "Conditions": codePrice,
+      "Items": sapMaterial,
+      "Conditions": codePr,
 
       "AdditionalDataA": {
         "Freight": this.updateInfoForm.value['freight'],
@@ -457,82 +435,95 @@ export class PrepareScComponent implements OnInit {
         "FreightIndicator": this.updateInfoForm.value['fr_ind']
       }
     };
-    
-    let screquest = {
-      "scData": sapRequest,
-      "basic_auth": authorizationData
-    }
-    this._spiner.show();
-    this._sales.salesContract(screquest).subscribe((res:any) => {
+
+    seFormDataArr.push(sapRequest);
+  }
+    console.log('sap-json',seFormDataArr);
+  this._spiner.show();
+  this._sales.scInExcelSave(seFormDataArr).subscribe((res:any) => {
     this._spiner.hide();
-      console.log('res',res);
-      // if (res.SalesContractRes.Status == 'S') {
-      //   alert(res.SalesContractRes.Message);
-      // }
-    }, err => {
-      console.log(err);
-      this._spiner.hide();
-    })
-    console.log(sapRequest);
-    return;
+    if(res.message == 'success') {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      let param = {
+        ids: res.result['ids'],
+        file: res.result['file']
+      }
+      this._sales.excelDownload(param).subscribe((res:any) => {
+        console.log(res);
+      })
+      this.getPolist();
+    }
+    console.log(res);
+  }, err => {
+    console.log(err);
+    this._spiner.hide();
+  })
     this._spiner.show();
-    this._sales.submitSalesCnt(fullData).subscribe((res: any) => {
-      this._spiner.hide();
-      Swal.fire(
-        'Success',
-        'Submited Successfully',
-        'success'
-      )
-      let ScStatusRequest = {
-        "po_no": this.poNumber,
-        "status": '5'
-      }
-      this._sales.poStatus(ScStatusRequest).subscribe((res: any) => {
-        this._spiner.hide();
-      })
+    // this._sales.salesContract(sapRequest).subscribe((res: any) => {
+    //   this._spiner.hide();
+    //   console.log('res', res);
 
-      let userId = localStorage.getItem('USER_ID');
-      let camNotiReq = {
-        "desc": 'Sales contract has been created',
-        "desc_no": this.poNumber,
-        "user_id": userId,
-        "url_type": 'PO'
-      }
-      this._product.camNotification(camNotiReq).subscribe((res: any) => {
-      })
-      let custNotiReq = {
-        "desc": 'Sales contract has been created',
-        "desc_no": this.poNumber,
-        "user_id": userId,
-        "url_type": 'PO',
-        "sender_id": this.userId
-      }
-      this._product.custNotiSubmit(custNotiReq).subscribe((res: any) => {
-      })
+    // }, err => {
+    //   console.log(err);
+    //   this._spiner.hide();
+    // })
+    // console.log(sapRequest);
+    return;
+    // this._spiner.show();
+    // this._sales.submitSalesCnt(fullData).subscribe((res: any) => {
+    //   this._spiner.hide();
+    //   Swal.fire(
+    //     'Success',
+    //     'Submited Successfully',
+    //     'success'
+    //   )
+    //   let ScStatusRequest = {
+    //     "po_no": this.poNumber,
+    //     "status": '5'
+    //   }
+    //   this._sales.poStatus(ScStatusRequest).subscribe((res: any) => {
+    //     this._spiner.hide();
+    //   })
 
-      // progress bar status
-      let statusRequest = {
-        "rfq_no": this.rfqNumber,
-        "sc_created": '1'
-      }
-      this._product.storeStatusKam(statusRequest).subscribe((res:any) => {
-      })
+    //   let userId = localStorage.getItem('USER_ID');
+    //   let camNotiReq = {
+    //     "desc": 'Sales contract has been created',
+    //     "desc_no": this.poNumber,
+    //     "user_id": userId,
+    //     "url_type": 'PO'
+    //   }
+    //   this._product.camNotification(camNotiReq).subscribe((res: any) => {
+    //   })
+    //   let custNotiReq = {
+    //     "desc": 'Sales contract has been created',
+    //     "desc_no": this.poNumber,
+    //     "user_id": userId,
+    //     "url_type": 'PO',
+    //     "sender_id": this.userId
+    //   }
+    //   this._product.custNotiSubmit(custNotiReq).subscribe((res: any) => {
+    //   })
 
-      this._product.storeStatusCust(statusRequest).subscribe((res:any) => {
-      })
+    //   let statusRequest = {
+    //     "rfq_no": this.rfqNumber,
+    //     "sc_created": '1'
+    //   }
+    //   this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
+    //   })
 
-      // let sc_mail = {
-      //   "sc_no":"SC1234",
-      //   "po_no":"AIT1234",
-      //   "user_id":2
-      // }
-      // this._sales.sendScMail(sc_mail).subscribe((res:any) => {
-      //   console.log(res);
-      // })
-    }, err => {
-      console.log(err);
-      this._spiner.hide();
-    })
+    //   this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
+    //   })
+
+    // }, err => {
+    //   console.log(err);
+    //   this._spiner.hide();
+    // })
   }
   backTo() {
     this._location.back();

@@ -7,6 +7,7 @@ import { PrepareSoComponent } from './prepare-so/prepare-so.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
+import { UpdateInfoComponent } from './update-info/update-info.component';
 
 
 const routes: Routes = [
@@ -18,12 +19,17 @@ const routes: Routes = [
     path: 'prepare-so', 
     component: PrepareSoComponent
   },
+  {
+    path: 'update-info', 
+    component: UpdateInfoComponent
+  }
 ];
 
 @NgModule({
   declarations: [
     PrepareScComponent,
-    PrepareSoComponent
+    PrepareSoComponent,
+    UpdateInfoComponent
   ],
   imports: [
     CommonModule,

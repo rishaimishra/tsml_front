@@ -134,9 +134,10 @@
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'PLANT')" routerLink="/dashboard/plant-dashboard">
                            Dashboard </a></li>
 
+                     <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'OPT')" routerLink="/sales/update-info">
+                           Update Info </a></li>
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'OPT')" routerLink="/dashboard/opt-dashboard">
                         Dashboard </a></li>
-
                      <li class="nav-item"><a class="nav-link" *ngIf="(isUserLogIn != true || loginFalse != false)" routerLink="/auth/login"> Login
                         </a></li>
                      <li class="nav-item"><a class="nav-link pointer" (click)="logOut()" *ngIf="(isUserLogIn != false && loginFalse != true)"> Logout </a></li>

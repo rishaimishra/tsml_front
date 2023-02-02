@@ -107,13 +107,22 @@ export class SalesService {
   
   rejectRemarks(request:any) {
     return this._http.post(this.BesUrl + '/user/sm_remark_save', request);
-  }
+  };
 
   uploadFgStock(request:any) {
     return this._http.post(this.BesUrl + '/user/prod-qty-upload-user', request);
-  }
+  };
+
   sendScMail(request:any) {
     return this._http.post(this.BesUrl + '/sc_mail', request);
+  };
+
+  scInExcelSave(request:any) {
+    return this._http.post(this.BesUrl + '/sc_excel_submit', request);
+  };
+
+  excelDownload(request:any) {
+    return this._http.post(this.BesUrl + '/scexceldownload', request);
   }
 
 }
