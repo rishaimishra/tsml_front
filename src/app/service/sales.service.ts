@@ -121,8 +121,16 @@ export class SalesService {
     return this._http.post(this.BesUrl + '/sc_excel_submit', request);
   };
 
-  excelDownload(request:any) {
-    return this._http.post(this.BesUrl + '/scexceldownload', request);
+  excelEmail(request:any) {
+    return this._http.post(this.BesUrl + '/user/sc_excel_mail', request);
+  };
+
+  updateSc(request:any) {
+    return this._http.post(this.BesUrl + '/user/up_excelsc', request);
+  };
+
+  getScInfoList() {
+    return this._http.get(this.BesUrl + '/user/get_all_excelsc');
   }
 
 }

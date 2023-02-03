@@ -220,8 +220,8 @@
                                   <tbody>
                                      <tr *ngFor="let dynamic of dynamicArray; let i = index;">
                                         <td>
-                                          <div class="form-group dropCls col-sm-8">
-                                             <select id="inputState" name="{{dynamic.matCode}}" [(ngModel)]="dynamic.matCode" class="form-control form-control-sm">
+                                          <div class="form-group dropCls col-sm-12">
+                                             <select id="inputState" name="{{dynamic.matCode}}" (change)="getMaterial($event,i)" [(ngModel)]="dynamic.matCode" class="form-control form-control-sm">
                                                <option value="" selected>Choose...</option>
                                                <option value="{{item.mat_code}}" *ngFor="let item of scInfo; let i = index">{{item.mat_code}}</option>
                                              </select>
@@ -238,7 +238,7 @@
                                           </div>
                                        </td>
                                         <td>
-                                          <div class="form-group dropCls col-sm-8">
+                                          <div class="form-group dropCls col-sm-12">
                                              <select id="inputState" name="{{dynamic.cnty}}" [(ngModel)]="dynamic.cnty" class="form-control form-control-sm">
                                                <option value="" selected>Choose...</option>
                                                <option value="ZPR0">ZPR0</option>
@@ -254,9 +254,9 @@
                                        </td>
                                         <td>
                                           <div class="form-group dropCls col-sm-8">
-                                             <select id="inputState" name="{{dynamic.plant}}" [(ngModel)]="dynamic.plant" class="form-control form-control-sm">
+                                             <select id="inputState" name="{{dynamic.plant}}" (change)="getPlant($event, i)" [(ngModel)]="dynamic.plant" class="form-control form-control-sm">
                                                <option value="" selected>Choose...</option>
-                                               <option value="{{item.pcode}}" *ngFor="let item of scInfo; let i = index">{{item.pcode}}</option>
+                                               <option value="{{plant.code}}" *ngFor="let plant of allPlants; let i = index">{{plant.name}}</option>
                                              </select>
                                            </div>
                                         </td>

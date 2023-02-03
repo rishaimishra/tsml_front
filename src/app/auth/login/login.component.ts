@@ -58,6 +58,10 @@ export class LoginComponent implements OnInit {
   };
 
   forgetPassword() {
+    if(this.forgetEmail == null || this.forgetEmail == undefined) {
+      this._toster.error('Email is required', 'Sorry!');
+      return;
+    }
     this._spinner.show();
     let forget = {
       "email": this.forgetEmail
@@ -84,6 +88,10 @@ export class LoginComponent implements OnInit {
       return;
     }
     else if (this.loginForm.invalid) { 
+      return;
+    }
+    else if (this.loginForm.value['logotp'] == "") { 
+      this._toster.error('OTP is required','Sorry!');
       return;
     }
 

@@ -12,35 +12,32 @@
             <th scope="col">Customer PO No.</th>
             <th scope="col">PO Date</th>
             <th scope="col">Customer Name</th>
-            <th scope="col">RFQ No</th>
-            <th scope="col">RFQ Date</th>
+            <th scope="col">Material Code</th>
+            <th scope="col">Plant</th>
             <th scope="col">Contract No.</th>
             <th scope="col">Order No.</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td><input type="text" ></td>
-            <td><input type="text" ></td>
-            <td><button class="btn btn-secondary btn-sm">Save</button></td>
-          </tr>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><button class="btn btn-secondary btn-sm">Save</button></td>
+          <tr *ngFor="let scItem of scInfoItems | paginate: { itemsPerPage: 12, currentPage: p }">
+            <td>{{scItem.cus_po_no}}</td>
+            <td>{{scItem.po_date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{scItem.cus_name}}</td>
+            <td>{{scItem.Material}}</td>
+            <td>{{scItem.Plant}}</td>
+            <td>
+              <input type="text" id="scNumber{{scItem.id}}" maxlength="10" [disabled]="scItem.sc_no != null" value="{{scItem.sc_no}}">
+            </td>
+            <td>
+              <input type="text" id="soNumber{{scItem.id}}" maxlength="10" [disabled]="scItem.sc_no == null || scItem.ordr_no != null" value="{{scItem.ordr_no}}">
+            </td>
+            <td><button class="btn btn-secondary btn-sm" [disabled]="scItem.sc_no != null && scItem.ordr_no != null" (click)="updateScSo(scItem.id)">UPDATE</button></td>
           </tr>
         </tbody>
       </table>
+      <div class="text-right">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
 </div>
 <app-footer></app-footer>

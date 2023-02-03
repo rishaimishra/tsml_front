@@ -109,4 +109,8 @@ export class AuthService {
     return this._http.post(this.BesUrl + '/regis_date_log',  request);
   };
 
+  resetOtp(request:any) {
+    return this._http.post(this.BesUrl + '/resest_pass_mail',  request);
+  };
+
 }

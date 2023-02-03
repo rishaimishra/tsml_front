@@ -51,6 +51,7 @@ export class PrepareScComponent implements OnInit {
 
   dynamicArray = [];
   newDynamic;
+  allPlants: any = [];
 
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
@@ -68,7 +69,7 @@ export class PrepareScComponent implements OnInit {
   ngOnInit(): void {
     this.getPolist();
     this.contractType();
-
+    this.getPlantAll();
     this.scForm = this._fb.group({
       po_no: [''],
       contract_ty: ['', Validators.required],
@@ -100,6 +101,15 @@ export class PrepareScComponent implements OnInit {
     })
 
   }
+
+  getPlantAll() {
+    let apiUrl = '/user/get_plants_by_type/PLANT';
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
+      if (res.message == 'success') {
+        this.allPlants = res.result;
+      }
+    })
+  };
 
   getPolist() {
     this._spiner.show();
@@ -243,9 +253,34 @@ export class PrepareScComponent implements OnInit {
     })
   };
 
+  matVal: any = [];
+  getMaterial(event:any, i:any) {
+    let matArr = [];
+    this.matVal[i] = event.target.value;
+    matArr.push(this.matVal);
+    for (let index = 0; index < matArr.length; index++) {
+      const element = matArr[index];
+      console.log('element',element);
+
+    }
+  };
+
+  pVal:any = [];
+  getPlant(event:any, i:any) {
+    let plantArr = [];
+    this.pVal[i] = event.target.value;
+    plantArr.push(this.pVal);
+    for (let index = 0; index < plantArr.length; index++) {
+      const plantElement = plantArr[index];
+      console.log('plantArr',plantElement);
+
+    }
+  };
+
+
   addRow() {
     this.dynamicArray.push({ matCode: '', ordrQty: '', basicPrc: this.scData?.price_det[0]['amt'], cnty: '', value: '', plant: '', });
-    console.log('New row added successfully', 'New Row');
+
   };
 
   deleteRow(index: any) {
@@ -382,10 +417,9 @@ export class PrepareScComponent implements OnInit {
 
     for (let index = 0; index < this.dynamicArray.length; index++) {
       const element = this.dynamicArray[index];
-      console.log('dynamicArray',index+1);
-       
+
       let sapMaterial = [{
-        "item": 10* (index+1),
+        "item": 10 * (index + 1),
         "Material": element.matCode,
         "Quantity": element.ordrQty,
         "CustomarMaterialNumber": element.matCode,
@@ -395,76 +429,77 @@ export class PrepareScComponent implements OnInit {
 
 
       let codePr = [{
-        "ItemNumber": 10 * (index+1),
+        "ItemNumber": 10 * (index + 1),
         "CnTy": element.cnty,
         "Amount": element.ordrQty * element.basicPrc
       }];
-     
-    let sapRequest = {
-      "OrganizationalData": {
-        "ContractType": this.scForm.value['contract_ty'],
-        "SalesOrganization": this.scForm.value['sales_org'],
-        "DistributionChannel": this.scForm.value['dis_chnl'],
-        "Division": this.scForm.value['div'],
-        "ContractValidFrom": this.scForm.value['ContractValidFrom'],
-        "ContractValidTo": this.scForm.value['ContractValidTo'],
-        "Salesoffice": this.scForm.value['sales_ofc'],
-        "Salesgroup": this.scForm.value['sales_grp'],
-        "Incoterms": this.updateInfoForm.value['incoterms'],
-        "Paymentterms": this.updateInfoForm.value['pay_terms']
-      },
-      "SoldToParty": {
-        "QtyContractTSML": this.scForm.value['qty_cont'],
-        "Sold_To_Party": this.scForm.value['sold_to_party'],
-        "Ship_To_Party": this.scForm.value['ship_to_party'],
-        "Cust_Referance": this.scForm.value['cus_ref'],
-        "NetValue": this.scForm.value['net_val'],
-        "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
-      },
-      "Sales": {
-        "Shp_Cond": this.scForm.value['shp_cond'],
-      },
-      "Items": sapMaterial,
-      "Conditions": codePr,
 
-      "AdditionalDataA": {
-        "Freight": this.updateInfoForm.value['freight'],
-        "CustomerGroup4": this.updateInfoForm.value['cus_grp']
-      },
-      "AdditionalDataforPricing": {
-        "FreightIndicator": this.updateInfoForm.value['fr_ind']
-      }
-    };
+      let sapRequest = {
+        "OrganizationalData": {
+          "ContractType": this.scForm.value['contract_ty'],
+          "SalesOrganization": this.scForm.value['sales_org'],
+          "DistributionChannel": this.scForm.value['dis_chnl'],
+          "Division": this.scForm.value['div'],
+          "ContractValidFrom": this.scForm.value['ContractValidFrom'],
+          "ContractValidTo": this.scForm.value['ContractValidTo'],
+          "Salesoffice": this.scForm.value['sales_ofc'],
+          "Salesgroup": this.scForm.value['sales_grp'],
+          "Incoterms": this.updateInfoForm.value['incoterms'],
+          "Paymentterms": this.updateInfoForm.value['pay_terms']
+        },
+        "SoldToParty": {
+          "QtyContractTSML": this.scForm.value['qty_cont'],
+          "Sold_To_Party": this.scForm.value['sold_to_party'],
+          "Ship_To_Party": this.scForm.value['ship_to_party'],
+          "Cust_Referance": this.scForm.value['cus_ref'],
+          "NetValue": this.scForm.value['net_val'],
+          "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
+        },
+        "Sales": {
+          "Shp_Cond": this.scForm.value['shp_cond'],
+        },
+        "Items": sapMaterial,
+        "Conditions": codePr,
 
-    seFormDataArr.push(sapRequest);
-  }
-    console.log('sap-json',seFormDataArr);
-  this._spiner.show();
-  this._sales.scInExcelSave(seFormDataArr).subscribe((res:any) => {
-    this._spiner.hide();
-    if(res.message == 'success') {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      let param = {
-        ids: res.result['ids'],
-        file: res.result['file']
-      }
-      this._sales.excelDownload(param).subscribe((res:any) => {
-        console.log(res);
-      })
-      this.getPolist();
+        "AdditionalDataA": {
+          "Freight": this.updateInfoForm.value['freight'],
+          "CustomerGroup4": this.updateInfoForm.value['cus_grp']
+        },
+        "AdditionalDataforPricing": {
+          "FreightIndicator": this.updateInfoForm.value['fr_ind']
+        }
+      };
+
+      seFormDataArr.push(sapRequest);
     }
-    console.log(res);
-  }, err => {
-    console.log(err);
-    this._spiner.hide();
-  })
+
     this._spiner.show();
+    this._sales.scInExcelSave(seFormDataArr).subscribe((res: any) => {
+      this._spiner.hide();
+      if (res.message == 'success') {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        let param = {
+          email: 'srvmondal88@gmail.com',
+          ids: res.result['ids']
+        }
+        this._sales.excelEmail(param).subscribe((res: any) => {
+          console.log(res);
+        })
+
+        this.getPolist();
+      }
+      console.log(res);
+    }, err => {
+      console.log(err);
+      this._spiner.hide();
+    })
+    // this._spiner.show();
     // this._sales.salesContract(sapRequest).subscribe((res: any) => {
     //   this._spiner.hide();
     //   console.log('res', res);
@@ -474,7 +509,7 @@ export class PrepareScComponent implements OnInit {
     //   this._spiner.hide();
     // })
     // console.log(sapRequest);
-    return;
+    // return;
     // this._spiner.show();
     // this._sales.submitSalesCnt(fullData).subscribe((res: any) => {
     //   this._spiner.hide();
@@ -524,7 +559,8 @@ export class PrepareScComponent implements OnInit {
     //   console.log(err);
     //   this._spiner.hide();
     // })
-  }
+  };
+
   backTo() {
     this._location.back();
   };
