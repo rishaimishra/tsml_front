@@ -93,6 +93,8 @@ export class KamComponent implements OnInit {
   pickupType: any;
   afterDiscount: any;
 
+  public quotation: any[] = [];
+  public quotation_value: any[] = [];
 
   sub_catId: any;
   sizes: any;
@@ -215,7 +217,6 @@ export class KamComponent implements OnInit {
         for (let i = 0; i < this.selectedItem.length; i++) {
           let form_data_array = this.selectedItem[i]['schedule'];
           this.showButtons = form_data_array.length;
-
           form_data_array.forEach(element => {
             if (element.quote_status == 3) {
               this.isSchduleArr.push(element?.quote_status);
@@ -225,7 +226,33 @@ export class KamComponent implements OnInit {
             }
 
           });
+          console.log('rfq',this.isSchduleArr);
         }
+
+        const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+        this.quotation.push({
+          schedule_no: scheduleNo,
+          pro_size: '',
+          quantity: '',
+          expected_price: '',
+          delivery: '',
+          plant: '',
+          location: '',
+          bill_to: '',
+          ship_to: '',
+          from_date: '',
+          to_date: '',
+          pay_term: 'Advance Payment',
+          remarks: '',
+          kam_price: '',
+          credit_days: '',
+          valid_till: '',
+          confirm_date: '',
+          sub_cat_id: '',
+          salesRemarks: '',
+          pickup_type: '',
+          kamsRemarks: ''
+        });
       }
       if (res.status == 'Token has Expired') {
         this._toaster.error(res.status);
@@ -1343,5 +1370,62 @@ export class KamComponent implements OnInit {
         this.slsHeadMsg = res.result;
       }
     })
+  };
+
+  addSechudle(i:any, schdlNo:any) {
+    const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+    this.quotation = this.selectedItem[i]['schedule'];
+
+    let shipId = $('#shipToVal_'+schdlNo).val();
+    let billtoId = $('#billToId'+schdlNo).val();
+    let expPrice = $('#expectedPr_'+schdlNo).val();
+    let billState = $('#billtoState'+schdlNo).html();
+    let shipState = $('#shipState'+schdlNo).html();
+
+    this.quotation.push({
+      schedule_no: scheduleNo,
+      pro_size: '',
+      quantity: '',
+      expected_price: expPrice,
+      delivery: '',
+      plant: '',
+      location: '',
+      bill_to: billtoId,
+      bill_to_state: billState,
+      ship_to: shipId,
+      ship_to_state: shipState,
+      from_date: '',
+      to_date: '',
+      pay_term: 'Advance Payment',
+      remarks: '',
+      kam_price: '',
+      credit_days: '',
+      quote_status: 0,
+      valid_till: '',
+      confirm_date: '',
+      sub_cat_id: '',
+      salesRemarks: '',
+      pickup_type: '',
+      kamsRemarks: ''
+    });
+    this.selectedItem[i]['schedule'] = this.quotation;
+    this.final_form_data();
+
   }
+  removeSchdl(i:any, schdl:any) {
+    this.quotation.splice(-1);
+  };
+
+  final_form_data() {
+    this.quotation_value = [];
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data = this.selectedItem[i]['schedule'];
+
+      for (let k = 0; k < form_data.length; k++) {
+        this.quotation_value.push(form_data[k]);
+      }
+      this.quotation_value[i] = this.selectedItem[i]['schedule'];
+    }
+
+  };
 }

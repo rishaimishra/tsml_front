@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -15,7 +16,8 @@ export class UpdateInfoComponent implements OnInit {
   p: number = 1;
 
 
-  constructor(private _sales: SalesService, private _spiner: NgxSpinnerService) { }
+  constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
+    private _toaster: ToastrService) { }
 
   ngOnInit(): void {
     this.getScList();
@@ -38,6 +40,10 @@ export class UpdateInfoComponent implements OnInit {
       "id": id,
       "sc_no": scNum,
       "ordr_no": soNum
+    }
+    if(scNum == "") {
+      this._toaster.error('Contract No. is required', 'Oops!');
+      return;
     }
 
     Swal.fire({
