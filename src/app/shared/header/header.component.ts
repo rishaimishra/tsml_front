@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
-declare var $: any; 
+declare var $: any;
 
 
 @Component({
@@ -20,17 +20,16 @@ export class HeaderComponent implements OnInit {
   userName: any;
   loginFalse: boolean = false;
   userType: boolean;
-  userRol:any;
+  userRol: any;
   notifications: any;
-  userId:any;
-  
+  userId: any;
+
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
-    private _product: ProductsService, private _sales: SalesService) 
-    { 
-      this.checkLogin();
-      this.isUserLogIn = this._auth.isLoggedIn();
-    }
+    private _product: ProductsService, private _sales: SalesService) {
+    this.checkLogin();
+    this.isUserLogIn = this._auth.isLoggedIn();
+  }
 
   ngOnInit(): void {
     this.isTokenUrl = localStorage.getItem('tokenUrl');
@@ -39,7 +38,7 @@ export class HeaderComponent implements OnInit {
     this.userId = localStorage.getItem('USER_ID');
     this.getTokenInRes(this.userId);
 
-    if(this.userRol == 'Kam') {
+    if (this.userRol == 'Kam') {
       this.getCamNoti();
       this.userType = false;
     }
@@ -50,25 +49,25 @@ export class HeaderComponent implements OnInit {
     else if (this.userRol == 'OPT') {
       this.getPlantMsg();
     }
-     else {
+    else {
       this.userType = true;
       this.getCustNoti();
     }
 
-    $( document ).ready(function() {
-      $(".shopcut").click(function(){
+    $(document).ready(function () {
+      $(".shopcut").click(function () {
         $(".shopcutBx").slideToggle("slow");
+      });
     });
-  });
 
   }
 
   clickOnLogo() {
     let userRol = localStorage.getItem('USER_TYPE');
-    if(userRol == 'Kam' && this.isUserLogIn != false) {
+    if (userRol == 'Kam' && this.isUserLogIn != false) {
       this.userType = false;
       this._router.navigate(['/dashboard/kam-dashboard']);
-    } 
+    }
     else if (userRol == 'Sales' && this.isUserLogIn != false) {
       this._router.navigate(['/dashboard/sales-dashboard']);
     }
@@ -91,19 +90,19 @@ export class HeaderComponent implements OnInit {
       confirmButtonText: 'Logout'
     }).then((result) => {
       if (result.isConfirmed) {
-       this._auth.logOut('').subscribe((res:any) => {
-        this.isUserLogIn = false;
-        this.isUserLogIn = false;
-        localStorage.clear();
-        this._router.navigate(['/']);
-       })
+        this._auth.logOut('').subscribe((res: any) => {
+          this.isUserLogIn = false;
+          this.isUserLogIn = false;
+          localStorage.clear();
+          this._router.navigate(['/']);
+        })
       }
     })
   };
 
-  checkLogin () {
+  checkLogin() {
     this._product.getDeliveryMethod().subscribe((res: any) => {
-      if(res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
+      if (res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
         this.loginFalse = true;
         localStorage.clear();
       }
@@ -114,19 +113,19 @@ export class HeaderComponent implements OnInit {
 
   getCamNoti() {
     let userid = localStorage.getItem('USER_ID');
-    const apiUrl = '/user/get_cam_notification/'+userid;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    const apiUrl = '/user/get_cam_notification/' + userid;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.notifications = res.result;
       }
     })
   };
-  
+
   getSalesNoti() {
-    this._product.getSalesNoti().subscribe((res:any) => {
+    this._product.getSalesNoti().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.notifications = res.result;
-      } 
+      }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
@@ -135,11 +134,11 @@ export class HeaderComponent implements OnInit {
 
   getCustNoti() {
     let userid = localStorage.getItem('USER_ID');
-    const apiUrl = '/user/get_cus_notification/'+userid;
-    this._product.getMethod(apiUrl).subscribe((res:any) => {
+    const apiUrl = '/user/get_cus_notification/' + userid;
+    this._product.getMethod(apiUrl).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
         this.notifications = res.result;
-      } 
+      }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
@@ -148,34 +147,34 @@ export class HeaderComponent implements OnInit {
 
   getPlantMsg() {
     let userId = localStorage.getItem('USER_ID');
-    this._sales.getPlantNoti(userId).subscribe((res:any) => {
+    this._sales.getPlantNoti(userId).subscribe((res: any) => {
       console.log(res);
     })
   };
 
-  removeNoti(id:any) {
+  removeNoti(id: any) {
     this._spinner.show();
     let removeNoti = {
       "id": id,
       "status": 2
     }
     if (this.userRol == 'Kam') {
-      this._product.removeNotiCam(removeNoti).subscribe((res:any) => {
+      this._product.removeNotiCam(removeNoti).subscribe((res: any) => {
         this._spinner.hide();
-          this.getCamNoti();
-        })
+        this.getCamNoti();
+      })
     }
     else if (this.userRol == 'Sales') {
-      this._product.salesRemoveNoti(removeNoti).subscribe((res:any) => {
+      this._product.salesRemoveNoti(removeNoti).subscribe((res: any) => {
         this._spinner.hide();
-          this.getSalesNoti();
-        })
+        this.getSalesNoti();
+      })
     }
     else {
-      this._product.custNotiRemove(removeNoti).subscribe((res:any) => {
+      this._product.custNotiRemove(removeNoti).subscribe((res: any) => {
         this._spinner.hide();
-          this.getCustNoti();
-        })
+        this.getCustNoti();
+      })
     }
   };
 
@@ -185,11 +184,11 @@ export class HeaderComponent implements OnInit {
       "user_type": this.userRol,
       "user_id": this.userId
     };
-    this._auth.clearNoti(clearMessage).subscribe((res:any) => {
+    this._auth.clearNoti(clearMessage).subscribe((res: any) => {
       this._spinner.hide();
       this.ngOnInit();
       console.log(res);
-      if (res.status == 'Token has Expired'){
+      if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
       }
     }, err => {
@@ -203,8 +202,8 @@ export class HeaderComponent implements OnInit {
     let reqParams = {
       "email": userEmail
     }
-    this._auth.forceLogOut(reqParams).subscribe((res:any) => {
-      if(res.success == true) {
+    this._auth.forceLogOut(reqParams).subscribe((res: any) => {
+      if (res.success == true) {
         this.isUserLogIn = false;
         this.isUserLogIn = false;
         localStorage.clear();
@@ -213,19 +212,19 @@ export class HeaderComponent implements OnInit {
     })
   };
 
-  getTokenInRes(userId:any) {
+  getTokenInRes(userId: any) {
     let token = localStorage.getItem('tokenUrl');
     let param = {
       "userid": userId
     }
 
-    this._auth.save_token(param).subscribe((res:any) => {
-      if(res.success == true) {
-        if(res.result.token  != token) {
+    this._auth.save_token(param).subscribe((res: any) => {
+      if (res.success == true) {
+        if (res.result.token != token) {
           this.forceLogout();
         }
       }
     })
   }
-  
+
 }

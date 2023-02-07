@@ -14,6 +14,8 @@ declare var $: any;
 export class UpdateInfoComponent implements OnInit {
   scInfoItems:any = [];
   p: number = 1;
+  sc_id: any;
+  scNum: any;
 
 
   constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
@@ -31,15 +33,16 @@ export class UpdateInfoComponent implements OnInit {
         this.scInfoItems = res.result;
       }
     })
-  }
+  };
 
   updateScSo(id:any) {
     let scNum = $('#scNumber'+id).val();
-    let soNum = $('#soNumber'+id).val();
     let params = {
       "id": id,
       "sc_no": scNum,
-      "ordr_no": soNum
+      "ordr_no": '',
+      "finance_no": '',
+      "payment_proc": ''
     }
     if(scNum == "") {
       this._toaster.error('Contract No. is required', 'Oops!');
@@ -48,7 +51,7 @@ export class UpdateInfoComponent implements OnInit {
 
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "You want to update !",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -79,6 +82,59 @@ export class UpdateInfoComponent implements OnInit {
           }
         })
       }
+    })
+  };
+
+  openModel(id:any,sc_no:any,ordr_no:any) {
+    $('#soNumber').val(ordr_no);
+
+    if(ordr_no != null) {
+      $('#soNumber').prop('readonly', true);
+    } else {
+      $('#soNumber').prop('readonly', false);
+    }
+
+    this.sc_id = id;
+    this.scNum = sc_no;
+  };
+
+  updateSO() {
+    let soNum = $('#soNumber').val();
+    let payment = $('#payment_pr').val();
+    let financial = $('#financial_d').val();
+
+    if(soNum == '' || soNum == null) {
+      this._toaster.error('SO number is required','Sorry !');
+      return;
+    }
+    let reqParams = {
+      "id": this.sc_id,
+      "sc_no": this.scNum,
+      "ordr_no": soNum,
+      "finance_no": financial,
+      "payment_proc": payment
+    }
+    this._spiner.show();
+    this._sales.updateSc(reqParams).subscribe((res:any) => {
+      this._spiner.hide();
+    if(res.message == 'success') {
+      this.getScList();
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: '',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      $("#soUpdateModel").hide();
+      $('body').removeClass('modal-open');
+      $(".modal-backdrop").removeClass("modal-backdrop show");
+    }
+
+    }, err => {
+      console.log(err);
+      this._spiner.hide();
     })
   }
 }
