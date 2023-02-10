@@ -4,7 +4,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
-import Swal from 'sweetalert2';
+
+
 
 @Component({
   selector: 'app-home',
@@ -18,12 +19,13 @@ export class HomeComponent implements OnInit {
   public product_list: any = [];
   public show_error: boolean = false;
   public popular_product_list: any = [];
+
   allNews: any;
   menuId: any;
-  isLogin:boolean;
-  categoryOne:any;
-  categoryTwo:any;
-  imageUrl:any;
+  isLogin: boolean;
+  categoryOne: any;
+  categoryTwo: any;
+  imageUrl: any;
 
   constructor(
     private _router: Router,
@@ -31,17 +33,17 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _product: ProductsService,
     private _auth: AuthService
-    ) 
-    { 
-      this.isLogin = this._auth.isLoggedIn();
+  ) {
+    this.isLogin = this._auth.isLoggedIn();
   }
 
   ngOnInit(): void {
     this.isUserLogin = this._auth.isLoggedIn();
     this.getProducts();
+
   }
 
-  
+
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
@@ -111,7 +113,7 @@ export class HomeComponent implements OnInit {
   isActive(item: any) {
     return this.menuId === item;
   };
-  
+
   get_popular_product() {
     let url = '/popular-product';
     this.productService.getMethod(url).subscribe(
@@ -136,7 +138,7 @@ export class HomeComponent implements OnInit {
 
   getProducts() {
     let apiurl = '/product-related-category-fetch';
-    this._product.getMethod(apiurl).subscribe((res:any) => {
+    this._product.getMethod(apiurl).subscribe((res: any) => {
       if (res.success == true) {
         this.categoryOne = res.product_one_category;
         this.categoryTwo = res.product_two_category;
@@ -146,5 +148,5 @@ export class HomeComponent implements OnInit {
       console.log(error);
     })
   }
-  
+
 }

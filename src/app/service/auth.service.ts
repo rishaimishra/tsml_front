@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { getOptRequest, getOtpResponse } from '../interfaces/mobile-verify';
-import { catchError, Observable, throwError } from 'rxjs';
-import { verifyOptRequest, verifyOtpResponse } from '../interfaces/verify-otp';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly GET_OTP_URL: String = 'send-mobile-otp';
-  private readonly VERIFY_OTP_URL: String = 'verify-mobile-otp';
 
+  headers= new HttpHeaders().set('content-type', 'application/json');
 
   private BesUrl = environment.apiEndpointBase;
   constructor(private _http: HttpClient) { }
@@ -23,7 +19,7 @@ export class AuthService {
   };
 
   login(data: any) {
-    return this._http.post(this.BesUrl + '/login', data, { withCredentials: true });
+    return this._http.post(this.BesUrl + '/login', data, { withCredentials: true, 'headers': this.headers  });
   };
 
   logOut(data: any) {
@@ -36,17 +32,18 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('tokenUrl') || '';
-  }
-  getOtp(requestData: getOptRequest): Observable<getOtpResponse> {
-    return this._http.post<getOtpResponse>(`${environment.apiEndpointBase}/${this.GET_OTP_URL}`, requestData);
   };
 
-  verifyOtp(requestData: verifyOptRequest): Observable<verifyOtpResponse> {
-    return this._http.post<verifyOtpResponse>(`${environment.apiEndpointBase}/${this.VERIFY_OTP_URL}`, requestData);
+  getOtp(requestData: any) {
+    return this._http.post(this.BesUrl + '/send-mobile-otp',requestData);
+  };
+
+  verifyOtp(requestData: any) {
+    return this._http.post(this.BesUrl + '/verify-mobile-otp',requestData);
   };
 
   submitForgetPass(data: any) {
-    return this._http.post(this.BesUrl + '/password-update', data);
+    return this._http.post(this.BesUrl + '/password-update', data,{ 'headers': this.headers });
   };
 
   gstApi() {
@@ -62,7 +59,7 @@ export class AuthService {
   };
   
   forgetPass(request:any) {
-    return this._http.post(this.BesUrl + '/password-email',  request);
+    return this._http.post(this.BesUrl + '/password-email',  request, { 'headers': this.headers });
   };
 
   checkEmail(request:any) {
@@ -86,7 +83,7 @@ export class AuthService {
   };
 
   passwordReset(request:any) {
-    return this._http.post(this.BesUrl + '/password-reset',  request);
+    return this._http.post(this.BesUrl + '/password-reset',  request, { 'headers': this.headers });
   };
 
   getOtpMobile(request:any) {
@@ -102,7 +99,7 @@ export class AuthService {
   };
 
   getOtpLog(request:any) {
-    return this._http.post(this.BesUrl + '/send-login-otp',  request);
+    return this._http.post(this.BesUrl + '/send-login-otp',  request, { 'headers': this.headers });
   };
 
   checkExpireyUser(request:any) {
@@ -110,7 +107,7 @@ export class AuthService {
   };
 
   resetOtp(request:any) {
-    return this._http.post(this.BesUrl + '/resest_pass_mail',  request);
+    return this._http.post(this.BesUrl + '/resest_pass_mail',  request, { 'headers': this.headers });
   };
 
 }

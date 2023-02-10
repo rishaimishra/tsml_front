@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 declare var $: any;
 
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -23,6 +24,14 @@ export class HeaderComponent implements OnInit {
   userRol: any;
   notifications: any;
   userId: any;
+
+  // Encryption
+  tokenFromUI: string = "0123456789123456";
+  encrypted: any = "";
+  decrypted: string;
+
+  request: string;
+  responce: string;
 
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
@@ -225,6 +234,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     })
-  }
+  };
+
 
 }

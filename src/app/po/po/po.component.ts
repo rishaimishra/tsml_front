@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
-import * as uuid from 'uuid';
 declare var $: any;
 
 @Component({
@@ -22,10 +21,7 @@ export class PoComponent implements OnInit {
   public show_data: boolean = false;
   public qty: Number = 1;
   public selected_size: any = '';
-  public delivery_date: any = '';
-  public show_error: boolean = false;
-  public error_message: String = '';
-  addItems: boolean = false;
+
   user_Id: any;
   title: any = '';
   productId: any;

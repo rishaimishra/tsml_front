@@ -450,8 +450,7 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    this._auth.getOtp(mobileNu).subscribe(
-      (res) => {
+    this._auth.getOtp(mobileNu).subscribe((res:any) => {
         if (res.status > 0) {
           this._spinner.hide();
           this.toastr.success(res.message);

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import { CustomValidators } from './customValidator';
 declare var $: any;
+import {CryptoJSAesJson} from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-reset-password',
@@ -55,6 +56,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
   };
+
   getOtp() {
     let email = $('#resetEmail').val();
     if(email == null || email == "") {
@@ -64,10 +66,13 @@ export class ResetPasswordComponent implements OnInit {
     let params = {
       "email": email
     }
+
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(params, password);
+
     this._spiner.show();
-    this._auth.resetOtp(params).subscribe((res:any) => {
+    this._auth.resetOtp(encrypted).subscribe((res:any) => {
       this._spiner.hide();
-      console.log(res);
       if(res.status == 1) {
         this.recevedOtp = true;
         Swal.fire({
@@ -98,8 +103,12 @@ export class ResetPasswordComponent implements OnInit {
     else if(this.resetPassForm.invalid) {
       return;
     } 
+    let resetValue = this.resetPassForm.value;
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(resetValue, password);
+
     this._spiner.show();
-    this._auth.passwordReset(this.resetPassForm.value).subscribe((res:any) => {
+    this._auth.passwordReset(encrypted).subscribe((res:any) => {
       this._spiner.hide();
 
       if(res.status == 1) {

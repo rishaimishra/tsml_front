@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import { CustomValidators } from './customValidator';
+import {CryptoJSAesJson} from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-forget-password',
@@ -59,9 +60,11 @@ export class ForgetPasswordComponent implements OnInit {
     // if (this.forgetPassForm.invalid) {
     //   return;
     // }
-
+    let forgetValue = this.forgetPassForm.value;
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(forgetValue, password);
     this._spinner.show();
-    this._auth.submitForgetPass(this.forgetPassForm.value).subscribe((res: any) => {
+    this._auth.submitForgetPass(encrypted).subscribe((res: any) => {
       this._spinner.hide();
       if (res.status == 1) {
         Swal.fire({
@@ -74,7 +77,7 @@ export class ForgetPasswordComponent implements OnInit {
         this._spinner.hide();
         this._router.navigate(['/auth/login']);
       }
-      else if (res.error.validation.password_confirm?.length > 0 && res.error.validation.password_confirm != undefined) {
+      else if (res.error?.validation?.password_confirm?.length > 0 && res.error?.validation?.password_confirm != undefined) {
         Swal.fire({
           icon: 'error',
           title: 'Sorry !',
@@ -82,15 +85,23 @@ export class ForgetPasswordComponent implements OnInit {
         })
         this._spinner.hide();
       }
-      else if (res.error.validation.otp?.length > 0 && res.error.validation.otp != undefined) {
+      else if (res.error?.validation?.otp?.length > 0 && res.error?.validation.otp != undefined) {
         Swal.fire({
           icon: 'error',
           title: 'Sorry !',
-          text: res.error.validation.otp[0],
+          text: res.error?.validation.otp[0],
         })
         this._spinner.hide();
       }
 
+      else if (res.error.message == "Invalid OTP or email please check !!") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry !',
+          text: res.error.message,
+        })
+        this._spinner.hide();
+      }
     }, err => {
       console.log(err);
       this._spinner.hide();
