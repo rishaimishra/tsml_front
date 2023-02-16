@@ -82,6 +82,9 @@ export class LoginComponent implements OnInit {
         })
         this._router.navigate(['/auth/forget-password'])
       }
+    }, err => {
+      console.log(err);
+      this._spinner.hide()
     })
   };
 

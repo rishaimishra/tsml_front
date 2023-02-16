@@ -97,7 +97,6 @@ export class CustomerComponent implements OnInit {
     this._route.params.subscribe(res => {
       if (res.id) {
         this.rfqNum = atob(res.id);
-        console.log(this.rfqNum);
       }
     });
 

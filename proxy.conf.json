@@ -1,6 +1,6 @@
 {
     "/api": {
-    "target": "https://beas.in/mje-shop/api",
+    "target": "https://beas.in/tsml-shop/api",
     "secure": false
     }
     }

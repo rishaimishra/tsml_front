@@ -15,7 +15,7 @@ export class AuthService {
 
 
   register(data: any) {
-    return this._http.post(this.BesUrl + '/register', data);
+    return this._http.post(this.BesUrl + '/register', data,{ 'headers': this.headers });
   };
 
   login(data: any) {
@@ -35,11 +35,11 @@ export class AuthService {
   };
 
   getOtp(requestData: any) {
-    return this._http.post(this.BesUrl + '/send-mobile-otp',requestData);
+    return this._http.post(this.BesUrl + '/send-mobile-otp',requestData, { 'headers': this.headers });
   };
 
   verifyOtp(requestData: any) {
-    return this._http.post(this.BesUrl + '/verify-mobile-otp',requestData);
+    return this._http.post(this.BesUrl + '/verify-mobile-otp',requestData, { 'headers': this.headers });
   };
 
   submitForgetPass(data: any) {

@@ -4,6 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 
 
@@ -129,8 +130,11 @@ export class HomeComponent implements OnInit {
   };
 
   gotoDetailsPage(productId: any, categoryId: any) {
+    let prodId = btoa(productId);
+    let catid = btoa(categoryId);
+
     if (this.isLogin == true) {
-      this._router.navigate(['/products/product-details', productId, categoryId]);
+      this._router.navigate(['/products/product-details', prodId, catid]);
     } else {
       this._router.navigate(['/auth/login']);
     }

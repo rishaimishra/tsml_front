@@ -4,12 +4,13 @@
 
 export const environment = {
   production: false,
-  apiEndpointBase:'https://beas.in/mje-shop/api',
+  apiEndpointBase:'https://beas.in/tsml-shop/api',
   sapApiEndpointBase:'https://15.207.150.126:50001/RESTAdapter',
   filePath:'https://beas.in/mje-shop/storage/app/public/images/complain/',
 };
 
 /*
+https://beas.in/mje-shop/api
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

@@ -81,6 +81,9 @@ export class ResetPasswordComponent implements OnInit {
           text: 'OTP has been sent to your registered email - '+email,
         })
       }
+    }, err => {
+      console.log(err);
+      this._spiner.hide()
     })
   };
 

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 declare var $: any;
 import { StateCityService } from 'src/app/service/state-city.service';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 //import uuid from "uuid";
 
@@ -86,12 +87,12 @@ export class ProductDetailsComponent implements OnInit {
     this.getDeliveryItem();
     this.states = this._state.getState();
     this._route.params.subscribe((res) => {
-      this.productId = res.productId;
-      this.categoryid = res.categoryId;
+      this.productId = atob(res.productId);
+      this.categoryid = atob(res.categoryId);
       this.removeCatArr.push(this.categoryid);
       this.removeCatArr.includes(this.categoryid)
       this.getCategoriDetails(this.productId, this.categoryid);
-      this.get_product_details(res.productId, res.categoryId);
+      this.get_product_details(this.productId, this.categoryid);
 
     });
     this.setFromData();
@@ -131,12 +132,16 @@ export class ProductDetailsComponent implements OnInit {
     $("#qty_" + cat_id).val(this.totalQty);
 
   };
+
   subCatSelect(event: any) {
     this.spinner.show();
     let apiUrl = '/sub_cat_details/' + event.target.value;
     this._product.getMethod(apiUrl).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success.') {
+      //Decrypt
+      // let password = '123456';
+      // let decrypted = CryptoJSAesJson.decrypt(res.result, password);
         this.prodcutSize = res.result['sizes'];
       }
     }, err => {
@@ -152,7 +157,10 @@ export class ProductDetailsComponent implements OnInit {
       (res: any) => {
         this.spinner.hide();
         if (res.status == 1) {
-          this.product_data = res.result;
+          // Decrypt
+          let password = '123456'
+          let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+          this.product_data = decrypted;
           this.selectedItem.push(this.product_data);
           this.show_data = true;
           // const uniqueID = uuid.v4();
@@ -195,6 +203,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     );
   };
+
   selecte_size(size: any, index: any) {
     this.selected_size = size;
   };
@@ -297,10 +306,14 @@ export class ProductDetailsComponent implements OnInit {
       rfqFormArry.push(reqData);
       let rfqNumberShow = reqData.rfq_number;
       this._state.sendRfqNumer(rfqNumberShow);
+
     }
+    //Encrypt
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
 
     this.spinner.show();
-    this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
+    this._product.storeRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1 && res.result != 'Quote not created') {
         this._toaster.success('Request success');
@@ -466,9 +479,12 @@ export class ProductDetailsComponent implements OnInit {
     if (userId != '' || userId != null) {
       this._product.getMethod(apiUrl).subscribe((res: any) => {
         this.spinner.hide();
-        this.billto = res.result['bill'];
-        this.shipto = res.result['ship'];
-        this.userAddr = res.result?.addressone + res.result?.addresstwo + res.result?.city + res.result?.state + res.result?.pincode;
+      //Decrypt
+      let password = '123456';
+      let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.billto = decrypted['bill'];
+        this.shipto = decrypted['ship'];
+        this.userAddr = decrypted?.addressone + decrypted?.addresstwo + decrypted?.city + decrypted?.state + decrypted?.pincode;
         if (res.status == 'Token has Expired') {
           this._router.navigate(['/auth/login']);
           this.spinner.hide();
