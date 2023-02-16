@@ -85,7 +85,7 @@ export class ProductDetailsComponent implements OnInit {
       this.userType = true;
     }
     this.getDeliveryItem();
-    this.states = this._state.getState();
+    // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
       this.productId = atob(res.productId);
       this.categoryid = atob(res.categoryId);
@@ -309,11 +309,11 @@ export class ProductDetailsComponent implements OnInit {
 
     }
     //Encrypt
-    let passwordd = '123456';
-    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    // let passwordd = '123456';
+    // let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
 
     this.spinner.show();
-    this._product.storeRfq(encryptedd).subscribe((res: any) => {
+    this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1 && res.result != 'Quote not created') {
         this._toaster.success('Request success');

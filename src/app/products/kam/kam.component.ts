@@ -9,7 +9,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { StateCityService } from 'src/app/service/state-city.service';
 import { SalesService } from 'src/app/service/sales.service';
 declare var $: any;
-
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 
 @Component({
@@ -600,6 +600,9 @@ export class KamComponent implements OnInit {
 
     let qouteSt = this.selectedItem[0]['quotest'];
     this.spinner.show();
+    //Encrypt
+    // let passwordd = '123456';
+    // let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
     this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
@@ -868,11 +871,18 @@ export class KamComponent implements OnInit {
       "delivery_method": dap,
       "sub_cat_id": subCatId
     }
+    //Encrypt
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(price, passwordd);
 
     this._product.priceCalculation(price).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
+      // Decrypt
+      // let password = '123456'
+      // let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+
       this.productPrice = res.result;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
 

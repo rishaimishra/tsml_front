@@ -111,7 +111,8 @@ export class HeaderComponent implements OnInit {
 
   checkLogin() {
     this._product.getDeliveryMethod().subscribe((res: any) => {
-      if (res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
+      if (res.status == 'Token is Expired' || res.status == 'Authorization Token not found') {
+        // this._router.navigate(['/'])
         this.loginFalse = true;
         localStorage.clear();
       }
