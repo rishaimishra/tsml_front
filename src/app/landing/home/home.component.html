@@ -78,8 +78,8 @@
                       <div class="product-list pointerTab">
                         <a (click)="gotoDetailsPage(categoryTwo?.product_id, categoryTwo?.id)">
                           <div class="product-list-img">
-                            <!-- <img src="{{imageUrl+'/'+categoryTwo?.primary_image }}" alt="product-img" /> -->
-                            <img src="assets/images/High_Grade_Friable_Chrome_Ore-1669783799-7660.png" alt="product-img" />
+                            <img src="{{imageUrl+'/'+categoryTwo?.primary_image }}" alt="product-img" />
+                            <!-- <img src="assets/images/High_Grade_Friable_Chrome_Ore-1669783799-7660.png" alt="product-img" /> -->
 
                           </div>
                           <h4>
@@ -201,9 +201,9 @@
                       <div class="product-list">
                         <a routerLink="/products/product-details/{{ categoryTwo?.product_id }}/{{categoryTwo?.id}}">
                           <div class="product-list-img">
-                            <!-- <img src="{{ imageUrl+'/'+categoryTwo?.primary_image }}" [alt]="categoryTwo?.id"
-                              [title]="categoryTwo?.id" alt="product-img" /> -->
-                              <img src="assets/images/High_Grade_Friable_Chrome_Ore-1669783799-7660.png" alt="product-img" />
+                            <img src="{{ imageUrl+'/'+categoryTwo?.primary_image }}" [alt]="categoryTwo?.id"
+                              [title]="categoryTwo?.id" alt="product-img" />
+                              <!-- <img src="assets/images/High_Grade_Friable_Chrome_Ore-1669783799-7660.png" alt="product-img" /> -->
                           </div>
                           <h4>
                             {{categoryTwo?.cat_name}}

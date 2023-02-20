@@ -7,6 +7,7 @@ import { ProductsService } from 'src/app/service/products.service';
 import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 
 @Component({
@@ -178,8 +179,10 @@ export class PoEditComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
-        this.editProductId = res.result[0]['product_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.editProductId = decrypted[0]['product_id'];
+        this.product_data = decrypted;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.rfqNumber = this.product_data[0]['rfq_no'];
@@ -483,7 +486,9 @@ export class PoEditComponent implements OnInit {
       rfqFormArry.push(reqData);
     }
     this.spinner.show();
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    this._product.updateRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
         this.detailByRfq();
@@ -640,12 +645,15 @@ export class PoEditComponent implements OnInit {
       "sub_cat_id": subCatId
     }
     // - Number(this.productPrice.cam_discount) + Number(this.productPrice.misc_expense)
-
-    this._product.priceCalculation(price).subscribe((res: any) => {
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(price, passwordd);
+    this._product.priceCalculation(encryptedd).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
-      this.productPrice = res.result;
+      let password = '123456';
+      let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+      this.productPrice = decrypted;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost) ;
       
       if (this.productPrice['price_premium_sing'] == '-') {

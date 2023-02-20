@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SalesService {
+  headers= new HttpHeaders().set('content-type', 'application/json');
   private BesUrl = environment.apiEndpointBase;
 
   constructor(private _http: HttpClient) { }
@@ -82,7 +83,7 @@ export class SalesService {
   };
 
   submitManagerRfq(request:any) {
-    return this._http.post(this.BesUrl + '/user/get_price_break', request);
+    return this._http.post(this.BesUrl + '/user/get_price_break', request, { 'headers': this.headers });
   };
 
   checkQtyDo(request:any) {

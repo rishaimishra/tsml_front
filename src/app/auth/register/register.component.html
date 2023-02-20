@@ -13,7 +13,6 @@
   </section>
   <!--/Top Banner-->
   <!--Content-->
-
   <section class="bg-grey position-relative">
     <div class="container">
       <div class="row ptt-5">
@@ -29,7 +28,7 @@
               </li>
               <li class="nav-item position-relative pointerClass">
                 <!-- (click)="mobileTabContinue()" -->
-                <a [ngClass]="ekycTab == true ? 'nav-link active' : 'nav-link'" data-toggle="tab"
+                <a [ngClass]="ekycTab == true ? 'nav-link active' : 'nav-link'"
                    role="tab" aria-controls="profile"><span class="kyc-icon mr-2"></span>
                   <span class="nav-ttxt">e-KYC Customer</span><span class="nav-round"></span></a>
               </li>
@@ -37,7 +36,7 @@
                 <!-- (click)="ekycTabContinue()" -->
                 <a [ngClass]="
                       addressTab == true ? 'nav-link active' : 'nav-link'
-                    " data-toggle="tab"  role="tab" aria-controls="address"><span
+                    " role="tab" aria-controls="address"><span
                     class="address-icon mr-2"></span>
                   <span class="nav-ttxt">Address</span><span class="nav-round"></span></a>
               </li>
@@ -45,7 +44,7 @@
                 <!-- (click)="addressTabContinue()" -->
                 <a [ngClass]="
                       this.uploadTab == true ? 'nav-link active' : 'nav-link'
-                    " data-toggle="tab"  role="tab" aria-controls="uploads"><span
+                    " role="tab" aria-controls="uploads"><span
                     class="upload-icon mr-2"></span>
                   <span class="nav-ttxt">Documents Upload</span><span class="nav-round"></span></a>
               </li>
@@ -558,9 +557,9 @@
                                   <div class="uplodimg">
                                     <div class="custom-file">
                                       <input type="file" (change)="getAddrssProfe($event)" [ngClass]="{ 'is-invalid': addrPdferor}"
-                                      accept="application/pdf" id="file-1" class="custom-file-input" />
-                                      <label class="custom-file-label" id="fileName" for="file-1">{{selectFileName?.name ?
-                                        selectFileName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                        accept=".pdf" id="file-1" class="custom-file-input" />
+                                      <label class="custom-file-label" for="file-1">{{selectedFile?.name ?
+                                        selectedFile?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="addrPdferor">Only PDF allowed</small>
                                       <div *ngIf="!addProof && submitted">
                                         <small class="text-danger">
@@ -586,8 +585,8 @@
                                       <input type="file" (change)="getCancelcheck($event)" [ngClass]="{ 'is-invalid': cancPdferor}"
                                         accept=".pdf" id="file-2" class="custom-file-input"
                                         name="filename" />
-                                      <label class="custom-file-label" for="file-2">{{checkbookName?.name ?
-                                        checkbookName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-2">{{cancelCheckBook?.name ?
+                                        cancelCheckBook?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="cancPdferor">Only PDF allowed</small>
                                       <div *ngIf="!checkBook && submitted">
                                         <small class="text-danger">
@@ -617,8 +616,8 @@
                                     <div class="custom-file">
                                       <input type="file" (change)="uploadPan($event)" accept=".pdf"
                                       [ngClass]="{ 'is-invalid': panPdferor}" id="file-3" class="custom-file-input" name="filename" />
-                                      <label class="custom-file-label" for="file-3">{{panName?.name ?
-                                        panName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-3">{{panUpload?.name ?
+                                        panUpload?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="panPdferor">Only PDF allowed</small>
                                       <div *ngIf="!panCardUpload && submitted">
                                         <small class="text-danger">
@@ -648,8 +647,8 @@
                                       <input type="file" (change)="gstCertificateFileUpload($event)"
                                       [ngClass]="{ 'is-invalid': gstPdferor}" accept=".pdf" id="file-4" class="custom-file-input"
                                         name="filename" />
-                                      <label class="custom-file-label" for="file-4">{{gstName?.name ?
-                                        gstName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-4">{{gstUpload?.name ?
+                                        gstUpload?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="gstPdferor">Only PDF allowed</small>
                                       <div *ngIf="!gstFile && submitted">
                                         <small class="text-danger">
@@ -677,8 +676,8 @@
                                       <input type="file" (change)="turnoverUpload($event)" [ngClass]="{ 'is-invalid': turnPdferor}"
                                         accept=".pdf" id="file-5" class="custom-file-input"
                                         name="filename" />
-                                      <label class="custom-file-label" for="file-5">{{trunFileName?.name ?
-                                        trunFileName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-5">{{turnoverFile?.name ?
+                                        turnoverFile?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="turnPdferor">Only PDF allowed</small>
                                       <div *ngIf="!turnOver && submitted">
                                         <small class="text-danger">
@@ -707,8 +706,8 @@
                                       <input type="file" (change)="itrFileUpload($event)" [ngClass]="{ 'is-invalid': itrPdferor}"
                                         accept=".pdf" id="file-6" class="custom-file-input"
                                         name="filename" />
-                                      <label class="custom-file-label" for="file-6">{{itrName?.name ?
-                                        itrName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-6">{{itrFile?.name ?
+                                        itrFile?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="itrPdferor">Only PDF allowed</small>
                                       <div *ngIf="!itrFileUpl && submitted">
                                         <small class="text-danger">
@@ -736,8 +735,8 @@
                                     <div class="custom-file">
                                       <input type="file" (change)="formDupload($event)" accept=".pdf" [ngClass]="{ 'is-invalid': fmDPdferor}"
                                         id="file-7" class="custom-file-input" name="filename" />
-                                      <label class="custom-file-label" for="file-7">{{formDname?.name ?
-                                        formDname?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-7">{{formDfile?.name ?
+                                        formDfile?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="fmDPdferor">Only PDF allowed</small>
                                     </div>
                                     <a class="reg-cross pointerClass" *ngIf="showResetUpload7" (click)="resetFormD()">
@@ -760,8 +759,8 @@
                                       <input type="file" (change)="consentLetterUpload($event)" [ngClass]="{ 'is-invalid': consntPdferor}"
                                         accept=".pdf" id="file-8" class="custom-file-input"
                                         name="filename" />
-                                      <label class="custom-file-label" for="file-8">{{consentName?.name ?
-                                        consentName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-8">{{consentLetter?.name ?
+                                        consentLetter?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="consntPdferor">Only PDF allowed</small>
                                       <div *ngIf="!consentFile && submitted">
                                         <small class="text-danger">
@@ -789,8 +788,8 @@
                                       <input type="file" (change)="regisCertificateUpload($event)" [ngClass]="{ 'is-invalid': certPdferor}"
                                         class="custom-file-input" id="customFile" accept=".pdf"
                                         name="filename">
-                                      <label class="custom-file-label" for="customFile">{{regisCert?.name ?
-                                        regisCert?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="customFile">{{regisCertificate?.name ?
+                                        regisCertificate?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="certPdferor">Only PDF allowed</small>
                                       <div *ngIf="!cerftificateUpl && submitted">
                                         <small class="text-danger">
@@ -822,8 +821,8 @@
                                       <input type="file" (change)="tcsFileUpload($event)" [ngClass]="{ 'is-invalid': tcsPdferor}"
                                         accept=".pdf" id="file-10" class=" custom-file-input"
                                         name="filename" />
-                                      <label class="custom-file-label" for="file-10">{{tcsfileName?.name ?
-                                        tcsfileName?.name:'File type: PDF, Max - 5MB'}}</label>
+                                      <label class="custom-file-label" for="file-10">{{tcsFile?.name ?
+                                        tcsFile?.name:'File type: PDF, Max - 5MB'}}</label>
                                         <small class="text-danger mt-0" *ngIf="tcsPdferor">Only PDF allowed</small>
                                       <div *ngIf="!tcsUplod && submitted">
                                         <small class="text-danger">
@@ -853,25 +852,25 @@
                               <div class="row">
                                <div class="col-12 col-lg-6">
                                 <label class="d-block">Choose Security Questions</label>
-                                <select class="form-control" formControlName="securityone" [ngClass]="{ 'is-invalid': submit && tf.securityone.errors }">
+                                <select class="form-control" formControlName="securityone" id="sequ1" [ngClass]="{ 'is-invalid': submit && tf.securityone.errors }">
                                   <option value="">Select..</option>
                                   <option value="{{questn.security_question_id}}" *ngFor="let questn of questions">{{questn.s_question}}</option>
                               </select>
                                </div>
                                <div class="col-12 col-lg-6">
                                 <label>Enter Your Answer</label>
-                               <input type="text" formControlName="answoreone"  maxlength="20" placeholder="Max 20 characters" [ngClass]="{ 'is-invalid': submit && tf.answoreone.errors }" class="form-control">
+                               <input type="text" formControlName="answoreone" id="ansOne"  maxlength="20" placeholder="Max 20 characters" [ngClass]="{ 'is-invalid': submit && tf.answoreone.errors }" class="form-control">
                                </div>
                                <div class="col-12 col-lg-6">
                                 <label class="d-block">Choose Security Questions</label>
-                                <select class="form-control" formControlName="securitytwo" [ngClass]="{ 'is-invalid': submit && tf.securitytwo.errors }">
+                                <select class="form-control" id="sequrity2" formControlName="securitytwo" [ngClass]="{ 'is-invalid': submit && tf.securitytwo.errors }">
                                   <option value="">Select..</option>
                                   <option value="{{questn.security_question_id}}" *ngFor="let questn of questions">{{questn.s_question}}</option>
                               </select>
                                </div>
                                <div class="col-12 col-lg-6">
                                 <label>Enter Your Answer</label>
-                               <input type="text" formControlName="answoretwo" maxlength="20" placeholder="Max 20 characters" [ngClass]="{ 'is-invalid': submit && tf.answoretwo.errors }" class="form-control">
+                               <input type="text" formControlName="answoretwo" id="answ2" maxlength="20" placeholder="Max 20 characters" [ngClass]="{ 'is-invalid': submit && tf.answoretwo.errors }" class="form-control">
                                </div>
                               </div>
                           </div>
@@ -909,7 +908,6 @@
       </div>
     </div>
   </section>
-
   <!--/Content-->
   <div class="container-fluid display-off">
     <div class="row">

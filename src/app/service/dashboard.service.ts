@@ -18,4 +18,8 @@ export class DashboardService {
   getKamList() {
     return this._http.get(this.BesUrl + '/user/kam_quotes_list');
   };
+
+  dashboardItem(request:any) {
+    return this._http.post(this.BesUrl + '/user/user-dashboard', request);
+  };
 }

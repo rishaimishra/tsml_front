@@ -1,15 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
+
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
-import { Country, State, City } from 'country-state-city';
 import { ProductsService } from 'src/app/service/products.service';
 import Swal from 'sweetalert2';
-declare var $: any;
 import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
+
+declare var $: any;
 
 @Component({
   selector: 'app-register',
@@ -17,19 +24,6 @@ import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  @ViewChild('country')
-  country!: ElementRef;
-  @ViewChild('city')
-  city!: ElementRef;
-  @ViewChild('state')
-  state!: ElementRef;
-
-  countries = Country.getAllCountries();
-  states: any | null;
-  cities: any | null;
-  selectedCountry: any;
-  selectedState: any;
-  selectedCity: any;
 
   chooseProduct: any = [];
   chooseProductSize: any = [];
@@ -59,7 +53,7 @@ export class RegisterComponent implements OnInit {
   showResetUpload9: boolean = false;
   showResetUpload10: boolean = false;
 
-  private base64textString:String="";
+
   cancelCheckBook: any;
   panUpload: any;
   gstUpload: any;
@@ -125,7 +119,7 @@ export class RegisterComponent implements OnInit {
   billGstNum: any;
   shipGst: any;
   chipsFinesSize: boolean = false;
-  emailMsg: any;
+  emailMsg:any;
   emailErr: boolean = true;
   disableInput: boolean = true;
   addrPdferor: boolean = false;
@@ -143,16 +137,7 @@ export class RegisterComponent implements OnInit {
   validMobile: boolean = false;
   errorMsg: boolean = true;
   hide = true;
-  selectFileName:any;
-  checkbookName:any;
-  panName:any;
-  gstName:any;
-  trunFileName:any;
-  itrName:any;
-  formDname:any;
-  consentName:any;
-  regisCert:any;
-  tcsfileName:any;
+  securityParam: boolean = true;
   
 
   ferroChrome = [
@@ -185,12 +170,13 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService,
     private _spinner: NgxSpinnerService,
     private productService: ProductsService
-  ) {
+  ) 
+  { 
     this.securityForm = this._fb.group({
       eamil: [''],
       securityone: ['', Validators.required],
-      answoreone: ['', Validators.required, Validators.maxLength(20)],
-      securitytwo: ['', Validators.required],
+      answoreone: ['', Validators.required,Validators.maxLength(20)],
+      securitytwo: ['',Validators.required],
       answoretwo: ['', Validators.required, Validators.maxLength(20)]
     })
   }
@@ -285,13 +271,13 @@ export class RegisterComponent implements OnInit {
   checkTerms(event: any) {
     this.isTermCondition = event.target.checked;
   };
-  onCountryChange($event: any): void {
-    this.states = State.getStatesOfCountry(
-      JSON.parse(this.country.nativeElement.value).isoCode
-    );
-    this.selectedCountry = JSON.parse(this.country.nativeElement.value);
-    this.cities = this.selectedState = this.selectedCity = null;
-  };
+  // onCountryChange($event: any): void {
+  //   this.states = State.getStatesOfCountry(
+  //     JSON.parse(this.country.nativeElement.value).isoCode
+  //   );
+  //   this.selectedCountry = JSON.parse(this.country.nativeElement.value);
+  //   this.cities = this.selectedState = this.selectedCity = null;
+  // };
 
   checkDistributionYes(event: any) {
     this.intrestedIndistribution = true;
@@ -306,20 +292,20 @@ export class RegisterComponent implements OnInit {
     this.checkedNo = event.target.checked;
     this.checkedYes = false;
   };
-  onStateChange(event: any): void {
-    this.cities = City.getCitiesOfState(
-      JSON.parse(this.country.nativeElement.value).isoCode,
-      JSON.parse(this.state.nativeElement.value).isoCode
-    );
-    this.selectedState = JSON.parse(this.state.nativeElement.value);
-    this.registerForm.value.state = this.selectedState.name;
-    this.selectedCity = null;
-  };
+  // onStateChange(event: any): void {
+  //   this.cities = City.getCitiesOfState(
+  //     JSON.parse(this.country.nativeElement.value).isoCode,
+  //     JSON.parse(this.state.nativeElement.value).isoCode
+  //   );
+  //   this.selectedState = JSON.parse(this.state.nativeElement.value);
+  //   this.registerForm.value.state = this.selectedState.name;
+  //   this.selectedCity = null;
+  // };
 
-  onCityChange(event: any): void {
-    this.selectedCity = JSON.parse(this.city.nativeElement.value);
-    this.registerForm.value.city = this.selectedCity.name;
-  };
+  // onCityChange(event: any): void {
+  //   this.selectedCity = JSON.parse(this.city.nativeElement.value);
+  //   this.registerForm.value.city = this.selectedCity.name;
+  // };
 
   firsttab() {
     this.addressTab = false;
@@ -376,7 +362,7 @@ export class RegisterComponent implements OnInit {
     });
   };
 
-  chinpsAndFinesSize(event: any) {
+  chinpsAndFinesSize(event:any) {
     let data = event.target.value;
     this.chooseProductSize = data;
   };
@@ -433,7 +419,7 @@ export class RegisterComponent implements OnInit {
   };
   sendOtp(event: any) {
     this.mobileNumber = event.target.value;
-    if (this.mobileNumber.length > 10 || this.mobileNumber.length < 10) {
+    if(this.mobileNumber.length> 10 || this.mobileNumber.length < 10) {
       this.validMobile = true;
     } else {
       this.validMobile = false;
@@ -446,36 +432,27 @@ export class RegisterComponent implements OnInit {
       mobile_no: this.mobileNumber,
       email: this.emailId
     };
-    if (mobileNu.mobile_no == '' && this.emailId == '') {
-      this.toastr.error('Mobile number and Email is required', 'Oops');
+    if (mobileNu.mobile_no == '') {
+      this.toastr.error('Mobile number is required');
       this._spinner.hide();
       return;
     }
-    // Encrypt
-    // let password = '123456';
-    // let encrypted = CryptoJSAesJson.encrypt(mobileNu, password);
-
-    this._auth.getOtp(mobileNu).subscribe((res: any) => {
-      if (res.status > 0) {
-        this._spinner.hide();
-        this.toastr.success(res.message);
-        // let password = '123456'
-        // let decrypted = CryptoJSAesJson.decrypt(res.result, password)
-        this.mobile = res.result;
-
-        this.haveOtp = false;
-      } else {
-        this.toastr.error(res.message);
-        this._spinner.hide();
-      }
-    },
+    this._auth.getOtp(mobileNu).subscribe((res:any) => {
+        if (res.status > 0) {
+          this._spinner.hide();
+          this.toastr.success(res.message);
+          this.mobile = res.result;
+          this.haveOtp = false;
+        } else {
+          this.toastr.error(res.message);
+          this._spinner.hide();
+        }
+      },
       (error) => {
         console.log(error);
-        this._spinner.hide()
       }
     );
-  };
-
+  }
   checkOtp(event: any) {
     this.verifyOtp = event.target.value;
   };
@@ -493,69 +470,55 @@ export class RegisterComponent implements OnInit {
       this.toastr.error('OTP is required');
       return;
     }
-
+    console.log(this.verifyOtp);
     let otpVerify = {
       mobile_no: this.mobileNumber,
       email: this.emailId,
       otp: this.verifyOtp,
     };
-    // Encrypt
-    // let password = '123456';
-    // let encrypted = CryptoJSAesJson.encrypt(otpVerify, password);
     this._spinner.show();
-    this._auth.verifyOtp(otpVerify).subscribe((res: any) => {
-      this._spinner.hide();
-      if (res.status != 0) {
-        // this.mobile.otp = '';
-        // let password = '123456'
-        // let decrypted = CryptoJSAesJson.decrypt(res.result, password)
-
-        this.emailId = res.result['email'],
-          this.mobileNumber = res.result['mob_number'],
-          this.verifyOtp = null;
-        this.disableInput = false;
+      this._auth.verifyOtp(otpVerify).subscribe((res:any) => {
         this._spinner.hide();
-        this.toastr.success(res.message);
-      } else {
-        this.toastr.error(res.message);
-        this._spinner.hide();
-        this.disableInput = true;
-      }
-    }, (error) => {
-      console.log(error);
-      this._spinner.hide();
-    }
-    );
+          if (res.status != 0) {
+            // this.mobile.otp = '';
+            this.emailId = res.result['email'],
+            this.mobileNumber = res.result['mob_number'],
+            this.verifyOtp = null;
+            this.disableInput = false;
+            this._spinner.hide();
+            this.toastr.success(res.message);
+          } else {
+            this.toastr.error(res.message);
+            this._spinner.hide();
+            this.disableInput = true;
+          }
+        },(error) => {
+          console.log(error);
+          this._spinner.hide();
+        }
+      );
   };
 
   getAddrssProfe(event: any) {
-    let selectFile = event.target.files[0];
-    this.selectFileName = selectFile;
-    if (
-      selectFile.type !== "application/pdf") {
-      this.addrPdferor = true;
-      this.resetUpload();
-      return;
-    } else {
-      this.addrPdferor = false;
-    }
+    this.selectedFile = event.target.files[0];
+      if(
+      this.selectedFile.type !== "application/pdf" ){
+        this.addrPdferor = true;
+        this.resetUpload();
+        return;
+      } else {
+        this.addrPdferor = false;
+      }
     let file = event.target.files[0];
     let checkPdf = file.type.includes('/pdf');
     if (file != '' || file != undefined && checkPdf == false) {
       this.showResetUpload = true;
     }
-    // Base64 image
-    if (file) {
-        var reader = new FileReader();
-        reader.onload =this._handleReaderLoaded.bind(this);
-        reader.readAsBinaryString(file);
-    }
-    const readerr = new FileReader();
-    readerr.readAsDataURL(file);
-    readerr.onload = () => {
-      this.addProof = readerr.result;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.addProof = reader.result;
     };
-
     if (file.size >= 5209785) {
       this.addressProof = true;
       event.target.value = null;
@@ -565,12 +528,6 @@ export class RegisterComponent implements OnInit {
     }
   };
 
-  _handleReaderLoaded(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.selectedFile = btoa(binaryString)
-   };
-
   resetUpload() {
     // this.resetFile(this.file1);
     this.addProof = null;
@@ -579,29 +536,20 @@ export class RegisterComponent implements OnInit {
   };
 
   getCancelcheck(event: any) {
-    let cancelCheckBook = event.target.files[0];
-    this.checkbookName = cancelCheckBook;
-    if (
-      cancelCheckBook.type !== "application/pdf") {
-      this.cancPdferor = true;
-      this.resetCheckbook();
-      return;
-    } else {
-      this.cancPdferor = false;
-    }
+    this.cancelCheckBook = event.target.files[0];
+    if(
+      this.cancelCheckBook.type !== "application/pdf" ){
+        this.cancPdferor = true;
+        this.resetCheckbook();
+        return;
+      } else {
+        this.cancPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload2 = true;
     }
-
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReader.bind(this);
-      readerr.readAsBinaryString(file);
-    }
-
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -615,13 +563,6 @@ export class RegisterComponent implements OnInit {
       this.checkbook = false;
     }
   };
-
-  _handleReader(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.cancelCheckBook = btoa(binaryString)
-   };
-
   resetCheckbook() {
     this.checkBook = null;
     this.cancelCheckBook = '';
@@ -629,26 +570,19 @@ export class RegisterComponent implements OnInit {
   };
 
   uploadPan(event: any) {
-    let panUpload = event.target.files[0];
-    this.panName = panUpload;
-    if (
-      panUpload.type !== "application/pdf") {
-      this.panPdferor = true;
-      this.resetPan();
-      return;
-    } else {
-      this.panPdferor = false;
-    }
+    this.panUpload = event.target.files[0];
+    if(
+      this.panUpload.type !== "application/pdf" ){
+        this.panPdferor = true;
+        this.resetPan();
+        return;
+      } else {
+        this.panPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload3 = true;
-    }
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderPan.bind(this);
-      readerr.readAsBinaryString(file);
     }
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -664,13 +598,6 @@ export class RegisterComponent implements OnInit {
     }
   };
 
-  _handleReaderPan(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.panUpload = btoa(binaryString);
-    console.log(this.panUpload);
-   };
-
   resetPan() {
     this.panCardUpload = null;
     this.panUpload = '';
@@ -678,26 +605,19 @@ export class RegisterComponent implements OnInit {
   };
 
   gstCertificateFileUpload(event: any) {
-    let gstUpload = event.target.files[0];
-    this.gstName = gstUpload;
-    if (
-      gstUpload.type !== "application/pdf") {
-      this.gstPdferor = true;
-      this.resetGst();
-      return;
-    } else {
-      this.gstPdferor = false;
-    }
+    this.gstUpload = event.target.files[0];
+    if(
+      this.gstUpload.type !== "application/pdf" ){
+        this.gstPdferor = true;
+        this.resetGst();
+        return;
+      } else {
+        this.gstPdferor = false;
+      }
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload4 = true;
     };
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReadergst.bind(this);
-      readerr.readAsBinaryString(file);
-    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -711,12 +631,6 @@ export class RegisterComponent implements OnInit {
       this.gstCertificate = false;
     }
   };
-  _handleReadergst(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.gstUpload = btoa(binaryString);
-    console.log(this.gstUpload);
-   };
 
   resetGst() {
     this.gstFile = null;
@@ -725,27 +639,20 @@ export class RegisterComponent implements OnInit {
   };
 
   turnoverUpload(event: any) {
-    let turnoverFile = event.target.files[0];
-    this.trunFileName = turnoverFile;
-    if (
-      turnoverFile.type !== "application/pdf") {
-      this.turnPdferor = true;
-      this.resetTurnover();
-      return;
-    } else {
-      this.turnPdferor = false;
-    }
+    this.turnoverFile = event.target.files[0];
+    if(
+      this.turnoverFile.type !== "application/pdf" ){
+        this.turnPdferor = true;
+        this.resetTurnover();
+        return;
+      } else {
+        this.turnPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload5 = true;
     };
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderTurn.bind(this);
-      readerr.readAsBinaryString(file);
-    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -759,14 +666,6 @@ export class RegisterComponent implements OnInit {
       this.turnOverFile = false;
     }
   };
-
-  _handleReaderTurn(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.turnoverFile = btoa(binaryString);
-    console.log(this.turnoverFile);
-   };
-
   resetTurnover() {
     this.turnOver = null;
     this.turnoverFile = '';
@@ -774,27 +673,20 @@ export class RegisterComponent implements OnInit {
   };
 
   itrFileUpload(event: any) {
-    let itrFile = event.target.files[0];
-    this.itrName = itrFile;
-    if (
-      itrFile.type !== "application/pdf") {
-      this.itrPdferor = true;
-      this.resetItr();
-      return;
-    } else {
-      this.itrPdferor = false;
-    }
+    this.itrFile = event.target.files[0];
+    if(
+      this.itrFile.type !== "application/pdf" ){
+        this.itrPdferor = true;
+        this.resetItr();
+        return;
+      } else {
+        this.itrPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload6 = true;
     };
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderItr.bind(this);
-      readerr.readAsBinaryString(file);
-    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -808,12 +700,6 @@ export class RegisterComponent implements OnInit {
       this.itrFileCheck = false;
     }
   };
-  _handleReaderItr(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.itrFile = btoa(binaryString);
-   };
-
   resetItr() {
     this.itrFileUpl = null;
     this.itrFile = '';
@@ -821,26 +707,19 @@ export class RegisterComponent implements OnInit {
   };
 
   formDupload(event: any) {
-    let formDfile = event.target.files[0];
-    this.formDname = formDfile;
-    if (
-      formDfile.type !== "application/pdf") {
-      this.fmDPdferor = true;
-      this.resetFormD();
-      return;
-    } else {
-      this.fmDPdferor = false;
-    }
+    this.formDfile = event.target.files[0];
+    if(
+      this.formDfile.type !== "application/pdf" ){
+        this.fmDPdferor = true;
+        this.resetFormD();
+        return;
+      } else {
+        this.fmDPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload7 = true;
-    }
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderFD.bind(this);
-      readerr.readAsBinaryString(file);
     }
     if (file.size >= 5209785) {
       this.formD = true;
@@ -850,39 +729,26 @@ export class RegisterComponent implements OnInit {
       this.formD = false;
     }
   };
-  _handleReaderFD(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.formDfile = btoa(binaryString);
-   };
-
   resetFormD() {
     this.formDfile = '';
     this.showResetUpload7 = false;
   };
 
   consentLetterUpload(event: any) {
-    let consentLetter = event.target.files[0];
-    this.consentName = consentLetter;
-    if (
-      consentLetter.type !== "application/pdf") {
-      this.consntPdferor = true;
-      this.resetConsent();
-      return;
-    } else {
-      this.consntPdferor = false;
-    }
+    this.consentLetter = event.target.files[0];
+    if(
+      this.consentLetter.type !== "application/pdf" ){
+        this.consntPdferor = true;
+        this.resetConsent();
+        return;
+      } else {
+        this.consntPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload8 = true;
     };
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderLetr.bind(this);
-      readerr.readAsBinaryString(file);
-    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -896,12 +762,6 @@ export class RegisterComponent implements OnInit {
       this.consentFileSize = false;
     }
   };
-  _handleReaderLetr(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.consentLetter = btoa(binaryString);
-   };
-
   resetConsent() {
     this.consentFile = null;
     this.consentLetter = '';
@@ -909,26 +769,19 @@ export class RegisterComponent implements OnInit {
   };
 
   regisCertificateUpload(event: any) {
-    let regisCertificate = event.target.files[0];
-    this.regisCert = regisCertificate;
-    if (
-      regisCertificate.type !== "application/pdf") {
-      this.certPdferor = true;
-      this.resetCertificate();
-      return;
-    } else {
-      this.certPdferor = false;
-    }
+    this.regisCertificate = event.target.files[0];
+    if(
+      this.regisCertificate.type !== "application/pdf" ){
+        this.certPdferor = true;
+        this.resetCertificate();
+        return;
+      } else {
+        this.certPdferor = false;
+      }
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload9 = true;
     };
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderCert.bind(this);
-      readerr.readAsBinaryString(file);
-    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -942,12 +795,6 @@ export class RegisterComponent implements OnInit {
       this.registerFileSize = false;
     }
   };
-  _handleReaderCert(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.regisCertificate = btoa(binaryString);
-    console.log(this.regisCertificate);
-   };
 
   resetCertificate() {
     this.cerftificateUpl = null;
@@ -956,27 +803,20 @@ export class RegisterComponent implements OnInit {
   };
 
   tcsFileUpload(event: any) {
-    let tcsFile = event.target.files[0];
-    this.tcsfileName = tcsFile;
-    if (
-      tcsFile.type !== "application/pdf") {
-      this.tcsPdferor = true;
-      this.resetTcs();
-      return;
-    } else {
-      this.tcsPdferor = false;
-    }
+    this.tcsFile = event.target.files[0];
+    if(
+      this.tcsFile.type !== "application/pdf" ){
+        this.tcsPdferor = true;
+        this.resetTcs();
+        return;
+      } else {
+        this.tcsPdferor = false;
+      }
 
     let file = event.target.files[0];
     if (file != '' || file != undefined) {
       this.showResetUpload10 = true;
     };
-    // Base64 image
-    if (file) {
-      var readerr = new FileReader();
-      readerr.onload =this._handleReaderTcs.bind(this);
-      readerr.readAsBinaryString(file);
-    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -990,13 +830,6 @@ export class RegisterComponent implements OnInit {
       this.tcsFileSize = false;
     }
   };
-
-  _handleReaderTcs(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString= btoa(binaryString);
-    this.tcsFile = btoa(binaryString);
-   };
-
   resetTcs() {
     this.tcsUplod = null;
     this.tcsFile = '';
@@ -1017,7 +850,7 @@ export class RegisterComponent implements OnInit {
 
     this.productService.getMjGstIn(this.gstNum).subscribe((res: any) => {
       this._spinner.hide();
-      this.toastr.success('', 'Success');
+      this.toastr.success('','Success');
       const withoutFirstAndLast = res.gstin.slice(2, -3);
       let state = res.pradr.addr.stcd;
       let city = res.pradr.addr.dst;
@@ -1051,7 +884,7 @@ export class RegisterComponent implements OnInit {
     }, err => {
       console.log(err);
       this._spinner.hide();
-      this.toastr.error('Please enter valid GST number.', 'Sorry !');
+      this.toastr.error('Please enter valid GST number.','Sorry !');
     })
 
   };
@@ -1063,7 +896,7 @@ export class RegisterComponent implements OnInit {
     this._spinner.show;
     this.productService.getMjGstIn(this.billGstNum).subscribe((res: any) => {
       this._spinner.hide();
-      this.toastr.success('', 'Success');
+      this.toastr.success('','Success');
       let state = res.pradr.addr.stcd;
       let city = res.pradr.addr.dst;
       let pincode = res.pradr.addr.pncd;
@@ -1082,7 +915,7 @@ export class RegisterComponent implements OnInit {
     }, err => {
       console.log(err);
       this._spinner.hide();
-      this.toastr.error('Please enter valid GST number.', 'Sorry !');
+      this.toastr.error('Please enter valid GST number.','Sorry !');
     })
   };
 
@@ -1094,7 +927,7 @@ export class RegisterComponent implements OnInit {
     this._spinner.show();
     this.productService.getMjGstIn(this.shipGst).subscribe((res: any) => {
       this._spinner.hide();
-      this.toastr.success('', 'Success');
+      this.toastr.success('','Success');
       let state = res.pradr.addr.stcd;
       let city = res.pradr.addr.dst;
       let pincode = res.pradr.addr.pncd;
@@ -1113,10 +946,10 @@ export class RegisterComponent implements OnInit {
     }, err => {
       console.log(err);
       this._spinner.hide();
-      this.toastr.error('Please enter valid GST number.', 'Sorry !');
+      this.toastr.error('Please enter valid GST number.','Sorry !');
     })
   };
-  useAsShippingAddr(event: any) {
+  useAsShippingAddr(event:any) {
     let checkValue = event.target.checked;
     if (checkValue == true) {
       $('#hideShipp').hide();
@@ -1131,31 +964,30 @@ export class RegisterComponent implements OnInit {
   };
   
   submitRegister() {
-    const form = document.querySelector('form');
-    const fileData = new FormData(form);
+    const fileData = new FormData();
     // this.submitted = true;
-
     if (!this.emailId) {
-      this.toastr.error('Email required !', 'Opps');
+      this.toastr.error('Email required !','Opps');
       this._spinner.hide();
       this.firsttab();
       return;
     };
+
     if (!this.mobileNumber) {
-      this.toastr.error('Mobile number required', 'Opps');
+      this.toastr.error('Mobile number required','Opps');
       this._spinner.hide();
       this.firsttab();
       return;
     };
 
     if (!this.password) {
-      this.toastr.error('Password required', 'Opps');
+      this.toastr.error('Password required','Opps');
       this._spinner.hide();
       this.firsttab();
       return;
     };
     if (!this.gstNum) {
-      this.toastr.error('GST required', 'Opps');
+      this.toastr.error('GST required','Opps');
       this._spinner.hide();
       this.firsttab();
       return;
@@ -1209,101 +1041,57 @@ export class RegisterComponent implements OnInit {
 
     this.submit = true;
     let value = this.securityForm.value;
-    if (this.securityForm.invalid) {
+
+    let sequrityOne = $('#sequ1').val();
+    let answOne = $('#ansOne').val();
+    let sequrityTwo = $('#sequrity2').val();
+    let ansTwo = $('#answ2').val();
+    if(sequrityOne == '' || answOne == '' || sequrityTwo == '' || ansTwo == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Security fields are required!',
+      })
       return;
     }
     if (value.securityone == value.securitytwo) {
       Swal.fire('Question selected should not match !');
       return;
     }
-    // this._spinner.show();
- 
-    // let registerData = {
-    //   'user_type': 'C',
-    //   'phone': this.mobileNumber,
-    //   'first_name': '',
-    //   'org_pan': this.orgPan,
-    //   'org_name': this.orgName,
-    //   'org_address': this.orgAddrs,
-    //   'tcs_dt': this.isTDS_applicable,
-    //   'pref_product_size': this.chooseProductSize,
-    //   'email': this.emailId,
-    //   'name': '',
-    //   'company_gst': this.gstNum,
-    //   'company_pan': this.orgPan,
-    //   'password': this.password,
-    //   'pref_product': this.chooseProduct,
-    //   'business_nature': this.businessType,
-    //   'billing_address': JSON.stringify(this.billingAdd.value),
-    //   'shipping_address': JSON.stringify(this.shiptingAdd.value),
-      
-    // }
 
-    // let allFiles = {
-    //   'address_proof_file': this.selectedFile,
-    //   'cancel_cheque_file': this.cancelCheckBook,
-    //   'pan_card_file': this.panUpload,
-    //   'gst_certificate': this.gstUpload,
-    //   'turnover_declare': this.turnoverFile,
-    //   'itr_last_yr': this.itrFile,
-    //   'form_d': this.formDfile,
-    //   'registration_certificate': this.regisCertificate,
-    //   'tcs': this.tcsFile,
-    //   'is_tcs_tds_applicable': this.isTDS_applicable,
-    //   'distribution': this.distributionValue,
-    //   'pan_dt': this.panDate,
-    //   'gst_dt': this.gstDate,
-    //   'formD_dt': this.formDdate
-    // }
-
-    //Encrypt
-    // let passwordd = '123456';
-    // let encryptedd = CryptoJSAesJson.encrypt(registerData, passwordd);
-
-    // let items = {
-    //   'details': encryptedd,
-    //   'files': allFiles
-    // }
-
- 
-    //Decrypt
-    // let password = '123456'
-    // let decrypted = CryptoJSAesJson.decrypt(encryptedd, password)
-    // console.log('Decrypted:', decrypted);
-
-    fileData.append('user_type', 'C');
-    fileData.append('phone', this.mobileNumber);
-    fileData.append('first_name', '');
-    fileData.append('org_pan', this.orgPan);
-    fileData.append('org_name', this.orgName);
-    fileData.append('org_address', this.orgAddrs);
-    fileData.append('tcs_dt', this.isTDS_applicable);
-    fileData.append('pref_product_size', this.chooseProductSize);
-    fileData.append('email', this.emailId);
-    fileData.append('name', '');
-    fileData.append('company_gst', this.gstNum);
-    fileData.append('company_pan', this.orgPan);
-    fileData.append('password', this.password);
-    fileData.append('pref_product', this.chooseProduct);
-    fileData.append('business_nature', this.businessType);
-    fileData.append('billing_address', JSON.stringify(this.billingAdd.value));
-    fileData.append('shipping_address', JSON.stringify(this.shiptingAdd.value));
-
-    fileData.append('address_proof_file', this.selectFileName);
-    fileData.append('cancel_cheque_file', this.checkbookName);
-    fileData.append('pan_card_file', this.panName);
-    fileData.append('gst_certificate', this.gstName);
-    fileData.append('turnover_declare', this.trunFileName);
-    fileData.append('itr_last_yr', this.itrName);
-    fileData.append('form_d', this.formDname);
-    fileData.append('registration_certificate', this.regisCert);
-    fileData.append('tcs', this.tcsfileName);
+    this._spinner.show();
+    fileData.append('user_type', btoa('C'));
+    fileData.append('phone', btoa(this.mobileNumber));
+    fileData.append('org_pan', btoa(this.orgPan));
+    fileData.append('org_name', btoa(this.orgName));
+    fileData.append('org_address',  btoa(this.orgAddrs));
+    fileData.append('tcs_dt', btoa(this.isTDS_applicable));
+    fileData.append('pref_product_size', btoa(this.chooseProductSize));
+    fileData.append('email', btoa(this.emailId));
+    fileData.append('company_gst',  btoa(this.gstNum));
+    fileData.append('company_pan', btoa(this.orgPan));
+    fileData.append('password', btoa(this.password));
+    fileData.append('pref_product', btoa(this.chooseProduct));
+    fileData.append('business_nature', btoa(this.businessType));
+    fileData.append('billing_address', btoa(JSON.stringify(this.billingAdd.value)));
+    fileData.append('shipping_address', btoa(JSON.stringify(this.shiptingAdd.value)));
+    //FILES
+    fileData.append('address_proof_file', this.selectedFile);
+    fileData.append('cancel_cheque_file', this.cancelCheckBook);
+    fileData.append('pan_card_file', this.panUpload);
+    fileData.append('gst_certificate', this.gstUpload);
+    fileData.append('turnover_declare', this.turnoverFile);
+    fileData.append('itr_last_yr', this.itrFile);
+    fileData.append('form_d', this.formDfile);
+    fileData.append('registration_certificate', this.regisCertificate);
+    fileData.append('tcs', this.tcsFile);
     fileData.append('is_tcs_tds_applicable', this.isTDS_applicable);
     fileData.append('distribution', this.distributionValue);
-    fileData.append('pan_dt', this.panDate);
-    fileData.append('gst_dt', this.gstDate);
-    fileData.append('formD_dt', this.formDdate);
-    fileData.append('tcs_dt', this.tcsDate);
+    //DATE
+    fileData.append('pan_dt', btoa(this.panDate));
+    fileData.append('gst_dt', btoa(this.gstDate));
+    fileData.append('formD_dt', btoa(this.formDdate));
+    fileData.append('tcs_dt', btoa(this.tcsDate));
 
     this._auth.register(fileData).subscribe((res: any) => {
       this._spinner.hide();
@@ -1315,16 +1103,16 @@ export class RegisterComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
+        this.saveForm();
         this.checkUserExpirey();
         this._router.navigate(['/auth/login']);
         this._spinner.hide();
-        this.saveForm();
       }
       else if (res.error.validation?.email) {
         this.toastr.error(res.error.validation.email);
         this._spinner.hide();
-      }
-      else if (res.error.validation?.company_pan.length > 0) {
+      } 
+      else if (res.error.validation?.company_pan.length > 0){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -1342,47 +1130,58 @@ export class RegisterComponent implements OnInit {
   };
 
   getQuestions() {
-    this._auth.getSecurityQue().subscribe((res: any) => {
-      if (res.message == 'success.') {
+    this._auth.getSecurityQue().subscribe((res:any) => {
+      if(res.message == 'success.') {
         this.questions = res.result;
       }
     })
   };
 
   checkUserExpirey() {
-    let usrParam = {
-      "email": this.emailId
-    }
-    this._auth.checkExpireyUser(usrParam).subscribe((res: any) => {
-      console.log(res);
-    })
+      let usrParam = {
+        "email": this.emailId
+      }
+      this._auth.checkExpireyUser(usrParam).subscribe((res: any) => {
+        console.log(res);
+      })
   };
-
+  
   saveForm() {
-    let value = this.securityForm.value;
-    let securityParam = [{
+    let sequrityOne = $('#sequ1').val();
+    let answOne = $('#ansOne').val();
+    let sequrityTwo = $('#sequrity2').val();
+    let ansTwo = $('#answ2').val();
+    if(sequrityOne == '' || answOne == '' || sequrityTwo == '' || ansTwo == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Security fields are required!',
+      })
+      return;
+    }
+
+    let securityVal = [{
       "email": this.emailId,
-      "securityone": value.securityone,
-      "answoreone": value.answoreone
+      "securityone": sequrityOne,
+      "answoreone": answOne
     },
     {
       "email": this.emailId,
-      "securityone": value.securitytwo,
-      "answoreone": value.answoretwo
+      "securityone": sequrityTwo,
+      "answoreone": ansTwo
     }]
-
-    this._auth.setSecurityQu(securityParam).subscribe((res: any) => {
-      console.log(res);
-    })
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(securityVal, passwordd);
+    this._auth.setSecurityQu(encryptedd).subscribe();
   };
 
-  emailvarify(event: any) {
+  emailvarify(event:any) {
     this.emailId = event.target.value;
     let email = {
       "email": event.target.value
     }
-    this._auth.checkEmail(email).subscribe((res: any) => {
-      if (res.result == 'It looks like you already signed up, please login to your account.') {
+    this._auth.checkEmail(email).subscribe((res:any) => {
+      if(res.result == 'It looks like you already signed up, please login to your account.') {
         this.emailErr = false;
         this.emailMsg = res.result;
       } else {
@@ -1391,16 +1190,14 @@ export class RegisterComponent implements OnInit {
     })
   };
 
-  passwordCheck(pass: any) {
+  passwordCheck(pass:any) {
     var pattern = /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/;
     this.errorMsg = pattern.test(pass);
-    if (pattern.test(pass)) {
-      return true;
-    } else {
-      return false;
+    if(pattern.test(pass)){
+        return true;
+    } else{
+        return false;
     }
   }
-
+  
 }
-
-

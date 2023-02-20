@@ -77,7 +77,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label for="">Delivery Method</label>
-                                                    <select [disabled]="formData.delivery == 'DAP (Delivered at Place)'" (change)="delectDlvryMethode($event, formData.schedule_no, i,y)"
+                                                    <select (change)="delectDlvryMethode($event, formData.schedule_no, i,y)"
                                                         #dlvrMethodInput="ngModel" [(ngModel)]="formData.delivery"
                                                         name="delivery_{{ formData.schedule_no }}"
                                                         class="form-control form-control-sm" required>
@@ -108,14 +108,15 @@
                                                             name="contact{{ formData.schedule_no }}_b" value="DEPOT"
                                                             class="mr-1"/>
                                                         <label for="contactChoice2">Depot</label>&nbsp;
-                                                        <ng-container *ngIf="selectedItem[0].product_id == 2">
+                                                        
+                                                        <!-- <ng-container *ngIf="selectedItem[0]?.product_id == 2">
                                                         <input type="radio" id="contactChoice3"
                                                             [(ngModel)]="formData.pickup_type"
                                                             id="pickupTyp_{{ formData.schedule_no }}_c"
                                                             name="contact{{ formData.schedule_no }}_c" value="MINES"
                                                             class="mr-1"/>
                                                         <label for="contactChoice3">Mines</label>
-                                                    </ng-container>
+                                                    </ng-container> -->
                                                     </label>
                                                     
                                                     <select id="pickup_from_{{formData.schedule_no}}" #pickUpfrom="ngModel"

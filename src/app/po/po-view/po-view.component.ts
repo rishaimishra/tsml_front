@@ -9,7 +9,8 @@ import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 import * as uuid from 'uuid';
 declare var $: any;
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js'
 
 
 @Component({
@@ -165,9 +166,11 @@ export class PoViewComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
-        this.editProductId = res.result[0]['product_id'];
-        let catId = res.result[0]['cat_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.editProductId = decrypted[0]['product_id'];
+        let catId = decrypted[0]['cat_id'];
+        this.product_data = decrypted;
         this.getCategoriDetails(this.editProductId, catId);
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
@@ -371,7 +374,9 @@ export class PoViewComponent implements OnInit {
       // console.log('rfqFormArry=', form_data_array);
     }
     this.spinner.show();
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(rfqFormArry, password);
+    this._product.updateRfq(encrypted).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
         this.detailByRfq();

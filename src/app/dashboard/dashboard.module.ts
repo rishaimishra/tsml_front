@@ -12,12 +12,12 @@ import { KamGuard } from '../Guard/kam.guard';
 import { CustGuard } from '../Guard/cust.guard';
 import { ManagerDashboardComponent } from './manager-dashboard/manager-dashboard.component';
 import { PlantDashboardComponent } from './plant-dashboard/plant-dashboard.component';
-import { AuthGuard } from '../auth/auth.guard';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { OptDashboardComponent } from './opt-dashboard/opt-dashboard.component';
 import { OptGuard } from '../Guard/opt.guard';
 import { ManagerGuard } from '../Guard/manager.guard';
 import { PlantGuard } from '../Guard/plant.guard';
+
 
 
 const routes: Routes = [

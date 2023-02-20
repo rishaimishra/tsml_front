@@ -309,11 +309,11 @@ export class ProductDetailsComponent implements OnInit {
 
     }
     //Encrypt
-    // let passwordd = '123456';
-    // let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
 
     this.spinner.show();
-    this._product.storeRfq(rfqFormArry).subscribe((res: any) => {
+    this._product.storeRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1 && res.result != 'Quote not created') {
         this._toaster.success('Request success');
@@ -330,12 +330,11 @@ export class ProductDetailsComponent implements OnInit {
           "sender_id": userId
         }
         this._product.camNotification(camNotiReq).subscribe((res: any) => {
-          console.log(res);
         })
 
         this._product.custNotiSubmit(camNotiReq).subscribe((res: any) => {
-          console.log(res);
         })
+        
         this.statusBar('RFQ' + rfqNumber)
         this.custRemarkApi();
       }
@@ -343,7 +342,7 @@ export class ProductDetailsComponent implements OnInit {
         this._toaster.error(res.result);
         this.spinner.hide();
       }
-      if (res.status == 'Token has Expired' || res.status == 'Authorization Token not found') {
+      if (res.status == 'Token is Expired' || res.status == 'Authorization Token not found') {
         this._toaster.error('Please register to submit RFQ');
         this._router.navigate(['/auth/login']);
         this.spinner.hide();

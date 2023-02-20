@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductsService } from 'src/app/service/products.service';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-po-list',
@@ -35,7 +36,9 @@ export class PoListComponent implements OnInit {
     this._products.getPoList().subscribe((res:any) => {
       if(res.message == 'success') {
         this._spinner.hide();
-      this.poItems = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+      this.poItems = decrypted;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
@@ -52,7 +55,9 @@ export class PoListComponent implements OnInit {
     this._products.getkamPoList().subscribe((res:any) => {
       if(res.message == 'success') {
         this._spinner.hide();
-      this.poItems = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+      this.poItems = decrypted;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);

@@ -15,7 +15,7 @@ export class AuthService {
 
 
   register(data: any) {
-    return this._http.post(this.BesUrl + '/register', data,{ 'headers': this.headers });
+    return this._http.post(this.BesUrl + '/register', data);
   };
 
   login(data: any) {
@@ -71,7 +71,7 @@ export class AuthService {
   };
 
   setSecurityQu(request:any) {
-    return this._http.post(this.BesUrl + '/save_security_qst_ans',  request);
+    return this._http.post(this.BesUrl + '/save_security_qst_ans',  request,{ 'headers': this.headers });
   };
 
   matchSecurityQu(request:any) {

@@ -7,9 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductsService {
+  headers= new HttpHeaders().set('content-type', 'application/json');
+
   private BesUrl = environment.apiEndpointBase;
   constructor(private _http: HttpClient) {}
-
   getMethod(url_paremter: any) {
     return this._http.get(this.BesUrl + url_paremter);
   };
@@ -27,11 +28,11 @@ export class ProductsService {
   };
 
   storeRfq(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/store_quotes', reqParameter);
+    return this._http.post(this.BesUrl + '/user/store_quotes', reqParameter,{ 'headers': this.headers });
   };
 
   updateRfq(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/update_quotes', reqParameter);
+    return this._http.post(this.BesUrl + '/user/update_quotes', reqParameter,{ 'headers': this.headers });
   };
   getAllNews() {
     return this._http.get(this.BesUrl + '/get_all_news_all');
@@ -71,7 +72,7 @@ export class ProductsService {
   };
 
   priceCalculation(reqParameter: any) {
-    return this._http.post(this.BesUrl + '/user/get-store-pro-price', reqParameter);
+    return this._http.post(this.BesUrl + '/user/get-store-pro-price', reqParameter,{ 'headers': this.headers });
   };
 
   getPiceValue() {

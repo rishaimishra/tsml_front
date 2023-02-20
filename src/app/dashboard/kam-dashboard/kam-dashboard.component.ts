@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DashboardService } from 'src/app/service/dashboard.service';
 import { ProductsService } from 'src/app/service/products.service';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-kam-dashboard',
@@ -19,6 +20,7 @@ export class KamDashboardComponent implements OnInit {
 
   searchValue:any;
   searchPoValue:any;
+  dashItem: any;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
   private _router: Router, private _product: ProductsService) { }
@@ -27,6 +29,7 @@ export class KamDashboardComponent implements OnInit {
     this.userName = localStorage.getItem('USER_NAME');
     this.getKamItems();
       this.getKamPoListing();
+      this.getDashboardValue();
   };
 
   poSearch() {
@@ -37,7 +40,9 @@ export class KamDashboardComponent implements OnInit {
     this._product.searchPo(poValReq).subscribe((res:any) => {
       this.spinner.hide();
       if (res.status == 1) {
-        this.poItems = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.poItems = decrypted;
       }
     })
   }
@@ -49,7 +54,9 @@ export class KamDashboardComponent implements OnInit {
     this._product.searchRfq(searchRequest).subscribe((res:any) => {
       this.spinner.hide();
       if (res.status == 1) {
-        this.kamItems = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.kamItems = decrypted;
       }
     })
   };
@@ -78,7 +85,9 @@ export class KamDashboardComponent implements OnInit {
       this.spinner.hide();
       if(res.message == 'success') {
         this.spinner.hide();
-        this.kamItems = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.kamItems = decrypted;
         const rfqNum = [];
         for (let i = 0; i < this.kamItems.length; i++) {
           let rfqNumbr = this.kamItems[i]['rfq_no'];
@@ -105,6 +114,8 @@ export class KamDashboardComponent implements OnInit {
     this._product.getRfqStatusKam(request).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
+        // let password = '123456';
+        // let decrypted = CryptoJSAesJson.decrypt(res.result, password);
         this.statusRfq = res.result;
       }
     }, err => {
@@ -120,11 +131,26 @@ export class KamDashboardComponent implements OnInit {
       this.spinner.hide();
       if(res?.message == 'success') {
         this.spinner.hide();
-      this.poItems = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+      this.poItems = decrypted;
       }
     }, err => {
       console.log(err);
       this.spinner.hide();
+    })
+  };
+
+  getDashboardValue () {
+    let userId = localStorage.getItem('USER_ID');
+    let params = {
+      user_id: userId
+    }
+    this.dashboard.dashboardItem(params).subscribe((res:any) => {
+      console.log(res);
+      if(res.status == 1) {
+        this.dashItem = res.result;
+      }
     })
   }
 

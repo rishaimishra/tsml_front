@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-confirm-rfq',
@@ -34,10 +35,11 @@ export class ConfirmRfqComponent implements OnInit {
   rfqListing() {
     this._spinner.show();
     this._products.getAllRequestOfRfq().subscribe((res: any) => {
-      console.log(res);
       if (res.status != 0) {
         this._spinner.hide();
-        this.rfqList = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.rfqList = decrypted;
       }
       if (res.status == 'Token has Expired') {
         this.toaster.error(res.status, 'Please login again')
@@ -48,10 +50,11 @@ export class ConfirmRfqComponent implements OnInit {
   rfqKamListing() {
     this._spinner.show();
     this._products.getAllRfqForKam().subscribe((res: any) => {
-      console.log(res);
       if (res.status != 0) {
         this._spinner.hide();
-        this.rfqList = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.rfqList = decrypted;
       }
       if (res.status == 'Token has Expired') {
         this.toaster.error(res.status, 'Please login again')

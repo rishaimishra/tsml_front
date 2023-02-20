@@ -205,9 +205,11 @@ export class KamComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
-        this.editProductId = res.result[0]['product_id'];
-        this.catId = res.result[0]['cat_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.catId = decrypted[0]['cat_id'];
+        this.editProductId = decrypted[0]['product_id'];
+        this.product_data = decrypted;
         this.rfqUserId = this.product_data[0].user_id;
         // this.getLocation(this.rfqUserId);
         this.qoutestId = this.product_data[0].quotest;
@@ -487,7 +489,6 @@ export class KamComponent implements OnInit {
   submitRfq() {
     this.submit = true;
     let userRol = localStorage.getItem('USER_TYPE');
-    let rediectStatus = [];
     let countArr = [];
     let confrmDate = [];
     let rfqFormArry: any = [];
@@ -601,9 +602,9 @@ export class KamComponent implements OnInit {
     let qouteSt = this.selectedItem[0]['quotest'];
     this.spinner.show();
     //Encrypt
-    // let passwordd = '123456';
-    // let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    this._product.updateRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
         Swal.fire({
@@ -875,15 +876,15 @@ export class KamComponent implements OnInit {
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(price, passwordd);
 
-    this._product.priceCalculation(price).subscribe((res: any) => {
+    this._product.priceCalculation(encryptedd).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
       // Decrypt
-      // let password = '123456'
-      // let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+      let password = '123456'
+      let decrypted = CryptoJSAesJson.decrypt(res.result, password);
 
-      this.productPrice = res.result;
+      this.productPrice = decrypted;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
 
       if (this.productPrice['price_premium_sing'] == '-') {
@@ -928,17 +929,24 @@ export class KamComponent implements OnInit {
       "rfq_no": this.rfqNum,
       "sche_no": schedule_no
     }
-    this._sales.submitManagerRfq(managerReq).subscribe((res: any) => {
-      if (res.status == 1 && res.result.length > 0) {
-        this.priceForm.controls['price_premium'].setValue(res.result[1].value);
-        this.priceForm.controls['cam_discount'].setValue(res.result[6].value);
-        this.priceForm.controls['delivery_cost'].setValue(res.result[2].value);
-        this.priceForm.controls['interest_rate'].setValue(res.result[3].value);
-        this.priceForm.controls['creditCoast'].setValue(res.result[4].value);
-        this.priceForm.controls['misc_expense'].setValue(res.result[5].value);
-        this.priceForm.controls['totalSum'].setValue(res.result[7].value);
-        this.priceForm.controls['finalAmt'].setValue(res.result[8].value);
+    //Encrypt
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(managerReq, password);
 
+    this._sales.submitManagerRfq(encrypted).subscribe((res: any) => {
+      // Decrypt
+      let password = '123456'
+      let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+      console.log(decrypted);
+      if (res.status == 1 && decrypted.length > 0) {
+        this.priceForm.controls['price_premium'].setValue(decrypted[1].value);
+        this.priceForm.controls['cam_discount'].setValue(decrypted[6].value);
+        this.priceForm.controls['delivery_cost'].setValue(decrypted[2].value);
+        this.priceForm.controls['interest_rate'].setValue(decrypted[3].value);
+        this.priceForm.controls['creditCoast'].setValue(decrypted[4].value);
+        this.priceForm.controls['misc_expense'].setValue(decrypted[5].value);
+        this.priceForm.controls['totalSum'].setValue(decrypted[7].value);
+        this.priceForm.controls['finalAmt'].setValue(decrypted[8].value);
       }
     })
   };
@@ -1351,9 +1359,11 @@ export class KamComponent implements OnInit {
     if (dlvrItem == 'Ex-Works') {
       $('#pickupTyp_' + schdl + '_c').hide();
       $('#picLable' + schdl).hide();
+      $('#contact' + schdl+'_c').hide();
     } else {
       $('#pickupTyp_' + schdl + '_c').show();
       $('#picLable' + schdl).show();
+      $('#contact' + schdl+'_c').show();
     }
     if (dlvrItem == 'DAP (Delivered at Place)') {
       $('#pickup_from_' + schdl).prop('disabled', true);

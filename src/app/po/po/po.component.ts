@@ -8,6 +8,7 @@ import { ProductsService } from 'src/app/service/products.service';
 import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-po',
@@ -110,6 +111,7 @@ export class PoComponent implements OnInit {
     this._route.params.subscribe((res) => {
       this.productId = atob(res.id);
       this.categoryid = res.categoryId;
+
       this.detailByRfq();
       this.getSubCategory(this.productId);
       // this.finalRuotedTsml();
@@ -153,8 +155,10 @@ export class PoComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
-        this.editProductId = res.result[0]['product_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.editProductId = decrypted[0]['product_id'];
+        this.product_data = decrypted;
         this.rfqUserId = this.product_data[0].user_id;
         this.rfqNumber = this.product_data[0].rfq_no;
         this.selectedItem.push(this.product_data);
@@ -308,6 +312,7 @@ export class PoComponent implements OnInit {
       }
     );
   };
+
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
   };
@@ -316,6 +321,7 @@ export class PoComponent implements OnInit {
       this.priceVal = res.result;
     });
   };
+
   selectFile(event: any) {
     this.letterHedFile = event.target.files[0];
     let file = event.target.files[0];
@@ -331,15 +337,16 @@ export class PoComponent implements OnInit {
     } else {
       this.letterHeadFile = false;
     }
-  }
+  };
+
   uploadLetterHead() {
     // this.submitt = true;
     this.spinner.show();
     const fileData = new FormData();
 
-    fileData.append('rfq_no', this.productId);
-    fileData.append('po_no', this.po_id);
     fileData.append('letterhead', this.letterHedFile);
+    fileData.append('rfqNo', this.productId);
+    fileData.append('po_no', this.po_id);
     fileData.append('po_date', this.newDate);
 
     this._product.uploadLetterHeadFile(fileData).subscribe((res: any) => {
@@ -354,7 +361,8 @@ export class PoComponent implements OnInit {
         this.spinner.hide();
       }
     })
-  }
+  };
+
   submitPO() {
     let userRol = localStorage.getItem('USER_TYPE');
     this.submit = true;
@@ -390,7 +398,9 @@ export class PoComponent implements OnInit {
     }
 
     this.spinner.show();
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    this._product.updateRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
         // this.detailByRfq();

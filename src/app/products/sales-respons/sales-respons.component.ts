@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StateCityService } from 'src/app/service/state-city.service';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-sales-respons',
@@ -193,9 +194,11 @@ export class SalesResponsComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
-        this.editProductId = res.result[0]['product_id'];
-        this.selectedUserId = res.result[0]['user_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.editProductId = decrypted[0]['product_id'];
+        this.selectedUserId = decrypted[0]['user_id'];
+        this.product_data = decrypted;
         this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
@@ -482,7 +485,11 @@ export class SalesResponsComponent implements OnInit {
     };
 
     let qouteSt = this.selectedItem[0]['quotest'];
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    //Encrypt
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+
+    this._product.updateRfq(encryptedd).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         Swal.fire({
@@ -639,8 +646,15 @@ export class SalesResponsComponent implements OnInit {
       "cat_id": catid,
       "size": size
     }
-    this._product.priceCalculation(price).subscribe((res: any) => {
-      this.productPrice = res.result;
+    //Encrypt
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(price, passwordd);
+    this._product.priceCalculation(encryptedd).subscribe((res: any) => {
+      // Decrypt
+      let password = '123456'
+      let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+
+      this.productPrice = decrypted;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.misc_expense) + 
       Number(this.productPrice.delivery_cost) + Number(this.productPrice.price_premium);
 

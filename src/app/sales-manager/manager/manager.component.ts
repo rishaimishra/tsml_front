@@ -9,6 +9,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { StateCityService } from 'src/app/service/state-city.service';
 import { SalesService } from 'src/app/service/sales.service';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-manager',
@@ -221,8 +222,11 @@ export class ManagerComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
-        this.editProductId = res.result[0]['product_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+
+        this.editProductId = decrypted[0]['product_id'];
+        this.product_data = decrypted;
         this.rfqUserId = this.product_data[0].user_id;
         this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
@@ -245,9 +249,9 @@ export class ManagerComponent implements OnInit {
         this._toaster.error(res.status);
         this._router.navigate(['/auth/login']);
       }
-      if (res.result.length < 1) {
-        this._router.navigate(['/products/rfq-list']);
-      }
+      // if (decrypted.length < 1) {
+      //   this._router.navigate(['/products/rfq-list']);
+      // }
       else {
         this.product_data = '';
       }
@@ -522,8 +526,10 @@ export class ManagerComponent implements OnInit {
 
     let qouteSt = this.selectedItem[0]['quotest'];
     let userTyp = localStorage.getItem('USER_TYPE');
-
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    //Encrypt
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    this._product.updateRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
         this.spinner.hide();
@@ -553,6 +559,7 @@ export class ManagerComponent implements OnInit {
           "url_type": 'R'
         }
         this._product.camNotification(salesNotiReq).subscribe((res: any) => {
+          console.log(res);
         })
         if (this.qtStatusUpdate == 6) {
           let statusRequest = {
@@ -560,6 +567,7 @@ export class ManagerComponent implements OnInit {
             "quoted_by_tsml": '1'
           }
           this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
+            console.log(res);
           })
           let statusRequestKam = {
             "rfq_no": this.rfqNum,
@@ -568,6 +576,7 @@ export class ManagerComponent implements OnInit {
           this._product.storeStatusKam(statusRequestKam).subscribe((res: any) => {
           })
         }
+        
         if (this.qtStatusUpdate == 9) {
           let statusRequestKam = {
             "rfq_no": this.rfqNum,
@@ -757,12 +766,18 @@ export class ManagerComponent implements OnInit {
       "sub_cat_id": subCatId
     }
     // - Number(this.productPrice.cam_discount) + Number(this.productPrice.misc_expense)
-
-    this._product.priceCalculation(price).subscribe((res: any) => {
+    //Encrypt
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(price, passwordd);
+    this._product.priceCalculation(encryptedd).subscribe((res: any) => {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
-      this.productPrice = res.result;
+      // Decrypt
+      let password = '123456'
+      let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+
+      this.productPrice = decrypted;
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost);
 
       if (this.productPrice['price_premium_sing'] == '-') {
@@ -807,16 +822,22 @@ export class ManagerComponent implements OnInit {
       "rfq_no": this.rfqNum,
       "sche_no": schedule_no
     }
-    this._sales.submitManagerRfq(managerReq).subscribe((res: any) => {
+    //Encrypt
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(managerReq, password);
+    this._sales.submitManagerRfq(encrypted).subscribe((res: any) => {
       if (res.status == 1) {
-        this.priceForm.controls['price_premium'].setValue(res.result[1].value);
-        this.priceForm.controls['cam_discount'].setValue(res.result[6].value);
-        this.priceForm.controls['delivery_cost'].setValue(res.result[2].value);
-        this.priceForm.controls['interest_rate'].setValue(res.result[3].value);
-        this.priceForm.controls['creditCoast'].setValue(res.result[4].value);
-        this.priceForm.controls['misc_expense'].setValue(res.result[5].value);
-        this.priceForm.controls['totalSum'].setValue(res.result[7].value);
-        this.priceForm.controls['finalAmt'].setValue(res.result[8].value);
+        let password = '123456';
+        let dcrypted = CryptoJSAesJson.decrypt(res.result, password);
+
+        this.priceForm.controls['price_premium'].setValue(dcrypted[1].value);
+        this.priceForm.controls['cam_discount'].setValue(dcrypted[6].value);
+        this.priceForm.controls['delivery_cost'].setValue(dcrypted[2].value);
+        this.priceForm.controls['interest_rate'].setValue(dcrypted[3].value);
+        this.priceForm.controls['creditCoast'].setValue(dcrypted[4].value);
+        this.priceForm.controls['misc_expense'].setValue(dcrypted[5].value);
+        this.priceForm.controls['totalSum'].setValue(dcrypted[7].value);
+        this.priceForm.controls['finalAmt'].setValue(dcrypted[8].value);
       }
     })
   };

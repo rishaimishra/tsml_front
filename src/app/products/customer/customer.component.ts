@@ -9,6 +9,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { StateCityService } from 'src/app/service/state-city.service';
 import { SalesService } from 'src/app/service/sales.service';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 
 @Component({
@@ -125,8 +126,10 @@ export class CustomerComponent implements OnInit {
     this.productService.getMethod(url).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {
-        this.editProductId = res.result[0]['product_id'];
-        this.product_data = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.product_data = decrypted;
+        this.editProductId = decrypted[0]['product_id'];
         this.rfqUserId = this.product_data[0].user_id;
         this.qoutestId = this.product_data[0].quotest;
         this.selectedItem.push(this.product_data);
@@ -300,7 +303,10 @@ export class CustomerComponent implements OnInit {
     };
 
     this.spinner.show();
-    this._product.updateRfq(rfqFormArry).subscribe((res: any) => {
+    //Encrypt
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(rfqFormArry, password);
+    this._product.updateRfq(encrypted).subscribe((res: any) => {
       if (res.message == 'success') {
         this.spinner.hide();
         Swal.fire({
