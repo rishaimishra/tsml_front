@@ -18,29 +18,21 @@
                      <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
-                           <span class="counter text-white">{{dashItem?.total_no_of_orders}}</span>
+                           <span class="counter text-white">105</span>
+                           <!-- <span class="counter text-white">{{dashItem?.total_no_of_orders}}</span> -->
                            <b>Total no of orders</b>
                         </div>
                      </div>
                   </a>
                </div>
-               <!-- <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
-                  <a>
-                     <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
-                        <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-                        <div class="mini-stat-info text-right text-white">
-                           <span class="counter text-white">{{dashItem?.total_no_of_orders}}</span>
-                           <b>Total no of orders</b>
-                        </div>
-                     </div>
-                  </a>
-               </div> -->
+
                <div class="col-md-6 col-sm-6 col-lg-3 pointerTab">
                   <a>
                      <div class="mini-stat clearfix bx-shadow bg-warning1  hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
                            <span class="counter text-white">10</span>
+                           <!-- <span class="counter text-white">10</span> -->
                            <b>Total no of customers assigned</b>
                         </div>
                      </div>
@@ -51,7 +43,8 @@
                      <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
-                           <span class="counter text-white">{{dashItem?.rfq_under_negotiation}}</span>
+                           <span class="counter text-white">6</span>
+                           <!-- <span class="counter text-white">{{dashItem?.rfq_under_negotiation}}</span> -->
                            <b> RFQ under negotiation</b>
                         </div>
                      </div>
@@ -62,7 +55,8 @@
                      <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
-                           <span class="counter text-white">{{dashItem?.orders_confirmed_pending_for_delivery}}</span>
+                           <span class="counter text-white">99</span>
+                           <!-- <span class="counter text-white">{{dashItem?.orders_confirmed_pending_for_delivery}}</span> -->
                            <b>Order confirmed</b>
                         </div>
                      </div>
@@ -73,7 +67,8 @@
                     <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
                        <span class="mini-stat-icon"><i class="fa fa-comments" aria-hidden="true"></i></span>
                        <div class="mini-stat-info text-right text-white">
-                          <span class="counter text-white">{{dashItem?.Total_no_of_open_complaints}}</span>
+                          <span class="counter text-white">15</span>
+                          <!-- <span class="counter text-white">{{dashItem?.Total_no_of_open_complaints}}</span> -->
                           <b>Customer complaints </b>
                        </div>
                     </div>
@@ -105,12 +100,32 @@
             <div class="row">
                <div class="col-12 col-lg-6">
                 <div class="iimg-block">
-                 <img src="assets/images/G2.png" class="img-fluid" alt="image">
+                 <!-- <img src="assets/images/G2.png" class="img-fluid" alt="image"> -->
+                 <div id="chart">
+                  <apx-chart
+                    [series]="chartOptions?.series"
+                    [chart]="chartOptions?.chart"
+                    [dataLabels]="chartOptions?.dataLabels"
+                    [plotOptions]="chartOptions?.plotOptions"
+                    [responsive]="chartOptions?.responsive"
+                    [xaxis]="chartOptions?.xaxis"
+                    [legend]="chartOptions?.legend"
+                    [fill]="chartOptions?.fill"
+                  ></apx-chart>
+                </div>
                 </div>
                </div>
                <div class="col-12 col-lg-6">
-                 <div class="iimg-block">
-                   <img src="assets/images/G1.png" class="img-fluid" alt="image">
+                 <div class="iimg-block" style="padding-left: 107px; padding-top: 55px;">
+                  <div id="chart1">
+                     <apx-chart
+                       [series]="chartOptions1?.series"
+                       [chart]="chartOptions1?.chart"
+                       [labels]="chartOptions1?.labels"
+                       [responsive]="chartOptions1?.responsive"
+                     ></apx-chart>
+                  </div>
+                   <!-- <img src="assets/images/G1.png" class="img-fluid" alt="image"> -->
                   </div>
                </div>
            </div>

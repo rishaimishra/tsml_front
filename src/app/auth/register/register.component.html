@@ -248,7 +248,7 @@
                     <!--/-->
                     <!-- [disabled]="disableInput" -->
                     <div class="col-12 mt-2" data-toggle="tooltip" data-placement="top" title="Varify email and mobile no. to continue !">
-                      <button (click)="mobileTabContinue()" class="btn btn-primary ttab" data-toggle="tab" role="tab"
+                      <button (click)="mobileTabContinue()" [disabled]="disableInput" class="btn btn-primary ttab" data-toggle="tab" role="tab"
                         aria-controls="profile" routerLinkActive="active">
                         Continue
                       </button>

@@ -8,6 +8,7 @@ import { StateCityService } from 'src/app/service/state-city.service';
 import Swal from 'sweetalert2';
 declare var $: any;
 import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
+import { SalesService } from 'src/app/service/sales.service';
 
 
 @Component({
@@ -119,7 +120,8 @@ export class PoEditComponent implements OnInit {
     private _product: ProductsService,
     private _toaster: ToastrService,
     private _state: StateCityService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _sales: SalesService
   ) {
   }
 
@@ -642,6 +644,7 @@ export class PoEditComponent implements OnInit {
       "pro_id": prodId,
       "cat_id": catid,
       "size": size,
+      "delivery_method": dlvr,
       "sub_cat_id": subCatId
     }
     // - Number(this.productPrice.cam_discount) + Number(this.productPrice.misc_expense)
@@ -651,9 +654,34 @@ export class PoEditComponent implements OnInit {
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
       }
+      let managerReq = {
+        "rfq_no": this.rfqNumber,
+        "sche_no": schedule_no
+      }
+      //Encrypt
+      let passwordd = '123456';
+      let encrypted = CryptoJSAesJson.encrypt(managerReq, passwordd);
+      this._sales.submitManagerRfq(encrypted).subscribe((res: any) => {
+        // Decrypt
+        let password = '123456'
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+  
+        if (res.status == 1 && decrypted.length > 0) {
+          this.priceForm.controls['price_premium'].setValue(decrypted[1].value);
+          this.priceForm.controls['cam_discount'].setValue(decrypted[6].value);
+          this.priceForm.controls['delivery_cost'].setValue(decrypted[2].value);
+          this.priceForm.controls['interest_rate'].setValue(decrypted[3].value);
+          this.priceForm.controls['creditCoast'].setValue(decrypted[4].value);
+          this.priceForm.controls['misc_expense'].setValue(decrypted[5].value);
+          this.priceForm.controls['totalSum'].setValue(decrypted[7].value);
+          this.priceForm.controls['finalAmt'].setValue(decrypted[8].value);
+        }
+      })
+
       let password = '123456';
       let decrypted = CryptoJSAesJson.decrypt(res.result, password);
       this.productPrice = decrypted;
+
       const backendTotal = Number(this.productPrice.bpt_price) + Number(this.productPrice.delivery_cost) ;
       
       if (this.productPrice['price_premium_sing'] == '-') {

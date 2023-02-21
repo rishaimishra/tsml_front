@@ -937,7 +937,7 @@ export class KamComponent implements OnInit {
       // Decrypt
       let password = '123456'
       let decrypted = CryptoJSAesJson.decrypt(res.result, password);
-      console.log(decrypted);
+
       if (res.status == 1 && decrypted.length > 0) {
         this.priceForm.controls['price_premium'].setValue(decrypted[1].value);
         this.priceForm.controls['cam_discount'].setValue(decrypted[6].value);

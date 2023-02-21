@@ -1,9 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DashboardService } from 'src/app/service/dashboard.service';
 import { ProductsService } from 'src/app/service/products.service';
 import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
+import * as ApexCharts from 'apexcharts';
+
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexResponsive,
+  ApexXAxis,
+  ApexTitleSubtitle,
+  ApexStroke,
+  ApexGrid,
+  ApexMarkers,
+  ApexYAxis,
+  ApexLegend,
+  ApexTooltip,
+  ApexFill
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  responsive: ApexResponsive[];
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
+  legend: ApexLegend;
+  colors: string[];
+  markers: ApexMarkers;
+  tooltip: ApexTooltip;
+  grid: ApexGrid;
+  stroke: ApexStroke;
+  title: ApexTitleSubtitle;
+  fill: ApexFill;
+  labels: any;
+};
 
 @Component({
   selector: 'app-kam-dashboard',
@@ -21,6 +59,12 @@ export class KamDashboardComponent implements OnInit {
   searchValue:any;
   searchPoValue:any;
   dashItem: any;
+  
+  @ViewChild("chart") chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
+
+  @ViewChild("chart") chart1: ChartComponent;
+  public chartOptions1: Partial<ChartOptions>;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
   private _router: Router, private _product: ProductsService) { }
@@ -29,7 +73,9 @@ export class KamDashboardComponent implements OnInit {
     this.userName = localStorage.getItem('USER_NAME');
     this.getKamItems();
       this.getKamPoListing();
-      this.getDashboardValue();
+      // this.getDashboardValue();
+      this.barchart();
+      this.piechart();
   };
 
   poSearch() {
@@ -147,15 +193,88 @@ export class KamDashboardComponent implements OnInit {
       user_id: userId
     }
     this.dashboard.dashboardItem(params).subscribe((res:any) => {
-      console.log(res);
       if(res.status == 1) {
         this.dashItem = res.result;
       }
     })
-  }
+  };
 
   redirectPo(poNum:any) {
     let rfqNo = btoa(poNum);
     this._router.navigate(['/po/po-view',rfqNo])
+  };
+
+  barchart() {
+    var options = {
+      series: [{
+      name: 'Month',
+      type: 'column',
+      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+    }, {
+      name: 'Revenues',
+      type: 'line',
+      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+    }],
+      chart: {
+      height: 350,
+      type: 'line',
+    },
+    stroke: {
+      width: [0, 4]
+    },
+    title: {
+      text: 'Traffic Sources'
+    },
+    dataLabels: {
+      enabled: true,
+      enabledOnSeries: [1]
+    },
+    labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+    xaxis: {
+      type: 'datetime'
+    },
+    yaxis: [{
+      title: {
+        text: '',
+      },
+    
+    }, {
+      opposite: true,
+      title: {
+        text: ''
+      }
+    }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+  };
+
+  piechart() {
+    var options = {
+      series: [44, 55, 13, 43, 22,65],
+      chart: {
+      width: 380,
+      type: 'pie',
+    },
+    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: 'top'
+        },
+        toolbar: {
+          show: false
+        }
+      }
+    }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart1"), options);
+    chart.render();
   }
 }

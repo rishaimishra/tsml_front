@@ -25,11 +25,10 @@ export class CustomerDashboardComponent implements OnInit {
     private _router: Router, private _product: ProductsService) { }
 
   ngOnInit(): void {
-    let userRol = localStorage.getItem('USER_TYPE');
     this.userName = localStorage.getItem('USER_NAME');
     this.getCustRfqItems();
       this.getPoListing();
-    this.getDashboardValue();
+    // this.getDashboardValue();
   };
 
   poSearch() {

@@ -17,6 +17,7 @@ import { OptDashboardComponent } from './opt-dashboard/opt-dashboard.component';
 import { OptGuard } from '../Guard/opt.guard';
 import { ManagerGuard } from '../Guard/manager.guard';
 import { PlantGuard } from '../Guard/plant.guard';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -46,6 +47,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
+    NgApexchartsModule,
     NgxPaginationModule,
     MatPaginatorModule
   ]
