@@ -100,7 +100,6 @@
             <div class="row">
                <div class="col-12 col-lg-6">
                 <div class="iimg-block">
-                 <!-- <img src="assets/images/G2.png" class="img-fluid" alt="image"> -->
                  <div id="chart">
                   <apx-chart
                     [series]="chartOptions?.series"
@@ -113,10 +112,12 @@
                     [fill]="chartOptions?.fill"
                   ></apx-chart>
                 </div>
+               <!-- <img src="assets/images/G2.png" class="img-fluid" alt="image"> -->
                 </div>
                </div>
                <div class="col-12 col-lg-6">
-                 <div class="iimg-block" style="padding-left: 107px; padding-top: 55px;">
+                  <h6 class="text-center">Top 5 Customer wise YTD volume</h6>
+                 <div class="iimg-block">
                   <div id="chart1">
                      <apx-chart
                        [series]="chartOptions1?.series"

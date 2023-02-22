@@ -49,17 +49,17 @@ export type ChartOptions = {
   styleUrls: ['./kam-dashboard.component.scss']
 })
 export class KamDashboardComponent implements OnInit {
-  kamItems:any;
+  kamItems: any;
   poItems: any;
-  userName:any;
+  userName: any;
   p: number = 1;
   d: number = 1;
-  statusRfq:any = [];
+  statusRfq: any = [];
 
-  searchValue:any;
-  searchPoValue:any;
+  searchValue: any;
+  searchPoValue: any;
   dashItem: any;
-  
+
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
@@ -67,15 +67,15 @@ export class KamDashboardComponent implements OnInit {
   public chartOptions1: Partial<ChartOptions>;
 
   constructor(private dashboard: DashboardService, private spinner: NgxSpinnerService,
-  private _router: Router, private _product: ProductsService) { }
+    private _router: Router, private _product: ProductsService) { }
 
   ngOnInit() {
     this.userName = localStorage.getItem('USER_NAME');
     this.getKamItems();
-      this.getKamPoListing();
-      // this.getDashboardValue();
-      this.barchart();
-      this.piechart();
+    this.getKamPoListing();
+    // this.getDashboardValue();
+    this.barchart();
+    this.piechart();
   };
 
   poSearch() {
@@ -83,7 +83,7 @@ export class KamDashboardComponent implements OnInit {
     let poValReq = {
       "search_txt": this.searchPoValue
     }
-    this._product.searchPo(poValReq).subscribe((res:any) => {
+    this._product.searchPo(poValReq).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
         let password = '123456';
@@ -97,7 +97,7 @@ export class KamDashboardComponent implements OnInit {
     let searchRequest = {
       "rfq_no": this.searchValue
     }
-    this._product.searchRfq(searchRequest).subscribe((res:any) => {
+    this._product.searchRfq(searchRequest).subscribe((res: any) => {
       this.spinner.hide();
       if (res.status == 1) {
         let password = '123456';
@@ -107,29 +107,29 @@ export class KamDashboardComponent implements OnInit {
     })
   };
 
-  reedirectPage(status:any, rfqNumber:any, kamStatus:any) {
+  reedirectPage(status: any, rfqNumber: any, kamStatus: any) {
     let rfqNo = btoa(rfqNumber);
     let userType = localStorage.getItem('USER_TYPE');
     if (status == 'Accepted' && kamStatus != 4) {
-      this._router.navigate(['/po/po',rfqNo]);
+      this._router.navigate(['/po/po', rfqNo]);
     }
     else if (kamStatus == 4) {
       this._router.navigate(['/po/po-list'])
     }
     else if (userType == 'C') {
-      this._router.navigate(['/products/customer',rfqNo]);
+      this._router.navigate(['/products/customer', rfqNo]);
     }
     else {
-      this._router.navigate(['/products/cam',rfqNo]);
+      this._router.navigate(['/products/cam', rfqNo]);
     }
   };
 
   getKamItems() {
     this.searchValue = '';
     // this.spinner.show();
-    this.dashboard.getKamList().subscribe((res:any) => {
+    this.dashboard.getKamList().subscribe((res: any) => {
       this.spinner.hide();
-      if(res.message == 'success') {
+      if (res.message == 'success') {
         this.spinner.hide();
         let password = '123456';
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
@@ -151,8 +151,8 @@ export class KamDashboardComponent implements OnInit {
       this.spinner.hide();
     })
   };
-  
-  getRfqStatus(rfqNumbr:any) {
+
+  getRfqStatus(rfqNumbr: any) {
     // this.spinner.show();
     let request = {
       "rfq_no": rfqNumbr
@@ -170,16 +170,16 @@ export class KamDashboardComponent implements OnInit {
     })
   };
 
-  getKamPoListing () {
+  getKamPoListing() {
     this.searchPoValue = '';
     // this.spinner.show();
-    this._product.getkamPoList().subscribe((res:any) => {
+    this._product.getkamPoList().subscribe((res: any) => {
       this.spinner.hide();
-      if(res?.message == 'success') {
+      if (res?.message == 'success') {
         this.spinner.hide();
         let password = '123456';
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
-      this.poItems = decrypted;
+        this.poItems = decrypted;
       }
     }, err => {
       console.log(err);
@@ -187,63 +187,63 @@ export class KamDashboardComponent implements OnInit {
     })
   };
 
-  getDashboardValue () {
+  getDashboardValue() {
     let userId = localStorage.getItem('USER_ID');
     let params = {
       user_id: userId
     }
-    this.dashboard.dashboardItem(params).subscribe((res:any) => {
-      if(res.status == 1) {
+    this.dashboard.dashboardItem(params).subscribe((res: any) => {
+      if (res.status == 1) {
         this.dashItem = res.result;
       }
     })
   };
 
-  redirectPo(poNum:any) {
+  redirectPo(poNum: any) {
     let rfqNo = btoa(poNum);
-    this._router.navigate(['/po/po-view',rfqNo])
+    this._router.navigate(['/po/po-view', rfqNo])
   };
 
   barchart() {
     var options = {
       series: [{
-      name: 'Month',
-      type: 'column',
-      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
-    }, {
-      name: 'Revenues',
-      type: 'line',
-      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
-    }],
+        name: 'Month',
+        type: 'column',
+        data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+      }, {
+        name: 'Revenues',
+        type: 'line',
+        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+      }],
       chart: {
-      height: 350,
-      type: 'line',
-    },
-    stroke: {
-      width: [0, 4]
-    },
-    title: {
-      text: 'Traffic Sources'
-    },
-    dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1]
-    },
-    labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
-    xaxis: {
-      type: 'datetime'
-    },
-    yaxis: [{
-      title: {
-        text: '',
+        height: 350,
+        type: 'line',
       },
-    
-    }, {
-      opposite: true,
+      stroke: {
+        width: [0, 4]
+      },
       title: {
-        text: ''
-      }
-    }]
+        text: 'Monthly Volume Graph with average Net Price Realization'
+      },
+      dataLabels: {
+        enabled: true,
+        enabledOnSeries: [1]
+      },
+      labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+      xaxis: {
+        type: 'datetime'
+      },
+      yaxis: [{
+        title: {
+          text: '',
+        },
+
+      }, {
+        opposite: true,
+        title: {
+          text: ''
+        }
+      }]
     };
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -252,26 +252,29 @@ export class KamDashboardComponent implements OnInit {
 
   piechart() {
     var options = {
-      series: [44, 55, 13, 43, 22,65],
+      series: [44, 55, 13, 43, 22, 65],
       chart: {
-      width: 380,
-      type: 'pie',
-    },
-    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
-        },
-        legend: {
-          position: 'top'
-        },
-        toolbar: {
-          show: false
+        width: 600,
+        type: 'pie',
+      },
+      // labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+      labels: ["Viraj Profiles Ltd. - Unit-ll",
+       'ROHIT & COMPANY (Ahmedabad/Mumbai)', 'AIA Engineering Ltd', 
+       "SAIL, SALEM STEEL PLANT", 'LAULS LIMITED','Others'],
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 600
+          },
+          legend: {
+            position: 'top'
+          },
+          toolbar: {
+            show: true
+          }
         }
-      }
-    }]
+      }]
     };
 
     var chart = new ApexCharts(document.querySelector("#chart1"), options);

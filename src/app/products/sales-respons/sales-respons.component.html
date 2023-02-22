@@ -102,12 +102,12 @@
                                                             name="contact{{ formData.schedule_no }}_b" value="DEPOT"
                                                             class="mr-1" disabled />
                                                         <label for="contactChoice2">Depot</label>&nbsp;
-                                                        <input type="radio" id="contactChoice3"
+                                                        <!-- <input type="radio" id="contactChoice3"
                                                             [(ngModel)]="formData.pickup_type"
                                                             id="pickupTyp_{{ formData.schedule_no }}_c"
                                                             name="contact{{ formData.schedule_no }}_c" value="MINES"
                                                             class="mr-1" disabled />
-                                                        <label for="contactChoice3">Mines</label>
+                                                        <label for="contactChoice3">Mines</label> -->
                                                     </label>
                                                     <select disabled #pickUpfrom="ngModel" [(ngModel)]="formData.plant"
                                                         (change)="plantSele($event, formData.schedule_no)"

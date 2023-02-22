@@ -56,7 +56,6 @@ export class SalesDashboardComponent implements OnInit {
         this.dashItem = res.result;
         this.chartOne();
         this.chartTwo();
-        console.log(this.dashItem)
       }
     })
   };
@@ -86,14 +85,18 @@ export class SalesDashboardComponent implements OnInit {
   };
 
   chartTwo () {
+    let dapval = this.dashItem?.DAP_con_orders_chrt_mon;
+    let exDepot = this.dashItem?.ex_Depot_con_orders_chrt_mon;
+    let exPlant = this.dashItem?.ex_plant_con_orders_chrt_mon;
+
     this.chartOptions1 = {
-      series: [this.dashItem?.DAP_con_orders_chrt_mon, this.dashItem?.ex_Depot_con_orders_chrt_mon, this.dashItem?.ex_plant_con_orders_chrt_mon],
+      series: [dapval, exDepot, exPlant],
       chart: {
         width: 450,
         type: "pie"
       },
       
-      labels: ["DAP", "EX-Depot", "EX-Plant"],
+      labels: ["DAP MT", "EX-Depot MT", "EX-Plant MT"],
       responsive: [
         {
           breakpoint: 480,

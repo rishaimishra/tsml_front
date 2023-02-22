@@ -8,6 +8,7 @@ import { ProductsService } from 'src/app/service/products.service';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-prepare-sc',
@@ -472,6 +473,8 @@ export class PrepareScComponent implements OnInit {
 
       seFormDataArr.push(sapRequest);
     }
+    // let passwordd = '123456';
+    // let encryptedd = CryptoJSAesJson.encrypt(seFormDataArr, passwordd);
 
     this._spiner.show();
     this._sales.scInExcelSave(seFormDataArr).subscribe((res: any) => {
@@ -493,6 +496,7 @@ export class PrepareScComponent implements OnInit {
         })
 
         this.getPolist();
+        this._router.navigate(['/sales/update-info'])
       }
       console.log(res);
     }, err => {

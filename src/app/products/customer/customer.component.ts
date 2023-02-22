@@ -343,7 +343,8 @@ export class CustomerComponent implements OnInit {
             "desc_no": this.rfqNum,
             "user_id": userId,
             "desc": 'RFQ has been updated',
-            "url_type": 'R'
+            "url_type": 'R',
+            "sender_id": this.selectedItem[0].user_id
           }
           this._product.camNotification(salesNotiReq).subscribe((res:any) => {
           })

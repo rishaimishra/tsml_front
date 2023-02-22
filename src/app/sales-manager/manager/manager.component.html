@@ -91,13 +91,13 @@
                                                         <label for="">Pickup From</label> &nbsp;
                                                         <label for=""
                                                             (change)="selectPlant($event, formData.schedule_no)">
-                                                            <input type="radio" id="contactChoice1"
+                                                            <input type="radio" readonly id="contactChoice1"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_a"
                                                                 name="contact{{ formData.schedule_no }}_a" value="PLANT"
                                                                 class="mr-1" />
                                                             <label for="contactChoice1">Plant</label>&nbsp;
-                                                            <input type="radio" id="contactChoice2"
+                                                            <input type="radio" readonly id="contactChoice2"
                                                                 [(ngModel)]="formData.pickup_type"
                                                                 id="pickupTyp_{{ formData.schedule_no }}_b"
                                                                 name="contact{{ formData.schedule_no }}_b" value="DEPOT"
@@ -109,16 +109,16 @@
                                                                 name="contact{{ formData.schedule_no }}_c" value="PORT"
                                                                 class="mr-1" />
                                                             <label for="contactChoice3">Port</label> -->
-                                                            <ng-container *ngIf="selectedItem[0].product_id == 2">
-                                                                <input type="radio" id="contactChoice3"
+                                                            <!-- <ng-container *ngIf="selectedItem[0].product_id == 2">
+                                                                <input type="radio" readonly id="contactChoice3"
                                                                     [(ngModel)]="formData.pickup_type"
                                                                     id="pickupTyp_{{ formData.schedule_no }}_c"
                                                                     name="contact{{ formData.schedule_no }}_c" value="MINES"
                                                                     class="mr-1"/>
                                                                 <label for="contactChoice3">Mines</label>
-                                                            </ng-container>
+                                                            </ng-container> -->
                                                         </label>
-                                                        <select [disabled]="userByrole == 'C'" #pickUpfrom="ngModel"
+                                                        <select disabled #pickUpfrom="ngModel"
                                                             (change)="plantSele($event, formData.schedule_no)"
                                                             [(ngModel)]="formData.plant"
                                                             name="plant_{{ formData.schedule_no }}"
