@@ -119,7 +119,7 @@ export class SalesService {
   };
 
   scInExcelSave(request:any) {
-    return this._http.post(this.BesUrl + '/sc_excel_submit', request);
+    return this._http.post(this.BesUrl + '/sc_excel_submit', request,{ 'headers': this.headers });
   };
 
   excelEmail(request:any) {
@@ -127,7 +127,7 @@ export class SalesService {
   };
 
   updateSc(request:any) {
-    return this._http.post(this.BesUrl + '/user/up_excelsc', request);
+    return this._http.post(this.BesUrl + '/user/up_excelsc', request,{ 'headers': this.headers });
   };
 
   getScInfoList() {

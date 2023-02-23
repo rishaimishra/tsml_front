@@ -74,9 +74,9 @@
                       <option>Select</option>
                    </select>
                 </div> -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <a href="#" class="btn btn-primary btn-block mt-41"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
-                </div>
+                </div> -->
                 <div class="form-group">
                    <label>Select Year</label>
                    <select class="form-control">
@@ -94,9 +94,19 @@
                       <h4 class="card-title ml-1">Region Wise Product Sale</h4>
                    </div>
                 </div> -->
+                <h5 class="text-center mt-3">EX Depot, EX Plant & DAP - YTD FY 23</h5>
+                <hr class="hrlne"/>
                 <div class="card-body">
                    <!-- <canvas id="myChart" style="width:100%;max-width:600px"></canvas> -->
-                   <img style="width:100%;max-width:600px" src="assets/images/G3.png" alt="">
+                   <div id="chart">
+                     <apx-chart
+                       [series]="chartOptions?.series"
+                       [chart]="chartOptions?.chart"
+                       [labels]="chartOptions?.labels"
+                       [responsive]="chartOptions?.responsive"
+                     ></apx-chart>
+                  </div>
+                   <!-- <img style="width:100%;max-width:600px" src="assets/images/G3.png" alt=""> -->
                 </div>
              </div>
           </div>
@@ -108,9 +118,19 @@
                       <h4 class="card-title ml-1">Category Wise Product Sale</h4>
                    </div>
                 </div> -->
+                <h5 class="text-center mt-3">Current Month Ex Depot, Ex Plant & DAP</h5>
+                <hr class="hrlne"/>
                 <div class="card-body">
                     <!-- <canvas id="myChart2" style="width:100%;max-width:600px"></canvas> -->
-                    <img style="width:100%;max-width:600px" src="assets/images/G4.png" alt="">
+                    <div id="chart1">
+                     <apx-chart
+                       [series]="chartOptions1?.series"
+                       [chart]="chartOptions1?.chart"
+                       [labels]="chartOptions1?.labels"
+                       [responsive]="chartOptions1?.responsive"
+                     ></apx-chart>
+                  </div>
+                    <!-- <img style="width:100%;max-width:600px" src="assets/images/G4.png" alt=""> -->
                 </div>
              </div>
           </div>

@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 
 @Component({
@@ -30,7 +31,10 @@ export class UpdateInfoComponent implements OnInit {
     this._sales.getScInfoList().subscribe((res:any) => {
       this._spiner.hide();
       if(res.message == 'success') {
-        this.scInfoItems = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password)
+        this.scInfoItems = result;
+        console.log(result);
       }
     })
   };
@@ -40,9 +44,9 @@ export class UpdateInfoComponent implements OnInit {
     let params = {
       "id": id,
       "sc_no": scNum,
-      "ordr_no": '',
-      "finance_no": '',
-      "payment_proc": ''
+      "ordr_no": null,
+      "finance_no": null,
+      "payment_proc": null
     }
     if(scNum == "") {
       this._toaster.error('Contract No. is required', 'Oops!');
@@ -60,7 +64,10 @@ export class UpdateInfoComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this._spiner.show();
-        this._sales.updateSc(params).subscribe((res:any) => {
+        let passwordd = '123456';
+        let encryptedd = CryptoJSAesJson.encrypt(params, passwordd)
+
+        this._sales.updateSc(encryptedd).subscribe((res:any) => {
           this._spiner.hide();
           if(res.status == 1 && res.message == 'success') {
             Swal.fire({
@@ -80,6 +87,8 @@ export class UpdateInfoComponent implements OnInit {
             })
             return;
           }
+        }, err => {
+          console.log(err);
         })
       }
     })
@@ -110,12 +119,17 @@ export class UpdateInfoComponent implements OnInit {
     let reqParams = {
       "id": this.sc_id,
       "sc_no": this.scNum,
-      "ordr_no": soNum,
-      "finance_no": financial,
-      "payment_proc": payment
+      "ordr_no": soNum ? soNum: null,
+      "finance_no": financial ? financial: null,
+      "payment_proc": payment ? payment: null
     }
+    console.log(reqParams);
+
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(reqParams, passwordd);
+
     this._spiner.show();
-    this._sales.updateSc(reqParams).subscribe((res:any) => {
+    this._sales.updateSc(encryptedd).subscribe((res:any) => {
       this._spiner.hide();
     if(res.message == 'success') {
       this.getScList();

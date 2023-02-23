@@ -98,8 +98,9 @@
             </div>
             </div>
             <div class="row">
-               <div class="col-12 col-lg-6">
-                <div class="iimg-block">
+               <div class="col-12 col-lg-6 grid-margin stretch-card">
+               <div class="card">
+                <div class="card-body">
                  <div id="chart">
                   <apx-chart
                     [series]="chartOptions?.series"
@@ -115,9 +116,11 @@
                <!-- <img src="assets/images/G2.png" class="img-fluid" alt="image"> -->
                 </div>
                </div>
-               <div class="col-12 col-lg-6">
-                  <h6 class="text-center">Top 5 Customer wise YTD volume</h6>
-                 <div class="iimg-block">
+               </div>
+               <div class="col-12 col-lg-6 grid-margin stretch-card">
+                  <div class="card">
+                  <h6 class="text-center mt-3">Top 5 Customer wise YTD volume</h6>
+                 <div class="card-body">
                   <div id="chart1">
                      <apx-chart
                        [series]="chartOptions1?.series"
@@ -129,6 +132,7 @@
                    <!-- <img src="assets/images/G1.png" class="img-fluid" alt="image"> -->
                   </div>
                </div>
+            </div>
            </div>
             <div class="row">
                <div class="col-md-6 col-lg-12 col-xl-6">

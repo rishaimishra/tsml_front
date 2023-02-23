@@ -158,7 +158,6 @@ export class HeaderComponent implements OnInit {
   getPlantMsg() {
     let userId = localStorage.getItem('USER_ID');
     this._sales.getPlantNoti(userId).subscribe((res: any) => {
-      console.log(res);
     })
   };
 

@@ -117,13 +117,15 @@ export class PrepareScComponent implements OnInit {
     this._sales.getSalesPO().subscribe((res: any) => {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
-        this.salesPo = res.result;
+        let password = '123456'
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.salesPo = decrypted;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
       }
     }, err => {
-      console.log(err);
+      console.error(err);
       this._spiner.hide();
     })
   };
@@ -133,7 +135,9 @@ export class PrepareScComponent implements OnInit {
     this._sales.getSapContractType().subscribe((res: any) => {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
-        this.contractTyp = res.result;
+        let password = '123456'
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.contractTyp = decrypted;
         this.salesOrg();
       }
     })
@@ -144,7 +148,9 @@ export class PrepareScComponent implements OnInit {
   salesOrg() {
     this._sales.getSalesOrg().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.orgSales = res.result;
+        let password = '123456'
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.orgSales = decrypted;
         this.getDistriChnl();
       }
     })
@@ -153,7 +159,9 @@ export class PrepareScComponent implements OnInit {
   getSapGroup() {
     this._sales.getSalesSapGroup().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.sapGroup = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.sapGroup = result;
       }
     })
   };
@@ -161,7 +169,9 @@ export class PrepareScComponent implements OnInit {
   getDistriChnl() {
     this._sales.getSalesDistri().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.distribution = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.distribution = result;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -178,7 +188,9 @@ export class PrepareScComponent implements OnInit {
     }
     this._sales.getSapDivi(divReq).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.sapDivision = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.sapDivision = result;
         this.getOffice();
       }
       if (res.status == 'Token has Expired') {
@@ -190,7 +202,9 @@ export class PrepareScComponent implements OnInit {
   getOffice() {
     this._sales.getSaleOffice().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.salesOffic = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.salesOffic = result;
         this.getSapGroup();
       }
       if (res.status == 'Token has Expired') {
@@ -202,7 +216,9 @@ export class PrepareScComponent implements OnInit {
   getdlvrMode() {
     this._sales.getDlvryMode().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.modeOfDlvr = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.modeOfDlvr = result;
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -213,7 +229,9 @@ export class PrepareScComponent implements OnInit {
   getFreight() {
     this._sales.getSapFreight().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.freightItems = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.freightItems = result;
         this.custGroup();
       }
     })
@@ -222,7 +240,9 @@ export class PrepareScComponent implements OnInit {
   getFreightIndic() {
     this._sales.getFreightIndicat().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.freightIndicator = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.freightIndicator = result;
       }
     })
   };
@@ -230,7 +250,9 @@ export class PrepareScComponent implements OnInit {
   custGroup() {
     this._sales.getCustGroup().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.customerGrp = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.customerGrp = result;
         this.getFreightIndic();
       }
     })
@@ -239,7 +261,9 @@ export class PrepareScComponent implements OnInit {
   incoterms() {
     this._sales.getIncoterms().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.incotermsInfo = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.incotermsInfo = result;
         this.paymentTerms();
       }
     })
@@ -248,7 +272,9 @@ export class PrepareScComponent implements OnInit {
   paymentTerms() {
     this._sales.paymentTerms().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.paymentInfo = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.paymentInfo = result;
         this.getFreight();
       }
     })
@@ -261,7 +287,6 @@ export class PrepareScComponent implements OnInit {
     matArr.push(this.matVal);
     for (let index = 0; index < matArr.length; index++) {
       const element = matArr[index];
-      console.log('element',element);
 
     }
   };
@@ -273,7 +298,6 @@ export class PrepareScComponent implements OnInit {
     plantArr.push(this.pVal);
     for (let index = 0; index < plantArr.length; index++) {
       const plantElement = plantArr[index];
-      console.log('plantArr',plantElement);
 
     }
   };
@@ -317,8 +341,10 @@ export class PrepareScComponent implements OnInit {
     this._sales.getMethod(apiUrl).subscribe((res: any) => {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
-        this.scData = res.result[0];
-        this.scInfo = res.result;
+        let password = '123456'
+        let result = CryptoJSAesJson.decrypt(res.result, password);
+        this.scData = result[0];
+        this.scInfo = result;
         this.rfqNumber = this.scData['rfq_no'];
         this.userId = this.scData['user_id'];
         let addrOne = this.scData.addressone;
@@ -473,11 +499,11 @@ export class PrepareScComponent implements OnInit {
 
       seFormDataArr.push(sapRequest);
     }
-    // let passwordd = '123456';
-    // let encryptedd = CryptoJSAesJson.encrypt(seFormDataArr, passwordd);
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(seFormDataArr, passwordd);
 
     this._spiner.show();
-    this._sales.scInExcelSave(seFormDataArr).subscribe((res: any) => {
+    this._sales.scInExcelSave(encryptedd).subscribe((res: any) => {
       this._spiner.hide();
       if (res.message == 'success') {
         Swal.fire({
@@ -492,13 +518,12 @@ export class PrepareScComponent implements OnInit {
           ids: res.result['ids']
         }
         this._sales.excelEmail(param).subscribe((res: any) => {
-          console.log(res);
         })
 
         this.getPolist();
         this._router.navigate(['/sales/update-info'])
       }
-      console.log(res);
+
     }, err => {
       console.log(err);
       this._spiner.hide();
