@@ -11,7 +11,10 @@
                      <div class = "notification">
                         <!-- <a href = "#"> -->
                         <div class = "notBtn">
-                          <div class = "number">{{notifications?.length}}+</div>
+                           <!-- <span [CountTo]="volConfm" [from]="0"
+                                [duration]="2" class="counter"></span> -->
+                          <div class = "number"><span [CountTo]="notifications?.length" [from]="0"
+                                [duration]="2" class="counter"></span>+</div>
                           <i class="fa fa-bell" aria-hidden="true"></i>
                             <div class = "box">
                               <div class = "display">

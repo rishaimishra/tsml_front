@@ -157,6 +157,7 @@ export class PoComponent implements OnInit {
       if (res.status == 1) {
         let password = '123456';
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+
         this.editProductId = decrypted[0]['product_id'];
         this.product_data = decrypted;
         this.rfqUserId = this.product_data[0].user_id;

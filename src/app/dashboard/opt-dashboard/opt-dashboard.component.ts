@@ -18,6 +18,7 @@ import {
   ApexTooltip,
   ApexFill
 } from "ng-apexcharts";
+import { DashboardService } from 'src/app/service/dashboard.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -50,14 +51,44 @@ export class OptDashboardComponent implements OnInit {
 
   @ViewChild("chart") chart1: ChartComponent;
   public chartOptions1: Partial<ChartOptions>;
+  dashItem:any = [];
+  undrnego:any;
+  exPlantConf:any;
+  exDepotConf:any;
+  dapConf:any;
+  volConfm:any;
 
-  
-  constructor() { }
+
+
+  constructor(private dashboard: DashboardService) { }
 
   ngOnInit(): void {
-    this.piechart1();
-    this.piechart();
-  }
+    this.getDashboardValue();
+  };
+
+  getDashboardValue () {
+    let userId = localStorage.getItem('USER_ID');
+    let params = {
+      user_id: userId
+    }
+    this.dashboard.dashboardItem(params).subscribe((res:any) => {
+      if(res.status == 1) {
+        this.dashItem = res.result;
+        function removeTrailingZeros(num:any, decimals:any) {
+          const number = String(num).replace(/\.0+$/, '');
+          return parseFloat(number).toFixed(decimals);
+        }
+        let valuConfrm = removeTrailingZeros(this.dashItem.volumeconfirmed, 0);
+        this.volConfm = valuConfrm;
+        this.undrnego = this.dashItem.volume_under_negotiation;
+        this.exPlantConf = this.dashItem?.ex_plant_confirmed_orders;
+        this.exDepotConf = this.dashItem?.ex_Depot_confirmed_orders;
+        this.dapConf = this.dashItem?.DAP_confirmed_orders;
+        this.piechart1();
+        this.piechart();
+      }
+    })
+  };
 
   piechart1() {
     var options = {
@@ -85,13 +116,13 @@ export class OptDashboardComponent implements OnInit {
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
-  }
+  };
 
   piechart() {
     var options = {
       series: [44, 55, 100],
       chart: {
-        width: 470,
+        width: 450,
         type: 'pie',
       },
       // labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
@@ -100,7 +131,7 @@ export class OptDashboardComponent implements OnInit {
         breakpoint: 480,
         options: {
           chart: {
-            width: 470
+            width: 450
           },
           legend: {
             position: 'top'

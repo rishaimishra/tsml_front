@@ -59,6 +59,8 @@ export class KamDashboardComponent implements OnInit {
   searchValue: any;
   searchPoValue: any;
   dashItem: any;
+  keys:any = [];
+  keysValue:any = [];
 
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
@@ -73,9 +75,7 @@ export class KamDashboardComponent implements OnInit {
     this.userName = localStorage.getItem('USER_NAME');
     this.getKamItems();
     this.getKamPoListing();
-    // this.getDashboardValue();
-    this.barchart();
-    this.piechart();
+    this.getDashboardValue();
   };
 
   poSearch() {
@@ -195,6 +195,9 @@ export class KamDashboardComponent implements OnInit {
     this.dashboard.dashboardItem(params).subscribe((res: any) => {
       if (res.status == 1) {
         this.dashItem = res.result;
+        console.log(this.dashItem)
+        this.barchart();
+        this.piechart();
       }
     })
   };
@@ -203,6 +206,7 @@ export class KamDashboardComponent implements OnInit {
     let rfqNo = btoa(poNum);
     this._router.navigate(['/po/po-view', rfqNo])
   };
+
 
   barchart() {
     var options = {
@@ -251,21 +255,24 @@ export class KamDashboardComponent implements OnInit {
   };
 
   piechart() {
+    let keysval = Object.keys(this.dashItem.top_five_cust_sale);
+    let keys = Object.values(this.dashItem.top_five_cust_sale);
+    this.keys.push(keysval);
+    this.keysValue.push(keys);
+
     var options = {
-      series: [44, 55, 13, 43, 22, 65],
+      series: this.keysValue[0],
       chart: {
-        width: 600,
+        width: 550,
         type: 'pie',
       },
-      // labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-      labels: ["Viraj Profiles Ltd. - Unit-ll",
-       'ROHIT & COMPANY (Ahmedabad/Mumbai)', 'AIA Engineering Ltd', 
-       "SAIL, SALEM STEEL PLANT", 'LAULS LIMITED','Others'],
+
+      labels: this.keys[0],
       responsive: [{
         breakpoint: 480,
         options: {
           chart: {
-            width: 600
+            width: 550
           },
           legend: {
             position: 'top'

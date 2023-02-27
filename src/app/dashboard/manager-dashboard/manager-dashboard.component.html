@@ -12,7 +12,9 @@
                       <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">8000</span>
+                            <!-- <span class="counter text-white">{{dashItem?.volumeconfirmed}}</span> -->
+                            <span [CountTo]="volConfm" [from]="0"
+                                [duration]="2" class="counter"></span>
                             <b>Volume Confirmed</b>
                          </div>
                       </div>
@@ -23,7 +25,10 @@
                       <div class="mini-stat clearfix bx-shadow bg-warning1  hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">600</span>
+                            <!-- <span class="counter text-white">{{dashItem?.volume_under_negotiation}}</span> -->
+                            <span [CountTo]="undrnego" [from]="0"
+                                [duration]="2" class="counter"></span>
+                           <span *ngIf="dashItem?.volume_under_negotiation <1" class="counter text-white">0</span>
                             <b>Volume (Under Negotiation)</b>
                          </div>
                       </div>
@@ -34,7 +39,9 @@
                       <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">4000 MT</span>
+                            <!-- <span class="counter text-white">{{dashItem?.ex_plant_confirmed_orders}} MT</span> -->
+                            <span [CountTo]="exPlantConf" [from]="0"
+                                [duration]="2" class="counter"></span>
                             <b> Ex-Plant Confirmed Orders</b>
                          </div>
                       </div>
@@ -45,7 +52,9 @@
                       <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">2000 MT</span>
+                            <!-- <span class="counter text-white">{{dashItem?.ex_Depot_confirmed_orders}} MT</span> -->
+                            <span [CountTo]="exDepotConf" [from]="0"
+                                [duration]="2" class="counter"></span>
                             <b>Ex-Depot Confirmed Orders</b>
                          </div>
                       </div>
@@ -56,7 +65,9 @@
                      <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
-                           <span class="counter text-white">2000 MT</span>
+                           <!-- <span class="counter text-white">{{dashItem?.DAP_confirmed_orders}} MT</span> -->
+                           <span [CountTo]="dapConf" [from]="0"
+                                [duration]="2" class="counter"></span>
                            <b>DAP Confirmed Orders</b>
                         </div>
                      </div>
@@ -74,9 +85,9 @@
                       <option>Select</option>
                    </select>
                 </div> -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <a href="#" class="btn btn-primary btn-block mt-41"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
-                </div>
+                </div> -->
                 <div class="form-group">
                    <label>Select Year</label>
                    <select class="form-control">
@@ -89,28 +100,36 @@
        <div class="row mt-2 mb-5">
           <div class="col-12 col-lg-6 grid-margin stretch-card">
              <div class="card">
-                <!-- <div class="card-body px-0 pb-0 border-bottom">
-                   <div class="px-4">
-                      <h4 class="card-title ml-1">Region Wise Product Sale</h4>
-                   </div>
-                </div> -->
                 <div class="card-body">
-                   <!-- <canvas id="myChart" style="width:100%;max-width:600px"></canvas> -->
-                   <img style="width:100%;max-width:600px" src="assets/images/G3.png" alt="">
+                   <!-- <img style="width:100%;max-width:600px" src="assets/images/G3.png" alt=""> -->
+                   <h5 class="ml-3 my-2 dash-color">EX Depot, EX Plant & DAP - YTD FY 23</h5>
+                   <hr class="hrlne"/>
+                  <div id="chart">
+                     <apx-chart
+                       [series]="chartOptions?.series"
+                       [chart]="chartOptions?.chart"
+                       [labels]="chartOptions?.labels"
+                       [responsive]="chartOptions?.responsive"
+                     ></apx-chart>
+                   </div>
                 </div>
              </div>
           </div>
           <!--/-->
           <div class="col-12 col-lg-6 grid-margin stretch-card">
              <div class="card">
-                <!-- <div class="card-body px-0 pb-0 border-bottom">
-                   <div class="px-4">
-                      <h4 class="card-title ml-1">Category Wise Product Sale</h4>
-                   </div>
-                </div> -->
                 <div class="card-body">
-                    <!-- <canvas id="myChart2" style="width:100%;max-width:600px"></canvas> -->
-                    <img style="width:100%;max-width:600px" src="assets/images/G4.png" alt="">
+                    <!-- <img style="width:100%;max-width:600px" src="assets/images/G4.png" alt=""> -->
+                  <h5 class="ml-3 my-2 dash-color">Current Month Ex Depot, Ex Plant & DAP (Data in MT)</h5>
+                  <hr class="hrlne"/>
+                  <div id="chart">
+                     <apx-chart
+                       [series]="chartOptions1?.series"
+                       [chart]="chartOptions1?.chart"
+                       [labels]="chartOptions1?.labels"
+                       [responsive]="chartOptions1?.responsive"
+                     ></apx-chart>
+                  </div>
                 </div>
              </div>
           </div>

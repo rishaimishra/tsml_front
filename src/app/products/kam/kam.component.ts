@@ -228,7 +228,6 @@ export class KamComponent implements OnInit {
             }
 
           });
-          console.log('rfq',this.isSchduleArr);
         }
 
         const scheduleNo = Math.floor(1000 + Math.random() * 9000);
@@ -248,7 +247,7 @@ export class KamComponent implements OnInit {
           remarks: '',
           kam_price: '',
           credit_days: '',
-          valid_till: '',
+          valid_till: null,
           confirm_date: '',
           sub_cat_id: '',
           salesRemarks: '',
@@ -470,8 +469,6 @@ export class KamComponent implements OnInit {
         this.deliverySchdule.splice(indx, 1);
       }
       this.deliverySchdule.push(setSechdule);
-      console.log(this.deliverySchdule);
-
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -693,15 +690,12 @@ export class KamComponent implements OnInit {
         "rfq_no": this.rfqNum,
         "under_negotiation": '1'
       }
-      this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
-      })
-      this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
-      })
+      this._product.storeStatusKam(statusRequest).subscribe();
+      this._product.storeStatusCust(statusRequest).subscribe();
     }
 
     if (this.countReqoutArr.length > 0) {
-      this._product.reqouteCount(this.countReqoutArr).subscribe((res: any) => {
-      })
+      this._product.reqouteCount(this.countReqoutArr).subscribe();
     }
 
     if (qouteSt != 5 && qouteSt != 6 || qouteSt == 2) {
@@ -737,8 +731,7 @@ export class KamComponent implements OnInit {
     }
 
     // component price save here
-    this._product.saveComPrice(this.tsmlPriceArr).subscribe((res: any) => {
-    })
+    this._product.saveComPrice(this.tsmlPriceArr).subscribe();
 
 
     // let addCount = Number(this.statusArr.length + this.countSche['aac_rej']);
@@ -759,21 +752,25 @@ export class KamComponent implements OnInit {
         "rfq_no": this.rfqNum,
         "status": 8
       }
-      this._product.qouteStatusUpdate(qouteReq).subscribe((res: any) => {
-      });
+      this._product.qouteStatusUpdate(qouteReq).subscribe();
 
       let statusRequest = {
         "rfq_no": this.rfqNum,
         "price_approved_awaited": '1'
       }
 
-      this._product.storeStatusKam(statusRequest).subscribe((res: any) => {
-      })
+      this._product.storeStatusKam(statusRequest).subscribe();
+
+      let salesHdNoti = {
+        "desc": "Price added against this ",
+        "desc_no": this.rfqNum,
+        "sender_ids": this.rfqUserId
+      }
+      this._sales.salesHeadNoti(salesHdNoti).subscribe();
     }
 
     let apiUrlKy = '/user/get_rfq_st/'+this.rfqNum
     this._product.getMethod(apiUrlKy).subscribe((res:any) => {
-      console.log('res',res);
       if(res.result == "Accepted") {
         let userId = localStorage.getItem('USER_ID');
           let confimerRfq = {
@@ -1163,7 +1160,6 @@ export class KamComponent implements OnInit {
           "components": componentArr
         }
         this.tsmlPriceArr.push(compPriceArr);
-        console.log(this.tsmlPriceArr);
       }
 
     })
@@ -1316,7 +1312,6 @@ export class KamComponent implements OnInit {
       this.spinner.hide();
       if (res.message == 'success.') {
         this.subCategory = res.result;
-        console.log(this.subCategory);
       }
     }, err => {
       console.log(err);
@@ -1331,7 +1326,6 @@ export class KamComponent implements OnInit {
       this.spinner.hide();
       if (res.status == 1 && res.message == 'success.') {
         this.prodcutSize = res.result['sizes'];
-        console.log('ffff', this.prodcutSize);
       }
     }, err => {
       console.log(err);
@@ -1421,7 +1415,7 @@ export class KamComponent implements OnInit {
       kam_price: '',
       credit_days: '',
       quote_status: 0,
-      valid_till: '',
+      valid_till: null,
       confirm_date: '',
       sub_cat_id: '',
       salesRemarks: '',

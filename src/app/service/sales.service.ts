@@ -132,6 +132,20 @@ export class SalesService {
 
   getScInfoList() {
     return this._http.get(this.BesUrl + '/user/get_all_excelsc');
+  };
+
+
+  getHeadNoti() {
+    return this._http.get(this.BesUrl + '/user/get_sh_notification');
+  };
+
+  clearHedNoti() {
+    return this._http.get(this.BesUrl + '/user/up_sh_notification_all');
+  };
+
+  salesHeadNoti(data:any) {
+    return this._http.post(this.BesUrl + '/user/sh_notification_submit', data);
   }
+
 
 }

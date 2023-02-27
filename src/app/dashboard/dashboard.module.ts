@@ -18,6 +18,7 @@ import { OptGuard } from '../Guard/opt.guard';
 import { ManagerGuard } from '../Guard/manager.guard';
 import { PlantGuard } from '../Guard/plant.guard';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { CountToModule } from 'angular-count-to';
 
 
 
@@ -47,6 +48,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     FormsModule,
+    CountToModule,
     NgApexchartsModule,
     NgxPaginationModule,
     MatPaginatorModule

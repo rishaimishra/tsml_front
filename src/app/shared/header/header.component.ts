@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
   request: string;
   responce: string;
 
+
   constructor(private _router: Router, private _auth: AuthService,
     private _spinner: NgxSpinnerService, private _toster: ToastrService,
     private _product: ProductsService, private _sales: SalesService) {
@@ -57,6 +58,10 @@ export class HeaderComponent implements OnInit {
     }
     else if (this.userRol == 'OPT') {
       this.getPlantMsg();
+    }
+    else if (this.userRol == 'SM') {
+      this.userType = true;
+      this.getSHnoti();
     }
     else {
       this.userType = true;
@@ -112,7 +117,6 @@ export class HeaderComponent implements OnInit {
   checkLogin() {
     this._product.getDeliveryMethod().subscribe((res: any) => {
       if (res.status == 'Token is Expired' || res.status == 'Authorization Token not found') {
-        // this._router.navigate(['/'])
         this.loginFalse = true;
         localStorage.clear();
       }
@@ -154,6 +158,14 @@ export class HeaderComponent implements OnInit {
       }
     })
   };
+  getSHnoti() {
+    this._sales.getHeadNoti().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.notifications = res.result;
+      }
+    })
+
+  };
 
   getPlantMsg() {
     let userId = localStorage.getItem('USER_ID');
@@ -179,6 +191,12 @@ export class HeaderComponent implements OnInit {
         this.getSalesNoti();
       })
     }
+    else if (this.userRol == 'SM') {
+      let apiUrl = '/user/up_sh_notification/'+id;
+      this._sales.getMethod(apiUrl).subscribe();
+      this.getSHnoti();
+      this._spinner.hide();
+    }
     else {
       this._product.custNotiRemove(removeNoti).subscribe((res: any) => {
         this._spinner.hide();
@@ -189,21 +207,27 @@ export class HeaderComponent implements OnInit {
 
   clearAllNoti() {
     this._spinner.show();
-    let clearMessage = {
-      "user_type": this.userRol,
-      "user_id": this.userId
-    };
-    this._auth.clearNoti(clearMessage).subscribe((res: any) => {
+    if(this.userRol == 'SM') {
+      this._sales.clearHedNoti().subscribe();
       this._spinner.hide();
-      this.ngOnInit();
-      console.log(res);
-      if (res.status == 'Token has Expired') {
-        this._router.navigate(['/auth/login'])
-      }
-    }, err => {
-      console.log(err);
-      this._spinner.hide();
-    })
+    }
+    else {
+      let clearMessage = {
+        "user_type": this.userRol,
+        "user_id": this.userId
+      };
+      this._auth.clearNoti(clearMessage).subscribe((res: any) => {
+        this._spinner.hide();
+        this.ngOnInit();
+  
+        if (res.status == 'Token has Expired') {
+          this._router.navigate(['/auth/login'])
+        }
+      }, err => {
+        console.log(err);
+        this._spinner.hide();
+      })
+    }
   };
 
   forceLogout() {

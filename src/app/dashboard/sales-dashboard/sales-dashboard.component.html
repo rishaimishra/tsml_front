@@ -12,7 +12,9 @@
                       <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">8000 (MT)</span>
+                            <!-- <span class="counter text-white">8000 (MT)</span> -->
+                            <span [CountTo]="volConfm" [from]="0"
+                                [duration]="2" class="counter"></span>
                             <b>Volume Confirmed</b>
                          </div>
                       </div>
@@ -23,7 +25,10 @@
                       <div class="mini-stat clearfix bx-shadow bg-warning1  hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">600 (MT)</span>
+                            <!-- <span class="counter text-white">600 (MT)</span> -->
+                            <span [CountTo]="undrnego" [from]="0"
+                                [duration]="2" class="counter"></span>
+                                <span *ngIf="dashItem?.volume_under_negotiation <1" class="counter text-white">0</span>
                             <b>Volume (Under Negotiation)</b>
                          </div>
                       </div>
@@ -34,7 +39,9 @@
                       <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">4000 MT</span>
+                            <!-- <span class="counter text-white">4000 MT</span> -->
+                            <span [CountTo]="exPlantConf" [from]="0"
+                            [duration]="2" class="counter"></span>
                             <b> Ex-Plant Confirmed Orders</b>
                          </div>
                       </div>
@@ -45,7 +52,9 @@
                       <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">2000 MT</span>
+                            <!-- <span class="counter text-white">2000 MT</span> -->
+                            <span [CountTo]="exDepotConf" [from]="0"
+                            [duration]="2" class="counter"></span>
                             <b>Ex-Depot Confirmed Orders</b>
                          </div>
                       </div>
@@ -56,7 +65,9 @@
                      <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
-                           <span class="counter text-white">2000 MT</span>
+                           <!-- <span class="counter text-white">2000 MT</span> -->
+                           <span [CountTo]="dapConf" [from]="0"
+                            [duration]="2" class="counter"></span>
                            <b>DAP Confirmed Orders</b>
                         </div>
                      </div>
@@ -90,8 +101,8 @@
           <div class="col-12 col-lg-6 grid-margin stretch-card">
              <div class="card">
                 <div class="card-body">
-                  
                   <h4 class="ml-3 my-3 dash-color">EX Depot, EX Plant & DAP - YTD FY 23</h4>
+                  <hr class="hrlne"/>
                   <div id="chart">
                      <apx-chart
                        [series]="chartOptions?.series"
