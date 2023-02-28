@@ -7,6 +7,9 @@ import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import { CustomValidators } from './customValidator';
 import {CryptoJSAesJson} from 'src/assets/js/cryptojs-aes-format.js';
+declare var $: any;
+
+
 
 @Component({
   selector: 'app-forget-password',
@@ -19,11 +22,15 @@ export class ForgetPasswordComponent implements OnInit {
   forgetPassForm: FormGroup;
   email: any = '';
   submitted: boolean = false;
+  showFields: boolean = false;
   token: string|undefined;
 
   constructor(private _auth: AuthService,
-    private _fb: FormBuilder, private _toaster: ToastrService, private _spinner: NgxSpinnerService,
-    private _router: Router) {
+    private _fb: FormBuilder, private _toaster: ToastrService, 
+    private _spinner: NgxSpinnerService,
+    private _router: Router,
+    private _toster: ToastrService) 
+    {
     this.forgetPassForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required]],
@@ -38,6 +45,7 @@ export class ForgetPasswordComponent implements OnInit {
     return this.forgetPassForm.controls;
   }
   ngOnInit(): void {
+
   }
 
   send(form: NgForm): void {
@@ -105,6 +113,39 @@ export class ForgetPasswordComponent implements OnInit {
     }, err => {
       console.log(err);
       this._spinner.hide();
+    })
+  };
+
+  getOtp() {
+
+    let email = $('#emailfield').val();
+    if (email == '' || email == undefined) {
+      this._toster.error('Email is required !', 'Sorry!');
+      return;
+    }
+    let forget = {
+      "email": email
+    }
+
+    // return;
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(forget, passwordd);
+    
+    this._spinner.show();
+    this._auth.forgetPass(encryptedd).subscribe((res: any) => {
+      this._spinner.hide();
+      if (res.status == 1) {
+        this.showFields = true;
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'OTP has been sent to your registered mail id !',
+        })
+        // this._router.navigate(['/auth/forget-password'])
+      }
+    }, err => {
+      console.log(err);
+      this._spinner.hide()
     })
   };
 

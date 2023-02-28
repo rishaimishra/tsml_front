@@ -55,10 +55,10 @@ export class LoginComponent implements OnInit {
     }
   };
 
-  goToForgetPass() {
-    this.hideLogin = false;
-    this.hideShowPass = true;
-  };
+  // goToForgetPass() {
+  //   this.hideLogin = false;
+  //   this.hideShowPass = true;
+  // };
 
   forgetPassword() {
     if (this.forgetEmail == null || this.forgetEmail == undefined) {
