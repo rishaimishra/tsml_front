@@ -300,7 +300,25 @@ export class CustomerComponent implements OnInit {
         quote_schedules: form_data_array,
       };
       rfqFormArry.push(reqData);
+
+      rfqFormArry.push(reqData);
+      this.poRedirectArr.forEach((element:any) => {
+        rediectStatus.push(element.status);
+      });
+
     };
+
+    let userId = localStorage.getItem('USER_ID');
+    let custNotiReq = {
+      "desc_no": this.rfqNum,
+      "user_id": userId,
+      "desc": 'Subcategory has been accepted against',
+      "url_type": 'R',
+      "sender_id": this.rfqUserId
+    }
+    if ((rediectStatus.includes('Rej') == false && rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+      this._product.custNotiSubmit(custNotiReq).subscribe();
+    }
 
     this.spinner.show();
     //Encrypt
@@ -351,6 +369,7 @@ export class CustomerComponent implements OnInit {
           this._product.custNotiSubmit(salesNotiReq).subscribe((res:any) => {
           })
         }
+
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -403,11 +422,11 @@ export class CustomerComponent implements OnInit {
       })
     } 
 
-    if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-      this._router.navigate(['/po/po',this.rfqNum]);
-    } else {
-      this._router.navigate(['/products/rfq-list']);
-    }
+    // if ((rediectStatus.includes('Rej') == false &&  rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+    //   this._router.navigate(['/po/po',this.rfqNum]);
+    // } else {
+    // }
+    this._router.navigate(['/products/rfq-list']);
   };
 
   date: any;

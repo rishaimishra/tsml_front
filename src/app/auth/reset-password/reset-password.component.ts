@@ -21,7 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   token: string|undefined;
   recevedOtp: boolean = false;
   errorMsg: boolean = true;
-
+  hide = true;
 
 
 
@@ -32,6 +32,7 @@ export class ResetPasswordComponent implements OnInit {
     this.resetPassForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required, Validators.minLength(6)]],
+      old_pass: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(10)]],
       password_confirm: ['', [Validators.required, Validators.minLength(10)]]
     })
@@ -124,6 +125,13 @@ export class ResetPasswordComponent implements OnInit {
         })
         this._router.navigate(['/auth/login'])
       }
+      else if ( res.status == 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry !',
+          text: res.message,
+        })
+      }
       else if(res.error['message'] != null || res.error['message'] != "") {
         Swal.fire({
           icon: 'error',
@@ -131,6 +139,7 @@ export class ResetPasswordComponent implements OnInit {
           text: 'Please enter your valid 6 digit OTP',
         })
       }
+
     }, err => {
       console.log(err);
       this._spiner.hide();

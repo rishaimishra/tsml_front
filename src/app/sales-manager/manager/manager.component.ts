@@ -475,7 +475,7 @@ export class ManagerComponent implements OnInit {
     let countArr = [];
     let confrmDate = [];
 
-    this.spinner.show();
+
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -529,6 +529,7 @@ export class ManagerComponent implements OnInit {
     //Encrypt
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
+    this.spinner.show();
     this._product.updateRfq(encryptedd).subscribe((res: any) => {
       this.spinner.hide();
       if (res.message == 'success') {

@@ -207,6 +207,7 @@ export class KamComponent implements OnInit {
       if (res.message == 'success') {
         let password = '123456';
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        console.log(decrypted);
         this.catId = decrypted[0]['cat_id'];
         this.editProductId = decrypted[0]['product_id'];
         this.product_data = decrypted;
@@ -488,6 +489,7 @@ export class KamComponent implements OnInit {
     let userRol = localStorage.getItem('USER_TYPE');
     let countArr = [];
     let confrmDate = [];
+    let rediectStatus = [];
     let rfqFormArry: any = [];
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -592,9 +594,21 @@ export class KamComponent implements OnInit {
         quote_type: userRol,
         quote_schedules: form_data_array,
       };
-      rfqFormArry.push(reqData);
 
+      rfqFormArry.push(reqData);
+      this.poRedirectArr.forEach((element:any) => {
+        rediectStatus.push(element.status);
+      });
     };
+
+    let userId = localStorage.getItem('USER_ID');
+    let custNotiReq = {
+      "desc_no": this.rfqNum,
+      "user_id": userId,
+      "desc": 'Subcategory has been accepted against',
+      "url_type": 'R',
+      "sender_id": this.rfqUserId
+    }
 
     let qouteSt = this.selectedItem[0]['quotest'];
     this.spinner.show();
@@ -653,7 +667,9 @@ export class KamComponent implements OnInit {
         // }
         this.camRemarks();
         this.otherFuncApi(qouteSt);
-
+        if ((rediectStatus.includes('Rej') == false && rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
+          this._product.custNotiSubmit(custNotiReq).subscribe();
+        }
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -670,10 +686,6 @@ export class KamComponent implements OnInit {
       this.spinner.hide();
     });
 
-    // if ((rediectStatus.includes('Rej') == false && rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
-    //   this._router.navigate(['/po/po', this.rfqNum]);
-    // } else {
-    // }
   };
 
   otherFuncApi(qouteSt:any) {
@@ -785,6 +797,7 @@ export class KamComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+    
     this._router.navigate(['/products/rfq-list']);
   };
 

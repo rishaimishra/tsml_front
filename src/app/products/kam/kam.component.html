@@ -433,7 +433,7 @@
                                               </div>
                                         </div>
                                         <div class="text-left col-12 pb-3" *ngIf="showButtons > 0">
-                                            <button type="button" *ngIf="selectedItem[0]?.quotest == 0 || selectedItem[0]?.quotest != 7 && selectedItem[0]?.quotest != 8"
+                                            <button type="button" *ngIf="selectedItem[0]?.quotest == 0 || selectedItem[0]?.quotest != 7 && selectedItem[0]?.quotest != 8 && selectedItem[0]?.quote_type != 'Kam'"
                                             class="btn btn-primary" (click)="submitRfq()"><i class="fa fa-paper-plane"></i> Submit</button>
                                             &nbsp;
                                             <button type="button" (click)="clickBack()" class="btn btn-danger"><i class="fa fa-arrow-left"></i>
