@@ -30,15 +30,35 @@
                         </div>
                         <!--/-->
                         <div class="col-12 mt-2">
-                           <div>
-                              <label>Password</label>
+                           <label>Password</label>
+                           <!-- <div>
                               <input formControlName="password" minlength="10" type="password" class="form-control"
                                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                  <div *ngIf="f.password.errors.required">Password is required</div>
                                  <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters</div>
                               </div>
-                           </div>
+                           </div> -->
+                           <div class="form-group inner-addon right-addon">
+                              <div class="input-group mx-auto">
+                                <input name="password" formControlName="password"
+                                    [type]="showPassword ? 'text' : 'password'"
+                                    class="form-control pwd-control"
+                                    id="password-field" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                                <div class="eye_show_hide">
+                                  <i alt="show" class="fa fa-eye eye-show" 
+                                  (click)="showPassword = !showPassword"
+                                  [class.hide]="showPassword"></i>
+                                  <i alt="hide" class="fa fa-eye-slash eye-hide" 
+                                  (click)="showPassword = !showPassword"
+                                  [class.hide]="!showPassword"></i>
+                                </div>
+                              </div>
+                              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                 <div *ngIf="f.password.errors.required">Password is required</div>
+                                 <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters</div>
+                              </div>
+                            </div>
                         </div>
 
                         <div class="col-12 mt-2">
@@ -58,9 +78,6 @@
                            </div>
                         </div>
                         <div class="row resetForget">
-                           <!-- <div class="col-6 ttext-left">
-                              <a routerLink="/auth/reset-password" class="smll-font pointer ml-3">Reset Password?</a>
-                           </div> -->
                            <div class="text-right" routerLink="/auth/forget-password">
                               <a class="smll-font pointer mr-3 text-primary">Forgot
                                  Password?</a>

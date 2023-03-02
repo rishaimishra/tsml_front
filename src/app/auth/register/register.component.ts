@@ -139,6 +139,9 @@ export class RegisterComponent implements OnInit {
   hide = true;
   securityParam: boolean = true;
   
+  public showPassword: boolean;
+  public showPasswordOnPress: boolean;
+  
 
   ferroChrome = [
     { id: 1, select: false, name: 'High Phos' },

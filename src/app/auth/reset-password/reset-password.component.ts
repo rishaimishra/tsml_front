@@ -23,7 +23,14 @@ export class ResetPasswordComponent implements OnInit {
   errorMsg: boolean = true;
   hide = true;
 
+  public showPassword: boolean;
+  public showPasswordOnPress: boolean;
 
+  public showPassword1: boolean;
+  public showPasswordOnPress1: boolean;
+
+  public showPassword2: boolean;
+  public showPasswordOnPress2: boolean;
 
   constructor(private _fb: FormBuilder, 
     private _auth: AuthService, private _spiner: NgxSpinnerService,

@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit {
   token: string | undefined;
   disableLogin: boolean = true;
 
+  public showPassword: boolean;
+  public showPasswordOnPress: boolean;
+
   constructor(private _fb: FormBuilder, private _toster: ToastrService,
     private _auth: AuthService, private _router: Router, private _spinner: NgxSpinnerService) {
     this.loginForm = this._fb.group({

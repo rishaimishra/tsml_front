@@ -25,6 +25,12 @@ export class ForgetPasswordComponent implements OnInit {
   showFields: boolean = false;
   token: string|undefined;
 
+  public showPassword: boolean;
+  public showPasswordOnPress: boolean;
+
+  public showPassword1: boolean;
+  public showPasswordOnPress1: boolean;
+
   constructor(private _auth: AuthService,
     private _fb: FormBuilder, private _toaster: ToastrService, 
     private _spinner: NgxSpinnerService,

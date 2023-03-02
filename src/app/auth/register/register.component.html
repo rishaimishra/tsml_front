@@ -104,7 +104,21 @@
                     <div class="col-12 col-lg-6 col-sm-6">
                       <div class="form-group">
                         <label>Password</label>
-                        <input type="password" [(ngModel)]="password" (keyup)="passwordCheck(password)" maxlength="10" #pass="ngModel" class="form-control" required/>
+                        <!-- <input type="password" [(ngModel)]="password" (keyup)="passwordCheck(password)" maxlength="10" #pass="ngModel" class="form-control" required/> -->
+                        <div class="input-group mx-auto">
+                          <input name="password" [(ngModel)]="password" (keyup)="passwordCheck(password)" maxlength="10" #pass="ngModel"
+                              [type]="showPassword ? 'text' : 'password'"
+                              class="form-control pwd-control"
+                              id="password-field" placeholder="Password" required>
+                          <div class="eye_show_hide">
+                            <i alt="show" class="fa fa-eye eye-show" 
+                            (click)="showPassword = !showPassword"
+                            [class.hide]="showPassword"></i>
+                            <i alt="hide" class="fa fa-eye-slash eye-hide" 
+                            (click)="showPassword = !showPassword"
+                            [class.hide]="!showPassword"></i>
+                          </div>
+                        </div>
                         <div *ngIf="pass?.invalid &&(pass.touched || submitted)">
                             <small class="text-danger">
                               Password is required
