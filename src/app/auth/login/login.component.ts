@@ -63,34 +63,6 @@ export class LoginComponent implements OnInit {
   //   this.hideShowPass = true;
   // };
 
-  forgetPassword() {
-    if (this.forgetEmail == null || this.forgetEmail == undefined) {
-      this._toster.error('Email is required', 'Sorry!');
-      return;
-    }
-    this._spinner.show();
-    let forget = {
-      "email": this.forgetEmail
-    }
-    let passwordd = '123456';
-    let encryptedd = CryptoJSAesJson.encrypt(forget, passwordd);
-
-    this._auth.forgetPass(encryptedd).subscribe((res: any) => {
-      this._spinner.hide();
-      if (res.status == 1) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'OTP has been sent to your registered mail id !',
-        })
-        this._router.navigate(['/auth/forget-password'])
-      }
-    }, err => {
-      console.log(err);
-      this._spinner.hide()
-    })
-  };
-
   submitLogin(form: NgForm) {
     this.submitted = true;
     this.send(form);

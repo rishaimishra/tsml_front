@@ -68,6 +68,15 @@ export class ViewProfileComponent implements OnInit {
         })
         this.updateMobile = false;
       }
+      if(res.status == 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          text: res.message,
+          showConfirmButton: false,
+          timer: 4000
+        })
+      }
     })
     // this.productService.getMethod(url).subscribe((res: any) => {
     //   this.spinner.hide();
@@ -92,7 +101,6 @@ export class ViewProfileComponent implements OnInit {
     this.spinner.show();
     this._auth.getOtpMobile(getOtpParam).subscribe((res:any) => {
       this.spinner.hide();
-      console.log(res);
       if (res.status == 1) {
         Swal.fire({
           icon: 'success',

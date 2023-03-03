@@ -29,9 +29,7 @@
                                             Get OTP
                                           </button>
                                       </div>
-                                      <div class="">
-                                       <a routerLink="/auth/reset-password" class="smll-font pointer">Reset Password?</a>
-                                    </div>
+                                      
                                       <div *ngIf="validMobile">
                                        <small class="text-danger">Please, Enter 10 digit mobile number.</small>
                                      </div>
@@ -42,6 +40,9 @@
                                        <button type="button" class="btn blue-btn" (click)="onUpdateMob(customer_information.email)">
                                              Verify
                                            </button>
+                                       </div>
+                                       <div class="">
+                                          <a routerLink="/auth/reset-password" class="smll-font pointer">Reset Password?</a>
                                        </div>
                                     </div>
                                   </div>
