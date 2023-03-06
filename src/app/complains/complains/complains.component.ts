@@ -26,6 +26,9 @@ export class ComplainsComponent implements OnInit {
   poDate:any;
   fileName:any;
   downloadFile = environment.apiEndpointBase;
+  maxChars = 500;
+  role = '';
+
 
 
   constructor(private _complainse: ComplainsService,
@@ -48,14 +51,13 @@ export class ComplainsComponent implements OnInit {
   };
   ngOnInit(): void {
     this.user_Id = localStorage.getItem('USER_ID');
-
     this._complainse.receiveData().subscribe((res:any) => {
       this.poNumber = res[0];
       this.poDate = res[1]
-      
     })
     this.categories();
   }
+
   categories() {
     this._spinner.show();
     this._complainse.getCategories().subscribe((res: any) => {

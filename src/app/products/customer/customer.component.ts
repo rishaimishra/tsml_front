@@ -263,6 +263,13 @@ export class CustomerComponent implements OnInit {
     $('body').removeClass('modal-open');
     $(".modal-backdrop").removeClass("modal-backdrop show");
   };
+  changesche(event:any,sdlNum:any) {
+    let val = event.target.value;
+    console.log(sdlNum);
+    if(val != '' || val != undefined) {
+      $('#acceptId_' + sdlNum).hide();
+    }
+  };
 
   submitRfq() {
     this.submit = true;

@@ -183,12 +183,12 @@
                                             class="inputValidation">Quantity is required</small>
                                     </div>
                                 </div>
-                                <div class="col-lg-3" *ngIf="userByrole != 'Sales'">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="">Expected Price</label>
                                         <div class="pri-box">
                                             <span>₹</span>
-                                            <input type="number"
+                                            <input type="number"  (keyup)="changesche($event,formData.schedule_no)"
                                                 [disabled]="!userType || formData.kam_price == null"
                                                 #priceInput="ngModel"
                                                 [(ngModel)]="formData.expected_price"
@@ -355,7 +355,7 @@
                                                     name="fav_language_{{formData?.id}}">
                                                 <label for="inlineCheckbox0">Requote </label>
                                             </div>
-                                            <div class="form-check form-check-inline">
+                                            <div class="form-check form-check-inline" id="acceptId_{{formData?.schedule_no}}">
                                                 <input type="radio" class="form-check-input"
                                                     id="inlineCheckbox1"
                                                     (click)="getStatus(formData?.schedule_no,1)"

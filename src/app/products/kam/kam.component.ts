@@ -504,10 +504,11 @@ export class KamComponent implements OnInit {
         }
 
         if (form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
-          || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].pickup_type == null || form_data_array[i].from_date == ""
-          || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null || form_data_array[i].plant == null || form_data_array[i].location == null) {
+          || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].pickup_type == "" || form_data_array[i].from_date == ""
+          || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null || form_data_array[i].plant == "" || form_data_array[i].location == null) {
           return;
         }
+
         let tantetiveReq = {
           "schedule_no": form_data_array[i]['schedule_no'],
           "confirm_date": form_data_array[i]['confirm_date'],
@@ -665,11 +666,11 @@ export class KamComponent implements OnInit {
         //     console.log(res)
         //   })
         // }
-        this.camRemarks();
-        this.otherFuncApi(qouteSt);
         if ((rediectStatus.includes('Rej') == false && rediectStatus.includes('Req') == false) && rediectStatus.length == countArr.length) {
           this._product.custNotiSubmit(custNotiReq).subscribe();
         }
+        this.camRemarks();
+        this.otherFuncApi(qouteSt);
       }
       if (res.message == 'error' || res.status == 0) {
         this._toaster.error(res.message);
@@ -1373,20 +1374,20 @@ export class KamComponent implements OnInit {
       $('#contact' + schdl+'_c').show();
     }
     if (dlvrItem == 'DAP (Delivered at Place)') {
-      $('#pickup_from_' + schdl).prop('disabled', true);
-      $('#loca_' + schdl).prop('disabled', true);
-      $('#pickupTyp_' + schdl + '_a').prop('disabled', true);
-      $('#pickupTyp_' + schdl + '_b').prop('disabled', true);
-      $('#pickupTyp_' + schdl + '_c').prop('disabled', true);
+      // $('#pickup_from_' + schdl).prop('disabled', true);
+      // $('#loca_' + schdl).prop('disabled', true);
+      // $('#pickupTyp_' + schdl + '_a').prop('disabled', true);
+      // $('#pickupTyp_' + schdl + '_b').prop('disabled', true);
+      // $('#pickupTyp_' + schdl + '_c').prop('disabled', true);
       this.selectedItem[i]['form_data'][y].plant = '';
       this.selectedItem[i]['form_data'][y].pickup_type = '';
       this.selectedItem[i]['form_data'][y].location = '';
     } else {
-      $('#pickup_from_' + schdl).prop('disabled', false);
-      $('#loca_' + schdl).prop('disabled', false);
-      $('#pickupTyp_' + schdl + '_a').prop('disabled', false);
-      $('#pickupTyp_' + schdl + '_b').prop('disabled', false);
-      $('#pickupTyp_' + schdl + '_c').prop('disabled', false);
+      // $('#pickup_from_' + schdl).prop('disabled', false);
+      // $('#loca_' + schdl).prop('disabled', false);
+      // $('#pickupTyp_' + schdl + '_a').prop('disabled', false);
+      // $('#pickupTyp_' + schdl + '_b').prop('disabled', false);
+      // $('#pickupTyp_' + schdl + '_c').prop('disabled', false);
     }
   };
 

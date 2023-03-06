@@ -440,19 +440,25 @@ export class RegisterComponent implements OnInit {
       this._spinner.hide();
       return;
     }
-    this._auth.getOtp(mobileNu).subscribe((res:any) => {
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(mobileNu, password);
+
+    this._auth.getOtp(encrypted).subscribe((res:any) => {
+      this._spinner.hide();
         if (res.status > 0) {
-          this._spinner.hide();
           this.toastr.success(res.message);
-          this.mobile = res.result;
+          let password = '123456'
+          let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+          this.mobile = decrypted;
           this.haveOtp = false;
         } else {
-          this.toastr.error(res.message);
+          this.toastr.error(res.error.validation['email']);
           this._spinner.hide();
         }
       },
       (error) => {
         console.log(error);
+        this._spinner.hide();
       }
     );
   }
@@ -473,19 +479,22 @@ export class RegisterComponent implements OnInit {
       this.toastr.error('OTP is required');
       return;
     }
-    console.log(this.verifyOtp);
+
     let otpVerify = {
       mobile_no: this.mobileNumber,
       email: this.emailId,
       otp: this.verifyOtp,
     };
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(otpVerify, password)
     this._spinner.show();
-      this._auth.verifyOtp(otpVerify).subscribe((res:any) => {
+      this._auth.verifyOtp(encrypted).subscribe((res:any) => {
         this._spinner.hide();
           if (res.status != 0) {
-            // this.mobile.otp = '';
-            this.emailId = res.result['email'],
-            this.mobileNumber = res.result['mob_number'],
+            let password = '123456'
+            let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+            this.emailId = decrypted['email'],
+            this.mobileNumber = decrypted['mob_number'],
             this.verifyOtp = null;
             this.disableInput = false;
             this._spinner.hide();

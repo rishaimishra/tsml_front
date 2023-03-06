@@ -123,7 +123,6 @@ export class UpdateInfoComponent implements OnInit {
       "finance_no": financial ? financial: null,
       "payment_proc": payment ? payment: null
     }
-    console.log(reqParams);
 
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(reqParams, passwordd);

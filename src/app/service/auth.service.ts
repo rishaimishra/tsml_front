@@ -87,11 +87,11 @@ export class AuthService {
   };
 
   getOtpMobile(request:any) {
-    return this._http.post(this.BesUrl + '/user/update-mobile-number',  request);
+    return this._http.post(this.BesUrl + '/user/update-mobile-number',  request, { 'headers': this.headers });
   };
 
   verifyMobile(request:any) {
-    return this._http.post(this.BesUrl + '/user/update-mobile-user',  request);
+    return this._http.post(this.BesUrl + '/user/update-mobile-user',  request, { 'headers': this.headers });
   };
 
   save_token(request:any) {

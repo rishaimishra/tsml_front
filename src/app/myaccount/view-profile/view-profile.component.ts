@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProductsService } from 'src/app/service/products.service';
 import Swal from 'sweetalert2';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
 
 @Component({
   selector: 'app-view-profile',
@@ -54,9 +55,11 @@ export class ViewProfileComponent implements OnInit {
       "mobile_no": this.custPhoneNo,
       "email": email,
       "otp": this.receviedOtp
-
     }
-    this._auth.verifyMobile(params).subscribe((res: any) => {
+
+    let password = '123456';
+    let encrypted = CryptoJSAesJson.encrypt(params, password);
+    this._auth.verifyMobile(encrypted).subscribe((res: any) => {
       this.spinner.hide();
       if (res.success) {
         Swal.fire({
@@ -77,20 +80,11 @@ export class ViewProfileComponent implements OnInit {
           timer: 4000
         })
       }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     })
-    // this.productService.getMethod(url).subscribe((res: any) => {
-    //   this.spinner.hide();
-    //   this.file_link = res.file_link;
-    //   this.customer_information = res.customer_information;
-    //   this.customer_kyc = res.customer_kyc;
-    //   this.billing_address = res.billing_address;
-    //   this.shipping_address = res.shipping_address;
-    //   this.documents = res.documents;
-    //   console.log('Res', res)
-    //   if (res.message == 'success') {
-    //     this.data = res;
-    //   }
-    // })
+
   };
 
   getOtp(email:any) {
@@ -98,8 +92,11 @@ export class ViewProfileComponent implements OnInit {
       "mobile_no": this.custPhoneNo,
       "email": email
     }
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(getOtpParam, passwordd);
+
     this.spinner.show();
-    this._auth.getOtpMobile(getOtpParam).subscribe((res:any) => {
+    this._auth.getOtpMobile(encryptedd).subscribe((res:any) => {
       this.spinner.hide();
       if (res.status == 1) {
         Swal.fire({
@@ -117,6 +114,9 @@ export class ViewProfileComponent implements OnInit {
       })
         return;
       }
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
     })
   };
 

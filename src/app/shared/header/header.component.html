@@ -89,8 +89,9 @@
                            </div>
                         </div>
                      </li>
-                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true ) && (userRol == 'OPT' || userRol == 'Kam')"
+                     <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true ) && (userRol == 'OPT' || userRol == 'Kam' || userRol == 'PLANT')"
                      ><a class="nav-link" routerLink="/plant/do-list">View Do</a></li>
+                     
                      <!-- <li class="nav-item" *ngIf="(isUserLogIn != false && loginFalse != true && userRol == 'PLANT')"
                      ><a class="nav-link" routerLink="/plant/do-entry">Do Entry</a></li> -->
 
