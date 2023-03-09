@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   headers= new HttpHeaders().set('content-type', 'application/json');
-
+  
   private BesUrl = environment.apiEndpointBase;
   constructor(private _http: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class AuthService {
   };
 
   submitForgetPass(data: any) {
-    return this._http.post(this.BesUrl + '/password-update', data,{ 'headers': this.headers });
+    return this._http.post(this.BesUrl + '/password-update', data, { 'headers': this.headers });
   };
 
   gstApi() {

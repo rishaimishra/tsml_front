@@ -142,9 +142,20 @@ export class SalesService {
   clearHedNoti() {
     return this._http.get(this.BesUrl + '/user/up_sh_notification_all');
   };
+  clearPlantNoti() {
+    return this._http.get(this.BesUrl + '/user/clearall_plant_noti');
+  };
 
   salesHeadNoti(data:any) {
     return this._http.post(this.BesUrl + '/user/sh_notification_submit', data);
+  };
+
+  plantMail(data:any) {
+    return this._http.post(this.BesUrl + '/pant_do_mail', data);
+  };
+
+  plantNotification(data:any) {
+    return this._http.post(this.BesUrl + '/user/plant_notification_submit', data);
   }
 
 

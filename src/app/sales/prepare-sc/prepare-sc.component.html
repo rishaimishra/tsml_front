@@ -58,9 +58,9 @@
                             <li>
                                <span>Customer Name: </span> {{scData?.cus_name}}
                             </li>
-                            <li>
+                            <!-- <li>
                                <span>RFQ No: </span> {{scData?.rfq_no}}
-                            </li>
+                            </li> -->
                          </ul>
                       </div>
                    </div>
@@ -125,13 +125,13 @@
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Qty Contract TSML</label>
-                            <input type="text" formControlName="qty_cont" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['qty_cont'].errors }">
+                            <input type="text" formControlName="qty_cont" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['qty_cont'].errors }">
                          </div>
                       </div>
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Net Value</label>
-                            <input type="text" formControlName="net_val" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['net_val'].errors }">
+                            <input type="text" formControlName="net_val" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['net_val'].errors }">
                          </div>
                       </div>
 
@@ -151,33 +151,33 @@
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Sold-To-Party</label>
-                            <input type="text" formControlName="sold_to_party" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_party'].errors }">
+                            <input type="text" formControlName="sold_to_party" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_party'].errors }">
                          </div>
                       </div>
                       <!-- sold to party address -->
                       <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Sold-To-Party Address</label>
-                           <textarea type="text" formControlName="sold_to_addr" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_addr'].errors }"></textarea>
+                           <textarea type="text" formControlName="sold_to_addr" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_addr'].errors }"></textarea>
                         </div>
                      </div>
                      <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Cust Referance No.</label>
-                           <input type="text" formControlName="cus_ref" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['cus_ref'].errors }">
+                           <input type="text" formControlName="cus_ref" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['cus_ref'].errors }">
                         </div>
                      </div>
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Ship-To-Party</label>
-                            <input type="text" formControlName="ship_to_party" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_party'].errors }">
+                            <input type="text" formControlName="ship_to_party" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_party'].errors }">
                          </div>
                       </div>
                       <!-- ship to party address -->
                       <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Ship-To-Party Address</label>
-                           <textarea type="text" formControlName="ship_to_addr" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_addr'].errors }"></textarea>
+                           <textarea type="text" formControlName="ship_to_addr" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_addr'].errors }"></textarea>
                         </div>
                      </div>
                       
@@ -185,7 +185,7 @@
                          <div class="form-group">
                             <label>Cust. Ref. Date</label>
                             <div class="position-relative">
-                               <input type="text" formControlName="cus_ref_dt" class="form-control form-control-sm datepicker" [ngClass]="{ 'is-invalid': submit && f['cus_ref_dt'].errors }">
+                               <input type="text" formControlName="cus_ref_dt" readonly class="form-control form-control-sm datepicker" [ngClass]="{ 'is-invalid': submit && f['cus_ref_dt'].errors }">
                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                             </div>
                          </div>

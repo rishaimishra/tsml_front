@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiEndpointBase:'https://beas.in/tsml-shop/api',
-  sapApiEndpointBase:'https://15.207.150.126:50001/RESTAdapter',
+  // sapApiEndpointBase:'https://15.207.150.126:50001/RESTAdapter',
   filePath:'https://beas.in/mje-shop/storage/app/public/images/complain/',
 };
 
@@ -18,3 +18,6 @@ https://beas.in/mje-shop/api
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+
+// https://beas.in/tsml-microservice/login --- for all api url without register

@@ -343,6 +343,7 @@ export class PrepareScComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
+        console.log(result);
         this.scData = result[0];
         this.scInfo = result;
         this.rfqNumber = this.scData['rfq_no'];
@@ -358,6 +359,7 @@ export class PrepareScComponent implements OnInit {
         this.scForm.get('cus_ref_dt').setValue(this.scData.po_date);
         this.scForm.get('sold_to_addr').setValue(fullAddr);
         this.scForm.get('ship_to_addr').setValue(fullAddr);
+
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login']);
@@ -499,6 +501,7 @@ export class PrepareScComponent implements OnInit {
 
       seFormDataArr.push(sapRequest);
     }
+
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(seFormDataArr, passwordd);
 
