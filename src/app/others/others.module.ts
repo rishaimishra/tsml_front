@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { CookiesComponent } from './cookies/cookies.component';
 import { FaqComponent } from './faq/faq.component';
+import { ConnectionLostComponent } from './connection-lost/connection-lost.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
     path: 'FAQ', 
     component: FaqComponent
   },
+  {
+    path: 'connection-lost', 
+    component: ConnectionLostComponent
+  },
 
 ];
 
@@ -28,7 +33,8 @@ const routes: Routes = [
   declarations: [
     PrivacyComponent,
     CookiesComponent,
-    FaqComponent
+    FaqComponent,
+    ConnectionLostComponent
   ],
   imports: [
     CommonModule,

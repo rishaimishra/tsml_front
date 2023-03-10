@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,15 @@ export class AuthService {
   constructor(private _http: HttpClient) { }
 
 
-  register(data: any) {
-    return this._http.post(this.BesUrl + '/register', data);
+  register(data: any):Observable<any> {
+    return this._http.post('https://beas.in/tsml-microservice/register/api/register', data);
   };
 
-  login(data: any) {
+  login(data: any):Observable<any> {
     return this._http.post(this.BesUrl + '/login', data, { withCredentials: true, 'headers': this.headers  });
   };
 
-  logOut(data: any) {
+  logOut(data: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/logout', data);
   };
 
@@ -34,79 +34,79 @@ export class AuthService {
     return localStorage.getItem('tokenUrl') || '';
   };
 
-  getOtp(requestData: any) {
-    return this._http.post(this.BesUrl + '/send-mobile-otp',requestData, { 'headers': this.headers });
+  getOtp(requestData: any):Observable<any> {
+    return this._http.post('https://beas.in/tsml-microservice/register/api/send-mobile-otp',requestData, { 'headers': this.headers });
   };
 
-  verifyOtp(requestData: any) {
-    return this._http.post(this.BesUrl + '/verify-mobile-otp',requestData, { 'headers': this.headers });
+  verifyOtp(requestData: any):Observable<any> {
+    return this._http.post('https://beas.in/tsml-microservice/register/api/verify-mobile-otp',requestData, { 'headers': this.headers });
   };
 
-  submitForgetPass(data: any) {
+  submitForgetPass(data: any):Observable<any> {
     return this._http.post(this.BesUrl + '/password-update', data, { 'headers': this.headers });
   };
 
-  gstApi() {
+  gstApi():Observable<any> {
     return this._http.get(this.BesUrl + '/gst_details_dummy');
   };
 
-  getSecurityQue() {
+  getSecurityQue():Observable<any> {
     return this._http.get(this.BesUrl + '/get_security_questions');
   };
 
-  clearNoti(request:any) {
+  clearNoti(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/clear_notification', request);
   };
   
-  forgetPass(request:any) {
+  forgetPass(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/password-email',  request, { 'headers': this.headers });
   };
 
-  checkEmail(request:any) {
+  checkEmail(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/chk_email',  request);
   };
 
-  forceLogOut(request:any) {
+  forceLogOut(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/force_logout',  request);
   };
 
-  setSecurityQu(request:any) {
-    return this._http.post(this.BesUrl + '/save_security_qst_ans',  request,{ 'headers': this.headers });
+  setSecurityQu(request:any):Observable<any> {
+    return this._http.post('https://beas.in/tsml-microservice/register/api/save_security_qst_ans',  request,{ 'headers': this.headers });
   };
 
-  matchSecurityQu(request:any) {
+  matchSecurityQu(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/security_qstn_match',  request);
   };
 
-  emailSecurityQu(request:any) {
+  emailSecurityQu(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/security_qstn_mail',  request);
   };
 
-  passwordReset(request:any) {
+  passwordReset(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/password-reset',  request, { 'headers': this.headers });
   };
 
-  getOtpMobile(request:any) {
+  getOtpMobile(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/update-mobile-number',  request, { 'headers': this.headers });
   };
 
-  verifyMobile(request:any) {
+  verifyMobile(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/update-mobile-user',  request, { 'headers': this.headers });
   };
 
-  save_token(request:any) {
+  save_token(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/get_save_token',  request);
   };
 
-  getOtpLog(request:any) {
+  getOtpLog(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/send-login-otp',  request, { 'headers': this.headers });
   };
 
-  checkExpireyUser(request:any) {
+  checkExpireyUser(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/regis_date_log',  request);
   };
 
-  resetOtp(request:any) {
+  resetOtp(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/resest_pass_mail',  request, { 'headers': this.headers });
   };
 

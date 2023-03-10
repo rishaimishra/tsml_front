@@ -123,7 +123,6 @@ export class ForgetPasswordComponent implements OnInit {
   };
 
   getOtp() {
-
     let email = $('#emailfield').val();
     if (email == '' || email == undefined) {
       this._toster.error('Email is required !', 'Sorry!');
@@ -142,6 +141,7 @@ export class ForgetPasswordComponent implements OnInit {
       this._spinner.hide();
       if (res.status == 1) {
         this.showFields = true;
+        $('#otpdSDisable').prop('disabled', true);
         Swal.fire({
           icon: 'success',
           title: 'Success',

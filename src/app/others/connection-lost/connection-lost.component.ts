@@ -1,28 +1,27 @@
-import { Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Observer, fromEvent, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-declare var $: any;
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-connection-lost',
+  templateUrl: './connection-lost.component.html',
+  styleUrls: ['./connection-lost.component.scss']
 })
-export class AppComponent {
-  title = 'tatasteelmining';
+export class ConnectionLostComponent implements OnInit {
   onlineMessage:any;
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router) { }
+
+  ngOnInit(): void {
     this.createOnline$().subscribe((isOnline) => {
       if (isOnline) {
         this.onlineMessage = 'You are connected to internet';
+        this._router.navigate(['/']);
       } else {
         this.onlineMessage =
           'Connection lost, Please check your internet connection.';
           // window.confirm("Connection lost, Please check your internet connection.");
-        this._router.navigate(['/others/connection-lost']);
       }
     });
   }
@@ -37,5 +36,4 @@ export class AppComponent {
       })
     );
   }
-
 }

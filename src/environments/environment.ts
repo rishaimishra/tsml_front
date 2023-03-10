@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiEndpointBase:'https://beas.in/tsml-shop/api',
+  apiEndpointBase:'https://beas.in/tsml-microservice/login/api',
   // sapApiEndpointBase:'https://15.207.150.126:50001/RESTAdapter',
   filePath:'https://beas.in/mje-shop/storage/app/public/images/complain/',
 };

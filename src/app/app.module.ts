@@ -15,6 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { environment } from '../environments/environment.prod';
 import { RECAPTCHA_SETTINGS,RecaptchaSettings } from 'ng-recaptcha';
+import { OnlineStatusModule } from 'ngx-online-status';
 
 
 
@@ -33,7 +34,8 @@ import { RECAPTCHA_SETTINGS,RecaptchaSettings } from 'ng-recaptcha';
     ToastrModule.forRoot(),
     DatepickerModule,
     NgxPaginationModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    OnlineStatusModule
 
   ],
   exports: [RouterModule],

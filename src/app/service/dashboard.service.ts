@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,15 +12,15 @@ export class DashboardService {
 
   constructor(private _http: HttpClient) { }
 
-  getMethod(url_paremter: any) {
+  getMethod(url_paremter: any):Observable<any> {
     return this._http.get(this.BesUrl + url_paremter);
   };
 
-  getKamList() {
+  getKamList():Observable<any> {
     return this._http.get(this.BesUrl + '/user/kam_quotes_list');
   };
 
-  dashboardItem(request:any) {
+  dashboardItem(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/user-dashboard', request);
   };
 }

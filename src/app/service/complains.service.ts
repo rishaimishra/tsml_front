@@ -13,62 +13,62 @@ export class ComplainsService {
 
   private subject = new BehaviorSubject<string>('');
 
-  getMethod(url_paremter: any) {
+  getMethod(url_paremter: any):Observable<any> {
     return this._http.get(this.BesUrl + url_paremter);
   };
 
-  getCategories() {
+  getCategories():Observable<any> {
     return this._http.get(this.BesUrl + '/user/complain-category-list');
   };
 
-  storeComplain(reqParameter: any) {
+  storeComplain(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/store-complain-main', reqParameter);
   };
 
-  getComplainsKamList(reqParameter: any) {
+  getComplainsKamList(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/get-complain-list-kam', reqParameter);
   };
 
-  replyComplains(reqParameter: any) {
+  replyComplains(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/remarks-replay', reqParameter);
   };
 
-  saveProduction(reqParameter: any) {
+  saveProduction(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/monthly_prod_plan_submit', reqParameter);
   };
 
-  storeDailyProd(reqParameter: any) {
+  storeDailyProd(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/prod-qty-upload', reqParameter);
   };
 
-  storeDispatchPlan(reqParameter: any) {
+  storeDispatchPlan(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/submit_dispatch_plan', reqParameter);
   };
 
-  OrderPlaning(reqParameter: any) {
+  OrderPlaning(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/get_order_planning', reqParameter);
   };
 
-  orderPlaningUpload(reqParameter: any) {
+  orderPlaningUpload(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/monthly_prod_plan_submit', reqParameter);
   };
-  getDepartment() {
+  getDepartment():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-deparment');
   };
 
-  getDeprtEmail(reqParameter: any) {
+  getDeprtEmail(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/get-deparment-mail', reqParameter);
   };
-  sendEmail(reqParameter: any) {
+  sendEmail(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/send-com-mail', reqParameter);
   };
-  emailReceve(reqParameter: any) {
+  emailReceve(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/com-mail-confirm', reqParameter);
   };
-  openModelSubmit(reqParameter: any) {
+  openModelSubmit(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/get-com-manage-data', reqParameter);
   };
-  storeComplainFiles(reqParameter: any) {
+  storeComplainFiles(reqParameter: any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/store-com-files', reqParameter);
   };
 

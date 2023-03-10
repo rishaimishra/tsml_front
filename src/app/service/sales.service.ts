@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,146 +16,146 @@ export class SalesService {
     return this._http.get(this.BesUrl + url_paremter);
   };
 
-  getSapContractType() {
+  getSapContractType():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_contract_type');
   };
 
-  getSalesPO() {
+  getSalesPO():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_all_sc_po');
   };
 
-  getSalesOrg() {
+  getSalesOrg():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-sap-sales-org');
   };
 
-  getSalesSapGroup() {
+  getSalesSapGroup():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_sales_group');
   };
 
-  getSalesDistri() {
+  getSalesDistri():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-distri-channel');
   };
 
-  getSapDivi(reqData) {
+  getSapDivi(reqData:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/get-sap-division', reqData);
   };
 
-  getSaleOffice() {
+  getSaleOffice():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-sales-office');
   };
 
-  getDlvryMode() {
+  getDlvryMode():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_delivery_mode');
   };
-  getSapFreight() {
+  getSapFreight():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_freight');
   };
 
-  getFreightIndicat() {
+  getFreightIndicat():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_freight_indi');
   };
 
-  getCustGroup() {
+  getCustGroup():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_customer_group');
   };
   
-  getIncoterms() {
+  getIncoterms():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_incoterms');
   };
 
-  paymentTerms() {
+  paymentTerms():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-sap-payment-terms');
   };
 
-  submitSalesCnt(request:any) {
+  submitSalesCnt(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/sales_cnt_submit', request);
   };
 
-  getOrderType() {
+  getOrderType():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-order-type');
   };
 
-  getPlantNoti(request:any) {
+  getPlantNoti(request:any):Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_plant_notification/'+ request);
   };
 
-  submitSalesSo(request:any) {
+  submitSalesSo(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/so_submit', request);
   };
 
-  submitManagerRfq(request:any) {
+  submitManagerRfq(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/get_price_break', request, { 'headers': this.headers });
   };
 
-  checkQtyDo(request:any) {
+  checkQtyDo(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/validate_do_qty', request);
   };
 
-  poStatus(request:any) {
+  poStatus(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/po_status_update', request);
   };
 
-  sapReq(request:any) {
+  sapReq(request:any):Observable<any> {
     return this._http.post('https://15.207.150.126:50001/RESTAdapter/SalesContract', request);
   };
 
-  sapSoReq(request:any) {
+  sapSoReq(request:any):Observable<any> {
     return this._http.post('https://15.207.150.126:50001/RESTAdapter/SalesOrder', request);
   };
 
-  salesContract(request:any) {
+  salesContract(request:any):Observable<any> {
     return this._http.post(this.BesUrl +'/sap_sales_contarct', request);
   };
   
-  rejectRemarks(request:any) {
+  rejectRemarks(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/sm_remark_save', request);
   };
 
-  uploadFgStock(request:any) {
+  uploadFgStock(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/prod-qty-upload-user', request);
   };
 
-  sendScMail(request:any) {
+  sendScMail(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/sc_mail', request);
   };
 
-  scInExcelSave(request:any) {
+  scInExcelSave(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/sc_excel_submit', request,{ 'headers': this.headers });
   };
 
-  excelEmail(request:any) {
+  excelEmail(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/sc_excel_mail', request);
   };
 
-  updateSc(request:any) {
+  updateSc(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/up_excelsc', request,{ 'headers': this.headers });
   };
 
-  getScInfoList() {
+  getScInfoList():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_all_excelsc');
   };
 
 
-  getHeadNoti() {
+  getHeadNoti():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sh_notification');
   };
 
-  clearHedNoti() {
+  clearHedNoti():Observable<any> {
     return this._http.get(this.BesUrl + '/user/up_sh_notification_all');
   };
-  clearPlantNoti() {
+  clearPlantNoti():Observable<any> {
     return this._http.get(this.BesUrl + '/user/clearall_plant_noti');
   };
 
-  salesHeadNoti(data:any) {
+  salesHeadNoti(data:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/sh_notification_submit', data);
   };
 
-  plantMail(data:any) {
+  plantMail(data:any):Observable<any> {
     return this._http.post(this.BesUrl + '/pant_do_mail', data);
   };
 
-  plantNotification(data:any) {
+  plantNotification(data:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/plant_notification_submit', data);
   }
 
