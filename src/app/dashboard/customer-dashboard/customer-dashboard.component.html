@@ -220,11 +220,11 @@
                                     <th>Quantity (MT)</th>
                                     <th>Amend No</th>
                                     <th>Status</th>
-                                    <th></th>
+                                    <th>Action</th>
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }" class="pointerTab" (click)="redirectPo(po.po_no)">
+                                 <tr *ngFor="let po of poItems | paginate: { itemsPerPage: 10, currentPage: d, id: 'd' }" class="pointerTab">
                                     <td>{{po.po_no}}</td>
                                     <td>{{po.rfq_no}}</td>
                                     <td>{{po.cus_po_no}}</td>
@@ -258,14 +258,14 @@
                                     <td>
                                        <div class="cell1 tab_head_sheet_1 ">
                                           <div class="add_ttrr actions-main text-center">
-                                             <a class="css-tooltip-top color-blue meet-rvw uu0"> <span>View Details</span>
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0" (click)="redirectPo(po.po_no)"> <span>View Details</span>
                                                 <img src="assets/images/view-act-b.png" class="blue-show" alt="">
                                              </a>
 
-                                             <!-- <a class="css-tooltip-top color-blue meet-rvw uu0" href="#">
-                                                <span>Cancel</span>
-                                                <img src="assets/images/rejectt.png" class="blue-show" alt="">
-                                             </a> -->
+                                             <a class="css-tooltip-top color-blue meet-rvw uu0" routerLink="/po/po-status/{{po.cus_po_no}}">
+                                                <span>View PO Status</span>
+                                                <img src="assets/images/delivery-truck.png" class="blue-show" alt="">
+                                             </a>
 
                                           </div>
                                        </div>

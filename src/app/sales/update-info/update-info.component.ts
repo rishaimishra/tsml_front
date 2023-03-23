@@ -18,7 +18,7 @@ export class UpdateInfoComponent implements OnInit {
   sc_id: any;
   scNum: any;
   plantCode: any;
-
+  payGurProc:any = [];
 
   constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
     private _toaster: ToastrService) { }
@@ -36,6 +36,13 @@ export class UpdateInfoComponent implements OnInit {
         let result = CryptoJSAesJson.decrypt(res.result, password)
         this.scInfoItems = result;
         console.log(result);
+      }
+    })
+
+    this._sales.getProcPay().subscribe((res:any) => {
+      console.log(res);
+      if(res.message == 'success') {
+        this.payGurProc = res.result;
       }
     })
   };
@@ -106,9 +113,9 @@ export class UpdateInfoComponent implements OnInit {
       $('#soNumber').prop('readonly', false);
     }
     if (pymt != null) {
-      $('#payment_pr').prop('readonly', true);
+      $('#payment_pr').prop('disabled', true);
     } else {
-      $('#payment_pr').prop('readonly', false);
+      $('#payment_pr').prop('disabled', false);
     }
 
     this.sc_id = id;
@@ -135,7 +142,8 @@ export class UpdateInfoComponent implements OnInit {
     let plantNoti = {
     "desc_no": soNum,
     "plant": this.plantCode,
-    "desc": "SO has been uploaded"
+    "desc": "SO has been uploaded",
+    // "sender_id": 
     }
 
     let passwordd = '123456';

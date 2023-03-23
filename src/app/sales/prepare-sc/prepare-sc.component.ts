@@ -72,6 +72,7 @@ export class PrepareScComponent implements OnInit {
   filteredInco: Observable<any[]>;
   filteredPymt: Observable<any[]>;
   // @ViewChild('stateInput') inputField : ElementRef;
+  @ViewChild('freightInput') inputField : ElementRef;
   incoTermVal:any;
   pymatVal:any;
   filteredFreit: Observable<any[]>;
@@ -95,6 +96,7 @@ export class PrepareScComponent implements OnInit {
   filteredMode: Observable<any[]>;
   modeVal:any;
   matarial:any = [];
+  showText: boolean = false;
 
   constructor(private _product: ProductsService, private _spiner: NgxSpinnerService,
     private _sales: SalesService, private _location: Location,
@@ -165,7 +167,7 @@ export class PrepareScComponent implements OnInit {
         }
       }
     })
-    console.log('FGFGHFGH', this.allPlants);
+
   };
 
   getPolist() {
@@ -405,6 +407,12 @@ export class PrepareScComponent implements OnInit {
   };
   onEnterFrei(event:any) {
     this.freightVal = event.source.value;
+    console.log(this.freightVal);
+    if(this.freightVal == 'N') {
+      this.showText = true;
+    } else {
+      this.showText = false;
+    }
   };
 
   getFreightIndic() {
@@ -586,7 +594,6 @@ export class PrepareScComponent implements OnInit {
     })
 
     this._sales.getMaterial().subscribe((res:any) => {
-      console.log(res);
       if(res.message == 'success') {
         this.matarial = res.result;
       }
@@ -650,6 +657,7 @@ export class PrepareScComponent implements OnInit {
 
   submitSc() {
     const seFormDataArr = [];
+    const seFormDataArr1 = [];
     const sapMatArr = [];
     const codePrice = [];
     this.updateInfoForm.value['incoterms'] = this.incoTermVal;
@@ -664,7 +672,7 @@ export class PrepareScComponent implements OnInit {
     this.scForm.value['sales_ofc'] = this.officeVal;
     this.scForm.value['sales_grp'] = this.salesGrpVal;
     this.scForm.value['shp_cond'] = this.modeVal;
-    
+    let inputFreight = $('#_freightInput').val();
 
     this.submit = true;
     this.scForm.value['po_no'] = this.poNumber;
@@ -693,58 +701,59 @@ export class PrepareScComponent implements OnInit {
     for (let index = 0; index < this.dynamicArray.length; index++) {
       const element = this.dynamicArray[index];
 
-      // let sapMaterial = [{
-      //   "item": 10 * (index + 1),
-      //   "Material": element.matCode,
-      //   "Quantity": element.ordrQty,
-      //   "CustomarMaterialNumber": element.matCode,
-      //   "OrderQuantity": element.ordrQty,
-      //   "Plant": element.plant
-      // }];
+      let sapMaterial = [{
+        "Item": 10 * (index + 1),
+        "Material": element.matCode,
+        "Quantity": element.ordrQty,
+        "CustomarMaterialNumber": element.matCode,
+        "OrderQuantity": element.ordrQty,
+        "Plant": element.plant
+      }];
 
-      // let codePr = [{
-      //   "ItemNumber": 10 * (index + 1),
-      //   "CnTy": element.cnty,
-      //   "Amount": element.ordrQty * element.basicPrc
-      // }];
+      let codePr = [{
+        "ItemNumber": 10 * (index + 1),
+        "CnTy": element.cnty,
+        "Amount": element.ordrQty * element.basicPrc
+      }];
 
-      // let sapRequest = {
-      //   "OrganizationalData": {
-      //     "ContractType": this.scForm.value['contract_ty'],
-      //     "SalesOrganization": this.scForm.value['sales_org'],
-      //     "DistributionChannel": this.scForm.value['dis_chnl'],
-      //     "Division": this.scForm.value['div'],
-      //     "ContractValidFrom": this.scForm.value['ContractValidFrom'],
-      //     "ContractValidTo": this.scForm.value['ContractValidTo'],
-      //     "Salesoffice": this.scForm.value['sales_ofc'],
-      //     "Salesgroup": this.scForm.value['sales_grp'],
-      //     "Incoterms": this.updateInfoForm.value['incoterms'],
-      //     "Paymentterms": this.updateInfoForm.value['pay_terms']
-      //   },
-      //   "SoldToParty": {
-      //     "QtyContractTSML": this.scForm.value['qty_cont'],
-      //     "Sold_To_Party": this.scForm.value['sold_to_party'],
-      //     "Ship_To_Party": this.scForm.value['ship_to_party'],
-      //     "Cust_Referance": this.scForm.value['cus_ref'],
-      //     "NetValue": this.scForm.value['net_val'],
-      //     "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
-      //   },
-      //   "Sales": {
-      //     "Shp_Cond": this.scForm.value['shp_cond'],
-      //   },
-      //   "Items": sapMaterial,
-      //   "Conditions": codePr,
+      let sapRequest1 = {
+        "OrganizationalData": {
+          "ContractType": this.scForm.value['contract_ty'],
+          "SalesOrganization": this.scForm.value['sales_org'],
+          "DistributionChannel": this.scForm.value['dis_chnl'],
+          "Division": this.scForm.value['div'],
+          "ContractValidFrom": this.scForm.value['ContractValidFrom'],
+          "ContractValidTo": this.scForm.value['ContractValidTo'],
+          "Salesoffice": this.scForm.value['sales_ofc'],
+          "Salesgroup": this.scForm.value['sales_grp'],
+          "Incoterms": this.updateInfoForm.value['incoterms'],
+          "Paymentterms": this.updateInfoForm.value['pay_terms']
+        },
+        "SoldToParty": {
+          "QtyContractTSML": this.scForm.value['qty_cont'],
+          "Sold_To_Party": this.scForm.value['sold_to_party'],
+          "Ship_To_Party": this.scForm.value['ship_to_party'],
+          "Cust_Referance": this.scForm.value['cus_ref'],
+          "NetValue": this.scForm.value['net_val'],
+          "Cust_Ref_Date": this.scForm.value['cus_ref_dt']
+        },
+        "Sales": {
+          "Shp_Cond": this.scForm.value['shp_cond'],
+        },
+        "Items": sapMaterial,
+        "Conditions": codePr,
 
-      //   "AdditionalDataA": {
-      //     "Freight": this.updateInfoForm.value['freight'],
-      //     "CustomerGroup4": this.updateInfoForm.value['cus_grp']
-      //   },
-      //   "AdditionalDataforPricing": {
-      //     "FreightIndicator": this.updateInfoForm.value['fr_ind']
-      //   }
-      // };
+        "AdditionalDataA": {
+          "Freight": this.updateInfoForm.value['freight'],
+          "CustomerGroup4": this.updateInfoForm.value['cus_grp']
+        },
+        "AdditionalDataforPricing": {
+          "FreightIndicator": this.updateInfoForm.value['fr_ind'],
+          "SpecialFrieght" : inputFreight
+        }
+      };
 
-      // seFormDataArr.push(sapRequest);
+      seFormDataArr1.push(sapRequest1);
     }
 
     for (let i = 0; i < this.scInfo.length; i++) {
@@ -818,7 +827,8 @@ export class PrepareScComponent implements OnInit {
         "CustomerGroup4": this.updateInfoForm.value['cus_grp']
       },
       "AdditionalDataforPricing": {
-        "FreightIndicator": this.updateInfoForm.value['fr_ind']
+        "FreightIndicator": this.updateInfoForm.value['fr_ind'],
+        "SpecialFrieght" : inputFreight
       }
     };
 
@@ -826,46 +836,68 @@ export class PrepareScComponent implements OnInit {
       "scData": sapRequest,
       "basic_auth": authorizationData
     }
-    console.log(fullData);
-    return;
-    this._spiner.show();
-    this._sales.salesContract(screquest).subscribe((res: any) => {
-      this._spiner.hide();
-      if (res.SalesContractRes.Status == 'S') {
-        Swal.fire({
-          title: res.SalesContractRes['ContractNumber'],
-          text: res.SalesContractRes['Message'],
-          icon: 'success',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Go for SO!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this._router.navigate(['/sales/prepare-so'])
-          }
-        })
-        this.otherFuncApi(fullData, res.SalesContractRes['ContractNumber'])
+
+    let passwordd = '123456';
+    let encryptedd = CryptoJSAesJson.encrypt(seFormDataArr1, passwordd);
+
+    this._sales.scInExcelSave(encryptedd).subscribe((res:any) => {
+      console.log(res)
+      if(res.message == 'success') {
+        let param = {
+          email: 'srvmondal88@gmail.com',
+          ids: res.result['ids'],
+          cus_po_no: this.scData.cus_po_no,
+          cus_code: this.scData.user_code
+        }
+        this._sales.excelEmail(param).subscribe();
       }
-      else if(res.SalesContractRes.Status == 'E') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: res.SalesContractRes.Message,
-        })
-      }
-    }, err => {
-      console.log(err);
-      this._spiner.hide();
     })
+    this._spiner.show();
+    // this._sales.salesContract(screquest).subscribe((res: any) => {
+    //   this._spiner.hide();
+    //   if (res.SalesContractRes.Status == 'S') {
+    //     Swal.fire({
+    //       title: res.SalesContractRes['ContractNumber'],
+    //       text: res.SalesContractRes['Message'],
+    //       icon: 'success',
+    //       showCancelButton: true,
+    //       confirmButtonColor: '#3085d6',
+    //       cancelButtonColor: '#d33',
+    //       confirmButtonText: 'Go for SO!'
+    //     }).then((result) => {
+    //       if (result.isConfirmed) {
+    //         this._router.navigate(['/sales/prepare-so'])
+    //       }
+    //     })
+    //     // this.otherFuncApi(fullData, res.SalesContractRes['ContractNumber']);
+    //   }
+    //   else if(res.SalesContractRes.Status == 'E') {
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: 'Oops...',
+    //       text: res.SalesContractRes.Message,
+    //     })
+    //   }
+    // }, err => {
+    //   console.log(err);
+    //   this._spiner.hide();
+    // })
+    this.otherFuncApi(fullData);
   };
 
-  otherFuncApi(fullData: any, sc_no: any) {
+  otherFuncApi(fullData: any) {
     this._spiner.show();
     this._sales.submitSalesCnt(fullData).subscribe((res: any) => {
       this._spiner.hide();
       if (res.status == 1) {
-        this.updateContract(sc_no, res.result);
+        // this.updateContract(sc_no, res.result);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          text: 'Sales Contract has been submitted !',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
       let ScStatusRequest = {
         "po_no": this.poNumber,
@@ -903,11 +935,12 @@ export class PrepareScComponent implements OnInit {
 
       this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
       })
-
+      this._router.navigate(['/sales/prepare-so'])
     }, err => {
       console.log(err);
       this._spiner.hide();
     })
+
   };
 
   updateContract(sc_no: any, result: any) {

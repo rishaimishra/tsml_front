@@ -1,0 +1,93 @@
+<body>
+    <!-- Heeader -->
+    <app-header></app-header>
+    <div class="page-content">
+       <section class="sub-header-2">
+          <div class="container">
+             <h1>Customer Complaints List</h1>
+             <div class="clearfix"></div>
+          </div>
+       </section>
+       <section class="add-prod-pg">
+          <div class="container">
+             <div class="row">
+                <div class="col-lg-12 pb-5">
+                  <!-- <div class="ddnld-box" *ngIf="custFileDownload">
+                     <small>Customer files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
+                     <ul *ngFor="let custdd of custFileDowld">
+                        <li><a *ngIf="custdd != null" target="_blank" [href]="baseFilePath+''+custdd"><span></span>{{custdd}} <i class="fa fa-arrow-circle-down"></i></a></li>
+                     </ul>
+                  </div>
+                  <div class="ddnld-box" *ngIf="kamFileDownload">
+                     <small>CAM files <i class="fa fa-chevron-down" aria-hidden="true"></i></small>
+                     <ul *ngFor="let kamdd of kamFileDownld">
+                        <li><a *ngIf="kamdd != null" target="_blank" [href]="baseFilePath+''+kamdd"><span></span>{{kamdd}} <i class="fa fa-arrow-circle-down"></i></a></li>
+                     </ul>
+                  </div> -->
+                   <div class="cart-table">
+                      <div class="table-responsive">
+                         <table class="table">
+                            <thead>
+                               <tr>
+                                  <th>Po No</th>
+                                  <th>Po Date</th>
+                                  <th>Invoice No</th>
+                                  <th>Invoice Date</th>
+                                  <th>Invoice Qty</th>
+                                  <th style="text-align: center;">Attachments</th>
+                                  <!-- <th>Customer PO No.</th> -->
+                                  <!-- <th>View</th> -->
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr *ngFor="let item of doItem; let i = index">
+                                <ng-container *ngIf="item[i]?.doDocument != ''">
+                                 <td>
+                                    {{item.po_no}}
+                                  </td>
+                                 <td>
+                                    {{item.po_date}}
+                                  </td>
+                                  <td style="padding: inherit">
+                                    {{item.po_date}}
+                                  </td>
+                                  <td>
+                                   {{item.doDocument.invoice_no}}
+                                  </td>
+                                  <td>
+                                    {{item.doDocument.invoice_date}}
+                                  </td>
+                                  <td class="position-relative">
+                                    <div class="btn-edt-del btn-edt-dell">
+                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.lr_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download LR"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.e_waybill_file"  target="_blank"  data-toggle="tooltip" data-placement="top" title="Download e-waybill"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.test_certificate_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download Test Certificate"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.e_invoice_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download e-Invoice"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.misc_doc_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download Misc. Doc"><i class="fa fa-arrow-circle-down"></i></a>
+                                    </div>
+                                  </td>
+                                  <!-- <td>
+                                     fsdfsdf
+                                  <td>
+                                     <div class="btn-edt-del btn-edt-dell">
+                                        <a class="edt-btn btn-primary pointer"  data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                     </div>
+                                  </td> -->
+                                </ng-container>
+                               </tr>
+                              </tbody>
+                              <!-- <div *ngIf="camplainsItems?.length < 0">No Data Found</div> -->
+                         </table>
+                         <!-- <div class="text-right">
+                           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                         </div> -->
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </section>
+    </div>
+    <!-- Footer -->
+    <app-footer></app-footer>
+

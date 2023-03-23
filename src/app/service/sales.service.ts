@@ -163,8 +163,19 @@ export class SalesService {
     return this._http.post(this.BesUrl + '/user/update_contarcts_no', data);
   };
 
+  veiwDOcustom(data:any):Observable<any> {
+    return this._http.post(this.BesUrl + '/do-summary', data);
+  };
+
+  custDoMail(data:any):Observable<any> {
+    return this._http.post(this.BesUrl + '/cus_do_mail', data);
+  };
+
   getMaterial():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_all_mats');
+  };
+  getProcPay():Observable<any> {
+    return this._http.get(this.BesUrl + '/user/get-pay-gurantee-pos');
   };
 
 }

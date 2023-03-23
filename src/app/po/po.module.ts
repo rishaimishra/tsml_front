@@ -9,13 +9,15 @@ import { PoEditComponent } from './po-edit/po-edit.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { PoViewComponent } from './po-view/po-view.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PoStatusComponent } from './po-status/po-status.component';
 
 
 const routes: Routes = [
   {path: 'po/:id', component: PoComponent, canActivate: [AuthGuard]},
   {path: 'po-list', component: PoListComponent, canActivate: [AuthGuard]},
   {path: 'po-edit/:id', component: PoEditComponent, canActivate: [AuthGuard]},
-  {path: 'po-view/:id', component: PoViewComponent, canActivate: [AuthGuard]}
+  {path: 'po-view/:id', component: PoViewComponent, canActivate: [AuthGuard]},
+  {path: 'po-status/:id', component: PoStatusComponent, canActivate: [AuthGuard]}
 
 ];
 
@@ -25,7 +27,8 @@ const routes: Routes = [
     PoListComponent,
     PoComponent,
     PoEditComponent,
-    PoViewComponent
+    PoViewComponent,
+    PoStatusComponent
   ],
   imports: [
     CommonModule,

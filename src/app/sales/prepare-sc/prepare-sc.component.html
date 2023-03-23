@@ -279,7 +279,7 @@
                                      <tr>
                                         <th>Material</th>
                                         <th>Order Quantity</th>
-                                        <th>Basic Price</th>
+                                        <th>Net Value</th>
                                         <th>Cnty</th>
                                         <th>Value</th>
                                         <th>Plant</th>
@@ -496,6 +496,9 @@
                                     </mat-autocomplete>
                                   </mat-form-field>
                               </div>
+                              <div class="col-12 col-lg-2 mt-3">
+                                 <input *ngIf="showText == true" id="_freightInput" class="form-control form-control-sm">
+                              </div>
                               <div class="col-12 col-lg-4">
                                  <!-- <div class="form-group">
                                     <label>Customer Group</label>
@@ -525,9 +528,9 @@
                                  </div> -->
                                  <mat-form-field >
                                     <label>Feight Indicator</label>
-                                    <input #freIndInput (keyup)="0" matInput  class="form-control form-control-sm" formControlName="fr_ind" aria-label="" [matAutocomplete]="auto5" [formControl]="freightIndCtrl" required matTooltip="Type to filter the Freight list"
+                                    <input #freIndInput (keyup)="0" matInput  class="form-control form-control-sm" formControlName="fr_ind" aria-label="" [matAutocomplete]="auto15" [formControl]="freightIndCtrl" required matTooltip="Type to filter the Freight list"
                                         matTooltipPosition="after">
-                                    <mat-autocomplete #auto5="matAutocomplete">
+                                    <mat-autocomplete #auto15="matAutocomplete">
                                       <mat-option  (onSelectionChange)="freIndInput.value !=undefined && onEnterIndi($event)" *ngFor="let indic of filteredFreitIndi | async" [value]="indic.freight_indication_code">
                                         <span>{{ indic.freight_indication_code }} - {{ indic.freight_indication_dec }}</span>
                                       </mat-option>

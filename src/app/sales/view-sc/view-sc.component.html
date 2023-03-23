@@ -92,12 +92,12 @@
                          </div>
                       </div>
                       <!-- sold to party address -->
-                      <div class="col-12 col-lg-4">
+                      <!-- <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Sold-To-Party Address</label>
                            <textarea type="text"  readonly class="form-control form-control-sm" ></textarea>
                         </div>
-                     </div>
+                     </div> -->
                      <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Cust Referance No.</label>
@@ -111,12 +111,12 @@
                          </div>
                       </div>
                       <!-- ship to party address -->
-                      <div class="col-12 col-lg-4">
+                      <!-- <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Ship-To-Party Address</label>
                            <textarea type="text" readonly  class="form-control form-control-sm" ></textarea>
                         </div>
-                     </div>
+                     </div> -->
                       
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
@@ -132,7 +132,13 @@
                             <label>Shp. Cond.</label>
                            <input type="text" readonly [value]="viewdata?.Shp_Cond" class="form-control form-control-sm">
                          </div>
-                         
+                      </div>
+
+                      <div class="col-12 col-lg-4">
+                         <div class="form-group">
+                            <label>Special Frieght</label>
+                           <input type="text" readonly [value]="viewdata?.special_frg" class="form-control form-control-sm">
+                         </div>
                       </div>
                    </div>
                 <!-- </form> -->
@@ -231,6 +237,24 @@
                                  <div class="form-group">
                                     <label>Feight Indicator</label>
                                     <input type="text" readonly [value]="viewdata?.FreightIndicator" class="form-control form-control-sm">
+                                 </div>
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>SO No</label>
+                                    <input type="text" readonly [value]="viewdata?.ordr_no" class="form-control form-control-sm">
+                                 </div>
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Payment Proc</label>
+                                    <input type="text" readonly [value]="viewdata?.payment_proc" class="form-control form-control-sm">
+                                 </div>
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Financial Doc No</label>
+                                    <input type="text" readonly [value]="viewdata?.finance_no" class="form-control form-control-sm">
                                  </div>
                               </div>
                            </div>

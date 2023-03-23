@@ -222,8 +222,13 @@ export class DoEntryComponent implements OnInit {
               this.misDoc = undefined;
               this.entryForm.reset();
               this.toastr.success(res.message);
+
+              let param = {
+                "do_no": this.entryForm.value.do_no
+              }
+              this._sales.custDoMail(param).subscribe();
             } else {
-              this.toastr.error();
+              this.toastr.error('Someting went wrong','Sorry');
             }
             let statusRequestKam = {
               "rfq_no": this.soList[indx].rfq_no,
@@ -252,8 +257,8 @@ export class DoEntryComponent implements OnInit {
               "desc_no": this.soList[indx].rfq_no,
               "user_id": userId,
               "desc": 'Invoice Generated',
-              "url_type": 'R'
-              // "sender_id": 
+              "url_type": 'R',
+              "sender_id": this.entryForm.value.user_id
             }
             this.setPoStatus(this.soList[indx].po_no);
             this._products.custNotiSubmit(custNotiReq).subscribe((res: any) => {

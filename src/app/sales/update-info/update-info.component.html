@@ -20,7 +20,7 @@
         <th scope="col">Payment Proc</th>
         <th scope="col">Financial Doc. No.</th>
         <th scope="col">Action</th>
-        
+
       </tr>
     </thead>
     <tbody>
@@ -37,19 +37,21 @@
         </td>
         <td>
           {{scItem.ordr_no}}
-         
+
         </td>
         <td>{{scItem.payment_proc}}</td>
         <td>{{scItem.finance_no}}</td>
         <td><button class="btn btn-secondary btn-sm" [disabled]="scItem.sc_no !=  null"
             (click)="updateScSo(scItem.id)">UPDATE</button></td>
-        <td><button 
+        <td><button
             [disabled]="scItem.sc_no == null || (scItem.ordr_no != null && scItem.payment_proc != null && scItem.finance_no != null)"
             class="btn btn-secondary btn-sm sizefit" data-toggle="modal"
-            (click)="openModel(scItem.id,scItem.sc_no,scItem.ordr_no, scItem.Plant,scItem.payment_proc)" data-target="#soUpdateModel">UPDATE SO</button>
+            (click)="openModel(scItem.id,scItem.sc_no,scItem.ordr_no, scItem.Plant,scItem.payment_proc)"
+            data-target="#soUpdateModel">UPDATE SO</button>
         </td>
         <td>
-          <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="View Sales Contract">
+          <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top"
+            title="View Sales Contract">
             <i routerLink="/sales/view-sc/{{scItem.id}}" class="fa fa-eye pointer" aria-hidden="true"></i>
           </span>
         </td>
@@ -78,8 +80,14 @@
             <input type="text" class="form-control" maxlength="10" id="soNumber" placeholder="Enter SO Number">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Payment Guarantee Proc</label>
-            <input type="text" class="form-control" maxlength="10" id="payment_pr" placeholder="Payment Guarantee Proc">
+            <!-- <label for="formGroupExampleInput2">Payment Guarantee Proc</label>
+            <input type="text" class="form-control" maxlength="10" id="payment_pr" placeholder="Payment Guarantee Proc"> -->
+            <label>Customer Group</label>
+            <select class="form-control form-control-sm" id="payment_pr">
+              <option value="">--Select--</option>
+              <option value="{{paym.pay_gurantee_code}}" *ngFor="let paym of payGurProc">{{paym.pay_gurantee_code}}
+                - {{paym.pay_gurantee_dec}}</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="formGroupExampleInput2">Financial Document number</label>
