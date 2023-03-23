@@ -8,23 +8,26 @@
   </section>
   <table class="table table-hover">
     <thead>
-      <tr>
+      <tr class="headercls">
         <th scope="col">Customer PO No.</th>
         <th scope="col">PO Date</th>
+        <th scope="col">Quantity</th>
         <th scope="col">Customer Name</th>
         <th scope="col">Material Code</th>
         <th scope="col">Plant</th>
         <th scope="col">Contract No.</th>
-        <th scope="col">Order No.</th>
+        <th scope="col">SO No.</th>
         <th scope="col">Payment Proc</th>
         <th scope="col">Financial Doc. No.</th>
         <th scope="col">Action</th>
+        
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let scItem of scInfoItems | paginate: { itemsPerPage: 12, currentPage: p }">
         <td>{{scItem.cus_po_no}}</td>
         <td>{{scItem.po_date | date: 'dd/MM/yyyy'}}</td>
+        <td>{{scItem.qty}}</td>
         <td>{{scItem.cus_name}}</td>
         <td>{{scItem.Material}}</td>
         <td>{{scItem.Plant}}</td>
@@ -34,16 +37,21 @@
         </td>
         <td>
           {{scItem.ordr_no}}
-          <!-- <input type="text" id="soNumber{{scItem.id}}" maxlength="10" [disabled]="scItem.sc_no == null || scItem.ordr_no != null" value="{{scItem.ordr_no}}"> -->
+         
         </td>
         <td>{{scItem.payment_proc}}</td>
         <td>{{scItem.finance_no}}</td>
         <td><button class="btn btn-secondary btn-sm" [disabled]="scItem.sc_no !=  null"
             (click)="updateScSo(scItem.id)">UPDATE</button></td>
-        <td><button
+        <td><button 
             [disabled]="scItem.sc_no == null || (scItem.ordr_no != null && scItem.payment_proc != null && scItem.finance_no != null)"
-            class="btn btn-secondary btn-sm" data-toggle="modal"
+            class="btn btn-secondary btn-sm sizefit" data-toggle="modal"
             (click)="openModel(scItem.id,scItem.sc_no,scItem.ordr_no, scItem.Plant,scItem.payment_proc)" data-target="#soUpdateModel">UPDATE SO</button>
+        </td>
+        <td>
+          <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="View Sales Contract">
+            <i routerLink="/sales/view-sc/{{scItem.id}}" class="fa fa-eye pointer" aria-hidden="true"></i>
+          </span>
         </td>
       </tr>
     </tbody>

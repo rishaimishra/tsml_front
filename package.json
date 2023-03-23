@@ -25,6 +25,7 @@
     "angular-bootstrap-md": "^14.0.0",
     "angular-count-to": "^0.0.3",
     "angular-material": "^1.2.5",
+    "angular-ng-autocomplete": "^2.0.12",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.37.0",
     "bootstrap": "^5.2.0",

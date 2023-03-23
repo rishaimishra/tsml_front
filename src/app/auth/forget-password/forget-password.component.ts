@@ -149,6 +149,13 @@ export class ForgetPasswordComponent implements OnInit {
         })
         // this._router.navigate(['/auth/forget-password'])
       }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry',
+          text: res.error['message'],
+        })
+      }
     }, err => {
       console.log(err);
       this._spinner.hide()

@@ -100,7 +100,7 @@ export class SalesService {
   };
 
   sapSoReq(request:any):Observable<any> {
-    return this._http.post('https://15.207.150.126:50001/RESTAdapter/SalesOrder', request);
+    return this._http.post(this.BesUrl +'/sap_sales_order', request);
   };
 
   salesContract(request:any):Observable<any> {
@@ -157,7 +157,14 @@ export class SalesService {
 
   plantNotification(data:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/plant_notification_submit', data);
-  }
+  };
 
+  updateContractNo(data:any):Observable<any> {
+    return this._http.post(this.BesUrl + '/user/update_contarcts_no', data);
+  };
+
+  getMaterial():Observable<any> {
+    return this._http.get(this.BesUrl + '/user/get_all_mats');
+  };
 
 }

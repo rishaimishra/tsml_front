@@ -330,3 +330,22 @@ input.textarea {
     opacity: 0.9;
 }
 
+
+// design issue 
+app-header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+.page-content {
+    padding-top: 126px;
+}
+
+
+.modal-backdrop.show {
+    display: none;
+}
+.modal-open .modal {
+    background: #00000050;
+}

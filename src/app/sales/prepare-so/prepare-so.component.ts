@@ -6,6 +6,8 @@ import { ProductsService } from 'src/app/service/products.service';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
 declare var $: any;
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-prepare-so',
@@ -35,33 +37,16 @@ export class PrepareSoComponent implements OnInit {
   divisin: any;
   salesOffice: any;
   salesGroup: any;
-  soForm: FormGroup;
   submit: boolean = false;
-
+  transactId:any;
+  userId:any;
   constructor(private _sales: SalesService, private _spiner: NgxSpinnerService,
     private _fb: FormBuilder, private _router: Router,
-    private _product: ProductsService) { }
-
-  get f() {
-    return this.soForm.controls;
-  };
+    private _product: ProductsService, private _toater: ToastrService) { }
 
   ngOnInit(): void {
     this.getPolist();
-    this.soForm = this._fb.group({
-      transact_id: [''],
-      co_no: ['', Validators.required],
-      po_no: [''],
-      pay_proc: ['',Validators.required],
-      fin_doc_no: ['', Validators.required],
-      user_id: [''],
-      order_type: ['', Validators.required],
-      sales_org: ['', Validators.required],
-      dis_chnl: ['', Validators.required],
-      division: ['', Validators.required],
-      sales_ofc: ['', Validators.required],
-      sales_grp: ['', Validators.required]
-    })
+
   }
 
   getPolist() {
@@ -69,7 +54,9 @@ export class PrepareSoComponent implements OnInit {
     this._sales.getSalesPO().subscribe((res: any) => {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
-        this.salesPo = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.salesPo = decrypted;
       }
     }, err => {
       console.log(err);
@@ -88,13 +75,10 @@ export class PrepareSoComponent implements OnInit {
     this._sales.getMethod(apiUrl).subscribe((res: any) => {
       this._spiner.hide();
       if (res.status == 1 && res.message == 'success') {
-        this.soDetails = res.result[0];
-        this.soForm.get('transact_id').setValue(this.soDetails.transactid);
-        this.soForm.get('co_no').setValue(this.soDetails.sc_no);
-        this.soForm.get('po_no').setValue(this.poNumber);
-        this.soForm.get('user_id').setValue(this.soDetails.uid);
-        console.log(this.soDetails.sc_no);
-        this.userid = this.soDetails['uid'];
+        this.soDetails = res.result;
+        this.transactId = res.result['sc_id'];
+        this.userid = res.result['user_id'];
+        $('#contrtNum').val(this.soDetails.sc_no);
       }
     }, err => {
       console.log(err);
@@ -103,42 +87,97 @@ export class PrepareSoComponent implements OnInit {
   };
 
   submitSo() {
-    console.log(this.soForm.value);
-    this.submit = true;
+    let order_type = $('#ordertyp_').val();
+    let salesOrg = $('#salesOrg_').val();
+    let distrib = $('#distrib_').val();
+    let divisi = $('#divisi_').val();
+    let salesOffc = $('#salesOffc_').val();
+    let salesGrp = $('#salesGrp_').val();
+    let contrtNum = $('#contrtNum').val();
+    let paymGur = $('#paymGur_').val();
+    let financia = $('#financia_').val();
+    if (order_type == '') {
+      this._toater.error('Ordert Type is required');
+      return;
+    }
+    else if(salesOrg == '') {
+      this._toater.error('Sales Organization is required');
+      return;
+    }
+    else if(paymGur == '') {
+      this._toater.error('Payment Guarantee Proc is required');
+      return;
+    }
+    else if(contrtNum == '') {
+      this._toater.error('Contract Number is required');
+      return;
+    }
+    else if(financia == '') {
+      this._toater.error('Financial Document number is required');
+      return;
+    }
     let sapSoReq = {
       "OrganizationalData": {
-        "OrderType": this.soForm.value['order_type'],
-        "SalesOrganization": this.soForm.value['sales_org'],
-        "DistributionChannel": this.soForm.value['dis_chnl'],
-        "Division": this.soForm.value['division'],
-        "Salesoffice": this.soForm.value['sales_ofc'],
-        "Salesgroup": this.soForm.value['sales_grp']
+        "OrderType": order_type,
+        "SalesOrganization": salesOrg,
+        "DistributionChannel": distrib,
+        "Division": divisi,
+        "Salesoffice": salesOffc,
+        "Salesgroup": salesGrp,
       },
       "Contract": {
-        "ContractNumber": this.soForm.value['co_no']
+        "ContractNumber": contrtNum
       }
+    };
+
+    let loaclData = {
+      "transact_id": this.transactId,
+      "co_no": this.soDetails.sc_no,
+      "po_no": this.poNumber,
+      "pay_proc": paymGur,
+      "fin_doc_no": financia,
+      "user_id": this.soDetails.user_id,
+      "order_type": order_type,
+      "sales_org": salesOrg,
+      "dis_chnl": distrib,
+      "division": divisi,
+      "sales_ofc": salesOffc,
+      "sales_grp": salesGrp
     };
 
     this._spiner.show();
     this._sales.sapSoReq(sapSoReq).subscribe((res: any) => {
       this._spiner.hide();
       if (res.Status == 'S') {
-        alert(res.Message);
+        Swal.fire({
+          title: res.SalesOrderNumber,
+          text: res.Message,
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this._router.navigate(['/sales/prepare-so']);
+            this.getPolist();
+          }
+        })
+      }
+      else if(res.Status == 'E') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Oops...',
+          text: res.Message,
+        })
       }
     }, err => {
       console.log(err)
       this._spiner.hide()
     })
 
-    return;
-
     this._spiner.show();
-    this._sales.submitSalesSo(this.soForm.value).subscribe((res: any) => {
-      Swal.fire(
-        'Success',
-        'Submited Successfully',
-        'success'
-      )
+    this._sales.submitSalesSo(loaclData).subscribe((res: any) => {
       this._spiner.hide();
 
       let SoStatusRequest = {
@@ -189,8 +228,10 @@ export class PrepareSoComponent implements OnInit {
   };
 
   getContract() {
-    this._sales.getSapContractType().subscribe((res: any) => {
+    this._sales.getOrderType().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
+        // let password = '123456';
+        // let decrypted = CryptoJSAesJson.decrypt(res.result, password);
         this.contType = res.result;
         this.salesOrg();
       }
@@ -200,7 +241,9 @@ export class PrepareSoComponent implements OnInit {
   salesOrg() {
     this._sales.getSalesOrg().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.orgSales = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.orgSales = decrypted;
         this.getDistribution();
       }
     })
@@ -209,7 +252,9 @@ export class PrepareSoComponent implements OnInit {
   getDistribution() {
     this._sales.getSalesDistri().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.distribution = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.distribution = decrypted;
       }
     })
   };
@@ -225,7 +270,9 @@ export class PrepareSoComponent implements OnInit {
     }
     this._sales.getSapDivi(divReq).subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.sapDivision = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.sapDivision = decrypted;
         this.getOffice();
       }
       if (res.status == 'Token has Expired') {
@@ -237,7 +284,9 @@ export class PrepareSoComponent implements OnInit {
   getOffice() {
     this._sales.getSaleOffice().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.salesOffic = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.salesOffic = decrypted;
         this.getSapGroup();
       }
       if (res.status == 'Token has Expired') {
@@ -249,7 +298,9 @@ export class PrepareSoComponent implements OnInit {
   getSapGroup() {
     this._sales.getSalesSapGroup().subscribe((res: any) => {
       if (res.status == 1 && res.message == 'success') {
-        this.sapGroup = res.result;
+        let password = '123456';
+        let decrypted = CryptoJSAesJson.decrypt(res.result, password);
+        this.sapGroup = decrypted;
       }
     })
   }

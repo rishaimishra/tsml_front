@@ -68,6 +68,8 @@ export class LoginComponent implements OnInit {
     this.send(form);
     let captchaToken = `Token [${this.token}] generated`;
     let email = this.loginForm.value['email'];
+
+
     if (this.token == undefined || captchaToken == undefined) {
       return;
     }
@@ -288,5 +290,6 @@ export class LoginComponent implements OnInit {
       this._spinner.hide()
     })
 
-  }
+  };
+
 }

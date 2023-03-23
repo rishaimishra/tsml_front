@@ -20,7 +20,7 @@
                         <div class="col-12">
                            <div>
                               <label>User ID</label>
-                              <input formControlName="email" type="email" class="form-control"
+                              <input formControlName="email" placeholder="abc@gmail.com" type="email" class="form-control"
                                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                               <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                                  <div *ngIf="f.email.errors.required">Email is required</div>
@@ -30,7 +30,7 @@
                         </div>
                         <!--/-->
                         <div class="col-12 mt-2">
-                           <label>Password</label>
+                           <label>Password <small>(Min 10 digit)</small></label>
                            <div class="form-group inner-addon right-addon">
                               <div class="input-group mx-auto">
                                 <input name="password" formControlName="password"
@@ -44,11 +44,11 @@
                                   <i alt="hide" class="fa fa-eye-slash eye-hide" 
                                   (click)="showPassword = !showPassword"
                                   [class.hide]="!showPassword"></i>
-                                </div>
-                              </div>
-                              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                                 <div *ngIf="f.password.errors.required">Password is required</div>
-                                 <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters</div>
+                                 </div>
+                                 <div *ngIf="submitted || f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                    <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters</div>
+                                 </div>
                               </div>
                             </div>
                         </div>
@@ -58,14 +58,14 @@
                              <label>Verify OTP</label>
                              <div class="d-flex2 display-f">
                                <input type="text" formControlName="logotp" [readonly]="disableLogin" MaxLength="6" class="form-control w-79 gstVal"
-                               [ngClass]="{ 'is-invalid': submitted && f.logotp.errors }" />
+                               [ngClass]="{ 'is-invalid': submitted && f.logotp?.errors }" />
                                <button type="button" class="btn blue-btn" [disabled]="!disableLogin" (click)="getOtpLogin()">
                                  Get OTP
                                </button>
                               </div>
-                              <div *ngIf="submitted && f.logotp.errors" class="invalid-feedback">
-                                <div *ngIf="f.logotp.errors.required">OTP is required</div>
-                                <div *ngIf="f.logotp.errors.minlength">OTP must be at least 6 characters</div>
+                              <div *ngIf="submitted || f.logotp?.errors" class="invalid-feedback">
+                                <div *ngIf="f.logotp.errors?.required">OTP is required</div>
+                                <div *ngIf="f.logotp.errors?.minlength">OTP must be at least 6 characters</div>
                              </div>
                            </div>
                         </div>
@@ -91,7 +91,7 @@
                            </div>
                         </div>
                         <div class="col-12 my-3" *ngIf="!disableLoginBtn">
-                           <button href="javascript:;" [disabled]="disableLogin" type="button" (click)="submitLogin(form)"
+                           <button href="javascript:;" type="button" (click)="submitLogin(form)"
                               class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
                         </div>
                         <div class="col-12 my-3" *ngIf="disableLoginBtn">

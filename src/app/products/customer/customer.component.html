@@ -275,20 +275,23 @@
                                         <label for="">TSML's Price </label>
                                         <div class="pri-box">
                                             <span>₹</span>
-                                            <input type="text" disabled [(ngModel)]="formData.kam_price"
+                                            <input type="text" disabled [(ngModel)]="formData.kam_price" *ngIf="selectedItem[0]?.quotest == 6 || selectedItem[0]?.quotest == 5"
+                                                class="form-control form-control-sm kamClass"
+                                                id="camsPrice{{formData.schedule_no}}" placeholder="0">
+                                            <input type="text" disabled value="0" *ngIf="selectedItem[0]?.quotest != 6 && selectedItem[0]?.quotest != 5"
                                                 class="form-control form-control-sm kamClass"
                                                 id="camsPrice{{formData.schedule_no}}" placeholder="0">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
-                                    <div class="form-group" *ngIf="userByrole != 'Sales'">
+                                    <div class="form-group">
                                         <label for="">Valid Till </label>
                                         <div class="position-relative">
                                             <input type="datetime-local"
                                                 [disabled]="userType || qoutestId == 0 || qoutestId == 2"
                                                 #validTill="ngModel" [(ngModel)]="formData.valid_till"
-                                                class="form-control form-control-sm datepicker">
+                                                class="form-control form-control-sm">
 
                                         </div>
                                     </div>

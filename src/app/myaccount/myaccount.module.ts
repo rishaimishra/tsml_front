@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent } from './profile/profile.component';
 import { MyCartComponent } from './my-cart/my-cart.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,10 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 
 
 const routes: Routes = [
-  {
-    path: 'profile', 
-    component: ProfileComponent, canActivate: [AuthGuard]
-  },
   {
     path: 'my-cart', 
     component: MyCartComponent, canActivate: [AuthGuard]
@@ -27,7 +22,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ProfileComponent,
     MyCartComponent,
     ViewProfileComponent
   ],

@@ -68,64 +68,123 @@
                   <form [formGroup]="scForm">
                    <div class="row mt-2">
                       <div class="col-12 col-lg-3">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Contract Type</label>
                             <select class="form-control form-control-sm" formControlName="contract_ty" [ngClass]="{ 'is-invalid': submit && f['contract_ty'].errors }">
                                <option value="">--Select--</option>
-                               <option value="{{contract.contract_type_code}}" *ngFor="let contract of contractTyp">{{contract.contract_type_dec}}</option>
+                               <option value="{{contract.contract_type_code}}" *ngFor="let contract of contractTyp">{{contract.contract_type_code}} - {{contract.contract_type_dec }}</option>
                             </select>
-                            
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Contract Type</label>
+                           <input #contrctInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="contract_ty" aria-label="" [matAutocomplete]="auto5" [formControl]="contrctCtrl" required matTooltip="Type to filter the Contrct list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto5="matAutocomplete">
+                             <mat-option  (onSelectionChange)="contrctInput.value !=undefined && onContrct($event)" *ngFor="let contrct of filteredContrt | async" [value]="contrct.contract_type_code">
+                               <span>{{ contrct.contract_type_code }} - {{ contrct.contract_type_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                       <div class="col-12 col-lg-3">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Sales Organization</label>
                             <select class="form-control form-control-sm" formControlName="sales_org" [ngClass]="{ 'is-invalid': submit && f['sales_org'].errors }">
                                <option value="">--Select--</option>
-                               <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_dec}}</option>
+                               <option value="{{org.sales_orgerms_code}}" *ngFor="let org of orgSales">{{org.sales_orgerms_code}} - {{org.sales_orgerms_dec}}</option>
                             </select>
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Sales Organization</label>
+                           <input #slOrgInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="sales_org" aria-label="" [matAutocomplete]="auto6" [formControl]="salesOrgCtrl" required matTooltip="Type to filter the Sales Org list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto6="matAutocomplete">
+                             <mat-option  (onSelectionChange)="slOrgInput.value !=undefined && onSalesOrg($event)" *ngFor="let slOrg of filteredSlOrg | async" [value]="slOrg.sales_orgerms_code">
+                               <span>{{ slOrg.sales_orgerms_code }} - {{ slOrg.sales_orgerms_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                       <div class="col-12 col-lg-3">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Distribution Channel</label>
                             <select class="form-control form-control-sm" (change)="selectDist($event)" formControlName="dis_chnl" [ngClass]="{ 'is-invalid': submit && f['dis_chnl'].errors }">
                                <option value="">--Select--</option>
-                               <option value="{{dst.distr_chan_code}}" *ngFor="let dst of distribution">{{dst.distr_chan_terms_dec}}</option>
+                               <option value="{{dst.distr_chan_code}}" *ngFor="let dst of distribution">{{dst.distr_chan_code}} - {{dst.distr_chan_terms_dec}}</option>
                             </select>
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Distribution Channel</label>
+                           <input #distriInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="dis_chnl" aria-label="" [matAutocomplete]="auto7" [formControl]="distriCtrl" required matTooltip="Type to filter the distribution list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto7="matAutocomplete">
+                             <mat-option  (onSelectionChange)="distriInput.value !=undefined && onDistrib($event)" *ngFor="let dist of filteredDistri | async" [value]="dist.distr_chan_code">
+                               <span>{{ dist.distr_chan_code }} - {{ dist.distr_chan_terms_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                       <div class="col-12 col-lg-3">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Division</label>
                             <select class="form-control form-control-sm" formControlName="div" [ngClass]="{ 'is-invalid': submit && f['div'].errors }">
                                <option value="">--Select--</option>
-                               <option value="{{divi.division_code}}" *ngFor="let divi of sapDivision">{{divi.division_dec}}</option>
+                               <option value="{{divi.division_code}}" *ngFor="let divi of sapDivision">{{divi.division_code}} - {{divi.division_dec}}</option>
                             </select>
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Division</label>
+                           <input #divisInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="div" aria-label="" [matAutocomplete]="auto8" [formControl]="diviCtrl" required matTooltip="Type to filter the Division list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto8="matAutocomplete">
+                             <mat-option  (onSelectionChange)="divisInput.value !=undefined && onDiviCh($event)" *ngFor="let divi of filteredDivi | async" [value]="divi.division_code">
+                               <span>{{ divi.division_code }} - {{ divi.division_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                       <div class="col-12 col-lg-3">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Sales office</label>
                             <select class="form-control form-control-sm" formControlName="sales_ofc" [ngClass]="{ 'is-invalid': submit && f['sales_ofc'].errors }">
                                 <option value="">--Select--</option>
-                               <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_dec}}</option>
+                               <option value="{{slcOfc.sales_office_code}}" *ngFor="let slcOfc of salesOffic">{{slcOfc.sales_office_code}} - {{slcOfc.sales_office_dec}}</option>
                             </select>
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Sales office</label>
+                           <input #officeInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="sales_ofc" aria-label="" [matAutocomplete]="auto9" [formControl]="officeCtrl" required matTooltip="Type to filter the Sales Office list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto9="matAutocomplete">
+                             <mat-option  (onSelectionChange)="officeInput.value !=undefined && onOffice($event)" *ngFor="let ofic of filteredOffice | async" [value]="ofic.sales_office_code">
+                               <span>{{ ofic.sales_office_code }} - {{ ofic.sales_office_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                       <div class="col-12 col-lg-3">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Sales Group</label>
                             <select class="form-control form-control-sm" formControlName="sales_grp" [ngClass]="{ 'is-invalid': submit && f['sales_grp'].errors }">
                                <option value="">--Select--</option>
-                               <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_dec}}</option>
+                               <option value="{{sapGp.sales_group_code}}" *ngFor="let sapGp of sapGroup">{{sapGp.sales_group_code}} - {{sapGp.sales_group_dec}}</option>
                             </select>
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Sales Group</label>
+                           <input #grpInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="sales_grp" aria-label="" [matAutocomplete]="auto10" [formControl]="salesGrpCtrl" required matTooltip="Type to filter the Sales Office list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto10="matAutocomplete">
+                             <mat-option  (onSelectionChange)="grpInput.value !=undefined && onSalesGrp($event)" *ngFor="let grp of filteredSlGrp | async" [value]="grp.sales_group_code">
+                               <span>{{ grp.sales_group_code }} - {{ grp.sales_group_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                       <div class="col-12 col-lg-3">
                          <div class="form-group">
                             <label>Qty Contract TSML</label>
-                            <input type="text" formControlName="qty_cont" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['qty_cont'].errors }">
+                            <input type="text" formControlName="qty_cont" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['qty_cont'].errors }">
                          </div>
                       </div>
                       <div class="col-12 col-lg-3">
@@ -151,14 +210,14 @@
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Sold-To-Party</label>
-                            <input type="text" formControlName="sold_to_party" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_party'].errors }">
+                            <input type="text" formControlName="sold_to_party"  class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_party'].errors }">
                          </div>
                       </div>
                       <!-- sold to party address -->
                       <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Sold-To-Party Address</label>
-                           <textarea type="text" formControlName="sold_to_addr" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_addr'].errors }"></textarea>
+                           <textarea type="text" formControlName="sold_to_addr"  class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['sold_to_addr'].errors }"></textarea>
                         </div>
                      </div>
                      <div class="col-12 col-lg-4">
@@ -170,14 +229,14 @@
                       <div class="col-12 col-lg-4">
                          <div class="form-group">
                             <label>Ship-To-Party</label>
-                            <input type="text" formControlName="ship_to_party" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_party'].errors }">
+                            <input type="text" formControlName="ship_to_party"  class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_party'].errors }">
                          </div>
                       </div>
                       <!-- ship to party address -->
                       <div class="col-12 col-lg-4">
                         <div class="form-group">
                            <label>Ship-To-Party Address</label>
-                           <textarea type="text" formControlName="ship_to_addr" readonly class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_addr'].errors }"></textarea>
+                           <textarea type="text" formControlName="ship_to_addr" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submit && f['ship_to_addr'].errors }"></textarea>
                         </div>
                      </div>
                       
@@ -185,19 +244,29 @@
                          <div class="form-group">
                             <label>Cust. Ref. Date</label>
                             <div class="position-relative">
-                               <input type="text" formControlName="cus_ref_dt" readonly class="form-control form-control-sm datepicker" [ngClass]="{ 'is-invalid': submit && f['cus_ref_dt'].errors }">
+                               <input type="text" formControlName="cus_ref_dt" id="custRefdate" readonly class="form-control form-control-sm datepicker" [ngClass]="{ 'is-invalid': submit && f['cus_ref_dt'].errors }">
                                <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
                             </div>
                          </div>
                       </div>
                       <div class="col-12 col-lg-4">
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Shp. Cond.</label>
                             <select class="form-control form-control-sm" formControlName="shp_cond" [ngClass]="{ 'is-invalid': submit && f['shp_cond'].errors }">
                                 <option value="">--Select--</option>
-                                <option value="{{dlvrMode.delivery_mode_code}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_dec}}</option>
+                                <option value="{{dlvrMode.delivery_mode_code}}" *ngFor="let dlvrMode of modeOfDlvr">{{dlvrMode.delivery_mode_code}} - {{dlvrMode.delivery_mode_dec}}</option>
                             </select>
-                         </div>
+                         </div> -->
+                         <mat-form-field >
+                           <label>Shp. Cond.</label>
+                           <input #modeInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="shp_cond" aria-label="" [matAutocomplete]="auto11" [formControl]="modeCtrl" required matTooltip="Type to filter the Shp. Cond list"
+                               matTooltipPosition="after">
+                           <mat-autocomplete #auto11="matAutocomplete">
+                             <mat-option  (onSelectionChange)="modeInput.value !=undefined && onMode($event)" *ngFor="let md of filteredMode | async" [value]="md.delivery_mode_code">
+                               <span>{{ md.delivery_mode_code }} - {{ md.delivery_mode_dec }}</span>
+                             </mat-option>
+                           </mat-autocomplete>
+                         </mat-form-field>
                       </div>
                    </div>
                 </form>
@@ -220,10 +289,10 @@
                                   <tbody>
                                      <tr *ngFor="let dynamic of dynamicArray; let i = index;">
                                         <td>
-                                          <div class="form-group dropCls col-sm-12">
+                                          <div class="form-group dropCls addClass col-sm-12">
                                              <select id="inputState" name="{{dynamic.matCode}}" (change)="getMaterial($event,i)" [(ngModel)]="dynamic.matCode" class="form-control form-control-sm">
                                                <option value="" selected>Choose...</option>
-                                               <option value="{{item.mat_code}}" *ngFor="let item of scInfo; let i = index">{{item.mat_code}}</option>
+                                               <option value="{{item.mat_no}}" *ngFor="let item of matarial; let i = index">{{item.mat_no}}</option>
                                              </select>
                                            </div>
                                         </td>
@@ -234,7 +303,7 @@
                                        </td>
                                        <td class="tdWidth">
                                           <div class="col-sm-8 mb-3 dropCls">
-                                             <input class="form-control form-control-sm" id="basicPrc_{{i}}" readonly name="{{dynamic.basicPrc}}" [(ngModel)]="dynamic.basicPrc" value="{{scData?.price_det[0]['amt']}}" type="text">
+                                             <input class="form-control form-control-sm" id="basicPrc_{{i}}" name="{{dynamic.basicPrc}}" [(ngModel)]="scData.net_value" value="{{scData?.price_det[0]['amt']}}" type="text">
                                           </div>
                                        </td>
                                         <td>
@@ -249,14 +318,14 @@
                                         <!-- <td class="mb-3">{{scData?.value}}</td> -->
                                         <td class="tdWidth">
                                           <div class="col-sm-8 mb-3 dropCls">
-                                             <input class="form-control form-control-sm" readonly name="{{dynamic.value}}" [(ngModel)]="dynamic.value" [value]="dynamic.ordrQty * dynamic.basicPrc" type="text">
+                                             <input class="form-control form-control-sm" name="{{dynamic.value}}" [(ngModel)]="dynamic.value" [value]="dynamic.ordrQty * dynamic.basicPrc" type="text">
                                           </div>
                                        </td>
                                         <td>
                                           <div class="form-group dropCls col-sm-8">
                                              <select id="inputState" name="{{dynamic.plant}}" (change)="getPlant($event, i)" [(ngModel)]="dynamic.plant" class="form-control form-control-sm">
                                                <option value="" selected>Choose...</option>
-                                               <option value="{{plant.code}}" *ngFor="let plant of allPlants; let i = index">{{plant.name}}</option>
+                                               <option value="{{plant.code}}" *ngFor="let plant of allPlants; let i = index">{{plant.code}} - {{plant.name}}</option>
                                              </select>
                                            </div>
                                         </td>
@@ -368,50 +437,102 @@
                           <form [formGroup]="updateInfoForm">
                            <div class="row">
                               <div class="col-12 col-lg-4">
-                                <div class="form-group">
-                                   <label>Incoterms</label>
-                                   <select class="form-control form-control-sm" formControlName="incoterms" [ngClass]="{ 'is-invalid': submit && ff['incoterms'].errors }">
+                                <!-- <div class="form-group">
+                                   <br/> -->
+                                   <!-- <select class="form-control form-control-sm" formControlName="incoterms" [ngClass]="{ 'is-invalid': submit && ff['incoterms'].errors }">
                                       <option value="">--Select--</option>
-                                      <option value="{{item.incoterms_code}}" *ngFor="let item of incotermsInfo">{{item.incoterms_dec}}</option>
-                                   </select>
-                                </div>
+                                      <option value="{{item.incoterms_code}}" *ngFor="let item of incotermsInfo">{{item.incoterms_code}} - {{item.incoterms_dec}}</option>
+                                    </select> -->
+                                    <!-- <div class="ng-autocomplete"> -->
+                                       <mat-form-field >
+                                       <label>Incoterms</label>
+                                       <input #stateInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="incoterms" aria-label="" [matAutocomplete]="auto1" [formControl]="IncoTermCtrl" required matTooltip="Type to filter the Incoterms list"
+                                           matTooltipPosition="after">
+                                       <mat-autocomplete #auto1="matAutocomplete">
+                                         <mat-option  (onSelectionChange)="stateInput.value !=undefined && onEnter($event)" *ngFor="let inco of filteredInco | async" [value]="inco.incoterms_code">
+                                           <span>{{ inco.incoterms_code }} - {{ inco.incoterms_dec }}</span>
+                                         </mat-option>
+                                       </mat-autocomplete>
+                                     </mat-form-field>
+                                  <!-- </div> -->
+                                <!-- </div> -->
                              </div>
                              <div class="col-12 col-lg-4">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                    <label>Payment Terms</label>
                                    <select class="form-control form-control-sm" formControlName="pay_terms" [ngClass]="{ 'is-invalid': submit && ff['pay_terms'].errors }">
                                       <option value="">--Select--</option>
-                                      <option value="{{item.payment_terms_code}}" *ngFor="let item of paymentInfo">{{item.payment_terms_dec}}</option>
+                                      <option value="{{item.payment_terms_code}}" *ngFor="let item of paymentInfo">{{item.payment_terms_code}} - {{item.payment_terms_dec}}</option>
                                    </select>
-                                </div>
+                                </div> -->
+                                <mat-form-field >
+                                 <label>Payment Terms</label>
+                                 <input #pymtInput (keyup)="0" matInput class="form-control form-control-sm" formControlName="pay_terms" aria-label="" [matAutocomplete]="auto2" [formControl]="pymntCtrl" required matTooltip="Type to filter the Payment list"
+                                     matTooltipPosition="after">
+                                 <mat-autocomplete #auto2="matAutocomplete">
+                                   <mat-option  (onSelectionChange)="pymtInput.value !=undefined && onEnterPymt($event)" *ngFor="let pym of filteredPymt | async" [value]="pym.payment_terms_code">
+                                     <span>{{ pym.payment_terms_code }} - {{ pym.payment_terms_dec }}</span>
+                                   </mat-option>
+                                 </mat-autocomplete>
+                               </mat-form-field>
                              </div>
 
                               <div class="col-12 col-lg-4">
-                                 <div class="form-group">
+                                 <!-- <div class="form-group">
                                     <label>Feight</label>
                                     <select class="form-control form-control-sm" formControlName="freight" [ngClass]="{ 'is-invalid': submit && ff['freight'].errors }">
                                        <option value="">--Select--</option>
-                                       <option value="{{item.freight_code}}" *ngFor="let item of freightItems">{{item.freight_dec}}</option>
+                                       <option value="{{item.freight_code}}" *ngFor="let item of freightItems">{{item.freight_code}} - {{item.freight_dec}}</option>
                                     </select>
-                                 </div>
+                                 </div> -->
+                                 <mat-form-field >
+                                    <label>Feight</label>
+                                    <input #freightInput (keyup)="0" matInput  class="form-control form-control-sm" formControlName="freight" aria-label="" [matAutocomplete]="auto3" [formControl]="freightCtrl" required matTooltip="Type to filter the Freight list"
+                                        matTooltipPosition="after">
+                                    <mat-autocomplete #auto3="matAutocomplete">
+                                      <mat-option  (onSelectionChange)="freightInput.value !=undefined && onEnterFrei($event)" *ngFor="let fright of filteredFreit | async" [value]="fright.freight_code">
+                                        <span>{{ fright.freight_code }} - {{ fright.freight_dec }}</span>
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
                               </div>
                               <div class="col-12 col-lg-4">
-                                 <div class="form-group">
+                                 <!-- <div class="form-group">
                                     <label>Customer Group</label>
                                     <select class="form-control form-control-sm" formControlName="cus_grp" [ngClass]="{ 'is-invalid': submit && ff['cus_grp'].errors }">
                                        <option value="">--Select--</option>
-                                       <option value="{{custGrp.cus_group_code}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_dec}}</option>
+                                       <option value="{{custGrp.cus_group_code}}" *ngFor="let custGrp of customerGrp">{{custGrp.cus_group_code}} - {{custGrp.cus_group_dec}}</option>
                                     </select>
-                                 </div>
+                                 </div> -->
+                                 <mat-form-field >
+                                    <label>Customer Group</label>
+                                    <input #CustInput (keyup)="0" matInput  class="form-control form-control-sm" formControlName="freight" aria-label="" [matAutocomplete]="auto4" [formControl]="custCtrl" required matTooltip="Type to filter the Freight list"
+                                        matTooltipPosition="after">
+                                    <mat-autocomplete #auto4="matAutocomplete">
+                                      <mat-option  (onSelectionChange)="CustInput.value !=undefined && onEnterCust($event)" *ngFor="let cust of filteredCust | async" [value]="cust.cus_group_code">
+                                        <span>{{ cust.cus_group_code }} - {{ cust.cus_group_dec }}</span>
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
                               </div>
                               <div class="col-12 col-lg-4">
-                                 <div class="form-group">
+                                 <!-- <div class="form-group">
                                     <label>Feight Indicator</label>
                                     <select class="form-control form-control-sm" formControlName="fr_ind" [ngClass]="{ 'is-invalid': submit && ff['fr_ind'].errors }">
                                        <option value="">--Select--</option>
-                                       <option value="{{indi.freight_indication_code}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_dec}}</option>
+                                       <option value="{{indi.freight_indication_code}}" *ngFor="let indi of freightIndicator">{{indi.freight_indication_code}} - {{indi.freight_indication_dec}}</option>
                                     </select>
-                                 </div>
+                                 </div> -->
+                                 <mat-form-field >
+                                    <label>Feight Indicator</label>
+                                    <input #freIndInput (keyup)="0" matInput  class="form-control form-control-sm" formControlName="fr_ind" aria-label="" [matAutocomplete]="auto5" [formControl]="freightIndCtrl" required matTooltip="Type to filter the Freight list"
+                                        matTooltipPosition="after">
+                                    <mat-autocomplete #auto5="matAutocomplete">
+                                      <mat-option  (onSelectionChange)="freIndInput.value !=undefined && onEnterIndi($event)" *ngFor="let indic of filteredFreitIndi | async" [value]="indic.freight_indication_code">
+                                        <span>{{ indic.freight_indication_code }} - {{ indic.freight_indication_dec }}</span>
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
                               </div>
                            </div>
                           </form>

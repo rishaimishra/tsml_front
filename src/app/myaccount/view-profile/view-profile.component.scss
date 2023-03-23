@@ -1,0 +1,25 @@
+#accordion .card-header {
+    background-color: #fff;
+    padding: .75rem;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 8px;
+    margin: 0;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.accordion .card-header.collapsed:after {
+    content: "\f0d7";
+    font-family: 'FontAwesome';
+    font-size: 25px;
+    line-height: 20px;
+}
+.accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content: "\f0d8";
+    font-size: 25px;
+    line-height: 20px;
+}
+#accordion .card-body {
+    flex: 1 1 auto;
+    padding: 0;
+}

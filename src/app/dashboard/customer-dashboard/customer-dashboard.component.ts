@@ -28,7 +28,7 @@ export class CustomerDashboardComponent implements OnInit {
     this.userName = localStorage.getItem('USER_NAME');
     this.getCustRfqItems();
       this.getPoListing();
-    // this.getDashboardValue();
+    this.getDashboardValue();
   };
 
   poSearch() {

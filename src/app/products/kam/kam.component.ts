@@ -883,6 +883,7 @@ export class KamComponent implements OnInit {
       "delivery_method": dap,
       "sub_cat_id": subCatId
     }
+    console.log(price);
     //Encrypt
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(price, passwordd);

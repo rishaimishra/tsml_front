@@ -1,0 +1,245 @@
+
+<app-header></app-header>
+<div class="page-content">
+    <section class="sub-header-2 row">
+       <div class="container col-10">
+          <h1 class="ml-2">View Sales Contract</h1>
+          <div class="clearfix"></div>
+       </div>
+       <div class="col-2 text-right">
+         <b class="mr-2 pointer" routerLink="/sales/update-info"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</b>
+       </div>
+    </section>
+    <section class="add-prod-pg">
+       <div class="container">
+             <div class="">
+                <div class="prof-form-bdy mb-5">
+               <!-- 1st form -->
+                  <!-- <form [formGroup]="scForm"> -->
+                   <div class="row mt-2">
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Contract Type</label>
+                            <input type="text" readonly [value]="viewdata?.ContractType" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sales Organization</label>
+                            <input type="text" readonly [value]="viewdata?.SalesOrganization" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Distribution Channel</label>
+                            <input type="text" readonly [value]="viewdata?.DistributionChannel" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Division</label>
+                            <input type="text" readonly [value]="viewdata?.Division" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sales office</label>
+                            <input type="text" readonly [value]="viewdata?.Salesoffice" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Sales Group</label>
+                            <input type="text" readonly [value]="viewdata?.Salesgroup" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Qty Contract TSML</label>
+                            <input type="text" readonly [value]="viewdata?.QtyContractTSML"  class="form-control form-control-sm" >
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-3">
+                         <div class="form-group">
+                            <label>Net Value</label>
+                            <input type="text" readonly [value]="viewdata?.NetValue" readonly class="form-control form-control-sm" >
+                         </div>
+                      </div>
+
+                      <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                           <label>Valid From</label>
+                           <input type="text" readonly [value]="viewdata?.ContractValidFrom" class="form-control form-control-sm" >
+                        </div>
+                     </div>
+                     <div class="col-12 col-lg-3">
+                        <div class="form-group">
+                           <label>Valid To</label>
+                           <input type="text" readonly [value]="viewdata?.ContractValidTo"  class="form-control form-control-sm" >
+                        </div>
+                     </div>
+
+                      <div class="col-12 col-lg-4">
+                         <div class="form-group">
+                            <label>Sold-To-Party</label>
+                            <input type="text" readonly [value]="viewdata?.Sold_To_Party"  class="form-control form-control-sm" >
+                         </div>
+                      </div>
+                      <!-- sold to party address -->
+                      <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                           <label>Sold-To-Party Address</label>
+                           <textarea type="text"  readonly class="form-control form-control-sm" ></textarea>
+                        </div>
+                     </div>
+                     <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                           <label>Cust Referance No.</label>
+                           <input type="text" readonly [value]="viewdata?.Cust_Referance" class="form-control form-control-sm" >
+                        </div>
+                     </div>
+                      <div class="col-12 col-lg-4">
+                         <div class="form-group">
+                            <label>Ship-To-Party</label>
+                            <input type="text" readonly [value]="viewdata?.Ship_To_Party" class="form-control form-control-sm" >
+                         </div>
+                      </div>
+                      <!-- ship to party address -->
+                      <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                           <label>Ship-To-Party Address</label>
+                           <textarea type="text" readonly  class="form-control form-control-sm" ></textarea>
+                        </div>
+                     </div>
+                      
+                      <div class="col-12 col-lg-4">
+                         <div class="form-group">
+                            <label>Cust. Ref. Date</label>
+                            <div class="position-relative">
+                               <input type="text" id="custRefdate" readonly [value]="viewdata?.Cust_Ref_Date" class="form-control form-control-sm datepicker" >
+                               <span class="over_llp"><img src="assets/images/cal.png" alt=""></span>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="col-12 col-lg-4">
+                         <div class="form-group">
+                            <label>Shp. Cond.</label>
+                           <input type="text" readonly [value]="viewdata?.Shp_Cond" class="form-control form-control-sm">
+                         </div>
+                         
+                      </div>
+                   </div>
+                <!-- </form> -->
+                   <div class="row">
+                      <div class="col-lg-12">
+                         <div class="cart-table">
+                            <div class="table-responsive">
+                               <table class="table table-op">
+                                  <thead>
+                                     <tr>
+                                        <th>Material</th>
+                                        <th>Order Quantity</th>
+                                        <th>Net Value</th>
+                                        <th>Cnty</th>
+                                        <th>Value</th>
+                                        <th>Plant</th>
+                                        <th></th>
+                                     </tr>
+                                  </thead>
+                                  <tbody>
+                                     <tr >
+                                        <td>
+                                          <div class="form-group dropCls addClass col-sm-12">
+                                             <input type="text" readonly [value]="viewdata?.Material" class="form-control form-control-sm">
+                                           </div>
+                                        </td>
+                                        <td class="tdWidth">
+                                          <div class="col-sm-8 mb-3 dropCls">
+                                             <input class="form-control form-control-sm" readonly [value]="viewdata?.OrderQuantity"  type="text">
+                                          </div>
+                                       </td>
+                                       <td class="tdWidth">
+                                          <div class="col-sm-8 mb-3 dropCls">
+                                             <input class="form-control form-control-sm" readonly [value]="viewdata?.NetValue"  type="text">
+                                          </div>
+                                       </td>
+                                        <td>
+                                          <div class="form-group dropCls col-sm-12">
+                                             <input type="text" readonly [value]="viewdata?.CnTy" class="form-control form-control-sm">
+                                           </div>
+                                        </td>
+                                        <!-- <td class="mb-3">{{scData?.value}}</td> -->
+                                        <td class="tdWidth">
+                                          <div class="col-sm-8 mb-3 dropCls">
+                                             <input class="form-control form-control-sm" readonly [value]="viewdata?.OrderQuantity * viewdata?.NetValue"  name="" type="text">
+                                          </div>
+                                       </td>
+                                        <td>
+                                          <div class="form-group dropCls col-sm-8">
+                                             <input type="text" readonly [value]="viewdata?.Plant" class="form-control form-control-sm">
+                                           </div>
+                                        </td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+
+                   <!-- 2nd Form -->
+                   <div class="row">
+                     <div class="col-12">
+                        <div class="po-summery">
+                          <!-- <form [formGroup]="updateInfoForm"> -->
+                           <div class="row">
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group">
+                                   <label>Incoterms</label>
+                                   <input type="text" readonly [value]="viewdata?.Incoterms" class="form-control form-control-sm">
+                                </div>
+                             </div>
+                             <div class="col-12 col-lg-4">
+                                <div class="form-group">
+                                   <label>Payment Terms</label>
+                                   <input type="text"  readonly [value]="viewdata?.Paymentterms" class="form-control form-control-sm">
+                                </div>
+                                
+                             </div>
+
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Feight</label>
+                                    <input type="text" readonly [value]="viewdata?.Freight" class="form-control form-control-sm">
+                                 </div>
+                                 
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Customer Group</label>
+                                    <input type="text" readonly [value]="viewdata?.CustomerGroup4" class="form-control form-control-sm">
+                                 </div>
+                                 
+                              </div>
+                              <div class="col-12 col-lg-4">
+                                 <div class="form-group">
+                                    <label>Feight Indicator</label>
+                                    <input type="text" readonly [value]="viewdata?.FreightIndicator" class="form-control form-control-sm">
+                                 </div>
+                              </div>
+                           </div>
+                          <!-- </form> -->
+                        </div>
+                     </div>
+                   </div>
+                </div>
+             </div>
+
+             <!-- Footer -->
+            <app-footer></app-footer>

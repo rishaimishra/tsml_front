@@ -8,6 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
 import { UpdateInfoComponent } from './update-info/update-info.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ViewScComponent } from './view-sc/view-sc.component';
 
 
 const routes: Routes = [
@@ -22,6 +27,10 @@ const routes: Routes = [
   {
     path: 'update-info', 
     component: UpdateInfoComponent
+  },
+  {
+    path: 'view-sc/:id', 
+    component: ViewScComponent
   }
 ];
 
@@ -29,7 +38,8 @@ const routes: Routes = [
   declarations: [
     PrepareScComponent,
     PrepareSoComponent,
-    UpdateInfoComponent
+    UpdateInfoComponent,
+    ViewScComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +47,11 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgxPaginationModule,
     RouterModule.forChild(routes),
-    FormsModule
+    FormsModule,
+    AutocompleteLibModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class SalesModule { }

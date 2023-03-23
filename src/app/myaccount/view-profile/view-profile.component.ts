@@ -22,7 +22,7 @@ export class ViewProfileComponent implements OnInit {
   updateMobile: boolean = false;
   receviedOtp: any = '';
   validMobile: boolean = false;
-  mobileNumber: any = '';
+  mobileNumber: any;
   
   constructor(private _auth: AuthService,
      private spinner: NgxSpinnerService,
@@ -124,7 +124,13 @@ export class ViewProfileComponent implements OnInit {
     this.mobileNumber = event.target.value;
     if(this.mobileNumber.length> 10 || this.mobileNumber.length < 10) {
       this.validMobile = true;
-    } else {
+    } 
+    else if (isNaN(this.mobileNumber)){
+      // alert("Please Provide the input as a number");
+      this.validMobile = true;
+      return false;
+   }
+    else {
       this.validMobile = false;
     }
   }

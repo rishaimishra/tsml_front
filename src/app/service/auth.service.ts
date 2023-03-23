@@ -15,7 +15,7 @@ export class AuthService {
 
 
   register(data: any):Observable<any> {
-    return this._http.post('https://beas.in/tsml-microservice/register/api/register', data);
+    return this._http.post(this.BesUrl + '/register', data);
   };
 
   login(data: any):Observable<any> {
@@ -35,11 +35,11 @@ export class AuthService {
   };
 
   getOtp(requestData: any):Observable<any> {
-    return this._http.post('https://beas.in/tsml-microservice/register/api/send-mobile-otp',requestData, { 'headers': this.headers });
+    return this._http.post(this.BesUrl + '/send-mobile-otp',requestData, { 'headers': this.headers });
   };
 
   verifyOtp(requestData: any):Observable<any> {
-    return this._http.post('https://beas.in/tsml-microservice/register/api/verify-mobile-otp',requestData, { 'headers': this.headers });
+    return this._http.post(this.BesUrl + '/verify-mobile-otp',requestData, { 'headers': this.headers });
   };
 
   submitForgetPass(data: any):Observable<any> {
@@ -71,7 +71,7 @@ export class AuthService {
   };
 
   setSecurityQu(request:any):Observable<any> {
-    return this._http.post('https://beas.in/tsml-microservice/register/api/save_security_qst_ans',  request,{ 'headers': this.headers });
+    return this._http.post(this.BesUrl + '/save_security_qst_ans',  request,{ 'headers': this.headers });
   };
 
   matchSecurityQu(request:any):Observable<any> {
