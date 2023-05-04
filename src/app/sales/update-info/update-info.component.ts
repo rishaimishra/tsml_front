@@ -171,6 +171,11 @@ export class UpdateInfoComponent implements OnInit {
         $("#soUpdateModel").hide();
         $('body').removeClass('modal-open');
         $(".modal-backdrop").removeClass("modal-backdrop show");
+        
+        let param2 = {
+          so_no: soNum
+        }
+        this._sales.excelEmail2(param2).subscribe();
       }
 
     }, err => {

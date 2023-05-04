@@ -8,6 +8,9 @@ import Swal from 'sweetalert2';
 import { CustomValidators } from './customValidator';
 import {CryptoJSAesJson} from 'src/assets/js/cryptojs-aes-format.js';
 declare var $: any;
+import randomString from 'randomstring';
+import { Directive, HostListener } from '@angular/core';
+
 
 
 
@@ -31,6 +34,9 @@ export class ForgetPasswordComponent implements OnInit {
   public showPassword1: boolean;
   public showPasswordOnPress1: boolean;
 
+  generatedCaptchaValue: any;
+  captchaValue = "";
+
   constructor(private _auth: AuthService,
     private _fb: FormBuilder, private _toaster: ToastrService, 
     private _spinner: NgxSpinnerService,
@@ -41,7 +47,8 @@ export class ForgetPasswordComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(10)]],
-      password_confirm: ['', [Validators.required, Validators.minLength(6)]]
+      password_confirm: ['', [Validators.required, Validators.minLength(6)]],
+      capthaValueEntered: ['']
     })
 
     CustomValidators.mustMatch('password', 'password_confirm') // insert here
@@ -51,29 +58,41 @@ export class ForgetPasswordComponent implements OnInit {
     return this.forgetPassForm.controls;
   }
   ngOnInit(): void {
-
+    this.generateCaptha()
+  }
+  generateCaptha() {
+    var result = randomString.generate(6)
+    console.log(result);
+    this.generatedCaptchaValue = result;
   }
 
-  send(form: NgForm): void {
+  /* send(form: NgForm): void {
     if (form.invalid) {
       for (const control of Object.keys(form.controls)) {
         form.controls[control].markAsTouched();
       }
       return;
     }
-
-  };
+  }; */
   
-  forgotPassword(form: NgForm) {
+  forgotPassword() {
     this.submitted = true;
-    this.send(form);
+    /* this.send(form);
     let captchaToken = `Token [${this.token}] generated`;
     if(this.token == undefined || captchaToken == undefined) {
       return;
+    } */
+    if (this.forgetPassForm.invalid) {
+      return;
     }
-    // if (this.forgetPassForm.invalid) {
-    //   return;
-    // }
+    if (this.generatedCaptchaValue !== this.forgetPassForm.value['capthaValueEntered']) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sorry !',
+        text: 'Invalid Captcha',
+      })
+      return;
+    }
     let forgetValue = this.forgetPassForm.value;
     let password = '123456';
     let encrypted = CryptoJSAesJson.encrypt(forgetValue, password);
@@ -147,7 +166,6 @@ export class ForgetPasswordComponent implements OnInit {
           title: 'Success',
           text: 'OTP has been sent to your registered mail id !',
         })
-        // this._router.navigate(['/auth/forget-password'])
       }
       else {
         Swal.fire({

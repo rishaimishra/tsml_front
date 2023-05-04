@@ -114,6 +114,8 @@ export class KamComponent implements OnInit {
   slsHeadMsg: any;
   lastQoute: any = [];
   remarksArry: any = [];
+  deliveryMethodVal: any;
+  pickupVal: any;
 
 
 
@@ -253,7 +255,9 @@ export class KamComponent implements OnInit {
           sub_cat_id: '',
           salesRemarks: '',
           pickup_type: '',
-          kamsRemarks: ''
+          kamsRemarks: '',
+          kamsRemarkssp: '',
+          kamsRemarkssh: ''
         });
       }
       if (res.status == 'Token has Expired') {
@@ -460,7 +464,7 @@ export class KamComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Total quantity should not exceed the RFQ quantity!',
+        text: 'Total quantity should be equal to RFQ quantity!',
       })
       return;
 
@@ -485,6 +489,8 @@ export class KamComponent implements OnInit {
   };
 
   submitRfq() {
+    // console.log(this.requoteArr);
+    // return;
     this.submit = true;
     let userRol = localStorage.getItem('USER_TYPE');
     let countArr = [];
@@ -505,7 +511,7 @@ export class KamComponent implements OnInit {
 
         if (form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
           || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].pickup_type == "" || form_data_array[i].from_date == ""
-          || form_data_array[i].to_date == "" || form_data_array[i].kamsRemarks == null || form_data_array[i].plant == "" || form_data_array[i].location == null) {
+          || form_data_array[i].to_date == "" || form_data_array[i].plant == "" || form_data_array[i].location == null) {
           return;
         }
 
@@ -562,7 +568,21 @@ export class KamComponent implements OnInit {
           this.remarksArry.push(rmarksParam);
         }
         else if (qouteSts == 6) {
-          let rmarksParam = {
+
+          if(this.requoteArr.length > 0)
+          {
+            var rmarksParam = {
+              rfq_no: this.rfqNum,
+              sche_no: form_data_array[i].schedule_no,
+              remarks: '',
+              camremarks: form_data_array[i].kamsRemarks,
+              salesremarks: '',
+              from: 'Kam',
+              to: 'SM'
+            };
+          }
+          else{
+            var rmarksParam = {
             rfq_no: this.rfqNum,
             sche_no: form_data_array[i].schedule_no,
             remarks: '',
@@ -571,6 +591,7 @@ export class KamComponent implements OnInit {
             from: 'Kam',
             to: 'C'
           };
+        }
           this.remarksArry.push(rmarksParam);
         }
         else if (qouteSts == 9) {
@@ -767,6 +788,8 @@ export class KamComponent implements OnInit {
       }
       this._product.qouteStatusUpdate(qouteReq).subscribe();
 
+      
+
       let statusRequest = {
         "rfq_no": this.rfqNum,
         "price_approved_awaited": '1'
@@ -781,6 +804,17 @@ export class KamComponent implements OnInit {
       }
       this._sales.salesHeadNoti(salesHdNoti).subscribe();
     }
+
+    // ----------- cam requote price update
+
+    if (qouteSt == 6 && this.requoteArr.length > 0) {
+      let qouteReq = {
+        "rfq_no": this.rfqNum,
+        "status": 8
+      }
+      this._product.qouteStatusUpdate(qouteReq).subscribe();
+      }
+      // --------------------------------------------------------
 
     let apiUrlKy = '/user/get_rfq_st/'+this.rfqNum
     this._product.getMethod(apiUrlKy).subscribe((res:any) => {
@@ -853,6 +887,10 @@ export class KamComponent implements OnInit {
   };
 
   getPrice(location: any, pickup: any, schedule_no: any, shipTo: any, prodId: any, catid: any, size: any, subCatId: any, plant: any, dlvr: any, dap: any, i: any, y: any) {
+    console.log('DEL VAL',schedule_no);
+    console.log(dlvr);
+    this.deliveryMethodVal = dlvr;
+    this.pickupVal = pickup;
     this.firstIndex = i;
     this.lastIndex = y;
     this.sub_catId = subCatId;
@@ -1270,6 +1308,7 @@ export class KamComponent implements OnInit {
   selectPlant(event: any, schdleNo: any) {
     this.plantSelectArr[schdleNo] = null;
     this.spinner.show();
+    this.pickupVal = event.target.value;
     let eventValue = event.target.value;
     $('#pickupTyp_' + schdleNo).val(eventValue);
     let apiUrl = '/user/get_plants_by_type/' + eventValue;
@@ -1365,6 +1404,8 @@ export class KamComponent implements OnInit {
 
   delectDlvryMethode(event: any, schdl: any, i: any, y: any) {
     let dlvrItem = event.target.value;
+    this.deliveryMethodVal = event.target.value;
+    //this.deliveryMethodVal = event.target.value;
     if (dlvrItem == 'Ex-Works') {
       $('#pickupTyp_' + schdl + '_c').hide();
       $('#picLable' + schdl).hide();
@@ -1435,7 +1476,9 @@ export class KamComponent implements OnInit {
       sub_cat_id: '',
       salesRemarks: '',
       pickup_type: '',
-      kamsRemarks: ''
+      kamsRemarks: '',
+      kamsRemarkssp: '',
+      kamsRemarkssh: ''
     });
     this.selectedItem[i]['schedule'] = this.quotation;
     this.final_form_data();

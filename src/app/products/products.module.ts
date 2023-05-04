@@ -20,6 +20,7 @@ import { SalesResponsComponent } from './sales-respons/sales-respons.component';
 import { SalesGuard } from '../Guard/sales.guard';
 import { CustGuard } from '../Guard/cust.guard';
 import { KamGuard } from '../Guard/kam.guard';
+import { MisComponent } from './mis/mis.component';
 
 
 const routes: Routes = [
@@ -79,6 +80,10 @@ const routes: Routes = [
     path: 'sales-respons/:id',
     component: SalesResponsComponent,canActivate: [SalesGuard],
   },
+  {
+    path: 'mis',
+    component: MisComponent,canActivate: [SalesGuard],
+  },
 ];
 
 @NgModule({
@@ -94,7 +99,8 @@ const routes: Routes = [
     TruncatePipe,
     CustomerComponent,
     ConfirmRfqComponent,
-    SalesResponsComponent
+    SalesResponsComponent,
+    MisComponent
   ],
   imports: [
     CommonModule,

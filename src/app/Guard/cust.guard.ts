@@ -22,7 +22,7 @@ export class CustGuard implements CanActivate {
             title: 'Oops...',
             text: 'You are not authorized to access!',
           })
-          this._router.navigate(['/auth/login']);
+          //this._router.navigate(['/auth/login']);
           return false;
         }
       } else {

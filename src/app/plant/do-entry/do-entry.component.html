@@ -27,7 +27,7 @@
                         <div class="col-12 col-lg-3">
                             <div class="form-group">
                                 <label>DO No</label>
-                                <input type="text" class="form-control form-control-sm" formControlName="do_no"
+                                <input type="text" class="form-control form-control-sm" id="_doNum" formControlName="do_no"
                                     [ngClass]="{ 'is-invalid': submitted && f['do_no'].errors }">
                                 <div *ngIf="submitted && f.do_no.errors" class="invalid-feedback">
                                     <div *ngIf="f.do_no.errors.required">Do No is required</div>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-12 col-lg-3">
                             <div class="form-group">
-                                <label>DO Quantity (MT)</label>
+                                <label>Invoice Quantity (MT)</label>
                                 <input type="text" class="form-control form-control-sm datepicker"
                                         formControlName="do_quantity"
                                         [ngClass]="{ 'is-invalid': submitted && f['do_quantity'].errors }">
@@ -124,7 +124,7 @@
                             <div class="form-group">
                                 <label>Remarks</label>
                                 <textarea class="form-control" style="height:80px;" formControlName="premarks"
-                                    [ngClass]="{ 'is-invalid': submitted && f['premarks'].errors }"></textarea>
+                                    ></textarea>
                                 <div *ngIf="submitted && f.premarks.errors" class="invalid-feedback">
                                     <div *ngIf="f.premarks.errors.required">Material Grade is required</div>
                                 </div>
@@ -142,38 +142,49 @@
                                 </div>
                                 <div class="col-12 col-lg-12">
                                     <div class="form-group text-center">
-
-                                        <a type="file" class="btn btn-primary" (click)="fileLR.click()">Upload LR <i
-                                                class="fa fa-upload" aria-hidden="true"></i>
-                                            <input type="file" accept=".png, .jpg, .jpeg, .pdf" #fileLR hidden
-                                                (change)="onGetLrDoc($event)">
-                                        </a>&nbsp;
-
-
-                                        <a type="file" class="btn btn-primary" (click)="Ewaybill.click()">Upload e-waybill <i class="fa fa-upload"
-                                                aria-hidden="true"></i>
-                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #Ewaybill hidden
-                                                (change)="onGetEwaybillDoc($event)">
-                                            </a>&nbsp;
-
-                                        <a type="file" class="btn btn-primary" (click)="TestCertificate.click()">Test Certificate <i class="fa fa-upload"
-                                                aria-hidden="true"></i>
-                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #TestCertificate hidden
-                                                (change)="onGetTestCertificate($event)">
-                                            </a>&nbsp;
-
-                                        <a type="file" class="btn btn-primary" (click)="EInvoice.click()">e-Invoice <i class="fa fa-upload"
-                                                aria-hidden="true"></i>
-                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #EInvoice hidden
-                                                (change)="onGetEInvoice($event)">
-                                            </a>&nbsp;
-
-                                        <a type="file" class="btn btn-primary"  (click)="misDoc.click()">Misc. Doc <i class="fa fa-upload"
-                                                aria-hidden="true"></i>
-                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #misDoc hidden
-                                                (change)="onGetMisDoc($event)">
-                                            </a>
-
+            
+                                        <div class="upld--doc">
+            
+                                            <div class="upld--doc-itm">
+                                                <a type="file" class="btn btn-primary" (click)="fileLR.click()">Upload LR <i
+                                                    class="fa fa-upload" aria-hidden="true"></i>
+                                                <input type="file" accept=".png, .jpg, .jpeg, .pdf" #fileLR hidden
+                                                    (change)="onGetLrDoc($event)">
+                                            </a><p>{{lr_file?.name}}</p>
+                                            </div>
+            
+                                            <div class="upld--doc-itm">
+                                                <a type="file" class="btn btn-primary" (click)="Ewaybill.click()">Upload e-waybill <i class="fa fa-upload"
+                                                    aria-hidden="true"></i>
+                                                    <input type="file" accept=".png, .jpg, .jpeg, .pdf, .zip" #Ewaybill hidden
+                                                    (change)="onGetEwaybillDoc($event)">
+                                                </a><p>{{ewaybill?.name}}</p>
+                                            </div>
+            
+                                            <div class="upld--doc-itm">
+                                                <a type="file" class="btn btn-primary" (click)="TestCertificate.click()">Test Certificate <i class="fa fa-upload"
+                                                    aria-hidden="true"></i>
+                                                    <input type="file" accept=".png, .jpg, .jpeg, .pdf, .zip" #TestCertificate hidden
+                                                    (change)="onGetTestCertificate($event)">
+                                                </a><p>{{testCertificate?.name}}</p>
+                                            </div>
+            
+                                            <div class="upld--doc-itm">
+                                                <a type="file" class="btn btn-primary" (click)="EInvoice.click()">Invoice <i class="fa fa-upload"
+                                                    aria-hidden="true"></i>
+                                                    <input type="file" accept=".png, .jpg, .jpeg, .pdf, .zip" #EInvoice hidden
+                                                    (change)="onGetEInvoice($event)">
+                                                </a><p>{{eInvoice?.name}}</p>
+                                            </div>
+            
+                                            <div class="upld--doc-itm">
+                                                <a type="file" class="btn btn-primary"  (click)="misDoc.click()">Misc. Doc <i class="fa fa-upload"
+                                                    aria-hidden="true"></i>
+                                                    <input type="file" accept=".png, .jpg, .jpeg, .pdf, .zip" #misDoc hidden
+                                                    (change)="onGetMisDoc($event)">
+                                                </a><p>{{miseDoc}}</p>
+                                            </div>
+                                        </div>
                                         <!-- <div class="col-12 my-3">
                                             <button href="javascript:;" type="submit"
                                                 class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i>
@@ -182,7 +193,7 @@
                                         <div class="add-btn-sec pt-2 pb-2 text-right mt-3">
                                             <button class="btn btn-primary" type="submit"><i
                                                 class="fa fa-check"></i>Submit</button>&nbsp;
-                                            <button type="button" class="btn btn-danger">
+                                            <button type="button" class="btn btn-danger" onclick="history.back()">
                                                 <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
                                           </div>
                                     </div>
@@ -194,5 +205,7 @@
             </div>
         </form>
     </section>
+
+
 </div>
 <app-footer></app-footer>

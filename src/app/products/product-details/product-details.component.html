@@ -154,8 +154,8 @@
                             <input type="number" #priceInput="ngModel" [(ngModel)]="formData.expected_price"
                               name="expected_price{{ formData.schedule_no }}" class="form-control form-control-sm" id=""
                               placeholder="" value="" required />
-                            <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
-                              class="inputValidation">Price is required</small>
+                            <!-- <small *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched || submit)"
+                              class="inputValidation">Price is required</small> -->
                           </div>
                         </div>
                       </div>
@@ -169,7 +169,7 @@
                             name="bill_to_{{ formData.schedule_no }}" required>
                             <option value="" disabled>--Bill to--</option>
                             <option value="{{ biilToAdr.addr_id }}" *ngFor="let biilToAdr of billto" data-toggle="tooltip" data-placement="top"
-                            title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode - {{biilToAdr.pincode}}">{{ biilToAdr.state }}</option>
+                            title="{{biilToAdr.addressone}} {{biilToAdr.addresstwo}} {{biilToAdr.city}}, Pincode - {{biilToAdr.pincode}}">{{ biilToAdr.city }}</option>
                           </select>
                           <small *ngIf="billTo.invalid && (billTo.dirty || billTo.touched || submit)"
                             class="inputValidation">Select bill to</small>
@@ -184,7 +184,7 @@
                             name="ship_to_{{ formData.schedule_no }}" required>
                             <option value="" disabled> --Ship to--</option>
                             <option value="{{ shipToAdr.addr_id }}" *ngFor="let shipToAdr of shipto" data-toggle="tooltip" data-placement="top"
-                              title="{{shipToAdr.addressone}} {{shipToAdr.addresstwo}} {{shipToAdr.city}}, Pincode -{{shipToAdr.pincode}}">{{ shipToAdr.state }}</option>
+                              title="{{shipToAdr.addressone}} {{shipToAdr.addresstwo}} {{shipToAdr.city}}, Pincode -{{shipToAdr.pincode}}">{{ shipToAdr.city }}</option>
                           </select>
                           <small *ngIf="shipTo.invalid && (shipTo.dirty || shipTo.touched || submit)"
                             class="inputValidation">Select ship to</small>

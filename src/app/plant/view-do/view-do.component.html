@@ -1,51 +1,90 @@
 <app-header></app-header>
 <div class="page-content">
-    <section class="sub-header-2">
-       <div class="container">
-          <h1>Delivery Order List</h1>
-          <div class="clearfix"></div>
-       </div>
-    </section>
-    <section class="add-prod-pg">
-       <div class="container">
-          <div class="row">
-             <div class="col-12 text-right" *ngIf="userByRole == 'PLANT'">
-                <b class="btn btn-sm btn-primary" type="button" (click)="onAdd();">Add DO</b>
-             </div>
-             <div class="col-12 mt-3">
-                <div class="cart-table">
-                   <div class="table-responsive">
-                      <table class="table table-op">
-                         <thead>
-                            <tr>
-                               <th>SO No</th>
-                               <th>SO Date</th>
-                               <th>SO Quantity (MT)</th>
-                               <th>DO No.</th>
-                               <th>DO Date</th>
-                               <th>DO Quantity (MT)</th>
-                               <th>Customer</th>
-                               <th>Action</th>
-                            </tr>
-                         </thead>
-                         <tbody>
-                            <tr *ngFor="let item of soList">
-                               <!-- <td>{{item.so_no}}</td> -->
-                               <td>{{item.so_no}}</td>
-                               <td>{{item.so_date}}</td>
-                               <td>{{item.qty_cont}}</td>
-                               <td>{{item.do_no}}</td>
-                               <td>{{item.do_date}}</td>
-                               <td>{{item.do_quantity}}</td>
-                               <td>{{item.cus_name}}</td>
-                               <td><button class="btn btn-sm btn-primary" (click)="onView(item.do_id)">View Details</button></td>
-                            </tr>
-                         </tbody>
-                      </table>
-                   </div>
-                </div>
-             </div>
-          </div>
-          
- </div>
-<app-footer></app-footer>
+   <section class="sub-header-2">
+      <div class="container">
+         <h1>Delivery Order List</h1>
+         <div class="clearfix"></div>
+      </div>
+   </section>
+   <section class="add-prod-pg">
+      <div class="container">
+
+         <div class="prof-form-bdy">
+            <div class="row">
+               <div class="col-12 text-right mb-3" *ngIf="userByRole == 'PLANT'">
+                  <b class="btn btn-sm btn-primary mt-0" type="button" (click)="onAdd();">Add DO</b>
+               </div>
+            </div>
+
+            <form [formGroup]="doSearchForm">
+               <div class="row cust--mrgn">
+                  <div class="col-3 cust--pad">
+                     <input type="text" placeholder="Search by So no" class="form-control" formControlName="so_no">
+                  </div>
+                  <div class="col-3 cust--pad">
+                     <input type="text" placeholder="Search by Do no" class="form-control" formControlName="do_no">
+                  </div>
+                  <div class="col-2 cust--pad">
+                     <input type="text" placeholder="Search by Cus po no" class="form-control"
+                     formControlName="cus_po_no">
+                  </div>
+                  <div class="col-2 cust--pad">
+                     <input type="date" placeholder="Search by Date" class="form-control" formControlName="do_date">
+                  </div>
+                  <div class="col-2 cust--pad">
+                     <div class="btn-srch-ref">
+                        <button class="btn btn-primary btn-ser" type="submit" (click)="doSearch()">Search</button>
+                        <button class="btn btn-primary btn-ser" type="submit" (click)="refresh()"><span><i style="padding: 5px;"
+                           class="fa fa-refresh" aria-hidden="true"  ></i></span>Refresh</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+
+         <div class="row">
+
+            <div class="col-12 mt-3">
+               <div class="cart-table">
+                  <div class="table-responsive">
+                     <table class="table table-op">
+                        <thead>
+                           <tr>
+                              <th>SO No</th>
+                              <th>SO Date</th>
+                              <th>SO Quantity (MT)</th>
+                              <th>DO No.</th>
+                              <th>DO Date</th>
+                              <th>DO Quantity (MT)</th>
+                              <th>Cus Ref No</th>
+                              <th>Customer</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let item of soList">
+                              <!-- <td>{{item.so_no}}</td> -->
+                              <td>{{item.so_no}}</td>
+                              <td>{{item.so_date}}</td>
+                              <td>{{item.qty_cont}}</td>
+                              <td>{{item.do_no}}</td>
+                              <td>{{item.do_date}}</td>
+                              <td>{{item.do_quantity}}</td>
+                              <td>{{item.cus_po_no}}</td>
+                              <td>{{item.cus_name}}</td>
+                              <td><button class="btn btn-sm btn-primary" (click)="onView(item.do_id)">View
+                                    Details</button>
+                                 <a [routerLink]="['/plant/edit-do',item?.do_id]"
+                                    class="mx-2px btn radius-1 border-2 btn-xs btn-brc-tp btn-light-secondary btn-h-lighter-success btn-a-lighter-success">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                 </a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <app-footer></app-footer>

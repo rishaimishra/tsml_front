@@ -14,7 +14,6 @@ import { DatepickerModule } from 'ng2-datepicker';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { environment } from '../environments/environment.prod';
-import { RECAPTCHA_SETTINGS,RecaptchaSettings } from 'ng-recaptcha';
 import { OnlineStatusModule } from 'ngx-online-status';
 
 
@@ -42,12 +41,7 @@ import { OnlineStatusModule } from 'ngx-online-status';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthIntercepto, multi: true},
     Location, {provide: LocationStrategy, useClass: HashLocationStrategy},
-    {
-      provide: RECAPTCHA_SETTINGS,
-      useValue: {
-        siteKey: environment.recaptcha.siteKey,
-      } as RecaptchaSettings,
-    }],
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -111,6 +111,10 @@ export class PoEditComponent implements OnInit {
   billto: any = [];
   shipto: any = [];
 
+  deliveryMethodVal: any;
+  deliveryDropList: any;
+  //deliveryVal: any;
+
 
   constructor(
     private _route: ActivatedRoute,
@@ -132,6 +136,7 @@ export class PoEditComponent implements OnInit {
     } else {
       this.userType = true;
     }
+    this.getDeliveryItem();
     this.user_Id = localStorage.getItem('USER_ID');
     // this.states = this._state.getState();
     this._route.params.subscribe((res) => {
@@ -163,6 +168,14 @@ export class PoEditComponent implements OnInit {
     return this.priceForm.controls;
   };
 
+  getDeliveryItem() {
+    this._product.getDeliveryMethod().subscribe((res: any) => {
+      if (res.status == 1 && res.message == 'success') {
+        this.deliveryDropList = res.result;
+      }
+    })
+  };
+
   getTotalQuantity(cat_id: any) {
     for (let i = 0; i < this.selectedItem.length; i++) {
       let form_data_array = this.selectedItem[i]['schedule'];
@@ -185,6 +198,12 @@ export class PoEditComponent implements OnInit {
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
         this.editProductId = decrypted[0]['product_id'];
         this.product_data = decrypted;
+
+
+       /*  this.deliveryVal = decrypted[0].schedule[0].delivery;
+        console.log(this.deliveryVal); */
+
+                                                      
         this.selectedItem.push(this.product_data);
         this.selectedItem = this.product_data;
         this.rfqNumber = this.product_data[0]['rfq_no'];
@@ -354,7 +373,7 @@ export class PoEditComponent implements OnInit {
   }
 
 
-  deleteRfqById(id: any) {
+  /* deleteRfqById(id: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -385,7 +404,7 @@ export class PoEditComponent implements OnInit {
         })
       }
     })
-  };
+  }; */
 
   goToCustomerPage(id: any) {
     this._router.navigate(['/products/customer', id]);
@@ -394,7 +413,7 @@ export class PoEditComponent implements OnInit {
     this.selected_size = size;
   };
 
-  selectItems(event: any) {
+  /* selectItems(event: any) {
     let categoryId = event.target.value;
     this.categoryid = event.target.value;
     this.removeCat(categoryId);
@@ -436,7 +455,7 @@ export class PoEditComponent implements OnInit {
         }
       }
     );
-  };
+  }; */
   sizeOfferd(event: any) {
     this.proSize1 = event.target.value;
   };
@@ -488,6 +507,18 @@ export class PoEditComponent implements OnInit {
       rfqFormArry.push(reqData);
     }
     this.spinner.show();
+
+
+
+   /*  
+    console.log("data to send", rfqFormArry);
+    this.spinner.hide();
+    return; */
+
+
+
+
+    
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(rfqFormArry, passwordd);
     this._product.updateRfq(encryptedd).subscribe((res: any) => {
@@ -531,7 +562,7 @@ export class PoEditComponent implements OnInit {
     this.submitStatus();
   };
 
-  addItem(i: any) {
+  /* addItem(i: any) {
     const scheduleNo = Math.floor(1000 + Math.random() * 9000);
     this.quotation = this.selectedItem[i]['schedule'];
     this.quotation.push({
@@ -556,20 +587,7 @@ export class PoEditComponent implements OnInit {
     this.selectedItem[i]['schedule'] = this.quotation;
     console.log('this.selectedItem=', this.selectedItem);
     this.final_form_data();
-  };
-  final_form_data() {
-    this.quotation_value = [];
-    // console.log('this.selectedItem final fn=', this.selectedItem);
-    for (let i = 0; i < this.selectedItem.length; i++) {
-      let form_data = this.selectedItem[i]['schedule'];
-
-      for (let k = 0; k < form_data.length; k++) {
-        this.quotation_value.push(form_data[k]);
-      }
-      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
-    }
-    console.log('this.quotation_value=', this.quotation_value);
-  };
+  }; */
 
   date: any;
   setFromData() {
@@ -923,5 +941,66 @@ export class PoEditComponent implements OnInit {
       this._router.navigate(['/po/po-list']);
     })
   };
+
+  /* addSechudle(i:any, schdlNo:any) {
+    const scheduleNo = Math.floor(1000 + Math.random() * 9000);
+    this.quotation = this.selectedItem[i]['schedule'];
+
+    let shipId = $('#shipToVal_'+schdlNo).val();
+    let billtoId = $('#billToId'+schdlNo).val();
+    let expPrice = $('#expectedPr_'+schdlNo).val();
+    let billState = $('#billtoState'+schdlNo).html();
+    let shipState = $('#shipState'+schdlNo).html();
+
+    this.quotation.push({
+      schedule_no: scheduleNo,
+      pro_size: '',
+      quantity: '',
+      expected_price: expPrice,
+      delivery: '',
+      plant: '',
+      location: '',
+      bill_to: billtoId,
+      bill_to_state: billState,
+      ship_to: shipId,
+      ship_to_state: shipState,
+      from_date: '',
+      to_date: '',
+      pay_term: 'Advance Payment',
+      remarks: '',
+      kam_price: '',
+      credit_days: '',
+      quote_status: 0,
+      valid_till: null,
+      confirm_date: '',
+      sub_cat_id: '',
+      salesRemarks: '',
+      pickup_type: '',
+      kamsRemarks: '',
+      kamsRemarkssp: '',
+      kamsRemarkssh: ''
+    });
+    this.selectedItem[i]['schedule'] = this.quotation;
+    this.final_form_data();
+
+  }
+  removeSchdl(i:any, schdl:any) {
+    this.quotation.splice(-1);
+  };
+
+  final_form_data() {
+    this.quotation_value = [];
+    // console.log('this.selectedItem final fn=', this.selectedItem);
+    for (let i = 0; i < this.selectedItem.length; i++) {
+      let form_data = this.selectedItem[i]['schedule'];
+
+      for (let k = 0; k < form_data.length; k++) {
+        this.quotation_value.push(form_data[k]);
+      }
+      //this.quotation_value[i] = this.selectedItem[i]['form_data'];
+    }
+    console.log('this.quotation_value=', this.quotation_value);
+  }; */
+  
 
 }

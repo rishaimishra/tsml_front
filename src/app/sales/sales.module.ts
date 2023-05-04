@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: 'view-sc/:id', 
     component: ViewScComponent
-  }
+  },
 ];
 
 @NgModule({

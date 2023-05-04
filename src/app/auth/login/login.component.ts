@@ -7,7 +7,9 @@ import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import { CustomValidators } from '../login/custom1Validator';
 declare var $: any;
-import {CryptoJSAesJson} from 'src/assets/js/cryptojs-aes-format.js';
+import { CryptoJSAesJson } from 'src/assets/js/cryptojs-aes-format.js';
+import randomString from 'randomstring';
+import { Directive, HostListener } from '@angular/core';
 
 
 
@@ -25,59 +27,58 @@ export class LoginComponent implements OnInit {
   forgetEmail: any;
   token: string | undefined;
   disableLogin: boolean = true;
+  generatedCaptchaValue: any;
 
   public showPassword: boolean;
   public showPasswordOnPress: boolean;
+
+  captchaValue = "";
 
   constructor(private _fb: FormBuilder, private _toster: ToastrService,
     private _auth: AuthService, private _router: Router, private _spinner: NgxSpinnerService) {
     this.loginForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(10)]],
+      capthaValueEntered: [''],
       logotp: ['', Validators.minLength(6)]
     })
+
+
     CustomValidators.mustMatch('password', 'password_confirm') // insert here
     this.token = undefined;
 
   }
-
+  
   get f() {
     return this.loginForm.controls;
   }
 
   ngOnInit(): void {
-
+    this.generateCaptha()
+  }
+  generateCaptha() {
+    var result = randomString.generate(6)
+    console.log(result);
+    this.generatedCaptchaValue = result;
   }
 
-  send(form: NgForm): void {
-    if (form.invalid) {
-      for (const control of Object.keys(form.controls)) {
-        form.controls[control].markAsTouched();
-      }
-      return;
-    }
-  };
 
-  // goToForgetPass() {
-  //   this.hideLogin = false;
-  //   this.hideShowPass = true;
-  // };
-
-  submitLogin(form: NgForm) {
+  submitLogin() {
     this.submitted = true;
-    this.send(form);
-    let captchaToken = `Token [${this.token}] generated`;
     let email = this.loginForm.value['email'];
-
-
-    if (this.token == undefined || captchaToken == undefined) {
-      return;
-    }
-    else if (this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
       return;
     }
     else if (this.loginForm.value['logotp'] == "") {
       this._toster.error('OTP is required', 'Sorry!');
+      return;
+    }
+    else if (this.generatedCaptchaValue !== this.loginForm.value['capthaValueEntered']) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sorry !',
+        text: 'Invalid Captcha',
+      })
       return;
     }
     let loginForm = this.loginForm.value;
@@ -172,15 +173,6 @@ export class LoginComponent implements OnInit {
         })
         return;
       }
-      // else if (res.success == false && res.message == 'Password expired.') {
-      //   Swal.fire({
-      //     icon: 'error',
-      //     title: 'Sorry !',
-      //     text: res.message,
-      //   })
-      //   this._router.navigate(['/auth/reset-password']);
-      //   return;
-      // }
 
       else if (res.success == false && res.result?.user_status == null) {
         Swal.fire({

@@ -55,6 +55,10 @@ export class SalesService {
     return this._http.get(this.BesUrl + '/user/get_sap_freight_indi');
   };
 
+  getFreightPartn():Observable<any> {
+    return this._http.get(this.BesUrl + '/user/get-freight-partner');
+  };
+
   getCustGroup():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get_sap_customer_group');
   };
@@ -127,6 +131,14 @@ export class SalesService {
     return this._http.post(this.BesUrl + '/user/sc_excel_mail', request);
   };
 
+  excelEmail2(request:any):Observable<any> {
+    return this._http.post(this.BesUrl + '/plant_doexcel_mail', request);
+  };
+
+  getAddrCode(request:any):Observable<any> {
+    return this._http.get(this.BesUrl + '/user/get_addr_code/'+ request);
+  };
+
   updateSc(request:any):Observable<any> {
     return this._http.post(this.BesUrl + '/user/up_excelsc', request,{ 'headers': this.headers });
   };
@@ -176,6 +188,12 @@ export class SalesService {
   };
   getProcPay():Observable<any> {
     return this._http.get(this.BesUrl + '/user/get-pay-gurantee-pos');
+  };
+  getCity():Observable<any> {
+    return this._http.get(this.BesUrl + '/get_all_city');
+  };
+  getPlant():Observable<any> {
+    return this._http.get(this.BesUrl + '/get_all_plants');
   };
 
 }

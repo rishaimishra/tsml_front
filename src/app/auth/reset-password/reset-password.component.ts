@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { CustomValidators } from './customValidator';
 declare var $: any;
 import {CryptoJSAesJson} from 'src/assets/js/cryptojs-aes-format.js';
+import randomString from 'randomstring';
+import { Directive, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-reset-password',
@@ -32,6 +34,9 @@ export class ResetPasswordComponent implements OnInit {
   public showPassword2: boolean;
   public showPasswordOnPress2: boolean;
 
+  generatedCaptchaValue: any;
+  captchaValue = "";
+
   constructor(private _fb: FormBuilder, 
     private _auth: AuthService, private _spiner: NgxSpinnerService,
     private _router: Router, private _toaster: ToastrService) 
@@ -41,21 +46,28 @@ export class ResetPasswordComponent implements OnInit {
       otp: ['', [Validators.required, Validators.minLength(6)]],
       old_pass: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(10)]],
-      password_confirm: ['', [Validators.required, Validators.minLength(10)]]
+      password_confirm: ['', [Validators.required, Validators.minLength(10)]],
+      capthaValueEntered: ['']
     })
 
     CustomValidators.mustMatch('password', 'password_confirm') // insert here
     this.token = undefined;
   }
-
   get f() {
     return this.resetPassForm.controls;
   }
 
   ngOnInit(): void {
+    this.generateCaptha()
   }
-
-  send(form: NgForm): void {
+  generateCaptha() {
+    /* let val : any = btoa(Math.random() * 1000000); 
+    val = val.substr(0,5+Math.random()*5); */
+    var result = randomString.generate(6)
+    console.log(result);
+    this.generatedCaptchaValue = result;
+  }
+ /*  send(form: NgForm): void {
     if (form.invalid) {
       for (const control of Object.keys(form.controls)) {
         form.controls[control].markAsTouched();
@@ -63,7 +75,7 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 
-  };
+  }; */
 
   getOtp() {
     let email = $('#resetEmail').val();
@@ -95,13 +107,13 @@ export class ResetPasswordComponent implements OnInit {
     })
   };
 
-  sabmitResetPass(form: NgForm) {
+  sabmitResetPass() {
     this.submitt = true;
-    this.send(form);
+    /* this.send(form);
     let captchaToken = `Token [${this.token}] generated`;
     if(this.token == undefined || captchaToken == undefined) {
       return;
-    }
+    } */
     let fb = this.resetPassForm.value;
     if(fb.password !== fb.password_confirm) {
       Swal.fire({
@@ -112,6 +124,14 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
     else if(this.resetPassForm.invalid) {
+      return;
+    }
+    else if (this.generatedCaptchaValue !== this.resetPassForm.value['capthaValueEntered']) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sorry !',
+        text: 'Invalid Captcha',
+      })
       return;
     } 
     let resetValue = this.resetPassForm.value;

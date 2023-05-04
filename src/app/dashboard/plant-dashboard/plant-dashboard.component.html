@@ -12,7 +12,7 @@
                       <div class="mini-stat clearfix bx-shadow bg-info hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">8000</span>
+                            <span class="counter text-white">{{this.dashItem.volumeconfirmed}} MT</span>
                             <b>Volume Confirmed</b>
                          </div>
                       </div>
@@ -23,7 +23,7 @@
                       <div class="mini-stat clearfix bx-shadow bg-warning1  hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">600</span>
+                            <span class="counter text-white">{{this.dashItem.rfq_under_negotiation}} MT</span>
                             <b>Volume (Under Negotiation)</b>
                          </div>
                       </div>
@@ -34,8 +34,8 @@
                       <div class="mini-stat clearfix bx-shadow bg-pink hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-archive" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">4000 MT</span>
-                            <b> Ex-Plant Confirmed Orders</b>
+                            <span class="counter text-white">{{this.dashItem.ex_work_confirmed_orders}} MT</span>
+                            <b> Ex-Work Confirmed Orders</b>
                          </div>
                       </div>
                    </a>
@@ -45,23 +45,22 @@
                       <div class="mini-stat clearfix bx-shadow bg-success1  hvr-float-shadow">
                          <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                          <div class="mini-stat-info text-right text-white">
-                            <span class="counter text-white">200</span>
-                            <!-- <b>Ex-Depot Confirmed Orders</b> -->
+                            <span class="counter text-white">{{this.dashItem.qty_despatch}} MT</span>
+                            <b>Quantity Dispatched</b>
                          </div>
                       </div>
                    </a>
                 </div>
-                <div class="col-md-6 col-sm-6 col-lg-3">
+                <!-- <div class="col-md-6 col-sm-6 col-lg-3">
                   <a>
                      <div class="mini-stat clearfix bx-shadow bg-pink  hvr-float-shadow">
                         <span class="mini-stat-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                         <div class="mini-stat-info text-right text-white">
                            <span class="counter text-white">100</span>
-                           <!-- <b>DAP Confirmed Orders</b> -->
                         </div>
                      </div>
                   </a>
-               </div>
+               </div> -->
           
              </div>
        <!--Top Four Blocks-->

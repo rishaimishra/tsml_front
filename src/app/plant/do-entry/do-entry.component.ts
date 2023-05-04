@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/service/products.service';
 import { SalesService } from 'src/app/service/sales.service';
 import Swal from 'sweetalert2';
+declare var $: any;
+
 
 @Component({
   selector: 'app-do-entry',
@@ -24,7 +26,7 @@ export class DoEntryComponent implements OnInit {
   soList: any = [];
   materialGradeList: any = [];
   soNum: any;
-
+  miseDoc: any;
   constructor(private _products: ProductsService,
     private toastr: ToastrService,
     private _fb: FormBuilder,
@@ -76,7 +78,7 @@ export class DoEntryComponent implements OnInit {
       despatch_date: ['', Validators.required],
       truck_no: ['', Validators.required],
       driver_no: ['', Validators.required],
-      premarks: ['', Validators.required],
+      premarks: [],
     })
     this.getSo();
   }
@@ -141,11 +143,15 @@ export class DoEntryComponent implements OnInit {
 
   onGetMisDoc(event: any) {
     this.misDoc = event.target.files[0];
+    console.log(this.misDoc.File ,'this.misDoc');
+    
     let file = event.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
     };
+    console.log("File size", file.size , file.name);
+    this.miseDoc = file.name;
     if (file.size >= 5209785) {
       event.target.value = null;
       return;
@@ -153,6 +159,9 @@ export class DoEntryComponent implements OnInit {
   }
 
   submit() {
+    let param = {
+      "do_no": $('#_doNum').val()
+    }
     var userId = localStorage.getItem('USER_ID');
     this.entryForm.get('user_id').setValue(userId);
     this.submitted = true;
@@ -162,7 +171,7 @@ export class DoEntryComponent implements OnInit {
 
     let indx = this.soList.findIndex((item: any) => item.so_no == this.entryForm.value.so_no);
 
-    if (this.lr_file == undefined) {
+    /* if (this.lr_file == undefined) {
       this.toastr.error('', 'Please Upload LR Document');
     }
     if (this.ewaybill == undefined) {
@@ -170,9 +179,9 @@ export class DoEntryComponent implements OnInit {
     }
     if (this.testCertificate == undefined) {
       this.toastr.error('', 'Please Upload testn certificate Document');
-    }
+    } */
     if (this.eInvoice == undefined) {
-      this.toastr.error('', 'Please Upload e-Invoice Document');
+      this.toastr.error('', 'Please Upload Invoice Document');
     }
     else {
       this._spinner.show();
@@ -210,6 +219,7 @@ export class DoEntryComponent implements OnInit {
           fileData.append("e_invoice_file", this.eInvoice);
           fileData.append("misc_doc_file", this.misDoc);
           fileData.append("plant_id", userId);
+          fileData.append("delv_id", userId);
 
           this._products.postMethopd('/user/store-do', fileData).subscribe((res: any) => {
             this._spinner.hide();
@@ -223,9 +233,6 @@ export class DoEntryComponent implements OnInit {
               this.entryForm.reset();
               this.toastr.success(res.message);
 
-              let param = {
-                "do_no": this.entryForm.value.do_no
-              }
               this._sales.custDoMail(param).subscribe();
             } else {
               this.toastr.error('Someting went wrong','Sorry');
@@ -253,16 +260,16 @@ export class DoEntryComponent implements OnInit {
             }
             this._products.camNotification(camNotiReq).subscribe((res: any) => {
             })
-            let custNotiReq = {
-              "desc_no": this.soList[indx].rfq_no,
-              "user_id": userId,
-              "desc": 'Invoice Generated',
-              "url_type": 'R',
-              "sender_id": this.entryForm.value.user_id
-            }
-            this.setPoStatus(this.soList[indx].po_no);
-            this._products.custNotiSubmit(custNotiReq).subscribe((res: any) => {
-            })
+            // let custNotiReq = {
+            //   "desc_no": this.soList[indx].rfq_no,
+            //   "user_id": userId,
+            //   "desc": 'Invoice Generated',
+            //   "url_type": 'R',
+            //   "sender_id": this.entryForm.value.user_id
+            // }
+            // this.setPoStatus(this.soList[indx].po_no);
+            // this._products.custNotiSubmit(custNotiReq).subscribe((res: any) => {
+            // })
             this._router.navigate(['/plant/do-list']);
           }, error => {
             console.log(error)

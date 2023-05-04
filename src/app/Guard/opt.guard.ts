@@ -23,7 +23,7 @@ export class OptGuard implements CanActivate {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'You are not authorized to access!',
+            text: 'You are not authorized to access! opt',
           })
           this._router.navigate(['/auth/login']);
           return false;

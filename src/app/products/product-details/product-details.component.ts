@@ -169,7 +169,7 @@ export class ProductDetailsComponent implements OnInit {
             schedule_no: scheduleNo,
             pro_size: '',
             quantity: '',
-            expected_price: '',
+            expected_price: 0,
             delivery: '',
             plant: '',
             location: '',
@@ -186,7 +186,9 @@ export class ProductDetailsComponent implements OnInit {
             sub_cat_id: '',
             salesRemarks: '',
             pickup_type: '',
-            kamsRemarks: ''
+            kamsRemarks: '',
+            kamsRemarkssp: null,
+            kamsRemarkssh: null
           });
 
           let i = this.selectedItem.length - 1;
@@ -228,7 +230,7 @@ export class ProductDetailsComponent implements OnInit {
             schedule_no: scheduleNo,
             pro_size: '',
             quantity: '',
-            expected_price: '',
+            expected_price: 0,
             delivery: '',
             plant: '',
             location: '',
@@ -245,7 +247,9 @@ export class ProductDetailsComponent implements OnInit {
             sub_cat_id: '',
             salesRemarks: '',
             pickup_type: '',
-            kamsRemarks: ''
+            kamsRemarks: '',
+            kamsRemarkssp: null,
+            kamsRemarkssh: null
           });
 
           let i = this.selectedItem.length - 1;
@@ -279,7 +283,7 @@ export class ProductDetailsComponent implements OnInit {
         qty = qty + parseInt(form_data_array[i]['quantity']);
 
         if(form_data_array[i].delivery == "" || form_data_array[i].sub_cat_id == ""
-        || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].expected_price == "" || form_data_array[i].from_date == "" 
+        || form_data_array[i].pro_size == "" || form_data_array[i].quantity == "" || form_data_array[i].from_date == "" 
         || form_data_array[i].to_date == "" || form_data_array[i].remarks == "") {
           return;
         }
@@ -378,7 +382,7 @@ export class ProductDetailsComponent implements OnInit {
       schedule_no: scheduleNo,
       pro_size: '',
       quantity: '',
-      expected_price: '',
+      expected_price: 0,
       delivery: '',
       plant: '',
       location: '',
@@ -395,7 +399,9 @@ export class ProductDetailsComponent implements OnInit {
       sub_cat_id: '',
       salesRemarks: '',
       pickup_type: '',
-      kamsRemarks: ''
+      kamsRemarks: '',
+      kamsRemarkssp: null,
+      kamsRemarkssh: null
     });
     this.selectedItem[i]['form_data'] = this.quotation;
     this.final_form_data();
@@ -500,7 +506,7 @@ export class ProductDetailsComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         this.locationState[schdlNo] = res.result['state'];
         this.locationRes = res.result['addressone'] + res.result['addresstwo'] + res.result['city'] + res.result['state'] + '' + res.result['pincode']
-        // this.getSubCategory(this.productId, this.categoryid, indx.id);
+        this.getSubCategory(this.productId, this.categoryid, indx.id); //uncommented on 20APR 
       }
     })
   };

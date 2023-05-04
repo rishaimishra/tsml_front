@@ -64,6 +64,7 @@ export class DoDetailsComponent implements OnInit {
         // if (res.message === 'success') {
           this.onChangeSo(res.result.so_no);
           this.data = res.result;
+          console.log(this.data);
           
           // this.soList = res.result;
         // }

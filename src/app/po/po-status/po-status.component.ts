@@ -23,7 +23,17 @@ export class PoStatusComponent implements OnInit {
       this._sales.veiwDOcustom(param).subscribe((res:any) => {
         console.log(res);
         if(res.message == 'success') {
-          this.doItem = res.result;
+         /*  res.result.forEach(element => {
+            if(element.doDocument.keys() == 0)
+            this.doItem = element.doDocument;
+            console.log(this.doItem);
+          }); */
+          res.result.forEach(ele => {
+            if(ele.doDocument != null){
+              this.doItem = ele.doDocument;
+            }
+          })
+          console.log("Do res",this.doItem);
         }
       })
     })

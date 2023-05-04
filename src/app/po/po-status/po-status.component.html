@@ -4,7 +4,7 @@
     <div class="page-content">
        <section class="sub-header-2">
           <div class="container">
-             <h1>Customer Complaints List</h1>
+             <h1>Delivery Order List</h1>
              <div class="clearfix"></div>
           </div>
        </section>
@@ -31,8 +31,8 @@
                                <tr>
                                   <th>Po No</th>
                                   <th>Po Date</th>
-                                  <th>Invoice No</th>
                                   <th>Invoice Date</th>
+                                  <th>Invoice No</th>
                                   <th>Invoice Qty</th>
                                   <th style="text-align: center;">Attachments</th>
                                   <!-- <th>Customer PO No.</th> -->
@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                <tr *ngFor="let item of doItem; let i = index">
-                                <ng-container *ngIf="item[i]?.doDocument != ''">
+                                <ng-container >
                                  <td>
                                     {{item.po_no}}
                                   </td>
@@ -49,21 +49,21 @@
                                     {{item.po_date}}
                                   </td>
                                   <td style="padding: inherit">
-                                    {{item.po_date}}
+                                    {{item.invoice_date}}
                                   </td>
                                   <td>
-                                   {{item.doDocument.invoice_no}}
+                                   {{item.invoice_no}}
                                   </td>
                                   <td>
-                                    {{item.doDocument.invoice_date}}
+                                    {{item.invoice_qty}}
                                   </td>
                                   <td class="position-relative">
                                     <div class="btn-edt-del btn-edt-dell">
-                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.lr_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download LR"><i class="fa fa-arrow-circle-down"></i></a>
-                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.e_waybill_file"  target="_blank"  data-toggle="tooltip" data-placement="top" title="Download e-waybill"><i class="fa fa-arrow-circle-down"></i></a>
-                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.test_certificate_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download Test Certificate"><i class="fa fa-arrow-circle-down"></i></a>
-                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.e_invoice_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download e-Invoice"><i class="fa fa-arrow-circle-down"></i></a>
-                                       <a class="edt-btn btn-primary pointer" [href]="item.doDocument.misc_doc_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download Misc. Doc"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" *ngIf="item.lr_file" [href]="item.lr_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download LR"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" *ngIf="item.e_waybill_file" [href]="item.e_waybill_file"  target="_blank"  data-toggle="tooltip" data-placement="top" title="Download e-waybill"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" *ngIf="item.test_certificate_file" [href]="item.test_certificate_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download Test Certificate"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" *ngIf="item.e_invoice_file" [href]="item.e_invoice_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download e-Invoice"><i class="fa fa-arrow-circle-down"></i></a>
+                                       <a class="edt-btn btn-primary pointer" *ngIf="item.misc_doc_file" [href]="item.misc_doc_file"  target="_blank" data-toggle="tooltip" data-placement="top" title="Download Misc. Doc"><i class="fa fa-arrow-circle-down"></i></a>
                                     </div>
                                   </td>
                                   <!-- <td>

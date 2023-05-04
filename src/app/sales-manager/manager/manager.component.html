@@ -314,7 +314,7 @@
                                                 <!-- Kam's remarks -->
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="">CAM's Remarks (Max. 500 characters)</label>
+                                                        <label for="">CAM's Remarks for Customer (Max. 500 characters)</label>
                                                         <textarea disabled [(ngModel)]="formData.kamsRemarks"
                                                             #kamsRemarks="ngModel"
                                                             name="kamRemarks_{{ formData.schedule_no }}"
@@ -323,6 +323,18 @@
                                                         <small
                                                             *ngIf="remarks.invalid && (remarks.dirty || remarks.touched || submit)"
                                                             class="inputValidation">Remarks is required</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="">CAM's Remarks for Sales Head (Max. 500 characters)</label>
+                                                        <textarea disabled [(ngModel)]="formData.kamsRemarkssh" MaxLength="500" #kamsRemarkssh="ngModel"
+                                                            name="kamsRemarkssh_{{ formData.schedule_no }}"
+                                                            class="form-control form-control-sm" rows="4"
+                                                            required></textarea>
+                                                        <small
+                                                            *ngIf="kamsRemarkssh.invalid && (kamsRemarkssh.dirty || kamsRemarkssh.touched || submit)"
+                                                            class="inputValidation">CAM Remarks is required</small>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -524,7 +536,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Miscellaneous Cost (Sizing, Commission etc.)</td>
+                                    <td colspan="2">Miscellaneous Cost (Depot Charges, Sizing, Commission etc.)</td>
                                     <td>
                                         <div class="pp-bx" id="miscId">
                                             {{productPrice?.misc_expense}}

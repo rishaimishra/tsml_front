@@ -220,4 +220,15 @@ export class ProductsService {
   remarksList(url_paremter: any):Observable<any> {
     return this._http.post(this.BesUrl +'/user/view_remarks', url_paremter);
   };
+
+  getMisSalesData(requestData: any):Observable<any> {
+    return this._http.post(this.BesUrl + '/user/sales_mis_list', requestData);
+  };
+  updateDo(url_paremter: any):Observable<any> {
+    return this._http.post(this.BesUrl +'/user/view_remarks', url_paremter);
+  };
+
+  doListData(payload:any){
+    return this._http.post(this.BesUrl + '/user/get_all_do',payload)
+  };
 }

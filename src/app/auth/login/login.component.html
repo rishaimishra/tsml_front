@@ -20,8 +20,8 @@
                         <div class="col-12">
                            <div>
                               <label>User ID</label>
-                              <input formControlName="email" placeholder="abc@gmail.com" type="email" class="form-control"
-                                 [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                              <input formControlName="email" placeholder="abc@gmail.com" type="email"
+                                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                               <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                                  <div *ngIf="f.email.errors.required">Email is required</div>
                                  <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
@@ -33,40 +33,41 @@
                            <label>Password <small>(Min 10 digit)</small></label>
                            <div class="form-group inner-addon right-addon">
                               <div class="input-group mx-auto">
-                                <input name="password" formControlName="password"
-                                    [type]="showPassword ? 'text' : 'password'"
-                                    class="form-control pwd-control"
-                                    id="password-field" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                                <div class="eye_show_hide">
-                                  <i alt="show" class="fa fa-eye eye-show" 
-                                  (click)="showPassword = !showPassword"
-                                  [class.hide]="showPassword"></i>
-                                  <i alt="hide" class="fa fa-eye-slash eye-hide" 
-                                  (click)="showPassword = !showPassword"
-                                  [class.hide]="!showPassword"></i>
+                                 <input name="password" formControlName="password"
+                                    [type]="showPassword ? 'text' : 'password'" class="form-control pwd-control"
+                                    id="password-field" placeholder="Password"
+                                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                                 <div class="eye_show_hide">
+                                    <i alt="show" class="fa fa-eye eye-show" (click)="showPassword = !showPassword"
+                                       [class.hide]="showPassword"></i>
+                                    <i alt="hide" class="fa fa-eye-slash eye-hide"
+                                       (click)="showPassword = !showPassword" [class.hide]="!showPassword"></i>
                                  </div>
                                  <div *ngIf="submitted || f.password.errors" class="invalid-feedback">
                                     <div *ngIf="f.password.errors.required">Password is required</div>
-                                    <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters</div>
+                                    <div *ngIf="f.password.errors.minlength">Password must be at least 10 characters
+                                    </div>
                                  </div>
                               </div>
-                            </div>
+                           </div>
                         </div>
 
                         <div class="col-12 mt-2">
                            <div class="form-group">
-                             <label>Verify OTP</label>
-                             <div class="d-flex2 display-f">
-                               <input type="text" formControlName="logotp" [readonly]="disableLogin" MaxLength="6" class="form-control w-79 gstVal"
-                               [ngClass]="{ 'is-invalid': submitted && f.logotp?.errors }" />
-                               <button type="button" class="btn blue-btn" [disabled]="!disableLogin" (click)="getOtpLogin()">
-                                 Get OTP
-                               </button>
+                              <label>Verify OTP</label>
+                              <div class="d-flex2 display-f">
+                                 <input type="text" formControlName="logotp" [readonly]="disableLogin" MaxLength="6"
+                                    class="form-control w-79 gstVal"
+                                    [ngClass]="{ 'is-invalid': submitted && f.logotp?.errors }" />
+                                 <button type="button" class="btn blue-btn" [disabled]="!disableLogin"
+                                    (click)="getOtpLogin()">
+                                    Get OTP
+                                 </button>
                               </div>
                               <div *ngIf="submitted || f.logotp?.errors" class="invalid-feedback">
-                                <div *ngIf="f.logotp.errors?.required">OTP is required</div>
-                                <div *ngIf="f.logotp.errors?.minlength">OTP must be at least 6 characters</div>
-                             </div>
+                                 <div *ngIf="f.logotp.errors?.required">OTP is required</div>
+                                 <div *ngIf="f.logotp.errors?.minlength">OTP must be at least 6 characters</div>
+                              </div>
                            </div>
                         </div>
                         <div class="row resetForget">
@@ -75,23 +76,24 @@
                                  Password?</a>
                            </div>
                         </div>
-                     </form>
 
-                     <form #form="ngForm">
-                        <div class="row mt-3 ml-2">
+
                            <div class="col-sm-12 mb-2">
-                              <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token"
-                                 required
-                                 [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)">
-                              </re-captcha>
-                              <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"
-                                 class="invalid-feedback">
-                                 <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
+                              <div class="captha">
+                                 <label for="captha-input">Enter Captha</label>
+                                 <div class="preview">
+                                    <p>{{this.generatedCaptchaValue}}</p>
+                                 </div>
+                                 <div class="captha-form captcha-box">
+                                    <input (paste)="$event.preventDefault()" class="form-control" type="text" formControlName="capthaValueEntered">
+                                    <button class="captcha-refresh" (click)="generateCaptha()">
+                                       <i class="fa fa-refresh"></i>
+                                    </button>
+                                 </div>
                               </div>
                            </div>
-                        </div>
                         <div class="col-12 my-3" *ngIf="!disableLoginBtn">
-                           <button href="javascript:;" type="button" (click)="submitLogin(form)"
+                           <button href="javascript:;" type="button" (click)="submitLogin()"
                               class="btn btn-primary btn-block"><i class="fa fa-paper-plane"></i> Login</button>
                         </div>
                         <div class="col-12 my-3" *ngIf="disableLoginBtn">

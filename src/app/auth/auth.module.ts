@@ -8,7 +8,6 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from '../shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 import { SecurityComponent } from './security/security.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -50,8 +49,6 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    RecaptchaModule,
-    RecaptchaFormsModule,
     MatFormFieldModule,
     MatIconModule,
     ToastrModule.forRoot() // ToastrModule added

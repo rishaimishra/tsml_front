@@ -1,0 +1,21 @@
+.btn-srch-ref {
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.cust--pad {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.cust--mrgn {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+.btn-srch-ref .btn-primary {
+    margin-top: 0;
+    padding: 6px 12px;
+}
+.cust--pad .btn-srch-ref {
+    padding-top: 0;
+}

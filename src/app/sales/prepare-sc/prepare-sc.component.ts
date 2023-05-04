@@ -36,6 +36,7 @@ export class PrepareScComponent implements OnInit {
   updateInfoForm: FormGroup;
   freightItems: any = [];
   freightIndicator: any = [];
+  freightPartner: any = [];
   scInfo: any = [];
   priceInfo: any = [];
   customerGrp: any = [];
@@ -54,6 +55,7 @@ export class PrepareScComponent implements OnInit {
 
   dynamicArray = [];
   allPlants: any = [];
+  tempPartnerValue = "";
 
   length: number;
   IncoTermCtrl: FormControl;
@@ -61,6 +63,7 @@ export class PrepareScComponent implements OnInit {
   freightCtrl: FormControl;
   custCtrl: FormControl;
   freightIndCtrl: FormControl;
+  freightPartnerCtrl: FormControl;
   contrctCtrl: FormControl;
   salesOrgCtrl: FormControl;
   distriCtrl: FormControl;
@@ -81,6 +84,8 @@ export class PrepareScComponent implements OnInit {
   customerVal:any;
   filteredFreitIndi: Observable<any[]>;
   freightIndiVal:any;
+  filteredFreitPartner: Observable<any[]>;
+  freightPartnerVal:any;
   filteredContrt: Observable<any[]>;
   contrctVal:any;
   filteredSlOrg: Observable<any[]>;
@@ -141,7 +146,8 @@ export class PrepareScComponent implements OnInit {
       pay_terms: [''],
       freight: [''],
       cus_grp: [''],
-      fr_ind: ['']
+      fr_ind: [''],
+      FrieghtPartner: ['']
     })
 
   };
@@ -196,6 +202,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
         this.contractTyp = decrypted;
+        this.contractTyp.forEach(element => {
+          element.concatValue = element.contract_type_code + " - " + element.contract_type_dec;  
+        });
       }
     })
     this.contrctCtrl = new FormControl();
@@ -217,6 +226,8 @@ export class PrepareScComponent implements OnInit {
   };
   onContrct(event:any) {
     this.contrctVal = event.source.value;
+    this.contrctVal = this.contrctVal.slice(0, (this.contrctVal.indexOf("-")-1));
+    console.log("Cont Type toSend", this.contrctVal);
   };
 
   salesOrg() {
@@ -225,6 +236,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let decrypted = CryptoJSAesJson.decrypt(res.result, password);
         this.orgSales = decrypted;
+        this.orgSales.forEach(element => {
+          element.concatValue = element.sales_orgerms_code + " - " + element.sales_orgerms_dec;
+        })
       }
     })
     this.getDistriChnl();
@@ -241,6 +255,8 @@ export class PrepareScComponent implements OnInit {
   };
   onSalesOrg(event:any) {
     this.salesOrgVal = event.source.value;
+    this.salesOrgVal = this.salesOrgVal.slice(0, (this.salesOrgVal.indexOf("-")-1));
+    console.log(this.salesOrgVal);
   };
 
   getSapGroup() {
@@ -249,6 +265,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.sapGroup = result;
+        this.sapGroup.forEach(element => {
+          element.concatValue = element.sales_group_code + " - " + element.sales_group_dec;
+        })
       }
     })
     this.salesGrpCtrl = new FormControl();
@@ -265,6 +284,8 @@ export class PrepareScComponent implements OnInit {
   };
   onSalesGrp(event:any) {
     this.salesGrpVal = event.source.value;
+    this.salesGrpVal = this.salesGrpVal.slice(0, (this.salesGrpVal.indexOf("-")-1));
+    console.log(this.salesGrpVal);
   };
 
 
@@ -274,6 +295,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.distribution = result;
+        this.distribution.forEach(element => {
+          element.concatValue = element.distr_chan_code + " - " + element.distr_chan_terms_dec;
+        })
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -293,6 +317,8 @@ export class PrepareScComponent implements OnInit {
   onDistrib(event:any) {
     this.distribVal = event.source.value;
     this.getsapDivin(this.distribVal);
+    this.distribVal = this.distribVal.slice(0, (this.distribVal.indexOf("-")-1));
+    console.log(this.distribVal);
   };
 
   getsapDivin(divData: any) {
@@ -304,6 +330,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.sapDivision = result;
+        this.sapDivision.forEach(element => {
+          element.concatValue = element.division_code + " - " + element.division_dec;
+        })
 
       }
       if (res.status == 'Token has Expired') {
@@ -325,6 +354,8 @@ export class PrepareScComponent implements OnInit {
   };
   onDiviCh(event:any) {
     this.divisVal = event.source.value;
+    this.divisVal = this.divisVal.slice(0, (this.divisVal.indexOf("-")-1));
+    console.log(this.divisVal);
   };
 
   getOffice() {
@@ -333,6 +364,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.salesOffic = result;
+        this.salesOffic.forEach(element => {
+          element.concatValue = element.sales_office_code + " - " + element.sales_office_dec;
+        })
       }
       if (res.status == 'Token has Expired') {
         this._router.navigate(['/auth/login'])
@@ -354,6 +388,8 @@ export class PrepareScComponent implements OnInit {
   };
   onOffice(event:any) {
     this.officeVal = event.source.value;
+    this.officeVal = this.officeVal.slice(0, (this.officeVal.indexOf("-")-1));
+    console.log(this.officeVal);
   };
 
   getdlvrMode() {
@@ -390,6 +426,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.freightItems = result;
+        this.freightItems.forEach(element => {
+          element.concatValue = element.freight_code + " - " + element.freight_dec;
+        })
       }
     })
     this.custGroup();
@@ -407,6 +446,7 @@ export class PrepareScComponent implements OnInit {
   };
   onEnterFrei(event:any) {
     this.freightVal = event.source.value;
+    this.freightVal = this.freightVal.slice(0, (this.freightVal.indexOf("-")-1));
     console.log(this.freightVal);
     if(this.freightVal == 'N') {
       this.showText = true;
@@ -420,7 +460,11 @@ export class PrepareScComponent implements OnInit {
       if (res.status == 1 && res.message == 'success') {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
+        console.log("Decrypted Result Here", result);
         this.freightIndicator = result;
+        this.freightIndicator.forEach(element => {
+          element.concatValue = element.freight_indication_code + " - " + element.freight_indication_dec;
+        });
       }
     })
     this.freightIndCtrl = new FormControl();
@@ -431,12 +475,47 @@ export class PrepareScComponent implements OnInit {
     );
   };
 
+  getFreightPartner() {
+    this._sales.getFreightPartn().subscribe((res: any) => {
+      if (res.status == 1 && res.message == 'success') {
+        let password = '123456'
+        //let result = CryptoJSAesJson.decrypt(res.result, password);
+        let result = res.result;
+        console.log("Partner Result", result);
+        this.freightPartner = result;
+        this.freightPartner.forEach(element => {
+          element.concatValue = element.fr_part_code + " - " + element.frt_part_name;
+        });
+        console.log("Afer Concat", this.freightPartner);
+      }
+    })
+    this.freightPartnerCtrl = new FormControl();
+    this.filteredFreitPartner = this.freightPartnerCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(freiPartner => freiPartner ? this.filterFreightPartner(freiPartner) : this.freightPartner.slice())
+    );
+    console.log("After Filter", this.filteredFreitPartner);
+  };
+
   filterFreightInd(name: string) {
     return this.freightIndicator.filter(indi => 
       indi.freight_indication_code.toLowerCase().indexOf(name.toLowerCase()) === 0);
   };
+  filterFreightPartner(name: string) {
+    return this.freightPartner.filter(partner => 
+      partner.fr_part_code.toLowerCase().indexOf(name.toLowerCase()) === 0);
+  };
   onEnterIndi(event:any) {
     this.freightIndiVal = event.source.value;
+    this.freightIndiVal = this.freightIndiVal.slice(0, (this.freightIndiVal.indexOf("-")-1));
+    console.log("Indi Value", this.freightIndiVal);
+  };
+  onEnterPartner(event:any) {
+    console.log("Event Here", event);
+    this.freightPartnerVal = event.source.value;
+    this.freightPartnerVal = this.freightPartnerVal.slice(0, (this.freightPartnerVal.indexOf("-")-1));
+    console.log("Part Value", this.freightPartnerVal);
   };
 
   custGroup() {
@@ -445,9 +524,13 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.customerGrp = result;
+        this.customerGrp.forEach(element => {
+          element.concatValue = element.cus_group_code + " - " + element.cus_group_dec;
+        });
       }
     })
     this.getFreightIndic();
+    this.getFreightPartner();
     this.custCtrl = new FormControl();
     this.filteredCust = this.custCtrl.valueChanges
       .pipe(
@@ -461,6 +544,8 @@ export class PrepareScComponent implements OnInit {
   };
   onEnterCust(event:any) {
     this.customerVal = event.source.value;
+    this.customerVal = this.customerVal.slice(0, (this.customerVal.indexOf("-")-1));
+    console.log(this.customerVal);
   };
 
   incoterms() {
@@ -469,6 +554,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.incotermsInfo = result;
+        this.incotermsInfo.forEach(element => {
+          element.concatValue = element.incoterms_code + " - " + element.incoterms_dec;
+        })
       }
     })
     this.paymentTerms();
@@ -482,6 +570,8 @@ export class PrepareScComponent implements OnInit {
   };
   onEnter(event:any) {
     this.incoTermVal = event.source.value;
+    this.incoTermVal = this.incoTermVal.slice(0, (this.incoTermVal.indexOf("-")-1));
+    console.log(this.incoTermVal);
   };
   filterInco(name: string) {
     return this.incotermsInfo.filter(inco => 
@@ -494,6 +584,9 @@ export class PrepareScComponent implements OnInit {
         let password = '123456'
         let result = CryptoJSAesJson.decrypt(res.result, password);
         this.paymentInfo = result;
+        this.paymentInfo.forEach(element => {
+          element.concatValue = element.payment_terms_code + " - " + element.payment_terms_dec;
+        })
       }
     })
     this.getFreight();
@@ -513,6 +606,8 @@ export class PrepareScComponent implements OnInit {
 
   onEnterPymt(event:any) {
     this.pymatVal = event.source.value;
+    this.pymatVal = this.pymatVal.slice(0, (this.pymatVal.indexOf("-")-1));
+    console.log(this.pymatVal);
   };
   
   matVal: any = [];
@@ -665,6 +760,7 @@ export class PrepareScComponent implements OnInit {
     this.updateInfoForm.value['freight'] = this.freightVal;
     this.updateInfoForm.value['cus_grp'] = this.customerVal;
     this.updateInfoForm.value['fr_ind'] = this.freightIndiVal;
+    this.updateInfoForm.value['FrieghtPartner'] = this.freightPartnerVal;
     this.scForm.value['contract_ty'] = this.contrctVal;
     this.scForm.value['sales_org'] = this.salesOrgVal;
     this.scForm.value['dis_chnl'] = this.distribVal;
@@ -749,11 +845,14 @@ export class PrepareScComponent implements OnInit {
         },
         "AdditionalDataforPricing": {
           "FreightIndicator": this.updateInfoForm.value['fr_ind'],
-          "SpecialFrieght" : inputFreight
+          "SpecialFrieght" : inputFreight,
+          "FrieghtPartner" : this.updateInfoForm.value['FrieghtPartner'],
         }
       };
 
       seFormDataArr1.push(sapRequest1);
+      console.log("Sap Request", sapRequest1);
+     
     }
 
     for (let i = 0; i < this.scInfo.length; i++) {
@@ -828,7 +927,8 @@ export class PrepareScComponent implements OnInit {
       },
       "AdditionalDataforPricing": {
         "FreightIndicator": this.updateInfoForm.value['fr_ind'],
-        "SpecialFrieght" : inputFreight
+        "SpecialFrieght" : inputFreight,
+        "FrieghtPartner" : this.updateInfoForm.value['FrieghtPartner']
       }
     };
 
@@ -836,7 +936,7 @@ export class PrepareScComponent implements OnInit {
       "scData": sapRequest,
       "basic_auth": authorizationData
     }
-
+    console.log("Data before sending", seFormDataArr1)
     let passwordd = '123456';
     let encryptedd = CryptoJSAesJson.encrypt(seFormDataArr1, passwordd);
 
@@ -849,9 +949,15 @@ export class PrepareScComponent implements OnInit {
           cus_po_no: this.scData.cus_po_no,
           cus_code: this.scData.user_code
         }
+        /* let param2 = {
+          ids: res.result['ids'],
+          rfq_no: this.rfqNo,
+        } */
         this._sales.excelEmail(param).subscribe();
+        //this._sales.excelEmail2(param2).subscribe();
       }
     })
+
     this._spiner.show();
     // this._sales.salesContract(screquest).subscribe((res: any) => {
     //   this._spiner.hide();
@@ -935,7 +1041,7 @@ export class PrepareScComponent implements OnInit {
 
       this._product.storeStatusCust(statusRequest).subscribe((res: any) => {
       })
-      this._router.navigate(['/sales/prepare-so'])
+      this._router.navigate(['/sales/update-info'])
     }, err => {
       console.log(err);
       this._spiner.hide();
@@ -957,5 +1063,35 @@ export class PrepareScComponent implements OnInit {
   backTo() {
     this._location.back();
   };
+  redirectPo(poNum:any) {
+    let rfqNo = btoa(poNum);
+    this._router.navigate(['/po/po-view',rfqNo])
+  }
+
+  shipToPartyChanged(event){
+    console.log("Getting Called");
+    console.log(event);
+    let val = event.target.value;
+    this._sales.getAddrCode(val).subscribe((res: any) => {
+
+      if(res.result.length === 0) {
+        console.log("Empty");
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          text: 'Invalid User Code !',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      else {
+        console.log(res.addressone);
+        let fullAddress = res.result.addressone + ", " + res.result.addresstwo + res.result.city;
+  
+        // concat address here
+        this.scForm.get('ship_to_addr').setValue(fullAddress);
+      }
+    })
+  }
 
 }
